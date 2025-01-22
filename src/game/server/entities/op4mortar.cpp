@@ -252,6 +252,8 @@ public:
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
+    bool IsMonster() override { return false; }
+
     int d_x;
     int d_y;
     float m_lastupdate;

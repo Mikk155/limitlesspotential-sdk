@@ -2187,6 +2187,8 @@ public:
 
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
+    bool IsMonster() override { return false; }
+
 private:
     bool m_on;
 };

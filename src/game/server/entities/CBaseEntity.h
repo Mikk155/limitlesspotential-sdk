@@ -331,6 +331,7 @@ public:
     virtual bool HasTarget( string_t targetname ) { return FStrEq( STRING( targetname ), GetTarget() ); }
     virtual bool IsInWorld();
     virtual bool IsPlayer() { return false; }
+    virtual bool IsMonster() { return false; }
     virtual bool IsNetClient() { return false; }
     virtual const char* TeamID() { return ""; }
 

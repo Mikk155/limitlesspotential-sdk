@@ -106,6 +106,7 @@ public:
     void Smoke();
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    bool IsMonster() override { return false; }
 
     int m_iMagnitude;  // how large is the fireball? how much damage?
     int m_spriteScale; // what's the exact fireball sprite scale?

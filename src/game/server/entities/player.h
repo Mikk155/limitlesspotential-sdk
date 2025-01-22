@@ -332,6 +332,7 @@ public:
     void Killed( CBaseEntity* attacker, int iGib ) override;
     Vector BodyTarget( const Vector& posSrc ) override { return Center() + pev->view_ofs * RANDOM_FLOAT( 0.5, 1.1 ); } // position to shoot at
     bool IsAlive() override { return ( pev->deadflag == DEAD_NO ) && pev->health > 0; }
+    bool IsMonster() override { return false; }
     bool ShouldFadeOnDeath() override { return false; }
     bool IsPlayer() override { return true; } // Spectators should return false for this, they aren't "players" as far as game logic is concerned
 

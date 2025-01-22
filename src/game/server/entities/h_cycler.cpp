@@ -44,6 +44,7 @@ public:
 
 	// Don't treat as a live target
     bool IsAlive() override { return false; }
+    bool IsMonster() override { return false; }
 
     bool m_animate;
 };
@@ -255,6 +256,7 @@ public:
     void Spawn() override;
     void Precache() override;
     void Think() override;
+    bool IsMonster() override { return false; }
 
 private:
     float m_flStartTime;

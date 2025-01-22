@@ -43,6 +43,7 @@ public:
     void OnCreate() override;
     void Precache() override;
     void Spawn() override;
+    bool IsMonster() override { return false; }
 
     enum SATCHELCODE
     {

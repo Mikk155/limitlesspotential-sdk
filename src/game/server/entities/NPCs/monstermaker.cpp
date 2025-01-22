@@ -37,6 +37,7 @@ public:
     void Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
+    bool IsMonster() override { return false; }
 
 	/**
 	 *	@brief activates/deactivates the monster maker

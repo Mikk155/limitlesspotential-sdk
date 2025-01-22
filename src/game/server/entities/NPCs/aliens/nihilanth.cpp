@@ -32,6 +32,7 @@ class CNihilanthHVR : public CBaseMonster
 public:
     void Spawn() override;
     void Precache() override;
+    bool IsMonster() override { return false; }
 
     void CircleInit( CBaseEntity* pTarget );
     void AbsorbInit();

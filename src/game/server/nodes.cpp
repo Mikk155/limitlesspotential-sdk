@@ -1450,6 +1450,7 @@ class CTestHull : public CBaseMonster
 public:
     void Spawn( CBaseEntity* masterNode );
     int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    bool IsMonster() override { return false; }
     void CallBuildNodeGraph();
     void BuildNodeGraph();
     void ShowBadNode();

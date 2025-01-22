@@ -1033,6 +1033,7 @@ public:
 	 *	but now it only initializes moving furniture in scripted sequences
 	 */
     void Spawn() override;
+    bool IsMonster() override { return false; }
 
     void Die();
 

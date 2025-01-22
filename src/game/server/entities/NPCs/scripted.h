@@ -78,6 +78,7 @@ public:
     void Touch( CBaseEntity* pOther ) override;
 	// Don't allow player to +use this.
     int ObjectCaps() override { return ( CBaseMonster::ObjectCaps() & ~( FCAP_ACROSS_TRANSITION | FCAP_IMPULSE_USE ) ); }
+    bool IsMonster() override { return false; }
 
 	/**
 	 *	@brief Find an entity that I'm interested in and precache the sounds he'll need in the sequence.
