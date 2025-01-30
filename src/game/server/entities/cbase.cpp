@@ -566,8 +566,8 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
         m_SentenceReplacementFileName = ALLOC_STRING( pkvd->szValue );
         LoadSentenceReplacementMap( m_SentenceReplacement, m_SentenceReplacementFileName );
     }
-	// Note: while this code does fix backwards bounds here it will not apply to partial hulls mixing with hard-coded ones.
-    else if( FStrEq( pkvd->szKeyName, "custom_hull_min" ) )
+    // Note: while this code does fix backwards bounds here it will not apply to partial hulls mixing with hard-coded ones.
+    else if( FStrEq( pkvd->szKeyName, "minhullsize" ) )
     {
         UTIL_StringToVector( m_CustomHullMin, pkvd->szValue );
         m_HasCustomHullMin = true;
@@ -579,7 +579,7 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
 
         return true;
     }
-    else if( FStrEq( pkvd->szKeyName, "custom_hull_max" ) )
+    else if( FStrEq( pkvd->szKeyName, "maxhullsize" ) )
     {
         UTIL_StringToVector( m_CustomHullMax, pkvd->szValue );
         m_HasCustomHullMax = true;
@@ -780,13 +780,11 @@ void CBaseEntity::SetObjectCollisionBox()
 
 bool CBaseEntity::Intersects( CBaseEntity* pOther )
 {
-    if( pOther->pev->absmin.x > pev->absmax.x ||
-        pOther->pev->absmin.y > pev->absmax.y ||
-        pOther->pev->absmin.z > pev->absmax.z ||
-        pOther->pev->absmax.x < pev->absmin.x ||
-        pOther->pev->absmax.y < pev->absmin.y ||
-        pOther->pev->absmax.z < pev->absmin.z )
-        return false;
+    for( int i = 0; i < 3; i++ ) {
+        if( pOther->pev->absmin[i] > pev->absmax[i] || pOther->pev->absmax[i] < pev->absmin[i] ) {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -837,12 +835,18 @@ bool CBaseEntity::IsInWorld()
 
 bool CBaseEntity::ShouldToggle( USE_TYPE useType, bool currentState )
 {
-    if( useType != USE_TOGGLE && useType != USE_SET )
+    switch( useType )
     {
-        if( ( currentState && useType == USE_ON ) || ( !currentState && useType == USE_OFF ) )
-            return false;
+        case USE_TOGGLE:
+            return true;
+        case USE_ON:
+            return !currentState; // True if it's disabled
+        case USE_OFF:
+            return currentState; // True if it's enabled
+        case USE_SET:
+            return !currentState; // -TODO Return the original state. i.e if it spawned being active or inactive.
     }
-    return true;
+    return false;
 }
 
 int CBaseEntity::DamageDecal( int bitsDamageType )
@@ -865,6 +869,7 @@ CBaseEntity* CBaseEntity::Create( const char* szName, const Vector& vecOrigin, c
         CBaseEntity::Logger->debug( "NULL Ent in Create!" );
         return nullptr;
     }
+
     entity->SetOwner( owner );
     entity->pev->origin = vecOrigin;
     entity->pev->angles = vecAngles;
