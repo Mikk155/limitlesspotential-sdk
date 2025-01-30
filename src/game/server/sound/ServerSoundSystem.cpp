@@ -279,7 +279,19 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
 
     if( entityIndex <= 0 || entityIndex > gpGlobals->maxClients )
     {
-        m_Logger->error( "EmitSound: Entity is not a player, cannot use SND_NOTHOST" );
+        m_Logger->error("EmitSound: Entity is not a player, cannot use SND_NOTHOST / SND_ONLYHOST");
+        return;
+    }
+
+    if( ( flags & SND_ONLYHOST ) != 0 )
+    {
+        auto player = ToBasePlayer( entity );
+        if( player->IsConnected() && player->IsNetClient() )
+        {
+            MESSAGE_BEGIN(MSG_ONE_UNRELIABLE, gmsgEmitSound, nullptr, player);
+            BuildSoundMessage(entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin);
+            MESSAGE_END();
+        }
         return;
     }
 
