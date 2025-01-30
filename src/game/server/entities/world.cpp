@@ -360,6 +360,13 @@ void CWorld::Precache()
 	// 63 testing
     LIGHT_STYLE( 63, "a" );
 
+    if( !m_HasCustomHullMax ) {
+        m_CustomHullMax = Vector( 4096, 4096, 4096 );
+    }
+    if( !m_HasCustomHullMin ) {
+        m_CustomHullMin = Vector( -4096, -4096, -4096 );
+    }
+
     for( std::size_t i = 0; i < std::size( gDecals ); i++ )
         gDecals[i].index = DECAL_INDEX( gDecals[i].name );
 

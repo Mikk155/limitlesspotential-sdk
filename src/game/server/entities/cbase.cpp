@@ -818,32 +818,19 @@ bool CBaseEntity::IsLockedByMaster()
 
 bool CBaseEntity::IsInWorld()
 {
-	// position
-    if( pev->origin.x >= 4096 )
-        return false;
-    if( pev->origin.y >= 4096 )
-        return false;
-    if( pev->origin.z >= 4096 )
-        return false;
-    if( pev->origin.x <= -4096 )
-        return false;
-    if( pev->origin.y <= -4096 )
-        return false;
-    if( pev->origin.z <= -4096 )
-        return false;
-	// speed
-    if( pev->velocity.x >= 2000 )
-        return false;
-    if( pev->velocity.y >= 2000 )
-        return false;
-    if( pev->velocity.z >= 2000 )
-        return false;
-    if( pev->velocity.x <= -2000 )
-        return false;
-    if( pev->velocity.y <= -2000 )
-        return false;
-    if( pev->velocity.z <= -2000 )
-        return false;
+    // position
+    for( int i = 0; i < 3; i++ ) {
+        if( pev->origin[i] >= World->m_CustomHullMax[i] || pev->origin[i] <= World->m_CustomHullMin[i] ) {
+            return false;
+        }
+    }
+
+    // speed
+    for( int i = 0; i < 3; i++ ) {
+        if( pev->velocity[i] >= 2000 || pev->velocity[i] <= -2000 ) {
+            return false;
+        }
+    }
 
     return true;
 }
