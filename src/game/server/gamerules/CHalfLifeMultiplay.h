@@ -51,7 +51,6 @@ public:
     void PlayerThink( CBasePlayer* pPlayer ) override;
     bool FPlayerCanRespawn( CBasePlayer* pPlayer ) override;
     float FlPlayerSpawnTime( CBasePlayer* pPlayer ) override;
-    CBaseEntity* GetPlayerSpawnSpot( CBasePlayer* pPlayer ) override;
 
     bool AllowAutoTargetCrosshair() override;
 

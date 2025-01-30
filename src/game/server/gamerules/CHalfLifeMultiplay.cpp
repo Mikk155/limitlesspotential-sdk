@@ -662,17 +662,6 @@ int CHalfLifeMultiplay::DeadPlayerAmmo( CBasePlayer* pPlayer )
     return GR_PLR_DROP_AMMO_ACTIVE;
 }
 
-CBaseEntity* CHalfLifeMultiplay::GetPlayerSpawnSpot( CBasePlayer* pPlayer )
-{
-    CBaseEntity* pSpawnSpot = CGameRules::GetPlayerSpawnSpot( pPlayer );
-    if( IsMultiplayer() && !FStringNull( pSpawnSpot->pev->target ) )
-    {
-        FireTargets( STRING( pSpawnSpot->pev->target ), pPlayer, pPlayer, USE_TOGGLE, 0 );
-    }
-
-    return pSpawnSpot;
-}
-
 int CHalfLifeMultiplay::PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget )
 {
 	// half life deathmatch has only enemies

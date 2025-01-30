@@ -2788,7 +2788,10 @@ void CBasePlayer::Spawn()
         pev->iuser1 = OBS_ROAMING;
     }
 
-    g_pGameRules->GetPlayerSpawnSpot( this );
+    if( auto spawnpoint = g_pGameRules->GetPlayerSpawnSpot( this ); spawnpoint != nullptr && !FStringNull( spawnpoint->pev->target ) )
+    {
+        FireTargets( STRING( spawnpoint->pev->target ), this, spawnpoint, USE_TOGGLE, 0 );
+    }
 
     SetModel( "models/player.mdl" );
     pev->sequence = LookupActivity( ACT_IDLE );
