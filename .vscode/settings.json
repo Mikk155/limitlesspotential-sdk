@@ -1,0 +1,37 @@
+{
+    "files.associations":
+    {
+        "*.json": "jsonc"
+    },
+
+    "files.exclude":
+    {
+        "build/": true,
+        "cmake/": true,
+        "src/FGDGenerator/bin": true,
+        "src/FGDGenerator/obj": true,
+        "vcpkg/": true,
+        "vcpkg_config/": true,
+        ".clang-format": true,
+        ".clang-tidy": true,
+        "halflife-unified-sdk.sln": true,
+        "vcpkg-configuration.json": true,
+        "vcpkg.json": true,
+    },
+
+    "search.exclude":
+    {
+        "build/": true,
+        "cmake/": true,
+        "src/FGDGenerator/bin": true,
+        "src/FGDGenerator/obj": true,
+        "src/FGDGenerator/FGD": true,
+        "vcpkg/": true,
+        "vcpkg_config/": true,
+        ".clang-format": true,
+        ".clang-tidy": true,
+        "halflife-unified-sdk.sln": true,
+        "vcpkg-configuration.json": true,
+        "vcpkg.json": true,
+    },
+}
