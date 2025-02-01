@@ -30,7 +30,12 @@ int DispatchSpawn( edict_t* pent )
 
     if( pEntity )
     {
-		// Initialize these or entities who don't link to the world won't have anything in here
+        if( !pEntity->ShouldAppearByFlags() ) {
+            UTIL_Remove( pEntity );
+            return -1;
+        }
+
+        // Initialize these or entities who don't link to the world won't have anything in here
         pEntity->pev->absmin = pEntity->pev->origin - Vector( 1, 1, 1 );
         pEntity->pev->absmax = pEntity->pev->origin + Vector( 1, 1, 1 );
 
@@ -591,6 +596,46 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
 
         return true;
     }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_skilleasy" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::SkillEasy] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_skillmedium" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::SkillMedium] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_skillhard" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::SkillHard] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_singleplayer" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::GameModeSinglePlayer] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_multiplayer" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::GameModeMultiPlayer] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_cooperative" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::GameModeCooperative] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_deathmatch" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::GameModeDeathmatch] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_cft" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::GameModeCaptureTheFlag] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_teamplay" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::GameModeTeamPlay] = static_cast<appearflags>( abit );
+    } }
+    else if( FStrEq( pkvd->szKeyName, "appearflag_dedicated" ) ) {
+        if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
+            m_appearflags[appearflags::ServerIsDedicated] = static_cast<appearflags>( abit );
+    } }
 
     return false;
 }
@@ -900,4 +945,70 @@ void CBaseEntity::EmitAmbientSound( const Vector& vecOrigin, const char* samp, f
 void CBaseEntity::StopSound( int channel, const char* sample )
 {
     sound::g_ServerSound.EmitSound( this, channel, sample, 0, 0, SND_STOP, PITCH_NORM );
+}
+
+bool CBaseEntity::ShouldAppearByFlags()
+{
+    bool should_not = false;
+
+    auto matched = []( appearflags bit, bool condition ) -> bool
+    {
+        switch( bit )
+        {
+            case appearflags::NotIn:
+                return condition;
+            case appearflags::OnlyIn:
+                return !condition;
+        }
+        return false;
+    };
+
+    for( size_t i = 0; i < m_appearflags.size(); i++ )
+    {
+        appearflags condition_flag = m_appearflags[i];
+
+        if( !condition_flag || condition_flag == appearflags::Default )
+            continue;
+
+        switch( i )
+        {
+            case appearflags::SkillEasy:
+                should_not = matched( condition_flag, ( g_Skill.GetSkillLevel() == SkillLevel::Easy ) );
+            break;
+            case appearflags::SkillMedium:
+                should_not = matched( condition_flag, ( g_Skill.GetSkillLevel() == SkillLevel::Medium ) );
+            break;
+            case appearflags::SkillHard:
+                should_not = matched( condition_flag, ( g_Skill.GetSkillLevel() == SkillLevel::Hard ) );
+            break;
+            case appearflags::GameModeDeathmatch:
+                should_not = matched( condition_flag, ( g_pGameRules->IsDeathmatch() ) );
+            break;
+            case appearflags::GameModeCooperative:
+                should_not = matched( condition_flag, ( g_pGameRules->IsCoOp() ) );
+            break;
+            case appearflags::GameModeCaptureTheFlag:
+                should_not = matched( condition_flag, ( g_pGameRules->IsCTF() ) );
+            break;
+            case appearflags::GameModeTeamPlay:
+                should_not = matched( condition_flag, ( g_pGameRules->IsTeamplay() ) );
+            break;
+            case appearflags::GameModeMultiPlayer:
+                should_not = matched( condition_flag, ( g_pGameRules->IsMultiplayer() ) );
+            break;
+            case appearflags::GameModeSinglePlayer:
+                should_not = matched( condition_flag, !( g_pGameRules->IsMultiplayer() ) );
+            break;
+            case appearflags::ServerIsDedicated:
+                should_not = matched( condition_flag, ( IS_DEDICATED_SERVER() ) );
+            break;
+        }
+
+        if( should_not )
+        {
+            return false;
+        }
+    }
+
+    return true;
 }

@@ -62,6 +62,25 @@ enum USE_TYPE : int
     USE_TOGGLE = 3
 };
 
+enum appearflags : int
+{
+    NotIn = -1, // Does not appears when
+    Default = 0, // Has no effect
+    OnlyIn = 1, // Only appears when
+
+    SkillEasy = 0,
+    SkillMedium,
+    SkillHard,
+    GameModeDeathmatch,
+    GameModeCooperative,
+    GameModeCaptureTheFlag,
+    GameModeTeamPlay,
+    GameModeMultiPlayer,
+    GameModeSinglePlayer,
+    ServerIsDedicated,
+    AppearflagsSize
+};
+
 // people gib if their health is <= this at the time of death
 #define GIB_HEALTH_VALUE -30
 
@@ -618,6 +637,12 @@ public:
 	 *	@details The entity's angles affect this offset.
 	 */
     Vector m_SoundOffset{};
+
+    std::vector<appearflags> m_appearflags{ (int)appearflags::AppearflagsSize };
+    /**
+     *    @brief Returns whatever a entity is fine to exists by the current rules it has.
+     */
+    bool ShouldAppearByFlags();
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }
