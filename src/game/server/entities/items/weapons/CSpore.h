@@ -17,56 +17,56 @@
 
 enum SporeAnim
 {
-	SPORE_IDLE = 0,
+    SPORE_IDLE = 0,
 };
 
 class CSpore : public CGrenade
 {
-	DECLARE_CLASS(CSpore, CGrenade);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CSpore, CGrenade );
+    DECLARE_DATAMAP();
 
 public:
-	enum class SporeType
-	{
-		ROCKET = 1,
-		GRENADE = 2
-	};
+    enum class SporeType
+    {
+        ROCKET = 1,
+        GRENADE = 2
+    };
 
 public:
-	void Precache() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void BounceSound() override;
+    void BounceSound() override;
 
-	void IgniteThink();
+    void IgniteThink();
 
-	void FlyThink();
+    void FlyThink();
 
-	void GibThink();
+    void GibThink();
 
-	void RocketTouch(CBaseEntity* pOther);
+    void RocketTouch( CBaseEntity* pOther );
 
-	void MyBounceTouch(CBaseEntity* pOther);
+    void MyBounceTouch( CBaseEntity* pOther );
 
-	static CSpore* CreateSpore(
-		const Vector& vecOrigin, const Vector& vecAngles, CBaseEntity* pOwner,
-		SporeType sporeType, bool bIsAI, bool bPuked);
+    static CSpore* CreateSpore( 
+        const Vector& vecOrigin, const Vector& vecAngles, CBaseEntity* pOwner,
+        SporeType sporeType, bool bIsAI, bool bPuked );
 
 private:
-	int m_iBlow;
-	int m_iBlowSmall;
+    int m_iBlow;
+    int m_iBlowSmall;
 
-	int m_iSpitSprite;
-	int m_iTrail;
+    int m_iSpitSprite;
+    int m_iTrail;
 
-	SporeType m_SporeType;
+    SporeType m_SporeType;
 
-	float m_flIgniteTime;
-	float m_flSoundDelay;
+    float m_flIgniteTime;
+    float m_flSoundDelay;
 
-	bool m_bPuked;
-	bool m_bIsAI;
+    bool m_bPuked;
+    bool m_bIsAI;
 
-	EHANDLE m_hSprite;
+    EHANDLE m_hSprite;
 };

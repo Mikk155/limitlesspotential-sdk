@@ -22,14 +22,14 @@ class CRope;
  */
 struct RopeSampleData
 {
-	Vector mPosition;
-	Vector mVelocity;
-	Vector mForce;
-	Vector mExternalForce;
+    Vector mPosition;
+    Vector mVelocity;
+    Vector mForce;
+    Vector mExternalForce;
 
-	bool mApplyExternalForce;
+    bool mApplyExternalForce;
 
-	float mMassReciprocal;
+    float mMassReciprocal;
 };
 
 /**
@@ -37,27 +37,27 @@ struct RopeSampleData
  */
 class CRopeSample : public CBaseEntity
 {
-	DECLARE_CLASS(CRopeSample, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CRopeSample, CBaseEntity );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
+    void Spawn() override;
 
 
-	static CRopeSample* CreateSample();
+    static CRopeSample* CreateSample();
 
-	const RopeSampleData& GetData() const { return m_Data; }
+    const RopeSampleData& GetData() const { return m_Data; }
 
-	RopeSampleData& GetData() { return m_Data; }
+    RopeSampleData& GetData() { return m_Data; }
 
-	CRope* GetMasterRope() { return m_pMasterRope; }
+    CRope* GetMasterRope() { return m_pMasterRope; }
 
-	void SetMasterRope(CRope* pRope)
-	{
-		m_pMasterRope = pRope;
-	}
+    void SetMasterRope( CRope* pRope )
+    {
+        m_pMasterRope = pRope;
+    }
 
 private:
-	RopeSampleData m_Data;
-	CRope* m_pMasterRope;
+    RopeSampleData m_Data;
+    CRope* m_pMasterRope;
 };

@@ -29,74 +29,74 @@ template <typename DataContext>
 class BaseFileNamesListSection : public GameConfigSection<DataContext>
 {
 public:
-	json::value_t GetType() const override final { return json::value_t::object; }
+    json::value_t GetType() const override final { return json::value_t::object; }
 
-	std::string GetSchema() const override
-	{
-		return fmt::format(R"(
+    std::string GetSchema() const override
+    {
+        return fmt::format( R"(
 "properties": {{
-	"ResetList": {{
-		"description": "If true, the list of filenames is cleared before new filenames are added to it",
-		"type": "boolean"
-	}},
-	"FileNames": {{
-		"type": "array",
-		"items": {{
-			"type": "string"
-		}}
-	}}
-}})");
-	}
+    "ResetList": {{
+        "description": "If true, the list of filenames is cleared before new filenames are added to it",
+        "type": "boolean"
+    }},
+    "FileNames": {{
+        "type": "array",
+        "items": {{
+            "type": "string"
+        }}
+    }}
+}})" );
+    }
 
-	bool TryParse(GameConfigContext<DataContext>& context) const override final
-	{
-		auto& fileNamesList = GetFileNamesList(context.Data);
+    bool TryParse( GameConfigContext<DataContext>& context ) const override final
+    {
+        auto& fileNamesList = GetFileNamesList( context.Data );
 
-		if (const auto resetList = context.Input.find("ResetList");
-			resetList != context.Input.end() && resetList->is_boolean() && resetList->template get<bool>())
-		{
-			context.Logger.debug("Resetting {} filename list", GetListName());
-			fileNamesList.clear();
-		}
+        if( const auto resetList = context.Input.find( "ResetList" );
+            resetList != context.Input.end() && resetList->is_boolean() && resetList->template get<bool>() )
+        {
+            context.Logger.debug( "Resetting {} filename list", GetListName() );
+            fileNamesList.clear();
+        }
 
-		const auto fileNames = context.Input.find("FileNames");
+        const auto fileNames = context.Input.find( "FileNames" );
 
-		if (fileNames == context.Input.end() || !fileNames->is_array())
-		{
-			return true;
-		}
+        if( fileNames == context.Input.end() || !fileNames->is_array() )
+        {
+            return true;
+        }
 
-		const auto begin = fileNames->begin();
+        const auto begin = fileNames->begin();
 
-		for (auto it = fileNames->begin(), end = fileNames->end(); it != end; ++it)
-		{
-			const auto& fileName = *it;
+        for( auto it = fileNames->begin(), end = fileNames->end(); it != end; ++it )
+        {
+            const auto& fileName = *it;
 
-			if (!fileName.is_string())
-			{
-				continue;
-			}
+            if( !fileName.is_string() )
+            {
+                continue;
+            }
 
-			auto fileNameString = fileName.template get<std::string>();
+            auto fileNameString = fileName.template get<std::string>();
 
-			const auto trimmedString = Trim(fileNameString);
+            const auto trimmedString = Trim( fileNameString );
 
-			if (trimmedString.empty())
-			{
-				context.Logger.warn("Ignoring empty {} filename (index {})", GetListName(), it - begin);
-				continue;
-			}
+            if( trimmedString.empty() )
+            {
+                context.Logger.warn( "Ignoring empty {} filename (index {})", GetListName(), it - begin );
+                continue;
+            }
 
-			context.Logger.debug("Adding {} file \"{}\"", GetListName(), trimmedString);
+            context.Logger.debug( "Adding {} file \"{}\"", GetListName(), trimmedString );
 
-			fileNamesList.push_back(std::string{trimmedString});
-		}
+            fileNamesList.push_back( std::string{trimmedString} );
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 protected:
-	virtual std::string_view GetListName() const = 0;
+    virtual std::string_view GetListName() const = 0;
 
-	virtual std::vector<std::string>& GetFileNamesList(DataContext& context) const = 0;
+    virtual std::vector<std::string>& GetFileNamesList( DataContext& context ) const = 0;
 };

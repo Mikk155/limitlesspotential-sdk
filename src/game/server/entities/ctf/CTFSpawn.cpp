@@ -17,44 +17,44 @@
 #include "CTFSpawn.h"
 
 const char* const sTeamSpawnNames[] =
-	{
-		"ctfs0",
-		"ctfs1",
-		"ctfs2",
+    {
+        "ctfs0",
+        "ctfs1",
+        "ctfs2",
 };
 
-LINK_ENTITY_TO_CLASS(info_ctfspawn, CTFSpawn);
+LINK_ENTITY_TO_CLASS( info_ctfspawn, CTFSpawn );
 
-bool CTFSpawn::KeyValue(KeyValueData* pkvd)
+bool CTFSpawn::KeyValue( KeyValueData* pkvd )
 {
-	if (FStrEq("team_no", pkvd->szKeyName))
-	{
-		team_no = static_cast<CTFTeam>(atoi(pkvd->szValue));
-		return true;
-	}
+    if( FStrEq( "team_no", pkvd->szKeyName ) )
+    {
+        team_no = static_cast<CTFTeam>( atoi( pkvd->szValue ) );
+        return true;
+    }
 
-	return CBaseEntity::KeyValue(pkvd);
+    return CBaseEntity::KeyValue( pkvd );
 }
 
 void CTFSpawn::Spawn()
 {
-	if (team_no < CTFTeam::None || team_no > CTFTeam::OpposingForce)
-	{
-		Logger->debug("Teamspawnpoint with an invalid team_no of {}", static_cast<int>(team_no));
-		return;
-	}
+    if( team_no < CTFTeam::None || team_no > CTFTeam::OpposingForce )
+    {
+        Logger->debug( "Teamspawnpoint with an invalid team_no of {}", static_cast<int>( team_no ) );
+        return;
+    }
 
-	m_sMaster = pev->classname;
+    m_sMaster = pev->classname;
 
 	// Change the classname to the owning team's spawn name
-	pev->classname = MAKE_STRING(sTeamSpawnNames[static_cast<int>(team_no)]);
-	m_fState = true;
+    pev->classname = MAKE_STRING( sTeamSpawnNames[static_cast<int>( team_no )] );
+    m_fState = true;
 }
 
-bool CTFSpawn::IsTriggered(CBaseEntity* pEntity)
+bool CTFSpawn::IsTriggered( CBaseEntity* pEntity )
 {
-	if (!FStringNull(pev->targetname) && STRING(pev->targetname))
-		return m_fState;
-	else
-		return UTIL_IsMasterTriggered(m_sMaster, pEntity);
+    if( !FStringNull( pev->targetname ) && STRING( pev->targetname ) )
+        return m_fState;
+    else
+        return UTIL_IsMasterTriggered( m_sMaster, pEntity );
 }

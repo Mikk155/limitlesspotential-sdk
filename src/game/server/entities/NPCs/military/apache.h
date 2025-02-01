@@ -22,62 +22,62 @@ class CBeam;
 
 class CApache : public CBaseMonster
 {
-	DECLARE_CLASS(CApache, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CApache, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	int BloodColor() override { return DONT_BLEED; }
-	void Killed(CBaseEntity* attacker, int iGib) override;
-	void GibMonster() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    int BloodColor() override { return DONT_BLEED; }
+    void Killed( CBaseEntity* attacker, int iGib ) override;
+    void GibMonster() override;
 
-	void SetObjectCollisionBox() override
-	{
-		pev->absmin = pev->origin + Vector(-300, -300, -172);
-		pev->absmax = pev->origin + Vector(300, 300, 8);
-	}
+    void SetObjectCollisionBox() override
+    {
+        pev->absmin = pev->origin + Vector( -300, -300, -172 );
+        pev->absmax = pev->origin + Vector( 300, 300, 8 );
+    }
 
-	void HuntThink();
-	void FlyTouch(CBaseEntity* pOther);
-	void CrashTouch(CBaseEntity* pOther);
-	void DyingThink();
-	void StartupUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-	void NullThink();
+    void HuntThink();
+    void FlyTouch( CBaseEntity* pOther );
+    void CrashTouch( CBaseEntity* pOther );
+    void DyingThink();
+    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void NullThink();
 
-	void ShowDamage();
-	void Flight();
-	void FireRocket();
-	bool FireGun();
+    void ShowDamage();
+    void Flight();
+    void FireRocket();
+    bool FireGun();
 
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
-	void TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
+    void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	int m_iRockets;
-	float m_flForce;
-	float m_flNextRocket;
+    int m_iRockets;
+    float m_flForce;
+    float m_flNextRocket;
 
-	Vector m_vecTarget;
-	Vector m_posTarget;
+    Vector m_vecTarget;
+    Vector m_posTarget;
 
-	Vector m_vecDesired;
-	Vector m_posDesired;
+    Vector m_vecDesired;
+    Vector m_posDesired;
 
-	Vector m_vecGoal;
+    Vector m_vecGoal;
 
-	Vector m_angGun;
-	float m_flLastSeen;
-	float m_flPrevSeen;
+    Vector m_angGun;
+    float m_flLastSeen;
+    float m_flPrevSeen;
 
-	int m_iSoundState; // don't save this
+    int m_iSoundState; // don't save this
 
-	int m_iSpriteTexture;
-	int m_iExplode;
-	int m_iBodyGibs;
+    int m_iSpriteTexture;
+    int m_iExplode;
+    int m_iBodyGibs;
 
-	float m_flGoalSpeed;
+    float m_flGoalSpeed;
 
-	int m_iDoSmokePuff;
-	CBeam* m_pBeam;
+    int m_iDoSmokePuff;
+    CBeam* m_pBeam;
 };

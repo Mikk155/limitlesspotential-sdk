@@ -33,24 +33,24 @@ class asIScriptContext;
  */
 struct ConditionEvaluator final : public IGameSystem
 {
-	const char* GetName() const override { return "ConditionEvaluator"; }
+    const char* GetName() const override { return "ConditionEvaluator"; }
 
-	bool Initialize() override;
-	void PostInitialize() override {}
-	void Shutdown() override;
+    bool Initialize() override;
+    void PostInitialize() override {}
+    void Shutdown() override;
 
 	/**
 	 *	@brief Evaluate a conditional expression
 	 *	@return If the conditional was successfully evaluated, returns the result.
 	 *		Otherwise, returns an empty optional.
 	 */
-	std::optional<bool> Evaluate(std::string_view conditional);
+    std::optional<bool> Evaluate( std::string_view conditional );
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    std::shared_ptr<spdlog::logger> m_Logger;
 
-	as::EnginePtr m_ScriptEngine;
-	as::UniquePtr<asIScriptContext> m_ScriptContext;
+    as::EnginePtr m_ScriptEngine;
+    as::UniquePtr<asIScriptContext> m_ScriptContext;
 };
 
 inline ConditionEvaluator g_ConditionEvaluator;

@@ -27,17 +27,17 @@
 class SpawnInventorySystem final
 {
 public:
-	const PlayerInventory* GetInventory() const { return &m_Inventory; }
+    const PlayerInventory* GetInventory() const { return &m_Inventory; }
 
-	PlayerInventory* GetInventory() { return &m_Inventory; }
+    PlayerInventory* GetInventory() { return &m_Inventory; }
 
-	void SetInventory(PlayerInventory&& inventory)
-	{
-		m_Inventory = std::move(inventory);
-	}
+    void SetInventory( PlayerInventory&& inventory )
+    {
+        m_Inventory = std::move( inventory );
+    }
 
 private:
-	PlayerInventory m_Inventory;
+    PlayerInventory m_Inventory;
 };
 
 inline SpawnInventorySystem g_SpawnInventory;

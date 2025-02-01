@@ -19,42 +19,42 @@
 
 enum python_e
 {
-	PYTHON_IDLE1 = 0,
-	PYTHON_FIDGET,
-	PYTHON_FIRE1,
-	PYTHON_RELOAD,
-	PYTHON_HOLSTER,
-	PYTHON_DRAW,
-	PYTHON_IDLE2,
-	PYTHON_IDLE3
+    PYTHON_IDLE1 = 0,
+    PYTHON_FIDGET,
+    PYTHON_FIRE1,
+    PYTHON_RELOAD,
+    PYTHON_HOLSTER,
+    PYTHON_DRAW,
+    PYTHON_IDLE2,
+    PYTHON_IDLE3
 };
 
 class CPython : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CPython, CBasePlayerWeapon);
+    DECLARE_CLASS( CPython, CBasePlayerWeapon );
 
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool Deploy() override;
-	void Holster() override;
-	void Reload() override;
-	void WeaponIdle() override;
-	void ItemPostFrame() override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool Deploy() override;
+    void Holster() override;
+    void Reload() override;
+    void WeaponIdle() override;
+    void ItemPostFrame() override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	unsigned short m_usFirePython;
+    unsigned short m_usFirePython;
 };

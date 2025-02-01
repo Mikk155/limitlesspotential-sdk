@@ -28,44 +28,44 @@ extern int iHornetPuff;
  */
 class CHornet : public CBaseMonster
 {
-	DECLARE_CLASS(CHornet, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CHornet, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
 
-	bool IsBioWeapon() const override { return true; }
+    bool IsBioWeapon() const override { return true; }
 
 	/**
 	 *	@brief hornets will never get mad at each other, no matter who the owner is.
 	 */
-	Relationship IRelationship(CBaseEntity* pTarget) override;
+    Relationship IRelationship( CBaseEntity* pTarget ) override;
 
-	void IgniteTrail();
+    void IgniteTrail();
 
 	/**
 	 *	@brief starts a hornet out tracking its target
 	 */
-	void StartTrack();
+    void StartTrack();
 
 	/**
 	 *	@brief starts a hornet out just flying straight.
 	 */
-	void StartDart();
+    void StartDart();
 
 	/**
 	 *	@brief Hornet is flying, gently tracking target
 	 */
-	void TrackTarget();
-	void TrackTouch(CBaseEntity* pOther);
-	void DartTouch(CBaseEntity* pOther);
-	void DieTouch(CBaseEntity* pOther);
+    void TrackTarget();
+    void TrackTouch( CBaseEntity* pOther );
+    void DartTouch( CBaseEntity* pOther );
+    void DieTouch( CBaseEntity* pOther );
 
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
-	float m_flStopAttack;
-	int m_iHornetType;
-	float m_flFlySpeed;
+    float m_flStopAttack;
+    int m_iHornetType;
+    float m_flFlySpeed;
 };

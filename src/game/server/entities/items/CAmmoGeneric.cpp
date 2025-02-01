@@ -17,24 +17,24 @@
 
 class CAmmoGeneric final : public CBasePlayerAmmo
 {
-	DECLARE_CLASS(CAmmoGeneric, CBasePlayerAmmo);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CAmmoGeneric, CBasePlayerAmmo );
+    DECLARE_DATAMAP();
 
 public:
-	bool KeyValue(KeyValueData* pkvd) override
-	{
-		if (FStrEq(pkvd->szKeyName, "ammo_name"))
-		{
-			m_AmmoName = ALLOC_STRING(pkvd->szValue);
-			return true;
-		}
+    bool KeyValue( KeyValueData* pkvd ) override
+    {
+        if( FStrEq( pkvd->szKeyName, "ammo_name" ) )
+        {
+            m_AmmoName = ALLOC_STRING( pkvd->szValue );
+            return true;
+        }
 
-		return CBasePlayerAmmo::KeyValue(pkvd);
-	}
+        return CBasePlayerAmmo::KeyValue( pkvd );
+    }
 };
 
-LINK_ENTITY_TO_CLASS(ammo_generic, CAmmoGeneric);
+LINK_ENTITY_TO_CLASS( ammo_generic, CAmmoGeneric );
 
-BEGIN_DATAMAP(CAmmoGeneric)
-DEFINE_FIELD(m_AmmoName, FIELD_STRING),
-	END_DATAMAP();
+BEGIN_DATAMAP( CAmmoGeneric )
+    DEFINE_FIELD( m_AmmoName, FIELD_STRING ),
+END_DATAMAP();

@@ -35,40 +35,40 @@ class TextPanel;
 class CCampaignSelectPanel : public CTransparentPanel
 {
 private:
-	CListBox* m_CampaignList;
+    CListBox* m_CampaignList;
 
-	ButtonGroup* m_MissionGroup;
+    ButtonGroup* m_MissionGroup;
 
-	RadioButton* m_MissionButton;
-	RadioButton* m_TrainingButton;
+    RadioButton* m_MissionButton;
+    RadioButton* m_TrainingButton;
 
-	ButtonGroup* m_DifficultyGroup;
+    ButtonGroup* m_DifficultyGroup;
 
-	std::vector<RadioButton*> m_Difficulties;
+    std::vector<RadioButton*> m_Difficulties;
 
-	ScrollPanel* m_pScrollPanel;
-	TextPanel* m_Description;
+    ScrollPanel* m_pScrollPanel;
+    TextPanel* m_Description;
 
-	Button* m_StartButton;
+    Button* m_StartButton;
 
-	int m_TextHeight = 0;
+    int m_TextHeight = 0;
 
-	std::vector<CampaignInfo> m_Campaigns;
+    std::vector<CampaignInfo> m_Campaigns;
 
 public:
-	CCampaignSelectPanel(int iTrans, int x, int y, int wide, int tall);
+    CCampaignSelectPanel( int iTrans, int x, int y, int wide, int tall );
 
-	virtual void Open();
-	virtual void Update();
-	virtual void Initialize();
+    virtual void Open();
+    virtual void Update();
+    virtual void Initialize();
 
-	virtual void Reset()
-	{
-	}
+    virtual void Reset()
+    {
+    }
 
-	void CampaignChanged();
-	void StartCurrentCampaign();
+    void CampaignChanged();
+    void StartCurrentCampaign();
 
 private:
-	void SetCampaignByIndex(int index);
+    void SetCampaignByIndex( int index );
 };

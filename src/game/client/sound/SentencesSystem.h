@@ -34,41 +34,41 @@ class SoundCache;
 class SentencesSystem final
 {
 public:
-	static constexpr std::size_t InvalidIndex = std::numeric_limits<std::size_t>::max();
+    static constexpr std::size_t InvalidIndex = std::numeric_limits<std::size_t>::max();
 
-	SentencesSystem(std::shared_ptr<spdlog::logger> logger, SoundCache* soundCache);
+    SentencesSystem( std::shared_ptr<spdlog::logger> logger, SoundCache* soundCache );
 
-	SentencesSystem(const SentencesSystem&) = delete;
-	SentencesSystem& operator=(const SentencesSystem&) = delete;
+    SentencesSystem( const SentencesSystem& ) = delete;
+    SentencesSystem& operator=( const SentencesSystem& ) = delete;
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block);
+    void HandleNetworkDataBlock( NetworkDataBlock& block );
 
-	void Clear();
+    void Clear();
 
-	std::size_t FindSentence(const char* name) const;
+    std::size_t FindSentence( const char* name ) const;
 
-	const Sentence* GetSentence(std::size_t index) const;
+    const Sentence* GetSentence( std::size_t index ) const;
 
-	bool SetSentenceWord(Channel& channel, SentenceChannel& sentenceChannel);
+    bool SetSentenceWord( Channel& channel, SentenceChannel& sentenceChannel );
 
-	bool UpdateSentence(Channel& channel);
+    bool UpdateSentence( Channel& channel );
 
-	void InitMouth(int entityIndex, int channelIndex);
-	void CloseMouth(int entityIndex, int channelIndex);
+    void InitMouth( int entityIndex, int channelIndex );
+    void CloseMouth( int entityIndex, int channelIndex );
 
-	void MoveMouth(Channel& channel, const Sound& sound);
-
-private:
-	bool CreateTimeCompressedBuffer(const Channel& channel, SentenceChannel& sentenceChannel, const Sound& sound);
-
-	bool UpdateSentencePlayback(Channel& channel, SentenceChannel& sentenceChannel);
-
-	void MoveMouth(Channel& channel, SentenceChannel& sentenceChannel);
+    void MoveMouth( Channel& channel, const Sound& sound );
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	SoundCache* const m_SoundCache;
+    bool CreateTimeCompressedBuffer( const Channel& channel, SentenceChannel& sentenceChannel, const Sound& sound );
 
-	std::vector<Sentence> m_Sentences;
+    bool UpdateSentencePlayback( Channel& channel, SentenceChannel& sentenceChannel );
+
+    void MoveMouth( Channel& channel, SentenceChannel& sentenceChannel );
+
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
+    SoundCache* const m_SoundCache;
+
+    std::vector<Sentence> m_Sentences;
 };
 }

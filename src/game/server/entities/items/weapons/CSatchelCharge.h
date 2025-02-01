@@ -19,27 +19,27 @@
 
 class CSatchelCharge : public CGrenade
 {
-	DECLARE_CLASS(CSatchelCharge, CGrenade);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CSatchelCharge, CGrenade );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	void BounceSound() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    void BounceSound() override;
 
-	void SatchelSlide(CBaseEntity* pOther);
-	void SatchelThink();
+    void SatchelSlide( CBaseEntity* pOther );
+    void SatchelThink();
 
 public:
 	/**
 	 *	@brief do whatever it is we do to an orphaned satchel when we don't want it in the world anymore.
 	 */
-	void Deactivate();
+    void Deactivate();
 };
 
 /**
  *	@brief removes all satchels owned by the provided player. Should only be used upon death.
  *	Made this global on purpose.
  */
-void DeactivateSatchels(CBasePlayer* pOwner);
+void DeactivateSatchels( CBasePlayer* pOwner );

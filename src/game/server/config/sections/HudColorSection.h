@@ -29,33 +29,33 @@
 class HudColorSection final : public GameConfigSection<ServerConfigContext>
 {
 public:
-	explicit HudColorSection() = default;
+    explicit HudColorSection() = default;
 
-	std::string_view GetName() const override final { return "HudColor"; }
+    std::string_view GetName() const override final { return "HudColor"; }
 
-	json::value_t GetType() const override final { return json::value_t::string; }
+    json::value_t GetType() const override final { return json::value_t::string; }
 
-	std::string GetSchema() const override final
-	{
-		return fmt::format(R"("pattern": "^\\d\\d?\\d? \\d\\d?\\d? \\d\\d?\\d?$")");
-	}
+    std::string GetSchema() const override final
+    {
+        return fmt::format( R"("pattern": "^\\d\\d?\\d? \\d\\d?\\d? \\d\\d?\\d?$")" );
+    }
 
-	bool TryParse(GameConfigContext<ServerConfigContext>& context) const override final
-	{
-		const auto color = context.Input.get<std::string>();
+    bool TryParse( GameConfigContext<ServerConfigContext>& context ) const override final
+    {
+        const auto color = context.Input.get<std::string>();
 
-		if (!color.empty())
-		{
-			Vector colorValue{255, 255, 255};
+        if( !color.empty() )
+        {
+            Vector colorValue{255, 255, 255};
 
-			UTIL_StringToVector(colorValue, color);
+            UTIL_StringToVector( colorValue, color );
 
-			context.Data.State.m_HudColor = {
-				static_cast<std::uint8_t>(colorValue.x),
-				static_cast<std::uint8_t>(colorValue.y),
-				static_cast<std::uint8_t>(colorValue.z)};
-		}
+            context.Data.State.m_HudColor = {
+                static_cast<std::uint8_t>( colorValue.x ),
+                static_cast<std::uint8_t>( colorValue.y ),
+                static_cast<std::uint8_t>( colorValue.z )};
+        }
 
-		return true;
-	}
+        return true;
+    }
 };

@@ -36,94 +36,94 @@
 // #define PATH_SPARKLE_DEBUG		1	// This makes a particle effect around path_track entities for debugging
 class CPathTrack : public CPointEntity
 {
-	DECLARE_CLASS(CPathTrack, CPointEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CPathTrack, CPointEntity );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	void Activate() override;
-	bool KeyValue(KeyValueData* pkvd) override;
+    void Spawn() override;
+    void Activate() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void SetPrevious(CPathTrack* pprevious);
-	void Link();
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
+    void SetPrevious( CPathTrack* pprevious );
+    void Link();
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
-	CPathTrack* ValidPath(CPathTrack* ppath, bool testFlag); // Returns ppath if enabled, nullptr otherwise
-	void Project(CPathTrack* pstart, CPathTrack* pend, Vector* origin, float dist);
+    CPathTrack* ValidPath( CPathTrack* ppath, bool testFlag ); // Returns ppath if enabled, nullptr otherwise
+    void Project( CPathTrack* pstart, CPathTrack* pend, Vector* origin, float dist );
 
-	static CPathTrack* Instance(CBaseEntity* pent);
+    static CPathTrack* Instance( CBaseEntity* pent );
 
-	CPathTrack* LookAhead(Vector* origin, float dist, bool move);
-	CPathTrack* Nearest(Vector origin);
+    CPathTrack* LookAhead( Vector* origin, float dist, bool move );
+    CPathTrack* Nearest( Vector origin );
 
-	CPathTrack* GetNext();
-	CPathTrack* GetPrevious();
+    CPathTrack* GetNext();
+    CPathTrack* GetPrevious();
 
 #if PATH_SPARKLE_DEBUG
-	void Sparkle();
+    void Sparkle();
 #endif
 
-	float m_length;
-	string_t m_altName;
-	CPathTrack* m_pnext;
-	CPathTrack* m_pprevious;
-	CPathTrack* m_paltpath;
+    float m_length;
+    string_t m_altName;
+    CPathTrack* m_pnext;
+    CPathTrack* m_pprevious;
+    CPathTrack* m_paltpath;
 };
 
 class CFuncTrackTrain : public CBaseEntity
 {
-	DECLARE_CLASS(CFuncTrackTrain, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CFuncTrackTrain, CBaseEntity );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	void Precache() override;
+    void Spawn() override;
+    void Precache() override;
 
-	void Blocked(CBaseEntity* pOther) override;
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	bool KeyValue(KeyValueData* pkvd) override;
+    void Blocked( CBaseEntity* pOther ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void Next();
-	void Find();
-	void NearestPath();
-	void DeadEnd();
+    void Next();
+    void Find();
+    void NearestPath();
+    void DeadEnd();
 
-	void NextThink(float thinkTime, bool alwaysThink);
+    void NextThink( float thinkTime, bool alwaysThink );
 
-	void SetTrack(CPathTrack* track) { m_ppath = track->Nearest(pev->origin); }
-	void SetControls(CBaseEntity* controls);
-	bool OnControls(CBaseEntity* controller) override;
+    void SetTrack( CPathTrack* track ) { m_ppath = track->Nearest( pev->origin ); }
+    void SetControls( CBaseEntity* controls );
+    bool OnControls( CBaseEntity* controller ) override;
 
-	void StopTrainSound();
+    void StopTrainSound();
 
 	/**
 	 *	@brief update pitch based on speed, start sound if not playing
 	 *	NOTE: when train goes through transition, m_soundPlaying should go to 0,
 	 *	which will cause the looped sound to restart.
 	 */
-	void UpdateTrainSound();
+    void UpdateTrainSound();
 
-	static CFuncTrackTrain* Instance(CBaseEntity* pent);
+    static CFuncTrackTrain* Instance( CBaseEntity* pent );
 
-	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
+    int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ) | FCAP_DIRECTIONAL_USE; }
 
-	void OverrideReset() override;
+    void OverrideReset() override;
 
-	CPathTrack* m_ppath;
-	float m_length;
-	float m_height;
-	float m_speed;
-	float m_dir;
-	float m_startSpeed;
-	Vector m_controlMins;
-	Vector m_controlMaxs;
-	bool m_soundPlaying;
-	string_t m_sounds;
-	float m_flVolume;
-	float m_flBank;
-	float m_oldSpeed;
+    CPathTrack* m_ppath;
+    float m_length;
+    float m_height;
+    float m_speed;
+    float m_dir;
+    float m_startSpeed;
+    Vector m_controlMins;
+    Vector m_controlMaxs;
+    bool m_soundPlaying;
+    string_t m_sounds;
+    float m_flVolume;
+    float m_flBank;
+    float m_oldSpeed;
 
 private:
-	float m_CachedPitch;
-	float m_LastPlayerJoinTimeCheck;
+    float m_CachedPitch;
+    float m_LastPlayerJoinTimeCheck;
 };

@@ -28,23 +28,23 @@ extern playermove_t* pmove;
 #define BOX_GAP 0.0f
 
 static int PM_boxpnt[6][4] =
-	{
-		{0, 4, 6, 2}, // +X
-		{0, 1, 5, 4}, // +Y
-		{0, 2, 3, 1}, // +Z
-		{7, 5, 1, 3}, // -X
-		{7, 3, 2, 6}, // -Y
-		{7, 6, 4, 5}, // -Z
+    {
+        {0, 4, 6, 2}, // +X
+        {0, 1, 5, 4}, // +Y
+        {0, 2, 3, 1}, // +Z
+        {7, 5, 1, 3}, // -X
+        {7, 3, 2, 6}, // -Y
+        {7, 6, 4, 5}, // -Z
 };
 
 void PM_ShowClipBox()
 {
-#if defined(_DEBUG)
-	Vector org;
-	Vector offset = {0, 0, 0};
+#if defined( _DEBUG )
+    Vector org;
+    Vector offset = {0, 0, 0};
 
-	if (0 == pmove->runfuncs)
-		return;
+    if( 0 == pmove->runfuncs )
+        return;
 
 	// More debugging, draw the particle bbox for player and for the entity we are looking directly at.
 	//  aslo prints entity info to the console overlay.
@@ -54,23 +54,23 @@ void PM_ShowClipBox()
 	// Draw entity in center of view
 	// Also draws the normal to the clip plane that intersects our movement ray.  Leaves a particle
 	//  trail at the intersection point.
-	PM_ViewEntity();
+    PM_ViewEntity();
 
-	org = pmove->origin;
+    org = pmove->origin;
 
-	if (0 != pmove->server)
-	{
-		org = org + offset;
-	}
-	else
-	{
-		org = org - offset;
-	}
+    if( 0 != pmove->server )
+    {
+        org = org + offset;
+    }
+    else
+    {
+        org = org - offset;
+    }
 
 	// Show our BBOX in particles.
-	PM_DrawBBox(pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], org, 0 != pmove->server ? 132 : 0, 0.1);
+    PM_DrawBBox( pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], org, 0 != pmove->server ? 132 : 0, 0.1 );
 
-	PM_ParticleLine(org, org, 0 != pmove->server ? 132 : 0, 0.1, 5.0);
+    PM_ParticleLine( org, org, 0 != pmove->server ? 132 : 0, 0.1, 5.0 );
 	/*
 		{
 			int i;
@@ -92,29 +92,29 @@ PM_ParticleLine(Vector start, Vector end, int color, float life)
 
 ================
 */
-void PM_ParticleLine(Vector start, Vector end, int pcolor, float life, float vert)
+void PM_ParticleLine( Vector start, Vector end, int pcolor, float life, float vert )
 {
-	float linestep = 2.0f;
-	float curdist;
-	float len;
-	Vector curpos;
-	Vector diff;
-	int i;
+    float linestep = 2.0f;
+    float curdist;
+    float len;
+    Vector curpos;
+    Vector diff;
+    int i;
 	// Determine distance;
 
-	diff = end - start;
+    diff = end - start;
 
-	len = VectorNormalize(diff);
+    len = VectorNormalize( diff );
 
-	curdist = 0;
-	while (curdist <= len)
-	{
-		for (i = 0; i < 3; i++)
-			curpos[i] = start[i] + curdist * diff[i];
+    curdist = 0;
+    while( curdist <= len )
+    {
+        for( i = 0; i < 3; i++ )
+            curpos[i] = start[i] + curdist * diff[i];
 
-		pmove->PM_Particle(curpos, pcolor, life, 0, vert);
-		curdist += linestep;
-	}
+        pmove->PM_Particle( curpos, pcolor, life, 0, vert );
+        curdist += linestep;
+    }
 }
 
 /*
@@ -123,12 +123,12 @@ PM_DrawRectangle(Vector tl, Vector br)
 
 ================
 */
-void PM_DrawRectangle(Vector tl, Vector bl, Vector tr, Vector br, int pcolor, float life)
+void PM_DrawRectangle( Vector tl, Vector bl, Vector tr, Vector br, int pcolor, float life )
 {
-	PM_ParticleLine(tl, bl, pcolor, life, 0);
-	PM_ParticleLine(bl, br, pcolor, life, 0);
-	PM_ParticleLine(br, tr, pcolor, life, 0);
-	PM_ParticleLine(tr, tl, pcolor, life, 0);
+    PM_ParticleLine( tl, bl, pcolor, life, 0 );
+    PM_ParticleLine( bl, br, pcolor, life, 0 );
+    PM_ParticleLine( br, tr, pcolor, life, 0 );
+    PM_ParticleLine( tr, tl, pcolor, life, 0 );
 }
 
 /*
@@ -137,87 +137,87 @@ PM_DrawPhysEntBBox(int num)
 
 ================
 */
-void PM_DrawPhysEntBBox(int num, int pcolor, float life)
+void PM_DrawPhysEntBBox( int num, int pcolor, float life )
 {
-	physent_t* pe;
-	Vector org;
-	int j;
-	Vector tmp;
-	Vector p[8];
-	float gap = BOX_GAP;
-	Vector modelmins, modelmaxs;
+    physent_t* pe;
+    Vector org;
+    int j;
+    Vector tmp;
+    Vector p[8];
+    float gap = BOX_GAP;
+    Vector modelmins, modelmaxs;
 
-	if (num >= pmove->numphysent ||
-		num <= 0)
-		return;
+    if( num >= pmove->numphysent ||
+        num <= 0 )
+        return;
 
-	pe = &pmove->physents[num];
+    pe = &pmove->physents[num];
 
-	if (pe->model)
-	{
-		org = pe->origin;
+    if( pe->model )
+    {
+        org = pe->origin;
 
-		pmove->PM_GetModelBounds(pe->model, modelmins, modelmaxs);
-		for (j = 0; j < 8; j++)
-		{
-			tmp[0] = (j & 1) != 0 ? modelmins[0] - gap : modelmaxs[0] + gap;
-			tmp[1] = (j & 2) != 0 ? modelmins[1] - gap : modelmaxs[1] + gap;
-			tmp[2] = (j & 4) != 0 ? modelmins[2] - gap : modelmaxs[2] + gap;
+        pmove->PM_GetModelBounds( pe->model, modelmins, modelmaxs );
+        for( j = 0; j < 8; j++ )
+        {
+            tmp[0] = ( j & 1 ) != 0 ? modelmins[0] - gap : modelmaxs[0] + gap;
+            tmp[1] = ( j & 2 ) != 0 ? modelmins[1] - gap : modelmaxs[1] + gap;
+            tmp[2] = ( j & 4 ) != 0 ? modelmins[2] - gap : modelmaxs[2] + gap;
 
-			p[j] = tmp;
-		}
+            p[j] = tmp;
+        }
 
 		// If the bbox should be rotated, do that
-		if (pe->angles != g_vecZero)
-		{
-			Vector forward, right, up;
+        if( pe->angles != g_vecZero )
+        {
+            Vector forward, right, up;
 
-			AngleVectorsTranspose(pe->angles, &forward, &right, &up);
-			for (j = 0; j < 8; j++)
-			{
-				tmp = p[j];
-				p[j][0] = DotProduct(tmp, forward);
-				p[j][1] = DotProduct(tmp, right);
-				p[j][2] = DotProduct(tmp, up);
-			}
-		}
+            AngleVectorsTranspose( pe->angles, &forward, &right, &up );
+            for( j = 0; j < 8; j++ )
+            {
+                tmp = p[j];
+                p[j][0] = DotProduct( tmp, forward );
+                p[j][1] = DotProduct( tmp, right );
+                p[j][2] = DotProduct( tmp, up );
+            }
+        }
 
 		// Offset by entity origin, if any.
-		for (j = 0; j < 8; j++)
-			p[j] = p[j] + org;
+        for( j = 0; j < 8; j++ )
+            p[j] = p[j] + org;
 
-		for (j = 0; j < 6; j++)
-		{
-			PM_DrawRectangle(
-				p[PM_boxpnt[j][1]],
-				p[PM_boxpnt[j][0]],
-				p[PM_boxpnt[j][2]],
-				p[PM_boxpnt[j][3]],
-				pcolor, life);
-		}
-	}
-	else
-	{
-		for (j = 0; j < 8; j++)
-		{
-			tmp[0] = (j & 1) != 0 ? pe->mins[0] : pe->maxs[0];
-			tmp[1] = (j & 2) != 0 ? pe->mins[1] : pe->maxs[1];
-			tmp[2] = (j & 4) != 0 ? pe->mins[2] : pe->maxs[2];
+        for( j = 0; j < 6; j++ )
+        {
+            PM_DrawRectangle( 
+                p[PM_boxpnt[j][1]],
+                p[PM_boxpnt[j][0]],
+                p[PM_boxpnt[j][2]],
+                p[PM_boxpnt[j][3]],
+                pcolor, life );
+        }
+    }
+    else
+    {
+        for( j = 0; j < 8; j++ )
+        {
+            tmp[0] = ( j & 1 ) != 0 ? pe->mins[0] : pe->maxs[0];
+            tmp[1] = ( j & 2 ) != 0 ? pe->mins[1] : pe->maxs[1];
+            tmp[2] = ( j & 4 ) != 0 ? pe->mins[2] : pe->maxs[2];
 
-			tmp = tmp + pe->origin;
-			p[j] = tmp;
-		}
+            tmp = tmp + pe->origin;
+            p[j] = tmp;
+        }
 
-		for (j = 0; j < 6; j++)
-		{
-			PM_DrawRectangle(
-				p[PM_boxpnt[j][1]],
-				p[PM_boxpnt[j][0]],
-				p[PM_boxpnt[j][2]],
-				p[PM_boxpnt[j][3]],
-				pcolor, life);
-		}
-	}
+        for( j = 0; j < 6; j++ )
+        {
+            PM_DrawRectangle( 
+                p[PM_boxpnt[j][1]],
+                p[PM_boxpnt[j][0]],
+                p[PM_boxpnt[j][2]],
+                p[PM_boxpnt[j][3]],
+                pcolor, life );
+        }
+    }
 }
 
 /*
@@ -226,33 +226,33 @@ PM_DrawBBox(Vector mins, Vector maxs, Vector origin, int pcolor, float life)
 
 ================
 */
-void PM_DrawBBox(Vector mins, Vector maxs, Vector origin, int pcolor, float life)
+void PM_DrawBBox( Vector mins, Vector maxs, Vector origin, int pcolor, float life )
 {
-	int j;
+    int j;
 
-	Vector tmp;
-	Vector p[8];
-	float gap = BOX_GAP;
+    Vector tmp;
+    Vector p[8];
+    float gap = BOX_GAP;
 
-	for (j = 0; j < 8; j++)
-	{
-		tmp[0] = (j & 1) != 0 ? mins[0] - gap : maxs[0] + gap;
-		tmp[1] = (j & 2) != 0 ? mins[1] - gap : maxs[1] + gap;
-		tmp[2] = (j & 4) != 0 ? mins[2] - gap : maxs[2] + gap;
+    for( j = 0; j < 8; j++ )
+    {
+        tmp[0] = ( j & 1 ) != 0 ? mins[0] - gap : maxs[0] + gap;
+        tmp[1] = ( j & 2 ) != 0 ? mins[1] - gap : maxs[1] + gap;
+        tmp[2] = ( j & 4 ) != 0 ? mins[2] - gap : maxs[2] + gap;
 
-		tmp = tmp + origin;
-		p[j] = tmp;
-	}
+        tmp = tmp + origin;
+        p[j] = tmp;
+    }
 
-	for (j = 0; j < 6; j++)
-	{
-		PM_DrawRectangle(
-			p[PM_boxpnt[j][1]],
-			p[PM_boxpnt[j][0]],
-			p[PM_boxpnt[j][2]],
-			p[PM_boxpnt[j][3]],
-			pcolor, life);
-	}
+    for( j = 0; j < 6; j++ )
+    {
+        PM_DrawRectangle( 
+            p[PM_boxpnt[j][1]],
+            p[PM_boxpnt[j][0]],
+            p[PM_boxpnt[j][2]],
+            p[PM_boxpnt[j][3]],
+            pcolor, life );
+    }
 }
 
 /*
@@ -267,43 +267,43 @@ Tries to shoot a ray out by about 128 units.
 */
 void PM_ViewEntity()
 {
-	Vector forward, right, up;
-	float raydist = 256.0f;
-	Vector origin;
-	Vector end;
-	int i;
-	pmtrace_t trace;
-	int pcolor = 77;
-	float fup;
+    Vector forward, right, up;
+    float raydist = 256.0f;
+    Vector origin;
+    Vector end;
+    int i;
+    pmtrace_t trace;
+    int pcolor = 77;
+    float fup;
 
 #if 0
-	if (!pm_showclip.value)
-		return;
+    if( !pm_showclip.value )
+        return;
 #endif
 
-	AngleVectors(pmove->angles, &forward, &right, &up); // Determine movement angles
+    AngleVectors( pmove->angles, &forward, &right, &up ); // Determine movement angles
 
-	origin = pmove->origin;
+    origin = pmove->origin;
 
-	fup = 0.5 * (pmove->player_mins[pmove->usehull][2] + pmove->player_maxs[pmove->usehull][2]);
-	fup += pmove->view_ofs[2];
-	fup -= 4;
+    fup = 0.5 * ( pmove->player_mins[pmove->usehull][2] + pmove->player_maxs[pmove->usehull][2] );
+    fup += pmove->view_ofs[2];
+    fup -= 4;
 
-	for (i = 0; i < 3; i++)
-	{
-		end[i] = origin[i] + raydist * forward[i];
-	}
+    for( i = 0; i < 3; i++ )
+    {
+        end[i] = origin[i] + raydist * forward[i];
+    }
 
-	trace = pmove->PM_PlayerTrace(origin, end, PM_STUDIO_BOX, -1);
+    trace = pmove->PM_PlayerTrace( origin, end, PM_STUDIO_BOX, -1 );
 
-	if (trace.ent > 0) // Not the world
-	{
-		pcolor = 111;
-	}
+    if( trace.ent > 0 ) // Not the world
+    {
+        pcolor = 111;
+    }
 
 	// Draw the hull or bbox.
-	if (trace.ent > 0)
-	{
-		PM_DrawPhysEntBBox(trace.ent, pcolor, 0.3f);
-	}
+    if( trace.ent > 0 )
+    {
+        PM_DrawPhysEntBBox( trace.ent, pcolor, 0.3f );
+    }
 }

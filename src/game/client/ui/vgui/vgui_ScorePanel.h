@@ -35,64 +35,64 @@ using namespace vgui;
 class CTextImage2 : public Image
 {
 public:
-	CTextImage2()
-	{
-		_image[0] = new TextImage("");
-		_image[1] = new TextImage("");
-	}
+    CTextImage2()
+    {
+        _image[0] = new TextImage( "" );
+        _image[1] = new TextImage( "" );
+    }
 
-	~CTextImage2()
-	{
-		delete _image[0];
-		delete _image[1];
-	}
+    ~CTextImage2()
+    {
+        delete _image[0];
+        delete _image[1];
+    }
 
-	TextImage* GetImage(int image)
-	{
-		return _image[image];
-	}
+    TextImage* GetImage( int image )
+    {
+        return _image[image];
+    }
 
-	void getSize(int& wide, int& tall) override
-	{
-		int w1, w2, t1, t2;
-		_image[0]->getTextSize(w1, t1);
-		_image[1]->getTextSize(w2, t2);
+    void getSize( int& wide, int& tall ) override
+    {
+        int w1, w2, t1, t2;
+        _image[0]->getTextSize( w1, t1 );
+        _image[1]->getTextSize( w2, t2 );
 
-		wide = w1 + w2;
-		tall = std::max(t1, t2);
-		setSize(wide, tall);
-	}
+        wide = w1 + w2;
+        tall = std::max( t1, t2 );
+        setSize( wide, tall );
+    }
 
-	void doPaint(Panel* panel) override
-	{
-		_image[0]->doPaint(panel);
-		_image[1]->doPaint(panel);
-	}
+    void doPaint( Panel* panel ) override
+    {
+        _image[0]->doPaint( panel );
+        _image[1]->doPaint( panel );
+    }
 
-	void setPos(int x, int y) override
-	{
-		_image[0]->setPos(x, y);
+    void setPos( int x, int y ) override
+    {
+        _image[0]->setPos( x, y );
 
-		int swide, stall;
-		_image[0]->getSize(swide, stall);
+        int swide, stall;
+        _image[0]->getSize( swide, stall );
 
-		int wide, tall;
-		_image[1]->getSize(wide, tall);
-		_image[1]->setPos(x + wide, y + (stall * 0.9) - tall);
-	}
+        int wide, tall;
+        _image[1]->getSize( wide, tall );
+        _image[1]->setPos( x + wide, y + ( stall * 0.9 ) - tall );
+    }
 
-	void setColor(Color color) override
-	{
-		_image[0]->setColor(color);
-	}
+    void setColor( Color color ) override
+    {
+        _image[0]->setColor( color );
+    }
 
-	void setColor2(Color color)
-	{
-		_image[1]->setColor(color);
-	}
+    void setColor2( Color color )
+    {
+        _image[1]->setColor( color );
+    }
 
 private:
-	TextImage* _image[2];
+    TextImage* _image[2];
 };
 
 //-----------------------------------------------------------------------------
@@ -101,120 +101,120 @@ private:
 class CLabelHeader : public Label
 {
 public:
-	CLabelHeader()
-		: Label("")
-	{
-		_dualImage = new CTextImage2();
-		_dualImage->setColor2(Color(255, 170, 0, 0));
-		_row = -2;
-		_useFgColorAsImageColor = true;
-		_offset[0] = 0;
-		_offset[1] = 0;
-	}
+    CLabelHeader()
+        : Label( "" )
+    {
+        _dualImage = new CTextImage2();
+        _dualImage->setColor2( Color( 255, 170, 0, 0 ) );
+        _row = -2;
+        _useFgColorAsImageColor = true;
+        _offset[0] = 0;
+        _offset[1] = 0;
+    }
 
-	~CLabelHeader()
-	{
-		delete _dualImage;
-	}
+    ~CLabelHeader()
+    {
+        delete _dualImage;
+    }
 
-	void setRow(int row)
-	{
-		_row = row;
-	}
+    void setRow( int row )
+    {
+        _row = row;
+    }
 
-	void setFgColorAsImageColor(bool state)
-	{
-		_useFgColorAsImageColor = state;
-	}
+    void setFgColorAsImageColor( bool state )
+    {
+        _useFgColorAsImageColor = state;
+    }
 
-	void setText(int textBufferLen, const char* text) override
-	{
-		_dualImage->GetImage(0)->setText(text);
+    void setText( int textBufferLen, const char* text ) override
+    {
+        _dualImage->GetImage( 0 )->setText( text );
 
 		// calculate the text size
-		Font* font = _dualImage->GetImage(0)->getFont();
-		_gap = 0;
-		for (const char* ch = text; *ch != 0; ch++)
-		{
-			int a, b, c;
-			font->getCharABCwide(*ch, a, b, c);
-			_gap += (a + b + c);
-		}
+        Font* font = _dualImage->GetImage( 0 )->getFont();
+        _gap = 0;
+        for( const char* ch = text; *ch != 0; ch++ )
+        {
+            int a, b, c;
+            font->getCharABCwide( *ch, a, b, c );
+            _gap += ( a + b + c );
+        }
 
-		_gap += XRES(5);
-	}
+        _gap += XRES( 5 );
+    }
 
-	virtual void setText(const char* text)
-	{
+    virtual void setText( const char* text )
+    {
 		// strip any non-alnum characters from the end
-		char buf[512];
-		strcpy(buf, text);
+        char buf[512];
+        strcpy( buf, text );
 
-		int len = strlen(buf);
-		while (len && isspace(buf[--len]))
-		{
-			buf[len] = 0;
-		}
+        int len = strlen( buf );
+        while( len && isspace( buf[--len] ) )
+        {
+            buf[len] = 0;
+        }
 
-		CLabelHeader::setText(0, buf);
-	}
+        CLabelHeader::setText( 0, buf );
+    }
 
-	void setText2(const char* text)
-	{
-		_dualImage->GetImage(1)->setText(text);
-	}
+    void setText2( const char* text )
+    {
+        _dualImage->GetImage( 1 )->setText( text );
+    }
 
-	void getTextSize(int& wide, int& tall) override
-	{
-		_dualImage->getSize(wide, tall);
-	}
+    void getTextSize( int& wide, int& tall ) override
+    {
+        _dualImage->getSize( wide, tall );
+    }
 
-	void setFgColor(int r, int g, int b, int a) override
-	{
-		Label::setFgColor(r, g, b, a);
-		Color color(r, g, b, a);
-		_dualImage->setColor(color);
-		_dualImage->setColor2(color);
-		repaint();
-	}
+    void setFgColor( int r, int g, int b, int a ) override
+    {
+        Label::setFgColor( r, g, b, a );
+        Color color( r, g, b, a );
+        _dualImage->setColor( color );
+        _dualImage->setColor2( color );
+        repaint();
+    }
 
-	void setFgColor(Scheme::SchemeColor sc) override
-	{
-		int r, g, b, a;
-		Label::setFgColor(sc);
-		Label::getFgColor(r, g, b, a);
+    void setFgColor( Scheme::SchemeColor sc ) override
+    {
+        int r, g, b, a;
+        Label::setFgColor( sc );
+        Label::getFgColor( r, g, b, a );
 
 		// Call the r,g,b,a version so it sets the color in the dualImage..
-		setFgColor(r, g, b, a);
-	}
+        setFgColor( r, g, b, a );
+    }
 
-	void setFont(Font* font) override
-	{
-		_dualImage->GetImage(0)->setFont(font);
-	}
+    void setFont( Font* font ) override
+    {
+        _dualImage->GetImage( 0 )->setFont( font );
+    }
 
-	void setFont2(Font* font)
-	{
-		_dualImage->GetImage(1)->setFont(font);
-	}
+    void setFont2( Font* font )
+    {
+        _dualImage->GetImage( 1 )->setFont( font );
+    }
 
 	// this adjust the absolute position of the text after alignment is calculated
-	void setTextOffset(int x, int y)
-	{
-		_offset[0] = x;
-		_offset[1] = y;
-	}
+    void setTextOffset( int x, int y )
+    {
+        _offset[0] = x;
+        _offset[1] = y;
+    }
 
-	void paint() override;
-	void paintBackground() override;
-	void calcAlignment(int iwide, int itall, int& x, int& y);
+    void paint() override;
+    void paintBackground() override;
+    void calcAlignment( int iwide, int itall, int& x, int& y );
 
 private:
-	CTextImage2* _dualImage;
-	int _row;
-	int _gap;
-	int _offset[2];
-	bool _useFgColorAsImageColor;
+    CTextImage2* _dualImage;
+    int _row;
+    int _gap;
+    int _offset[2];
+    bool _useFgColorAsImageColor;
 };
 
 class ScoreTablePanel;
@@ -229,22 +229,22 @@ class ScorePanel : public Panel, public vgui::CDefaultInputSignal
 {
 private:
 	// Default panel implementation doesn't forward mouse messages when there is no cursor and we need them.
-	class HitTestPanel : public Panel
-	{
-	public:
-		void internalMousePressed(MouseCode code) override;
-	};
+    class HitTestPanel : public Panel
+    {
+    public:
+        void internalMousePressed( MouseCode code ) override;
+    };
 
-	enum class TeamType
-	{
-		No = 0,
-		Yes = 1,
-		Spectators = 2,
-		Blank = 3,
-	};
+    enum class TeamType
+    {
+        No = 0,
+        Yes = 1,
+        Spectators = 2,
+        Blank = 3,
+    };
 
 private:
-	Label m_TitleLabel;
+    Label m_TitleLabel;
 
 	// Here is how these controls are arranged hierarchically.
 	// m_HeaderGrid
@@ -254,56 +254,56 @@ private:
 	//     m_PlayerGrid
 	//         m_PlayerEntries
 
-	CGrid m_HeaderGrid;
-	CLabelHeader m_HeaderLabels[NUM_COLUMNS]; // Labels above the
-	CLabelHeader* m_pCurrentHighlightLabel;
-	int m_iHighlightRow;
+    CGrid m_HeaderGrid;
+    CLabelHeader m_HeaderLabels[NUM_COLUMNS]; // Labels above the
+    CLabelHeader* m_pCurrentHighlightLabel;
+    int m_iHighlightRow;
 
-	vgui::CListBox m_PlayerList;
-	CGrid m_PlayerGrids[NUM_ROWS];						 // The grid with player and team info.
-	CLabelHeader m_PlayerEntries[NUM_COLUMNS][NUM_ROWS]; // Labels for the grid entries.
+    vgui::CListBox m_PlayerList;
+    CGrid m_PlayerGrids[NUM_ROWS];                         // The grid with player and team info.
+    CLabelHeader m_PlayerEntries[NUM_COLUMNS][NUM_ROWS]; // Labels for the grid entries.
 
-	ScorePanel::HitTestPanel m_HitTestPanel;
+    ScorePanel::HitTestPanel m_HitTestPanel;
 	// CommandButton* m_pCloseButton;
-	CommandButton* m_pStatsButton;
-	CLabelHeader* GetPlayerEntry(int x, int y) { return &m_PlayerEntries[x][y]; }
+    CommandButton* m_pStatsButton;
+    CLabelHeader* GetPlayerEntry( int x, int y ) { return &m_PlayerEntries[x][y]; }
 
 public:
-	int m_iNumTeams;
-	int m_iPlayerNum;
-	int m_iShowscoresHeld;
+    int m_iNumTeams;
+    int m_iPlayerNum;
+    int m_iShowscoresHeld;
 
-	int m_iRows;
-	int m_iSortedRows[NUM_ROWS];
-	TeamType m_iIsATeam[NUM_ROWS];
-	bool m_bHasBeenSorted[MAX_PLAYERS_HUD];
-	int m_iLastKilledBy;
-	int m_fLastKillTime;
+    int m_iRows;
+    int m_iSortedRows[NUM_ROWS];
+    TeamType m_iIsATeam[NUM_ROWS];
+    bool m_bHasBeenSorted[MAX_PLAYERS_HUD];
+    int m_iLastKilledBy;
+    int m_fLastKillTime;
 
 
 public:
-	ScorePanel(int x, int y, int wide, int tall);
+    ScorePanel( int x, int y, int wide, int tall );
 
-	void Update();
+    void Update();
 
-	void SortTeams();
-	void SortPlayers(TeamType iTeam, char* team);
-	int RebuildTeams();
+    void SortTeams();
+    void SortPlayers( TeamType iTeam, char* team );
+    int RebuildTeams();
 
-	void FillGrid();
+    void FillGrid();
 
-	void DeathMsg(int killer, int victim);
+    void DeathMsg( int killer, int victim );
 
-	void Initialize();
+    void Initialize();
 
-	void Open();
+    void Open();
 
-	void MouseOverCell(int row, int col);
+    void MouseOverCell( int row, int col );
 
 	// InputSignal overrides.
 public:
-	void mousePressed(MouseCode code, Panel* panel) override;
-	void cursorMoved(int x, int y, Panel* panel) override;
+    void mousePressed( MouseCode code, Panel* panel ) override;
+    void cursorMoved( int x, int y, Panel* panel ) override;
 
-	friend class CLabelHeader;
+    friend class CLabelHeader;
 };

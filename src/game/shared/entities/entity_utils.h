@@ -23,10 +23,10 @@ struct edict_t;
  *	@brief Converts an entity pointer to a player pointer, returning nullptr if it isn't a player.
  *	In debug builds the type is checked to make sure it's a player.
  */
-CBasePlayer* ToBasePlayer(CBaseEntity* entity);
+CBasePlayer* ToBasePlayer( CBaseEntity* entity );
 
 /**
  *	@brief Converts an edict to a player pointer, returning nullptr if it isn't a player.
  *	In debug builds the type is checked to make sure it's a player.
  */
-CBasePlayer* ToBasePlayer(edict_t* entity);
+CBasePlayer* ToBasePlayer( edict_t* entity );

@@ -23,11 +23,11 @@ class CBasePlayer;
 class IVoiceGameMgrHelper
 {
 public:
-	virtual ~IVoiceGameMgrHelper() {}
+    virtual ~IVoiceGameMgrHelper() {}
 
 	// Called each frame to determine which players are allowed to hear each other.	This overrides
 	// whatever squelch settings players have.
-	virtual bool CanPlayerHearPlayer(CBasePlayer* pListener, CBasePlayer* pTalker) = 0;
+    virtual bool CanPlayerHearPlayer( CBasePlayer* pListener, CBasePlayer* pTalker ) = 0;
 };
 
 
@@ -35,47 +35,47 @@ public:
 class CVoiceGameMgr
 {
 public:
-	static inline std::shared_ptr<spdlog::logger> Logger;
+    static inline std::shared_ptr<spdlog::logger> Logger;
 
-	CVoiceGameMgr();
-	virtual ~CVoiceGameMgr();
+    CVoiceGameMgr();
+    virtual ~CVoiceGameMgr();
 
-	bool Init(
-		IVoiceGameMgrHelper* m_pHelper,
-		int maxClients);
+    bool Init( 
+        IVoiceGameMgrHelper* m_pHelper,
+        int maxClients );
 
-	void Shutdown();
+    void Shutdown();
 
-	void SetHelper(IVoiceGameMgrHelper* pHelper);
+    void SetHelper( IVoiceGameMgrHelper* pHelper );
 
 	// Updates which players can hear which other players.
 	// If gameplay mode is DM, then only players within the PVS can hear each other.
 	// If gameplay mode is teamplay, then only players on the same team can hear each other.
 	// Player masks are always applied.
-	void Update(double frametime);
+    void Update( double frametime );
 
 	// Called when a new client connects (unsquelches its entity for everyone).
-	void ClientConnected(edict_t* pEdict);
+    void ClientConnected( edict_t* pEdict );
 
 	// Called to determine if the Receiver has muted (blocked) the Sender
 	// Returns true if the receiver has blocked the sender
-	bool PlayerHasBlockedPlayer(CBasePlayer* pReceiver, CBasePlayer* pSender);
+    bool PlayerHasBlockedPlayer( CBasePlayer* pReceiver, CBasePlayer* pSender );
 
 
 private:
 	// Force it to update the client masks.
-	void UpdateMasks();
+    void UpdateMasks();
 
-	std::optional<int> GetAndValidatePlayerIndex(CBasePlayer* player, const char* cmd);
+    std::optional<int> GetAndValidatePlayerIndex( CBasePlayer* player, const char* cmd );
 
 private:
-	int m_msgPlayerVoiceMask;
-	int m_msgRequestState;
+    int m_msgPlayerVoiceMask;
+    int m_msgRequestState;
 
-	IVoiceGameMgrHelper* m_pHelper;
-	int m_nMaxPlayers;
-	double m_UpdateInterval; // How long since the last update.
+    IVoiceGameMgrHelper* m_pHelper;
+    int m_nMaxPlayers;
+    double m_UpdateInterval; // How long since the last update.
 
-	ScopedClientCommand m_VBanCommand;
-	ScopedClientCommand m_VModEnableCommand;
+    ScopedClientCommand m_VBanCommand;
+    ScopedClientCommand m_VModEnableCommand;
 };

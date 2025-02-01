@@ -18,12 +18,12 @@
 
 bool GameConfigSystem::Initialize()
 {
-	m_Logger = g_Logging.CreateLogger("gamecfg");
+    m_Logger = g_Logging.CreateLogger( "gamecfg" );
 
-	return true;
+    return true;
 }
 
 void GameConfigSystem::Shutdown()
 {
-	m_Logger.reset();
+    m_Logger.reset();
 }

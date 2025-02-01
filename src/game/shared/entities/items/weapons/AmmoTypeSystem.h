@@ -24,15 +24,15 @@
 
 struct AmmoType
 {
-	int Id{0};
-	eastl::fixed_string<char, 32> Name;
+    int Id{0};
+    eastl::fixed_string<char, 32> Name;
 
-	int MaximumCapacity{0};
+    int MaximumCapacity{0};
 
 	/**
 	 *	@brief For exhaustible weapons. If provided, and the player does not have this weapon in their inventory yet it will be given to them.
 	 */
-	eastl::fixed_string<char, 32> WeaponName;
+    eastl::fixed_string<char, 32> WeaponName;
 };
 
 /**
@@ -42,27 +42,27 @@ struct AmmoType
 class AmmoTypeSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	const char* GetName() const override { return "AmmoTypes"; }
+    const char* GetName() const override { return "AmmoTypes"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override {}
+    void Shutdown() override {}
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override;
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-	int GetCount() const { return static_cast<std::size_t>(m_AmmoTypes.size()); }
+    int GetCount() const { return static_cast<std::size_t>( m_AmmoTypes.size() ); }
 
-	int IndexOf(std::string_view name) const;
+    int IndexOf( std::string_view name ) const;
 
-	const AmmoType* GetByIndex(int index) const;
+    const AmmoType* GetByIndex( int index ) const;
 
-	const AmmoType* GetByName(std::string_view name) const;
+    const AmmoType* GetByName( std::string_view name ) const;
 
-	int GetMaxCapacity(std::string_view name) const;
+    int GetMaxCapacity( std::string_view name ) const;
 
-	void Clear();
+    void Clear();
 
 	/**
 	 *	@brief Registers a new ammo type.
@@ -71,12 +71,12 @@ public:
 	 *	@param weaponName If specified, this is the name of the weapon to give the player when they get ammo of this type.
 	 *		Used for exhaustible weapons like hand grenades to ensure the player always has the associated weapon.
 	 */
-	int Register(std::string_view name, int maximumCapacity, std::string_view weaponName = {});
+    int Register( std::string_view name, int maximumCapacity, std::string_view weaponName = {} );
 
 private:
 	// Public indices are 1-based, private ones are 0-based.
 	// Store one less than max since index 0 is not used.
-	eastl::fixed_vector<AmmoType, MAX_AMMO_TYPES - 1> m_AmmoTypes;
+    eastl::fixed_vector<AmmoType, MAX_AMMO_TYPES - 1> m_AmmoTypes;
 };
 
 inline AmmoTypeSystem g_AmmoTypes;

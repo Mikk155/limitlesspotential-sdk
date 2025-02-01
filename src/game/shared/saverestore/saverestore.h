@@ -28,123 +28,123 @@ struct SAVERESTOREDATA;
 class CSaveRestoreBuffer
 {
 public:
-	static inline std::shared_ptr<spdlog::logger> Logger;
+    static inline std::shared_ptr<spdlog::logger> Logger;
 
-	CSaveRestoreBuffer(SAVERESTOREDATA& data);
-	~CSaveRestoreBuffer();
+    CSaveRestoreBuffer( SAVERESTOREDATA& data );
+    ~CSaveRestoreBuffer();
 
-	int EntityIndex(const edict_t* pentLookup);
-	int EntityIndex(const CBaseEntity* pEntity);
+    int EntityIndex( const edict_t* pentLookup );
+    int EntityIndex( const CBaseEntity* pEntity );
 
-	int EntityFlags(int entityIndex, int flags) { return EntityFlagsSet(entityIndex, 0); }
-	int EntityFlagsSet(int entityIndex, int flags);
+    int EntityFlags( int entityIndex, int flags ) { return EntityFlagsSet( entityIndex, 0 ); }
+    int EntityFlagsSet( int entityIndex, int flags );
 
-	edict_t* EntityFromIndex(int entityIndex);
+    edict_t* EntityFromIndex( int entityIndex );
 
-	unsigned short TokenHash(const char* pszToken);
+    unsigned short TokenHash( const char* pszToken );
 
-	const SAVERESTOREDATA& GetData() const { return m_data; }
+    const SAVERESTOREDATA& GetData() const { return m_data; }
 
 	// Data is only valid if it's a valid pointer and if it has a token list
-	[[nodiscard]] static bool IsValidSaveRestoreData(SAVERESTOREDATA* data);
+    [[nodiscard]] static bool IsValidSaveRestoreData( SAVERESTOREDATA* data );
 
-	const DataMap* GetCurrentCompleteDataMap() const { return m_CurrentCompleteDataMap; }
+    const DataMap* GetCurrentCompleteDataMap() const { return m_CurrentCompleteDataMap; }
 
-	const DataMap* GetCurrentDataMap() const { return m_CurrentDataMap; }
-
-protected:
-	SAVERESTOREDATA& m_data;
-	void BufferRewind(int size);
-	unsigned int HashString(const char* pszToken);
+    const DataMap* GetCurrentDataMap() const { return m_CurrentDataMap; }
 
 protected:
-	const DataMap* m_CurrentCompleteDataMap{};
-	const DataMap* m_CurrentDataMap{};
+    SAVERESTOREDATA& m_data;
+    void BufferRewind( int size );
+    unsigned int HashString( const char* pszToken );
+
+protected:
+    const DataMap* m_CurrentCompleteDataMap{};
+    const DataMap* m_CurrentDataMap{};
 };
 
 
 class CSave : public CSaveRestoreBuffer
 {
 public:
-	using CSaveRestoreBuffer::CSaveRestoreBuffer;
+    using CSaveRestoreBuffer::CSaveRestoreBuffer;
 
-	bool WriteFields(void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap);
+    bool WriteFields( void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap );
 
-	std::byte* GetWriteAddress();
+    std::byte* GetWriteAddress();
 
-	std::byte* WriteBytes(const std::byte* bytes, std::size_t sizeInBytes);
+    std::byte* WriteBytes( const std::byte* bytes, std::size_t sizeInBytes );
 
-	template <typename T>
-	T* WriteValue(const T& value)
-	{
-		return reinterpret_cast<T*>(WriteBytes(reinterpret_cast<const std::byte*>(&value), sizeof(value)));
-	}
+    template <typename T>
+    T* WriteValue( const T& value )
+    {
+        return reinterpret_cast<T*>( WriteBytes( reinterpret_cast<const std::byte*>( &value ), sizeof( value ) ) );
+    }
 
-	bool HasOverflowed() const;
+    bool HasOverflowed() const;
 
 private:
-	short* WriteHeader(const char* name, short size);
-	void WriteCount(short* destination, int count);
+    short* WriteHeader( const char* name, short size );
+    void WriteCount( short* destination, int count );
 
-	static bool DataEmpty(const std::byte* pdata, int size);
+    static bool DataEmpty( const std::byte* pdata, int size );
 };
 
 struct HEADER
 {
-	unsigned short size;
-	unsigned short token;
-	std::byte* pData;
+    unsigned short size;
+    unsigned short token;
+    std::byte* pData;
 };
 
 class CRestore : public CSaveRestoreBuffer
 {
 public:
-	using CSaveRestoreBuffer::CSaveRestoreBuffer;
+    using CSaveRestoreBuffer::CSaveRestoreBuffer;
 
-	bool ReadFields(void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap);
-	int ReadField(void* baseData, const DataMap& dataMap, const char* fieldName, int startField, std::byte* data, int size);
-	bool Empty();
-	void SetGlobalMode(bool global) { m_global = global; }
+    bool ReadFields( void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap );
+    int ReadField( void* baseData, const DataMap& dataMap, const char* fieldName, int startField, std::byte* data, int size );
+    bool Empty();
+    void SetGlobalMode( bool global ) { m_global = global; }
 
-	bool ShouldPrecache() const { return m_precache; }
+    bool ShouldPrecache() const { return m_precache; }
 
-	void PrecacheMode(bool mode) { m_precache = mode; }
+    void PrecacheMode( bool mode ) { m_precache = mode; }
 
-	const std::byte* GetReadAddress();
+    const std::byte* GetReadAddress();
 
-	void ReadBytes(std::byte* bytes, std::size_t sizeInBytes);
+    void ReadBytes( std::byte* bytes, std::size_t sizeInBytes );
 
-	template <typename T>
-	T ReadValue()
-	{
-		T value{};
-		ReadBytes(reinterpret_cast<std::byte*>(&value), sizeof(value));
-		return value;
-	}
+    template <typename T>
+    T ReadValue()
+    {
+        T value{};
+        ReadBytes( reinterpret_cast<std::byte*>( &value ), sizeof( value ) );
+        return value;
+    }
 
-	bool HasOverflowed() const;
+    bool HasOverflowed() const;
 
 private:
-	std::byte* BufferPointer();
-	void BufferReadBytes(std::byte* pOutput, int size);
+    std::byte* BufferPointer();
+    void BufferReadBytes( std::byte* pOutput, int size );
 
-	template <typename T>
-	T BufferReadValue()
-	{
-		T value{};
-		BufferReadBytes(reinterpret_cast<std::byte*>(&value), sizeof(T));
-		return value;
-	}
+    template <typename T>
+    T BufferReadValue()
+    {
+        T value{};
+        BufferReadBytes( reinterpret_cast<std::byte*>( &value ), sizeof( T ) );
+        return value;
+    }
 
-	void BufferSkipBytes(int bytes);
+    void BufferSkipBytes( int bytes );
 
-	void BufferReadHeader(HEADER& header);
+    void BufferReadHeader( HEADER& header );
 
-	bool m_global = false; // Restoring a global entity?
-	bool m_precache = true;
+    bool m_global = false; // Restoring a global entity?
+    bool m_precache = true;
 
-	std::byte* m_ReadStartAddress{};
-	std::byte* m_ReadAddress{};
-	std::size_t m_ReadSize{};
-	bool m_HasOverflowed = false;
+    std::byte* m_ReadStartAddress{};
+    std::byte* m_ReadAddress{};
+    std::size_t m_ReadSize{};
+    bool m_HasOverflowed = false;
 };

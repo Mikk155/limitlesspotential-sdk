@@ -17,48 +17,48 @@
 
 enum PenguinAnim
 {
-	PENGUIN_IDLE1 = 0,
-	PENGUIN_FIDGETFIT,
-	PENGUIN_FIDGETNIP,
-	PENGUIN_DOWN,
-	PENGUIN_UP,
-	PENGUIN_THROW,
+    PENGUIN_IDLE1 = 0,
+    PENGUIN_FIDGETFIT,
+    PENGUIN_FIDGETNIP,
+    PENGUIN_DOWN,
+    PENGUIN_UP,
+    PENGUIN_THROW,
 };
 
 class CPenguin : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CPenguin, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CPenguin, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
+    void OnCreate() override;
 
-	void Precache() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	bool Deploy() override;
+    bool Deploy() override;
 
-	void Holster() override;
+    void Holster() override;
 
-	void WeaponIdle() override;
+    void WeaponIdle() override;
 
-	void PrimaryAttack() override;
+    void PrimaryAttack() override;
 
-	void SecondaryAttack() override;
+    void SecondaryAttack() override;
 
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	bool m_fJustThrown;
-	unsigned short m_usPenguinFire;
+    bool m_fJustThrown;
+    unsigned short m_usPenguinFire;
 };

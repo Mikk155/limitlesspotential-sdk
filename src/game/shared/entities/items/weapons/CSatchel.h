@@ -19,55 +19,55 @@
 
 enum satchel_e
 {
-	SATCHEL_IDLE1 = 0,
-	SATCHEL_FIDGET1,
-	SATCHEL_DRAW,
-	SATCHEL_DROP
+    SATCHEL_IDLE1 = 0,
+    SATCHEL_FIDGET1,
+    SATCHEL_DRAW,
+    SATCHEL_DROP
 };
 
 enum satchel_radio_e
 {
-	SATCHEL_RADIO_IDLE1 = 0,
-	SATCHEL_RADIO_FIDGET1,
-	SATCHEL_RADIO_DRAW,
-	SATCHEL_RADIO_FIRE,
-	SATCHEL_RADIO_HOLSTER
+    SATCHEL_RADIO_IDLE1 = 0,
+    SATCHEL_RADIO_FIDGET1,
+    SATCHEL_RADIO_DRAW,
+    SATCHEL_RADIO_FIRE,
+    SATCHEL_RADIO_HOLSTER
 };
 
 class CSatchel : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CSatchel, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CSatchel, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void AddToPlayer(CBasePlayer* pPlayer) override;
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool AddDuplicate(CBasePlayerWeapon* original) override;
-	bool CanDeploy() override;
-	bool Deploy() override;
-	bool IsUseable() override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void AddToPlayer( CBasePlayer* pPlayer ) override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool AddDuplicate( CBasePlayerWeapon* original ) override;
+    bool CanDeploy() override;
+    bool Deploy() override;
+    bool IsUseable() override;
 
-	void Holster() override;
-	void WeaponIdle() override;
-	void Throw();
+    void Holster() override;
+    void WeaponIdle() override;
+    void Throw();
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	void GetWeaponData(weapon_data_t& data) override;
+    void GetWeaponData( weapon_data_t& data ) override;
 
-	void SetWeaponData(const weapon_data_t& data) override;
+    void SetWeaponData( const weapon_data_t& data ) override;
 
 private:
-	int m_chargeReady;
+    int m_chargeReady;
 };

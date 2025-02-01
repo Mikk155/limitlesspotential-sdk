@@ -29,64 +29,64 @@ struct cvar_t;
 class ClientLibrary final : public GameLibrary
 {
 public:
-	ClientLibrary() = default;
-	~ClientLibrary() = default;
+    ClientLibrary() = default;
+    ~ClientLibrary() = default;
 
-	ClientLibrary(const ClientLibrary&) = delete;
-	ClientLibrary& operator=(const ClientLibrary&) = delete;
-	ClientLibrary(ClientLibrary&&) = delete;
-	ClientLibrary& operator=(ClientLibrary&&) = delete;
+    ClientLibrary( const ClientLibrary& ) = delete;
+    ClientLibrary& operator=( const ClientLibrary& ) = delete;
+    ClientLibrary( ClientLibrary&& ) = delete;
+    ClientLibrary& operator=( ClientLibrary&& ) = delete;
 
-	bool Initialize() override;
+    bool Initialize() override;
 
 	/**
 	 *	@brief Called when the engine finishes up client initialization.
 	 */
-	void HudInit();
+    void HudInit();
 
 	/**
 	 *	@brief Called whenever the client connects to a server.
 	 */
-	void VidInit();
+    void VidInit();
 
-	void PostInitialize();
+    void PostInitialize();
 
-	void ClientActivated();
+    void ClientActivated();
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	void RunFrame() override;
+    void RunFrame() override;
 
-	void OnUserMessageReceived();
+    void OnUserMessageReceived();
 
 	/**
 	 *	@brief Checks if the network data file needs loading.
 	 *	@details Should be called if it is possible for networked data to be accessed before the file is loaded.
 	 *	In practice this means user messages that use such data.
 	 */
-	void CheckNetworkDataFile();
+    void CheckNetworkDataFile();
 
 protected:
-	void AddGameSystems() override;
+    void AddGameSystems() override;
 
 private:
-	SDL_Window* FindWindow();
+    SDL_Window* FindWindow();
 
-	void AddCheatCommands();
+    void AddCheatCommands();
 
 private:
-	bool m_IsConnected = false;
-	float m_ConnectionTime = 0;
-	netadr_t m_ServerAddress;
-	Filename m_MapName;
-	Filename m_BaseMapName;
+    bool m_IsConnected = false;
+    float m_ConnectionTime = 0;
+    netadr_t m_ServerAddress;
+    Filename m_MapName;
+    Filename m_BaseMapName;
 
-	Uint32 m_WindowId = 0;
+    Uint32 m_WindowId = 0;
 
-	cvar_t* m_AllowDownload{};
+    cvar_t* m_AllowDownload{};
 
-	bool m_Activated{false};
-	bool m_NetworkDataFileLoaded{false};
+    bool m_Activated{false};
+    bool m_NetworkDataFileLoaded{false};
 };
 
 inline ClientLibrary g_Client;

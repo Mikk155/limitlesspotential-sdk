@@ -23,64 +23,64 @@ class CRopeSample;
  */
 class CRopeSegment : public CBaseAnimating
 {
-	DECLARE_CLASS(CRopeSegment, CBaseAnimating);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CRopeSegment, CBaseAnimating );
+    DECLARE_DATAMAP();
 
 public:
-	CRopeSegment();
+    CRopeSegment();
 
-	void Precache() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void Think() override;
+    void Think() override;
 
-	void Touch(CBaseEntity* pOther) override;
+    void Touch( CBaseEntity* pOther ) override;
 
-	static CRopeSegment* CreateSegment(CRopeSample* pSample, string_t iszModelName);
+    static CRopeSegment* CreateSegment( CRopeSample* pSample, string_t iszModelName );
 
-	CRopeSample* GetSample() { return m_pSample; }
+    CRopeSample* GetSample() { return m_pSample; }
 
 	/**
 	 *	Applies external force to the segment.
 	 *	@param vecForce Force.
 	 */
-	void ApplyExternalForce(const Vector& vecForce);
+    void ApplyExternalForce( const Vector& vecForce );
 
 	/**
 	 *	Resets the mass to the default value.
 	 */
-	void SetMassToDefault();
+    void SetMassToDefault();
 
 	/**
 	 *	Sets the default mass.
 	 *	@param flDefaultMass Mass.
 	 */
-	void SetDefaultMass(const float flDefaultMass);
+    void SetDefaultMass( const float flDefaultMass );
 
 	/**
 	 *	Sets the mass.
 	 *	@param flMass Mass.
 	 */
-	void SetMass(const float flMass);
+    void SetMass( const float flMass );
 
 	/**
 	 *	Sets whether the segment should cause damage on touch.
 	 *	@param bCauseDamage Whether to cause damage.
 	 */
-	void SetCauseDamageOnTouch(const bool bCauseDamage);
+    void SetCauseDamageOnTouch( const bool bCauseDamage );
 
 	/**
 	 *	Sets whether the segment can be grabbed.
 	 *	@param bCanBeGrabbed Whether the segment can be grabbed.
 	 */
-	void SetCanBeGrabbed(const bool bCanBeGrabbed);
+    void SetCanBeGrabbed( const bool bCanBeGrabbed );
 
 private:
-	CRopeSample* m_pSample;
-	string_t m_iszModelName;
-	float m_flDefaultMass;
-	bool m_bCauseDamage;
-	bool m_bCanBeGrabbed;
-	float m_LastDamageTime{0};
+    CRopeSample* m_pSample;
+    string_t m_iszModelName;
+    float m_flDefaultMass;
+    bool m_bCauseDamage;
+    bool m_bCanBeGrabbed;
+    float m_LastDamageTime{0};
 };

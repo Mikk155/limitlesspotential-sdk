@@ -23,47 +23,47 @@
  */
 class CElectrifiedWire : public CRope
 {
-	DECLARE_CLASS(CElectrifiedWire, CRope);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CElectrifiedWire, CRope );
+    DECLARE_DATAMAP();
 
 public:
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void Precache() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void Think() override;
+    void Think() override;
 
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float flValue) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float flValue ) override;
 
-	bool IsActive() const { return m_bIsActive != false; }
+    bool IsActive() const { return m_bIsActive != false; }
 
 	/**
 	 *	@param iFrequency Frequency.
 	 *	@return Whether the spark effect should be performed.
 	 */
-	bool ShouldDoEffect(const int iFrequency);
+    bool ShouldDoEffect( const int iFrequency );
 
-	void DoSpark(const size_t uiSegment, const bool bExertForce);
+    void DoSpark( const size_t uiSegment, const bool bExertForce );
 
-	void DoLightning();
+    void DoLightning();
 
 public:
-	bool m_bIsActive = true;
+    bool m_bIsActive = true;
 
-	int m_iTipSparkFrequency = 3;
-	int m_iBodySparkFrequency = 100;
-	int m_iLightningFrequency = 150;
+    int m_iTipSparkFrequency = 3;
+    int m_iBodySparkFrequency = 100;
+    int m_iLightningFrequency = 150;
 
-	int m_iXJoltForce = 0;
-	int m_iYJoltForce = 0;
-	int m_iZJoltForce = 0;
+    int m_iXJoltForce = 0;
+    int m_iYJoltForce = 0;
+    int m_iZJoltForce = 0;
 
-	size_t m_uiNumUninsulatedSegments = 0;
-	size_t m_uiUninsulatedSegments[MAX_SEGMENTS];
+    size_t m_uiNumUninsulatedSegments = 0;
+    size_t m_uiUninsulatedSegments[MAX_SEGMENTS];
 
-	int m_iLightningSprite = 0;
+    int m_iLightningSprite = 0;
 
-	float m_flLastSparkTime = 0;
+    float m_flLastSparkTime = 0;
 };

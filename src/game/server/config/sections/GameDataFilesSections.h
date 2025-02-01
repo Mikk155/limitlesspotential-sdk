@@ -26,17 +26,17 @@
 class SentencesSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
 public:
-	explicit SentencesSection() = default;
+    explicit SentencesSection() = default;
 
-	std::string_view GetName() const override final { return "Sentences"; }
+    std::string_view GetName() const override final { return "Sentences"; }
 
 protected:
-	std::string_view GetListName() const override final { return "sentences"; }
+    std::string_view GetListName() const override final { return "sentences"; }
 
-	std::vector<std::string>& GetFileNamesList(ServerConfigContext& context) const override final
-	{
-		return context.SentencesFiles;
-	}
+    std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
+    {
+        return context.SentencesFiles;
+    }
 };
 
 /**
@@ -45,17 +45,17 @@ protected:
 class MaterialsSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
 public:
-	explicit MaterialsSection() = default;
+    explicit MaterialsSection() = default;
 
-	std::string_view GetName() const override final { return "Materials"; }
+    std::string_view GetName() const override final { return "Materials"; }
 
 protected:
-	std::string_view GetListName() const override final { return "materials"; }
+    std::string_view GetListName() const override final { return "materials"; }
 
-	std::vector<std::string>& GetFileNamesList(ServerConfigContext& context) const override final
-	{
-		return context.MaterialsFiles;
-	}
+    std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
+    {
+        return context.MaterialsFiles;
+    }
 };
 
 /**
@@ -64,15 +64,15 @@ protected:
 class SkillSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
 public:
-	explicit SkillSection() = default;
+    explicit SkillSection() = default;
 
-	std::string_view GetName() const override final { return "Skill"; }
+    std::string_view GetName() const override final { return "Skill"; }
 
 protected:
-	std::string_view GetListName() const override final { return "skill"; }
+    std::string_view GetListName() const override final { return "skill"; }
 
-	std::vector<std::string>& GetFileNamesList(ServerConfigContext& context) const override final
-	{
-		return context.SkillFiles;
-	}
+    std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
+    {
+        return context.SkillFiles;
+    }
 };

@@ -18,20 +18,20 @@
 #define NUM_SCIENTIST_HEADS 4 //!< four heads available for scientist model
 enum
 {
-	HEAD_GLASSES = 0,
-	HEAD_EINSTEIN = 1,
-	HEAD_LUTHER = 2,
-	HEAD_SLICK = 3
+    HEAD_GLASSES = 0,
+    HEAD_EINSTEIN = 1,
+    HEAD_LUTHER = 2,
+    HEAD_SLICK = 3
 };
 
 namespace ScientistBodygroup
 {
 enum ScientistBodygroup
 {
-	Body = 0,
-	Head = 1,
-	Needle = 2,
-	Item = 3,
+    Body = 0,
+    Head = 1,
+    Needle = 2,
+    Item = 3,
 };
 }
 
@@ -39,37 +39,37 @@ namespace ScientistNeedle
 {
 enum ScientistNeedle
 {
-	Blank = 0,
-	Drawn
+    Blank = 0,
+    Drawn
 };
 }
 
 enum class ScientistItem
 {
-	None = 0,
-	Clipboard,
-	Stick
+    None = 0,
+    Clipboard,
+    Stick
 };
 
 enum
 {
-	SCHED_HIDE = LAST_TALKMONSTER_SCHEDULE + 1,
-	SCHED_FEAR,
-	SCHED_PANIC,
-	SCHED_STARTLE,
-	SCHED_TARGET_CHASE_SCARED,
-	SCHED_TARGET_FACE_SCARED,
+    SCHED_HIDE = LAST_TALKMONSTER_SCHEDULE + 1,
+    SCHED_FEAR,
+    SCHED_PANIC,
+    SCHED_STARTLE,
+    SCHED_TARGET_CHASE_SCARED,
+    SCHED_TARGET_FACE_SCARED,
 };
 
 enum
 {
-	TASK_SAY_HEAL = LAST_TALKMONSTER_TASK + 1,
-	TASK_HEAL,
-	TASK_SAY_FEAR,
-	TASK_RUN_PATH_SCARED,
-	TASK_SCREAM,
-	TASK_RANDOM_SCREAM,
-	TASK_MOVE_TO_TARGET_RANGE_SCARED,
+    TASK_SAY_HEAL = LAST_TALKMONSTER_TASK + 1,
+    TASK_HEAL,
+    TASK_SAY_FEAR,
+    TASK_RUN_PATH_SCARED,
+    TASK_SCREAM,
+    TASK_RANDOM_SCREAM,
+    TASK_MOVE_TO_TARGET_RANGE_SCARED,
 };
 
 #define SCIENTIST_AE_HEAL (1)
@@ -81,53 +81,53 @@ enum
  */
 class CScientist : public CTalkMonster
 {
-	DECLARE_CLASS(CScientist, CTalkMonster);
-	DECLARE_DATAMAP();
-	DECLARE_CUSTOM_SCHEDULES();
+    DECLARE_CLASS( CScientist, CTalkMonster );
+    DECLARE_DATAMAP();
+    DECLARE_CUSTOM_SCHEDULES();
 
 public:
-	void OnCreate() override;
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Spawn() override;
-	void Precache() override;
+    void OnCreate() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void Spawn() override;
+    void Precache() override;
 
-	bool HasHumanGibs() override { return true; }
+    bool HasHumanGibs() override { return true; }
 
-	void SetYawSpeed() override;
-	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-	void RunTask(const Task_t* pTask) override;
-	void StartTask(const Task_t* pTask) override;
-	int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
-	void SetActivity(Activity newActivity) override;
-	Activity GetStoppedActivity() override;
-	int ISoundMask() override;
-	void DeclineFollowing() override;
+    void SetYawSpeed() override;
+    void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
+    void RunTask( const Task_t* pTask ) override;
+    void StartTask( const Task_t* pTask ) override;
+    int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
+    void SetActivity( Activity newActivity ) override;
+    Activity GetStoppedActivity() override;
+    int ISoundMask() override;
+    void DeclineFollowing() override;
 
-	float CoverRadius() override { return 1200; } // Need more room for cover because scientists want to get far away!
-	bool DisregardEnemy(CBaseEntity* pEnemy) { return !pEnemy->IsAlive() || (gpGlobals->time - m_fearTime) > 15; }
+    float CoverRadius() override { return 1200; } // Need more room for cover because scientists want to get far away!
+    bool DisregardEnemy( CBaseEntity* pEnemy ) { return !pEnemy->IsAlive() || ( gpGlobals->time - m_fearTime ) > 15; }
 
-	bool CanHeal();
-	virtual void Heal();
-	virtual void Scream();
+    bool CanHeal();
+    virtual void Heal();
+    virtual void Scream();
 
 	// Override these to set behavior
-	const Schedule_t* GetScheduleOfType(int Type) override;
-	const Schedule_t* GetSchedule() override;
-	MONSTERSTATE GetIdealState() override;
+    const Schedule_t* GetScheduleOfType( int Type ) override;
+    const Schedule_t* GetSchedule() override;
+    MONSTERSTATE GetIdealState() override;
 
-	void DeathSound() override;
-	void PainSound() override;
+    void DeathSound() override;
+    void PainSound() override;
 
-	void TalkInit() override;
+    void TalkInit() override;
 
 protected:
-	float m_painTime;
-	float m_healTime;
-	float m_fearTime;
+    float m_painTime;
+    float m_healTime;
+    float m_fearTime;
 
 	// Don't save, only used during spawn.
-	ScientistItem m_Item = ScientistItem::None;
+    ScientistItem m_Item = ScientistItem::None;
 };
 
 /**
@@ -135,20 +135,20 @@ protected:
  */
 class CSittingScientist : public CScientist // kdb: changed from public CBaseMonster so he can speak
 {
-	DECLARE_CLASS(CSittingScientist, CScientist);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CSittingScientist, CScientist );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
 
-	void SittingThink();
+    void SittingThink();
 
-	void SetAnswerQuestion(CTalkMonster* pSpeaker) override;
+    void SetAnswerQuestion( CTalkMonster* pSpeaker ) override;
 
-	bool FIdleSpeak();
-	int m_baseSequence;
-	int m_headTurn;
-	float m_flResponseDelay;
+    bool FIdleSpeak();
+    int m_baseSequence;
+    int m_headTurn;
+    float m_flResponseDelay;
 };

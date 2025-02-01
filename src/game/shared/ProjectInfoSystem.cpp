@@ -19,68 +19,68 @@
 #include "ProjectInfoSystem.h"
 
 const LibraryInfo ProjectInfoSystem::m_LocalInfo{
-	.MajorVersion = UnifiedSDKVersionMajor,
-	.MinorVersion = UnifiedSDKVersionMinor,
-	.PatchVersion = UnifiedSDKVersionPatch,
+    .MajorVersion = UnifiedSDKVersionMajor,
+    .MinorVersion = UnifiedSDKVersionMinor,
+    .PatchVersion = UnifiedSDKVersionPatch,
 
-	.ReleaseType = UnifiedSDKReleaseType,
+    .ReleaseType = UnifiedSDKReleaseType,
 
-	.BranchName = UnifiedSDKGitBranchName,
-	.TagName = UnifiedSDKGitTagName,
-	.CommitHash = UnifiedSDKGitCommitHash,
+    .BranchName = UnifiedSDKGitBranchName,
+    .TagName = UnifiedSDKGitTagName,
+    .CommitHash = UnifiedSDKGitCommitHash,
 
 	// This changes every time this file is built.
 	// Since this file has to be rebuilt anyway whenever Git status changes
 	// it will reflect the latest build even without forcing it to rebuild this file.
-	.BuildTimestamp = __TIME__ " " __DATE__};
+    .BuildTimestamp = __TIME__ " " __DATE__};
 
 bool ProjectInfoSystem::Initialize()
 {
-	g_ConCommands.CreateCommand("projectinfo_print", [this](const auto&)
-		{ PrintLocalInfo(); });
+    g_ConCommands.CreateCommand( "projectinfo_print", [this]( const auto& )
+        { PrintLocalInfo(); } );
 
 #ifdef CLIENT_DLL
-	g_ConCommands.CreateCommand("projectinfo_print_all", [this](const auto&)
-		{ PrintAllInfo(); });
+    g_ConCommands.CreateCommand( "projectinfo_print_all", [this]( const auto& )
+        { PrintAllInfo(); } );
 #endif
 
-	return true;
+    return true;
 }
 
-bool ProjectInfoSystem::IsAlphaBuild(const LibraryInfo& info)
+bool ProjectInfoSystem::IsAlphaBuild( const LibraryInfo& info )
 {
-	std::string releaseType{info.ReleaseType};
+    std::string releaseType{info.ReleaseType};
 
-	ToLower(releaseType);
+    ToLower( releaseType );
 
-	return releaseType.find("alpha") != std::string::npos;
+    return releaseType.find( "alpha" ) != std::string::npos;
 }
 
 void ProjectInfoSystem::PrintLocalInfo()
 {
-	PrintLibraryInfo(GetLongLibraryPrefix(), m_LocalInfo);
+    PrintLibraryInfo( GetLongLibraryPrefix(), m_LocalInfo );
 }
 
 void ProjectInfoSystem::PrintAllInfo()
 {
-	PrintLocalInfo();
+    PrintLocalInfo();
 
-	if (m_ServerInfo.MajorVersion != -1)
-	{
-		PrintLibraryInfo("server", m_ServerInfo);
-	}
-	else
-	{
-		Con_Printf("Project info for server: Not connected to a server\n");
-	}
+    if( m_ServerInfo.MajorVersion != -1 )
+    {
+        PrintLibraryInfo( "server", m_ServerInfo );
+    }
+    else
+    {
+        Con_Printf( "Project info for server: Not connected to a server\n" );
+    }
 }
 
-void ProjectInfoSystem::PrintLibraryInfo(std::string_view name, const LibraryInfo& info)
+void ProjectInfoSystem::PrintLibraryInfo( std::string_view name, const LibraryInfo& info )
 {
-	Con_Printf("Project info for %s:\n", name.data());
-	Con_Printf("Version: %d.%d.%d-%s\n", info.MajorVersion, info.MinorVersion, info.PatchVersion, info.ReleaseType.c_str());
-	Con_Printf("Branch: %s\n", info.BranchName.c_str());
-	Con_Printf("Tag: %s\n", info.TagName.c_str());
-	Con_Printf("Commit Hash: %s\n", info.CommitHash.c_str());
-	Con_Printf("Build Timestamp: %s\n", info.BuildTimestamp.c_str());
+    Con_Printf( "Project info for %s:\n", name.data() );
+    Con_Printf( "Version: %d.%d.%d-%s\n", info.MajorVersion, info.MinorVersion, info.PatchVersion, info.ReleaseType.c_str() );
+    Con_Printf( "Branch: %s\n", info.BranchName.c_str() );
+    Con_Printf( "Tag: %s\n", info.TagName.c_str() );
+    Con_Printf( "Commit Hash: %s\n", info.CommitHash.c_str() );
+    Con_Printf( "Build Timestamp: %s\n", info.BuildTimestamp.c_str() );
 }

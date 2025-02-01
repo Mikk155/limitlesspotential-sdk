@@ -16,15 +16,15 @@
 
 #include "CEagleLaser.h"
 
-LINK_ENTITY_TO_CLASS(eagle_laser, CEagleLaser);
+LINK_ENTITY_TO_CLASS( eagle_laser, CEagleLaser );
 
 CEagleLaser* CEagleLaser::CreateSpot()
 {
-	auto pSpot = static_cast<CEagleLaser*>(g_EntityDictionary->Create("eagle_laser"));
-	pSpot->Spawn();
+    auto pSpot = static_cast<CEagleLaser*>( g_EntityDictionary->Create( "eagle_laser" ) );
+    pSpot->Spawn();
 
 	// Eagle laser is smaller
-	pSpot->pev->scale = 0.5;
+    pSpot->pev->scale = 0.5;
 
-	return pSpot;
+    return pSpot;
 }

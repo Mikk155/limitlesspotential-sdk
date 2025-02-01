@@ -23,57 +23,57 @@ namespace sound
 {
 struct DummyGameSoundSystem final : public IGameSoundSystem
 {
-	~DummyGameSoundSystem() override = default;
+    ~DummyGameSoundSystem() override = default;
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override {}
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override {}
 
-	void StartSound(int entityIndex, int channelIndex, const char* soundOrSentence,
-		const Vector& origin, float volume, float attenuation, int pitch, int flags) override {}
+    void StartSound( int entityIndex, int channelIndex, const char* soundOrSentence,
+        const Vector& origin, float volume, float attenuation, int pitch, int flags ) override {}
 
-	void StartSound(int entityIndex, int channelIndex, SoundData&& sound,
-		const Vector& origin, float volume, float attenuation, int pitch, int flags) override {}
+    void StartSound( int entityIndex, int channelIndex, SoundData&& sound,
+        const Vector& origin, float volume, float attenuation, int pitch, int flags ) override {}
 
-	void StopAllSounds() override {}
+    void StopAllSounds() override {}
 
-	void MsgFunc_EmitSound(const char* pszName, BufferReader& reader) override {}
+    void MsgFunc_EmitSound( const char* pszName, BufferReader& reader ) override {}
 };
 
 struct DummyMusicSystem final : public IMusicSystem
 {
-	~DummyMusicSystem() override = default;
+    ~DummyMusicSystem() override = default;
 
-	void Play(std::string&& fileName, bool looping) override {}
-	void Stop() override {}
-	void Pause() override {}
-	void Resume() override {}
+    void Play( std::string&& fileName, bool looping ) override {}
+    void Stop() override {}
+    void Pause() override {}
+    void Resume() override {}
 };
 
 struct DummySoundSystem final : public ISoundSystem
 {
-	~DummySoundSystem() override = default;
+    ~DummySoundSystem() override = default;
 
-	void Update() override {}
+    void Update() override {}
 
-	void Block() override {}
+    void Block() override {}
 
-	void Unblock() override {}
+    void Unblock() override {}
 
-	void Pause() override {}
+    void Pause() override {}
 
-	void Resume() override {}
+    void Resume() override {}
 
-	IGameSoundSystem* GetGameSoundSystem() override
-	{
-		return m_GameSoundSystem.get();
-	}
+    IGameSoundSystem* GetGameSoundSystem() override
+    {
+        return m_GameSoundSystem.get();
+    }
 
-	IMusicSystem* GetMusicSystem() override
-	{
-		return m_MusicSystem.get();
-	}
+    IMusicSystem* GetMusicSystem() override
+    {
+        return m_MusicSystem.get();
+    }
 
 private:
-	const std::unique_ptr<DummyGameSoundSystem> m_GameSoundSystem = std::make_unique<DummyGameSoundSystem>();
-	const std::unique_ptr<IMusicSystem> m_MusicSystem = std::make_unique<DummyMusicSystem>();
+    const std::unique_ptr<DummyGameSoundSystem> m_GameSoundSystem = std::make_unique<DummyGameSoundSystem>();
+    const std::unique_ptr<IMusicSystem> m_MusicSystem = std::make_unique<DummyMusicSystem>();
 };
 }

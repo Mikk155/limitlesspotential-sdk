@@ -74,17 +74,17 @@ constexpr byte BLOOD_COLOR_BRIGHT_BLUE = 208;
 enum MONSTERSTATE
 {
 
-	MONSTERSTATE_NONE = 0,
-	MONSTERSTATE_IDLE,
-	MONSTERSTATE_COMBAT,
-	MONSTERSTATE_ALERT,
-	MONSTERSTATE_HUNT,
-	MONSTERSTATE_PRONE,
-	MONSTERSTATE_SCRIPT,
-	MONSTERSTATE_PLAYDEAD,
-	MONSTERSTATE_DEAD,
+    MONSTERSTATE_NONE = 0,
+    MONSTERSTATE_IDLE,
+    MONSTERSTATE_COMBAT,
+    MONSTERSTATE_ALERT,
+    MONSTERSTATE_HUNT,
+    MONSTERSTATE_PRONE,
+    MONSTERSTATE_SCRIPT,
+    MONSTERSTATE_PLAYDEAD,
+    MONSTERSTATE_DEAD,
 
-	MONSTERSTATE_COUNT // Must be last, not a valid state
+    MONSTERSTATE_COUNT // Must be last, not a valid state
 
 };
 
@@ -93,196 +93,196 @@ enum MONSTERSTATE
 // Things that toggle (buttons/triggers/doors) need this
 enum TOGGLE_STATE
 {
-	TS_AT_TOP,
-	TS_AT_BOTTOM,
-	TS_GOING_UP,
-	TS_GOING_DOWN
+    TS_AT_TOP,
+    TS_AT_BOTTOM,
+    TS_GOING_UP,
+    TS_GOING_DOWN
 };
 
 // Misc useful
-inline bool FStrEq(const char* sz1, const char* sz2)
+inline bool FStrEq( const char* sz1, const char* sz2 )
 {
-	return (strcmp(sz1, sz2) == 0);
+    return ( strcmp( sz1, sz2 ) == 0 );
 }
 
 // Misc. Prototypes
-CBaseEntity* UTIL_FindEntityInSphere(CBaseEntity* pStartEntity, const Vector& vecCenter, float flRadius);
-CBaseEntity* UTIL_FindEntityByString(CBaseEntity* pStartEntity, const char* szKeyword, const char* szValue);
-CBaseEntity* UTIL_FindEntityByClassname(CBaseEntity* pStartEntity, const char* szName);
-CBaseEntity* UTIL_FindEntityByTargetname(CBaseEntity* pStartEntity, const char* szName,
-	CBaseEntity* activator = nullptr, CBaseEntity* caller = nullptr);
+CBaseEntity* UTIL_FindEntityInSphere( CBaseEntity* pStartEntity, const Vector& vecCenter, float flRadius );
+CBaseEntity* UTIL_FindEntityByString( CBaseEntity* pStartEntity, const char* szKeyword, const char* szValue );
+CBaseEntity* UTIL_FindEntityByClassname( CBaseEntity* pStartEntity, const char* szName );
+CBaseEntity* UTIL_FindEntityByTargetname( CBaseEntity* pStartEntity, const char* szName,
+    CBaseEntity* activator = nullptr, CBaseEntity* caller = nullptr );
 
 /**
  *	@brief For doing a reverse lookup. Say you have a door, and want to find its button.
  */
-CBaseEntity* UTIL_FindEntityByTarget(CBaseEntity* pStartEntity, const char* szName);
+CBaseEntity* UTIL_FindEntityByTarget( CBaseEntity* pStartEntity, const char* szName );
 
-CBaseEntity* UTIL_FindEntityGeneric(const char* szName, Vector& vecSrc, float flRadius);
+CBaseEntity* UTIL_FindEntityGeneric( const char* szName, Vector& vecSrc, float flRadius );
 
 /**
  *	@brief Finds entities by an identifier matching either classname or targetname.
  */
-CBaseEntity* UTIL_FindEntityByIdentifier(CBaseEntity* startEntity, const char* needle);
+CBaseEntity* UTIL_FindEntityByIdentifier( CBaseEntity* startEntity, const char* needle );
 
 /**
  *	@brief returns a CBasePlayer pointer to a player by index.
  *	Only returns if the player is spawned and connected, otherwise returns nullptr.
  *	@param playerIndex 1 based player index
  */
-CBasePlayer* UTIL_PlayerByIndex(int playerIndex);
+CBasePlayer* UTIL_PlayerByIndex( int playerIndex );
 
 /**
  *	@brief Finds the player nearest to the given origin.
  */
-CBasePlayer* UTIL_FindNearestPlayer(const Vector& origin);
+CBasePlayer* UTIL_FindNearestPlayer( const Vector& origin );
 
 #define UTIL_EntitiesInPVS(pent) (*g_engfuncs.pfnEntitiesInPVS)(pent)
-CBasePlayer* UTIL_FindClientInPVS(CBaseEntity* entity);
-void UTIL_MakeVectors(const Vector& vecAngles);
+CBasePlayer* UTIL_FindClientInPVS( CBaseEntity* entity );
+void UTIL_MakeVectors( const Vector& vecAngles );
 
 // Pass in an array of pointers and an array size, it fills the array and returns the number inserted
-int UTIL_MonstersInSphere(CBaseEntity** pList, int listMax, const Vector& center, float radius);
-int UTIL_EntitiesInBox(CBaseEntity** pList, int listMax, const Vector& mins, const Vector& maxs, int flagMask);
+int UTIL_MonstersInSphere( CBaseEntity** pList, int listMax, const Vector& center, float radius );
+int UTIL_EntitiesInBox( CBaseEntity** pList, int listMax, const Vector& mins, const Vector& maxs, int flagMask );
 
-void UTIL_MakeAimVectors(const Vector& vecAngles); // like MakeVectors, but assumes pitch isn't inverted
-void UTIL_MakeInvVectors(const Vector& vec, globalvars_t* pgv);
+void UTIL_MakeAimVectors( const Vector& vecAngles ); // like MakeVectors, but assumes pitch isn't inverted
+void UTIL_MakeInvVectors( const Vector& vec, globalvars_t* pgv );
 
-void UTIL_ParticleEffect(const Vector& vecOrigin, const Vector& vecDirection, unsigned int ulColor, unsigned int ulCount);
-void UTIL_ScreenShake(const Vector& center, float amplitude, float frequency, float duration, float radius);
-void UTIL_ScreenShakeAll(const Vector& center, float amplitude, float frequency, float duration);
-void UTIL_ShowMessage(const char* pString, CBasePlayer* pPlayer);
-void UTIL_ShowMessageAll(const char* pString);
-void UTIL_ScreenFadeAll(const Vector& color, float fadeTime, float holdTime, int alpha, int flags);
-void UTIL_ScreenFade(CBasePlayer* pEntity, const Vector& color, float fadeTime, float fadeHold, int alpha, int flags);
+void UTIL_ParticleEffect( const Vector& vecOrigin, const Vector& vecDirection, unsigned int ulColor, unsigned int ulCount );
+void UTIL_ScreenShake( const Vector& center, float amplitude, float frequency, float duration, float radius );
+void UTIL_ScreenShakeAll( const Vector& center, float amplitude, float frequency, float duration );
+void UTIL_ShowMessage( const char* pString, CBasePlayer* pPlayer );
+void UTIL_ShowMessageAll( const char* pString );
+void UTIL_ScreenFadeAll( const Vector& color, float fadeTime, float holdTime, int alpha, int flags );
+void UTIL_ScreenFade( CBasePlayer* pEntity, const Vector& color, float fadeTime, float fadeHold, int alpha, int flags );
 
 enum IGNORE_MONSTERS
 {
-	ignore_monsters = 1,
-	dont_ignore_monsters = 0,
-	missile = 2
+    ignore_monsters = 1,
+    dont_ignore_monsters = 0,
+    missile = 2
 };
 enum IGNORE_GLASS
 {
-	ignore_glass = 1,
-	dont_ignore_glass = 0
+    ignore_glass = 1,
+    dont_ignore_glass = 0
 };
-void UTIL_TraceLine(const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, edict_t* pentIgnore, TraceResult* ptr);
-void UTIL_TraceLine(const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t* pentIgnore, TraceResult* ptr);
+void UTIL_TraceLine( const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, edict_t* pentIgnore, TraceResult* ptr );
+void UTIL_TraceLine( const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t* pentIgnore, TraceResult* ptr );
 enum
 {
-	point_hull = 0,
-	human_hull = 1,
-	large_hull = 2,
-	head_hull = 3
+    point_hull = 0,
+    human_hull = 1,
+    large_hull = 2,
+    head_hull = 3
 };
-void UTIL_TraceHull(const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, int hullNumber, edict_t* pentIgnore, TraceResult* ptr);
+void UTIL_TraceHull( const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, int hullNumber, edict_t* pentIgnore, TraceResult* ptr );
 TraceResult UTIL_GetGlobalTrace();
-void UTIL_TraceModel(const Vector& vecStart, const Vector& vecEnd, int hullNumber, edict_t* pentModel, TraceResult* ptr);
-Vector UTIL_GetAimVector(edict_t* pent, float flSpeed);
-int UTIL_PointContents(const Vector& vec);
+void UTIL_TraceModel( const Vector& vecStart, const Vector& vecEnd, int hullNumber, edict_t* pentModel, TraceResult* ptr );
+Vector UTIL_GetAimVector( edict_t* pent, float flSpeed );
+int UTIL_PointContents( const Vector& vec );
 
-bool UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity* pActivator);
-void UTIL_BloodStream(const Vector& origin, const Vector& direction, int color, int amount);
-void UTIL_BloodDrips(const Vector& origin, const Vector& direction, int color, int amount);
+bool UTIL_IsMasterTriggered( string_t sMaster, CBaseEntity* pActivator );
+void UTIL_BloodStream( const Vector& origin, const Vector& direction, int color, int amount );
+void UTIL_BloodDrips( const Vector& origin, const Vector& direction, int color, int amount );
 Vector UTIL_RandomBloodVector();
-bool UTIL_ShouldShowBlood(int bloodColor);
-void UTIL_BloodDecalTrace(TraceResult* pTrace, int bloodColor);
-void UTIL_DecalTrace(TraceResult* pTrace, int decalNumber);
-void UTIL_PlayerDecalTrace(TraceResult* pTrace, int playernum, int decalNumber, bool bIsCustom);
-void UTIL_GunshotDecalTrace(TraceResult* pTrace, int decalNumber);
-void UTIL_ExplosionEffect(const Vector& explosionOrigin, int modelIndex, byte scale, int framerate, int flags,
-	int msg_dest, const float* pOrigin = nullptr, CBasePlayer* player = nullptr);
-void UTIL_Sparks(const Vector& position);
-void UTIL_Ricochet(const Vector& position, float scale);
-void UTIL_StringToIntArray(int* pVector, int count, const char* pString);
-Vector UTIL_ClampVectorToBox(const Vector& input, const Vector& clampSize);
-float UTIL_Approach(float target, float value, float speed);
-float UTIL_ApproachAngle(float target, float value, float speed);
-float UTIL_AngleDistance(float next, float cur);
+bool UTIL_ShouldShowBlood( int bloodColor );
+void UTIL_BloodDecalTrace( TraceResult* pTrace, int bloodColor );
+void UTIL_DecalTrace( TraceResult* pTrace, int decalNumber );
+void UTIL_PlayerDecalTrace( TraceResult* pTrace, int playernum, int decalNumber, bool bIsCustom );
+void UTIL_GunshotDecalTrace( TraceResult* pTrace, int decalNumber );
+void UTIL_ExplosionEffect( const Vector& explosionOrigin, int modelIndex, byte scale, int framerate, int flags,
+    int msg_dest, const float* pOrigin = nullptr, CBasePlayer* player = nullptr );
+void UTIL_Sparks( const Vector& position );
+void UTIL_Ricochet( const Vector& position, float scale );
+void UTIL_StringToIntArray( int* pVector, int count, const char* pString );
+Vector UTIL_ClampVectorToBox( const Vector& input, const Vector& clampSize );
+float UTIL_Approach( float target, float value, float speed );
+float UTIL_ApproachAngle( float target, float value, float speed );
+float UTIL_AngleDistance( float next, float cur );
 
-char* UTIL_VarArgs(const char* format, ...);
-void UTIL_Remove(CBaseEntity* pEntity);
-bool UTIL_IsValidEntity(edict_t* pent);
+char* UTIL_VarArgs( const char* format, ... );
+void UTIL_Remove( CBaseEntity* pEntity );
+bool UTIL_IsValidEntity( edict_t* pent );
 
 /**
  *	@brief Returns whether the given entity can be removed if requested by players or designers (killtarget).
  */
-bool UTIL_IsRemovableEntity(CBaseEntity* entity);
+bool UTIL_IsRemovableEntity( CBaseEntity* entity );
 
-bool UTIL_TeamsMatch(const char* pTeamName1, const char* pTeamName2);
+bool UTIL_TeamsMatch( const char* pTeamName1, const char* pTeamName2 );
 
 // Use for ease-in, ease-out style interpolation (accel/decel)
-float UTIL_SplineFraction(float value, float scale);
+float UTIL_SplineFraction( float value, float scale );
 
 // Search for water transition along a vertical line
-float UTIL_WaterLevel(const Vector& position, float minz, float maxz);
-void UTIL_Bubbles(Vector mins, Vector maxs, int count);
-void UTIL_BubbleTrail(Vector from, Vector to, int count);
+float UTIL_WaterLevel( const Vector& position, float minz, float maxz );
+void UTIL_Bubbles( Vector mins, Vector maxs, int count );
+void UTIL_BubbleTrail( Vector from, Vector to, int count );
 
 /**
  *	@brief Initializes the given entity with the given list of keyvalue pairs.
  */
-void UTIL_InitializeKeyValues(CBaseEntity* entity, string_t* keys, string_t* values, int numKeyValues);
+void UTIL_InitializeKeyValues( CBaseEntity* entity, string_t* keys, string_t* values, int numKeyValues );
 
 /**
  *	@brief Allows precaching of other entities,
  *	initializing it with the given pairs of keyvalues so custom settings precache correctly.
  */
-void UTIL_PrecacheOther(const char* szClassname, string_t* keys, string_t* values, int numKeyValues);
+void UTIL_PrecacheOther( const char* szClassname, string_t* keys, string_t* values, int numKeyValues );
 
 /**
  *	@brief Allows precaching of other entities
  */
-void UTIL_PrecacheOther(const char* szClassname);
+void UTIL_PrecacheOther( const char* szClassname );
 
 // prints a message to each client
-void UTIL_ClientPrintAll(int msg_dest, const char* msg_name, const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr);
-inline void UTIL_CenterPrintAll(const char* msg_name, const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr)
+void UTIL_ClientPrintAll( int msg_dest, const char* msg_name, const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr );
+inline void UTIL_CenterPrintAll( const char* msg_name, const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr )
 {
-	UTIL_ClientPrintAll(HUD_PRINTCENTER, msg_name, param1, param2, param3, param4);
+    UTIL_ClientPrintAll( HUD_PRINTCENTER, msg_name, param1, param2, param3, param4 );
 }
 
 // prints messages through the HUD
-void ClientPrint(CBasePlayer* client, int msg_dest, const char* msg_name,
-	const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr);
+void ClientPrint( CBasePlayer* client, int msg_dest, const char* msg_name,
+    const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr );
 
 // prints a message to the HUD say (chat)
-void UTIL_SayText(const char* pText, CBasePlayer* pEntity);
-void UTIL_SayTextAll(const char* pText, CBasePlayer* pEntity);
+void UTIL_SayText( const char* pText, CBasePlayer* pEntity );
+void UTIL_SayTextAll( const char* pText, CBasePlayer* pEntity );
 
 struct hudtextparms_t
 {
-	float x;
-	float y;
-	int effect;
-	byte r1, g1, b1, a1;
-	byte r2, g2, b2, a2;
-	float fadeinTime;
-	float fadeoutTime;
-	float holdTime;
-	float fxTime;
-	int channel;
+    float x;
+    float y;
+    int effect;
+    byte r1, g1, b1, a1;
+    byte r2, g2, b2, a2;
+    float fadeinTime;
+    float fadeoutTime;
+    float holdTime;
+    float fxTime;
+    int channel;
 };
 
 // prints as transparent 'title' to the HUD
-void UTIL_HudMessageAll(const hudtextparms_t& textparms, const char* pMessage);
-void UTIL_HudMessage(CBasePlayer* pEntity, const hudtextparms_t& textparms, const char* pMessage);
+void UTIL_HudMessageAll( const hudtextparms_t& textparms, const char* pMessage );
+void UTIL_HudMessage( CBasePlayer* pEntity, const hudtextparms_t& textparms, const char* pMessage );
 
 // Sorta like FInViewCone, but for nonmonsters.
-float UTIL_DotPoints(const Vector& vecSrc, const Vector& vecCheck, const Vector& vecDir);
+float UTIL_DotPoints( const Vector& vecSrc, const Vector& vecCheck, const Vector& vecDir );
 
-void UTIL_StripToken(const char* pKey, char* pDest); // for redundant keynames
+void UTIL_StripToken( const char* pKey, char* pDest ); // for redundant keynames
 
 // Misc functions
 /**
  *	@brief QuakeEd only writes a single float for angles (bad idea), so up and down are just constant angles.
  */
-void SetMovedir(CBaseEntity* entity);
+void SetMovedir( CBaseEntity* entity );
 
 /**
  *	@brief calculates origin of a bmodel from absmin/size because all bmodel origins are 0 0 0
  */
-Vector VecBModelOrigin(CBaseEntity* bModel);
+Vector VecBModelOrigin( CBaseEntity* bModel );
 
 //
 // Constants that were used only by QC (maybe not used at all now)
@@ -367,33 +367,33 @@ constexpr int SND_NOTHOST = 1 << 10;		 // Don't send sound message to host (only
 
 // Sound Utilities
 
-float TEXTURETYPE_PlaySound(TraceResult* ptr, Vector vecSrc, Vector vecEnd, int iBulletType);
+float TEXTURETYPE_PlaySound( TraceResult* ptr, Vector vecSrc, Vector vecEnd, int iBulletType );
 
 /**
  *	@brief Just like @see CBaseEntity::EmitSoundDyn, but will skip the current host player if they have cl_lw turned on.
  *	@details entity must be the current host entity for this to work, and must be called only inside a player's PostThink method.
  */
-void EMIT_SOUND_PREDICTED(CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
-	int flags, int pitch);
+void EMIT_SOUND_PREDICTED( CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
+    int flags, int pitch );
 
 /**
  *	@brief play a specific sentence over the HEV suit speaker - just pass player entity, and !sentencename
  */
-void EMIT_SOUND_SUIT(CBaseEntity* entity, const char* sample);
+void EMIT_SOUND_SUIT( CBaseEntity* entity, const char* sample );
 
 /**
  *	@brief play a sentence, randomly selected from the passed in groupname
  */
-void EMIT_GROUPNAME_SUIT(CBaseEntity* entity, const char* groupname);
+void EMIT_GROUPNAME_SUIT( CBaseEntity* entity, const char* groupname );
 
 #define PRECACHE_SOUND_ARRAY(a)                        \
-	{                                                  \
-		for (std::size_t i = 0; i < std::size(a); i++) \
-			PrecacheSound(a[i]);                       \
-	}
+    {                                                  \
+        for( std::size_t i = 0; i < std::size( a ); i++ ) \
+            PrecacheSound( a[i] );                       \
+    }
 
 #define EMIT_SOUND_ARRAY_DYN(chan, array) \
-	EmitSoundDyn(chan, array[RANDOM_LONG(0, std::size(array) - 1)], 1.0, ATTN_NORM, 0, RANDOM_LONG(95, 105));
+    EmitSoundDyn( chan, array[RANDOM_LONG( 0, std::size( array ) - 1 )], 1.0, ATTN_NORM, 0, RANDOM_LONG( 95, 105 ) );
 
 #define RANDOM_SOUND_ARRAY(array) (array)[RANDOM_LONG(0, std::size((array)) - 1)]
 
@@ -409,167 +409,167 @@ inline int g_groupop = 0;
 class UTIL_GroupTrace
 {
 public:
-	UTIL_GroupTrace(int groupmask, int op);
-	~UTIL_GroupTrace();
+    UTIL_GroupTrace( int groupmask, int op );
+    ~UTIL_GroupTrace();
 
 private:
-	int m_oldgroupmask, m_oldgroupop;
+    int m_oldgroupmask, m_oldgroupop;
 };
 
-void UTIL_SetGroupTrace(int groupmask, int op);
+void UTIL_SetGroupTrace( int groupmask, int op );
 void UTIL_UnsetGroupTrace();
 
 float UTIL_WeaponTimeBase();
 
-CBaseEntity* UTIL_FindEntityForward(CBaseEntity* pMe);
+CBaseEntity* UTIL_FindEntityForward( CBaseEntity* pMe );
 
 bool UTIL_IsMultiplayer();
 
-inline void WRITE_COORD_VECTOR(const Vector& vec)
+inline void WRITE_COORD_VECTOR( const Vector& vec )
 {
-	WRITE_COORD(vec.x);
-	WRITE_COORD(vec.y);
-	WRITE_COORD(vec.z);
+    WRITE_COORD( vec.x );
+    WRITE_COORD( vec.y );
+    WRITE_COORD( vec.z );
 }
 
 struct MinuteSecondTime
 {
-	const int Minutes;
-	const int Seconds;
+    const int Minutes;
+    const int Seconds;
 };
 
 /**
  *	@brief Converts seconds to minutes and seconds
  */
-inline MinuteSecondTime SecondsToTime(const int seconds)
+inline MinuteSecondTime SecondsToTime( const int seconds )
 {
-	const auto minutes = seconds / 60;
-	return {minutes, seconds - (minutes * 60)};
+    const auto minutes = seconds / 60;
+    return {minutes, seconds - ( minutes * 60 )};
 }
 
 template <>
 struct fmt::formatter<MinuteSecondTime>
 {
 	constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
-	{
-		auto it = ctx.begin();
+    {
+        auto it = ctx.begin();
 
-		if (it != ctx.end() && *it != '}')
-		{
-			throw format_error("invalid format");
-		}
+        if( it != ctx.end() && *it != '}' )
+        {
+            throw format_error( "invalid format" );
+        }
 
-		return it;
-	}
+        return it;
+    }
 
-	template <typename FormatContext>
-	auto format(const MinuteSecondTime& time, FormatContext& ctx) const -> decltype(ctx.out())
-	{
-		return fmt::format_to(ctx.out(), "{:0d}:{:02d}", time.Minutes, time.Seconds);
-	}
+    template <typename FormatContext>
+    auto format( const MinuteSecondTime& time, FormatContext& ctx ) const -> decltype( ctx.out() )
+    {
+        return fmt::format_to( ctx.out(), "{:0d}:{:02d}", time.Minutes, time.Seconds );
+    }
 };
 
 template <typename T>
 struct FindByClassnameFunctor
 {
-	static T* Find(T* pStartEntity, const char* pszClassname)
-	{
-		return static_cast<T*>(UTIL_FindEntityByClassname(pStartEntity, pszClassname));
-	}
+    static T* Find( T* pStartEntity, const char* pszClassname )
+    {
+        return static_cast<T*>( UTIL_FindEntityByClassname( pStartEntity, pszClassname ) );
+    }
 };
 
 template <typename T>
 struct FindByTargetnameFunctor
 {
-	static T* Find(T* pStartEntity, const char* pszName)
-	{
-		return static_cast<T*>(UTIL_FindEntityByTargetname(pStartEntity, pszName));
-	}
+    static T* Find( T* pStartEntity, const char* pszName )
+    {
+        return static_cast<T*>( UTIL_FindEntityByTargetname( pStartEntity, pszName ) );
+    }
 };
 
 template <typename T>
 struct FindByTargetFunctor
 {
-	static T* Find(T* pStartEntity, const char* pszName)
-	{
-		return static_cast<T*>(UTIL_FindEntityByTarget(pStartEntity, pszName));
-	}
+    static T* Find( T* pStartEntity, const char* pszName )
+    {
+        return static_cast<T*>( UTIL_FindEntityByTarget( pStartEntity, pszName ) );
+    }
 };
 
 template <typename T>
 struct FindNextEntityFunctor
 {
-	static T* Find(T* pStartEntity)
-	{
+    static T* Find( T* pStartEntity )
+    {
 		// Start with first player, ignore world
-		auto index = pStartEntity ? pStartEntity->entindex() + 1 : 1;
+        auto index = pStartEntity ? pStartEntity->entindex() + 1 : 1;
 
-		auto entities = g_engfuncs.pfnPEntityOfEntIndexAllEntities(0);
+        auto entities = g_engfuncs.pfnPEntityOfEntIndexAllEntities( 0 );
 
 		// Find the first entity that has a valid baseentity
-		for (; index < gpGlobals->maxEntities; ++index)
-		{
-			auto entity = static_cast<CBaseEntity*>(GET_PRIVATE(&entities[index]));
+        for( ; index < gpGlobals->maxEntities; ++index )
+        {
+            auto entity = static_cast<CBaseEntity*>( GET_PRIVATE( &entities[index] ) );
 
-			if (entity)
-			{
-				return static_cast<T*>(entity);
-			}
-		}
+            if( entity )
+            {
+                return static_cast<T*>( entity );
+            }
+        }
 
-		return nullptr;
-	}
+        return nullptr;
+    }
 };
 
 template <typename T, typename FINDER>
 class CEntityIterator
 {
 public:
-	CEntityIterator()
-		: m_pszName(""),
-		  m_pEntity(nullptr)
-	{
-	}
+    CEntityIterator()
+        : m_pszName( "" ),
+          m_pEntity( nullptr )
+    {
+    }
 
-	CEntityIterator(const CEntityIterator&) = default;
+    CEntityIterator( const CEntityIterator& ) = default;
 
-	CEntityIterator(const char* const pszName, T* pEntity)
-		: m_pszName(pszName),
-		  m_pEntity(pEntity)
-	{
-	}
+    CEntityIterator( const char* const pszName, T* pEntity )
+        : m_pszName( pszName ),
+          m_pEntity( pEntity )
+    {
+    }
 
-	CEntityIterator& operator=(const CEntityIterator&) = default;
+    CEntityIterator& operator=( const CEntityIterator& ) = default;
 
-	const T* operator*() const { return m_pEntity; }
+    const T* operator*() const { return m_pEntity; }
 
-	T* operator*() { return m_pEntity; }
+    T* operator*() { return m_pEntity; }
 
-	T* operator->() { return m_pEntity; }
+    T* operator->() { return m_pEntity; }
 
-	void operator++()
-	{
-		m_pEntity = static_cast<T*>(FINDER::Find(m_pEntity, m_pszName));
-	}
+    void operator++()
+    {
+        m_pEntity = static_cast<T*>( FINDER::Find( m_pEntity, m_pszName ) );
+    }
 
-	void operator++(int)
-	{
-		++*this;
-	}
+    void operator++(int)
+    {
+        ++*this;
+    }
 
-	bool operator==(const CEntityIterator& other) const
-	{
-		return m_pEntity == other.m_pEntity;
-	}
+    bool operator==( const CEntityIterator& other ) const
+    {
+        return m_pEntity == other.m_pEntity;
+    }
 
-	bool operator!=(const CEntityIterator& other) const
-	{
-		return !(*this == other);
-	}
+    bool operator!=( const CEntityIterator& other ) const
+    {
+        return !( *this == other );
+    }
 
 private:
-	const char* const m_pszName;
-	T* m_pEntity;
+    const char* const m_pszName;
+    T* m_pEntity;
 };
 
 /**
@@ -579,27 +579,27 @@ template <typename T, typename FINDER>
 class CEntityEnumerator
 {
 public:
-	using Functor = FINDER;
-	using iterator = CEntityIterator<T, Functor>;
+    using Functor = FINDER;
+    using iterator = CEntityIterator<T, Functor>;
 
 public:
-	CEntityEnumerator(const char* pszClassName)
-		: m_pszName(pszClassName)
-	{
-	}
+    CEntityEnumerator( const char* pszClassName )
+        : m_pszName( pszClassName )
+    {
+    }
 
-	iterator begin()
-	{
-		return {m_pszName, static_cast<T*>(Functor::Find(nullptr, m_pszName))};
-	}
+    iterator begin()
+    {
+        return {m_pszName, static_cast<T*>( Functor::Find( nullptr, m_pszName ) )};
+    }
 
-	iterator end()
-	{
-		return {m_pszName, nullptr};
-	}
+    iterator end()
+    {
+        return {m_pszName, nullptr};
+    }
 
 private:
-	const char* const m_pszName;
+    const char* const m_pszName;
 };
 
 /**
@@ -609,65 +609,65 @@ template <typename T, typename FINDER>
 class CEntityEnumeratorWithStart
 {
 public:
-	using Functor = FINDER;
-	using iterator = CEntityIterator<T, Functor>;
+    using Functor = FINDER;
+    using iterator = CEntityIterator<T, Functor>;
 
 public:
-	CEntityEnumeratorWithStart(const char* pszClassName, T* pStartEntity)
-		: m_pszName(pszClassName),
-		  m_pStartEntity(pStartEntity)
-	{
-	}
+    CEntityEnumeratorWithStart( const char* pszClassName, T* pStartEntity )
+        : m_pszName( pszClassName ),
+          m_pStartEntity( pStartEntity )
+    {
+    }
 
-	iterator begin()
-	{
-		return {m_pszName, static_cast<T*>(Functor::Find(m_pStartEntity, m_pszName))};
-	}
+    iterator begin()
+    {
+        return {m_pszName, static_cast<T*>( Functor::Find( m_pStartEntity, m_pszName ) )};
+    }
 
-	iterator end()
-	{
-		return {m_pszName, nullptr};
-	}
+    iterator end()
+    {
+        return {m_pszName, nullptr};
+    }
 
 private:
-	const char* const m_pszName;
-	T* m_pStartEntity = nullptr;
+    const char* const m_pszName;
+    T* m_pStartEntity = nullptr;
 };
 
 template <typename T = CBaseEntity>
-inline CEntityEnumerator<T, FindByClassnameFunctor<T>> UTIL_FindEntitiesByClassname(const char* pszClassName)
+inline CEntityEnumerator<T, FindByClassnameFunctor<T>> UTIL_FindEntitiesByClassname( const char* pszClassName )
 {
-	return {pszClassName};
+    return {pszClassName};
 }
 
 template <typename T = CBaseEntity>
-inline CEntityEnumeratorWithStart<T, FindByClassnameFunctor<T>> UTIL_FindEntitiesByClassname(const char* pszClassName, T* pStartEntity)
+inline CEntityEnumeratorWithStart<T, FindByClassnameFunctor<T>> UTIL_FindEntitiesByClassname( const char* pszClassName, T* pStartEntity )
 {
-	return {pszClassName, pStartEntity};
+    return {pszClassName, pStartEntity};
 }
 
 template <typename T = CBaseEntity>
-inline CEntityEnumerator<T, FindByTargetnameFunctor<T>> UTIL_FindEntitiesByTargetname(const char* pszName)
+inline CEntityEnumerator<T, FindByTargetnameFunctor<T>> UTIL_FindEntitiesByTargetname( const char* pszName )
 {
-	return {pszName};
+    return {pszName};
 }
 
 template <typename T = CBaseEntity>
-inline CEntityEnumeratorWithStart<T, FindByTargetnameFunctor<T>> UTIL_FindEntitiesByTargetname(const char* pszName, T* pStartEntity)
+inline CEntityEnumeratorWithStart<T, FindByTargetnameFunctor<T>> UTIL_FindEntitiesByTargetname( const char* pszName, T* pStartEntity )
 {
-	return {pszName, pStartEntity};
+    return {pszName, pStartEntity};
 }
 
 template <typename T = CBaseEntity>
-inline CEntityEnumerator<T, FindByTargetFunctor<T>> UTIL_FindEntitiesByTarget(const char* pszName)
+inline CEntityEnumerator<T, FindByTargetFunctor<T>> UTIL_FindEntitiesByTarget( const char* pszName )
 {
-	return {pszName};
+    return {pszName};
 }
 
 template <typename T = CBaseEntity>
-inline CEntityEnumeratorWithStart<T, FindByTargetFunctor<T>> UTIL_FindEntitiesByTarget(const char* pszName, T* pStartEntity)
+inline CEntityEnumeratorWithStart<T, FindByTargetFunctor<T>> UTIL_FindEntitiesByTarget( const char* pszName, T* pStartEntity )
 {
-	return {pszName, pStartEntity};
+    return {pszName, pStartEntity};
 }
 
 template <typename T, typename FINDER>
@@ -677,9 +677,9 @@ public:
 	constexpr CNextEntityIterator() = default;
 
 	constexpr CNextEntityIterator(T* pStartEntity)
-		: m_pEntity(pStartEntity)
-	{
-	}
+        : m_pEntity( pStartEntity )
+    {
+    }
 
 	constexpr CNextEntityIterator(const CNextEntityIterator&) = default;
 	constexpr CNextEntityIterator& operator=(const CNextEntityIterator&) = default;
@@ -690,28 +690,28 @@ public:
 
 	constexpr T* operator->() { return m_pEntity; }
 
-	void operator++()
-	{
-		m_pEntity = static_cast<T*>(FINDER::Find(m_pEntity));
-	}
+    void operator++()
+    {
+        m_pEntity = static_cast<T*>( FINDER::Find( m_pEntity ) );
+    }
 
-	void operator++(int)
-	{
-		++*this;
-	}
+    void operator++(int)
+    {
+        ++*this;
+    }
 
 	constexpr bool operator==(const CNextEntityIterator& other) const
-	{
-		return m_pEntity == other.m_pEntity;
-	}
+    {
+        return m_pEntity == other.m_pEntity;
+    }
 
 	constexpr bool operator!=(const CNextEntityIterator& other) const
-	{
-		return !(*this == other);
-	}
+    {
+        return !( *this == other );
+    }
 
 private:
-	T* m_pEntity = nullptr;
+    T* m_pEntity = nullptr;
 };
 
 /**
@@ -721,27 +721,27 @@ template <typename T, typename FINDER>
 class CNextEntityEnumerator
 {
 public:
-	using Functor = FINDER;
-	using iterator = CNextEntityIterator<T, Functor>;
+    using Functor = FINDER;
+    using iterator = CNextEntityIterator<T, Functor>;
 
 public:
-	CNextEntityEnumerator() = default;
+    CNextEntityEnumerator() = default;
 
-	iterator begin()
-	{
-		return {static_cast<T*>(Functor::Find(nullptr))};
-	}
+    iterator begin()
+    {
+        return {static_cast<T*>( Functor::Find( nullptr ) )};
+    }
 
-	iterator end()
-	{
-		return {nullptr};
-	}
+    iterator end()
+    {
+        return {nullptr};
+    }
 };
 
 template <typename T = CBaseEntity>
 inline CNextEntityEnumerator<T, FindNextEntityFunctor<T>> UTIL_FindEntities()
 {
-	return {};
+    return {};
 }
 
 /**
@@ -751,15 +751,15 @@ inline CNextEntityEnumerator<T, FindNextEntityFunctor<T>> UTIL_FindEntities()
 template <typename Func>
 struct CallOnDestroy
 {
-	const Func Function;
+    const Func Function;
 
-	explicit CallOnDestroy(Func&& function)
-		: Function(function)
-	{
-	}
+    explicit CallOnDestroy( Func&& function )
+        : Function( function )
+    {
+    }
 
-	~CallOnDestroy()
-	{
-		Function();
-	}
+    ~CallOnDestroy()
+    {
+        Function();
+    }
 };

@@ -26,46 +26,46 @@ namespace sound
 class ClientSoundReplacementSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	const char* GetName() const override { return "ClientSoundReplacement"; }
+    const char* GetName() const override { return "ClientSoundReplacement"; }
 
-	bool Initialize() override
-	{
-		g_NetworkData.RegisterHandler("GlobalSoundReplacement", this);
-		return true;
-	}
+    bool Initialize() override
+    {
+        g_NetworkData.RegisterHandler( "GlobalSoundReplacement", this );
+        return true;
+    }
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override {}
+    void Shutdown() override {}
 
-	void OnBeginNetworkDataProcessing() override
-	{
-		m_SoundReplacement.reset();
-	}
+    void OnBeginNetworkDataProcessing() override
+    {
+        m_SoundReplacement.reset();
+    }
 
-	void OnEndNetworkDataProcessing() override
-	{
+    void OnEndNetworkDataProcessing() override
+    {
 		// If we didn't receive any data we should use a dummy replacement map to avoid crashes.
-		if (!m_SoundReplacement)
-		{
-			m_SoundReplacement = std::make_unique<ReplacementMap>(Replacements{}, false);
-		}
-	}
+        if( !m_SoundReplacement )
+        {
+            m_SoundReplacement = std::make_unique<ReplacementMap>( Replacements{}, false );
+        }
+    }
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override
-	{
-		m_SoundReplacement = g_ReplacementMaps.Deserialize(block.Data);
-	}
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override
+    {
+        m_SoundReplacement = g_ReplacementMaps.Deserialize( block.Data );
+    }
 
-	const char* Lookup(const char* value) const noexcept
-	{
-		assert(m_SoundReplacement);
-		return m_SoundReplacement->Lookup(value);
-	}
+    const char* Lookup( const char* value ) const noexcept
+    {
+        assert( m_SoundReplacement );
+        return m_SoundReplacement->Lookup( value );
+    }
 
 private:
 	// Make sure this is valid in case any calls come in before we load the data.
-	std::unique_ptr<ReplacementMap> m_SoundReplacement = std::make_unique<ReplacementMap>(Replacements{}, false);
+    std::unique_ptr<ReplacementMap> m_SoundReplacement = std::make_unique<ReplacementMap>( Replacements{}, false );
 };
 
 inline ClientSoundReplacementSystem g_ClientSoundReplacement;

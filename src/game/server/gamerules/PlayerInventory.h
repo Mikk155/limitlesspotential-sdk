@@ -31,7 +31,7 @@ class CBasePlayer;
 
 struct PersistentWeaponState
 {
-	std::unordered_map<std::string, std::any, TransparentStringHash, TransparentEqual> Properties;
+    std::unordered_map<std::string, std::any, TransparentStringHash, TransparentEqual> Properties;
 };
 
 /**
@@ -41,47 +41,47 @@ struct PersistentWeaponState
 class PlayerInventory
 {
 private:
-	struct WeaponData
-	{
-		std::string ClassName;
+    struct WeaponData
+    {
+        std::string ClassName;
 
-		std::optional<int> DefaultAmmo;
-		std::optional<PersistentWeaponState> PersistentState;
-	};
+        std::optional<int> DefaultAmmo;
+        std::optional<PersistentWeaponState> PersistentState;
+    };
 
-	struct AmmoValue
-	{
+    struct AmmoValue
+    {
 		// Stored as string to avoid tying to map-specific indices.
-		std::string Name;
-		int Count{};
-	};
+        std::string Name;
+        int Count{};
+    };
 
 public:
-	void AddWeapon(std::string className, std::optional<int> defaultAmmo = std::nullopt);
+    void AddWeapon( std::string className, std::optional<int> defaultAmmo = std::nullopt );
 
-	int GetAmmoCount(std::string_view name, int defaultValue = 0) const;
+    int GetAmmoCount( std::string_view name, int defaultValue = 0 ) const;
 
-	void SetAmmoCount(std::string_view name, int count);
+    void SetAmmoCount( std::string_view name, int count );
 
-	static PlayerInventory CreateFromPlayer(CBasePlayer* player);
+    static PlayerInventory CreateFromPlayer( CBasePlayer* player );
 
-	void ApplyToPlayer(CBasePlayer* player) const;
+    void ApplyToPlayer( CBasePlayer* player ) const;
 
 private:
-	const AmmoValue* FindAmmoValue(std::string_view name) const;
+    const AmmoValue* FindAmmoValue( std::string_view name ) const;
 
-	AmmoValue* FindOrCreateAmmoValue(std::string_view name);
+    AmmoValue* FindOrCreateAmmoValue( std::string_view name );
 
 public:
-	std::optional<bool> HasSuit;
-	std::optional<bool> HasLongJump;
+    std::optional<bool> HasSuit;
+    std::optional<bool> HasLongJump;
 
-	std::optional<int> Health;
-	std::optional<int> Armor;
+    std::optional<int> Health;
+    std::optional<int> Armor;
 
-	std::string WeaponToSelect;
+    std::string WeaponToSelect;
 
 private:
-	eastl::fixed_vector<WeaponData, 16> m_WeaponData;
-	eastl::fixed_vector<AmmoValue, MAX_AMMO_TYPES> m_AmmoValues;
+    eastl::fixed_vector<WeaponData, 16> m_WeaponData;
+    eastl::fixed_vector<AmmoValue, MAX_AMMO_TYPES> m_AmmoValues;
 };

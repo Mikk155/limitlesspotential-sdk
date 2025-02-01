@@ -26,60 +26,60 @@ constexpr std::string_view CommandWhitelistSchemaName{"CommandWhitelist"sv};
 
 static std::string GetCommandWhitelistSchema()
 {
-	return fmt::format(R"(
+    return fmt::format( R"(
 {{
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "Command Whitelist",
-	"description": "List of console commands that map configs and logic_setcvar can execute",
-	"type": "array",
-	"items": {{
-		"title": "Command Name",
-		"type": "string",
-		"pattern": "^[\\w]+$"
-	}}
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Command Whitelist",
+    "description": "List of console commands that map configs and logic_setcvar can execute",
+    "type": "array",
+    "items": {{
+        "title": "Command Name",
+        "type": "string",
+        "pattern": "^[\\w]+$"
+    }}
 }}
-)");
+)" );
 }
 
 void RegisterCommandWhitelistSchema()
 {
-	g_JSON.RegisterSchema(CommandWhitelistSchemaName, &GetCommandWhitelistSchema);
+    g_JSON.RegisterSchema( CommandWhitelistSchemaName, &GetCommandWhitelistSchema );
 }
 
 void LoadCommandWhitelist()
 {
 	// Load the whitelist from a file
-	auto whitelist = g_JSON.ParseJSONFile(
-		CommandWhitelistFileName,
-		{.SchemaName = CommandWhitelistSchemaName, .PathID = "GAMECONFIG"},
-		[](const json& input)
-		{
-			CommandWhitelist list;
+    auto whitelist = g_JSON.ParseJSONFile( 
+        CommandWhitelistFileName,
+        {.SchemaName = CommandWhitelistSchemaName, .PathID = "GAMECONFIG"},
+        []( const json& input )
+        {
+            CommandWhitelist list;
 
-			if (input.is_array())
-			{
-				list.reserve(input.size());
+            if( input.is_array() )
+            {
+                list.reserve( input.size() );
 
-				for (const auto& element : input)
-				{
-					auto command = element.get<std::string>();
+                for( const auto& element : input )
+                {
+                    auto command = element.get<std::string>();
 
-					if (std::regex_match(command, CommandWhitelistRegex))
-					{
-						if (!list.insert(std::move(command)).second)
-						{
-							g_GameLogger->debug("Whitelist command \"{}\" encountered more than once", command);
-						}
-					}
-					else
-					{
-						g_GameLogger->warn("Whitelist command \"{}\" has invalid syntax, ignoring", command);
-					}
-				}
-			}
+                    if( std::regex_match( command, CommandWhitelistRegex ) )
+                    {
+                        if( !list.insert( std::move( command ) ).second )
+                        {
+                            g_GameLogger->debug( "Whitelist command \"{}\" encountered more than once", command );
+                        }
+                    }
+                    else
+                    {
+                        g_GameLogger->warn( "Whitelist command \"{}\" has invalid syntax, ignoring", command );
+                    }
+                }
+            }
 
-			return list;
-		});
+            return list;
+        } );
 
-	g_CommandWhitelist = whitelist.value_or(CommandWhitelist{});
+    g_CommandWhitelist = whitelist.value_or( CommandWhitelist{} );
 }

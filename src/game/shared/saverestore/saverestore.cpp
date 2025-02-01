@@ -20,423 +20,423 @@
 #include "saverestore.h"
 
 // Base class includes common SAVERESTOREDATA pointer, and manages the entity table
-CSaveRestoreBuffer::CSaveRestoreBuffer(SAVERESTOREDATA& data)
-	: m_data(data)
+CSaveRestoreBuffer::CSaveRestoreBuffer( SAVERESTOREDATA& data )
+    : m_data( data )
 {
 }
 
 CSaveRestoreBuffer::~CSaveRestoreBuffer() = default;
 
-int CSaveRestoreBuffer::EntityIndex(const CBaseEntity* pEntity)
+int CSaveRestoreBuffer::EntityIndex( const CBaseEntity* pEntity )
 {
-	if (pEntity == nullptr)
-		return -1;
-	return EntityIndex(pEntity->edict());
+    if( pEntity == nullptr )
+        return -1;
+    return EntityIndex( pEntity->edict() );
 }
 
-int CSaveRestoreBuffer::EntityIndex(const edict_t* pentLookup)
+int CSaveRestoreBuffer::EntityIndex( const edict_t* pentLookup )
 {
-	if (pentLookup == nullptr)
-		return -1;
+    if( pentLookup == nullptr )
+        return -1;
 
-	for (int i = 0; i < m_data.tableCount; ++i)
-	{
-		if (m_data.pTable[i].pent == pentLookup)
-			return i;
-	}
+    for( int i = 0; i < m_data.tableCount; ++i )
+    {
+        if( m_data.pTable[i].pent == pentLookup )
+            return i;
+    }
 
-	return -1;
+    return -1;
 }
 
-edict_t* CSaveRestoreBuffer::EntityFromIndex(int entityIndex)
+edict_t* CSaveRestoreBuffer::EntityFromIndex( int entityIndex )
 {
-	if (entityIndex < 0)
-		return nullptr;
+    if( entityIndex < 0 )
+        return nullptr;
 
-	for (int i = 0; i < m_data.tableCount; ++i)
-	{
-		auto pTable = m_data.pTable + i;
-		if (pTable->id == entityIndex)
-			return pTable->pent;
-	}
+    for( int i = 0; i < m_data.tableCount; ++i )
+    {
+        auto pTable = m_data.pTable + i;
+        if( pTable->id == entityIndex )
+            return pTable->pent;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
-int CSaveRestoreBuffer::EntityFlagsSet(int entityIndex, int flags)
+int CSaveRestoreBuffer::EntityFlagsSet( int entityIndex, int flags )
 {
-	if (entityIndex < 0)
-		return 0;
-	if (entityIndex > m_data.tableCount)
-		return 0;
+    if( entityIndex < 0 )
+        return 0;
+    if( entityIndex > m_data.tableCount )
+        return 0;
 
-	m_data.pTable[entityIndex].flags |= flags;
+    m_data.pTable[entityIndex].flags |= flags;
 
-	return m_data.pTable[entityIndex].flags;
+    return m_data.pTable[entityIndex].flags;
 }
 
-void CSaveRestoreBuffer::BufferRewind(int size)
+void CSaveRestoreBuffer::BufferRewind( int size )
 {
-	if (m_data.size < size)
-		size = m_data.size;
+    if( m_data.size < size )
+        size = m_data.size;
 
-	m_data.pCurrentData -= size;
-	m_data.size -= size;
+    m_data.pCurrentData -= size;
+    m_data.size -= size;
 }
 
-unsigned int CSaveRestoreBuffer::HashString(const char* pszToken)
+unsigned int CSaveRestoreBuffer::HashString( const char* pszToken )
 {
-	unsigned int hash = 0;
+    unsigned int hash = 0;
 
-	while ('\0' != *pszToken)
-		hash = std::rotr(hash, 4) ^ *pszToken++;
+    while( '\0' != *pszToken )
+        hash = std::rotr( hash, 4 ) ^ *pszToken++;
 
-	return hash;
+    return hash;
 }
 
-unsigned short CSaveRestoreBuffer::TokenHash(const char* pszToken)
+unsigned short CSaveRestoreBuffer::TokenHash( const char* pszToken )
 {
 #if _DEBUG
-	static int tokensparsed = 0;
-	tokensparsed++;
+    static int tokensparsed = 0;
+    tokensparsed++;
 #endif
-	if (0 == m_data.tokenCount || nullptr == m_data.pTokens)
-	{
+    if( 0 == m_data.tokenCount || nullptr == m_data.pTokens )
+    {
 		// if we're here it means trigger_changelevel is trying to actually save something when it's not supposed to.
-		Logger->error("No token table array in TokenHash()!");
-		return 0;
-	}
+        Logger->error( "No token table array in TokenHash()!" );
+        return 0;
+    }
 
-	const unsigned short hash = (unsigned short)(HashString(pszToken) % (unsigned)m_data.tokenCount);
+    const unsigned short hash = (unsigned short)( HashString( pszToken ) % ( unsigned )m_data.tokenCount );
 
-	for (int i = 0; i < m_data.tokenCount; i++)
-	{
+    for( int i = 0; i < m_data.tokenCount; i++ )
+    {
 #if _DEBUG
-		static bool beentheredonethat = false;
-		if (i > 50 && !beentheredonethat)
-		{
-			beentheredonethat = true;
-			Logger->error("CSaveRestoreBuffer :: TokenHash() is getting too full!");
-		}
+        static bool beentheredonethat = false;
+        if( i > 50 && !beentheredonethat )
+        {
+            beentheredonethat = true;
+            Logger->error( "CSaveRestoreBuffer :: TokenHash() is getting too full!" );
+        }
 #endif
 
-		int index = hash + i;
-		if (index >= m_data.tokenCount)
-			index -= m_data.tokenCount;
+        int index = hash + i;
+        if( index >= m_data.tokenCount )
+            index -= m_data.tokenCount;
 
-		if (!m_data.pTokens[index] || strcmp(pszToken, m_data.pTokens[index]) == 0)
-		{
-			m_data.pTokens[index] = (char*)pszToken;
-			return index;
-		}
-	}
+        if( !m_data.pTokens[index] || strcmp( pszToken, m_data.pTokens[index] ) == 0 )
+        {
+            m_data.pTokens[index] = (char*)pszToken;
+            return index;
+        }
+    }
 
 	// Token hash table full!!!
 	// [Consider doing overflow table(s) after the main table & limiting linear hash table search]
-	Logger->error("CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!");
-	return 0;
+    Logger->error( "CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!" );
+    return 0;
 }
 
-bool CSaveRestoreBuffer::IsValidSaveRestoreData(SAVERESTOREDATA* data)
+bool CSaveRestoreBuffer::IsValidSaveRestoreData( SAVERESTOREDATA* data )
 {
-	const bool isValid = nullptr != data && nullptr != data->pTokens && data->tokenCount > 0;
+    const bool isValid = nullptr != data && nullptr != data->pTokens && data->tokenCount > 0;
 
-	ASSERT(isValid);
+    ASSERT( isValid );
 
-	return isValid;
+    return isValid;
 }
 
-bool CSave::WriteFields(void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap)
+bool CSave::WriteFields( void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap )
 {
-	WriteHeader(currentDataMap.ClassName, sizeof(int));
-	auto fieldCount = WriteValue(int(0));
+    WriteHeader( currentDataMap.ClassName, sizeof(int) );
+    auto fieldCount = WriteValue( int( 0 ) );
 
-	if (!fieldCount)
-	{
-		return false;
-	}
+    if( !fieldCount )
+    {
+        return false;
+    }
 
-	m_CurrentCompleteDataMap = &completeDataMap;
-	m_CurrentDataMap = &currentDataMap;
+    m_CurrentCompleteDataMap = &completeDataMap;
+    m_CurrentDataMap = &currentDataMap;
 
-	for (const auto& member : currentDataMap.Members)
-	{
-		auto field = std::get_if<DataFieldDescription>(&member);
+    for( const auto& member : currentDataMap.Members )
+    {
+        auto field = std::get_if<DataFieldDescription>( &member );
 
-		if (!field)
-		{
-			continue;
-		}
+        if( !field )
+        {
+            continue;
+        }
 
-		auto fields = reinterpret_cast<const std::byte*>(baseData) + field->fieldOffset;
+        auto fields = reinterpret_cast<const std::byte*>( baseData ) + field->fieldOffset;
 
-		auto serializer = field->Serializer;
+        auto serializer = field->Serializer;
 
-		if (!serializer)
-		{
-			Logger->error("Bad field type");
-			continue;
-		}
+        if( !serializer )
+        {
+            Logger->error( "Bad field type" );
+            continue;
+        }
 
-		if (DataEmpty(fields, field->fieldSize * serializer->GetFieldSize()))
-			continue;
+        if( DataEmpty( fields, field->fieldSize * serializer->GetFieldSize() ) )
+            continue;
 
-		auto fieldSize = WriteHeader(field->fieldName, 0);
+        auto fieldSize = WriteHeader( field->fieldName, 0 );
 
-		const auto startPosition = m_data.pCurrentData;
+        const auto startPosition = m_data.pCurrentData;
 
-		serializer->Serialize(*this, fields, field->fieldSize);
+        serializer->Serialize( *this, fields, field->fieldSize );
 
-		WriteCount(fieldSize, m_data.pCurrentData - startPosition);
+        WriteCount( fieldSize, m_data.pCurrentData - startPosition );
 
 		// Empty fields will not be written, write out the actual number of fields to be written
-		++(*fieldCount);
-	}
+        ++( *fieldCount );
+    }
 
-	m_CurrentDataMap = nullptr;
-	m_CurrentCompleteDataMap = nullptr;
+    m_CurrentDataMap = nullptr;
+    m_CurrentCompleteDataMap = nullptr;
 
-	return true;
+    return true;
 }
 
 std::byte* CSave::GetWriteAddress()
 {
-	return reinterpret_cast<std::byte*>(m_data.pCurrentData);
+    return reinterpret_cast<std::byte*>( m_data.pCurrentData );
 }
 
-std::byte* CSave::WriteBytes(const std::byte* bytes, std::size_t sizeInBytes)
+std::byte* CSave::WriteBytes( const std::byte* bytes, std::size_t sizeInBytes )
 {
-	const int size = int(sizeInBytes);
+    const int size = int( sizeInBytes );
 
-	if (m_data.size + size > m_data.bufferSize)
-	{
-		Logger->error("Save/Restore overflow!");
-		m_data.size = m_data.bufferSize;
-		return nullptr;
-	}
+    if( m_data.size + size > m_data.bufferSize )
+    {
+        Logger->error( "Save/Restore overflow!" );
+        m_data.size = m_data.bufferSize;
+        return nullptr;
+    }
 
-	memcpy(m_data.pCurrentData, bytes, sizeInBytes);
-	auto address = m_data.pCurrentData;
-	m_data.pCurrentData += size;
-	m_data.size += size;
+    memcpy( m_data.pCurrentData, bytes, sizeInBytes );
+    auto address = m_data.pCurrentData;
+    m_data.pCurrentData += size;
+    m_data.size += size;
 
-	return reinterpret_cast<std::byte*>(address);
+    return reinterpret_cast<std::byte*>( address );
 }
 
 bool CSave::HasOverflowed() const
 {
-	return m_data.size >= m_data.bufferSize;
+    return m_data.size >= m_data.bufferSize;
 }
 
-short* CSave::WriteHeader(const char* name, short size)
+short* CSave::WriteHeader( const char* name, short size )
 {
-	if (size > (1 << (sizeof(short) * 8)))
-	{
-		Logger->error("CSave::WriteHeader() size parameter exceeds 'short'!");
-	}
+    if( size > ( 1 << ( sizeof(short) * 8 ) ) )
+    {
+        Logger->error( "CSave::WriteHeader() size parameter exceeds 'short'!" );
+    }
 
-	const short hashvalue = TokenHash(name);
+    const short hashvalue = TokenHash( name );
 
-	auto address = reinterpret_cast<short*>(m_data.pCurrentData);
+    auto address = reinterpret_cast<short*>( m_data.pCurrentData );
 
-	WriteValue(size);
-	WriteValue(hashvalue);
+    WriteValue( size );
+    WriteValue( hashvalue );
 
-	return address;
+    return address;
 }
 
-void CSave::WriteCount(short* destination, int count)
+void CSave::WriteCount( short* destination, int count )
 {
-	if (count > (1 << (sizeof(short) * 8)))
-	{
-		Logger->error("CSave::WriteCount() size parameter exceeds 'short'!");
-	}
+    if( count > ( 1 << ( sizeof(short) * 8 ) ) )
+    {
+        Logger->error( "CSave::WriteCount() size parameter exceeds 'short'!" );
+    }
 
-	*destination = count;
+    *destination = count;
 }
 
-bool CSave::DataEmpty(const std::byte* pdata, int size)
+bool CSave::DataEmpty( const std::byte* pdata, int size )
 {
-	for (int i = 0; i < size; i++)
-	{
-		if (std::byte{0} != pdata[i])
-			return false;
-	}
-	return true;
+    for( int i = 0; i < size; i++ )
+    {
+        if( std::byte{0} != pdata[i] )
+            return false;
+    }
+    return true;
 }
 
-bool CRestore::ReadFields(void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap)
+bool CRestore::ReadFields( void* baseData, const DataMap& completeDataMap, const DataMap& currentDataMap )
 {
-	const int headerSize = BufferReadValue<short>();
+    const int headerSize = BufferReadValue<short>();
 
-	ASSERT(headerSize == sizeof(int)); // First entry should be an int
+    ASSERT( headerSize == sizeof(int) ); // First entry should be an int
 
-	const int headerToken = BufferReadValue<short>();
+    const int headerToken = BufferReadValue<short>();
 
 	// Check the struct name
-	if (headerToken != TokenHash(currentDataMap.ClassName)) // Field Set marker
-	{
+    if( headerToken != TokenHash( currentDataMap.ClassName ) ) // Field Set marker
+    {
 		// Logger->error("Expected {} found {}!", currentDataMap.ClassName, BufferPointer());
-		BufferRewind(2 * sizeof(short));
-		return false;
-	}
+        BufferRewind( 2 * sizeof(short) );
+        return false;
+    }
 
 	// Skip over the struct name
-	const int fileCount = BufferReadValue<int>(); // Read field count
+    const int fileCount = BufferReadValue<int>(); // Read field count
 
-	int lastField = 0; // Make searches faster, most data is read/written in the same order
+    int lastField = 0; // Make searches faster, most data is read/written in the same order
 
-	m_CurrentCompleteDataMap = &completeDataMap;
-	m_CurrentDataMap = &currentDataMap;
+    m_CurrentCompleteDataMap = &completeDataMap;
+    m_CurrentDataMap = &currentDataMap;
 
 	// Clear out base data
-	for (const auto& member : currentDataMap.Members)
-	{
-		auto field = std::get_if<DataFieldDescription>(&member);
+    for( const auto& member : currentDataMap.Members )
+    {
+        auto field = std::get_if<DataFieldDescription>( &member );
 
-		if (!field)
-		{
-			continue;
-		}
+        if( !field )
+        {
+            continue;
+        }
 
 		// Don't clear global fields
-		if (!m_global || (field->flags & FTYPEDESC_GLOBAL) == 0)
-		{
-			auto serializer = field->Serializer;
+        if( !m_global || ( field->flags & FTYPEDESC_GLOBAL ) == 0 )
+        {
+            auto serializer = field->Serializer;
 
-			if (!serializer)
-			{
-				Logger->error("Bad field type");
-				continue;
-			}
+            if( !serializer )
+            {
+                Logger->error( "Bad field type" );
+                continue;
+            }
 
-			std::memset(reinterpret_cast<std::byte*>(baseData) + field->fieldOffset, 0,
-				field->fieldSize * serializer->GetFieldSize());
-		}
-	}
+            std::memset( reinterpret_cast<std::byte*>( baseData ) + field->fieldOffset, 0,
+                field->fieldSize * serializer->GetFieldSize() );
+        }
+    }
 
-	HEADER header;
+    HEADER header;
 
-	for (int field = 0; field < fileCount; ++field)
-	{
-		BufferReadHeader(header);
-		lastField = ReadField(baseData, currentDataMap, m_data.pTokens[header.token], lastField, header.pData, header.size);
-		lastField++;
-	}
+    for( int field = 0; field < fileCount; ++field )
+    {
+        BufferReadHeader( header );
+        lastField = ReadField( baseData, currentDataMap, m_data.pTokens[header.token], lastField, header.pData, header.size );
+        lastField++;
+    }
 
-	m_CurrentDataMap = nullptr;
-	m_CurrentCompleteDataMap = nullptr;
+    m_CurrentDataMap = nullptr;
+    m_CurrentCompleteDataMap = nullptr;
 
-	return true;
+    return true;
 }
 
-int CRestore::ReadField(void* baseData, const DataMap& dataMap, const char* fieldName, int startField, std::byte* data, int size)
+int CRestore::ReadField( void* baseData, const DataMap& dataMap, const char* fieldName, int startField, std::byte* data, int size )
 {
-	for (std::size_t i = 0; i < dataMap.Members.size(); ++i)
-	{
-		const int fieldNumber = (i + startField) % int(dataMap.Members.size());
-		const auto& member = dataMap.Members[fieldNumber];
+    for( std::size_t i = 0; i < dataMap.Members.size(); ++i )
+    {
+        const int fieldNumber = ( i + startField ) % int( dataMap.Members.size() );
+        const auto& member = dataMap.Members[fieldNumber];
 
-		auto field = std::get_if<DataFieldDescription>(&member);
+        auto field = std::get_if<DataFieldDescription>( &member );
 
-		if (!field)
-		{
-			continue;
-		}
+        if( !field )
+        {
+            continue;
+        }
 
-		if (!stricmp(field->fieldName, fieldName))
-		{
-			if (!m_global || (field->flags & FTYPEDESC_GLOBAL) == 0)
-			{
-				auto serializer = field->Serializer;
+        if( !stricmp( field->fieldName, fieldName ) )
+        {
+            if( !m_global || ( field->flags & FTYPEDESC_GLOBAL ) == 0 )
+            {
+                auto serializer = field->Serializer;
 
-				if (!serializer)
-				{
-					Logger->error("Bad field type");
-					continue;
-				}
+                if( !serializer )
+                {
+                    Logger->error( "Bad field type" );
+                    continue;
+                }
 
-				m_ReadStartAddress = m_ReadAddress = data;
-				m_ReadSize = size;
-				m_HasOverflowed = false;
+                m_ReadStartAddress = m_ReadAddress = data;
+                m_ReadSize = size;
+                m_HasOverflowed = false;
 
-				serializer->Deserialize(*this, reinterpret_cast<std::byte*>(baseData) + field->fieldOffset, field->fieldSize);
-			}
+                serializer->Deserialize( *this, reinterpret_cast<std::byte*>( baseData ) + field->fieldOffset, field->fieldSize );
+            }
 #if 0
-			else
-			{
-				Logger->debug( "Skipping global field {}", pName);
-			}
+            else
+            {
+                Logger->debug( "Skipping global field {}", pName );
+            }
 #endif
-			return fieldNumber;
-		}
-	}
+            return fieldNumber;
+        }
+    }
 
-	return -1;
+    return -1;
 }
 
-void CRestore::BufferReadHeader(HEADER& header)
+void CRestore::BufferReadHeader( HEADER& header )
 {
-	header.size = BufferReadValue<short>();	 // Read field size
-	header.token = BufferReadValue<short>(); // Read field name token
-	header.pData = BufferPointer();			 // Field Data is next
-	BufferSkipBytes(header.size);			 // Advance to next field
+    header.size = BufferReadValue<short>();     // Read field size
+    header.token = BufferReadValue<short>(); // Read field name token
+    header.pData = BufferPointer();             // Field Data is next
+    BufferSkipBytes( header.size );             // Advance to next field
 }
 
 bool CRestore::Empty()
 {
-	return (m_data.pCurrentData - m_data.pBaseData) >= m_data.bufferSize;
+    return ( m_data.pCurrentData - m_data.pBaseData ) >= m_data.bufferSize;
 }
 
 const std::byte* CRestore::GetReadAddress()
 {
-	return m_ReadAddress;
+    return m_ReadAddress;
 }
 
-void CRestore::ReadBytes(std::byte* bytes, std::size_t sizeInBytes)
+void CRestore::ReadBytes( std::byte* bytes, std::size_t sizeInBytes )
 {
-	if (((m_ReadAddress - m_ReadStartAddress) + sizeInBytes) > m_ReadSize)
-	{
-		Logger->error("Restore overflow!");
-		m_ReadAddress = m_ReadStartAddress + m_ReadSize;
-		m_HasOverflowed = true;
-		return;
-	}
+    if( ( ( m_ReadAddress - m_ReadStartAddress ) + sizeInBytes ) > m_ReadSize )
+    {
+        Logger->error( "Restore overflow!" );
+        m_ReadAddress = m_ReadStartAddress + m_ReadSize;
+        m_HasOverflowed = true;
+        return;
+    }
 
-	if (bytes)
-		memcpy(bytes, m_ReadAddress, sizeInBytes);
-	m_ReadAddress += sizeInBytes;
+    if( bytes )
+        memcpy( bytes, m_ReadAddress, sizeInBytes );
+    m_ReadAddress += sizeInBytes;
 }
 
 bool CRestore::HasOverflowed() const
 {
-	return m_HasOverflowed;
+    return m_HasOverflowed;
 }
 
 std::byte* CRestore::BufferPointer()
 {
-	return reinterpret_cast<std::byte*>(m_data.pCurrentData);
+    return reinterpret_cast<std::byte*>( m_data.pCurrentData );
 }
 
-void CRestore::BufferReadBytes(std::byte* pOutput, int size)
+void CRestore::BufferReadBytes( std::byte* pOutput, int size )
 {
-	if (Empty())
-		return;
+    if( Empty() )
+        return;
 
-	if ((m_data.size + size) > m_data.bufferSize)
-	{
-		Logger->error("Restore overflow!");
-		m_data.size = m_data.bufferSize;
-		return;
-	}
+    if( ( m_data.size + size ) > m_data.bufferSize )
+    {
+        Logger->error( "Restore overflow!" );
+        m_data.size = m_data.bufferSize;
+        return;
+    }
 
-	if (pOutput)
-		memcpy(pOutput, m_data.pCurrentData, size);
-	m_data.pCurrentData += size;
-	m_data.size += size;
+    if( pOutput )
+        memcpy( pOutput, m_data.pCurrentData, size );
+    m_data.pCurrentData += size;
+    m_data.size += size;
 }
 
-void CRestore::BufferSkipBytes(int bytes)
+void CRestore::BufferSkipBytes( int bytes )
 {
-	BufferReadBytes(nullptr, bytes);
+    BufferReadBytes( nullptr, bytes );
 }

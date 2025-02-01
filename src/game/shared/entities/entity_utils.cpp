@@ -16,21 +16,21 @@
 #include "cbase.h"
 #include "entity_utils.h"
 
-CBasePlayer* ToBasePlayer(CBaseEntity* entity)
+CBasePlayer* ToBasePlayer( CBaseEntity* entity )
 {
-	if (!entity || !entity->IsPlayer())
-	{
-		return nullptr;
-	}
+    if( !entity || !entity->IsPlayer() )
+    {
+        return nullptr;
+    }
 
 #if DEBUG
-	assert(dynamic_cast<CBasePlayer*>(entity) != nullptr);
+    assert( dynamic_cast<CBasePlayer*>( entity ) != nullptr );
 #endif
 
-	return static_cast<CBasePlayer*>(entity);
+    return static_cast<CBasePlayer*>( entity );
 }
 
-CBasePlayer* ToBasePlayer(edict_t* entity)
+CBasePlayer* ToBasePlayer( edict_t* entity )
 {
-	return ToBasePlayer(GET_PRIVATE<CBaseEntity>(entity));
+    return ToBasePlayer( GET_PRIVATE<CBaseEntity>( entity ) );
 }

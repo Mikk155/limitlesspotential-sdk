@@ -41,7 +41,7 @@ inline std::shared_ptr<spdlog::logger> g_PrecacheLogger;
 // How did I ever live without ASSERT?
 //
 #ifdef DEBUG
-void DBG_AssertFunction(bool fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage);
+void DBG_AssertFunction( bool fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage );
 #define ASSERT(f) DBG_AssertFunction(f, #f, __FILE__, __LINE__, nullptr)
 #define ASSERTSZ(f, sz) DBG_AssertFunction(f, #f, __FILE__, __LINE__, sz)
 #else // !DEBUG
@@ -53,122 +53,122 @@ void DBG_AssertFunction(bool fExpr, const char* szExpr, const char* szFile, int 
 // Conversion among the three types of "entity", including identity-conversions.
 //
 #ifdef DEBUG
-edict_t* DBG_EntOfVars(const entvars_t* pev);
-inline edict_t* ENT(const entvars_t* pev) { return DBG_EntOfVars(pev); }
+edict_t* DBG_EntOfVars( const entvars_t* pev );
+inline edict_t* ENT( const entvars_t* pev ) { return DBG_EntOfVars( pev ); }
 #else
-inline edict_t* ENT(const entvars_t* pev)
+inline edict_t* ENT( const entvars_t* pev )
 {
-	return pev->pContainingEntity;
+    return pev->pContainingEntity;
 }
 #endif
 
-inline entvars_t* VARS(edict_t* pent)
+inline entvars_t* VARS( edict_t* pent )
 {
-	if (!pent)
-		return nullptr;
+    if( !pent )
+        return nullptr;
 
-	return &pent->v;
+    return &pent->v;
 }
 
-inline int ENTINDEX(const edict_t* pEdict) { return (*g_engfuncs.pfnIndexOfEdict)(pEdict); }
-inline edict_t* INDEXENT(int iEdictNum) { return (*g_engfuncs.pfnPEntityOfEntIndex)(iEdictNum); }
+inline int ENTINDEX( const edict_t* pEdict ) { return ( *g_engfuncs.pfnIndexOfEdict )( pEdict ); }
+inline edict_t* INDEXENT( int iEdictNum ) { return ( *g_engfuncs.pfnPEntityOfEntIndex )( iEdictNum ); }
 
 // Testing the three types of "entity" for nullity
 
 // Index 0 is worldspawn, which is treated as a null entity to match Quake 1's QuakeC integer boolean logic.
 // if (ent) is false for index 0.
-inline bool FNullEnt(const edict_t* pent) { return pent == nullptr || ENTINDEX(pent) == 0; }
-inline bool FNullEnt(entvars_t* pev) { return pev == nullptr || FNullEnt(ENT(pev)); }
+inline bool FNullEnt( const edict_t* pent ) { return pent == nullptr || ENTINDEX( pent ) == 0; }
+inline bool FNullEnt( entvars_t* pev ) { return pev == nullptr || FNullEnt( ENT( pev ) ); }
 
 // entity offsets are no longer used. These overloads exist only to produce compiler errors if code passes integers.
-inline bool FNullEnt(int eoffset) = delete;
-inline edict_t* ENT(int eoffset) = delete;
+inline bool FNullEnt( int eoffset ) = delete;
+inline edict_t* ENT( int eoffset ) = delete;
 
 // Testing strings for nullity
-inline constexpr bool FStringNull(string_t iString)
+inline constexpr bool FStringNull( string_t iString )
 {
-	return iString == string_t::Null;
+    return iString == string_t::Null;
 }
 
-inline const char* STRING(string_t offset)
+inline const char* STRING( string_t offset )
 {
-	return gpGlobals->pStringBase + static_cast<unsigned int>(offset.m_Value);
+    return gpGlobals->pStringBase + static_cast<unsigned int>( offset.m_Value );
 }
 
 /**
  *	@brief Use this instead of ALLOC_STRING on constant strings
  */
-inline string_t MAKE_STRING(const char* str)
+inline string_t MAKE_STRING( const char* str )
 {
-	return static_cast<string_t>(reinterpret_cast<uint64>(str) - reinterpret_cast<uint64>(gpGlobals->pStringBase));
+    return static_cast<string_t>( reinterpret_cast<uint64>( str ) - reinterpret_cast<uint64>( gpGlobals->pStringBase ) );
 }
 
-string_t ALLOC_STRING(const char* str);
+string_t ALLOC_STRING( const char* str );
 
-string_t ALLOC_STRING_VIEW(std::string_view str);
+string_t ALLOC_STRING_VIEW( std::string_view str );
 
 /**
  *	@brief Version of ALLOC_STRING that parses and converts escape characters
  */
-string_t ALLOC_ESCAPED_STRING(const char* str);
+string_t ALLOC_ESCAPED_STRING( const char* str );
 
 void ClearStringPool();
 
 bool Con_IsPrintBufferingEnabled();
 
-void Con_SetPrintBufferingEnabled(bool enabled);
+void Con_SetPrintBufferingEnabled( bool enabled );
 
-void Con_Printf(const char* format, ...);
-void Con_DPrintf(const char* format, ...);
+void Con_Printf( const char* format, ... );
+void Con_DPrintf( const char* format, ... );
 
 /**
  *	@brief Gets the command line value for the given key
  *	@return Whether the key was specified on the command line
  */
-bool COM_GetParam(const char* name, const char** next);
+bool COM_GetParam( const char* name, const char** next );
 
 /**
  *	@brief Checks whether the given key was specified on the command line
  */
-bool COM_HasParam(const char* name);
+bool COM_HasParam( const char* name );
 
 /**
  *	@brief Fixes bounds vectors so that the min components are <= than the max components.
  *	This avoids the "backwards mins/maxs" engine error.
  */
-bool UTIL_FixBoundsVectors(Vector& mins, Vector& maxs);
+bool UTIL_FixBoundsVectors( Vector& mins, Vector& maxs );
 
 constexpr bool UTIL_IsServer()
 {
 #ifdef CLIENT_DLL
-	return false;
+    return false;
 #else
-	return true;
+    return true;
 #endif
 }
 
 constexpr std::string_view GetShortLibraryPrefix()
 {
-	if constexpr (UTIL_IsServer())
-	{
-		return "sv"sv;
-	}
-	else
-	{
-		return "cl"sv;
-	}
+    if constexpr ( UTIL_IsServer() )
+    {
+        return "sv"sv;
+    }
+    else
+    {
+        return "cl"sv;
+    }
 }
 
 constexpr std::string_view GetLongLibraryPrefix()
 {
-	if constexpr (UTIL_IsServer())
-	{
-		return "server"sv;
-	}
-	else
-	{
-		return "client"sv;
-	}
+    if constexpr ( UTIL_IsServer() )
+    {
+        return "server"sv;
+    }
+    else
+    {
+        return "client"sv;
+    }
 }
 
 inline char com_token[1500];
@@ -176,19 +176,19 @@ inline char com_token[1500];
 /**
  *	@brief Parse a token out of a string
  */
-const char* COM_Parse(const char* data);
+const char* COM_Parse( const char* data );
 
 /**
  *	@brief Returns true if additional data is waiting to be processed on this line
  */
-bool COM_TokenWaiting(const char* buffer);
+bool COM_TokenWaiting( const char* buffer );
 
-int UTIL_SharedRandomLong(unsigned int seed, int low, int high);
-float UTIL_SharedRandomFloat(unsigned int seed, float low, float high);
+int UTIL_SharedRandomLong( unsigned int seed, int low, int high );
+float UTIL_SharedRandomFloat( unsigned int seed, float low, float high );
 
 // The client also provides these functions, so use them to make this cross-library.
-inline float CVAR_GET_FLOAT(const char* x) { return g_engfuncs.pfnCVarGetFloat(x); }
-inline const char* CVAR_GET_STRING(const char* x) { return g_engfuncs.pfnCVarGetString(x); }
+inline float CVAR_GET_FLOAT( const char* x ) { return g_engfuncs.pfnCVarGetFloat( x ); }
+inline const char* CVAR_GET_STRING( const char* x ) { return g_engfuncs.pfnCVarGetString( x ); }
 
 inline std::unique_ptr<PrecacheList> g_ModelPrecache;
 inline std::unique_ptr<PrecacheList> g_SoundPrecache;
@@ -196,45 +196,45 @@ inline std::unique_ptr<PrecacheList> g_GenericPrecache;
 
 void UTIL_CreatePrecacheLists();
 
-const char* UTIL_CheckForGlobalModelReplacement(const char* s);
+const char* UTIL_CheckForGlobalModelReplacement( const char* s );
 
-int UTIL_PrecacheModelDirect(const char* s);
+int UTIL_PrecacheModelDirect( const char* s );
 
-int UTIL_PrecacheModel(const char* s);
+int UTIL_PrecacheModel( const char* s );
 
-int UTIL_PrecacheSoundDirect(const char* s);
+int UTIL_PrecacheSoundDirect( const char* s );
 
-int UTIL_PrecacheSound(const char* s);
+int UTIL_PrecacheSound( const char* s );
 
-int UTIL_PrecacheGenericDirect(const char* s);
+int UTIL_PrecacheGenericDirect( const char* s );
 
 template <>
 struct fmt::formatter<Vector> : public fmt::formatter<float>
 {
-	template <typename FormatContext>
-	auto format(const Vector& p, FormatContext& ctx) const -> decltype(ctx.out())
-	{
-		auto out = fmt::formatter<float>::format(p.x, ctx);
-		*out++ = ' ';
-		ctx.advance_to(out);
-		out = fmt::formatter<float>::format(p.y, ctx);
-		*out++ = ' ';
-		ctx.advance_to(out);
-		return fmt::formatter<float>::format(p.z, ctx);
-	}
+    template <typename FormatContext>
+    auto format( const Vector& p, FormatContext& ctx ) const -> decltype( ctx.out() )
+    {
+        auto out = fmt::formatter<float>::format( p.x, ctx );
+        *out++ = ' ';
+        ctx.advance_to( out );
+        out = fmt::formatter<float>::format( p.y, ctx );
+        *out++ = ' ';
+        ctx.advance_to( out );
+        return fmt::formatter<float>::format( p.z, ctx );
+    }
 };
 
 template <>
 struct fmt::formatter<Vector2D> : public fmt::formatter<float>
 {
-	template <typename FormatContext>
-	auto format(const Vector2D& p, FormatContext& ctx) const -> decltype(ctx.out())
-	{
-		auto out = fmt::formatter<float>::format(p.x, ctx);
-		*out++ = ' ';
-		ctx.advance_to(out);
-		return fmt::formatter<float>::format(p.y, ctx);
-	}
+    template <typename FormatContext>
+    auto format( const Vector2D& p, FormatContext& ctx ) const -> decltype( ctx.out() )
+    {
+        auto out = fmt::formatter<float>::format( p.x, ctx );
+        *out++ = ' ';
+        ctx.advance_to( out );
+        return fmt::formatter<float>::format( p.y, ctx );
+    }
 };
 
 /**

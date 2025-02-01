@@ -20,7 +20,7 @@
 class CBaseDMStart : public CPointEntity
 {
 public:
-	bool IsTriggered(CBaseEntity* pEntity) override;
+    bool IsTriggered( CBaseEntity* pEntity ) override;
 };
 
 inline CBaseEntity* g_pLastSpawn = nullptr;
@@ -29,4 +29,4 @@ inline CBaseEntity* g_pLastSpawn = nullptr;
  *	@brief Returns the entity to spawn at
  *	USES AND SETS GLOBAL g_pLastSpawn
  */
-CBaseEntity* EntSelectSpawnPoint(CBasePlayer* pPlayer);
+CBaseEntity* EntSelectSpawnPoint( CBasePlayer* pPlayer );

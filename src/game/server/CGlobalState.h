@@ -20,49 +20,49 @@
 
 enum GLOBALESTATE
 {
-	GLOBAL_OFF = 0,
-	GLOBAL_ON = 1,
-	GLOBAL_DEAD = 2
+    GLOBAL_OFF = 0,
+    GLOBAL_ON = 1,
+    GLOBAL_DEAD = 2
 };
 
 struct globalentity_t
 {
-	DECLARE_CLASS_NOBASE(globalentity_t);
-	DECLARE_SIMPLE_DATAMAP();
+    DECLARE_CLASS_NOBASE( globalentity_t );
+    DECLARE_SIMPLE_DATAMAP();
 
 public:
-	char name[64];
-	char levelName[32];
-	GLOBALESTATE state;
-	globalentity_t* pNext;
+    char name[64];
+    char levelName[32];
+    GLOBALESTATE state;
+    globalentity_t* pNext;
 };
 
 class CGlobalState
 {
-	DECLARE_CLASS_NOBASE(CGlobalState);
-	DECLARE_SIMPLE_DATAMAP();
+    DECLARE_CLASS_NOBASE( CGlobalState );
+    DECLARE_SIMPLE_DATAMAP();
 
 public:
-	CGlobalState();
-	void Reset();
-	void ClearStates();
-	void EntityAdd(string_t globalname, string_t mapName, GLOBALESTATE state);
-	void EntitySetState(string_t globalname, GLOBALESTATE state);
-	void EntityUpdate(string_t globalname, string_t mapname);
-	const globalentity_t* EntityFromTable(string_t globalname);
-	GLOBALESTATE EntityGetState(string_t globalname);
-	bool EntityInTable(string_t globalname) { return Find(globalname) != nullptr; }
-	bool Save(CSave& save);
-	bool Restore(CRestore& restore);
+    CGlobalState();
+    void Reset();
+    void ClearStates();
+    void EntityAdd( string_t globalname, string_t mapName, GLOBALESTATE state );
+    void EntitySetState( string_t globalname, GLOBALESTATE state );
+    void EntityUpdate( string_t globalname, string_t mapname );
+    const globalentity_t* EntityFromTable( string_t globalname );
+    GLOBALESTATE EntityGetState( string_t globalname );
+    bool EntityInTable( string_t globalname ) { return Find( globalname ) != nullptr; }
+    bool Save( CSave& save );
+    bool Restore( CRestore& restore );
 
 	// #ifdef _DEBUG
-	void DumpGlobals();
+    void DumpGlobals();
 	// #endif
 
 private:
-	globalentity_t* Find(string_t globalname);
-	globalentity_t* m_pList;
-	int m_listCount;
+    globalentity_t* Find( string_t globalname );
+    globalentity_t* m_pList;
+    int m_listCount;
 };
 
 extern CGlobalState gGlobalState;

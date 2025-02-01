@@ -16,99 +16,99 @@
 
 class CAirtank : public CGrenade
 {
-	DECLARE_CLASS(CAirtank, CGrenade);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CAirtank, CGrenade );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	void TankThink();
-	void TankTouch(CBaseEntity* pOther);
-	int BloodColor() override { return DONT_BLEED; }
-	void Killed(CBaseEntity* attacker, int iGib) override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    void TankThink();
+    void TankTouch( CBaseEntity* pOther );
+    int BloodColor() override { return DONT_BLEED; }
+    void Killed( CBaseEntity* attacker, int iGib ) override;
 
-	bool m_state;
+    bool m_state;
 };
 
-LINK_ENTITY_TO_CLASS(item_airtank, CAirtank);
+LINK_ENTITY_TO_CLASS( item_airtank, CAirtank );
 
-BEGIN_DATAMAP(CAirtank)
-DEFINE_FIELD(m_state, FIELD_BOOLEAN),
-	DEFINE_FUNCTION(TankThink),
-	DEFINE_FUNCTION(TankTouch),
-	END_DATAMAP();
+BEGIN_DATAMAP( CAirtank )
+    DEFINE_FIELD( m_state, FIELD_BOOLEAN ),
+    DEFINE_FUNCTION( TankThink ),
+    DEFINE_FUNCTION( TankTouch ),
+END_DATAMAP();
 
 void CAirtank::OnCreate()
 {
-	CGrenade::OnCreate();
+    CGrenade::OnCreate();
 
-	pev->health = 20;
-	pev->model = MAKE_STRING("models/w_oxygen.mdl");
+    pev->health = 20;
+    pev->model = MAKE_STRING( "models/w_oxygen.mdl" );
 }
 
 void CAirtank::Spawn()
 {
-	Precache();
+    Precache();
 	// motor
-	pev->movetype = MOVETYPE_FLY;
-	pev->solid = SOLID_BBOX;
+    pev->movetype = MOVETYPE_FLY;
+    pev->solid = SOLID_BBOX;
 
-	SetModel(STRING(pev->model));
-	SetSize(Vector(-16, -16, 0), Vector(16, 16, 36));
-	SetOrigin(pev->origin);
+    SetModel( STRING( pev->model ) );
+    SetSize( Vector( -16, -16, 0 ), Vector( 16, 16, 36 ) );
+    SetOrigin( pev->origin );
 
-	SetTouch(&CAirtank::TankTouch);
-	SetThink(&CAirtank::TankThink);
+    SetTouch( &CAirtank::TankTouch );
+    SetThink( &CAirtank::TankThink );
 
-	pev->flags |= FL_MONSTER;
-	pev->takedamage = DAMAGE_YES;
-	pev->dmg = 50;
-	m_state = true;
+    pev->flags |= FL_MONSTER;
+    pev->takedamage = DAMAGE_YES;
+    pev->dmg = 50;
+    m_state = true;
 }
 
 void CAirtank::Precache()
 {
-	PrecacheModel(STRING(pev->model));
-	PrecacheSound("doors/aliendoor3.wav");
+    PrecacheModel( STRING( pev->model ) );
+    PrecacheSound( "doors/aliendoor3.wav" );
 }
 
-void CAirtank::Killed(CBaseEntity* attacker, int iGib)
+void CAirtank::Killed( CBaseEntity* attacker, int iGib )
 {
-	SetOwner(attacker);
+    SetOwner( attacker );
 
 	// UNDONE: this should make a big bubble cloud, not an explosion
 
-	Explode(pev->origin, Vector(0, 0, -1));
+    Explode( pev->origin, Vector( 0, 0, -1 ) );
 }
 
 void CAirtank::TankThink()
 {
 	// Fire trigger
-	m_state = true;
-	SUB_UseTargets(this, USE_TOGGLE, 0);
+    m_state = true;
+    SUB_UseTargets( this, USE_TOGGLE, 0 );
 }
 
-void CAirtank::TankTouch(CBaseEntity* pOther)
+void CAirtank::TankTouch( CBaseEntity* pOther )
 {
-	if (!pOther->IsPlayer())
-		return;
+    if( !pOther->IsPlayer() )
+        return;
 
-	if (!m_state)
-	{
+    if( !m_state )
+    {
 		// "no oxygen" sound
-		EmitSound(CHAN_BODY, "player/pl_swim2.wav", 1.0, ATTN_NORM);
-		return;
-	}
+        EmitSound( CHAN_BODY, "player/pl_swim2.wav", 1.0, ATTN_NORM );
+        return;
+    }
 
 	// give player 12 more seconds of air
-	pOther->pev->air_finished = gpGlobals->time + 12;
+    pOther->pev->air_finished = gpGlobals->time + 12;
 
 	// suit recharge sound
-	EmitSound(CHAN_VOICE, "doors/aliendoor3.wav", 1.0, ATTN_NORM);
+    EmitSound( CHAN_VOICE, "doors/aliendoor3.wav", 1.0, ATTN_NORM );
 
 	// recharge airtank in 30 seconds
-	pev->nextthink = gpGlobals->time + 30;
-	m_state = false;
-	SUB_UseTargets(this, USE_TOGGLE, 1);
+    pev->nextthink = gpGlobals->time + 30;
+    m_state = false;
+    SUB_UseTargets( this, USE_TOGGLE, 1 );
 }

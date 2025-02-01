@@ -19,30 +19,30 @@
 #include "hud.h"
 
 int CL_ButtonBits(bool);
-void CL_ResetButtonBits(int bits);
+void CL_ResetButtonBits( int bits );
 
 extern float v_idlescale;
 float in_fov;
 
-bool CHud::UpdateClientData(client_data_t* cdata, float time)
+bool CHud::UpdateClientData( client_data_t* cdata, float time )
 {
-	memcpy(m_vecOrigin, cdata->origin, sizeof(Vector));
-	memcpy(m_vecAngles, cdata->viewangles, sizeof(Vector));
+    memcpy( m_vecOrigin, cdata->origin, sizeof( Vector ) );
+    memcpy( m_vecAngles, cdata->viewangles, sizeof( Vector ) );
 
-	m_iKeyBits = CL_ButtonBits(false);
+    m_iKeyBits = CL_ButtonBits( false );
 	// Weapon bits are now used for passing hud flags. MsgFunc_Weapons passes the weapon bits.
-	m_HudFlags = cdata->iWeaponBits;
+    m_HudFlags = cdata->iWeaponBits;
 
-	in_fov = cdata->fov;
+    in_fov = cdata->fov;
 
-	Think();
+    Think();
 
-	cdata->fov = m_iFOV;
+    cdata->fov = m_iFOV;
 
-	v_idlescale = m_iConcussionEffect;
+    v_idlescale = m_iConcussionEffect;
 
-	CL_ResetButtonBits(m_iKeyBits);
+    CL_ResetButtonBits( m_iKeyBits );
 
 	// return 1 if in anything in the client_data struct has been changed, 0 otherwise
-	return true;
+    return true;
 }

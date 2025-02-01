@@ -24,50 +24,50 @@
  */
 class CChangeLevel : public CBaseTrigger
 {
-	DECLARE_CLASS(CChangeLevel, CBaseTrigger);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CChangeLevel, CBaseTrigger );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	bool KeyValue(KeyValueData* pkvd) override;
+    void Spawn() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
 	/**
 	 *	@brief allows level transitions to be triggered by buttons, etc.
 	 */
-	void UseChangeLevel(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+    void UseChangeLevel( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
-	void TouchChangeLevel(CBaseEntity* pOther);
-	void ChangeLevelNow(CBaseEntity* pActivator);
+    void TouchChangeLevel( CBaseEntity* pOther );
+    void ChangeLevelNow( CBaseEntity* pActivator );
 
-	static CBaseEntity* FindLandmark(const char* pLandmarkName);
+    static CBaseEntity* FindLandmark( const char* pLandmarkName );
 
 	/**
 	 *	@brief This builds the list of all transitions on this level and
 	 *	which entities are in their PVS's and can/should be moved across.
 	 */
-	static int ChangeList(LEVELLIST* pLevelList, int maxList);
+    static int ChangeList( LEVELLIST* pLevelList, int maxList );
 
 	/**
 	 *	@brief Add a transition to the list, but ignore duplicates
 	 *	(a designer may have placed multiple trigger_changelevels with the same landmark)
 	 */
-	static bool AddTransitionToList(LEVELLIST* pLevelList, int listCount, const char* pMapName, const char* pLandmarkName, CBaseEntity* pentLandmark);
+    static bool AddTransitionToList( LEVELLIST* pLevelList, int listCount, const char* pMapName, const char* pLandmarkName, CBaseEntity* pentLandmark );
 
-	static bool InTransitionVolume(CBaseEntity* pEntity, char* pVolumeName);
+    static bool InTransitionVolume( CBaseEntity* pEntity, char* pVolumeName );
 
-	char m_szMapName[cchMapNameMost];	   // trigger_changelevel only:  next map
-	char m_szLandmarkName[cchMapNameMost]; // trigger_changelevel only:  landmark on next map
-	string_t m_changeTarget;
-	float m_changeTargetDelay;
+    char m_szMapName[cchMapNameMost];       // trigger_changelevel only:  next map
+    char m_szLandmarkName[cchMapNameMost]; // trigger_changelevel only:  landmark on next map
+    string_t m_changeTarget;
+    float m_changeTargetDelay;
 
-	bool m_UsePersistentLevelChange = true;
+    bool m_UsePersistentLevelChange = true;
 
 	// Co-op only, don't need to restore.
-	bool m_UsePersistentInventory = true;
+    bool m_UsePersistentInventory = true;
 
 	// Diagnostics only; so level changes placed too close in connected maps don't break.
-	bool m_Enabled = true;
-	float m_LastTooCloseMessageTime = 0;
+    bool m_Enabled = true;
+    float m_LastTooCloseMessageTime = 0;
 	// Matches the default value of the scr_centertime cvar.
-	static constexpr float TooCloseMessageInterval = 2;
+    static constexpr float TooCloseMessageInterval = 2;
 };

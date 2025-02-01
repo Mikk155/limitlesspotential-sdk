@@ -19,47 +19,47 @@
 
 enum crossbow_e
 {
-	CROSSBOW_IDLE1 = 0, // full
-	CROSSBOW_IDLE2,		// empty
-	CROSSBOW_FIDGET1,	// full
-	CROSSBOW_FIDGET2,	// empty
-	CROSSBOW_FIRE1,		// full
-	CROSSBOW_FIRE2,		// reload
-	CROSSBOW_FIRE3,		// empty
-	CROSSBOW_RELOAD,	// from empty
-	CROSSBOW_DRAW1,		// full
-	CROSSBOW_DRAW2,		// empty
-	CROSSBOW_HOLSTER1,	// full
-	CROSSBOW_HOLSTER2,	// empty
+    CROSSBOW_IDLE1 = 0, // full
+    CROSSBOW_IDLE2,        // empty
+    CROSSBOW_FIDGET1,    // full
+    CROSSBOW_FIDGET2,    // empty
+    CROSSBOW_FIRE1,        // full
+    CROSSBOW_FIRE2,        // reload
+    CROSSBOW_FIRE3,        // empty
+    CROSSBOW_RELOAD,    // from empty
+    CROSSBOW_DRAW1,        // full
+    CROSSBOW_DRAW2,        // empty
+    CROSSBOW_HOLSTER1,    // full
+    CROSSBOW_HOLSTER2,    // empty
 };
 
 class CCrossbow : public CBasePlayerWeapon
 {
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	void FireBolt();
-	void FireSniperBolt();
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool Deploy() override;
-	void Holster() override;
-	void Reload() override;
-	void WeaponIdle() override;
+    void FireBolt();
+    void FireSniperBolt();
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool Deploy() override;
+    void Holster() override;
+    void Reload() override;
+    void WeaponIdle() override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	unsigned short m_usCrossbow;
-	unsigned short m_usCrossbow2;
+    unsigned short m_usCrossbow;
+    unsigned short m_usCrossbow2;
 };

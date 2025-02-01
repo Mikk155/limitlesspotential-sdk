@@ -15,33 +15,33 @@ class CBaseParticle;
 class CMiniMem
 {
 private:
-	static inline CMiniMem* _instance = nullptr;
+    static inline CMiniMem* _instance = nullptr;
 
-	std::pmr::unsynchronized_pool_resource _pool;
+    std::pmr::unsynchronized_pool_resource _pool;
 
-	std::vector<CBaseParticle*> _particles;
-	std::size_t _visibleParticles = 0;
+    std::vector<CBaseParticle*> _particles;
+    std::size_t _visibleParticles = 0;
 
 protected:
 	// private constructor and destructor.
-	CMiniMem() = default;
-	~CMiniMem() = default;
+    CMiniMem() = default;
+    ~CMiniMem() = default;
 
 public:
-	void* Allocate(std::size_t sizeInBytes, std::size_t alignment = alignof(std::max_align_t));
+    void* Allocate( std::size_t sizeInBytes, std::size_t alignment = alignof( std::max_align_t ) );
 
-	void Deallocate(void* memory, std::size_t sizeInBytes, std::size_t alignment = alignof(std::max_align_t));
+    void Deallocate( void* memory, std::size_t sizeInBytes, std::size_t alignment = alignof( std::max_align_t ) );
 
-	void ProcessAll(); // Processes all
+    void ProcessAll(); // Processes all
 
-	void Reset(); // clears memory, setting all particles to not used.
+    void Reset(); // clears memory, setting all particles to not used.
 
-	void Shutdown();
+    void Shutdown();
 
-	int ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, float flStrength);
+    int ApplyForce( Vector vOrigin, Vector vDirection, float flRadius, float flStrength );
 
-	static CMiniMem* Instance();
+    static CMiniMem* Instance();
 
-	std::size_t GetTotalParticles() { return _particles.size(); }
-	std::size_t GetDrawnParticles() { return _visibleParticles; }
+    std::size_t GetTotalParticles() { return _particles.size(); }
+    std::size_t GetDrawnParticles() { return _visibleParticles; }
 };

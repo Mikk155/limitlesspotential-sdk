@@ -40,26 +40,26 @@ constexpr std::uint32_t NetworkDataInvalidProtocolVersion = 0;
 
 enum class NetworkDataMode
 {
-	Serialize,
-	Deserialize
+    Serialize,
+    Deserialize
 };
 
 struct NetworkDataBlock
 {
-	const std::string_view Name;
+    const std::string_view Name;
 
 	/**
 	 *	@brief Whether the block is being serialized or deserialized.
 	 */
-	const NetworkDataMode Mode;
+    const NetworkDataMode Mode;
 
-	json Data;
+    json Data;
 
 	/**
 	 *	@brief If an error occurs during the handling of a network data block,
 	 *	set this to an error message to indicate that an error occurred and which message to show.
 	 */
-	std::string ErrorMessage;
+    std::string ErrorMessage;
 };
 
 /**
@@ -68,19 +68,19 @@ struct NetworkDataBlock
 class INetworkDataBlockHandler
 {
 public:
-	virtual ~INetworkDataBlockHandler() = default;
+    virtual ~INetworkDataBlockHandler() = default;
 
 	/**
 	 *	@brief Called when a network data set is about to be processed.
 	 */
-	virtual void OnBeginNetworkDataProcessing() {}
+    virtual void OnBeginNetworkDataProcessing() {}
 
 	/**
 	 *	@brief Called when a network data set has been processed.
 	 */
-	virtual void OnEndNetworkDataProcessing() {}
+    virtual void OnEndNetworkDataProcessing() {}
 
-	virtual void HandleNetworkDataBlock(NetworkDataBlock& block) = 0;
+    virtual void HandleNetworkDataBlock( NetworkDataBlock& block ) = 0;
 };
 
 /**
@@ -89,47 +89,47 @@ public:
 class NetworkDataSystem final : public IGameSystem
 {
 private:
-	struct HandlerData
-	{
-		std::string Name;
-		INetworkDataBlockHandler* Handler{};
-	};
+    struct HandlerData
+    {
+        std::string Name;
+        INetworkDataBlockHandler* Handler{};
+    };
 
 public:
-	NetworkDataSystem() = default;
+    NetworkDataSystem() = default;
 
-	NetworkDataSystem(const NetworkDataSystem&) = delete;
-	NetworkDataSystem& operator=(const NetworkDataSystem&) = delete;
+    NetworkDataSystem( const NetworkDataSystem& ) = delete;
+    NetworkDataSystem& operator=( const NetworkDataSystem& ) = delete;
 
-	const char* GetName() const override { return "NetworkData"; }
+    const char* GetName() const override { return "NetworkData"; }
 
-	bool Initialize() override;
-	void PostInitialize() override;
-	void Shutdown() override;
+    bool Initialize() override;
+    void PostInitialize() override;
+    void Shutdown() override;
 
-	spdlog::logger* GetLogger() const { return m_Logger.get(); }
+    spdlog::logger* GetLogger() const { return m_Logger.get(); }
 
-	void RegisterHandler(std::string&& name, INetworkDataBlockHandler* handler);
+    void RegisterHandler( std::string&& name, INetworkDataBlockHandler* handler );
 
-	static void RemoveNetworkDataFiles(const char* pathID);
+    static void RemoveNetworkDataFiles( const char* pathID );
 
 #ifndef CLIENT_DLL
-	bool GenerateNetworkDataFile();
+    bool GenerateNetworkDataFile();
 
 private:
-	std::optional<json> TryGenerateNetworkData();
-	bool TryWriteNetworkDataFile(const std::string& fileName, const json& output);
+    std::optional<json> TryGenerateNetworkData();
+    bool TryWriteNetworkDataFile( const std::string& fileName, const json& output );
 #else
-	bool TryLoadNetworkDataFile();
+    bool TryLoadNetworkDataFile();
 
 private:
-	std::optional<std::vector<std::uint8_t>> TryLoadDataFromFile(const std::string& fileName);
-	bool TryParseNetworkData(const std::vector<std::uint8_t>& fileData);
+    std::optional<std::vector<std::uint8_t>> TryLoadDataFromFile( const std::string& fileName );
+    bool TryParseNetworkData( const std::vector<std::uint8_t>& fileData );
 #endif
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	std::vector<HandlerData> m_Handlers;
+    std::shared_ptr<spdlog::logger> m_Logger;
+    std::vector<HandlerData> m_Handlers;
 };
 
 inline NetworkDataSystem g_NetworkData;

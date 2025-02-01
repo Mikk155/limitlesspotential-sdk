@@ -16,17 +16,17 @@
 
 #include "CRopeSample.h"
 
-BEGIN_DATAMAP(CRopeSample)
-DEFINE_FIELD(m_Data.mPosition, FIELD_VECTOR),
-	DEFINE_FIELD(m_Data.mVelocity, FIELD_VECTOR),
-	DEFINE_FIELD(m_Data.mForce, FIELD_VECTOR),
-	DEFINE_FIELD(m_Data.mExternalForce, FIELD_VECTOR),
-	DEFINE_FIELD(m_Data.mApplyExternalForce, FIELD_BOOLEAN),
-	DEFINE_FIELD(m_Data.mMassReciprocal, FIELD_FLOAT),
-	DEFINE_FIELD(m_pMasterRope, FIELD_CLASSPTR),
-	END_DATAMAP();
+BEGIN_DATAMAP( CRopeSample )
+    DEFINE_FIELD( m_Data.mPosition, FIELD_VECTOR ),
+    DEFINE_FIELD( m_Data.mVelocity, FIELD_VECTOR ),
+    DEFINE_FIELD( m_Data.mForce, FIELD_VECTOR ),
+    DEFINE_FIELD( m_Data.mExternalForce, FIELD_VECTOR ),
+    DEFINE_FIELD( m_Data.mApplyExternalForce, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_Data.mMassReciprocal, FIELD_FLOAT ),
+    DEFINE_FIELD( m_pMasterRope, FIELD_CLASSPTR ),
+END_DATAMAP();
 
-LINK_ENTITY_TO_CLASS(rope_sample, CRopeSample);
+LINK_ENTITY_TO_CLASS( rope_sample, CRopeSample );
 
 void CRopeSample::Spawn()
 {
@@ -36,9 +36,9 @@ void CRopeSample::Spawn()
 
 CRopeSample* CRopeSample::CreateSample()
 {
-	auto pSample = static_cast<CRopeSample*>(g_EntityDictionary->Create("rope_sample"));
+    auto pSample = static_cast<CRopeSample*>( g_EntityDictionary->Create( "rope_sample" ) );
 
-	pSample->Spawn();
+    pSample->Spawn();
 
-	return pSample;
+    return pSample;
 }

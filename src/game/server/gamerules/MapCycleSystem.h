@@ -29,44 +29,44 @@
 
 struct MapCycleItem
 {
-	eastl::fixed_string<char, cchMapNameMost> MapName;
+    eastl::fixed_string<char, cchMapNameMost> MapName;
 
-	int MinPlayers{0};
-	int MaxPlayers{0};
+    int MinPlayers{0};
+    int MaxPlayers{0};
 };
 
 class MapCycle final
 {
 public:
-	std::vector<MapCycleItem> Items;
+    std::vector<MapCycleItem> Items;
 
-	std::size_t Index{0};
+    std::size_t Index{0};
 
-	const MapCycleItem* GetNextMap(int currentPlayerCount);
+    const MapCycleItem* GetNextMap( int currentPlayerCount );
 };
 
 class MapCycleSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "MapCycle"; }
+    const char* GetName() const override { return "MapCycle"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	MapCycle* GetMapCycle();
-
-private:
-	MapCycle LoadMapCycle(const char* fileName);
-	MapCycle ParseMapCycle(const json& input);
+    MapCycle* GetMapCycle();
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	eastl::fixed_string<char, MAX_PATH_LENGTH> m_PreviousMapCycleFile;
+    MapCycle LoadMapCycle( const char* fileName );
+    MapCycle ParseMapCycle( const json& input );
 
-	MapCycle m_MapCycle;
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
+    eastl::fixed_string<char, MAX_PATH_LENGTH> m_PreviousMapCycleFile;
+
+    MapCycle m_MapCycle;
 };
 
 inline MapCycleSystem g_MapCycleSystem;

@@ -19,26 +19,26 @@
 
 bool HudReplacementSystem::Initialize()
 {
-	g_NetworkData.RegisterHandler("HudReplacement", this);
-	return true;
+    g_NetworkData.RegisterHandler( "HudReplacement", this );
+    return true;
 }
 
-void HudReplacementSystem::HandleNetworkDataBlock(NetworkDataBlock& block)
+void HudReplacementSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 {
-	if (block.Mode == NetworkDataMode::Serialize)
-	{
-		block.Data = HudReplacementFileName;
-	}
-	else
-	{
-		HudReplacementFileName = block.Data.get<std::string>();
-	}
+    if( block.Mode == NetworkDataMode::Serialize )
+    {
+        block.Data = HudReplacementFileName;
+    }
+    else
+    {
+        HudReplacementFileName = block.Data.get<std::string>();
+    }
 }
 
-void HudReplacementSystem::SetWeaponHudReplacementFiles(WeaponHudReplacements&& fileNames)
+void HudReplacementSystem::SetWeaponHudReplacementFiles( WeaponHudReplacements&& fileNames )
 {
-	for (auto& [key, value] : fileNames)
-	{
-		g_WeaponData.SetWeaponHudConfigFileName(key, std::move(value));
-	}
+    for( auto& [key, value] : fileNames )
+    {
+        g_WeaponData.SetWeaponHudConfigFileName( key, std::move( value ) );
+    }
 }

@@ -18,90 +18,90 @@
 
 bool CHudProjectInfo::Init()
 {
-	gHUD.AddHudElem(this);
+    gHUD.AddHudElem( this );
 
-	m_iFlags |= HUD_ACTIVE;
+    m_iFlags |= HUD_ACTIVE;
 
-	m_IsAlphaBuild = g_ProjectInfo.IsAlphaBuild(*g_ProjectInfo.GetLocalInfo());
+    m_IsAlphaBuild = g_ProjectInfo.IsAlphaBuild( *g_ProjectInfo.GetLocalInfo() );
 
 	// Turn this on by default if this is a (pre-)alpha build.
 	// Users will easily know they're running a (pre-)alpha build and screenshots and videos will include important information.
-	m_ShowProjectInfo = CVAR_CREATE("cl_projectinfo_show", m_IsAlphaBuild ? "1" : "0", 0);
+    m_ShowProjectInfo = CVAR_CREATE( "cl_projectinfo_show", m_IsAlphaBuild ? "1" : "0", 0 );
 
-	return true;
+    return true;
 }
 
 bool CHudProjectInfo::VidInit()
 {
-	return true;
+    return true;
 }
 
-bool CHudProjectInfo::Draw(float flTime)
+bool CHudProjectInfo::Draw( float flTime )
 {
-	if (m_IsAlphaBuild || m_ShowProjectInfo->value > 0)
-	{
-		const int xPos = 20;
+    if( m_IsAlphaBuild || m_ShowProjectInfo->value > 0 )
+    {
+        const int xPos = 20;
 
-		int lineWidth, lineHeight;
-		GetConsoleStringSize("", &lineWidth, &lineHeight);
+        int lineWidth, lineHeight;
+        GetConsoleStringSize( "", &lineWidth, &lineHeight );
 
 		// Shrink line height a bit.
-		lineHeight = static_cast<int>(lineHeight * 0.9f);
+        lineHeight = static_cast<int>( lineHeight * 0.9f );
 
-		int yPos = static_cast<int>(ScreenHeight * 0.05);
+        int yPos = static_cast<int>( ScreenHeight * 0.05 );
 
-		const auto lineDrawer = [&](const char* text, const RGB24& color = {255, 255, 255})
-		{
-			gHUD.DrawHudString(xPos, yPos, ScreenWidth - xPos, text, color);
-			yPos += lineHeight;
-		};
+        const auto lineDrawer = [&]( const char* text, const RGB24& color = {255, 255, 255} )
+        {
+            gHUD.DrawHudString( xPos, yPos, ScreenWidth - xPos, text, color );
+            yPos += lineHeight;
+        };
 
-		eastl::fixed_string<char, 512> buffer;
+        eastl::fixed_string<char, 512> buffer;
 
-		const auto libraryDrawer = [&](const LibraryInfo& info, const char* libraryName, const RGB24& libraryNameColor)
-		{
-			buffer.clear();
-			fmt::format_to(std::back_inserter(buffer), "{}:", libraryName);
-			lineDrawer(buffer.c_str(), libraryNameColor);
+        const auto libraryDrawer = [&]( const LibraryInfo& info, const char* libraryName, const RGB24& libraryNameColor )
+        {
+            buffer.clear();
+            fmt::format_to( std::back_inserter( buffer ), "{}:", libraryName );
+            lineDrawer( buffer.c_str(), libraryNameColor );
 
-			buffer.clear();
-			fmt::format_to(std::back_inserter(buffer), "\tVersion: {}.{}.{}-{} | Branch: {} | Tag: {}",
-				info.MajorVersion, info.MinorVersion, info.PatchVersion,
-				info.ReleaseType, info.BranchName, info.TagName);
-			lineDrawer(buffer.c_str());
+            buffer.clear();
+            fmt::format_to( std::back_inserter( buffer ), "\tVersion: {}.{}.{}-{} | Branch: {} | Tag: {}",
+                info.MajorVersion, info.MinorVersion, info.PatchVersion,
+                info.ReleaseType, info.BranchName, info.TagName );
+            lineDrawer( buffer.c_str() );
 
-			buffer.clear();
-			fmt::format_to(std::back_inserter(buffer), "\tCommit Hash: {}", info.CommitHash);
-			lineDrawer(buffer.c_str());
+            buffer.clear();
+            fmt::format_to( std::back_inserter( buffer ), "\tCommit Hash: {}", info.CommitHash );
+            lineDrawer( buffer.c_str() );
 
-			buffer.clear();
-			fmt::format_to(std::back_inserter(buffer), "\tBuild Timestamp: {}", info.BuildTimestamp);
-			lineDrawer(buffer.c_str());
-		};
+            buffer.clear();
+            fmt::format_to( std::back_inserter( buffer ), "\tBuild Timestamp: {}", info.BuildTimestamp );
+            lineDrawer( buffer.c_str() );
+        };
 
-		const auto clientInfo = g_ProjectInfo.GetLocalInfo();
-		const auto serverInfo = g_ProjectInfo.GetServerInfo();
+        const auto clientInfo = g_ProjectInfo.GetLocalInfo();
+        const auto serverInfo = g_ProjectInfo.GetServerInfo();
 
 		// The server's build type isn't important enough to send over.
-		buffer.clear();
-		fmt::format_to(std::back_inserter(buffer), "Build type: {}", UNIFIED_SDK_CONFIG);
-		lineDrawer(buffer.c_str());
+        buffer.clear();
+        fmt::format_to( std::back_inserter( buffer ), "Build type: {}", UNIFIED_SDK_CONFIG );
+        lineDrawer( buffer.c_str() );
 
-		libraryDrawer(*clientInfo, "Client", {128, 128, 255});
-		libraryDrawer(*serverInfo, "Server", {255, 128, 128});
+        libraryDrawer( *clientInfo, "Client", {128, 128, 255} );
+        libraryDrawer( *serverInfo, "Server", {255, 128, 128} );
 
-		yPos += lineHeight;
+        yPos += lineHeight;
 
-		if (m_IsAlphaBuild)
-		{
-			lineDrawer("Work In Progress build not suited for use (testing individual features by request only)");
-		}
+        if( m_IsAlphaBuild )
+        {
+            lineDrawer( "Work In Progress build not suited for use (testing individual features by request only)" );
+        }
 
-		if (clientInfo->CommitHash != serverInfo->CommitHash)
-		{
-			lineDrawer("Warning: Client and server builds do not match");
-		}
-	}
+        if( clientInfo->CommitHash != serverInfo->CommitHash )
+        {
+            lineDrawer( "Warning: Client and server builds do not match" );
+        }
+    }
 
-	return true;
+    return true;
 }

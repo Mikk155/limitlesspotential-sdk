@@ -29,42 +29,42 @@ struct local_state_t;
 struct usercmd_t;
 
 edict_t* CreateEntity();
-edict_t* FindEntityByVars(entvars_t* pvars);
+edict_t* FindEntityByVars( entvars_t* pvars );
 
 class ClientPredictionSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "ClientPrediction"; }
+    const char* GetName() const override { return "ClientPrediction"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	void Reset();
+    void Reset();
 
-	void InitializeEntities();
+    void InitializeEntities();
 
-	CBasePlayer* GetPlayer() { return m_Player; }
+    CBasePlayer* GetPlayer() { return m_Player; }
 
-	CBasePlayerWeapon* GetLocalWeapon(int id);
+    CBasePlayerWeapon* GetLocalWeapon( int id );
 
 	/**
 	 *	@brief Run Weapon firing code on client
 	 */
-	void WeaponsPostThink(local_state_t* from, local_state_t* to, usercmd_t* cmd, double time, unsigned int random_seed);
+    void WeaponsPostThink( local_state_t* from, local_state_t* to, usercmd_t* cmd, double time, unsigned int random_seed );
 
 private:
-	CBasePlayer* CreatePlayer();
-	void PrepWeapon(std::string_view className, CBasePlayer* weaponOwner);
+    CBasePlayer* CreatePlayer();
+    void PrepWeapon( std::string_view className, CBasePlayer* weaponOwner );
 
 private:
-	bool m_Initialized = false;
-	bool m_WeaponInfoLinked = false;
+    bool m_Initialized = false;
+    bool m_WeaponInfoLinked = false;
 
-	CBasePlayer* m_Player{};
-	std::array<CBasePlayerWeapon*, MAX_WEAPONS> m_Weapons{};
+    CBasePlayer* m_Player{};
+    std::array<CBasePlayerWeapon*, MAX_WEAPONS> m_Weapons{};
 };
 
 inline ClientPredictionSystem g_ClientPrediction;

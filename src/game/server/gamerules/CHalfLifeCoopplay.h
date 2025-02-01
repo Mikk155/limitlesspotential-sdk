@@ -20,46 +20,46 @@
 class CHalfLifeCoopplay : public CHalfLifeMultiplay
 {
 public:
-	static constexpr char GameModeName[] = "coop";
+    static constexpr char GameModeName[] = "coop";
 
-	CHalfLifeCoopplay();
+    CHalfLifeCoopplay();
 
-	const char* GetGameModeName() const override { return GameModeName; }
+    const char* GetGameModeName() const override { return GameModeName; }
 
-	bool IsCoOp() override { return true; }
-	bool IsTeamplay() override { return true; }
+    bool IsCoOp() override { return true; }
+    bool IsTeamplay() override { return true; }
 
-	void UpdateGameMode(CBasePlayer* pPlayer) override;
+    void UpdateGameMode( CBasePlayer* pPlayer ) override;
 
-	void DeathNotice(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override {}
+    void DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override {}
 
-	void MonsterKilled(CBaseMonster* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override;
+    void MonsterKilled( CBaseMonster* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
 
-	int PlayerRelationship(CBasePlayer* pPlayer, CBaseEntity* pTarget) override;
+    int PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget ) override;
 
-	bool ShouldAutoAim(CBasePlayer* pPlayer, CBaseEntity* target) override;
+    bool ShouldAutoAim( CBasePlayer* pPlayer, CBaseEntity* target ) override;
 
-	int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) override;
+    int IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled ) override;
 
-	int IPointsForMonsterKill(CBasePlayer* pAttacker, CBaseMonster* pKilled) override;
+    int IPointsForMonsterKill( CBasePlayer* pAttacker, CBaseMonster* pKilled ) override;
 
-	bool FPlayerCanRespawn(CBasePlayer* pPlayer) override { return true; }
+    bool FPlayerCanRespawn( CBasePlayer* pPlayer ) override { return true; }
 
-	float FlPlayerSpawnTime(CBasePlayer* pPlayer) override;
+    float FlPlayerSpawnTime( CBasePlayer* pPlayer ) override;
 
-	int DeadPlayerWeapons(CBasePlayer* pPlayer) override;
+    int DeadPlayerWeapons( CBasePlayer* pPlayer ) override;
 
-	void PlayerKilled(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override;
+    void PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
 
-	void Think() override;
+    void Think() override;
 
-	bool FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker) override;
+    bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
 
-	const char* GetGameDescription() override { return "HL Coopplay"; }
+    const char* GetGameDescription() override { return "HL Coopplay"; }
 
 private:
-	bool m_DisableDeathMessages = false;
-	bool m_DisableDeathPenalty = false;
+    bool m_DisableDeathMessages = false;
+    bool m_DisableDeathPenalty = false;
 
-	ScopedClientCommand m_MenuSelectCommand;
+    ScopedClientCommand m_MenuSelectCommand;
 };

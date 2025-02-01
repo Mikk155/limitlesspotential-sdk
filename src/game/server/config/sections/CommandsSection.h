@@ -36,112 +36,112 @@ template <typename DataContext>
 class CommandsSection final : public GameConfigSection<DataContext>
 {
 private:
-	static const inline std::regex CommandNameRegex{"^[\\w]+$"};
+    static const inline std::regex CommandNameRegex{"^[\\w]+$"};
 
 public:
 	/**
 	 *	@param commandWhitelist If provided, only commands listed in this whitelist are allowed to be executed.
 	 */
-	explicit CommandsSection(const CommandWhitelist* commandWhitelist = nullptr)
-		: m_CommandWhitelist(std::move(commandWhitelist))
-	{
-	}
+    explicit CommandsSection( const CommandWhitelist* commandWhitelist = nullptr )
+        : m_CommandWhitelist( std::move( commandWhitelist ) )
+    {
+    }
 
-	std::string_view GetName() const override final { return "Commands"; }
+    std::string_view GetName() const override final { return "Commands"; }
 
-	json::value_t GetType() const override final { return json::value_t::array; }
+    json::value_t GetType() const override final { return json::value_t::array; }
 
-	std::string GetSchema() const override final
-	{
-		return fmt::format(R"(
+    std::string GetSchema() const override final
+    {
+        return fmt::format( R"(
 "items": {{
-	"title": "Command",
-	"type": "string",
-	"pattern": ".+"
-}})");
-	}
+    "title": "Command",
+    "type": "string",
+    "pattern": ".+"
+}})" );
+    }
 
-	bool TryParse(GameConfigContext<DataContext>& context) const override final
-	{
-		std::string buffer;
+    bool TryParse( GameConfigContext<DataContext>& context ) const override final
+    {
+        std::string buffer;
 
-		auto& logger = context.Logger;
+        auto& logger = context.Logger;
 
-		auto executor = [&](const std::string& command)
-		{
-			logger.trace("Executing command \"{}\"", command);
+        auto executor = [&]( const std::string& command )
+        {
+            logger.trace( "Executing command \"{}\"", command );
 
-			buffer.clear();
-			fmt::format_to(std::back_inserter(buffer), "{}\n", command);
+            buffer.clear();
+            fmt::format_to( std::back_inserter( buffer ), "{}\n", command );
 
-			g_engfuncs.pfnServerCommand(buffer.c_str());
-		};
+            g_engfuncs.pfnServerCommand( buffer.c_str() );
+        };
 
-		std::vector<std::string> commands;
+        std::vector<std::string> commands;
 
-		commands.reserve(context.Input.size());
+        commands.reserve( context.Input.size() );
 
-		for (const auto& command : context.Input)
-		{
-			if (!command.is_string())
-			{
-				continue;
-			}
+        for( const auto& command : context.Input )
+        {
+            if( !command.is_string() )
+            {
+                continue;
+            }
 
-			auto value = command.template get<std::string>();
+            auto value = command.template get<std::string>();
 
 			// First token is the command name
-			COM_Parse(value.c_str());
+            COM_Parse( value.c_str() );
 
-			if (!com_token[0])
-			{
-				continue;
-			}
+            if( !com_token[0] )
+            {
+                continue;
+            }
 
 			// Prevent anything screwy from going into names
 			// Prevent commands from being snuck in by appending it to the end of another command
-			if (!std::regex_match(com_token, CommandNameRegex) || !ValidateCommand(value))
-			{
-				logger.warn(
-					"Command \"{:.10}{}\" contains illegal characters",
-					value, value.length() > 10 ? "..."sv : ""sv);
-				continue;
-			}
+            if( !std::regex_match( com_token, CommandNameRegex ) || !ValidateCommand( value ) )
+            {
+                logger.warn( 
+                    "Command \"{:.10}{}\" contains illegal characters",
+                    value, value.length() > 10 ? "..."sv : ""sv );
+                continue;
+            }
 
-			if (!m_CommandWhitelist || m_CommandWhitelist->contains(com_token))
-			{
-				executor(value);
-			}
-			else
-			{
-				logger.warn("Command \"{}\" is not whitelisted, ignoring", com_token);
-			}
-		}
+            if( !m_CommandWhitelist || m_CommandWhitelist->contains( com_token ) )
+            {
+                executor( value );
+            }
+            else
+            {
+                logger.warn( "Command \"{}\" is not whitelisted, ignoring", com_token );
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 private:
-	static bool ValidateCommand(std::string_view command)
-	{
-		bool inQuotes = false;
+    static bool ValidateCommand( std::string_view command )
+    {
+        bool inQuotes = false;
 
-		for (auto c : command)
-		{
+        for( auto c : command )
+        {
 			// This logic matches that of the engine's command parser
-			if (c == '\"')
-			{
-				inQuotes = !inQuotes;
-			}
-			else if ((!inQuotes && c == ';') || c == '\n')
-			{
-				return false;
-			}
-		}
+            if( c == '\"' )
+            {
+                inQuotes = !inQuotes;
+            }
+            else if( ( !inQuotes && c == ';' ) || c == '\n' )
+            {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
 private:
-	const CommandWhitelist* m_CommandWhitelist;
+    const CommandWhitelist* m_CommandWhitelist;
 };

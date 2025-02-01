@@ -33,61 +33,61 @@ namespace sentences
 {
 struct Sentence
 {
-	SentenceName Name;
-	std::string Value;
+    SentenceName Name;
+    std::string Value;
 };
 
 class SentencesSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	const char* GetName() const override { return "Sentences"; }
+    const char* GetName() const override { return "Sentences"; }
 
-	bool Initialize() override;
-	void PostInitialize() override {}
-	void Shutdown() override;
+    bool Initialize() override;
+    void PostInitialize() override {}
+    void Shutdown() override;
 
-	void LoadSentences(std::span<const std::string> fileNames);
+    void LoadSentences( std::span<const std::string> fileNames );
 
-	void NewMapStarted();
+    void NewMapStarted();
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override;
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-	const char* GetSentenceNameByIndex(int index) const;
+    const char* GetSentenceNameByIndex( int index ) const;
 
 	/**
 	 *	@brief convert sentence (sample) name to !sentencenum.
 	 *	@return Sentence index, or -1 if the sentence could not be found.
 	 */
-	int LookupSentence(CBaseEntity* entity, const char* sample, SentenceIndexName* sentencenum) const;
+    int LookupSentence( CBaseEntity* entity, const char* sample, SentenceIndexName* sentencenum ) const;
 
 	/**
 	 *	@brief given sentence group name, play random sentence for given entity.
 	 *	@return ipick - which sentence was picked to play from the group.
 	 *		Ipick is only needed if you plan on stopping the sound before playback is done (@see Stop).
 	 */
-	int PlayRndSz(CBaseEntity* entity, const char* szrootname, float volume, float attenuation, int flags, int pitch);
+    int PlayRndSz( CBaseEntity* entity, const char* szrootname, float volume, float attenuation, int flags, int pitch );
 
 	/**
 	 *	@brief play sentences in sequential order from sentence group. Reset after last sentence.
 	 */
-	int PlaySequentialSz(CBaseEntity* entity, const char* szrootname, float volume, float attenuation, int flags, int pitch, int ipick, bool freset);
+    int PlaySequentialSz( CBaseEntity* entity, const char* szrootname, float volume, float attenuation, int flags, int pitch, int ipick, bool freset );
 
 	/**
 	 *	@brief for this entity, for the given sentence within the sentence group, stop the sentence.
 	 */
-	void Stop(CBaseEntity* entity, int isentenceg, int ipick);
+    void Stop( CBaseEntity* entity, int isentenceg, int ipick );
 
 private:
 	/**
 	 *	@brief randomize list of sentence name indices
 	 */
-	static void InitLRU(eastl::fixed_vector<unsigned char, CSENTENCE_LRU_MAX>& lru);
+    static void InitLRU( eastl::fixed_vector<unsigned char, CSENTENCE_LRU_MAX>& lru );
 
 	/**
 	 *	@brief Given sentence group rootname (name without number suffix), get sentence group index (isentenceg).
 	 *	@return -1 if no such name.
 	 */
-	int GetGroupIndex(CBaseEntity* entity, const char* szrootname) const;
+    int GetGroupIndex( CBaseEntity* entity, const char* szrootname ) const;
 
 	/**
 	 *	@brief pick a random sentence from rootname0 to rootnameX.
@@ -97,7 +97,7 @@ private:
 	 *	@param[out] found the sentence name.
 	 *	@return ipick, the ordinal of the picked sentence within the group.
 	 */
-	int Pick(int isentenceg, SentenceIndexName& found);
+    int Pick( int isentenceg, SentenceIndexName& found );
 
 	/**
 	 *	@brief ignore lru. pick next sentence from sentence group.
@@ -106,15 +106,15 @@ private:
 	 *	@param ipick requested sentence ordinal
 	 *	@return Next value for @p ipick, or -1 if there was an error.
 	 */
-	int PickSequential(int isentenceg, SentenceIndexName& found, int ipick, bool freset) const;
+    int PickSequential( int isentenceg, SentenceIndexName& found, int ipick, bool freset ) const;
 
-	const char* CheckForSentenceReplacement(CBaseEntity* entity, const char* sentenceName) const;
+    const char* CheckForSentenceReplacement( CBaseEntity* entity, const char* sentenceName ) const;
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    std::shared_ptr<spdlog::logger> m_Logger;
 
-	std::vector<Sentence> m_Sentences;
-	std::vector<SentenceGroup> m_SentenceGroups;
+    std::vector<Sentence> m_Sentences;
+    std::vector<SentenceGroup> m_SentenceGroups;
 };
 
 inline SentencesSystem g_Sentences;

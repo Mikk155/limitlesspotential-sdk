@@ -27,10 +27,10 @@
 class CWorld : public CBaseEntity
 {
 public:
-	CWorld();
-	~CWorld() override;
+    CWorld();
+    ~CWorld() override;
 
-	void Spawn() override;
-	void Precache() override;
-	bool KeyValue(KeyValueData* pkvd) override;
+    void Spawn() override;
+    void Precache() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 };

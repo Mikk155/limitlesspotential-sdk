@@ -19,49 +19,49 @@
 
 enum tripmine_e
 {
-	TRIPMINE_IDLE1 = 0,
-	TRIPMINE_IDLE2,
-	TRIPMINE_ARM1,
-	TRIPMINE_ARM2,
-	TRIPMINE_FIDGET,
-	TRIPMINE_HOLSTER,
-	TRIPMINE_DRAW,
+    TRIPMINE_IDLE1 = 0,
+    TRIPMINE_IDLE2,
+    TRIPMINE_ARM1,
+    TRIPMINE_ARM2,
+    TRIPMINE_FIDGET,
+    TRIPMINE_HOLSTER,
+    TRIPMINE_DRAW,
 };
 
 enum tripmineworld_e
 {
-	TRIPMINE_WORLD = 0,
-	TRIPMINE_GROUND
+    TRIPMINE_WORLD = 0,
+    TRIPMINE_GROUND
 };
 
 class CTripmine : public CBasePlayerWeapon
 {
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void SetObjectCollisionBox() override
-	{
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void SetObjectCollisionBox() override
+    {
 		//!!!BUGBUG - fix the model!
-		pev->absmin = pev->origin + Vector(-16, -16, -5);
-		pev->absmax = pev->origin + Vector(16, 16, 28);
-	}
+        pev->absmin = pev->origin + Vector( -16, -16, -5 );
+        pev->absmax = pev->origin + Vector( 16, 16, 28 );
+    }
 
-	void PrimaryAttack() override;
-	bool Deploy() override;
-	void Holster() override;
-	void WeaponIdle() override;
+    void PrimaryAttack() override;
+    bool Deploy() override;
+    void Holster() override;
+    void WeaponIdle() override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	unsigned short m_usTripFire;
+    unsigned short m_usTripFire;
 };

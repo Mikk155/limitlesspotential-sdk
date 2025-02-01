@@ -9,6 +9,6 @@
 
 struct kbutton_t
 {
-	int down[2]; // key nums holding it down
-	int state;	 // low bit is down state
+    int down[2]; // key nums holding it down
+    int state;     // low bit is down state
 };

@@ -28,39 +28,39 @@
 class GameLibrary
 {
 protected:
-	GameLibrary() = default;
+    GameLibrary() = default;
 
 public:
-	virtual ~GameLibrary() = default;
+    virtual ~GameLibrary() = default;
 
-	GameLibrary(const GameLibrary&) = delete;
-	GameLibrary& operator=(const GameLibrary&) = delete;
-	GameLibrary(GameLibrary&&) = delete;
-	GameLibrary& operator=(GameLibrary&&) = delete;
+    GameLibrary( const GameLibrary& ) = delete;
+    GameLibrary& operator=( const GameLibrary& ) = delete;
+    GameLibrary( GameLibrary&& ) = delete;
+    GameLibrary& operator=( GameLibrary&& ) = delete;
 
 	/**
 	 *	@details Derived classes must call the base implementation first.
 	 */
-	virtual bool Initialize();
+    virtual bool Initialize();
 
 	/**
 	 *	@details Derived classes must call the base implementation first.
 	 *	Called even if @see Initialize returned false.
 	 */
-	virtual void Shutdown();
+    virtual void Shutdown();
 
 	/**
 	 *	@brief Called every frame.
 	 */
-	virtual void RunFrame();
+    virtual void RunFrame();
 
 protected:
-	virtual void AddGameSystems();
+    virtual void AddGameSystems();
 
-	virtual void SetEntLogLevels(spdlog::level::level_enum level);
+    virtual void SetEntLogLevels( spdlog::level::level_enum level );
 
 private:
-	void SetEntLogLevels(const CommandArgs& args);
+    void SetEntLogLevels( const CommandArgs& args );
 };
 
 /**

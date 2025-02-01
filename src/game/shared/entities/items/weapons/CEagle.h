@@ -19,69 +19,69 @@ class CEagleLaser;
 
 enum DesertEagleAnim
 {
-	EAGLE_IDLE1 = 0,
-	EAGLE_IDLE2,
-	EAGLE_IDLE3,
-	EAGLE_IDLE4,
-	EAGLE_IDLE5,
-	EAGLE_SHOOT,
-	EAGLE_SHOOT_EMPTY,
-	EAGLE_RELOAD_NOSHOT,
-	EAGLE_RELOAD,
-	EAGLE_DRAW,
-	EAGLE_HOLSTER
+    EAGLE_IDLE1 = 0,
+    EAGLE_IDLE2,
+    EAGLE_IDLE3,
+    EAGLE_IDLE4,
+    EAGLE_IDLE5,
+    EAGLE_SHOOT,
+    EAGLE_SHOOT_EMPTY,
+    EAGLE_RELOAD_NOSHOT,
+    EAGLE_RELOAD,
+    EAGLE_DRAW,
+    EAGLE_HOLSTER
 };
 
 class CEagle : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CEagle, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CEagle, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
+    void OnCreate() override;
 
-	void Precache() override;
+    void Precache() override;
 
-	bool Deploy() override;
+    bool Deploy() override;
 
-	void Holster() override;
+    void Holster() override;
 
-	void WeaponIdle() override;
+    void WeaponIdle() override;
 
 	// So the laser spot is always updated.
-	bool ShouldWeaponIdle() override { return true; }
+    bool ShouldWeaponIdle() override { return true; }
 
-	void PrimaryAttack() override;
+    void PrimaryAttack() override;
 
-	void SecondaryAttack() override;
+    void SecondaryAttack() override;
 
-	void Reload() override;
+    void Reload() override;
 
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	void GetWeaponData(weapon_data_t& data) override;
+    void GetWeaponData( weapon_data_t& data ) override;
 
-	void SetWeaponData(const weapon_data_t& data) override;
-
-private:
-	void UpdateLaser();
+    void SetWeaponData( const weapon_data_t& data ) override;
 
 private:
-	int m_iShell;
-	unsigned short m_usFireEagle;
+    void UpdateLaser();
 
-	bool m_bSpotVisible;
-	bool m_bLaserActive;
-	CEagleLaser* m_pLaser;
+private:
+    int m_iShell;
+    unsigned short m_usFireEagle;
+
+    bool m_bSpotVisible;
+    bool m_bLaserActive;
+    CEagleLaser* m_pLaser;
 };

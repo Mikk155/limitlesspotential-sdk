@@ -26,16 +26,16 @@ namespace sound
  */
 struct IGameSoundSystem : public INetworkDataBlockHandler
 {
-	virtual ~IGameSoundSystem() = default;
+    virtual ~IGameSoundSystem() = default;
 
-	virtual void StartSound(int entityIndex, int channelIndex, const char* soundOrSentence,
-		const Vector& origin, float volume, float attenuation, int pitch, int flags) = 0;
+    virtual void StartSound( int entityIndex, int channelIndex, const char* soundOrSentence,
+        const Vector& origin, float volume, float attenuation, int pitch, int flags ) = 0;
 
-	virtual void StartSound(int entityIndex, int channelIndex, SoundData&& sound,
-		const Vector& origin, float volume, float attenuation, int pitch, int flags) = 0;
+    virtual void StartSound( int entityIndex, int channelIndex, SoundData&& sound,
+        const Vector& origin, float volume, float attenuation, int pitch, int flags ) = 0;
 
-	virtual void StopAllSounds() = 0;
+    virtual void StopAllSounds() = 0;
 
-	virtual void MsgFunc_EmitSound(const char* pszName, BufferReader& reader) = 0;
+    virtual void MsgFunc_EmitSound( const char* pszName, BufferReader& reader ) = 0;
 };
 }

@@ -24,5 +24,5 @@ namespace sound
 
 constexpr int RoomEffectCount = 29;
 
-void SetupEffect(ALuint effectId, unsigned int roomType);
+void SetupEffect( ALuint effectId, unsigned int roomType );
 }

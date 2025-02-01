@@ -26,19 +26,19 @@ using WeaponHudReplacements = std::unordered_map<std::string, std::string>;
 class HudReplacementSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	const char* GetName() const override { return "HudReplacements"; }
+    const char* GetName() const override { return "HudReplacements"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override {}
+    void Shutdown() override {}
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override;
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-	void SetWeaponHudReplacementFiles(WeaponHudReplacements&& fileNames);
+    void SetWeaponHudReplacementFiles( WeaponHudReplacements&& fileNames );
 
-	std::string HudReplacementFileName;
+    std::string HudReplacementFileName;
 };
 
 inline HudReplacementSystem g_HudReplacements;

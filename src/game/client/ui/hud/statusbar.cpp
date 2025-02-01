@@ -23,184 +23,184 @@
 
 #define STATUSBAR_ID_LINE 1
 
-Vector* GetClientColor(int clientIndex);
+Vector* GetClientColor( int clientIndex );
 extern Vector g_ColorYellow;
 
 bool CHudStatusBar::Init()
 {
-	gHUD.AddHudElem(this);
+    gHUD.AddHudElem( this );
 
-	g_ClientUserMessages.RegisterHandler("StatusText", &CHudStatusBar::MsgFunc_StatusText, this);
-	g_ClientUserMessages.RegisterHandler("StatusValue", &CHudStatusBar::MsgFunc_StatusValue, this);
+    g_ClientUserMessages.RegisterHandler( "StatusText", &CHudStatusBar::MsgFunc_StatusText, this );
+    g_ClientUserMessages.RegisterHandler( "StatusValue", &CHudStatusBar::MsgFunc_StatusValue, this );
 
-	Reset();
+    Reset();
 
-	CVAR_CREATE("hud_centerid", "0", FCVAR_ARCHIVE);
+    CVAR_CREATE( "hud_centerid", "0", FCVAR_ARCHIVE );
 
-	return true;
+    return true;
 }
 
 bool CHudStatusBar::VidInit()
 {
 	// Load sprites here
 
-	return true;
+    return true;
 }
 
 void CHudStatusBar::Reset()
 {
-	int i = 0;
+    int i = 0;
 
-	m_iFlags &= ~HUD_ACTIVE; // start out inactive
-	for (i = 0; i < MAX_STATUSBAR_LINES; i++)
-		m_szStatusText[i][0] = 0;
-	memset(m_iStatusValues, 0, sizeof m_iStatusValues);
+    m_iFlags &= ~HUD_ACTIVE; // start out inactive
+    for( i = 0; i < MAX_STATUSBAR_LINES; i++ )
+        m_szStatusText[i][0] = 0;
+    memset( m_iStatusValues, 0, sizeof m_iStatusValues );
 
-	m_iStatusValues[0] = 1; // 0 is the special index, which always returns true
+    m_iStatusValues[0] = 1; // 0 is the special index, which always returns true
 
 	// reset our colors for the status bar lines (yellow is default)
-	for (i = 0; i < MAX_STATUSBAR_LINES; i++)
-		m_pflNameColors[i] = &g_ColorYellow;
+    for( i = 0; i < MAX_STATUSBAR_LINES; i++ )
+        m_pflNameColors[i] = &g_ColorYellow;
 }
 
-void CHudStatusBar::ParseStatusString(int line_num)
+void CHudStatusBar::ParseStatusString( int line_num )
 {
 	// localise string first
-	char szBuffer[MAX_STATUSTEXT_LENGTH];
-	memset(szBuffer, 0, sizeof szBuffer);
-	gHUD.m_TextMessage.LocaliseTextString(m_szStatusText[line_num], szBuffer, MAX_STATUSTEXT_LENGTH);
+    char szBuffer[MAX_STATUSTEXT_LENGTH];
+    memset( szBuffer, 0, sizeof szBuffer );
+    gHUD.m_TextMessage.LocaliseTextString( m_szStatusText[line_num], szBuffer, MAX_STATUSTEXT_LENGTH );
 
 	// parse m_szStatusText & m_iStatusValues into m_szStatusBar
-	memset(m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH);
-	char* src = szBuffer;
-	char* dst = m_szStatusBar[line_num];
+    memset( m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH );
+    char* src = szBuffer;
+    char* dst = m_szStatusBar[line_num];
 
-	char *src_start = src, *dst_start = dst;
+    char *src_start = src, *dst_start = dst;
 
-	while (*src != 0)
-	{
-		while (*src == '\n')
-			src++; // skip over any newlines
+    while( *src != 0 )
+    {
+        while( *src == '\n' )
+            src++; // skip over any newlines
 
-		if (((src - src_start) >= MAX_STATUSTEXT_LENGTH) || ((dst - dst_start) >= MAX_STATUSTEXT_LENGTH))
-			break;
+        if( ( ( src - src_start ) >= MAX_STATUSTEXT_LENGTH ) || ( ( dst - dst_start ) >= MAX_STATUSTEXT_LENGTH ) )
+            break;
 
-		int index = atoi(src);
+        int index = atoi( src );
 		// should we draw this line?
-		if ((index >= 0 && index < MAX_STATUSBAR_VALUES) && (m_iStatusValues[index] != 0))
-		{ // parse this line and append result to the status bar
-			while (*src >= '0' && *src <= '9')
-				src++;
+        if( ( index >= 0 && index < MAX_STATUSBAR_VALUES ) && ( m_iStatusValues[index] != 0 ) )
+        { // parse this line and append result to the status bar
+            while( *src >= '0' && *src <= '9' )
+                src++;
 
-			if (*src == '\n' || *src == 0)
-				continue; // no more left in this text line
+            if( *src == '\n' || *src == 0 )
+                continue; // no more left in this text line
 
 			// copy the text, char by char, until we hit a % or a \n
-			while (*src != '\n' && *src != 0)
-			{
-				if (*src != '%')
-				{ // just copy the character
-					*dst = *src;
-					dst++, src++;
-				}
-				else
-				{
+            while( *src != '\n' && *src != 0 )
+            {
+                if( *src != '%' )
+                { // just copy the character
+                    *dst = *src;
+                    dst++, src++;
+                }
+                else
+                {
 					// get the descriptor
-					char valtype = *(++src); // move over %
+                    char valtype = *( ++src ); // move over %
 
 					// if it's a %, draw a % sign
-					if (valtype == '%')
-					{
-						*dst = valtype;
-						dst++, src++;
-						continue;
-					}
+                    if( valtype == '%' )
+                    {
+                        *dst = valtype;
+                        dst++, src++;
+                        continue;
+                    }
 
 					// move over descriptor, then get and move over the index
-					index = atoi(++src);
-					while (*src >= '0' && *src <= '9')
-						src++;
+                    index = atoi( ++src );
+                    while( *src >= '0' && *src <= '9' )
+                        src++;
 
-					if (index >= 0 && index < MAX_STATUSBAR_VALUES)
-					{
-						int indexval = m_iStatusValues[index];
+                    if( index >= 0 && index < MAX_STATUSBAR_VALUES )
+                    {
+                        int indexval = m_iStatusValues[index];
 
 						// get the string to substitute in place of the %XX
-						char szRepString[MAX_PLAYER_NAME_LENGTH];
-						switch (valtype)
-						{
-						case 'p': // player name
-							gEngfuncs.pfnGetPlayerInfo(indexval, &g_PlayerInfoList[indexval]);
-							if (g_PlayerInfoList[indexval].name != nullptr)
-							{
-								strncpy(szRepString, g_PlayerInfoList[indexval].name, MAX_PLAYER_NAME_LENGTH);
-								m_pflNameColors[line_num] = GetClientColor(indexval);
-							}
-							else
-							{
-								strcpy(szRepString, "******");
-							}
+                        char szRepString[MAX_PLAYER_NAME_LENGTH];
+                        switch ( valtype )
+                        {
+                        case 'p': // player name
+                            gEngfuncs.pfnGetPlayerInfo( indexval, &g_PlayerInfoList[indexval] );
+                            if( g_PlayerInfoList[indexval].name != nullptr )
+                            {
+                                strncpy( szRepString, g_PlayerInfoList[indexval].name, MAX_PLAYER_NAME_LENGTH );
+                                m_pflNameColors[line_num] = GetClientColor( indexval );
+                            }
+                            else
+                            {
+                                strcpy( szRepString, "******" );
+                            }
 
-							break;
-						case 'i': // number
-							sprintf(szRepString, "%d", indexval);
-							break;
-						default:
-							szRepString[0] = 0;
-						}
+                            break;
+                        case 'i': // number
+                            sprintf( szRepString, "%d", indexval );
+                            break;
+                        default:
+                            szRepString[0] = 0;
+                        }
 
-						for (char* cp = szRepString; *cp != 0 && ((dst - dst_start) < MAX_STATUSTEXT_LENGTH); cp++, dst++)
-							*dst = *cp;
-					}
-				}
-			}
-		}
-		else
-		{
+                        for( char* cp = szRepString; *cp != 0 && ( ( dst - dst_start ) < MAX_STATUSTEXT_LENGTH ); cp++, dst++ )
+                            *dst = *cp;
+                    }
+                }
+            }
+        }
+        else
+        {
 			// skip to next line of text
-			while (*src != 0 && *src != '\n')
-				src++;
-		}
-	}
+            while( *src != 0 && *src != '\n' )
+                src++;
+        }
+    }
 }
 
-bool CHudStatusBar::Draw(float fTime)
+bool CHudStatusBar::Draw( float fTime )
 {
-	if (m_bReparseString)
-	{
-		for (int i = 0; i < MAX_STATUSBAR_LINES; i++)
-		{
-			m_pflNameColors[i] = &g_ColorYellow;
-			ParseStatusString(i);
-		}
-		m_bReparseString = false;
-	}
+    if( m_bReparseString )
+    {
+        for( int i = 0; i < MAX_STATUSBAR_LINES; i++ )
+        {
+            m_pflNameColors[i] = &g_ColorYellow;
+            ParseStatusString( i );
+        }
+        m_bReparseString = false;
+    }
 
-	int Y_START = ScreenHeight - 52;
+    int Y_START = ScreenHeight - 52;
 
 	// Draw the status bar lines
-	for (int i = 0; i < MAX_STATUSBAR_LINES; i++)
-	{
-		int TextHeight, TextWidth;
-		GetConsoleStringSize(m_szStatusBar[i], &TextWidth, &TextHeight);
+    for( int i = 0; i < MAX_STATUSBAR_LINES; i++ )
+    {
+        int TextHeight, TextWidth;
+        GetConsoleStringSize( m_szStatusBar[i], &TextWidth, &TextHeight );
 
-		int x = 8;
-		int y = Y_START - (4 + TextHeight * i); // draw along bottom of screen
+        int x = 8;
+        int y = Y_START - ( 4 + TextHeight * i ); // draw along bottom of screen
 
 		// let user set status ID bar centering
-		if ((i == STATUSBAR_ID_LINE) && 0 != CVAR_GET_FLOAT("hud_centerid"))
-		{
-			x = std::max(0, std::max(2, (ScreenWidth - TextWidth)) / 2);
-			y = (ScreenHeight / 2) + (TextHeight * CVAR_GET_FLOAT("hud_centerid"));
-		}
+        if( ( i == STATUSBAR_ID_LINE ) && 0 != CVAR_GET_FLOAT( "hud_centerid" ) )
+        {
+            x = std::max( 0, std::max( 2, ( ScreenWidth - TextWidth ) ) / 2 );
+            y = ( ScreenHeight / 2 ) + ( TextHeight * CVAR_GET_FLOAT( "hud_centerid" ) );
+        }
 
-		if (m_pflNameColors[i])
-			gEngfuncs.pfnDrawSetTextColor(m_pflNameColors[i]->x, m_pflNameColors[i]->y, m_pflNameColors[i]->z);
+        if( m_pflNameColors[i] )
+            gEngfuncs.pfnDrawSetTextColor( m_pflNameColors[i]->x, m_pflNameColors[i]->y, m_pflNameColors[i]->z );
 
-		DrawConsoleString(x, y, m_szStatusBar[i]);
-	}
+        DrawConsoleString( x, y, m_szStatusBar[i] );
+    }
 
-	return true;
+    return true;
 }
 
 // Message handler for StatusText message
@@ -215,31 +215,31 @@ bool CHudStatusBar::Draw(float fTime)
 // if StatusValue[slotnum] != 0, the following string is drawn, upto the next newline - otherwise the text is skipped upto next newline
 // %pX, where X is an integer, will substitute a player name here, getting the player index from StatusValue[X]
 // %iX, where X is an integer, will substitute a number here, getting the number from StatusValue[X]
-void CHudStatusBar::MsgFunc_StatusText(const char* pszName, BufferReader& reader)
+void CHudStatusBar::MsgFunc_StatusText( const char* pszName, BufferReader& reader )
 {
-	int line = reader.ReadByte();
+    int line = reader.ReadByte();
 
-	if (line < 0 || line >= MAX_STATUSBAR_LINES)
-		return;
+    if( line < 0 || line >= MAX_STATUSBAR_LINES )
+        return;
 
-	strncpy(m_szStatusText[line], reader.ReadString(), MAX_STATUSTEXT_LENGTH);
-	m_szStatusText[line][MAX_STATUSTEXT_LENGTH - 1] = 0; // ensure it's null terminated ( strncpy() won't null terminate if read string too long)
+    strncpy( m_szStatusText[line], reader.ReadString(), MAX_STATUSTEXT_LENGTH );
+    m_szStatusText[line][MAX_STATUSTEXT_LENGTH - 1] = 0; // ensure it's null terminated ( strncpy() won't null terminate if read string too long)
 
-	m_iFlags |= HUD_ACTIVE;
-	m_bReparseString = true;
+    m_iFlags |= HUD_ACTIVE;
+    m_bReparseString = true;
 }
 
 // Message handler for StatusText message
 // accepts two values:
 //		byte: index into the status value array
 //		short: value to store
-void CHudStatusBar::MsgFunc_StatusValue(const char* pszName, BufferReader& reader)
+void CHudStatusBar::MsgFunc_StatusValue( const char* pszName, BufferReader& reader )
 {
-	int index = reader.ReadByte();
-	if (index < 1 || index >= MAX_STATUSBAR_VALUES)
-		return; // index out of range
+    int index = reader.ReadByte();
+    if( index < 1 || index >= MAX_STATUSBAR_VALUES )
+        return; // index out of range
 
-	m_iStatusValues[index] = reader.ReadShort();
+    m_iStatusValues[index] = reader.ReadShort();
 
-	m_bReparseString = true;
+    m_bReparseString = true;
 }

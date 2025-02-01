@@ -34,41 +34,41 @@
 class ASManager final : public IGameSystem
 {
 public:
-	ASManager();
-	~ASManager();
+    ASManager();
+    ~ASManager();
 
-	const char* GetName() const override { return "Angelscript manager"; }
+    const char* GetName() const override { return "Angelscript manager"; }
 
-	bool Initialize() override;
-	void PostInitialize() override {}
-	void Shutdown() override;
+    bool Initialize() override;
+    void PostInitialize() override {}
+    void Shutdown() override;
 
-	std::shared_ptr<spdlog::logger> GetLogger() { return m_Logger; }
+    std::shared_ptr<spdlog::logger> GetLogger() { return m_Logger; }
 
-	as::EnginePtr CreateEngine();
+    as::EnginePtr CreateEngine();
 
-	as::UniquePtr<asIScriptContext> CreateContext(asIScriptEngine& engine);
+    as::UniquePtr<asIScriptContext> CreateContext( asIScriptEngine& engine );
 
-	as::ModulePtr CreateModule(asIScriptEngine& engine, const char* moduleName);
+    as::ModulePtr CreateModule( asIScriptEngine& engine, const char* moduleName );
 
 	// Helpers to handle module creation
-	bool HandleAddScriptSectionResult(int returnCode, std::string_view moduleName, std::string_view sectionName);
-	bool HandleBuildResult(int returnCode, std::string_view moduleName);
+    bool HandleAddScriptSectionResult( int returnCode, std::string_view moduleName, std::string_view sectionName );
+    bool HandleBuildResult( int returnCode, std::string_view moduleName );
 
 	// Helpers to handle contexts
-	bool PrepareContext(asIScriptContext& context, asIScriptFunction* function);
-	void UnprepareContext(asIScriptContext& context);
-	bool ExecuteContext(asIScriptContext& context);
+    bool PrepareContext( asIScriptContext& context, asIScriptFunction* function );
+    void UnprepareContext( asIScriptContext& context );
+    bool ExecuteContext( asIScriptContext& context );
 
 private:
-	void OnMessageCallback(const asSMessageInfo* msg);
+    void OnMessageCallback( const asSMessageInfo* msg );
 
-	void OnTranslateAppExceptionCallback(asIScriptContext* context);
+    void OnTranslateAppExceptionCallback( asIScriptContext* context );
 
-	void OnThrownExceptionCallback(asIScriptContext* context);
+    void OnThrownExceptionCallback( asIScriptContext* context );
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    std::shared_ptr<spdlog::logger> m_Logger;
 };
 
 inline ASManager g_ASManager;

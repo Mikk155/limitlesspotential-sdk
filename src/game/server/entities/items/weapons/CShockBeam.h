@@ -18,29 +18,29 @@
 
 class CShockBeam : public CGrenade
 {
-	DECLARE_CLASS(CShockBeam, CGrenade);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CShockBeam, CGrenade );
+    DECLARE_DATAMAP();
 
 public:
-	void Precache() override;
-	void Spawn() override;
+    void Precache() override;
+    void Spawn() override;
 
-	void FlyThink();
-	void ExplodeThink();
-	void WaterExplodeThink();
+    void FlyThink();
+    void ExplodeThink();
+    void WaterExplodeThink();
 
-	void BallTouch(CBaseEntity* pOther);
+    void BallTouch( CBaseEntity* pOther );
 
-	static CShockBeam* CreateShockBeam(const Vector& vecOrigin, const Vector& vecAngles, CBaseEntity* pOwner);
+    static CShockBeam* CreateShockBeam( const Vector& vecOrigin, const Vector& vecAngles, CBaseEntity* pOwner );
 
 private:
-	void Explode();
+    void Explode();
 
 public:
-	CBeam* m_pBeam1;
-	CBeam* m_pBeam2;
+    CBeam* m_pBeam1;
+    CBeam* m_pBeam2;
 
-	CSprite* m_pSprite;
+    CSprite* m_pSprite;
 
-	int m_iBeams;
+    int m_iBeams;
 };

@@ -26,17 +26,17 @@ template <typename DataContext>
 class EchoSection final : public GameConfigSection<DataContext>
 {
 public:
-	explicit EchoSection() = default;
+    explicit EchoSection() = default;
 
-	std::string_view GetName() const override final { return "Echo"; }
+    std::string_view GetName() const override final { return "Echo"; }
 
-	json::value_t GetType() const override final { return json::value_t::string; }
+    json::value_t GetType() const override final { return json::value_t::string; }
 
-	std::string GetSchema() const override final { return {}; }
+    std::string GetSchema() const override final { return {}; }
 
-	bool TryParse(GameConfigContext<DataContext>& context) const override final
-	{
-		context.Logger.info("{}", context.Input.template get<std::string>());
-		return true;
-	}
+    bool TryParse( GameConfigContext<DataContext>& context ) const override final
+    {
+        context.Logger.info( "{}", context.Input.template get<std::string>() );
+        return true;
+    }
 };

@@ -24,27 +24,27 @@ struct WeaponInfo;
 
 struct WEAPON
 {
-	const WeaponInfo* Info{};
-	std::array<const AmmoType*, MAX_WEAPON_ATTACK_MODES> AmmoTypes{};
+    const WeaponInfo* Info{};
+    std::array<const AmmoType*, MAX_WEAPON_ATTACK_MODES> AmmoTypes{};
 
-	int AmmoInMagazine{0};
+    int AmmoInMagazine{0};
 
-	int iCount{0}; // # of itesm in plist
+    int iCount{0}; // # of itesm in plist
 
-	HSPRITE hActive{0};
-	Rect rcActive;
-	HSPRITE hInactive{0};
-	Rect rcInactive;
-	HSPRITE hAmmo{0};
-	Rect rcAmmo;
-	HSPRITE hAmmo2{0};
-	Rect rcAmmo2;
-	HSPRITE hCrosshair{0};
-	Rect rcCrosshair;
-	HSPRITE hAutoaim{0};
-	Rect rcAutoaim;
-	HSPRITE hZoomedCrosshair{0};
-	Rect rcZoomedCrosshair;
-	HSPRITE hZoomedAutoaim{0};
-	Rect rcZoomedAutoaim;
+    HSPRITE hActive{0};
+    Rect rcActive;
+    HSPRITE hInactive{0};
+    Rect rcInactive;
+    HSPRITE hAmmo{0};
+    Rect rcAmmo;
+    HSPRITE hAmmo2{0};
+    Rect rcAmmo2;
+    HSPRITE hCrosshair{0};
+    Rect rcCrosshair;
+    HSPRITE hAutoaim{0};
+    Rect rcAutoaim;
+    HSPRITE hZoomedCrosshair{0};
+    Rect rcZoomedCrosshair;
+    HSPRITE hZoomedAutoaim{0};
+    Rect rcZoomedAutoaim;
 };

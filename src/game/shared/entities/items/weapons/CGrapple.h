@@ -19,78 +19,78 @@ class CGrappleTip;
 
 enum BarnacleGrappleAnim
 {
-	BGRAPPLE_BREATHE = 0,
-	BGRAPPLE_LONGIDLE,
-	BGRAPPLE_SHORTIDLE,
-	BGRAPPLE_COUGH,
-	BGRAPPLE_DOWN,
-	BGRAPPLE_UP,
-	BGRAPPLE_FIRE,
-	BGRAPPLE_FIREWAITING,
-	BGRAPPLE_FIREREACHED,
-	BGRAPPLE_FIRETRAVEL,
-	BGRAPPLE_FIRERELEASE
+    BGRAPPLE_BREATHE = 0,
+    BGRAPPLE_LONGIDLE,
+    BGRAPPLE_SHORTIDLE,
+    BGRAPPLE_COUGH,
+    BGRAPPLE_DOWN,
+    BGRAPPLE_UP,
+    BGRAPPLE_FIRE,
+    BGRAPPLE_FIREWAITING,
+    BGRAPPLE_FIREREACHED,
+    BGRAPPLE_FIRETRAVEL,
+    BGRAPPLE_FIRERELEASE
 };
 
 class CGrapple : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CGrapple, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CGrapple, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 private:
-	enum class FireState
-	{
-		OFF = 0,
-		CHARGE = 1
-	};
+    enum class FireState
+    {
+        OFF = 0,
+        CHARGE = 1
+    };
 
 public:
-	void OnCreate() override;
+    void OnCreate() override;
 
-	void Precache() override;
+    void Precache() override;
 
-	bool Deploy() override;
+    bool Deploy() override;
 
-	void Holster() override;
+    void Holster() override;
 
-	void WeaponIdle() override;
+    void WeaponIdle() override;
 
-	void PrimaryAttack() override;
+    void PrimaryAttack() override;
 
-	void SecondaryAttack() override;
+    void SecondaryAttack() override;
 
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	void Fire(const Vector& vecOrigin, const Vector& vecDir);
-	void EndAttack();
+    void Fire( const Vector& vecOrigin, const Vector& vecDir );
+    void EndAttack();
 
-	void CreateEffect();
-	void UpdateEffect();
-	void DestroyEffect();
+    void CreateEffect();
+    void UpdateEffect();
+    void DestroyEffect();
 
 private:
-	CGrappleTip* m_pTip = nullptr;
+    CGrappleTip* m_pTip = nullptr;
 
-	CBeam* m_pBeam;
+    CBeam* m_pBeam;
 
-	float m_flShootTime;
-	float m_flDamageTime;
+    float m_flShootTime;
+    float m_flDamageTime;
 
-	FireState m_FireState;
+    FireState m_FireState;
 
-	bool m_bGrappling = false;
+    bool m_bGrappling = false;
 
-	bool m_bMissed;
+    bool m_bMissed;
 
-	bool m_bMomentaryStuck;
+    bool m_bMomentaryStuck;
 };

@@ -51,8 +51,8 @@ constexpr int MAX_PLAYERS = 32;
 constexpr int MAX_ALWAYS_VISIBLE_WEAPON_SLOTS = 5;
 #define MAX_WEAPON_SLOTS 10 // hud item selection slots
 
-static_assert(MAX_WEAPON_SLOTS >= MAX_ALWAYS_VISIBLE_WEAPON_SLOTS);
-static_assert(MAX_WEAPON_SLOTS <= 10);
+static_assert( MAX_WEAPON_SLOTS >= MAX_ALWAYS_VISIBLE_WEAPON_SLOTS );
+static_assert( MAX_WEAPON_SLOTS <= 10 );
 
 #define HIDEHUD_WEAPONS (1 << 0)
 #define HIDEHUD_FLASHLIGHT (1 << 1)
@@ -68,20 +68,20 @@ static_assert(MAX_WEAPON_SLOTS <= 10);
 
 enum class GibVelocityMultiplier
 {
-	Fraction = 0,
-	Double = 1,
-	Quadruple = 2
+    Fraction = 0,
+    Double = 1,
+    Quadruple = 2
 };
 
 // Hack: so we can select model + gib limit data
 enum class GibType
 {
-	None = 0, // Sound only
-	Human,
-	Alien,
-	Pitdrone,
-	Voltigore,
-	ShockTrooper,
+    None = 0, // Sound only
+    Human,
+    Alien,
+    Pitdrone,
+    Voltigore,
+    ShockTrooper,
 };
 
 // Flags are stored in the type variable to save a byte.
@@ -92,36 +92,36 @@ constexpr int GibFlag_Mask = GibFlag_GibSound | GibFlag_SpawnHead;
 
 enum WeaponId
 {
-	WEAPON_NONE = 0,
-	WEAPON_CROWBAR,
-	WEAPON_GLOCK,
-	WEAPON_PYTHON,
-	WEAPON_MP5,
-	WEAPON_CROSSBOW,
-	WEAPON_SHOTGUN,
-	WEAPON_RPG,
-	WEAPON_GAUSS,
-	WEAPON_EGON,
-	WEAPON_HORNETGUN,
-	WEAPON_HANDGRENADE,
-	WEAPON_TRIPMINE,
-	WEAPON_SATCHEL,
-	WEAPON_SNARK,
-	WEAPON_GRAPPLE,
-	WEAPON_EAGLE,
-	WEAPON_PIPEWRENCH,
-	WEAPON_M249,
-	WEAPON_DISPLACER,
-	WEAPON_SHOCKRIFLE,
-	WEAPON_SPORELAUNCHER,
-	WEAPON_SNIPERRIFLE,
-	WEAPON_KNIFE,
-	WEAPON_PENGUIN,
+    WEAPON_NONE = 0,
+    WEAPON_CROWBAR,
+    WEAPON_GLOCK,
+    WEAPON_PYTHON,
+    WEAPON_MP5,
+    WEAPON_CROSSBOW,
+    WEAPON_SHOTGUN,
+    WEAPON_RPG,
+    WEAPON_GAUSS,
+    WEAPON_EGON,
+    WEAPON_HORNETGUN,
+    WEAPON_HANDGRENADE,
+    WEAPON_TRIPMINE,
+    WEAPON_SATCHEL,
+    WEAPON_SNARK,
+    WEAPON_GRAPPLE,
+    WEAPON_EAGLE,
+    WEAPON_PIPEWRENCH,
+    WEAPON_M249,
+    WEAPON_DISPLACER,
+    WEAPON_SHOCKRIFLE,
+    WEAPON_SPORELAUNCHER,
+    WEAPON_SNIPERRIFLE,
+    WEAPON_KNIFE,
+    WEAPON_PENGUIN,
 };
 
 enum HudFlag
 {
-	HUD_HASSUIT = 0, //!< The player has the HEV suit.
+    HUD_HASSUIT = 0, //!< The player has the HEV suit.
 };
 
 /**
@@ -131,33 +131,33 @@ constexpr int WEAPON_NOCLIP = -1;
 
 enum class SuitLightType
 {
-	Flashlight = 0,
-	Nightvision
+    Flashlight = 0,
+    Nightvision
 };
 
 struct SuitLightTypeInfo
 {
-	const std::string_view Name;
+    const std::string_view Name;
 };
 
 constexpr SuitLightTypeInfo SuitLightTypes[] =
-	{
-		{"flashlight"},
-		{"nightvision"}};
+    {
+        {"flashlight"},
+        {"nightvision"}};
 
 constexpr std::optional<SuitLightType> SuitLightTypeFromString(std::string_view value)
 {
-	for (int i = 0; const auto& type : SuitLightTypes)
-	{
-		if (type.Name == value)
-		{
-			return static_cast<SuitLightType>(i);
-		}
+    for( int i = 0; const auto& type : SuitLightTypes )
+    {
+        if( type.Name == value )
+        {
+            return static_cast<SuitLightType>( i );
+        }
 
-		++i;
-	}
+        ++i;
+    }
 
-	return {};
+    return {};
 }
 
 // used by suit voice to indicate damage sustained and repaired type to player

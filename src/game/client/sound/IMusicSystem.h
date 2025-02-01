@@ -24,11 +24,11 @@ namespace sound
  */
 struct IMusicSystem
 {
-	virtual ~IMusicSystem() = default;
+    virtual ~IMusicSystem() = default;
 
-	virtual void Play(std::string&& fileName, bool looping) = 0;
-	virtual void Stop() = 0;
-	virtual void Pause() = 0;
-	virtual void Resume() = 0;
+    virtual void Play( std::string&& fileName, bool looping ) = 0;
+    virtual void Stop() = 0;
+    virtual void Pause() = 0;
+    virtual void Resume() = 0;
 };
 }

@@ -32,24 +32,24 @@ using EntityTemplateMap = std::unordered_map<std::string, std::string, Transpare
 class EntityTemplateSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "EntityTemplates"; }
+    const char* GetName() const override { return "EntityTemplates"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	void LoadTemplates(const EntityTemplateMap& templateMap);
+    void LoadTemplates( const EntityTemplateMap& templateMap );
 
-	void MaybeApplyTemplate(CBaseEntity* entity);
-
-private:
-	std::unordered_map<std::string, std::string> LoadTemplate(const json& input);
+    void MaybeApplyTemplate( CBaseEntity* entity );
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	std::unordered_map<std::string, std::unordered_map<std::string, std::string>> m_Templates;
+    std::unordered_map<std::string, std::string> LoadTemplate( const json& input );
+
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
+    std::unordered_map<std::string, std::unordered_map<std::string, std::string>> m_Templates;
 };
 
 inline EntityTemplateSystem g_EntityTemplates;

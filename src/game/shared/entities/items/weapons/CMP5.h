@@ -19,43 +19,43 @@
 
 enum mp5_e
 {
-	MP5_LONGIDLE = 0,
-	MP5_IDLE1,
-	MP5_LAUNCH,
-	MP5_RELOAD,
-	MP5_DEPLOY,
-	MP5_FIRE1,
-	MP5_FIRE2,
-	MP5_FIRE3,
+    MP5_LONGIDLE = 0,
+    MP5_IDLE1,
+    MP5_LAUNCH,
+    MP5_RELOAD,
+    MP5_DEPLOY,
+    MP5_FIRE1,
+    MP5_FIRE2,
+    MP5_FIRE3,
 };
 
 class CMP5 : public CBasePlayerWeapon
 {
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool Deploy() override;
-	void Reload() override;
-	void WeaponIdle() override;
-	float m_flNextAnimTime;
-	int m_iShell;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool Deploy() override;
+    void Reload() override;
+    void WeaponIdle() override;
+    float m_flNextAnimTime;
+    int m_iShell;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	float m_flNextGrenadeLoad;
-	unsigned short m_usMP5;
-	unsigned short m_usMP52;
+    float m_flNextGrenadeLoad;
+    unsigned short m_usMP5;
+    unsigned short m_usMP52;
 };

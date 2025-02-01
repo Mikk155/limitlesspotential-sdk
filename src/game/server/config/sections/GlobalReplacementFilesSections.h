@@ -26,17 +26,17 @@
 class GlobalModelReplacementSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
 public:
-	explicit GlobalModelReplacementSection() = default;
+    explicit GlobalModelReplacementSection() = default;
 
-	std::string_view GetName() const override final { return "GlobalModelReplacement"; }
+    std::string_view GetName() const override final { return "GlobalModelReplacement"; }
 
 protected:
-	std::string_view GetListName() const override final { return "global model replacement"; }
+    std::string_view GetListName() const override final { return "global model replacement"; }
 
-	std::vector<std::string>& GetFileNamesList(ServerConfigContext& context) const override final
-	{
-		return context.GlobalModelReplacementFiles;
-	}
+    std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
+    {
+        return context.GlobalModelReplacementFiles;
+    }
 };
 
 /**
@@ -45,17 +45,17 @@ protected:
 class GlobalSentenceReplacementSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
 public:
-	explicit GlobalSentenceReplacementSection() = default;
+    explicit GlobalSentenceReplacementSection() = default;
 
-	std::string_view GetName() const override final { return "GlobalSentenceReplacement"; }
+    std::string_view GetName() const override final { return "GlobalSentenceReplacement"; }
 
 protected:
-	std::string_view GetListName() const override final { return "global sentence replacement"; }
+    std::string_view GetListName() const override final { return "global sentence replacement"; }
 
-	std::vector<std::string>& GetFileNamesList(ServerConfigContext& context) const override final
-	{
-		return context.GlobalSentenceReplacementFiles;
-	}
+    std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
+    {
+        return context.GlobalSentenceReplacementFiles;
+    }
 };
 
 /**
@@ -64,15 +64,15 @@ protected:
 class GlobalSoundReplacementSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
 public:
-	explicit GlobalSoundReplacementSection() = default;
+    explicit GlobalSoundReplacementSection() = default;
 
-	std::string_view GetName() const override final { return "GlobalSoundReplacement"; }
+    std::string_view GetName() const override final { return "GlobalSoundReplacement"; }
 
 protected:
-	std::string_view GetListName() const override final { return "global sound replacement"; }
+    std::string_view GetListName() const override final { return "global sound replacement"; }
 
-	std::vector<std::string>& GetFileNamesList(ServerConfigContext& context) const override final
-	{
-		return context.GlobalSoundReplacementFiles;
-	}
+    std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
+    {
+        return context.GlobalSoundReplacementFiles;
+    }
 };

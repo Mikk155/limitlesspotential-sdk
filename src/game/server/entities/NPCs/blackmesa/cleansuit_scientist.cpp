@@ -25,126 +25,126 @@
 class CCleansuitScientist : public CScientist
 {
 public:
-	void OnCreate() override;
+    void OnCreate() override;
 
-	void Heal() override;
+    void Heal() override;
 };
 
-LINK_ENTITY_TO_CLASS(monster_cleansuit_scientist, CCleansuitScientist);
+LINK_ENTITY_TO_CLASS( monster_cleansuit_scientist, CCleansuitScientist );
 
 void CCleansuitScientist::OnCreate()
 {
-	CScientist::OnCreate();
+    CScientist::OnCreate();
 
-	pev->health = GetSkillFloat("cleansuit_scientist_health"sv);
-	pev->model = MAKE_STRING("models/cleansuit_scientist.mdl");
+    pev->health = GetSkillFloat( "cleansuit_scientist_health"sv );
+    pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
 }
 
 void CCleansuitScientist::Heal()
 {
-	if (!CanHeal())
-		return;
+    if( !CanHeal() )
+        return;
 
-	Vector target = m_hTargetEnt->pev->origin - pev->origin;
-	if (target.Length() > 100)
-		return;
+    Vector target = m_hTargetEnt->pev->origin - pev->origin;
+    if( target.Length() > 100 )
+        return;
 
-	m_hTargetEnt->GiveHealth(GetSkillFloat("cleansuit_scientist_heal"sv), DMG_GENERIC);
+    m_hTargetEnt->GiveHealth( GetSkillFloat( "cleansuit_scientist_heal"sv ), DMG_GENERIC );
 	// Don't heal again for 1 minute
-	m_healTime = gpGlobals->time + 60;
+    m_healTime = gpGlobals->time + 60;
 }
 
 class CDeadCleansuitScientist : public CBaseMonster
 {
 public:
-	void OnCreate() override;
-	void Spawn() override;
+    void OnCreate() override;
+    void Spawn() override;
 
-	bool HasHumanGibs() override { return true; }
+    bool HasHumanGibs() override { return true; }
 
-	bool KeyValue(KeyValueData* pkvd) override;
-	int m_iPose; // which sequence to display
-	static const char* m_szPoses[9];
+    bool KeyValue( KeyValueData* pkvd ) override;
+    int m_iPose; // which sequence to display
+    static const char* m_szPoses[9];
 };
 
-LINK_ENTITY_TO_CLASS(monster_cleansuit_scientist_dead, CDeadCleansuitScientist);
+LINK_ENTITY_TO_CLASS( monster_cleansuit_scientist_dead, CDeadCleansuitScientist );
 
 const char* CDeadCleansuitScientist::m_szPoses[] =
-	{
-		"lying_on_back",
-		"lying_on_stomach",
-		"dead_sitting",
-		"dead_hang",
-		"dead_table1",
-		"dead_table2",
-		"dead_table3",
-		"scientist_deadpose1",
-		"dead_against_wall"};
+    {
+        "lying_on_back",
+        "lying_on_stomach",
+        "dead_sitting",
+        "dead_hang",
+        "dead_table1",
+        "dead_table2",
+        "dead_table3",
+        "scientist_deadpose1",
+        "dead_against_wall"};
 
 void CDeadCleansuitScientist::OnCreate()
 {
-	CBaseMonster::OnCreate();
+    CBaseMonster::OnCreate();
 
 	// Corpses have less health
-	pev->health = 8; // GetSkillFloat("scientist_health"sv);
-	pev->model = MAKE_STRING("models/cleansuit_scientist.mdl");
+    pev->health = 8; // GetSkillFloat("scientist_health"sv);
+    pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
 
-	SetClassification("human_passive");
+    SetClassification( "human_passive" );
 }
 
-bool CDeadCleansuitScientist::KeyValue(KeyValueData* pkvd)
+bool CDeadCleansuitScientist::KeyValue( KeyValueData* pkvd )
 {
-	if (FStrEq(pkvd->szKeyName, "pose"))
-	{
-		m_iPose = atoi(pkvd->szValue);
-		return true;
-	}
+    if( FStrEq( pkvd->szKeyName, "pose" ) )
+    {
+        m_iPose = atoi( pkvd->szValue );
+        return true;
+    }
 
-	return CBaseMonster::KeyValue(pkvd);
+    return CBaseMonster::KeyValue( pkvd );
 }
 
 void CDeadCleansuitScientist::Spawn()
 {
-	PrecacheModel(STRING(pev->model));
-	SetModel(STRING(pev->model));
+    PrecacheModel( STRING( pev->model ) );
+    SetModel( STRING( pev->model ) );
 
-	pev->effects = 0;
-	pev->sequence = 0;
+    pev->effects = 0;
+    pev->sequence = 0;
 
-	m_bloodColor = BLOOD_COLOR_RED;
+    m_bloodColor = BLOOD_COLOR_RED;
 
-	if (pev->body == -1)
-	{
-		pev->body = 0;
+    if( pev->body == -1 )
+    {
+        pev->body = 0;
 		// -1 chooses a random head
 		// pick a head, any head
-		SetBodygroup(ScientistBodygroup::Head, RANDOM_LONG(0, GetBodygroupSubmodelCount(ScientistBodygroup::Head) - 1));
-	}
+        SetBodygroup( ScientistBodygroup::Head, RANDOM_LONG( 0, GetBodygroupSubmodelCount( ScientistBodygroup::Head ) - 1 ) );
+    }
 	// Luther is black, make his hands black
-	if (pev->body == HEAD_LUTHER)
-		pev->skin = 1;
-	else
-		pev->skin = 0;
+    if( pev->body == HEAD_LUTHER )
+        pev->skin = 1;
+    else
+        pev->skin = 0;
 
-	pev->sequence = LookupSequence(m_szPoses[m_iPose]);
-	if (pev->sequence == -1)
-	{
-		AILogger->debug("Dead scientist with bad pose");
-	}
+    pev->sequence = LookupSequence( m_szPoses[m_iPose] );
+    if( pev->sequence == -1 )
+    {
+        AILogger->debug( "Dead scientist with bad pose" );
+    }
 
 	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
-	MonsterInitDead();
+    MonsterInitDead();
 }
 
 class CSittingCleansuitScientist : public CSittingScientist // kdb: changed from public CBaseMonster so he can speak
 {
 public:
-	void OnCreate()
-	{
-		CSittingScientist::OnCreate();
+    void OnCreate()
+    {
+        CSittingScientist::OnCreate();
 
-		pev->model = MAKE_STRING("models/cleansuit_scientist.mdl");
-	}
+        pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
+    }
 };
 
-LINK_ENTITY_TO_CLASS(monster_sitting_cleansuit_scientist, CSittingCleansuitScientist);
+LINK_ENTITY_TO_CLASS( monster_sitting_cleansuit_scientist, CSittingCleansuitScientist );

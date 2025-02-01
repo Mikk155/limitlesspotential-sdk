@@ -22,177 +22,177 @@ cvar_t mapcyclejsonfile = {"mapcyclejsonfile", "cfg/server/mapcycle.json", FCVAR
 
 constexpr std::string_view MapCycleSchemaName{"MapCycle"sv};
 
-const MapCycleItem* MapCycle::GetNextMap(int currentPlayerCount)
+const MapCycleItem* MapCycle::GetNextMap( int currentPlayerCount )
 {
-	if (Items.empty())
-	{
-		return nullptr;
-	}
+    if( Items.empty() )
+    {
+        return nullptr;
+    }
 
-	const auto itemIndex = [&, this]()
-	{
-		std::size_t nextItemIndex = Index;
-		std::size_t itemsCount = Items.size();
+    const auto itemIndex = [&, this]()
+    {
+        std::size_t nextItemIndex = Index;
+        std::size_t itemsCount = Items.size();
 
-		for (int cycle = 0; cycle < 2; ++cycle)
-		{
-			for (; nextItemIndex < itemsCount; ++nextItemIndex)
-			{
-				const auto& item = Items[nextItemIndex];
+        for( int cycle = 0; cycle < 2; ++cycle )
+        {
+            for( ; nextItemIndex < itemsCount; ++nextItemIndex )
+            {
+                const auto& item = Items[nextItemIndex];
 
-				if (item.MinPlayers != 0 && currentPlayerCount < item.MinPlayers)
-				{
-					continue;
-				}
+                if( item.MinPlayers != 0 && currentPlayerCount < item.MinPlayers )
+                {
+                    continue;
+                }
 
-				if (item.MaxPlayers != 0 && currentPlayerCount > item.MaxPlayers)
-				{
-					continue;
-				}
+                if( item.MaxPlayers != 0 && currentPlayerCount > item.MaxPlayers )
+                {
+                    continue;
+                }
 
-				return nextItemIndex;
-			}
+                return nextItemIndex;
+            }
 
 			// Start from beginning.
-			nextItemIndex = 0;
-			itemsCount = Index;
-		}
+            nextItemIndex = 0;
+            itemsCount = Index;
+        }
 
 		// No valid map found, use next in list.
-		return Index;
-	}();
+        return Index;
+    }();
 
-	const auto item = &Items[itemIndex];
+    const auto item = &Items[itemIndex];
 
-	Index = (itemIndex + 1) % Items.size();
+    Index = ( itemIndex + 1 ) % Items.size();
 
-	return item;
+    return item;
 }
 
 static std::string GetMapCycleSchema()
 {
-	return R"(
+    return R"(
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "Map Cycle List",
-	"type": "array",
-	"items": {
-		"oneOf": [
-			{
-				"title": "Map Name",
-				"type": "string"
-			},
-			{
-				"title": "Map Object",
-				"type": "object",
-				"properties": {
-					"Name": {
-						"title": "Map Name",
-						"type": "string"
-					},
-					"MinPlayers": {
-						"title": "Minimum Number Of Players",
-						"type": "integer",
-						"minimum": 0,
-						"maximum": 32
-					},
-					"MaxPlayers": {
-						"title": "Maximum Number Of Players",
-						"type": "integer",
-						"minimum": 0,
-						"maximum": 32
-					}
-				}
-			}
-		]
-	}
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Map Cycle List",
+    "type": "array",
+    "items": {
+        "oneOf": [
+            {
+                "title": "Map Name",
+                "type": "string"
+            },
+            {
+                "title": "Map Object",
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "title": "Map Name",
+                        "type": "string"
+                    },
+                    "MinPlayers": {
+                        "title": "Minimum Number Of Players",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 32
+                    },
+                    "MaxPlayers": {
+                        "title": "Maximum Number Of Players",
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 32
+                    }
+                }
+            }
+        ]
+    }
 }
 )";
 }
 
 bool MapCycleSystem::Initialize()
 {
-	g_engfuncs.pfnCVarRegister(&mapcyclejsonfile);
-	m_Logger = g_Logging.CreateLogger("mapcycle");
+    g_engfuncs.pfnCVarRegister( &mapcyclejsonfile );
+    m_Logger = g_Logging.CreateLogger( "mapcycle" );
 
-	g_JSON.RegisterSchema(MapCycleSchemaName, &GetMapCycleSchema);
+    g_JSON.RegisterSchema( MapCycleSchemaName, &GetMapCycleSchema );
 
-	return true;
+    return true;
 }
 
 void MapCycleSystem::Shutdown()
 {
-	g_Logging.RemoveLogger(m_Logger);
-	m_Logger.reset();
+    g_Logging.RemoveLogger( m_Logger );
+    m_Logger.reset();
 }
 
 MapCycle* MapCycleSystem::GetMapCycle()
 {
 	// find the map to change to
-	const char* mapcfile = mapcyclejsonfile.string;
-	ASSERT(mapcfile != nullptr);
+    const char* mapcfile = mapcyclejsonfile.string;
+    ASSERT( mapcfile != nullptr );
 
 	// Has the map cycle filename changed?
-	if (m_PreviousMapCycleFile.comparei(mapcfile) != 0)
-	{
-		m_PreviousMapCycleFile = mapcfile;
+    if( m_PreviousMapCycleFile.comparei( mapcfile ) != 0 )
+    {
+        m_PreviousMapCycleFile = mapcfile;
 
-		m_MapCycle = LoadMapCycle(mapcfile);
+        m_MapCycle = LoadMapCycle( mapcfile );
 
-		if (m_MapCycle.Items.empty())
-		{
-			m_Logger->warn("Unable to load map cycle file {}", mapcfile);
-		}
-	}
+        if( m_MapCycle.Items.empty() )
+        {
+            m_Logger->warn( "Unable to load map cycle file {}", mapcfile );
+        }
+    }
 
-	return &m_MapCycle;
+    return &m_MapCycle;
 }
 
-MapCycle MapCycleSystem::LoadMapCycle(const char* fileName)
+MapCycle MapCycleSystem::LoadMapCycle( const char* fileName )
 {
-	return g_JSON.ParseJSONFile(fileName, {.SchemaName = MapCycleSchemaName, .PathID = "GAMECONFIG"},
-					 [this](const auto& input)
-					 { return ParseMapCycle(input); })
-		.value_or(MapCycle{});
+    return g_JSON.ParseJSONFile( fileName, {.SchemaName = MapCycleSchemaName, .PathID = "GAMECONFIG"},
+                     [this]( const auto& input )
+                     { return ParseMapCycle( input ); } )
+        .value_or( MapCycle{} );
 }
 
-MapCycle MapCycleSystem::ParseMapCycle(const json& input)
+MapCycle MapCycleSystem::ParseMapCycle( const json& input )
 {
-	MapCycle mapCycle;
+    MapCycle mapCycle;
 
-	mapCycle.Items.reserve(input.size());
+    mapCycle.Items.reserve( input.size() );
 
-	for (const auto& mapData : input)
-	{
-		std::string mapName;
+    for( const auto& mapData : input )
+    {
+        std::string mapName;
 
-		if (mapData.is_string())
-		{
-			mapName = mapData.get<std::string>();
-		}
-		else
-		{
-			mapName = mapData.value<std::string>("Name", "");
-		}
+        if( mapData.is_string() )
+        {
+            mapName = mapData.get<std::string>();
+        }
+        else
+        {
+            mapName = mapData.value<std::string>( "Name", "" );
+        }
 
-		if (!IS_MAP_VALID(mapName.c_str()))
-		{
-			m_Logger->error("Skipping {} from mapcycle, not a valid map", mapName);
-			continue;
-		}
+        if( !IS_MAP_VALID( mapName.c_str() ) )
+        {
+            m_Logger->error( "Skipping {} from mapcycle, not a valid map", mapName );
+            continue;
+        }
 
-		auto& item = mapCycle.Items.emplace_back();
+        auto& item = mapCycle.Items.emplace_back();
 
-		item.MapName = mapName.c_str();
+        item.MapName = mapName.c_str();
 
-		if (mapData.is_object())
-		{
-			item.MinPlayers = std::clamp(mapData.value<int>("MinPlayers", 0), 0, gpGlobals->maxClients);
-			item.MaxPlayers = std::clamp(mapData.value<int>("MaxPlayers", 0), 0, gpGlobals->maxClients);
-		}
-	}
+        if( mapData.is_object() )
+        {
+            item.MinPlayers = std::clamp( mapData.value<int>( "MinPlayers", 0 ), 0, gpGlobals->maxClients );
+            item.MaxPlayers = std::clamp( mapData.value<int>( "MaxPlayers", 0 ), 0, gpGlobals->maxClients );
+        }
+    }
 
-	mapCycle.Items.shrink_to_fit();
+    mapCycle.Items.shrink_to_fit();
 
-	return mapCycle;
+    return mapCycle;
 }

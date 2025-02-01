@@ -25,24 +25,24 @@
 
 struct WeaponAttackMode
 {
-	eastl::fixed_string<char, 32> AmmoType;
-	int MagazineSize{WEAPON_NOCLIP};
+    eastl::fixed_string<char, 32> AmmoType;
+    int MagazineSize{WEAPON_NOCLIP};
 };
 
 struct WeaponInfo
 {
-	int Id{WEAPON_NONE};
-	eastl::fixed_string<char, 32> Name;
+    int Id{WEAPON_NONE};
+    eastl::fixed_string<char, 32> Name;
 
-	int Slot{0};
-	int Position{0};
-	int Weight{0}; //!< this value used to determine this weapon's importance in autoselection.
-	int Flags{0};
+    int Slot{0};
+    int Position{0};
+    int Weight{0}; //!< this value used to determine this weapon's importance in autoselection.
+    int Flags{0};
 
-	std::array<WeaponAttackMode, MAX_WEAPON_ATTACK_MODES> AttackModeInfo;
+    std::array<WeaponAttackMode, MAX_WEAPON_ATTACK_MODES> AttackModeInfo;
 
 	// Initialized from map config.
-	std::string HudConfigFileName{};
+    std::string HudConfigFileName{};
 };
 
 /**
@@ -51,42 +51,42 @@ struct WeaponInfo
 class WeaponDataSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	static inline const WeaponInfo DummyInfo;
+    static inline const WeaponInfo DummyInfo;
 
-	const char* GetName() const override { return "WeaponData"; }
+    const char* GetName() const override { return "WeaponData"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override {}
+    void Shutdown() override {}
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override;
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-	int GetCount() const { return static_cast<std::size_t>(m_WeaponInfos.size()); }
+    int GetCount() const { return static_cast<std::size_t>( m_WeaponInfos.size() ); }
 
-	int IndexOf(std::string_view name) const;
+    int IndexOf( std::string_view name ) const;
 
-	const WeaponInfo* GetByIndex(int index) const;
+    const WeaponInfo* GetByIndex( int index ) const;
 
-	const WeaponInfo* GetByName(std::string_view name) const;
+    const WeaponInfo* GetByName( std::string_view name ) const;
 
-	void Clear();
+    void Clear();
 
 	/**
 	 *	@brief Registers a new weapon.
 	 */
-	int Register(WeaponInfo&& info);
+    int Register( WeaponInfo&& info );
 
-	void SetWeaponHudConfigFileName(std::string_view className, std::string&& fileName);
+    void SetWeaponHudConfigFileName( std::string_view className, std::string&& fileName );
 
 private:
-	WeaponInfo* GetMutableByName(std::string_view name);
+    WeaponInfo* GetMutableByName( std::string_view name );
 
 private:
 	// Public indices are 1-based, private ones are 0-based.
 	// Store one less than max since index 0 is not used.
-	std::array<WeaponInfo, MAX_WEAPONS - 1> m_WeaponInfos;
+    std::array<WeaponInfo, MAX_WEAPONS - 1> m_WeaponInfos;
 };
 
 inline WeaponDataSystem g_WeaponData;

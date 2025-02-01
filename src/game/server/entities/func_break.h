@@ -17,22 +17,22 @@
 
 enum Explosions
 {
-	expRandom,
-	expDirected
+    expRandom,
+    expDirected
 };
 enum Materials
 {
-	matGlass = 0,
-	matWood,
-	matMetal,
-	matFlesh,
-	matCinderBlock,
-	matCeilingTile,
-	matComputer,
-	matUnbreakableGlass,
-	matRocks,
-	matNone,
-	matLastMaterial
+    matGlass = 0,
+    matWood,
+    matMetal,
+    matFlesh,
+    matCinderBlock,
+    matCeilingTile,
+    matComputer,
+    matUnbreakableGlass,
+    matRocks,
+    matNone,
+    matLastMaterial
 };
 
 #define NUM_SHARDS 6 // this many shards spawned when breakable objects break;
@@ -42,57 +42,57 @@ enum Materials
  */
 class CBreakable : public CBaseDelay
 {
-	DECLARE_CLASS(CBreakable, CBaseDelay);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CBreakable, CBaseDelay );
+    DECLARE_DATAMAP();
 
 public:
 	// basic functions
-	void Spawn() override;
-	void Precache() override;
-	bool KeyValue(KeyValueData* pkvd) override;
-	void BreakTouch(CBaseEntity* pOther);
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
+    void Spawn() override;
+    void Precache() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void BreakTouch( CBaseEntity* pOther );
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
 	/**
 	 *	@brief play shard sound when func_breakable takes damage.
 	 *	the more damage, the louder the shard sound.
 	 */
-	void DamageSound();
+    void DamageSound();
 
 	/**
 	 *	@brief Special takedamage for func_breakable.
 	 *	Allows us to make exceptions that are breakable-specific
 	 */
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 	// To spark when hit
-	void TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
+    void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	bool IsBreakable();
+    bool IsBreakable();
 
-	int DamageDecal(int bitsDamageType) override;
+    int DamageDecal( int bitsDamageType ) override;
 
-	void Die();
-	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+    void Die();
+    int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ); }
 
-	inline bool Explodable() { return ExplosionMagnitude() > 0; }
-	inline int ExplosionMagnitude() { return pev->impulse; }
-	inline void ExplosionSetMagnitude(int magnitude) { pev->impulse = magnitude; }
+    inline bool Explodable() { return ExplosionMagnitude() > 0; }
+    inline int ExplosionMagnitude() { return pev->impulse; }
+    inline void ExplosionSetMagnitude( int magnitude ) { pev->impulse = magnitude; }
 
-	static void MaterialSoundPrecache(CBaseEntity* self, Materials precacheMaterial);
-	static void MaterialSoundRandom(CBaseEntity* self, Materials soundMaterial, float volume);
-	static const char** MaterialSoundList(Materials precacheMaterial, int& soundCount);
+    static void MaterialSoundPrecache( CBaseEntity* self, Materials precacheMaterial );
+    static void MaterialSoundRandom( CBaseEntity* self, Materials soundMaterial, float volume );
+    static const char** MaterialSoundList( Materials precacheMaterial, int& soundCount );
 
-	static const char* pSoundsWood[];
-	static const char* pSoundsFlesh[];
-	static const char* pSoundsGlass[];
-	static const char* pSoundsMetal[];
-	static const char* pSoundsConcrete[];
-	static const char* pSpawnObjects[];
+    static const char* pSoundsWood[];
+    static const char* pSoundsFlesh[];
+    static const char* pSoundsGlass[];
+    static const char* pSoundsMetal[];
+    static const char* pSoundsConcrete[];
+    static const char* pSpawnObjects[];
 
-	Materials m_Material;
-	Explosions m_Explosion;
-	int m_idShard;
-	float m_angle;
-	string_t m_iszGibModel;
-	string_t m_iszSpawnObject;
+    Materials m_Material;
+    Explosions m_Explosion;
+    int m_idShard;
+    float m_angle;
+    string_t m_iszGibModel;
+    string_t m_iszSpawnObject;
 };

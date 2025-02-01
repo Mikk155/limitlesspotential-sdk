@@ -35,7 +35,7 @@ extern float g_flCaptureAssistTime;
 extern float g_flPowerupRespawnTime;
 extern int g_iMapScoreMax;
 
-void DisplayTeamFlags(CBasePlayer* pPlayer);
+void DisplayTeamFlags( CBasePlayer* pPlayer );
 
 void ResetTeamScores();
 
@@ -45,111 +45,111 @@ void ResetTeamScores();
 class CHalfLifeCTFplay : public CHalfLifeMultiplay
 {
 private:
-	enum class StatsPhase
-	{
-		Nothing,
-		SendTeam0,
-		SendTeam1,
-		SendTeam2,
-		SendPlayers,
-		OpenMenu
-	};
+    enum class StatsPhase
+    {
+        Nothing,
+        SendTeam0,
+        SendTeam1,
+        SendTeam2,
+        SendPlayers,
+        OpenMenu
+    };
 
 public:
-	static constexpr char GameModeName[] = "ctf";
+    static constexpr char GameModeName[] = "ctf";
 
-	CHalfLifeCTFplay();
+    CHalfLifeCTFplay();
 
-	const char* GetGameModeName() const override { return GameModeName; }
+    const char* GetGameModeName() const override { return GameModeName; }
 
-	void Think() override;
+    void Think() override;
 
-	bool IsTeamplay() override { return true; }
-	bool IsCTF() override { return true; }
+    bool IsTeamplay() override { return true; }
+    bool IsCTF() override { return true; }
 
-	const char* GetGameDescription() override { return "OpFor CTF"; }
+    const char* GetGameDescription() override { return "OpFor CTF"; }
 
-	bool ClientConnected(edict_t* pEntity, const char* pszName, const char* pszAddress, char* szRejectReason) override;
+    bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char* szRejectReason ) override;
 
-	void InitHUD(CBasePlayer* pPlayer) override;
+    void InitHUD( CBasePlayer* pPlayer ) override;
 
-	void ClientDisconnected(edict_t* pClient) override;
+    void ClientDisconnected( edict_t* pClient ) override;
 
-	void UpdateGameMode(CBasePlayer* pPlayer) override;
+    void UpdateGameMode( CBasePlayer* pPlayer ) override;
 
-	bool FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker) override;
+    bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
 
-	bool ShouldAutoAim(CBasePlayer* pPlayer, CBaseEntity* target) override;
+    bool ShouldAutoAim( CBasePlayer* pPlayer, CBaseEntity* target ) override;
 
-	void PlayerSpawn(CBasePlayer* pPlayer) override;
+    void PlayerSpawn( CBasePlayer* pPlayer ) override;
 
-	void PlayerThink(CBasePlayer* pPlayer) override;
+    void PlayerThink( CBasePlayer* pPlayer ) override;
 
-	void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer) override;
+    void ClientUserInfoChanged( CBasePlayer* pPlayer, char* infobuffer ) override;
 
-	int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) override;
+    int IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled ) override;
 
-	void PlayerKilled(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override;
+    void PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
 
-	void DeathNotice(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override;
+    void DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
 
-	const char* GetTeamID(CBaseEntity* pEntity) override;
+    const char* GetTeamID( CBaseEntity* pEntity ) override;
 
-	int PlayerRelationship(CBasePlayer* pPlayer, CBaseEntity* pTarget) override;
+    int PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget ) override;
 
-	int GetTeamIndex(const char* pTeamName) override;
+    int GetTeamIndex( const char* pTeamName ) override;
 
-	const char* GetIndexedTeamName(int teamIndex) override;
+    const char* GetIndexedTeamName( int teamIndex ) override;
 
-	bool IsValidTeam(const char* pTeamName) override;
+    bool IsValidTeam( const char* pTeamName ) override;
 
-	void ChangePlayerTeam(CBasePlayer* pPlayer, const char* pCharName, bool bKill, bool bGib) override;
+    void ChangePlayerTeam( CBasePlayer* pPlayer, const char* pCharName, bool bKill, bool bGib ) override;
 
-	const char* SetDefaultPlayerTeam(CBasePlayer* pPlayer) override;
+    const char* SetDefaultPlayerTeam( CBasePlayer* pPlayer ) override;
 
-	const char* GetCharacterType(int iTeamNum, int iCharNum) override;
+    const char* GetCharacterType( int iTeamNum, int iCharNum ) override;
 
-	int GetNumTeams() override;
+    int GetNumTeams() override;
 
-	const char* TeamWithFewestPlayers() override;
+    const char* TeamWithFewestPlayers() override;
 
-	bool TeamsBalanced() override;
+    bool TeamsBalanced() override;
 
-	void GoToIntermission() override;
+    void GoToIntermission() override;
 
 protected:
-	void BecomeSpectator(CBasePlayer* player, const CommandArgs& args) override;
+    void BecomeSpectator( CBasePlayer* player, const CommandArgs& args ) override;
 
 private:
-	void SendTeamStatInfo(CTFTeam iTeamNum);
-	void SendPlayerStatInfo(CBasePlayer* pPlayer);
+    void SendTeamStatInfo( CTFTeam iTeamNum );
+    void SendPlayerStatInfo( CBasePlayer* pPlayer );
 
-	void RecountTeams();
+    void RecountTeams();
 
 private:
-	bool m_DisableDeathMessages = false;
-	bool m_DisableDeathPenalty = false;
-	bool m_fRefreshScores = false;
-	float m_flNextStatsSend;
-	StatsPhase m_iStatsPhase = StatsPhase::Nothing;
+    bool m_DisableDeathMessages = false;
+    bool m_DisableDeathPenalty = false;
+    bool m_fRefreshScores = false;
+    float m_flNextStatsSend;
+    StatsPhase m_iStatsPhase = StatsPhase::Nothing;
 	// Use a sane default to avoid lockups
-	int m_iStatsPlayer = 1;
+    int m_iStatsPlayer = 1;
 
-	ScopedClientCommand m_CancelMenuCommand;
-	ScopedClientCommand m_EndMotdCommand;
-	ScopedClientCommand m_JoinTeamCommand;
-	ScopedClientCommand m_SelectCharCommand;
-	ScopedClientCommand m_ChangeTeamCommand;
-	ScopedClientCommand m_ChangeClassCommand;
-	ScopedClientCommand m_FlagInfoCommand;
+    ScopedClientCommand m_CancelMenuCommand;
+    ScopedClientCommand m_EndMotdCommand;
+    ScopedClientCommand m_JoinTeamCommand;
+    ScopedClientCommand m_SelectCharCommand;
+    ScopedClientCommand m_ChangeTeamCommand;
+    ScopedClientCommand m_ChangeClassCommand;
+    ScopedClientCommand m_FlagInfoCommand;
 };
 
 extern char* pszPlayerIPs[MAX_PLAYERS * 2];
 
-void GetLosingTeam(int& iTeamNum, int& iScoreDiff);
+void GetLosingTeam( int& iTeamNum, int& iScoreDiff );
 
-void RespawnPlayerCTFPowerups(CBasePlayer* pPlayer, bool bForceRespawn);
-void ScatterPlayerCTFPowerups(CBasePlayer* pPlayer);
-void DropPlayerCTFPowerup(CBasePlayer* pPlayer);
+void RespawnPlayerCTFPowerups( CBasePlayer* pPlayer, bool bForceRespawn );
+void ScatterPlayerCTFPowerups( CBasePlayer* pPlayer );
+void DropPlayerCTFPowerup( CBasePlayer* pPlayer );
 void FlushCTFPowerupTimes();
-void InitItemsForPlayer(CBasePlayer* pPlayer);
+void InitItemsForPlayer( CBasePlayer* pPlayer );

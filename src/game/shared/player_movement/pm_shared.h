@@ -24,16 +24,16 @@
 
 struct playermove_t;
 
-void PM_Init(playermove_t* ppmove);
-void PM_Move(playermove_t* ppmove, qboolean server);
+void PM_Init( playermove_t* ppmove );
+void PM_Move( playermove_t* ppmove, qboolean server );
 
 /**
  *	@brief Engine calls this to enumerate player collision hulls, for prediction. Return false if the hullnumber doesn't exist.
  */
-bool PM_GetHullBounds(int hullnumber, float* mins, float* maxs);
+bool PM_GetHullBounds( int hullnumber, float* mins, float* maxs );
 
-int PM_GetVisEntInfo(int ent);
-int PM_GetPhysEntInfo(int ent);
+int PM_GetVisEntInfo( int ent );
+int PM_GetPhysEntInfo( int ent );
 
 // Spectator Movement modes (stored in pev->iuser1, so the physics code can get at them)
 #define OBS_NONE 0

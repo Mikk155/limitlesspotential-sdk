@@ -19,78 +19,78 @@
 
 #include "PrecacheList.h"
 
-int PrecacheList::IndexOf(const char* str) const
+int PrecacheList::IndexOf( const char* str ) const
 {
-	if (auto it = std::find_if(m_Precaches.begin(), m_Precaches.end(), [&](const auto candidate)
-			{ return 0 == stricmp(candidate, str); });
-		it != m_Precaches.end())
-	{
-		return static_cast<int>(it - m_Precaches.begin());
-	}
+    if( auto it = std::find_if( m_Precaches.begin(), m_Precaches.end(), [&]( const auto candidate )
+            { return 0 == stricmp( candidate, str ); } );
+        it != m_Precaches.end() )
+    {
+        return static_cast<int>( it - m_Precaches.begin() );
+    }
 
-	return -1;
+    return -1;
 }
 
-int PrecacheList::Add(const char* str)
+int PrecacheList::Add( const char* str )
 {
-	assert(str);
-	assert(str[0] > ' ');
+    assert( str );
+    assert( str[0] > ' ' );
 
-	if (m_ValidationFunction)
-	{
-		str = m_ValidationFunction(str, this);
-	}
+    if( m_ValidationFunction )
+    {
+        str = m_ValidationFunction( str, this );
+    }
 
-	if (!str)
-	{
-		return 0;
-	}
+    if( !str )
+    {
+        return 0;
+    }
 
-	if (auto index = IndexOf(str); index != -1)
-	{
-		LogString(spdlog::level::trace, "existing", str, index);
-		return index;
-	}
+    if( auto index = IndexOf( str ); index != -1 )
+    {
+        LogString( spdlog::level::trace, "existing", str, index );
+        return index;
+    }
 
-	const int index = static_cast<int>(m_Precaches.size());
+    const int index = static_cast<int>( m_Precaches.size() );
 
-	m_Precaches.push_back(str);
+    m_Precaches.push_back( str );
 
 	// Only call into the engine if it's not at its maximum capacity.
 	// TODO: need to handle running out of precaches gracefully.
 	// TODO: This will cause problems when an invalid index or unprecached asset is used.
-	if (m_EnginePrecacheFunction && m_MaxEnginePrecaches > 0 && static_cast<unsigned int>(index) < m_MaxEnginePrecaches)
-	{
+    if( m_EnginePrecacheFunction && m_MaxEnginePrecaches > 0 && static_cast<unsigned int>( index ) < m_MaxEnginePrecaches )
+    {
 		// This should never happen since the engine doesn't precache anything until after the game has finished.
 		// If it does happen it's because something else is calling precache functions directly.
 		// This call could cause a host error and may not return.
-		if (const int engineIndex = m_EnginePrecacheFunction(str); engineIndex != index)
-		{
-			m_Logger->error("Precached file \"{}\" has mismatched index (engine: {}, local: {})", str, engineIndex, index);
-			assert(!"Mismatched precache file index");
-		}
-	}
+        if( const int engineIndex = m_EnginePrecacheFunction( str ); engineIndex != index )
+        {
+            m_Logger->error( "Precached file \"{}\" has mismatched index (engine: {}, local: {})", str, engineIndex, index );
+            assert( !"Mismatched precache file index" );
+        }
+    }
 
-	LogString(spdlog::level::debug, "new", str, index);
+    LogString( spdlog::level::debug, "new", str, index );
 
-	return index;
+    return index;
 }
 
-void PrecacheList::AddUnchecked(const char* str)
+void PrecacheList::AddUnchecked( const char* str )
 {
-	assert(str);
-	m_Precaches.push_back(str);
+    assert( str );
+    m_Precaches.push_back( str );
 }
 
 void PrecacheList::Clear()
 {
-	m_Precaches.clear();
+    m_Precaches.clear();
 
 	// First entry is the empty string (invalid).
-	m_Precaches.push_back("");
+    m_Precaches.push_back( "" );
 }
 
-void PrecacheList::LogString(spdlog::level::level_enum level, const char* state, const char* str, int index)
+void PrecacheList::LogString( spdlog::level::level_enum level, const char* state, const char* str, int index )
 {
-	m_Logger->log(level, "[{}] {} \"{}\"{} ({})", m_Type, state, str, str == gpGlobals->pStringBase ? " (Null string_t)" : "", index);
+    m_Logger->log( level, "[{}] {} \"{}\"{} ({})", m_Type, state, str, str == gpGlobals->pStringBase ? " (Null string_t)" : "", index );
 }

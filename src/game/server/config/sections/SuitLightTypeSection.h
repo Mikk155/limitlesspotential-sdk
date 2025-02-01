@@ -31,54 +31,54 @@
 class SuitLightTypeSection final : public GameConfigSection<ServerConfigContext>
 {
 public:
-	explicit SuitLightTypeSection() = default;
+    explicit SuitLightTypeSection() = default;
 
-	std::string_view GetName() const override final { return "SuitLightType"; }
+    std::string_view GetName() const override final { return "SuitLightType"; }
 
-	json::value_t GetType() const override final { return json::value_t::string; }
+    json::value_t GetType() const override final { return json::value_t::string; }
 
-	std::string GetSchema() const override final
-	{
-		const auto types = []()
-		{
-			std::string types;
+    std::string GetSchema() const override final
+    {
+        const auto types = []()
+        {
+            std::string types;
 
-			bool first = true;
+            bool first = true;
 
-			for (const auto& type : SuitLightTypes)
-			{
-				if (!first)
-				{
-					types += ',';
-				}
-				else
-				{
-					first = false;
-				}
+            for( const auto& type : SuitLightTypes )
+            {
+                if( !first )
+                {
+                    types += ',';
+                }
+                else
+                {
+                    first = false;
+                }
 
-				types += '"';
-				types += type.Name;
-				types += '"';
-			}
+                types += '"';
+                types += type.Name;
+                types += '"';
+            }
 
-			return types;
-		}();
+            return types;
+        }();
 
-		return fmt::format(R"("enum": [{}])", types);
-	}
+        return fmt::format( R"("enum": [{}])", types );
+    }
 
-	bool TryParse(GameConfigContext<ServerConfigContext>& context) const override final
-	{
-		const auto type = context.Input.get<std::string>();
+    bool TryParse( GameConfigContext<ServerConfigContext>& context ) const override final
+    {
+        const auto type = context.Input.get<std::string>();
 
-		if (!type.empty())
-		{
-			if (auto value = SuitLightTypeFromString(type); value)
-			{
-				context.Data.State.m_LightType = *value;
-			}
-		}
+        if( !type.empty() )
+        {
+            if( auto value = SuitLightTypeFromString( type ); value )
+            {
+                context.Data.State.m_LightType = *value;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 };

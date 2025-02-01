@@ -33,30 +33,30 @@ using Replacements = std::unordered_map<std::string, std::string, TransparentStr
  */
 struct ReplacementMap
 {
-	ReplacementMap() = default;
+    ReplacementMap() = default;
 
-	ReplacementMap(Replacements&& replacements, bool caseSensitive)
-		: m_Replacements(std::move(replacements)),
-		  m_CaseSensitive(caseSensitive)
-	{
-	}
+    ReplacementMap( Replacements&& replacements, bool caseSensitive )
+        : m_Replacements( std::move( replacements ) ),
+          m_CaseSensitive( caseSensitive )
+    {
+    }
 
-	ReplacementMap(const ReplacementMap&) = delete;
-	ReplacementMap& operator=(const ReplacementMap&) = delete;
-	ReplacementMap(ReplacementMap&&) = default;
-	ReplacementMap& operator=(ReplacementMap&&) = default;
+    ReplacementMap( const ReplacementMap& ) = delete;
+    ReplacementMap& operator=( const ReplacementMap& ) = delete;
+    ReplacementMap( ReplacementMap&& ) = default;
+    ReplacementMap& operator=( ReplacementMap&& ) = default;
 
-	bool empty() const noexcept { return m_Replacements.empty(); }
+    bool empty() const noexcept { return m_Replacements.empty(); }
 
-	const Replacements& GetAll() const noexcept { return m_Replacements; }
+    const Replacements& GetAll() const noexcept { return m_Replacements; }
 
-	bool IsCaseSensitive() const { return m_CaseSensitive; }
+    bool IsCaseSensitive() const { return m_CaseSensitive; }
 
-	const char* Lookup(const char* value) const noexcept;
+    const char* Lookup( const char* value ) const noexcept;
 
 private:
-	Replacements m_Replacements;
-	bool m_CaseSensitive = true;
+    Replacements m_Replacements;
+    bool m_CaseSensitive = true;
 };
 
 struct ReplacementMapOptions
@@ -65,12 +65,12 @@ struct ReplacementMapOptions
 	 *	@brief If @c true, keys and values are stored as-is and looked up using case sensitive lookup.
 	 *	If @c false, keys and values are converted to lowercase and looked up by converting values to lowercase before looking them up.
 	 */
-	bool CaseSensitive = true;
+    bool CaseSensitive = true;
 
 	/**
 	 *	@brief If @c true, searches all paths for the file.
 	 */
-	bool LoadFromAllPaths = false;
+    bool LoadFromAllPaths = false;
 };
 
 /**
@@ -79,44 +79,44 @@ struct ReplacementMapOptions
 class ReplacementMapSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "ReplacementMap"; }
+    const char* GetName() const override { return "ReplacementMap"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	void Clear();
+    void Clear();
 
-	const ReplacementMap* Load(const std::string& fileName, const ReplacementMapOptions& options = {});
+    const ReplacementMap* Load( const std::string& fileName, const ReplacementMapOptions& options = {} );
 
 	/**
 	 *	@brief Loads multiple replacement files and merges them together. Last occurrence of a replacement wins.
 	 *	Not cached.
 	 */
-	std::unique_ptr<ReplacementMap> LoadMultiple(std::span<const std::string> fileNames, const ReplacementMapOptions& options = {}) const;
+    std::unique_ptr<ReplacementMap> LoadMultiple( std::span<const std::string> fileNames, const ReplacementMapOptions& options = {} ) const;
 
 	/**
 	 *	@brief Serializes a replacement map into a JSON object.
 	 */
-	json Serialize(const ReplacementMap& map) const;
+    json Serialize( const ReplacementMap& map ) const;
 
 	/**
 	 *	@brief Deserializes a replacement map from a JSON object.
 	 *	If an error occurs during deserialization an empty map is returned.
 	 */
-	std::unique_ptr<ReplacementMap> Deserialize(const json& input) const;
+    std::unique_ptr<ReplacementMap> Deserialize( const json& input ) const;
 
 private:
-	Replacements Parse(const json& input, const ReplacementMapOptions& options) const;
+    Replacements Parse( const json& input, const ReplacementMapOptions& options ) const;
 
-	Replacements ParseFile(const char* fileName, const ReplacementMapOptions& options) const;
+    Replacements ParseFile( const char* fileName, const ReplacementMapOptions& options ) const;
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    std::shared_ptr<spdlog::logger> m_Logger;
 
-	std::unordered_map<std::string, std::unique_ptr<ReplacementMap>> m_ReplacementMaps;
+    std::unordered_map<std::string, std::unique_ptr<ReplacementMap>> m_ReplacementMaps;
 };
 
 inline ReplacementMapSystem g_ReplacementMaps;

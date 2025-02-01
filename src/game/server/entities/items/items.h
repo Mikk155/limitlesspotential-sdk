@@ -20,18 +20,18 @@
 class CItem : public CBaseItem
 {
 public:
-	ItemType GetType() const override final { return ItemType::Consumable; }
+    ItemType GetType() const override final { return ItemType::Consumable; }
 
-	void Accept(IItemVisitor& visitor) override
-	{
-		visitor.Visit(this);
-	}
+    void Accept( IItemVisitor& visitor ) override
+    {
+        visitor.Visit( this );
+    }
 
-	ItemAddResult Apply(CBasePlayer* player) override
-	{
-		return AddItem(player) ? ItemAddResult::Added : ItemAddResult::NotAdded;
-	}
+    ItemAddResult Apply( CBasePlayer* player ) override
+    {
+        return AddItem( player ) ? ItemAddResult::Added : ItemAddResult::NotAdded;
+    }
 
 protected:
-	virtual bool AddItem(CBasePlayer* player) = 0;
+    virtual bool AddItem( CBasePlayer* player ) = 0;
 };

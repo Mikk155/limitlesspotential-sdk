@@ -22,114 +22,114 @@
 CHalfLifeRules::CHalfLifeRules()
 {
 	// Define this as a dummy command to silence console errors.
-	m_VModEnableCommand = g_ClientCommands.CreateScoped("vmodenable", [](auto, const auto&) {});
+    m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", []( auto, const auto& ) {} );
 }
 
 void CHalfLifeRules::Think()
 {
 }
 
-bool CHalfLifeRules::FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon)
+bool CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon )
 {
-	if (!pPlayer->m_pActiveWeapon)
-	{
+    if( !pPlayer->m_pActiveWeapon )
+    {
 		// player doesn't have an active item!
-		return true;
-	}
+        return true;
+    }
 
-	if (!pPlayer->m_pActiveWeapon->CanHolster())
-	{
-		return false;
-	}
+    if( !pPlayer->m_pActiveWeapon->CanHolster() )
+    {
+        return false;
+    }
 
 	// Never switch
-	if (pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never)
-	{
-		return false;
-	}
+    if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never )
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
-bool CHalfLifeRules::GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch)
+bool CHalfLifeRules::GetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch )
 {
 	// If this is an exhaustible weapon and it's out of ammo, always try to switch even in singleplayer.
-	if (alwaysSearch || ((pCurrentWeapon->iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 &&
-							pCurrentWeapon->PrimaryAmmoIndex() != -1 &&
-							pPlayer->GetAmmoCountByIndex(pCurrentWeapon->PrimaryAmmoIndex()) == 0))
-	{
-		return CGameRules::GetNextBestWeapon(pPlayer, pCurrentWeapon);
-	}
+    if( alwaysSearch || ( ( pCurrentWeapon->iFlags() & ITEM_FLAG_EXHAUSTIBLE ) != 0 &&
+                            pCurrentWeapon->PrimaryAmmoIndex() != -1 &&
+                            pPlayer->GetAmmoCountByIndex( pCurrentWeapon->PrimaryAmmoIndex() ) == 0 ) )
+    {
+        return CGameRules::GetNextBestWeapon( pPlayer, pCurrentWeapon );
+    }
 
-	return false;
+    return false;
 }
 
-bool CHalfLifeRules::ClientConnected(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128])
+bool CHalfLifeRules::ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] )
 {
-	return true;
+    return true;
 }
 
-void CHalfLifeRules::InitHUD(CBasePlayer* pl)
+void CHalfLifeRules::InitHUD( CBasePlayer* pl )
 {
 }
 
-void CHalfLifeRules::ClientDisconnected(edict_t* pClient)
+void CHalfLifeRules::ClientDisconnected( edict_t* pClient )
 {
 }
 
 bool CHalfLifeRules::AllowAutoTargetCrosshair()
 {
-	return (g_Skill.GetSkillLevel() == SkillLevel::Easy);
+    return ( g_Skill.GetSkillLevel() == SkillLevel::Easy );
 }
 
-void CHalfLifeRules::PlayerThink(CBasePlayer* pPlayer)
+void CHalfLifeRules::PlayerThink( CBasePlayer* pPlayer )
 {
 }
 
-bool CHalfLifeRules::FPlayerCanRespawn(CBasePlayer* pPlayer)
+bool CHalfLifeRules::FPlayerCanRespawn( CBasePlayer* pPlayer )
 {
-	return true;
+    return true;
 }
 
-float CHalfLifeRules::FlPlayerSpawnTime(CBasePlayer* pPlayer)
+float CHalfLifeRules::FlPlayerSpawnTime( CBasePlayer* pPlayer )
 {
-	return gpGlobals->time; // now!
+    return gpGlobals->time; // now!
 }
 
-int CHalfLifeRules::IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled)
+int CHalfLifeRules::IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled )
 {
-	return 1;
+    return 1;
 }
 
-void CHalfLifeRules::PlayerKilled(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor)
-{
-}
-
-void CHalfLifeRules::DeathNotice(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor)
+void CHalfLifeRules::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor )
 {
 }
 
-void CHalfLifeRules::PlayerGotItem(CBasePlayer* player, CBaseItem* item)
+void CHalfLifeRules::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor )
 {
 }
 
-bool CHalfLifeRules::IsAllowedToSpawn(CBaseEntity* pEntity)
+void CHalfLifeRules::PlayerGotItem( CBasePlayer* player, CBaseItem* item )
 {
-	return true;
 }
 
-int CHalfLifeRules::DeadPlayerWeapons(CBasePlayer* pPlayer)
+bool CHalfLifeRules::IsAllowedToSpawn( CBaseEntity* pEntity )
 {
-	return GR_PLR_DROP_GUN_NO;
+    return true;
 }
 
-int CHalfLifeRules::DeadPlayerAmmo(CBasePlayer* pPlayer)
+int CHalfLifeRules::DeadPlayerWeapons( CBasePlayer* pPlayer )
 {
-	return GR_PLR_DROP_AMMO_NO;
+    return GR_PLR_DROP_GUN_NO;
 }
 
-int CHalfLifeRules::PlayerRelationship(CBasePlayer* pPlayer, CBaseEntity* pTarget)
+int CHalfLifeRules::DeadPlayerAmmo( CBasePlayer* pPlayer )
+{
+    return GR_PLR_DROP_AMMO_NO;
+}
+
+int CHalfLifeRules::PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget )
 {
 	// why would a single player in half life need this?
-	return GR_NOTTEAMMATE;
+    return GR_NOTTEAMMATE;
 }

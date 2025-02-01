@@ -19,38 +19,38 @@
 
 enum squeak_e
 {
-	SQUEAK_IDLE1 = 0,
-	SQUEAK_FIDGETFIT,
-	SQUEAK_FIDGETNIP,
-	SQUEAK_DOWN,
-	SQUEAK_UP,
-	SQUEAK_THROW
+    SQUEAK_IDLE1 = 0,
+    SQUEAK_FIDGETFIT,
+    SQUEAK_FIDGETNIP,
+    SQUEAK_DOWN,
+    SQUEAK_UP,
+    SQUEAK_THROW
 };
 
 class CSqueak : public CBasePlayerWeapon
 {
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool Deploy() override;
-	void Holster() override;
-	void WeaponIdle() override;
-	bool m_fJustThrown;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool Deploy() override;
+    void Holster() override;
+    void WeaponIdle() override;
+    bool m_fJustThrown;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	unsigned short m_usSnarkFire;
+    unsigned short m_usSnarkFire;
 };

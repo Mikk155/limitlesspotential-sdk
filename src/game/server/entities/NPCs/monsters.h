@@ -71,34 +71,34 @@ inline CBaseEntity* g_pevLastInflictor = nullptr;
 inline bool g_fDrawLines = false;
 
 // spawn flags 256 and above are already taken by the engine
-void UTIL_MoveToOrigin(edict_t* pent, const Vector& vecGoal, float flDist, int iMoveType);
+void UTIL_MoveToOrigin( edict_t* pent, const Vector& vecGoal, float flDist, int iMoveType );
 
 /**
  *	@brief returns the velocity at which an object should be lobbed from vecspot1 to land near vecspot2.
  *	@return g_vecZero if toss is not feasible.
  */
-Vector VecCheckToss(CBaseEntity* entity, const Vector& vecSpot1, Vector vecSpot2, float flGravityAdj = 1.0);
+Vector VecCheckToss( CBaseEntity* entity, const Vector& vecSpot1, Vector vecSpot2, float flGravityAdj = 1.0 );
 
 /**
  *	@brief returns the velocity vector at which an object should be thrown from vecspot1 to hit vecspot2.
  *	@return g_vecZero if throw is not feasible.
  */
-Vector VecCheckThrow(CBaseEntity* entity, const Vector& vecSpot1, Vector vecSpot2, float flSpeed, float flGravityAdj = 1.0);
+Vector VecCheckThrow( CBaseEntity* entity, const Vector& vecSpot1, Vector vecSpot2, float flSpeed, float flGravityAdj = 1.0 );
 
 /**
  *	@brief tosses a brass shell from passed origin at passed velocity
  */
-void EjectBrass(const Vector& vecOrigin, const Vector& vecVelocity, float rotation, int model, int soundtype);
-void ExplodeModel(const Vector& vecOrigin, float speed, int model, int count);
-bool IsFacing(CBaseEntity* pevTest, const Vector& reference);
+void EjectBrass( const Vector& vecOrigin, const Vector& vecVelocity, float rotation, int model, int soundtype );
+void ExplodeModel( const Vector& vecOrigin, float speed, int model, int count );
+bool IsFacing( CBaseEntity* pevTest, const Vector& reference );
 
 /**
  *	@brief a more accurate ( and slower ) version of FVisible.
  *	!!!UNDONE - make this CBaseMonster?
  */
-bool FBoxVisible(CBaseEntity* looker, CBaseEntity* target, Vector& vecTargetOrigin, float flSize = 0.0);
+bool FBoxVisible( CBaseEntity* looker, CBaseEntity* target, Vector& vecTargetOrigin, float flSize = 0.0 );
 
-void DrawRoute(CBaseEntity* entity, WayPoint_t* m_Route, int m_iRouteIndex, int r, int g, int b);
+void DrawRoute( CBaseEntity* entity, WayPoint_t* m_Route, int m_iRouteIndex, int r, int g, int b );
 
 // these bits represent the monster's memory
 #define MEMORY_CLEAR 0
@@ -121,18 +121,18 @@ void DrawRoute(CBaseEntity* entity, WayPoint_t* m_Route, int m_iRouteIndex, int 
  */
 enum
 {
-	AITRIGGER_NONE = 0,
-	AITRIGGER_SEEPLAYER_ANGRY_AT_PLAYER,
-	AITRIGGER_TAKEDAMAGE,
-	AITRIGGER_HALFHEALTH,
-	AITRIGGER_DEATH,
-	AITRIGGER_SQUADMEMBERDIE,
-	AITRIGGER_SQUADLEADERDIE,
-	AITRIGGER_HEARWORLD,
-	AITRIGGER_HEARPLAYER,
-	AITRIGGER_HEARCOMBAT,
-	AITRIGGER_SEEPLAYER_UNCONDITIONAL,
-	AITRIGGER_SEEPLAYER_NOT_IN_COMBAT,
+    AITRIGGER_NONE = 0,
+    AITRIGGER_SEEPLAYER_ANGRY_AT_PLAYER,
+    AITRIGGER_TAKEDAMAGE,
+    AITRIGGER_HALFHEALTH,
+    AITRIGGER_DEATH,
+    AITRIGGER_SQUADMEMBERDIE,
+    AITRIGGER_SQUADLEADERDIE,
+    AITRIGGER_HEARWORLD,
+    AITRIGGER_HEARPLAYER,
+    AITRIGGER_HEARCOMBAT,
+    AITRIGGER_SEEPLAYER_UNCONDITIONAL,
+    AITRIGGER_SEEPLAYER_NOT_IN_COMBAT,
 };
 /*
 		0 : "No Trigger"
@@ -149,7 +149,7 @@ enum
 
 struct GibLimit
 {
-	const int MaxGibs;
+    const int MaxGibs;
 };
 
 /**
@@ -157,16 +157,16 @@ struct GibLimit
  */
 struct GibData
 {
-	const char* const ModelName;
-	const int FirstSubModel;
-	const int SubModelCount;
+    const char* const ModelName;
+    const int FirstSubModel;
+    const int SubModelCount;
 
 	/**
 	 *	@brief Optional list of limits to apply to each submodel
 	 *	Must be SubModelCount elements large
 	 *	If used, instead of randomly selecting a submodel each submodel is used until the requested number of gibs have been spawned
 	 */
-	const GibLimit* const Limits = nullptr;
+    const GibLimit* const Limits = nullptr;
 };
 
 #define GERMAN_GIB_COUNT 4
@@ -181,16 +181,16 @@ constexpr GibData PitDroneGibs = {"models/pit_drone_gibs.mdl", 0, 7};
 constexpr GibData ShockTrooperGibs = {"models/strooper_gibs.mdl", 0, 8};
 
 constexpr GibLimit VoltigoreGibLimits[] =
-	{
-		{1},
-		{1},
-		{1},
-		{1},
-		{2},
-		{1},
-		{2},
-		{1},
-		{2},
+    {
+        {1},
+        {1},
+        {1},
+        {1},
+        {2},
+        {1},
+        {2},
+        {1},
+        {2},
 };
 
 constexpr GibData VoltigoreGibs = {"models/vgibs.mdl", 0, std::ssize(VoltigoreGibLimits), VoltigoreGibLimits};
@@ -200,45 +200,45 @@ constexpr GibData VoltigoreGibs = {"models/vgibs.mdl", 0, std::ssize(VoltigoreGi
  */
 class CGib : public CBaseEntity
 {
-	DECLARE_CLASS(CGib, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CGib, CBaseEntity );
+    DECLARE_DATAMAP();
 
 public:
 	/**
 	 *	@brief Throw a chunk
 	 */
-	void Spawn(const char* szGibModel);
+    void Spawn( const char* szGibModel );
 
 	/**
 	 *	@brief Gib bounces on the ground or wall, sponges some blood down, too!
 	 */
-	void BounceGibTouch(CBaseEntity* pOther);
+    void BounceGibTouch( CBaseEntity* pOther );
 
 	/**
 	 *	@brief Sticky gib puts blood on the wall and stays put.
 	 */
-	void StickyGibTouch(CBaseEntity* pOther);
+    void StickyGibTouch( CBaseEntity* pOther );
 
 	/**
 	 *	@brief in order to emit their meaty scent from the proper location,
 	 *	gibs should wait until they stop bouncing to emit their scent.
 	 *	That's what this function does.
 	 */
-	void WaitTillLand();
-	void LimitVelocity();
+    void WaitTillLand();
+    void LimitVelocity();
 
-	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
-	static void SpawnHeadGib(CBaseEntity* victim);
-	static void SpawnRandomGibs(CBaseEntity* victim, int cGibs, const GibData& gibData);
-	static void SpawnRandomGibs(CBaseEntity* victim, int cGibs, bool human);
-	static void SpawnStickyGibs(CBaseEntity* victim, Vector vecOrigin, int cGibs);
+    int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ) | FCAP_DONT_SAVE; }
+    static void SpawnHeadGib( CBaseEntity* victim );
+    static void SpawnRandomGibs( CBaseEntity* victim, int cGibs, const GibData& gibData );
+    static void SpawnRandomGibs( CBaseEntity* victim, int cGibs, bool human );
+    static void SpawnStickyGibs( CBaseEntity* victim, Vector vecOrigin, int cGibs );
 
-	static void SpawnClientGibs(CBaseEntity* victim, const GibType type, bool playSound, bool spawnHead);
+    static void SpawnClientGibs( CBaseEntity* victim, const GibType type, bool playSound, bool spawnHead );
 
-	static void SpawnClientGibs(CBaseEntity* victim, const GibType type, int cGibs, bool playSound, bool spawnHead);
+    static void SpawnClientGibs( CBaseEntity* victim, const GibType type, int cGibs, bool playSound, bool spawnHead );
 
-	int m_bloodColor;
-	int m_cBloodDecals;
-	int m_material;
-	float m_lifeTime;
+    int m_bloodColor;
+    int m_cBloodDecals;
+    int m_material;
+    float m_lifeTime;
 };

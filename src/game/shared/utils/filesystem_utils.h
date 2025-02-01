@@ -52,13 +52,13 @@ const std::string& FileSystem_GetModDirectoryName();
 /**
  *	@brief Replaces occurrences of ::AlternatePathSeparatorChar with ::DefaultPathSeparatorChar.
  */
-void FileSystem_FixSlashes(std::string& fileName);
+void FileSystem_FixSlashes( std::string& fileName );
 
 /**
  *	@brief Returns the last modification time of the given file.
  *	Filenames are relative to the game directory.
  */
-time_t FileSystem_GetFileTime(const char* fileName);
+time_t FileSystem_GetFileTime( const char* fileName );
 
 /**
  *	@brief Compares the file time of the given files located in the mod directory.
@@ -71,12 +71,12 @@ time_t FileSystem_GetFileTime(const char* fileName);
  *		-@c 1 if @p filename1 is newer than @p filename2
  *	@return @c true if filetimes were retrieved, false otherwise.
  */
-bool FileSystem_CompareFileTime(const char* filename1, const char* filename2, int* iCompare);
+bool FileSystem_CompareFileTime( const char* filename1, const char* filename2, int* iCompare );
 
 enum class FileContentFormat
 {
-	Binary = 0,
-	Text = 1
+    Binary = 0,
+    Text = 1
 };
 
 /**
@@ -94,7 +94,7 @@ enum class FileContentFormat
  *		with a zero byte (null terminator) appended to it if @p format is @c FileContentFormat::Text.
  *		If the file could not be loaded an empty buffer is returned.
  */
-std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, FileContentFormat format, const char* pathID = nullptr);
+std::vector<std::byte> FileSystem_LoadFileIntoBuffer( const char* fileName, FileContentFormat format, const char* pathID = nullptr );
 
 /**
  *	@brief Writes a text file to disk.
@@ -105,7 +105,7 @@ std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, FileC
  *		If no writable location exists no file will be written to.
  *	@return True if the file was written, false if an error occurred.
  */
-bool FileSystem_WriteTextToFile(const char* fileName, const char* text, const char* pathID = nullptr);
+bool FileSystem_WriteTextToFile( const char* fileName, const char* text, const char* pathID = nullptr );
 
 /**
  *	@brief Returns @c true if the current game directory is that of a Valve game.
@@ -119,106 +119,106 @@ bool UTIL_IsValveGameDirectory();
 class FSFile
 {
 public:
-	FSFile() noexcept = default;
-	FSFile(const char* fileName, const char* options, const char* pathID = nullptr);
+    FSFile() noexcept = default;
+    FSFile( const char* fileName, const char* options, const char* pathID = nullptr );
 
-	FSFile(FSFile&& other) noexcept
-		: m_Handle(other.m_Handle)
-	{
-		other.m_Handle = FILESYSTEM_INVALID_HANDLE;
-	}
+    FSFile( FSFile&& other ) noexcept
+        : m_Handle( other.m_Handle )
+    {
+        other.m_Handle = FILESYSTEM_INVALID_HANDLE;
+    }
 
-	FSFile& operator=(FSFile&& other) noexcept
-	{
-		if (this != &other)
-		{
-			Close();
-			m_Handle = other.m_Handle;
-			other.m_Handle = FILESYSTEM_INVALID_HANDLE;
-		}
+    FSFile& operator=( FSFile&& other ) noexcept
+    {
+        if( this != &other )
+        {
+            Close();
+            m_Handle = other.m_Handle;
+            other.m_Handle = FILESYSTEM_INVALID_HANDLE;
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	FSFile(const FSFile&) = delete;
-	FSFile& operator=(const FSFile&) = delete;
+    FSFile( const FSFile& ) = delete;
+    FSFile& operator=( const FSFile& ) = delete;
 
-	~FSFile();
+    ~FSFile();
 
 	constexpr bool IsOpen() const { return m_Handle != FILESYSTEM_INVALID_HANDLE; }
 
-	std::size_t Size() const { return static_cast<std::size_t>(g_pFileSystem->Size(m_Handle)); }
+    std::size_t Size() const { return static_cast<std::size_t>( g_pFileSystem->Size( m_Handle ) ); }
 
-	bool Open(const char* filename, const char* options, const char* pathID = nullptr);
-	void Close();
+    bool Open( const char* filename, const char* options, const char* pathID = nullptr );
+    void Close();
 
-	void Seek(int pos, FileSystemSeek_t seekType);
+    void Seek( int pos, FileSystemSeek_t seekType );
 
-	std::size_t Tell() const;
+    std::size_t Tell() const;
 
-	int Read(void* dest, int size);
+    int Read( void* dest, int size );
 
-	int Write(const void* input, int size);
+    int Write( const void* input, int size );
 
-	template <typename... Args>
-	int Printf(const char* format, Args&&... args)
-	{
-		return g_pFileSystem->FPrintf(m_Handle, format, std::forward<Args>(args)...);
-	}
+    template <typename... Args>
+    int Printf( const char* format, Args&&... args )
+    {
+        return g_pFileSystem->FPrintf( m_Handle, format, std::forward<Args>( args )... );
+    }
 
 	constexpr operator bool() const { return IsOpen(); }
 
 private:
-	FileHandle_t m_Handle = FILESYSTEM_INVALID_HANDLE;
+    FileHandle_t m_Handle = FILESYSTEM_INVALID_HANDLE;
 };
 
-inline FSFile::FSFile(const char* filename, const char* options, const char* pathID)
+inline FSFile::FSFile( const char* filename, const char* options, const char* pathID )
 {
-	Open(filename, options, pathID);
+    Open( filename, options, pathID );
 }
 
 inline FSFile::~FSFile()
 {
-	Close();
+    Close();
 }
 
-inline bool FSFile::Open(const char* filename, const char* options, const char* pathID)
+inline bool FSFile::Open( const char* filename, const char* options, const char* pathID )
 {
-	Close();
+    Close();
 
-	m_Handle = g_pFileSystem->Open(filename, options, pathID);
+    m_Handle = g_pFileSystem->Open( filename, options, pathID );
 
-	return IsOpen();
+    return IsOpen();
 }
 
 inline void FSFile::Close()
 {
-	if (IsOpen())
-	{
-		g_pFileSystem->Close(m_Handle);
-		m_Handle = FILESYSTEM_INVALID_HANDLE;
-	}
+    if( IsOpen() )
+    {
+        g_pFileSystem->Close( m_Handle );
+        m_Handle = FILESYSTEM_INVALID_HANDLE;
+    }
 }
 
-inline void FSFile::Seek(int pos, FileSystemSeek_t seekType)
+inline void FSFile::Seek( int pos, FileSystemSeek_t seekType )
 {
-	if (IsOpen())
-	{
-		g_pFileSystem->Seek(m_Handle, pos, seekType);
-	}
+    if( IsOpen() )
+    {
+        g_pFileSystem->Seek( m_Handle, pos, seekType );
+    }
 }
 
 inline std::size_t FSFile::Tell() const
 {
-	return static_cast<std::size_t>(g_pFileSystem->Tell(m_Handle));
+    return static_cast<std::size_t>( g_pFileSystem->Tell( m_Handle ) );
 }
 
-inline int FSFile::Read(void* dest, int size)
+inline int FSFile::Read( void* dest, int size )
 {
-	return g_pFileSystem->Read(dest, size, m_Handle);
+    return g_pFileSystem->Read( dest, size, m_Handle );
 }
 
-inline int FSFile::Write(const void* input, int size)
+inline int FSFile::Write( const void* input, int size )
 {
-	return g_pFileSystem->Write(input, size, m_Handle);
+    return g_pFileSystem->Write( input, size, m_Handle );
 }

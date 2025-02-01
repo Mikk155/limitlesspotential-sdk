@@ -22,8 +22,8 @@
  */
 class CEagleLaser : public CLaserSpot
 {
-	DECLARE_CLASS(CEagleLaser, CLaserSpot);
+    DECLARE_CLASS( CEagleLaser, CLaserSpot );
 
 public:
-	static CEagleLaser* CreateSpot();
+    static CEagleLaser* CreateSpot();
 };

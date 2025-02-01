@@ -50,9 +50,9 @@ R_StudioDrawPlayer
 
 ====================
 */
-int R_StudioDrawPlayer(int flags, entity_state_t* pplayer)
+int R_StudioDrawPlayer( int flags, entity_state_t* pplayer )
 {
-	return static_cast<int>(g_StudioRenderer.StudioDrawPlayer(flags, pplayer));
+    return static_cast<int>( g_StudioRenderer.StudioDrawPlayer( flags, pplayer ) );
 }
 
 /*
@@ -61,9 +61,9 @@ R_StudioDrawModel
 
 ====================
 */
-int R_StudioDrawModel(int flags)
+int R_StudioDrawModel( int flags )
 {
-	return static_cast<int>(g_StudioRenderer.StudioDrawModel(flags));
+    return static_cast<int>( g_StudioRenderer.StudioDrawModel( flags ) );
 }
 
 /*
@@ -74,34 +74,34 @@ R_StudioInit
 */
 void R_StudioInit()
 {
-	g_StudioRenderer.Init();
+    g_StudioRenderer.Init();
 }
 
 // The simple drawing interface we'll pass back to the engine
 r_studio_interface_t studio =
-	{
-		STUDIO_INTERFACE_VERSION,
-		R_StudioDrawModel,
-		R_StudioDrawPlayer,
+    {
+        STUDIO_INTERFACE_VERSION,
+        R_StudioDrawModel,
+        R_StudioDrawPlayer,
 };
 
 /**
  *	@brief Export this function for the engine to use the studio renderer class to render objects.
  */
-int DLLEXPORT HUD_GetStudioModelInterface(int version, r_studio_interface_t** ppinterface, engine_studio_api_t* pstudio)
+int DLLEXPORT HUD_GetStudioModelInterface( int version, r_studio_interface_t** ppinterface, engine_studio_api_t* pstudio )
 {
-	if (version != STUDIO_INTERFACE_VERSION)
-		return 0;
+    if( version != STUDIO_INTERFACE_VERSION )
+        return 0;
 
 	// Point the engine to our callbacks
-	*ppinterface = &studio;
+    *ppinterface = &studio;
 
 	// Copy in engine helper functions
-	memcpy(&IEngineStudio, pstudio, sizeof(IEngineStudio));
+    memcpy( &IEngineStudio, pstudio, sizeof( IEngineStudio ) );
 
 	// Initialize local variables, etc.
-	R_StudioInit();
+    R_StudioInit();
 
 	// Success
-	return 1;
+    return 1;
 }

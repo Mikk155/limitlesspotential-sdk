@@ -17,40 +17,40 @@
 
 class CDisplacerBall : public CBaseEntity
 {
-	DECLARE_CLASS(CDisplacerBall, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CDisplacerBall, CBaseEntity );
+    DECLARE_DATAMAP();
 
 private:
-	static const size_t NUM_BEAMS = 8;
+    static const size_t NUM_BEAMS = 8;
 
 public:
-	void Precache() override;
-	void Spawn() override;
+    void Precache() override;
+    void Spawn() override;
 
-	void BallTouch(CBaseEntity* pOther);
+    void BallTouch( CBaseEntity* pOther );
 
-	void FlyThink();
-	void FlyThink2();
-	void FizzleThink();
-	void ExplodeThink();
-	void KillThink();
+    void FlyThink();
+    void FlyThink2();
+    void FizzleThink();
+    void ExplodeThink();
+    void KillThink();
 
-	void InitBeams();
+    void InitBeams();
 
-	void ClearBeams();
+    void ClearBeams();
 
-	void ArmBeam(int iSide);
+    void ArmBeam( int iSide );
 
-	bool ClassifyTarget(CBaseEntity* pTarget);
+    bool ClassifyTarget( CBaseEntity* pTarget );
 
-	static CDisplacerBall* CreateDisplacerBall(const Vector& vecOrigin, const Vector& vecAngles, CBaseEntity* pOwner);
+    static CDisplacerBall* CreateDisplacerBall( const Vector& vecOrigin, const Vector& vecAngles, CBaseEntity* pOwner );
 
 private:
-	int m_iTrail;
+    int m_iTrail;
 
-	CBeam* m_pBeam[NUM_BEAMS];
+    CBeam* m_pBeam[NUM_BEAMS];
 
-	size_t m_uiBeams;
+    size_t m_uiBeams;
 
-	EHANDLE m_hDisplacedTarget;
+    EHANDLE m_hDisplacedTarget;
 };

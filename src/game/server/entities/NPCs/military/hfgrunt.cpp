@@ -25,55 +25,55 @@ int g_fFGruntQuestion; //!< true if an idle grunt asked a question. Cleared when
 class CHFGrunt : public CHGrunt
 {
 public:
-	Relationship IRelationship(CBaseEntity* pTarget) override
-	{
+    Relationship IRelationship( CBaseEntity* pTarget ) override
+    {
 		// Players are allies
-		if (pTarget->IsPlayer())
-			return Relationship::Ally;
+        if( pTarget->IsPlayer() )
+            return Relationship::Ally;
 
-		return CHGrunt::IRelationship(pTarget);
-	}
+        return CHGrunt::IRelationship( pTarget );
+    }
 
 protected:
-	int& GetGruntQuestion() override { return g_fFGruntQuestion; }
+    int& GetGruntQuestion() override { return g_fFGruntQuestion; }
 };
 
-LINK_ENTITY_TO_CLASS(monster_human_friendly_grunt, CHFGrunt);
+LINK_ENTITY_TO_CLASS( monster_human_friendly_grunt, CHFGrunt );
 
 /**
  *	@brief when triggered, spawns a monster_human_friendly_grunt repelling down a line.
  */
 class CHFGruntRepel : public CHGruntRepel
 {
-	DECLARE_CLASS(CHFGruntRepel, CHGruntRepel);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CHFGruntRepel, CHGruntRepel );
+    DECLARE_DATAMAP();
 
 public:
-	void Precache() override
-	{
-		PrecacheCore("monster_human_friendly_grunt");
-	}
+    void Precache() override
+    {
+        PrecacheCore( "monster_human_friendly_grunt" );
+    }
 
-	void Spawn() override
-	{
-		CHGruntRepel::Spawn();
-		SetUse(&CHFGruntRepel::RepelUse);
-	}
+    void Spawn() override
+    {
+        CHGruntRepel::Spawn();
+        SetUse( &CHFGruntRepel::RepelUse );
+    }
 
-	void RepelUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
-	{
-		CreateMonster("monster_human_friendly_grunt");
-	}
+    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+    {
+        CreateMonster( "monster_human_friendly_grunt" );
+    }
 };
 
-BEGIN_DATAMAP(CHFGruntRepel)
-DEFINE_FUNCTION(RepelUse),
-	END_DATAMAP();
+BEGIN_DATAMAP( CHFGruntRepel )
+    DEFINE_FUNCTION( RepelUse ),
+END_DATAMAP();
 
-LINK_ENTITY_TO_CLASS(monster_fgrunt_repel, CHFGruntRepel);
+LINK_ENTITY_TO_CLASS( monster_fgrunt_repel, CHFGruntRepel );
 
 /**
  *	@brief DEAD HGRUNT PROP
  *	@details Same as regular grunt
  */
-LINK_ENTITY_TO_CLASS(monster_fhgrunt_dead, CDeadHGrunt);
+LINK_ENTITY_TO_CLASS( monster_fhgrunt_dead, CDeadHGrunt );

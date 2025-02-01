@@ -19,9 +19,9 @@ struct local_state_t;
 bool CL_IsDead();
 
 int HUD_GetWeaponAnim();
-void HUD_SendWeaponAnim(int iAnim, int body, bool force);
-void HUD_PlaybackEvent(int flags, const edict_t* pInvoker, unsigned short eventindex, float delay, const float* origin, const float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
-void HUD_SetMaxSpeed(const edict_t* ed, float speed);
+void HUD_SendWeaponAnim( int iAnim, int body, bool force );
+void HUD_PlaybackEvent( int flags, const edict_t* pInvoker, unsigned short eventindex, float delay, const float* origin, const float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 );
+void HUD_SetMaxSpeed( const edict_t* ed, float speed );
 
 Vector HUD_GetLastOrg();
 void HUD_SetLastOrg();
@@ -31,8 +31,8 @@ void HUD_SetLastOrg();
  */
 void HUD_SetupServerEngineInterface();
 
-unsigned short stub_PrecacheEvent(int type, const char* s);
-void stub_SetModel(edict_t* e, const char* m);
+unsigned short stub_PrecacheEvent( int type, const char* s );
+void stub_SetModel( edict_t* e, const char* m );
 
 
 extern cvar_t* cl_lw;

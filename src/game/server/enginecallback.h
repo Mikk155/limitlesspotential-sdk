@@ -65,35 +65,35 @@ inline enginefuncs_t g_engfuncs;
 #define WRITE_STRING (*g_engfuncs.pfnWriteString)
 #define WRITE_ENTITY (*g_engfuncs.pfnWriteEntity)
 
-inline void WRITE_RGB24(RGB24 color)
+inline void WRITE_RGB24( RGB24 color )
 {
-	WRITE_BYTE(color.Red);
-	WRITE_BYTE(color.Green);
-	WRITE_BYTE(color.Blue);
+    WRITE_BYTE( color.Red );
+    WRITE_BYTE( color.Green );
+    WRITE_BYTE( color.Blue );
 }
 
-inline void WRITE_FLOAT(float value)
+inline void WRITE_FLOAT( float value )
 {
-	WRITE_LONG(std::bit_cast<int>(value));
+    WRITE_LONG( std::bit_cast<int>( value ) );
 }
 
 #define CVAR_REGISTER (*g_engfuncs.pfnCVarRegister)
 #define CVAR_SET_FLOAT (*g_engfuncs.pfnCVarSetFloat)
 #define CVAR_SET_STRING (*g_engfuncs.pfnCVarSetString)
 #define CVAR_GET_POINTER (*g_engfuncs.pfnCVarGetPointer)
-inline void* GET_PRIVATE(edict_t* pent)
+inline void* GET_PRIVATE( edict_t* pent )
 {
-	if (pent)
-		return pent->pvPrivateData;
-	return nullptr;
+    if( pent )
+        return pent->pvPrivateData;
+    return nullptr;
 }
 
 template <typename T>
-inline T* GET_PRIVATE(edict_t* pent)
+inline T* GET_PRIVATE( edict_t* pent )
 {
-	if (pent)
-		return static_cast<T*>(pent->pvPrivateData);
-	return nullptr;
+    if( pent )
+        return static_cast<T*>( pent->pvPrivateData );
+    return nullptr;
 }
 
 #define GETENTITYILLUM (*g_engfuncs.pfnGetEntityIllum)

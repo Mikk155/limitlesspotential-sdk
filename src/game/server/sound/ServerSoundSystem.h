@@ -25,13 +25,13 @@ namespace sound
 class ServerSoundSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	const char* GetName() const override { return "ServerSound"; }
+    const char* GetName() const override { return "ServerSound"; }
 
-	bool Initialize() override;
-	void PostInitialize() override;
-	void Shutdown() override;
+    bool Initialize() override;
+    void PostInitialize() override;
+    void Shutdown() override;
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override;
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
 	/**
 	 *	@details Use this to set the pitch of a sound.
@@ -42,23 +42,23 @@ public:
 	 *	as it's not quite as fast as with normal pitch (the pitchshift mixer is not native coded).
 	 *	TODO: is this still true?
 	 */
-	void EmitSound(CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation, int flags, int pitch);
+    void EmitSound( CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation, int flags, int pitch );
 
-	void EmitAmbientSound(CBaseEntity* entity, const Vector& vecOrigin, const char* samp, float vol, float attenuation, int fFlags, int pitch);
+    void EmitAmbientSound( CBaseEntity* entity, const Vector& vecOrigin, const char* samp, float vol, float attenuation, int fFlags, int pitch );
 
-	const char* CheckForSoundReplacement(const char* soundName) const;
-
-private:
-	const char* CheckForSoundReplacement(CBaseEntity* entity, const char* soundName) const;
-
-	void EmitSoundCore(CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
-		int flags, int pitch, const Vector& origin, bool alwaysBroadcast);
-
-	void EmitSoundSentence(CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
-		int flags, int pitch);
+    const char* CheckForSoundReplacement( const char* soundName ) const;
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    const char* CheckForSoundReplacement( CBaseEntity* entity, const char* soundName ) const;
+
+    void EmitSoundCore( CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
+        int flags, int pitch, const Vector& origin, bool alwaysBroadcast );
+
+    void EmitSoundSentence( CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
+        int flags, int pitch );
+
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
 };
 
 inline ServerSoundSystem g_ServerSound;

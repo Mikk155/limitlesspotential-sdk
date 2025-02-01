@@ -19,15 +19,15 @@
 
 class CClientFog : public CBaseEntity
 {
-	DECLARE_CLASS(CClientFog, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CClientFog, CBaseEntity );
+    DECLARE_DATAMAP();
 
 public:
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Spawn() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void Spawn() override;
 
 public:
-	float m_Density = 0;
-	float m_StartDistance = 1500;
-	float m_StopDistance = 2000;
+    float m_Density = 0;
+    float m_StartDistance = 1500;
+    float m_StopDistance = 2000;
 };

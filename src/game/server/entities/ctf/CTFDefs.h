@@ -23,27 +23,27 @@
 
 enum class CTFTeam
 {
-	None = 0,
-	BlackMesa,
-	OpposingForce
+    None = 0,
+    BlackMesa,
+    OpposingForce
 };
 
 namespace CTFItem
 {
 enum CTFItem : unsigned int
 {
-	None = 0,
+    None = 0,
 
-	BlackMesaFlag = 1 << 0,
-	OpposingForceFlag = 1 << 1,
+    BlackMesaFlag = 1 << 0,
+    OpposingForceFlag = 1 << 1,
 
-	LongJump = 1 << 2,
-	PortableHEV = 1 << 3,
-	Backpack = 1 << 4,
-	Acceleration = 1 << 5,
-	Unknown = 1 << 6, // Appears to be some non-existent item
-	Regeneration = 1 << 7,
+    LongJump = 1 << 2,
+    PortableHEV = 1 << 3,
+    Backpack = 1 << 4,
+    Acceleration = 1 << 5,
+    Unknown = 1 << 6, // Appears to be some non-existent item
+    Regeneration = 1 << 7,
 
-	ItemsMask = LongJump | PortableHEV | Backpack | Acceleration | Unknown | Regeneration
+    ItemsMask = LongJump | PortableHEV | Backpack | Acceleration | Unknown | Regeneration
 };
 }

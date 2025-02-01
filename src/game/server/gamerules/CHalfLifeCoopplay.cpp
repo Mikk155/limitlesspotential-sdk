@@ -21,99 +21,99 @@
 
 CHalfLifeCoopplay::CHalfLifeCoopplay()
 {
-	m_MenuSelectCommand = g_ClientCommands.CreateScoped("menuselect", [](CBasePlayer* player, const auto& args)
-		{
-			if (args.Count() < 2)
-				return;
+    m_MenuSelectCommand = g_ClientCommands.CreateScoped( "menuselect", []( CBasePlayer* player, const auto& args )
+        {
+            if( args.Count() < 2 )
+                return;
 
 			// int slot = atoi(args.Argument(1));
 
 			// select the item from the current menu
-		});
+        } );
 }
 
-void CHalfLifeCoopplay::UpdateGameMode(CBasePlayer* pPlayer)
+void CHalfLifeCoopplay::UpdateGameMode( CBasePlayer* pPlayer )
 {
-	MESSAGE_BEGIN(MSG_ONE, gmsgGameMode, nullptr, pPlayer);
-	g_engfuncs.pfnWriteByte(1);
-	g_engfuncs.pfnMessageEnd();
+    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, pPlayer );
+    g_engfuncs.pfnWriteByte( 1 );
+    g_engfuncs.pfnMessageEnd();
 }
 
-void CHalfLifeCoopplay::MonsterKilled(CBaseMonster* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor)
+void CHalfLifeCoopplay::MonsterKilled( CBaseMonster* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor )
 {
-	auto killer = ToBasePlayer(pKiller);
+    auto killer = ToBasePlayer( pKiller );
 
-	if (killer && !pVictim->IsPlayer())
-	{
-		const int points = IPointsForMonsterKill(killer, pVictim);
+    if( killer && !pVictim->IsPlayer() )
+    {
+        const int points = IPointsForMonsterKill( killer, pVictim );
 
-		killer->pev->frags += points;
+        killer->pev->frags += points;
 
-		killer->SendScoreInfoAll();
-	}
+        killer->SendScoreInfoAll();
+    }
 }
 
-int CHalfLifeCoopplay::PlayerRelationship(CBasePlayer* pPlayer, CBaseEntity* pTarget)
+int CHalfLifeCoopplay::PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget )
 {
-	return GR_TEAMMATE;
+    return GR_TEAMMATE;
 }
 
-bool CHalfLifeCoopplay::ShouldAutoAim(CBasePlayer* pPlayer, CBaseEntity* target)
+bool CHalfLifeCoopplay::ShouldAutoAim( CBasePlayer* pPlayer, CBaseEntity* target )
 {
-	if (target && target->IsPlayer())
-	{
-		return PlayerRelationship(pPlayer, target) != GR_TEAMMATE;
-	}
+    if( target && target->IsPlayer() )
+    {
+        return PlayerRelationship( pPlayer, target ) != GR_TEAMMATE;
+    }
 
-	return true;
+    return true;
 }
 
-int CHalfLifeCoopplay::IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled)
+int CHalfLifeCoopplay::IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled )
 {
-	if (!pKilled)
-	{
-		return 0;
-	}
+    if( !pKilled )
+    {
+        return 0;
+    }
 
-	if (pAttacker && pAttacker != pKilled && PlayerRelationship(pAttacker, pKilled) == GR_TEAMMATE)
-	{
-		return -1;
-	}
+    if( pAttacker && pAttacker != pKilled && PlayerRelationship( pAttacker, pKilled ) == GR_TEAMMATE )
+    {
+        return -1;
+    }
 
-	return 1;
+    return 1;
 }
 
-int CHalfLifeCoopplay::IPointsForMonsterKill(CBasePlayer* pAttacker, CBaseMonster* pKilled)
+int CHalfLifeCoopplay::IPointsForMonsterKill( CBasePlayer* pAttacker, CBaseMonster* pKilled )
 {
-	return pKilled != nullptr ? 1 : 0;
+    return pKilled != nullptr ? 1 : 0;
 }
 
-float CHalfLifeCoopplay::FlPlayerSpawnTime(CBasePlayer* pPlayer)
+float CHalfLifeCoopplay::FlPlayerSpawnTime( CBasePlayer* pPlayer )
 {
-	return gpGlobals->time;
+    return gpGlobals->time;
 }
 
-int CHalfLifeCoopplay::DeadPlayerWeapons(CBasePlayer* pPlayer)
+int CHalfLifeCoopplay::DeadPlayerWeapons( CBasePlayer* pPlayer )
 {
-	return GR_PLR_DROP_GUN_NO;
+    return GR_PLR_DROP_GUN_NO;
 }
 
-void CHalfLifeCoopplay::PlayerKilled(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor)
+void CHalfLifeCoopplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor )
 {
-	if (!m_DisableDeathPenalty)
-		CHalfLifeMultiplay::PlayerKilled(pVictim, pKiller, inflictor);
+    if( !m_DisableDeathPenalty )
+        CHalfLifeMultiplay::PlayerKilled( pVictim, pKiller, inflictor );
 }
 
 void CHalfLifeCoopplay::Think()
 {
-	if (g_fGameOver)
-		CHalfLifeMultiplay::Think();
+    if( g_fGameOver )
+        CHalfLifeMultiplay::Think();
 }
 
-bool CHalfLifeCoopplay::FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker)
+bool CHalfLifeCoopplay::FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker )
 {
-	if (friendlyfire.value == 0 && pAttacker->IsPlayer() && pAttacker != pPlayer)
-		return false;
+    if( friendlyfire.value == 0 && pAttacker->IsPlayer() && pAttacker != pPlayer )
+        return false;
 
-	return CHalfLifeMultiplay::FPlayerCanTakeDamage(pPlayer, pAttacker);
+    return CHalfLifeMultiplay::FPlayerCanTakeDamage( pPlayer, pAttacker );
 }

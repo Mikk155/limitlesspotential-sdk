@@ -22,9 +22,9 @@
 
 struct RiffChunk
 {
-	std::string_view ChunkId{};
-	std::size_t Size{};
-	const std::byte* Data{};
+    std::string_view ChunkId{};
+    std::size_t Size{};
+    const std::byte* Data{};
 };
 
 /**
@@ -33,19 +33,19 @@ struct RiffChunk
 class RiffChunkReader final
 {
 public:
-	RiffChunkReader() = default;
-	RiffChunkReader(const std::byte* data, std::size_t size);
+    RiffChunkReader() = default;
+    RiffChunkReader( const std::byte* data, std::size_t size );
 
 	constexpr operator bool() const { return m_Data != nullptr; }
 
-	std::optional<RiffChunk> Next();
+    std::optional<RiffChunk> Next();
 
-	std::optional<RiffChunk> FindChunk(std::string_view chunkId);
+    std::optional<RiffChunk> FindChunk( std::string_view chunkId );
 
 private:
-	const std::byte* m_Data{};
-	std::size_t m_Size{};
-	const std::byte* m_ReadPosition{};
+    const std::byte* m_Data{};
+    std::size_t m_Size{};
+    const std::byte* m_ReadPosition{};
 };
 
 /**
@@ -55,88 +55,88 @@ private:
 class RiffFileReader final
 {
 public:
-	RiffFileReader(const std::byte* potentialRiffData, std::size_t sizeInBytes);
+    RiffFileReader( const std::byte* potentialRiffData, std::size_t sizeInBytes );
 
 	constexpr operator bool() const { return m_ChunkReader; }
 
-	RiffChunkReader GetChunkReader() const { return m_ChunkReader; }
+    RiffChunkReader GetChunkReader() const { return m_ChunkReader; }
 
 private:
-	RiffChunkReader m_ChunkReader;
+    RiffChunkReader m_ChunkReader;
 };
 
-inline RiffChunkReader::RiffChunkReader(const std::byte* data, std::size_t size)
-	: m_Data(data),
-	  m_Size(size),
-	  m_ReadPosition(data)
+inline RiffChunkReader::RiffChunkReader( const std::byte* data, std::size_t size )
+    : m_Data( data ),
+      m_Size( size ),
+      m_ReadPosition( data )
 {
 }
 
-inline RiffFileReader::RiffFileReader(const std::byte* potentialRiffData, std::size_t sizeInBytes)
+inline RiffFileReader::RiffFileReader( const std::byte* potentialRiffData, std::size_t sizeInBytes )
 {
 	// A valid RIFF header must be at least 12 bytes large.
-	if (!potentialRiffData || sizeInBytes <= 12)
-	{
-		return;
-	}
+    if( !potentialRiffData || sizeInBytes <= 12 )
+    {
+        return;
+    }
 
-	if (0 != strncmp("RIFF", reinterpret_cast<const char*>(potentialRiffData), 4))
-	{
-		return;
-	}
+    if( 0 != strncmp( "RIFF", reinterpret_cast<const char*>( potentialRiffData ), 4 ) )
+    {
+        return;
+    }
 
-	const int remainingSizeInBytes = *reinterpret_cast<const int*>(potentialRiffData + 4);
+    const int remainingSizeInBytes = *reinterpret_cast<const int*>( potentialRiffData + 4 );
 
 	// Don't bother if it only has the type id.
-	if (remainingSizeInBytes <= 4)
-	{
-		return;
-	}
+    if( remainingSizeInBytes <= 4 )
+    {
+        return;
+    }
 
-	if (0 != strncmp("WAVE", reinterpret_cast<const char*>(potentialRiffData + 8), 4))
-	{
-		return;
-	}
+    if( 0 != strncmp( "WAVE", reinterpret_cast<const char*>( potentialRiffData + 8 ), 4 ) )
+    {
+        return;
+    }
 
 	// Store the size of the data section.
-	m_ChunkReader = {potentialRiffData + 12, static_cast<std::size_t>(remainingSizeInBytes - 4)};
+    m_ChunkReader = {potentialRiffData + 12, static_cast<std::size_t>( remainingSizeInBytes - 4 )};
 }
 
 inline std::optional<RiffChunk> RiffChunkReader::Next()
 {
-	const auto end = m_Data + m_Size;
+    const auto end = m_Data + m_Size;
 
 	// No valid chunks left.
-	if ((end - m_ReadPosition) < 8)
-	{
-		return {};
-	}
+    if( ( end - m_ReadPosition ) < 8 )
+    {
+        return {};
+    }
 
-	const char* chunkId = reinterpret_cast<const char*>(m_ReadPosition);
-	const int size = *reinterpret_cast<const int*>(m_ReadPosition + 4);
+    const char* chunkId = reinterpret_cast<const char*>( m_ReadPosition );
+    const int size = *reinterpret_cast<const int*>( m_ReadPosition + 4 );
 
-	if (size < 0)
-	{
-		return {};
-	}
+    if( size < 0 )
+    {
+        return {};
+    }
 
-	const RiffChunk chunk{{chunkId, 4}, static_cast<std::size_t>(size), m_ReadPosition + 8};
+    const RiffChunk chunk{{chunkId, 4}, static_cast<std::size_t>( size ), m_ReadPosition + 8};
 
 	// Align to 2 byte boundary.
-	m_ReadPosition += (size + 8 + 1) & ~1;
+    m_ReadPosition += ( size + 8 + 1 ) & ~1;
 
-	return chunk;
+    return chunk;
 }
 
-inline std::optional<RiffChunk> RiffChunkReader::FindChunk(std::string_view chunkId)
+inline std::optional<RiffChunk> RiffChunkReader::FindChunk( std::string_view chunkId )
 {
-	for (auto chunk = Next(); chunk; chunk = Next())
-	{
-		if (chunk->ChunkId == chunkId)
-		{
-			return chunk;
-		}
-	}
+    for( auto chunk = Next(); chunk; chunk = Next() )
+    {
+        if( chunk->ChunkId == chunkId )
+        {
+            return chunk;
+        }
+    }
 
-	return {};
+    return {};
 }

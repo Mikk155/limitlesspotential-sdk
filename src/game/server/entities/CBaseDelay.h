@@ -22,16 +22,16 @@
  */
 class CBaseDelay : public CBaseEntity
 {
-	DECLARE_CLASS(CBaseDelay, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CBaseDelay, CBaseEntity );
+    DECLARE_DATAMAP();
 
 public:
-	float m_flDelay;
-	string_t m_iszKillTarget;
+    float m_flDelay;
+    string_t m_iszKillTarget;
 
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
 	// common member functions
-	void SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value);
-	void DelayThink();
+    void SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, float value );
+    void DelayThink();
 };

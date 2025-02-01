@@ -21,20 +21,20 @@ class CRpg;
 
 class CRpgRocket : public CGrenade
 {
-	DECLARE_CLASS(CRpgRocket, CGrenade);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CRpgRocket, CGrenade );
+    DECLARE_DATAMAP();
 
 public:
-	~CRpgRocket() override;
+    ~CRpgRocket() override;
 
-	void Spawn() override;
-	void Precache() override;
-	void FollowThink();
-	void IgniteThink();
-	void RocketTouch(CBaseEntity* pOther);
-	static CRpgRocket* CreateRpgRocket(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner, CRpg* pLauncher);
+    void Spawn() override;
+    void Precache() override;
+    void FollowThink();
+    void IgniteThink();
+    void RocketTouch( CBaseEntity* pOther );
+    static CRpgRocket* CreateRpgRocket( Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner, CRpg* pLauncher );
 
-	int m_iTrail;
-	float m_flIgniteTime;
-	EntityHandle<CRpg> m_pLauncher; // handle back to the launcher that fired me.
+    int m_iTrail;
+    float m_flIgniteTime;
+    EntityHandle<CRpg> m_pLauncher; // handle back to the launcher that fired me.
 };

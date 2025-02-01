@@ -36,47 +36,47 @@ void W_Precache();
  */
 class CGrenade : public CBaseMonster
 {
-	DECLARE_CLASS(CGrenade, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CGrenade, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Precache() override;
-	void Spawn() override;
+    void OnCreate() override;
+    void Precache() override;
+    void Spawn() override;
 
-	enum SATCHELCODE
-	{
-		SATCHEL_DETONATE = 0,
-		SATCHEL_RELEASE
-	};
+    enum SATCHELCODE
+    {
+        SATCHEL_DETONATE = 0,
+        SATCHEL_RELEASE
+    };
 
-	static CGrenade* ShootTimed(CBaseEntity* owner, Vector vecStart, Vector vecVelocity, float time);
-	static CGrenade* ShootContact(CBaseEntity* owner, Vector vecStart, Vector vecVelocity);
-	static CGrenade* ShootSatchelCharge(CBaseEntity* owner, Vector vecStart, Vector vecVelocity);
-	static void UseSatchelCharges(CBaseEntity* owner, SATCHELCODE code);
+    static CGrenade* ShootTimed( CBaseEntity* owner, Vector vecStart, Vector vecVelocity, float time );
+    static CGrenade* ShootContact( CBaseEntity* owner, Vector vecStart, Vector vecVelocity );
+    static CGrenade* ShootSatchelCharge( CBaseEntity* owner, Vector vecStart, Vector vecVelocity );
+    static void UseSatchelCharges( CBaseEntity* owner, SATCHELCODE code );
 
-	void Explode(Vector vecSrc, Vector vecAim);
-	void Explode(TraceResult* pTrace, int bitsDamageType);
-	void Smoke();
+    void Explode( Vector vecSrc, Vector vecAim );
+    void Explode( TraceResult* pTrace, int bitsDamageType );
+    void Smoke();
 
-	void BounceTouch(CBaseEntity* pOther);
-	void SlideTouch(CBaseEntity* pOther);
+    void BounceTouch( CBaseEntity* pOther );
+    void SlideTouch( CBaseEntity* pOther );
 
 	/**
 	 *	@brief Contact grenade, explode when it touches something
 	 */
-	void ExplodeTouch(CBaseEntity* pOther);
-	void DangerSoundThink();
-	void PreDetonate();
-	void Detonate();
-	void DetonateUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-	void TumbleThink();
+    void ExplodeTouch( CBaseEntity* pOther );
+    void DangerSoundThink();
+    void PreDetonate();
+    void Detonate();
+    void DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void TumbleThink();
 
-	virtual void BounceSound();
-	int BloodColor() override { return DONT_BLEED; }
-	void Killed(CBaseEntity* attacker, int iGib) override;
+    virtual void BounceSound();
+    int BloodColor() override { return DONT_BLEED; }
+    void Killed( CBaseEntity* attacker, int iGib ) override;
 
-	bool m_fRegisteredSound; // whether or not this grenade has issued its DANGER sound to the world sound list yet.
+    bool m_fRegisteredSound; // whether or not this grenade has issued its DANGER sound to the world sound list yet.
 };
 
 #define MAX_NORMAL_BATTERY 100
@@ -190,20 +190,20 @@ public:
 // bullet types
 enum Bullet
 {
-	BULLET_NONE = 0,
-	BULLET_PLAYER_9MM,		// glock
-	BULLET_PLAYER_MP5,		// mp5
-	BULLET_PLAYER_357,		// python
-	BULLET_PLAYER_BUCKSHOT, // shotgun
-	BULLET_PLAYER_CROWBAR,	// crowbar swipe
+    BULLET_NONE = 0,
+    BULLET_PLAYER_9MM,        // glock
+    BULLET_PLAYER_MP5,        // mp5
+    BULLET_PLAYER_357,        // python
+    BULLET_PLAYER_BUCKSHOT, // shotgun
+    BULLET_PLAYER_CROWBAR,    // crowbar swipe
 
-	BULLET_MONSTER_9MM,
-	BULLET_MONSTER_MP5,
-	BULLET_MONSTER_12MM,
+    BULLET_MONSTER_9MM,
+    BULLET_MONSTER_MP5,
+    BULLET_MONSTER_12MM,
 
-	BULLET_PLAYER_556,
-	BULLET_PLAYER_762,
-	BULLET_PLAYER_EAGLE,
+    BULLET_PLAYER_556,
+    BULLET_PLAYER_762,
+    BULLET_PLAYER_EAGLE,
 };
 
 #define ITEM_FLAG_SELECTONEMPTY 1
@@ -214,9 +214,9 @@ enum Bullet
 
 enum class WeaponState
 {
-	Inactive = 0,
-	Active,
-	OnTarget
+    Inactive = 0,
+    Active,
+    OnTarget
 };
 
 void Weapon_RegisterWeaponData();
@@ -228,43 +228,43 @@ constexpr int RefillAllAmmoAmount = -1;
  */
 class CBasePlayerWeapon : public CBaseItem
 {
-	DECLARE_CLASS(CBasePlayerWeapon, CBaseItem);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CBasePlayerWeapon, CBaseItem );
+    DECLARE_DATAMAP();
 
 public:
-	static inline std::shared_ptr<spdlog::logger> WeaponsLogger;
+    static inline std::shared_ptr<spdlog::logger> WeaponsLogger;
 
-	void SetObjectCollisionBox() override;
+    void SetObjectCollisionBox() override;
 
-	void PostRestore() override;
+    void PostRestore() override;
 
-	ItemType GetType() const { return ItemType::InventoryItem; }
+    ItemType GetType() const { return ItemType::InventoryItem; }
 
-	void Accept(IItemVisitor& visitor) override
-	{
-		visitor.Visit(this);
-	}
+    void Accept( IItemVisitor& visitor ) override
+    {
+        visitor.Visit( this );
+    }
 
-	void OnCreate() override;
+    void OnCreate() override;
 
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void LinkWeaponInfo();
+    void LinkWeaponInfo();
 
 	/**
 	 *	@brief return true if the item you want the item added to the player inventory
 	 */
-	virtual bool CanAddToPlayer(CBasePlayer* player) { return true; }
+    virtual bool CanAddToPlayer( CBasePlayer* player ) { return true; }
 
-	virtual void AddToPlayer(CBasePlayer* pPlayer);
+    virtual void AddToPlayer( CBasePlayer* pPlayer );
 
 	/**
 	 *	@brief return true if you want your duplicate removed from world
 	 *	CALLED THROUGH the newly-touched weapon's instance. The existing player weapon is @c original.
 	 */
-	virtual bool AddDuplicate(CBasePlayerWeapon* original);
+    virtual bool AddDuplicate( CBasePlayerWeapon* original );
 
 	/**
 	 *	@brief called by the new item with the existing item as parameter
@@ -274,214 +274,214 @@ public:
 	 *	which means only the ammo in the weapon clip comes along.
 	 *	@return true if you can add ammo to yourself when picked up
 	 */
-	virtual bool ExtractAmmo(CBasePlayerWeapon* weapon);
+    virtual bool ExtractAmmo( CBasePlayerWeapon* weapon );
 
 	/**
 	 *	@brief Called by the new item's class with the existing item as parameter
 	 *	@return true if you can add ammo to yourself when picked up
 	 */
-	virtual bool ExtractClipAmmo(CBasePlayerWeapon* weapon);
+    virtual bool ExtractClipAmmo( CBasePlayerWeapon* weapon );
 
 	// generic "shared" ammo handlers
-	bool AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, const char* szName, int iMaxClip);
-	bool AddSecondaryAmmo(int iCount, const char* szName);
+    bool AddPrimaryAmmo( CBasePlayerWeapon* origin, int iCount, const char* szName, int iMaxClip );
+    bool AddSecondaryAmmo( int iCount, const char* szName );
 
-	void DestroyItem();
+    void DestroyItem();
 
 	/**
 	 *	@brief returns false if struct not filled out
 	 */
-	virtual bool GetWeaponInfo(WeaponInfo& info) { return false; }
+    virtual bool GetWeaponInfo( WeaponInfo& info ) { return false; }
 
 	/**
 	 *	@brief this function determines whether or not a weapon is useable by the player in its current state.
 	 *	(does it have ammo loaded? do I have any ammo for the weapon?, etc)
 	 */
-	virtual bool IsUseable();
+    virtual bool IsUseable();
 
-	virtual bool CanDeploy();
+    virtual bool CanDeploy();
 
 	/**
 	 *	@brief returns is deploy was successful
 	 */
-	virtual bool Deploy()
-	{
-		return true;
-	}
+    virtual bool Deploy()
+    {
+        return true;
+    }
 
 	/**
 	 *	@brief can this weapon be put away right now?
 	 */
-	virtual bool CanHolster() { return true; }
+    virtual bool CanHolster() { return true; }
 
 	/**
 	 *	@brief Put away weapon
 	 */
-	virtual void Holster();
+    virtual void Holster();
 
 	/**
 	 *	@brief updates HUD state
 	 */
-	virtual void UpdateItemInfo() {}
+    virtual void UpdateItemInfo() {}
 
-	virtual void SendWeaponAnim(int iAnim);
+    virtual void SendWeaponAnim( int iAnim );
 
-	bool DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt);
-	bool DefaultReload(int iClipSize, int iAnim, float fDelay);
+    bool DefaultDeploy( const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt );
+    bool DefaultReload( int iClipSize, int iAnim, float fDelay );
 
 	/**
 	 *	@brief called each frame by player PreThink
 	 */
-	virtual void ItemPreFrame() {}
+    virtual void ItemPreFrame() {}
 
 	/**
 	 *	@brief called each frame by player PostThink
 	 */
-	virtual void ItemPostFrame();
+    virtual void ItemPostFrame();
 
 	// called by CBasePlayerWeapons ItemPostFrame()
 
 	/**
 	 *	@brief do "+ATTACK"
 	 */
-	virtual void PrimaryAttack() {}
+    virtual void PrimaryAttack() {}
 
 	/**
 	 *	@brief do "+ATTACK2"
 	 */
-	virtual void SecondaryAttack() {}
+    virtual void SecondaryAttack() {}
 
 	/**
 	 *	@brief do "+RELOAD"
 	 */
-	virtual void Reload() {}
+    virtual void Reload() {}
 
-	virtual bool ShouldWeaponIdle() { return false; }
+    virtual bool ShouldWeaponIdle() { return false; }
 
 	/**
 	 *	@brief called when no buttons pressed
 	 */
-	virtual void WeaponIdle() {}
+    virtual void WeaponIdle() {}
 
 	/**
 	 *	@brief Animate weapon model
 	 */
-	virtual bool PlayEmptySound();
-	virtual void ResetEmptySound();
+    virtual bool PlayEmptySound();
+    virtual void ResetEmptySound();
 
-	virtual void Kill();
-	virtual void AttachToPlayer(CBasePlayer* pPlayer);
+    virtual void Kill();
+    virtual void AttachToPlayer( CBasePlayer* pPlayer );
 
-	int PrimaryAmmoIndex() { return m_iPrimaryAmmoType; }
-	int SecondaryAmmoIndex() { return m_iSecondaryAmmoType; }
+    int PrimaryAmmoIndex() { return m_iPrimaryAmmoType; }
+    int SecondaryAmmoIndex() { return m_iSecondaryAmmoType; }
 
-	virtual void IncrementAmmo(CBasePlayer* pPlayer) {}
+    virtual void IncrementAmmo( CBasePlayer* pPlayer ) {}
 
 	/**
 	 *	@brief sends hud info to client dll, if things have changed
 	 */
-	virtual bool UpdateClientData(CBasePlayer* pPlayer);
+    virtual bool UpdateClientData( CBasePlayer* pPlayer );
 
-	virtual void GetWeaponData(weapon_data_t& data) {}
+    virtual void GetWeaponData( weapon_data_t& data ) {}
 
-	virtual void SetWeaponData(const weapon_data_t& data) {}
+    virtual void SetWeaponData( const weapon_data_t& data ) {}
 
-	virtual void DecrementTimers() {}
+    virtual void DecrementTimers() {}
 
-	virtual void SavePersistentState(PersistentWeaponState& state);
-	virtual void LoadPersistentState(const PersistentWeaponState& state);
+    virtual void SavePersistentState( PersistentWeaponState& state );
+    virtual void LoadPersistentState( const PersistentWeaponState& state );
 
 	/**
 	 *	@brief no more ammo for this gun, put it away.
 	 */
-	void RetireWeapon();
+    void RetireWeapon();
 
 	// Can't use virtual functions as think functions so this wrapper is needed.
-	void CallDoRetireWeapon()
-	{
-		DoRetireWeapon();
-	}
+    void CallDoRetireWeapon()
+    {
+        DoRetireWeapon();
+    }
 
-	virtual void DoRetireWeapon();
+    virtual void DoRetireWeapon();
 
 	/**
 	 *	@brief Whether to use relative time values that are decremented every frame or absolute time values.
 	 *	Relative time values are required for predicted weapons.
 	 *	@see UTIL_WeaponTimeBase
 	 */
-	virtual bool UseDecrement() { return false; }
+    virtual bool UseDecrement() { return false; }
 
 	/**
 	 *	@brief An accurate way of calculating the next attack time.
 	 */
-	float GetNextAttackDelay(float delay);
+    float GetNextAttackDelay( float delay );
 
-	void SetWeaponModels(const char* viewModel, const char* weaponModel);
+    void SetWeaponModels( const char* viewModel, const char* weaponModel );
 
-	void PrintState();
+    void PrintState();
 
-	int GetMagazine1() const;
-	void SetMagazine1(int count);
-	void AdjustMagazine1(int count);
+    int GetMagazine1() const;
+    void SetMagazine1( int count );
+    void AdjustMagazine1( int count );
 
-	int iItemSlot() { return m_WeaponInfo->Slot; } // return 0 to MAX_ITEMS_SLOTS, used in hud
-	int iItemPosition() { return m_WeaponInfo->Position; }
-	const char* pszAmmo1() { return !m_WeaponInfo->AttackModeInfo[0].AmmoType.empty() ? m_WeaponInfo->AttackModeInfo[0].AmmoType.c_str() : nullptr; }
-	const char* pszAmmo2() { return !m_WeaponInfo->AttackModeInfo[1].AmmoType.empty() ? m_WeaponInfo->AttackModeInfo[1].AmmoType.c_str() : nullptr; }
-	const char* pszName() { return m_WeaponInfo->Name.c_str(); }
-	int iMaxClip() const { return m_WeaponInfo->AttackModeInfo[0].MagazineSize; }
-	int MagazineSize2() { return m_WeaponInfo->AttackModeInfo[1].MagazineSize; }
-	int iWeight() { return m_WeaponInfo->Weight; }
-	int iFlags() { return m_WeaponInfo->Flags; }
+    int iItemSlot() { return m_WeaponInfo->Slot; } // return 0 to MAX_ITEMS_SLOTS, used in hud
+    int iItemPosition() { return m_WeaponInfo->Position; }
+    const char* pszAmmo1() { return !m_WeaponInfo->AttackModeInfo[0].AmmoType.empty() ? m_WeaponInfo->AttackModeInfo[0].AmmoType.c_str() : nullptr; }
+    const char* pszAmmo2() { return !m_WeaponInfo->AttackModeInfo[1].AmmoType.empty() ? m_WeaponInfo->AttackModeInfo[1].AmmoType.c_str() : nullptr; }
+    const char* pszName() { return m_WeaponInfo->Name.c_str(); }
+    int iMaxClip() const { return m_WeaponInfo->AttackModeInfo[0].MagazineSize; }
+    int MagazineSize2() { return m_WeaponInfo->AttackModeInfo[1].MagazineSize; }
+    int iWeight() { return m_WeaponInfo->Weight; }
+    int iFlags() { return m_WeaponInfo->Flags; }
 
 protected:
-	CBasePlayerWeapon* GetItemToRespawn(const Vector& respawnPoint) override;
+    CBasePlayerWeapon* GetItemToRespawn( const Vector& respawnPoint ) override;
 
-	ItemAddResult Apply(CBasePlayer* player) override;
+    ItemAddResult Apply( CBasePlayer* player ) override;
 
-	void FinishReload(bool force);
+    void FinishReload( bool force );
 
 public:
-	CBasePlayer* m_pPlayer;
-	CBasePlayerWeapon* m_pNext;
-	int m_iId; // WEAPON_???
-	const WeaponInfo* m_WeaponInfo{};
+    CBasePlayer* m_pPlayer;
+    CBasePlayerWeapon* m_pNext;
+    int m_iId; // WEAPON_???
+    const WeaponInfo* m_WeaponInfo{};
 
 	/**
 	 *	@brief Hack so deploy animations work when weapon prediction is enabled.
 	 */
-	bool m_ForceSendAnimations = false;
+    bool m_ForceSendAnimations = false;
 
-	bool m_iPlayEmptySound;
+    bool m_iPlayEmptySound;
 
 	/**
 	 *	@brief True when the gun is empty and the player is still holding down the attack key(s)
 	 */
-	bool m_fFireOnEmpty;
+    bool m_fFireOnEmpty;
 
-	float m_flPumpTime;
+    float m_flPumpTime;
 
-	int m_fInSpecialReload;			 //!< Are we in the middle of a reload for the shotguns
-	float m_flNextPrimaryAttack;	 //!< soonest time ItemPostFrame will call PrimaryAttack
-	float m_flNextSecondaryAttack;	 //!< soonest time ItemPostFrame will call SecondaryAttack
-	float m_flTimeWeaponIdle;		 //!< soonest time ItemPostFrame will call WeaponIdle
-	int m_iPrimaryAmmoType = -1;	 //!< "primary" ammo index into players m_rgAmmo[]
-	int m_iSecondaryAmmoType = -1;	 //!< "secondary" ammo index into players m_rgAmmo[]
-	int m_iClip;					 //!< number of shots left in the primary weapon clip, -1 it not used
-	int m_iClientClip;				 //!< the last version of m_iClip sent to hud dll
-	WeaponState m_ClientWeaponState; //!< the last version of the weapon state sent to hud dll (is current weapon, is on target)
-	bool m_fInReload;				 //!< Are we in the middle of a reload
+    int m_fInSpecialReload;             //!< Are we in the middle of a reload for the shotguns
+    float m_flNextPrimaryAttack;     //!< soonest time ItemPostFrame will call PrimaryAttack
+    float m_flNextSecondaryAttack;     //!< soonest time ItemPostFrame will call SecondaryAttack
+    float m_flTimeWeaponIdle;         //!< soonest time ItemPostFrame will call WeaponIdle
+    int m_iPrimaryAmmoType = -1;     //!< "primary" ammo index into players m_rgAmmo[]
+    int m_iSecondaryAmmoType = -1;     //!< "secondary" ammo index into players m_rgAmmo[]
+    int m_iClip;                     //!< number of shots left in the primary weapon clip, -1 it not used
+    int m_iClientClip;                 //!< the last version of m_iClip sent to hud dll
+    WeaponState m_ClientWeaponState; //!< the last version of the weapon state sent to hud dll (is current weapon, is on target)
+    bool m_fInReload;                 //!< Are we in the middle of a reload
 
-	int m_iDefaultAmmo;		   //!< how much ammo you get when you pick up this weapon as placed by a level designer.
-	int m_iDefaultPrimaryAmmo; // Copy of m_iDefaultAmmo after KeyValue is handled for respawn.
+    int m_iDefaultAmmo;           //!< how much ammo you get when you pick up this weapon as placed by a level designer.
+    int m_iDefaultPrimaryAmmo; // Copy of m_iDefaultAmmo after KeyValue is handled for respawn.
 
 	// hle time creep vars
-	float m_flPrevPrimaryAttack;
-	float m_flLastFireTime;
+    float m_flPrevPrimaryAttack;
+    float m_flLastFireTime;
 
-	string_t m_WorldModel;
-	string_t m_ViewModel;
-	string_t m_PlayerModel;
+    string_t m_WorldModel;
+    string_t m_ViewModel;
+    string_t m_PlayerModel;
 };
 
 constexpr char DefaultItemPickupSound[] = "items/9mmclip1.wav";
@@ -493,55 +493,55 @@ constexpr char DefaultItemPickupSound[] = "items/9mmclip1.wav";
  */
 class CBasePlayerAmmo : public CBaseItem
 {
-	DECLARE_CLASS(CBasePlayerAmmo, CBaseItem);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CBasePlayerAmmo, CBaseItem );
+    DECLARE_DATAMAP();
 
 public:
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void Precache() override
-	{
-		CBaseItem::Precache();
-		PrecacheSound(DefaultItemPickupSound);
-	}
+    void Precache() override
+    {
+        CBaseItem::Precache();
+        PrecacheSound( DefaultItemPickupSound );
+    }
 
-	void Spawn() override;
+    void Spawn() override;
 
-	ItemType GetType() const override { return ItemType::Consumable; }
+    ItemType GetType() const override { return ItemType::Consumable; }
 
-	void Accept(IItemVisitor& visitor) override
-	{
-		visitor.Visit(this);
-	}
+    void Accept( IItemVisitor& visitor ) override
+    {
+        visitor.Visit( this );
+    }
 
 protected:
-	ItemAddResult Apply(CBasePlayer* player) override
-	{
-		return AddAmmo(player) ? ItemAddResult::Added : ItemAddResult::NotAdded;
-	}
+    ItemAddResult Apply( CBasePlayer* player ) override
+    {
+        return AddAmmo( player ) ? ItemAddResult::Added : ItemAddResult::NotAdded;
+    }
 
-	void PlayPickupSound(const char* pickupSoundName);
+    void PlayPickupSound( const char* pickupSoundName );
 
-	bool GiveAmmo(CBasePlayer* player, int amount, const char* ammoName, const char* pickupSoundName);
+    bool GiveAmmo( CBasePlayer* player, int amount, const char* ammoName, const char* pickupSoundName );
 
-	bool DefaultGiveAmmo(CBasePlayer* player, int amount, const char* ammoName, bool playSound);
+    bool DefaultGiveAmmo( CBasePlayer* player, int amount, const char* ammoName, bool playSound );
 
-	virtual bool AddAmmo(CBasePlayer* player);
+    virtual bool AddAmmo( CBasePlayer* player );
 
 protected:
 	// Set to -2 to detect missing initialization.
-	int m_AmmoAmount = -2;
-	string_t m_AmmoName;
+    int m_AmmoAmount = -2;
+    string_t m_AmmoName;
 };
 
 inline short g_sModelIndexLaser; // holds the index for the laser beam
 constexpr const char* g_pModelNameLaser = "sprites/laserbeam.spr";
 
-inline short g_sModelIndexLaserDot;	  // holds the index for the laser beam dot
-inline short g_sModelIndexFireball;	  // holds the index for the fireball
-inline short g_sModelIndexSmoke;	  // holds the index for the smoke cloud
+inline short g_sModelIndexLaserDot;      // holds the index for the laser beam dot
+inline short g_sModelIndexFireball;      // holds the index for the fireball
+inline short g_sModelIndexSmoke;      // holds the index for the smoke cloud
 inline short g_sModelIndexWExplosion; // holds the index for the underwater explosion
-inline short g_sModelIndexBubbles;	  // holds the index for the bubbles model
+inline short g_sModelIndexBubbles;      // holds the index for the bubbles model
 inline short g_sModelIndexBloodDrop;  // holds the sprite index for blood drops
 inline short g_sModelIndexBloodSpray; // holds the sprite index for blood spray (bigger)
 
@@ -553,33 +553,33 @@ void ClearMultiDamage();
 /**
  *	@brief inflicts contents of global multi damage register on gMultiDamage.pEntity
  */
-void ApplyMultiDamage(CBaseEntity* inflictor, CBaseEntity* attacker);
-void AddMultiDamage(CBaseEntity* inflictor, CBaseEntity* pEntity, float flDamage, int bitsDamageType);
+void ApplyMultiDamage( CBaseEntity* inflictor, CBaseEntity* attacker );
+void AddMultiDamage( CBaseEntity* inflictor, CBaseEntity* pEntity, float flDamage, int bitsDamageType );
 
-void DecalGunshot(TraceResult* pTrace, int iBulletType);
-void SpawnBlood(Vector vecSpot, int bloodColor, float flDamage);
-int DamageDecal(CBaseEntity* pEntity, int bitsDamageType);
+void DecalGunshot( TraceResult* pTrace, int iBulletType );
+void SpawnBlood( Vector vecSpot, int bloodColor, float flDamage );
+int DamageDecal( CBaseEntity* pEntity, int bitsDamageType );
 
 /**
  *	@brief this entity is exploding, or otherwise needs to inflict damage upon entities within a certain range.
  *	only damage ents that can clearly be seen by the explosion!
  */
-void RadiusDamage(Vector vecSrc, CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, float flRadius,
-	int bitsDamageType, EntityClassification iClassIgnore = ENTCLASS_NONE);
+void RadiusDamage( Vector vecSrc, CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, float flRadius,
+    int bitsDamageType, EntityClassification iClassIgnore = ENTCLASS_NONE );
 
 /**
  *	@brief Collects multiple small damages into a single damage
  */
 struct MULTIDAMAGE
 {
-	CBaseEntity* pEntity;
-	float amount;
-	int type;
+    CBaseEntity* pEntity;
+    float amount;
+    int type;
 };
 
 inline MULTIDAMAGE gMultiDamage;
 
-void FindHullIntersection(const Vector& vecSrc, TraceResult& tr, const Vector& mins, const Vector& maxs, CBaseEntity* pEntity);
+void FindHullIntersection( const Vector& vecSrc, TraceResult& tr, const Vector& mins, const Vector& maxs, CBaseEntity* pEntity );
 
 #define LOUD_GUN_VOLUME 1000
 #define NORMAL_GUN_VOLUME 600
@@ -611,5 +611,5 @@ constexpr Vector VECTOR_CONE_20DEGREES{0.17365f, 0.17365f, 0.17365f};
 #ifdef CLIENT_DLL
 inline bool g_irunninggausspred = false;
 
-void LoadVModel(const char* szViewModel, CBasePlayer* m_pPlayer);
+void LoadVModel( const char* szViewModel, CBasePlayer* m_pPlayer );
 #endif

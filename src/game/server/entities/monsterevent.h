@@ -17,8 +17,8 @@
 
 struct MonsterEvent_t
 {
-	int event;
-	char* options;
+    int event;
+    char* options;
 };
 
 #define EVENT_SPECIFIC 0

@@ -20,7 +20,7 @@
 
 struct BspData
 {
-	std::size_t SubModelCount{};
+    std::size_t SubModelCount{};
 };
 
 /**
@@ -30,7 +30,7 @@ struct BspData
 class BspLoader final
 {
 public:
-	BspLoader() = delete;
+    BspLoader() = delete;
 
-	static std::optional<BspData> Load(const char* fileName);
+    static std::optional<BspData> Load( const char* fileName );
 };

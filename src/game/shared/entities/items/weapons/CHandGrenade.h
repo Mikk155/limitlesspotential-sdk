@@ -19,44 +19,44 @@
 
 enum handgrenade_e
 {
-	HANDGRENADE_IDLE = 0,
-	HANDGRENADE_FIDGET,
-	HANDGRENADE_PINPULL,
-	HANDGRENADE_THROW1, // toss
-	HANDGRENADE_THROW2, // medium
-	HANDGRENADE_THROW3, // hard
-	HANDGRENADE_HOLSTER,
-	HANDGRENADE_DRAW
+    HANDGRENADE_IDLE = 0,
+    HANDGRENADE_FIDGET,
+    HANDGRENADE_PINPULL,
+    HANDGRENADE_THROW1, // toss
+    HANDGRENADE_THROW2, // medium
+    HANDGRENADE_THROW3, // hard
+    HANDGRENADE_HOLSTER,
+    HANDGRENADE_DRAW
 };
 
 class CHandGrenade : public CBasePlayerWeapon
 {
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	void PrimaryAttack() override;
-	bool Deploy() override;
-	bool CanHolster() override;
-	void Holster() override;
-	void WeaponIdle() override;
+    void PrimaryAttack() override;
+    bool Deploy() override;
+    bool CanHolster() override;
+    void Holster() override;
+    void WeaponIdle() override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	void GetWeaponData(weapon_data_t& data) override;
+    void GetWeaponData( weapon_data_t& data ) override;
 
-	void SetWeaponData(const weapon_data_t& data) override;
+    void SetWeaponData( const weapon_data_t& data ) override;
 
 private:
-	float m_flStartThrow;
-	float m_flReleaseThrow;
+    float m_flStartThrow;
+    float m_flReleaseThrow;
 };

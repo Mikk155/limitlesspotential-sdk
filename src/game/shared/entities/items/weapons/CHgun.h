@@ -19,48 +19,48 @@
 
 enum hgun_e
 {
-	HGUN_IDLE1 = 0,
-	HGUN_FIDGETSWAY,
-	HGUN_FIDGETSHAKE,
-	HGUN_DOWN,
-	HGUN_UP,
-	HGUN_SHOOT
+    HGUN_IDLE1 = 0,
+    HGUN_FIDGETSWAY,
+    HGUN_FIDGETSHAKE,
+    HGUN_DOWN,
+    HGUN_UP,
+    HGUN_SHOOT
 };
 
 class CHgun : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CHgun, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CHgun, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void AddToPlayer(CBasePlayer* pPlayer) override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void AddToPlayer( CBasePlayer* pPlayer ) override;
 
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool Deploy() override;
-	bool IsUseable() override;
-	void Holster() override;
-	void Reload() override;
-	void WeaponIdle() override;
-	float m_flNextAnimTime;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool Deploy() override;
+    bool IsUseable() override;
+    void Holster() override;
+    void Reload() override;
+    void WeaponIdle() override;
+    float m_flNextAnimTime;
 
-	float m_flRechargeTime;
-	float m_LastRechargeTime;
+    float m_flRechargeTime;
+    float m_LastRechargeTime;
 
-	int m_iFirePhase = 0; // don't save me.
+    int m_iFirePhase = 0; // don't save me.
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
 private:
-	unsigned short m_usHornetFire;
+    unsigned short m_usHornetFire;
 };

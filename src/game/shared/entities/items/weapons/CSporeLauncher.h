@@ -17,72 +17,72 @@
 
 enum SporeLauncherAnim
 {
-	SPLAUNCHER_IDLE = 0,
-	SPLAUNCHER_FIDGET,
-	SPLAUNCHER_RELOAD_REACH,
-	SPLAUNCHER_RELOAD,
-	SPLAUNCHER_AIM,
-	SPLAUNCHER_FIRE,
-	SPLAUNCHER_HOLSTER1,
-	SPLAUNCHER_DRAW1,
-	SPLAUNCHER_IDLE2
+    SPLAUNCHER_IDLE = 0,
+    SPLAUNCHER_FIDGET,
+    SPLAUNCHER_RELOAD_REACH,
+    SPLAUNCHER_RELOAD,
+    SPLAUNCHER_AIM,
+    SPLAUNCHER_FIRE,
+    SPLAUNCHER_HOLSTER1,
+    SPLAUNCHER_DRAW1,
+    SPLAUNCHER_IDLE2
 };
 
 class CSporeLauncher : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CSporeLauncher, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CSporeLauncher, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 private:
-	enum class ReloadState
-	{
-		NOT_RELOADING = 0,
-		DO_RELOAD_EFFECTS,
-		RELOAD_ONE
-	};
+    enum class ReloadState
+    {
+        NOT_RELOADING = 0,
+        DO_RELOAD_EFFECTS,
+        RELOAD_ONE
+    };
 
 public:
-	void OnCreate() override;
+    void OnCreate() override;
 
-	void Precache() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	bool Deploy() override;
+    bool Deploy() override;
 
-	void Holster() override;
+    void Holster() override;
 
-	bool ShouldWeaponIdle() override;
+    bool ShouldWeaponIdle() override;
 
-	void WeaponIdle() override;
+    void WeaponIdle() override;
 
-	void PrimaryAttack() override;
+    void PrimaryAttack() override;
 
-	void SecondaryAttack() override;
+    void SecondaryAttack() override;
 
-	void Reload() override;
+    void Reload() override;
 
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	void GetWeaponData(weapon_data_t& data) override;
+    void GetWeaponData( weapon_data_t& data ) override;
 
-	void SetWeaponData(const weapon_data_t& data) override;
+    void SetWeaponData( const weapon_data_t& data ) override;
 
 private:
-	unsigned short m_usFireSpore;
+    unsigned short m_usFireSpore;
 
-	ReloadState m_ReloadState;
+    ReloadState m_ReloadState;
 
-	float m_flNextReload;
+    float m_flNextReload;
 };

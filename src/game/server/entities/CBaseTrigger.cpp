@@ -16,81 +16,81 @@
 #include "cbase.h"
 #include "CBaseTrigger.h"
 
-BEGIN_DATAMAP(CBaseTrigger)
-DEFINE_FUNCTION(MultiWaitOver),
-	DEFINE_FUNCTION(ToggleUse),
-	END_DATAMAP();
+BEGIN_DATAMAP( CBaseTrigger )
+    DEFINE_FUNCTION( MultiWaitOver ),
+    DEFINE_FUNCTION( ToggleUse ),
+END_DATAMAP();
 
-LINK_ENTITY_TO_CLASS(trigger, CBaseTrigger);
+LINK_ENTITY_TO_CLASS( trigger, CBaseTrigger );
 
 void CBaseTrigger::InitTrigger()
 {
 	// trigger angles are used for one-way touches.  An angle of 0 is assumed
 	// to mean no restrictions, so use a yaw of 360 instead.
-	if (pev->angles != g_vecZero)
-		SetMovedir(this);
-	pev->solid = SOLID_TRIGGER;
-	pev->movetype = MOVETYPE_NONE;
-	SetModel(STRING(pev->model)); // set size and link into world
-	if (CVAR_GET_FLOAT("showtriggers") == 0)
-		SetBits(pev->effects, EF_NODRAW);
+    if( pev->angles != g_vecZero )
+        SetMovedir( this );
+    pev->solid = SOLID_TRIGGER;
+    pev->movetype = MOVETYPE_NONE;
+    SetModel( STRING( pev->model ) ); // set size and link into world
+    if( CVAR_GET_FLOAT( "showtriggers" ) == 0 )
+        SetBits( pev->effects, EF_NODRAW );
 
-	if (!FStringNull(pev->message))
-	{
-		pev->message = ALLOC_ESCAPED_STRING(STRING(pev->message));
-	}
+    if( !FStringNull( pev->message ) )
+    {
+        pev->message = ALLOC_ESCAPED_STRING( STRING( pev->message ) );
+    }
 }
 
-bool CBaseTrigger::KeyValue(KeyValueData* pkvd)
+bool CBaseTrigger::KeyValue( KeyValueData* pkvd )
 {
-	if (FStrEq(pkvd->szKeyName, "damage"))
-	{
-		pev->dmg = atof(pkvd->szValue);
-		return true;
-	}
+    if( FStrEq( pkvd->szKeyName, "damage" ) )
+    {
+        pev->dmg = atof( pkvd->szValue );
+        return true;
+    }
 
-	return CBaseToggle::KeyValue(pkvd);
+    return CBaseToggle::KeyValue( pkvd );
 }
 
-void CBaseTrigger::ActivateMultiTrigger(CBaseEntity* pActivator)
+void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
 {
-	if (pev->nextthink > gpGlobals->time)
-		return; // still waiting for reset time
+    if( pev->nextthink > gpGlobals->time )
+        return; // still waiting for reset time
 
-	if (!UTIL_IsMasterTriggered(m_sMaster, pActivator))
-		return;
+    if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
+        return;
 
-	if (!FStringNull(pev->noise))
-		EmitSound(CHAN_VOICE, STRING(pev->noise), 1, ATTN_NORM);
+    if( !FStringNull( pev->noise ) )
+        EmitSound( CHAN_VOICE, STRING( pev->noise ), 1, ATTN_NORM );
 
 	// don't trigger again until reset
 	// pev->takedamage = DAMAGE_NO;
 
-	m_hActivator = pActivator;
-	SUB_UseTargets(m_hActivator, USE_TOGGLE, 0);
+    m_hActivator = pActivator;
+    SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
 
-	if (!FStringNull(pev->message))
-	{
-		if (auto player = ToBasePlayer(pActivator); player)
-		{
-			UTIL_ShowMessage(STRING(pev->message), player);
+    if( !FStringNull( pev->message ) )
+    {
+        if( auto player = ToBasePlayer( pActivator ); player )
+        {
+            UTIL_ShowMessage( STRING( pev->message ), player );
 			// UTIL_ConsolePrint(player, STRING(pev->message));
-		}
-	}
+        }
+    }
 
-	if (m_flWait > 0)
-	{
-		SetThink(&CBaseTrigger::MultiWaitOver);
-		pev->nextthink = gpGlobals->time + m_flWait;
-	}
-	else
-	{
+    if( m_flWait > 0 )
+    {
+        SetThink( &CBaseTrigger::MultiWaitOver );
+        pev->nextthink = gpGlobals->time + m_flWait;
+    }
+    else
+    {
 		// we can't just remove (self) here, because this is a touch function
 		// called while C code is looping through area links...
-		SetTouch(nullptr);
-		pev->nextthink = gpGlobals->time + 0.1;
-		SetThink(&CBaseTrigger::SUB_Remove);
-	}
+        SetTouch( nullptr );
+        pev->nextthink = gpGlobals->time + 0.1;
+        SetThink( &CBaseTrigger::SUB_Remove );
+    }
 }
 
 void CBaseTrigger::MultiWaitOver()
@@ -101,21 +101,21 @@ void CBaseTrigger::MultiWaitOver()
 	//		pev->takedamage	= DAMAGE_YES;
 	//		pev->solid		= SOLID_BBOX;
 	//		}
-	SetThink(nullptr);
+    SetThink( nullptr );
 }
 
-void CBaseTrigger::ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CBaseTrigger::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	if (pev->solid == SOLID_NOT)
-	{ // if the trigger is off, turn it on
-		pev->solid = SOLID_TRIGGER;
+    if( pev->solid == SOLID_NOT )
+    { // if the trigger is off, turn it on
+        pev->solid = SOLID_TRIGGER;
 
 		// Force retouch
-		gpGlobals->force_retouch++;
-	}
-	else
-	{ // turn the trigger off
-		pev->solid = SOLID_NOT;
-	}
-	SetOrigin(pev->origin);
+        gpGlobals->force_retouch++;
+    }
+    else
+    { // turn the trigger off
+        pev->solid = SOLID_NOT;
+    }
+    SetOrigin( pev->origin );
 }

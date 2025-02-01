@@ -22,38 +22,38 @@
 #include "cbase.h"
 #include "utils/filesystem_utils.h"
 
-FARPROC DelayLoad_LoadGameLib(const char* dllName)
+FARPROC DelayLoad_LoadGameLib( const char* dllName )
 {
-	ASSERT(dllName);
+    ASSERT( dllName );
 
-	const auto& gameDir = FileSystem_GetModDirectoryName();
+    const auto& gameDir = FileSystem_GetModDirectoryName();
 
-	const auto path = fmt::format("{}/{}", gameDir, dllName);
+    const auto path = fmt::format( "{}/{}", gameDir, dllName );
 
-	return reinterpret_cast<FARPROC>(LoadLibraryA(path.c_str()));
+    return reinterpret_cast<FARPROC>( LoadLibraryA( path.c_str() ) );
 }
 
 /*
  *	@brief Handles loading of shared delay loaded libraries
  */
-HMODULE DelayLoad_HandleSharedLibs(unsigned dliNotify, PDelayLoadInfo pdli)
+HMODULE DelayLoad_HandleSharedLibs( unsigned dliNotify, PDelayLoadInfo pdli )
 {
-	return nullptr;
+    return nullptr;
 }
 
-FARPROC WINAPI DelayHook(
-	unsigned dliNotify,
-	PDelayLoadInfo pdli)
+FARPROC WINAPI DelayHook( 
+    unsigned dliNotify,
+    PDelayLoadInfo pdli )
 {
-	if (dliNotify == dliNotePreLoadLibrary)
-	{
-		if (strcmp(pdli->szDll, "openal-hlu.dll") == 0)
-		{
-			return DelayLoad_LoadGameLib("cl_dlls/openal-hlu.dll");
-		}
-	}
+    if( dliNotify == dliNotePreLoadLibrary )
+    {
+        if( strcmp( pdli->szDll, "openal-hlu.dll" ) == 0 )
+        {
+            return DelayLoad_LoadGameLib( "cl_dlls/openal-hlu.dll" );
+        }
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 ExternC const PfnDliHook __pfnDliNotifyHook2 = DelayHook;

@@ -16,50 +16,50 @@
 #include "cbase.h"
 #include "CLaserSpot.h"
 
-BEGIN_DATAMAP(CLaserSpot)
-DEFINE_FUNCTION(Revive),
-	END_DATAMAP();
+BEGIN_DATAMAP( CLaserSpot )
+    DEFINE_FUNCTION( Revive ),
+END_DATAMAP();
 
-LINK_ENTITY_TO_CLASS(laser_spot, CLaserSpot);
+LINK_ENTITY_TO_CLASS( laser_spot, CLaserSpot );
 
 CLaserSpot* CLaserSpot::CreateSpot()
 {
-	CLaserSpot* pSpot = g_EntityDictionary->Create<CLaserSpot>("laser_spot");
-	pSpot->Spawn();
+    CLaserSpot* pSpot = g_EntityDictionary->Create<CLaserSpot>( "laser_spot" );
+    pSpot->Spawn();
 
-	return pSpot;
+    return pSpot;
 }
 
 void CLaserSpot::Spawn()
 {
-	Precache();
-	pev->movetype = MOVETYPE_NONE;
-	pev->solid = SOLID_NOT;
+    Precache();
+    pev->movetype = MOVETYPE_NONE;
+    pev->solid = SOLID_NOT;
 
-	pev->rendermode = kRenderGlow;
-	pev->renderfx = kRenderFxNoDissipation;
-	pev->renderamt = 255;
+    pev->rendermode = kRenderGlow;
+    pev->renderfx = kRenderFxNoDissipation;
+    pev->renderamt = 255;
 
-	SetModel("sprites/laserdot.spr");
-	SetOrigin(pev->origin);
+    SetModel( "sprites/laserdot.spr" );
+    SetOrigin( pev->origin );
 }
 
-void CLaserSpot::Suspend(float flSuspendTime)
+void CLaserSpot::Suspend( float flSuspendTime )
 {
-	pev->effects |= EF_NODRAW;
+    pev->effects |= EF_NODRAW;
 
-	SetThink(&CLaserSpot::Revive);
-	pev->nextthink = gpGlobals->time + flSuspendTime;
+    SetThink( &CLaserSpot::Revive );
+    pev->nextthink = gpGlobals->time + flSuspendTime;
 }
 
 void CLaserSpot::Revive()
 {
-	pev->effects &= ~EF_NODRAW;
+    pev->effects &= ~EF_NODRAW;
 
-	SetThink(nullptr);
+    SetThink( nullptr );
 }
 
 void CLaserSpot::Precache()
 {
-	PrecacheModel("sprites/laserdot.spr");
+    PrecacheModel( "sprites/laserdot.spr" );
 }

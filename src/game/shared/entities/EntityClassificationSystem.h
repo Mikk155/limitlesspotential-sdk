@@ -39,12 +39,12 @@ constexpr char ENTCLASS_NONE_NAME[] = "none";
  */
 enum class Relationship : std::int8_t
 {
-	Ally = -2,	 //!< pals. Good alternative to None when applicable.
-	Fear = -1,	 //!< will run
-	None = 0,	 //!< disregard
-	Dislike = 1, //!< will attack
-	Hate = 2,	 //!< will attack this character instead of any visible DISLIKEd characters
-	Nemesis = 3, //!< A monster Will ALWAYS attack its nemsis, no matter what
+    Ally = -2,     //!< pals. Good alternative to None when applicable.
+    Fear = -1,     //!< will run
+    None = 0,     //!< disregard
+    Dislike = 1, //!< will attack
+    Hate = 2,     //!< will attack this character instead of any visible DISLIKEd characters
+    Nemesis = 3, //!< A monster Will ALWAYS attack its nemsis, no matter what
 };
 
 /**
@@ -53,44 +53,44 @@ enum class Relationship : std::int8_t
 class EntityClassificationSystem final : public IGameSystem
 {
 private:
-	struct Classification
-	{
-		std::string Name;
-		std::vector<Relationship> Relationships{};
-	};
+    struct Classification
+    {
+        std::string Name;
+        std::vector<Relationship> Relationships{};
+    };
 
 public:
-	const char* GetName() const override { return "EntityClassifications"; }
+    const char* GetName() const override { return "EntityClassifications"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	void Load(const std::string& fileName);
+    void Load( const std::string& fileName );
 
-	EntityClassification GetClass(std::string_view name);
+    EntityClassification GetClass( std::string_view name );
 
-	Relationship GetRelationship(EntityClassification source, EntityClassification target) const;
+    Relationship GetRelationship( EntityClassification source, EntityClassification target ) const;
 
 	/**
 	 *	@brief Returns true if the given classification is one of the given class names.
 	 */
-	bool ClassNameIs(EntityClassification classification, std::initializer_list<const char*> classNames) const;
+    bool ClassNameIs( EntityClassification classification, std::initializer_list<const char*> classNames ) const;
 
 private:
-	Classification* FindClassification(std::string_view name);
+    Classification* FindClassification( std::string_view name );
 
-	void AddClassification(std::string&& name);
+    void AddClassification( std::string&& name );
 
-	void Clear();
+    void Clear();
 
-	bool ParseConfiguration(const json& input);
+    bool ParseConfiguration( const json& input );
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	std::vector<Classification> m_Classifications;
+    std::shared_ptr<spdlog::logger> m_Logger;
+    std::vector<Classification> m_Classifications;
 };
 
 inline EntityClassificationSystem g_EntityClassifications;

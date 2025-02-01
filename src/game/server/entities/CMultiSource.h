@@ -21,20 +21,20 @@
 
 class CMultiSource : public CPointEntity
 {
-	DECLARE_CLASS(CMultiSource, CPointEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CMultiSource, CPointEntity );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	int ObjectCaps() override { return (CPointEntity::ObjectCaps() | FCAP_MASTER); }
-	bool IsTriggered(CBaseEntity* pActivator) override;
-	void Register();
+    void Spawn() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    int ObjectCaps() override { return ( CPointEntity::ObjectCaps() | FCAP_MASTER ); }
+    bool IsTriggered( CBaseEntity* pActivator ) override;
+    void Register();
 
-	EHANDLE m_rgEntities[MS_MAX_TARGETS];
-	int m_rgTriggered[MS_MAX_TARGETS];
+    EHANDLE m_rgEntities[MS_MAX_TARGETS];
+    int m_rgTriggered[MS_MAX_TARGETS];
 
-	int m_iTotal;
-	string_t m_globalstate;
+    int m_iTotal;
+    string_t m_globalstate;
 };

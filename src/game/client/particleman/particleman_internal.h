@@ -34,14 +34,14 @@ inline Vector g_vViewAngles;
 
 inline bool IsGamePaused()
 {
-	return gEngfuncs.GetClientTime() == g_flOldTime;
+    return gEngfuncs.GetClientTime() == g_flOldTime;
 }
 
 struct ForceMember
 {
-	Vector m_vOrigin;
-	Vector m_vDirection;
-	float m_flRadius;
-	float m_flStrength;
-	float m_flDieTime;
+    Vector m_vOrigin;
+    Vector m_vDirection;
+    float m_flRadius;
+    float m_flStrength;
+    float m_flDieTime;
 };

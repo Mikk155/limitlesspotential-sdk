@@ -26,33 +26,33 @@
 
 struct CampaignInfo
 {
-	std::string FileName;
+    std::string FileName;
 
-	std::string Label;
-	std::string Description;
+    std::string Label;
+    std::string Description;
 
-	std::string CampaignMap;
-	std::string TrainingMap;
+    std::string CampaignMap;
+    std::string TrainingMap;
 };
 
 class CampaignSelectSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "CampaignSelect"; }
+    const char* GetName() const override { return "CampaignSelect"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	std::vector<CampaignInfo> LoadCampaigns();
-
-private:
-	CampaignInfo ParseCampaign(std::string&& fileName, const json& input);
+    std::vector<CampaignInfo> LoadCampaigns();
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    CampaignInfo ParseCampaign( std::string&& fileName, const json& input );
+
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
 };
 
 inline CampaignSelectSystem g_CampaignSelect;

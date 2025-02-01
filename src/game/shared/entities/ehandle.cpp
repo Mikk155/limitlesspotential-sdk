@@ -18,29 +18,29 @@
 
 edict_t* BaseEntityHandle::GetEdict() const
 {
-	if (!m_Edict)
-		return nullptr;
+    if( !m_Edict )
+        return nullptr;
 
-	if (m_Edict->serialnumber != m_SerialNumber)
-		return nullptr;
+    if( m_Edict->serialnumber != m_SerialNumber )
+        return nullptr;
 
-	return m_Edict;
+    return m_Edict;
 }
 
 CBaseEntity* BaseEntityHandle::InternalGetEntity() const
 {
-	return (CBaseEntity*)GET_PRIVATE(GetEdict());
+    return (CBaseEntity*)GET_PRIVATE( GetEdict() );
 }
 
-void BaseEntityHandle::InternalSetEntity(CBaseEntity* entity)
+void BaseEntityHandle::InternalSetEntity( CBaseEntity* entity )
 {
-	if (!entity)
-	{
-		m_Edict = nullptr;
-		m_SerialNumber = 0;
-		return;
-	}
+    if( !entity )
+    {
+        m_Edict = nullptr;
+        m_SerialNumber = 0;
+        return;
+    }
 
-	m_Edict = entity->edict();
-	m_SerialNumber = m_Edict->serialnumber;
+    m_Edict = entity->edict();
+    m_SerialNumber = m_Edict->serialnumber;
 }

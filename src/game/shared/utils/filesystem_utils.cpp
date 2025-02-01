@@ -56,305 +56,305 @@ static std::string g_ModDirectoryName;
 
 static bool FileSystem_InitializeGameDirectory()
 {
-	std::string gameDirectory;
+    std::string gameDirectory;
 
 #ifdef WIN32
-	const std::size_t BufferSize = MAX_PATH + 1;
-	gameDirectory.resize(BufferSize);
+    const std::size_t BufferSize = MAX_PATH + 1;
+    gameDirectory.resize( BufferSize );
 
-	const DWORD charactersWritten = GetModuleFileNameA(NULL, gameDirectory.data(), BufferSize);
+    const DWORD charactersWritten = GetModuleFileNameA( NULL, gameDirectory.data(), BufferSize );
 
-	if (charactersWritten == BufferSize)
-	{
+    if( charactersWritten == BufferSize )
+    {
 		// Path was truncated. Game is installed in the wrong location (Steam shouldn't allow this).
-		return false;
-	}
+        return false;
+    }
 #else
-	const std::size_t BufferSize = PATH_MAX + 1;
-	gameDirectory.resize(BufferSize);
+    const std::size_t BufferSize = PATH_MAX + 1;
+    gameDirectory.resize( BufferSize );
 
-	const ssize_t charactersWritten = readlink("/proc/self/exe", gameDirectory.data(), BufferSize);
+    const ssize_t charactersWritten = readlink( "/proc/self/exe", gameDirectory.data(), BufferSize );
 
-	if (charactersWritten < 0 || charactersWritten == BufferSize)
-	{
+    if( charactersWritten < 0 || charactersWritten == BufferSize )
+    {
 		// Path was truncated. Game is installed in the wrong location (Steam shouldn't allow this).
-		return false;
-	}
+        return false;
+    }
 #endif
 
 	// Resize buffer to actual size.
-	gameDirectory.resize(std::strlen(gameDirectory.c_str()));
+    gameDirectory.resize( std::strlen( gameDirectory.c_str() ) );
 
 	// Truncate to directory name.
-	const std::size_t directoryEnd = gameDirectory.find_last_of(DefaultPathSeparatorChar);
+    const std::size_t directoryEnd = gameDirectory.find_last_of( DefaultPathSeparatorChar );
 
-	if (directoryEnd == std::string::npos)
-	{
-		return false;
-	}
+    if( directoryEnd == std::string::npos )
+    {
+        return false;
+    }
 
-	gameDirectory.resize(directoryEnd);
+    gameDirectory.resize( directoryEnd );
 
-	gameDirectory.shrink_to_fit();
+    gameDirectory.shrink_to_fit();
 
-	g_ModDirectoryName.resize(BufferSize);
+    g_ModDirectoryName.resize( BufferSize );
 
 #ifdef CLIENT_DLL
-	g_ModDirectoryName = gEngfuncs.pfnGetGameDirectory();
+    g_ModDirectoryName = gEngfuncs.pfnGetGameDirectory();
 #else
-	g_engfuncs.pfnGetGameDir(g_ModDirectoryName.data());
-	g_ModDirectoryName.resize(std::strlen(g_ModDirectoryName.c_str()));
+    g_engfuncs.pfnGetGameDir( g_ModDirectoryName.data() );
+    g_ModDirectoryName.resize( std::strlen( g_ModDirectoryName.c_str() ) );
 #endif
 
-	g_GameDirectory = std::move(gameDirectory);
-	g_ModDirectory = g_GameDirectory + DefaultPathSeparatorChar + g_ModDirectoryName;
+    g_GameDirectory = std::move( gameDirectory );
+    g_ModDirectory = g_GameDirectory + DefaultPathSeparatorChar + g_ModDirectoryName;
 
-	return true;
+    return true;
 }
 
 bool FileSystem_LoadFileSystem()
 {
-	if (nullptr != g_pFileSystem)
-	{
+    if( nullptr != g_pFileSystem )
+    {
 		// Already loaded.
-		return true;
-	}
+        return true;
+    }
 
 	// Determine which filesystem to use.
-#if defined(_WIN32)
-	const char* szFsModule = "filesystem_stdio.dll";
-#elif defined(OSX)
-	const char* szFsModule = "filesystem_stdio.dylib";
-#elif defined(LINUX)
-	const char* szFsModule = "filesystem_stdio.so";
+#if defined( _WIN32 )
+    const char* szFsModule = "filesystem_stdio.dll";
+#elif defined( OSX )
+    const char* szFsModule = "filesystem_stdio.dylib";
+#elif defined( LINUX )
+    const char* szFsModule = "filesystem_stdio.so";
 #else
 #error
 #endif
 
 	// Get filesystem interface.
 	// The library is located next to the game exe, so there is no need to resolve the path first.
-	g_pFileSystemModule = Sys_LoadModule(szFsModule);
+    g_pFileSystemModule = Sys_LoadModule( szFsModule );
 
-	assert(nullptr != g_pFileSystemModule);
+    assert( nullptr != g_pFileSystemModule );
 
-	if (nullptr == g_pFileSystemModule)
-	{
-		return false;
-	}
+    if( nullptr == g_pFileSystemModule )
+    {
+        return false;
+    }
 
-	CreateInterfaceFn fileSystemFactory = Sys_GetFactory(g_pFileSystemModule);
+    CreateInterfaceFn fileSystemFactory = Sys_GetFactory( g_pFileSystemModule );
 
-	if (nullptr == fileSystemFactory)
-	{
-		return false;
-	}
+    if( nullptr == fileSystemFactory )
+    {
+        return false;
+    }
 
-	g_pFileSystem = reinterpret_cast<IFileSystem*>(fileSystemFactory(FILESYSTEM_INTERFACE_VERSION, nullptr));
+    g_pFileSystem = reinterpret_cast<IFileSystem*>( fileSystemFactory( FILESYSTEM_INTERFACE_VERSION, nullptr ) );
 
-	assert(nullptr != g_pFileSystem);
+    assert( nullptr != g_pFileSystem );
 
-	if (nullptr == g_pFileSystem)
-	{
-		return false;
-	}
+    if( nullptr == g_pFileSystem )
+    {
+        return false;
+    }
 
-	if (!FileSystem_InitializeGameDirectory())
-	{
-		return false;
-	}
+    if( !FileSystem_InitializeGameDirectory() )
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 void FileSystem_FreeFileSystem()
 {
-	if (nullptr != g_pFileSystem)
-	{
-		g_pFileSystem = nullptr;
-	}
+    if( nullptr != g_pFileSystem )
+    {
+        g_pFileSystem = nullptr;
+    }
 
-	if (nullptr != g_pFileSystemModule)
-	{
-		Sys_UnloadModule(g_pFileSystemModule);
-		g_pFileSystemModule = nullptr;
-	}
+    if( nullptr != g_pFileSystemModule )
+    {
+        Sys_UnloadModule( g_pFileSystemModule );
+        g_pFileSystemModule = nullptr;
+    }
 }
 
 const std::string& FileSystem_GetModDirectoryName()
 {
-	return g_ModDirectoryName;
+    return g_ModDirectoryName;
 }
 
-void FileSystem_FixSlashes(std::string& fileName)
+void FileSystem_FixSlashes( std::string& fileName )
 {
-	std::replace(fileName.begin(), fileName.end(), AlternatePathSeparatorChar, DefaultPathSeparatorChar);
+    std::replace( fileName.begin(), fileName.end(), AlternatePathSeparatorChar, DefaultPathSeparatorChar );
 }
 
-time_t FileSystem_GetFileTime(const char* fileName)
+time_t FileSystem_GetFileTime( const char* fileName )
 {
-	if (nullptr == fileName)
-	{
-		return 0;
-	}
+    if( nullptr == fileName )
+    {
+        return 0;
+    }
 
-	std::string absoluteFileName = g_ModDirectory + DefaultPathSeparatorChar + fileName;
+    std::string absoluteFileName = g_ModDirectory + DefaultPathSeparatorChar + fileName;
 
-	FileSystem_FixSlashes(absoluteFileName);
+    FileSystem_FixSlashes( absoluteFileName );
 
 #ifdef WIN32
-	struct _stat64i32 buf;
+    struct _stat64i32 buf;
 
-	const int result = _stat64i32(absoluteFileName.c_str(), &buf);
+    const int result = _stat64i32( absoluteFileName.c_str(), &buf );
 
-	if (result != 0)
-	{
-		return 0;
-	}
+    if( result != 0 )
+    {
+        return 0;
+    }
 
-	const time_t value = std::max(buf.st_ctime, buf.st_mtime);
+    const time_t value = std::max( buf.st_ctime, buf.st_mtime );
 
-	return value;
+    return value;
 #else
-	struct stat buf;
+    struct stat buf;
 
-	const int result = stat(absoluteFileName.c_str(), &buf);
+    const int result = stat( absoluteFileName.c_str(), &buf );
 
-	if (result != 0)
-	{
-		return 0;
-	}
+    if( result != 0 )
+    {
+        return 0;
+    }
 
-	const time_t value = std::max(buf.st_ctim.tv_sec, buf.st_mtim.tv_sec);
+    const time_t value = std::max( buf.st_ctim.tv_sec, buf.st_mtim.tv_sec );
 
-	return value;
+    return value;
 #endif
 }
 
-bool FileSystem_CompareFileTime(const char* filename1, const char* filename2, int* iCompare)
+bool FileSystem_CompareFileTime( const char* filename1, const char* filename2, int* iCompare )
 {
-	*iCompare = 0;
+    *iCompare = 0;
 
-	if (!filename1 || !filename2)
-	{
-		return false;
-	}
+    if( !filename1 || !filename2 )
+    {
+        return false;
+    }
 
-	const time_t time1 = FileSystem_GetFileTime(filename1);
-	const time_t time2 = FileSystem_GetFileTime(filename2);
+    const time_t time1 = FileSystem_GetFileTime( filename1 );
+    const time_t time2 = FileSystem_GetFileTime( filename2 );
 
-	if (time1 < time2)
-	{
-		*iCompare = -1;
-	}
-	else if (time1 > time2)
-	{
-		*iCompare = 1;
-	}
+    if( time1 < time2 )
+    {
+        *iCompare = -1;
+    }
+    else if( time1 > time2 )
+    {
+        *iCompare = 1;
+    }
 
-	return true;
+    return true;
 }
 
-static bool FileSystem_IsValidPath(const char* path)
+static bool FileSystem_IsValidPath( const char* path )
 {
-	return strstr(path, "..") == nullptr;
+    return strstr( path, ".." ) == nullptr;
 }
 
-std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, FileContentFormat format, const char* pathID)
+std::vector<std::byte> FileSystem_LoadFileIntoBuffer( const char* fileName, FileContentFormat format, const char* pathID )
 {
-	assert(nullptr != g_pFileSystem);
+    assert( nullptr != g_pFileSystem );
 
-	if (nullptr == fileName)
-	{
-		return {};
-	}
+    if( nullptr == fileName )
+    {
+        return {};
+    }
 
-	if (!FileSystem_IsValidPath(fileName))
-	{
-		Con_DPrintf("FileSystem_LoadFileIntoBuffer: Invalid filename \"%s\"\n", fileName);
-		return {};
-	}
+    if( !FileSystem_IsValidPath( fileName ) )
+    {
+        Con_DPrintf( "FileSystem_LoadFileIntoBuffer: Invalid filename \"%s\"\n", fileName );
+        return {};
+    }
 
-	if (FSFile file{fileName, "rb", pathID}; file)
-	{
-		const auto size = file.Size();
+    if( FSFile file{fileName, "rb", pathID}; file )
+    {
+        const auto size = file.Size();
 
-		std::vector<std::byte> buffer;
+        std::vector<std::byte> buffer;
 
-		buffer.resize(size + (format == FileContentFormat::Text ? 1 : 0));
+        buffer.resize( size + ( format == FileContentFormat::Text ? 1 : 0 ) );
 
-		file.Read(buffer.data(), size);
+        file.Read( buffer.data(), size );
 
-		if (format == FileContentFormat::Text)
-		{
+        if( format == FileContentFormat::Text )
+        {
 			// Null terminate it in case it's actually text.
-			buffer[size] = std::byte{'\0'};
-		}
+            buffer[size] = std::byte{'\0'};
+        }
 
-		return buffer;
-	}
+        return buffer;
+    }
 
-	Con_DPrintf("FileSystem_LoadFileIntoBuffer: couldn't open file \"%s\" for reading\n", fileName);
-	return {};
+    Con_DPrintf( "FileSystem_LoadFileIntoBuffer: couldn't open file \"%s\" for reading\n", fileName );
+    return {};
 }
 
-bool FileSystem_WriteTextToFile(const char* fileName, const char* text, const char* pathID)
+bool FileSystem_WriteTextToFile( const char* fileName, const char* text, const char* pathID )
 {
-	assert(nullptr != g_pFileSystem);
+    assert( nullptr != g_pFileSystem );
 
-	if (nullptr == fileName || nullptr == text)
-	{
-		return false;
-	}
+    if( nullptr == fileName || nullptr == text )
+    {
+        return false;
+    }
 
-	if (!FileSystem_IsValidPath(fileName))
-	{
-		Con_DPrintf("FileSystem_WriteTextToFile: Invalid filename \"%s\"\n", fileName);
-		return false;
-	}
+    if( !FileSystem_IsValidPath( fileName ) )
+    {
+        Con_DPrintf( "FileSystem_WriteTextToFile: Invalid filename \"%s\"\n", fileName );
+        return false;
+    }
 
-	const std::size_t length = std::strlen(text);
+    const std::size_t length = std::strlen( text );
 
-	if (length > static_cast<std::size_t>(std::numeric_limits<int>::max()))
-	{
-		Con_Printf("FileSystem_WriteTextToFile: text too long\n");
-		return false;
-	}
+    if( length > static_cast<std::size_t>( std::numeric_limits<int>::max() ) )
+    {
+        Con_Printf( "FileSystem_WriteTextToFile: text too long\n" );
+        return false;
+    }
 
-	if (FSFile file{fileName, "w", pathID}; file)
-	{
-		file.Write(text, length);
+    if( FSFile file{fileName, "w", pathID}; file )
+    {
+        file.Write( text, length );
 
-		return true;
-	}
+        return true;
+    }
 
-	Con_Printf("FileSystem_WriteTextToFile: couldn't open file \"%s\" for writing\n", fileName);
+    Con_Printf( "FileSystem_WriteTextToFile: couldn't open file \"%s\" for writing\n", fileName );
 
-	return false;
+    return false;
 }
 
 constexpr const char* ValveGameDirectoryPrefixes[] =
-	{
-		"valve",
-		"gearbox",
-		"bshift",
-		"ricochet",
-		"dmc",
-		"cstrike",
-		"czero", // Also covers Deleted Scenes (czeror)
-		"dod",
-		"tfc"};
+    {
+        "valve",
+        "gearbox",
+        "bshift",
+        "ricochet",
+        "dmc",
+        "cstrike",
+        "czero", // Also covers Deleted Scenes (czeror)
+        "dod",
+        "tfc"};
 
 bool UTIL_IsValveGameDirectory()
 {
-	const std::string& modDirectoryName = FileSystem_GetModDirectoryName();
+    const std::string& modDirectoryName = FileSystem_GetModDirectoryName();
 
-	for (const auto prefix : ValveGameDirectoryPrefixes)
-	{
-		if (strnicmp(modDirectoryName.c_str(), prefix, strlen(prefix)) == 0)
-		{
-			return true;
-		}
-	}
+    for( const auto prefix : ValveGameDirectoryPrefixes )
+    {
+        if( strnicmp( modDirectoryName.c_str(), prefix, strlen( prefix ) ) == 0 )
+        {
+            return true;
+        }
+    }
 
-	return false;
+    return false;
 }

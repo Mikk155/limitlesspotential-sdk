@@ -20,182 +20,182 @@
  */
 class CGMan : public CBaseMonster
 {
-	DECLARE_CLASS(CGMan, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CGMan, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	void SetYawSpeed() override;
-	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
-	int ISoundMask() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
+    int ISoundMask() override;
 
-	void StartTask(const Task_t* pTask) override;
-	void RunTask(const Task_t* pTask) override;
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
-	void TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
+    void StartTask( const Task_t* pTask ) override;
+    void RunTask( const Task_t* pTask ) override;
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
+    void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	void PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener) override;
+    void PlayScriptedSentence( const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener ) override;
 
-	EHANDLE m_hPlayer;
-	EHANDLE m_hTalkTarget;
-	float m_flTalkTime;
+    EHANDLE m_hPlayer;
+    EHANDLE m_hTalkTarget;
+    float m_flTalkTime;
 };
 
-LINK_ENTITY_TO_CLASS(monster_gman, CGMan);
+LINK_ENTITY_TO_CLASS( monster_gman, CGMan );
 
-BEGIN_DATAMAP(CGMan)
-DEFINE_FIELD(m_hTalkTarget, FIELD_EHANDLE),
-	DEFINE_FIELD(m_flTalkTime, FIELD_TIME),
-	END_DATAMAP();
+BEGIN_DATAMAP( CGMan )
+    DEFINE_FIELD( m_hTalkTarget, FIELD_EHANDLE ),
+    DEFINE_FIELD( m_flTalkTime, FIELD_TIME ),
+END_DATAMAP();
 
 void CGMan::OnCreate()
 {
-	CBaseMonster::OnCreate();
+    CBaseMonster::OnCreate();
 
-	pev->health = 100;
-	pev->model = MAKE_STRING("models/gman.mdl");
+    pev->health = 100;
+    pev->model = MAKE_STRING( "models/gman.mdl" );
 
-	SetClassification("none");
+    SetClassification( "none" );
 }
 
 void CGMan::SetYawSpeed()
 {
-	int ys;
+    int ys;
 
-	switch (m_Activity)
-	{
-	case ACT_IDLE:
-	default:
-		ys = 90;
-	}
+    switch ( m_Activity )
+    {
+    case ACT_IDLE:
+    default:
+        ys = 90;
+    }
 
-	pev->yaw_speed = ys;
+    pev->yaw_speed = ys;
 }
 
-void CGMan::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CGMan::HandleAnimEvent( MonsterEvent_t* pEvent )
 {
-	switch (pEvent->event)
-	{
-	case 0:
-	default:
-		CBaseMonster::HandleAnimEvent(pEvent);
-		break;
-	}
+    switch ( pEvent->event )
+    {
+    case 0:
+    default:
+        CBaseMonster::HandleAnimEvent( pEvent );
+        break;
+    }
 }
 
 int CGMan::ISoundMask()
 {
-	return bits_SOUND_NONE;
+    return bits_SOUND_NONE;
 }
 
 void CGMan::Spawn()
 {
-	Precache();
+    Precache();
 
-	SetModel(STRING(pev->model));
-	SetSize(VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
+    SetModel( STRING( pev->model ) );
+    SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
 
-	pev->solid = SOLID_SLIDEBOX;
-	pev->movetype = MOVETYPE_STEP;
-	m_bloodColor = DONT_BLEED;
-	m_flFieldOfView = 0.5; // indicates the width of this monster's forward view cone ( as a dotproduct result )
-	m_MonsterState = MONSTERSTATE_NONE;
+    pev->solid = SOLID_SLIDEBOX;
+    pev->movetype = MOVETYPE_STEP;
+    m_bloodColor = DONT_BLEED;
+    m_flFieldOfView = 0.5; // indicates the width of this monster's forward view cone ( as a dotproduct result )
+    m_MonsterState = MONSTERSTATE_NONE;
 
-	MonsterInit();
+    MonsterInit();
 }
 
 void CGMan::Precache()
 {
-	PrecacheModel(STRING(pev->model));
+    PrecacheModel( STRING( pev->model ) );
 }
 
-void CGMan::StartTask(const Task_t* pTask)
+void CGMan::StartTask( const Task_t* pTask )
 {
-	switch (pTask->iTask)
-	{
-	case TASK_WAIT:
-		if (m_hPlayer == nullptr)
-		{
-			m_hPlayer = UTIL_FindNearestPlayer(EyePosition());
-		}
-		break;
-	}
-	CBaseMonster::StartTask(pTask);
+    switch ( pTask->iTask )
+    {
+    case TASK_WAIT:
+        if( m_hPlayer == nullptr )
+        {
+            m_hPlayer = UTIL_FindNearestPlayer( EyePosition() );
+        }
+        break;
+    }
+    CBaseMonster::StartTask( pTask );
 }
 
-void CGMan::RunTask(const Task_t* pTask)
+void CGMan::RunTask( const Task_t* pTask )
 {
-	switch (pTask->iTask)
-	{
-	case TASK_WAIT:
+    switch ( pTask->iTask )
+    {
+    case TASK_WAIT:
 		// look at who I'm talking to
-		if (m_flTalkTime > gpGlobals->time && m_hTalkTarget != nullptr)
-		{
-			float yaw = VecToYaw(m_hTalkTarget->pev->origin - pev->origin) - pev->angles.y;
+        if( m_flTalkTime > gpGlobals->time && m_hTalkTarget != nullptr )
+        {
+            float yaw = VecToYaw( m_hTalkTarget->pev->origin - pev->origin ) - pev->angles.y;
 
-			if (yaw > 180)
-				yaw -= 360;
-			if (yaw < -180)
-				yaw += 360;
+            if( yaw > 180 )
+                yaw -= 360;
+            if( yaw < -180 )
+                yaw += 360;
 
 			// turn towards vector
-			SetBoneController(0, yaw);
-		}
+            SetBoneController( 0, yaw );
+        }
 		// look at player, but only if playing a "safe" idle animation
-		else if (m_hPlayer != nullptr && pev->sequence == 0)
-		{
-			float yaw = VecToYaw(m_hPlayer->pev->origin - pev->origin) - pev->angles.y;
+        else if( m_hPlayer != nullptr && pev->sequence == 0 )
+        {
+            float yaw = VecToYaw( m_hPlayer->pev->origin - pev->origin ) - pev->angles.y;
 
-			if (yaw > 180)
-				yaw -= 360;
-			if (yaw < -180)
-				yaw += 360;
+            if( yaw > 180 )
+                yaw -= 360;
+            if( yaw < -180 )
+                yaw += 360;
 
 			// turn towards vector
-			SetBoneController(0, yaw);
-		}
-		else
-		{
-			SetBoneController(0, 0);
-		}
-		CBaseMonster::RunTask(pTask);
-		break;
-	default:
-		SetBoneController(0, 0);
-		CBaseMonster::RunTask(pTask);
-		break;
-	}
+            SetBoneController( 0, yaw );
+        }
+        else
+        {
+            SetBoneController( 0, 0 );
+        }
+        CBaseMonster::RunTask( pTask );
+        break;
+    default:
+        SetBoneController( 0, 0 );
+        CBaseMonster::RunTask( pTask );
+        break;
+    }
 }
 
-bool CGMan::TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType)
+bool CGMan::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
 	// Override all damage
-	pev->health = pev->max_health / 2; // always trigger the 50% damage aitrigger
+    pev->health = pev->max_health / 2; // always trigger the 50% damage aitrigger
 
-	if (flDamage > 0)
-	{
-		SetConditions(bits_COND_LIGHT_DAMAGE);
-	}
+    if( flDamage > 0 )
+    {
+        SetConditions( bits_COND_LIGHT_DAMAGE );
+    }
 
-	if (flDamage >= 20)
-	{
-		SetConditions(bits_COND_HEAVY_DAMAGE);
-	}
-	return true;
+    if( flDamage >= 20 )
+    {
+        SetConditions( bits_COND_HEAVY_DAMAGE );
+    }
+    return true;
 }
 
-void CGMan::TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
+void CGMan::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	UTIL_Ricochet(ptr->vecEndPos, 1.0);
-	AddMultiDamage(attacker, this, flDamage, bitsDamageType);
+    UTIL_Ricochet( ptr->vecEndPos, 1.0 );
+    AddMultiDamage( attacker, this, flDamage, bitsDamageType );
 }
 
-void CGMan::PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener)
+void CGMan::PlayScriptedSentence( const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener )
 {
-	CBaseMonster::PlayScriptedSentence(pszSentence, duration, volume, attenuation, bConcurrent, pListener);
+    CBaseMonster::PlayScriptedSentence( pszSentence, duration, volume, attenuation, bConcurrent, pListener );
 
-	m_flTalkTime = gpGlobals->time + duration;
-	m_hTalkTarget = pListener;
+    m_flTalkTime = gpGlobals->time + duration;
+    m_hTalkTarget = pListener;
 }

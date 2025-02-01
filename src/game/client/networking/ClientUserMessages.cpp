@@ -19,70 +19,70 @@
 #include "ClientLibrary.h"
 #include "ClientUserMessages.h"
 
-static int DispatchUserMessageInternal(const char* pszName, int iSize, void* pbuf)
+static int DispatchUserMessageInternal( const char* pszName, int iSize, void* pbuf )
 {
-	return static_cast<int>(g_ClientUserMessages.DispatchUserMessage(pszName, iSize, pbuf));
+    return static_cast<int>( g_ClientUserMessages.DispatchUserMessage( pszName, iSize, pbuf ) );
 }
 
-bool ClientUserMessages::IsRegistered(std::string_view name) const
+bool ClientUserMessages::IsRegistered( std::string_view name ) const
 {
-	return m_Handlers.contains(name);
+    return m_Handlers.contains( name );
 }
 
-void ClientUserMessages::RegisterHandler(std::string_view name, MessageHandler&& handler)
+void ClientUserMessages::RegisterHandler( std::string_view name, MessageHandler&& handler )
 {
-	if (name.empty() || std::find_if_not(name.begin(), name.end(), [](auto c)
-							{ return std::isalpha(c); }) != name.end())
-	{
-		assert(!"User message handler names must contain only alphabetic characters");
-		return;
-	}
+    if( name.empty() || std::find_if_not( name.begin(), name.end(), []( auto c )
+                            { return std::isalpha(c); } ) != name.end() )
+    {
+        assert( !"User message handler names must contain only alphabetic characters" );
+        return;
+    }
 
-	if (!handler)
-	{
-		assert(!"Handler must be valid");
-		return;
-	}
+    if( !handler )
+    {
+        assert( !"Handler must be valid" );
+        return;
+    }
 
-	if (IsRegistered(name))
-	{
-		assert(!"Cannot register multiple handlers to the same user message");
-		return;
-	}
+    if( IsRegistered( name ) )
+    {
+        assert( !"Cannot register multiple handlers to the same user message" );
+        return;
+    }
 
 	// Ensure key address remains the same.
-	Element element{.Name = std::make_unique<char[]>(name.size() + 1), .Handler = std::move(handler)};
+    Element element{.Name = std::make_unique<char[]>( name.size() + 1 ), .Handler = std::move( handler )};
 
-	std::strncpy(element.Name.get(), name.data(), name.size());
-	element.Name[name.size()] = '\0';
+    std::strncpy( element.Name.get(), name.data(), name.size() );
+    element.Name[name.size()] = '\0';
 
-	const std::string_view key{element.Name.get(), name.size()};
+    const std::string_view key{element.Name.get(), name.size()};
 
-	m_Handlers.emplace(key, std::move(element));
+    m_Handlers.emplace( key, std::move( element ) );
 
-	gEngfuncs.pfnHookUserMsg(key.data(), &DispatchUserMessageInternal);
+    gEngfuncs.pfnHookUserMsg( key.data(), &DispatchUserMessageInternal );
 }
 
 void ClientUserMessages::Clear()
 {
-	m_Handlers.clear();
+    m_Handlers.clear();
 }
 
-bool ClientUserMessages::DispatchUserMessage(const char* pszName, int iSize, void* pbuf)
+bool ClientUserMessages::DispatchUserMessage( const char* pszName, int iSize, void* pbuf )
 {
-	g_Client.OnUserMessageReceived();
+    g_Client.OnUserMessageReceived();
 
-	if (auto it = m_Handlers.find(pszName); it != m_Handlers.end())
-	{
-		BufferReader reader{{reinterpret_cast<std::byte*>(pbuf), static_cast<std::size_t>(iSize)}};
-		it->second.Handler(pszName, reader);
-		return true;
-	}
+    if( auto it = m_Handlers.find( pszName ); it != m_Handlers.end() )
+    {
+        BufferReader reader{{reinterpret_cast<std::byte*>( pbuf ), static_cast<std::size_t>( iSize )}};
+        it->second.Handler( pszName, reader );
+        return true;
+    }
 
 	// Don't spam the console with error messages; this is a developer error.
-	g_GameLogger->debug("No user message handler for message \"{}\"", pszName);
+    g_GameLogger->debug( "No user message handler for message \"{}\"", pszName );
 
-	assert(!"No user message handler for message");
+    assert( !"No user message handler for message" );
 
-	return false;
+    return false;
 }

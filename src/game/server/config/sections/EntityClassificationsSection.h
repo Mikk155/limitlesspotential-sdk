@@ -29,23 +29,23 @@
 class EntityClassificationsSection final : public GameConfigSection<ServerConfigContext>
 {
 public:
-	explicit EntityClassificationsSection() = default;
+    explicit EntityClassificationsSection() = default;
 
-	std::string_view GetName() const override final { return "EntityClassifications"; }
+    std::string_view GetName() const override final { return "EntityClassifications"; }
 
-	json::value_t GetType() const override final { return json::value_t::string; }
+    json::value_t GetType() const override final { return json::value_t::string; }
 
-	std::string GetSchema() const override final
-	{
-		return R"|(
-	"title": "Entity Classifications",
-	"description": "Name of the file containing entity classifications",
-	"pattern": "^.+$")|";
-	}
+    std::string GetSchema() const override final
+    {
+        return R"|( 
+    "title": "Entity Classifications",
+    "description": "Name of the file containing entity classifications",
+    "pattern": "^.+$" )|";
+    }
 
-	bool TryParse(GameConfigContext<ServerConfigContext>& context) const override final
-	{
-		context.Data.EntityClassificationsFileName = context.Input.get<std::string>();
-		return true;
-	}
+    bool TryParse( GameConfigContext<ServerConfigContext>& context ) const override final
+    {
+        context.Data.EntityClassificationsFileName = context.Input.get<std::string>();
+        return true;
+    }
 };

@@ -16,40 +16,40 @@
 #include "cbase.h"
 #include "CClientFog.h"
 
-LINK_ENTITY_TO_CLASS(env_fog, CClientFog);
+LINK_ENTITY_TO_CLASS( env_fog, CClientFog );
 
-BEGIN_DATAMAP(CClientFog)
-DEFINE_FIELD(m_Density, FIELD_FLOAT),
-	DEFINE_FIELD(m_StartDistance, FIELD_FLOAT),
-	DEFINE_FIELD(m_StopDistance, FIELD_FLOAT),
-	END_DATAMAP();
+BEGIN_DATAMAP( CClientFog )
+    DEFINE_FIELD( m_Density, FIELD_FLOAT ),
+    DEFINE_FIELD( m_StartDistance, FIELD_FLOAT ),
+    DEFINE_FIELD( m_StopDistance, FIELD_FLOAT ),
+END_DATAMAP();
 
-bool CClientFog::KeyValue(KeyValueData* pkvd)
+bool CClientFog::KeyValue( KeyValueData* pkvd )
 {
-	if (FStrEq(pkvd->szKeyName, "density"))
-	{
-		m_Density = atof(pkvd->szValue);
-		return true;
-	}
-	else if (FStrEq(pkvd->szKeyName, "fogStartDistance"))
-	{
-		m_StartDistance = atof(pkvd->szValue);
-		return true;
-	}
-	else if (FStrEq(pkvd->szKeyName, "fogStopDistance"))
-	{
-		m_StopDistance = atof(pkvd->szValue);
-		return true;
-	}
+    if( FStrEq( pkvd->szKeyName, "density" ) )
+    {
+        m_Density = atof( pkvd->szValue );
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "fogStartDistance" ) )
+    {
+        m_StartDistance = atof( pkvd->szValue );
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "fogStopDistance" ) )
+    {
+        m_StopDistance = atof( pkvd->szValue );
+        return true;
+    }
 
-	return BaseClass::KeyValue(pkvd);
+    return BaseClass::KeyValue( pkvd );
 }
 
 void CClientFog::Spawn()
 {
 	// Not really needed, perhaps fog was once a brush entity?
-	pev->movetype = MOVETYPE_NOCLIP;
-	pev->solid = SOLID_NOT;
-	pev->renderamt = 0;
-	pev->rendermode = kRenderTransTexture;
+    pev->movetype = MOVETYPE_NOCLIP;
+    pev->solid = SOLID_NOT;
+    pev->renderamt = 0;
+    pev->rendermode = kRenderTransTexture;
 }

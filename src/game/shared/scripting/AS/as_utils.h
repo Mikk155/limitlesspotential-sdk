@@ -27,26 +27,26 @@ namespace as
 {
 struct ScriptEngineDeleter
 {
-	void operator()(asIScriptEngine* engine) const noexcept
-	{
-		if (engine)
-		{
-			engine->ShutDownAndRelease();
-		}
-	}
+    void operator()( asIScriptEngine* engine ) const noexcept
+    {
+        if( engine )
+        {
+            engine->ShutDownAndRelease();
+        }
+    }
 };
 
 using EnginePtr = std::unique_ptr<asIScriptEngine, ScriptEngineDeleter>;
 
 struct ScriptModuleDeleter
 {
-	void operator()(asIScriptModule* module) const noexcept
-	{
-		if (module)
-		{
-			module->Discard();
-		}
-	}
+    void operator()( asIScriptModule* module ) const noexcept
+    {
+        if( module )
+        {
+            module->Discard();
+        }
+    }
 };
 
 using ModulePtr = std::unique_ptr<asIScriptModule, ScriptModuleDeleter>;
@@ -57,143 +57,143 @@ using ModulePtr = std::unique_ptr<asIScriptModule, ScriptModuleDeleter>;
 template <typename T>
 struct ObjectDeleter
 {
-	void operator()(T* object) const noexcept
-	{
-		if (object)
-		{
-			object->Release();
-		}
-	}
+    void operator()( T* object ) const noexcept
+    {
+        if( object )
+        {
+            object->Release();
+        }
+    }
 };
 
 template <typename T>
 using UniquePtr = std::unique_ptr<T, ObjectDeleter<T>>;
 
-inline std::string FormatFunctionName(const asIScriptFunction& function)
+inline std::string FormatFunctionName( const asIScriptFunction& function )
 {
-	std::string buffer;
+    std::string buffer;
 
-	if (const auto ns = function.GetNamespace(); ns && ns[0])
-	{
-		buffer += ns;
-		buffer += "::";
-	}
+    if( const auto ns = function.GetNamespace(); ns && ns[0] )
+    {
+        buffer += ns;
+        buffer += "::";
+    }
 
-	if (const auto clazz = function.GetObjectName(); clazz)
-	{
-		buffer += clazz;
-		buffer += "::";
-	}
+    if( const auto clazz = function.GetObjectName(); clazz )
+    {
+        buffer += clazz;
+        buffer += "::";
+    }
 
-	buffer += function.GetName();
+    buffer += function.GetName();
 
-	return buffer;
+    return buffer;
 }
 
-std::string_view ReturnCodeToString(int code);
-std::string_view ContextStateToString(int code);
+std::string_view ReturnCodeToString( int code );
+std::string_view ContextStateToString( int code );
 
 /**
  *	@brief Gets a printable string for the function's module
  */
-inline const char* GetModuleName(const asIScriptFunction& function)
+inline const char* GetModuleName( const asIScriptFunction& function )
 {
-	if (const auto moduleName = function.GetModuleName(); moduleName)
-	{
-		return moduleName;
-	}
+    if( const auto moduleName = function.GetModuleName(); moduleName )
+    {
+        return moduleName;
+    }
 
-	switch (function.GetFuncType())
-	{
-	case asFUNC_SYSTEM:
-		return "System";
-	default:
-		return "Unknown";
-	}
+    switch ( function.GetFuncType() )
+    {
+    case asFUNC_SYSTEM:
+        return "System";
+    default:
+        return "Unknown";
+    }
 }
 
 struct SectionInfo
 {
-	std::string SectionName;
-	int Line = 0;
-	int Column = 0;
+    std::string SectionName;
+    int Line = 0;
+    int Column = 0;
 };
 
-inline std::string GetSectionName(const asIScriptFunction& function)
+inline std::string GetSectionName( const asIScriptFunction& function )
 {
-	if (const auto sectionName = function.GetScriptSectionName(); sectionName && sectionName[0])
-	{
-		return sectionName;
-	}
+    if( const auto sectionName = function.GetScriptSectionName(); sectionName && sectionName[0] )
+    {
+        return sectionName;
+    }
 
-	if (const auto module = function.GetModule(); module)
-	{
-		return fmt::format("Unknown section in module \"{}\"", module->GetName());
-	}
+    if( const auto module = function.GetModule(); module )
+    {
+        return fmt::format( "Unknown section in module \"{}\"", module->GetName() );
+    }
 
-	switch (function.GetFuncType())
-	{
-	case asFUNC_SYSTEM:
-		return "System function";
-	default:
-		return "Unknown section";
-	}
+    switch ( function.GetFuncType() )
+    {
+    case asFUNC_SYSTEM:
+        return "System function";
+    default:
+        return "Unknown section";
+    }
 }
 
-inline std::string GetSectionName(const asIScriptFunction* function)
+inline std::string GetSectionName( const asIScriptFunction* function )
 {
-	if (!function)
-	{
+    if( !function )
+    {
 		// Should never happen
-		return "No function to get section";
-	}
+        return "No function to get section";
+    }
 
-	return GetSectionName(*function);
+    return GetSectionName( *function );
 }
 
-inline SectionInfo GetExecutingSectionInfo(asIScriptContext& context, asUINT stackLevel = 0)
+inline SectionInfo GetExecutingSectionInfo( asIScriptContext& context, asUINT stackLevel = 0 )
 {
-	const char* sectionName;
-	int column;
-	const int lineNumber = context.GetLineNumber(stackLevel, &column, &sectionName);
+    const char* sectionName;
+    int column;
+    const int lineNumber = context.GetLineNumber( stackLevel, &column, &sectionName );
 
-	std::string sectionNameString;
+    std::string sectionNameString;
 
-	if (sectionName)
-	{
-		sectionNameString = sectionName;
-	}
-	else
-	{
-		sectionNameString = GetSectionName(context.GetFunction(stackLevel));
-	}
+    if( sectionName )
+    {
+        sectionNameString = sectionName;
+    }
+    else
+    {
+        sectionNameString = GetSectionName( context.GetFunction( stackLevel ) );
+    }
 
-	return {
-		.SectionName = std::move(sectionNameString),
-		.Line = lineNumber,
-		.Column = column};
+    return {
+        .SectionName = std::move( sectionNameString ),
+        .Line = lineNumber,
+        .Column = column};
 }
 
-inline SectionInfo GetExceptionSectionInfo(asIScriptContext& context)
+inline SectionInfo GetExceptionSectionInfo( asIScriptContext& context )
 {
-	const char* sectionName;
-	int column;
-	const int lineNumber = context.GetExceptionLineNumber(&column, &sectionName);
+    const char* sectionName;
+    int column;
+    const int lineNumber = context.GetExceptionLineNumber( &column, &sectionName );
 
-	std::string sectionNameString;
+    std::string sectionNameString;
 
-	if (sectionName)
-	{
-		sectionNameString = sectionName;
-	}
-	else
-	{
-		sectionNameString = GetSectionName(context.GetExceptionFunction());
-	}
+    if( sectionName )
+    {
+        sectionNameString = sectionName;
+    }
+    else
+    {
+        sectionNameString = GetSectionName( context.GetExceptionFunction() );
+    }
 
-	return {
-		.SectionName = std::move(sectionNameString),
-		.Line = lineNumber,
-		.Column = column};
+    return {
+        .SectionName = std::move( sectionNameString ),
+        .Line = lineNumber,
+        .Column = column};
 }
 }

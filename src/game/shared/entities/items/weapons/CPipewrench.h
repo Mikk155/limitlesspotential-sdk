@@ -17,70 +17,70 @@
 
 enum pipewrench_e
 {
-	PIPEWRENCH_IDLE1 = 0,
-	PIPEWRENCH_IDLE2,
-	PIPEWRENCH_IDLE3,
-	PIPEWRENCH_DRAW,
-	PIPEWRENCH_HOLSTER,
-	PIPEWRENCH_ATTACK1HIT,
-	PIPEWRENCH_ATTACK1MISS,
-	PIPEWRENCH_ATTACK2HIT,
-	PIPEWRENCH_ATTACK2MISS,
-	PIPEWRENCH_ATTACK3HIT,
-	PIPEWRENCH_ATTACK3MISS,
-	PIPEWRENCH_BIG_SWING_START,
-	PIPEWRENCH_BIG_SWING_HIT,
-	PIPEWRENCH_BIG_SWING_MISS,
-	PIPEWRENCH_BIG_SWING_IDLE
+    PIPEWRENCH_IDLE1 = 0,
+    PIPEWRENCH_IDLE2,
+    PIPEWRENCH_IDLE3,
+    PIPEWRENCH_DRAW,
+    PIPEWRENCH_HOLSTER,
+    PIPEWRENCH_ATTACK1HIT,
+    PIPEWRENCH_ATTACK1MISS,
+    PIPEWRENCH_ATTACK2HIT,
+    PIPEWRENCH_ATTACK2MISS,
+    PIPEWRENCH_ATTACK3HIT,
+    PIPEWRENCH_ATTACK3MISS,
+    PIPEWRENCH_BIG_SWING_START,
+    PIPEWRENCH_BIG_SWING_HIT,
+    PIPEWRENCH_BIG_SWING_MISS,
+    PIPEWRENCH_BIG_SWING_IDLE
 };
 
 class CPipewrench : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CPipewrench, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CPipewrench, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 private:
-	enum SwingMode
-	{
-		SWING_NONE = 0,
-		SWING_START_BIG,
-		SWING_DOING_BIG,
-	};
+    enum SwingMode
+    {
+        SWING_NONE = 0,
+        SWING_START_BIG,
+        SWING_DOING_BIG,
+    };
 
 public:
-	void OnCreate() override;
-	void Precache() override;
-	void SwingAgain();
-	void Smack();
+    void OnCreate() override;
+    void Precache() override;
+    void SwingAgain();
+    void Smack();
 
-	void PrimaryAttack() override;
-	void SecondaryAttack() override;
-	bool Swing(const bool bFirst);
-	void BigSwing();
-	bool Deploy() override;
-	void Holster() override;
-	void WeaponIdle() override;
+    void PrimaryAttack() override;
+    void SecondaryAttack() override;
+    bool Swing( const bool bFirst );
+    void BigSwing();
+    bool Deploy() override;
+    void Holster() override;
+    void WeaponIdle() override;
 
-	void GetWeaponData(weapon_data_t& data) override;
+    void GetWeaponData( weapon_data_t& data ) override;
 
-	void SetWeaponData(const weapon_data_t& data) override;
+    void SetWeaponData( const weapon_data_t& data ) override;
 
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	float m_flBigSwingStart;
-	int m_iSwingMode = SWING_NONE;
-	int m_iSwing;
-	TraceResult m_trHit;
+    float m_flBigSwingStart;
+    int m_iSwingMode = SWING_NONE;
+    int m_iSwing;
+    TraceResult m_trHit;
 
 private:
-	unsigned short m_usPipewrench;
+    unsigned short m_usPipewrench;
 };

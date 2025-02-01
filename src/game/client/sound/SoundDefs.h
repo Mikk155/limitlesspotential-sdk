@@ -83,23 +83,23 @@ namespace sound
  */
 struct SoundIndex final
 {
-	static constexpr int InvalidIndex = 0;
+    static constexpr int InvalidIndex = 0;
 
 	constexpr SoundIndex() noexcept = default;
 
-	explicit constexpr SoundIndex(int index) noexcept
-		: Index(index)
-	{
-	}
+    explicit constexpr SoundIndex( int index ) noexcept
+        : Index( index )
+    {
+    }
 
 	constexpr bool IsValid() const
-	{
-		return Index != InvalidIndex;
-	}
+    {
+        return Index != InvalidIndex;
+    }
 
 	constexpr auto operator<=>(const SoundIndex&) const = default;
 
-	int Index = InvalidIndex;
+    int Index = InvalidIndex;
 };
 
 /**
@@ -108,41 +108,41 @@ struct SoundIndex final
  */
 struct Sound
 {
-	RelativeFilename Name;
-	OpenALBuffer Buffer;
-	ALenum Format = 0;
-	std::vector<float> Samples; // For sentences, to update mouths.
-	bool IsLooping{false};
+    RelativeFilename Name;
+    OpenALBuffer Buffer;
+    ALenum Format = 0;
+    std::vector<float> Samples; // For sentences, to update mouths.
+    bool IsLooping{false};
 
-	explicit Sound(const RelativeFilename& filename)
-		: Name(filename)
-	{
-	}
+    explicit Sound( const RelativeFilename& filename )
+        : Name( filename )
+    {
+    }
 
-	Sound(Sound&&) = default;
-	Sound& operator=(Sound&&) = default;
+    Sound( Sound&& ) = default;
+    Sound& operator=( Sound&& ) = default;
 };
 
 struct SentenceWord
 {
-	SoundIndex Index;
-	sentences::SentenceWordParameters Parameters;
+    SoundIndex Index;
+    sentences::SentenceWordParameters Parameters;
 };
 
 struct Sentence
 {
-	sentences::SentenceName Name;
-	eastl::fixed_vector<SentenceWord, MaxWordsPerSentence> Words;
+    sentences::SentenceName Name;
+    eastl::fixed_vector<SentenceWord, MaxWordsPerSentence> Words;
 };
 
 // Sentence playback needs to keep track of the current word.
 struct SentenceChannel
 {
 	// Index into m_Sentences.
-	std::size_t Sentence{0};
-	std::size_t CurrentWord{0};
+    std::size_t Sentence{0};
+    std::size_t CurrentWord{0};
 
-	OpenALBuffer TimeCompressBuffer;
+    OpenALBuffer TimeCompressBuffer;
 
 	constexpr auto operator<=>(const SentenceChannel&) const = default;
 };
@@ -151,13 +151,13 @@ using SoundData = std::variant<SoundIndex, SentenceChannel>;
 
 struct Channel
 {
-	SoundData Sound;
+    SoundData Sound;
 
-	int EntityIndex{0};
-	int ChannelIndex{0};
-	int Pitch{PITCH_NORM};
-	int CreatedOnFrame{0};
+    int EntityIndex{0};
+    int ChannelIndex{0};
+    int Pitch{PITCH_NORM};
+    int CreatedOnFrame{0};
 
-	OpenALSource Source;
+    OpenALSource Source;
 };
 }

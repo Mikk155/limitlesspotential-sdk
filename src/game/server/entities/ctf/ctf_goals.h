@@ -21,85 +21,85 @@ class CBasePlayer;
 
 extern float g_flFlagReturnTime;
 
-void DumpCTFFlagInfo(CBasePlayer* pPlayer);
+void DumpCTFFlagInfo( CBasePlayer* pPlayer );
 
 class CTFGoal : public CBaseAnimating
 {
-	DECLARE_CLASS(CTFGoal, CBaseAnimating);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CTFGoal, CBaseAnimating );
+    DECLARE_DATAMAP();
 
 public:
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void SetObjectCollisionBox() override;
+    void SetObjectCollisionBox() override;
 
-	void StartGoal();
+    void StartGoal();
 
-	void PlaceGoal();
+    void PlaceGoal();
 
-	int m_iGoalNum;
-	int m_iGoalState;
-	Vector m_GoalMin;
-	Vector m_GoalMax;
+    int m_iGoalNum;
+    int m_iGoalState;
+    Vector m_GoalMin;
+    Vector m_GoalMax;
 };
 
 class CTFGoalBase : public CTFGoal
 {
-	DECLARE_CLASS(CTFGoalBase, CTFGoal);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CTFGoalBase, CTFGoal );
+    DECLARE_DATAMAP();
 
 public:
-	void BaseThink();
+    void BaseThink();
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void TurnOnLight(CBasePlayer* pPlayer);
+    void TurnOnLight( CBasePlayer* pPlayer );
 };
 
 class CTFGoalFlag : public CTFGoal
 {
-	DECLARE_CLASS(CTFGoalFlag, CTFGoal);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CTFGoalFlag, CTFGoal );
+    DECLARE_DATAMAP();
 
 public:
-	void Precache() override;
+    void Precache() override;
 
-	void PlaceItem();
+    void PlaceItem();
 
-	void ReturnFlag();
+    void ReturnFlag();
 
-	void FlagCarryThink();
+    void FlagCarryThink();
 
-	void goal_item_dropthink();
+    void goal_item_dropthink();
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void ReturnFlagThink();
+    void ReturnFlagThink();
 
-	void StartItem();
+    void StartItem();
 
-	void ScoreFlagTouch(CBasePlayer* pOther);
+    void ScoreFlagTouch( CBasePlayer* pOther );
 
-	void TurnOnLight(CBasePlayer* pPlayer);
+    void TurnOnLight( CBasePlayer* pPlayer );
 
-	void GiveFlagToPlayer(CBasePlayer* pPlayer);
+    void GiveFlagToPlayer( CBasePlayer* pPlayer );
 
-	void goal_item_touch(CBaseEntity* pOther);
+    void goal_item_touch( CBaseEntity* pOther );
 
-	void SetDropTouch();
+    void SetDropTouch();
 
-	void DoDrop(const Vector& vecOrigin);
+    void DoDrop( const Vector& vecOrigin );
 
-	void DropFlag(CBasePlayer* pPlayer);
+    void DropFlag( CBasePlayer* pPlayer );
 
-	void DisplayFlagStatus(CBasePlayer* pPlayer);
+    void DisplayFlagStatus( CBasePlayer* pPlayer );
 
-	void SetObjectCollisionBox() override;
+    void SetObjectCollisionBox() override;
 
-	unsigned int drop_time;
-	Vector m_OriginalAngles;
-	int m_nReturnPlayer;
-	float m_flReturnTime;
+    unsigned int drop_time;
+    Vector m_OriginalAngles;
+    int m_nReturnPlayer;
+    float m_flReturnTime;
 };

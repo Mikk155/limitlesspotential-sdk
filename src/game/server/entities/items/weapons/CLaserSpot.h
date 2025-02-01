@@ -19,24 +19,24 @@
 
 class CLaserSpot : public CBaseEntity
 {
-	DECLARE_CLASS(CLaserSpot, CBaseEntity);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CLaserSpot, CBaseEntity );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	void Precache() override;
+    void Spawn() override;
+    void Precache() override;
 
-	int ObjectCaps() override { return FCAP_DONT_SAVE; }
+    int ObjectCaps() override { return FCAP_DONT_SAVE; }
 
 	/**
 	 *	@brief make the laser sight invisible.
 	 */
-	void Suspend(float flSuspendTime);
+    void Suspend( float flSuspendTime );
 
 	/**
 	 *	@brief bring a suspended laser sight back.
 	 */
-	void Revive();
+    void Revive();
 
-	static CLaserSpot* CreateSpot();
+    static CLaserSpot* CreateSpot();
 };

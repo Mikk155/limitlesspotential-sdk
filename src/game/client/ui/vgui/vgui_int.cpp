@@ -23,46 +23,46 @@
 
 using namespace vgui;
 
-void VGui_ViewportPaintBackground(int extents[4])
+void VGui_ViewportPaintBackground( int extents[4] )
 {
-	gEngfuncs.VGui_ViewportPaintBackground(extents);
+    gEngfuncs.VGui_ViewportPaintBackground( extents );
 }
 
 void* VGui_GetPanel()
 {
-	return (Panel*)gEngfuncs.VGui_GetPanel();
+    return ( Panel* )gEngfuncs.VGui_GetPanel();
 }
 
 void VGui_Startup()
 {
-	Panel* root = (Panel*)VGui_GetPanel();
-	root->setBgColor(128, 128, 0, 0);
+    Panel* root = ( Panel* )VGui_GetPanel();
+    root->setBgColor( 128, 128, 0, 0 );
 	// root->setNonPainted(false);
 	// root->setBorder(new LineBorder());
-	root->setLayout(new BorderLayout(0));
+    root->setLayout( new BorderLayout( 0 ) );
 
 
 	// root->getSurfaceBase()->setEmulatedCursorVisible(true);
 
-	if (gViewPort != nullptr)
-	{
+    if( gViewPort != nullptr )
+    {
 		//		root->removeChild(gViewPort);
 
 		// free the memory
 		//		delete gViewPort;
 		//		gViewPort = nullptr;
 
-		gViewPort->Initialize();
-	}
-	else
-	{
-		gViewPort = new TeamFortressViewport(0, 0, root->getWide(), root->getTall());
-		gViewPort->setParent(root);
-	}
+        gViewPort->Initialize();
+    }
+    else
+    {
+        gViewPort = new TeamFortressViewport( 0, 0, root->getWide(), root->getTall() );
+        gViewPort->setParent( root );
+    }
 }
 
 void VGui_Shutdown()
 {
-	delete gViewPort;
-	gViewPort = nullptr;
+    delete gViewPort;
+    gViewPort = nullptr;
 }

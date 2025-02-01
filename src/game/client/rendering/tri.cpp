@@ -23,11 +23,11 @@
 
 void RenderFog()
 {
-	if (g_WaterLevel <= WaterLevel::Feet && g_FogDensity >= 0)
-	{
-		gEngfuncs.pTriAPI->FogParams(g_FogDensity, g_FogSkybox);
-		gEngfuncs.pTriAPI->Fog(g_FogColor, g_FogStartDistance, g_FogStopDistance, int(g_RenderFog));
-	}
+    if( g_WaterLevel <= WaterLevel::Feet && g_FogDensity >= 0 )
+    {
+        gEngfuncs.pTriAPI->FogParams( g_FogDensity, g_FogSkybox );
+        gEngfuncs.pTriAPI->Fog( g_FogColor, g_FogStartDistance, g_FogStopDistance, int( g_RenderFog ) );
+    }
 }
 
 /**
@@ -35,7 +35,7 @@ void RenderFog()
  */
 void DLLEXPORT HUD_DrawNormalTriangles()
 {
-	gHUD.m_Spectator.DrawOverview();
+    gHUD.m_Spectator.DrawOverview();
 }
 
 /**
@@ -43,8 +43,8 @@ void DLLEXPORT HUD_DrawNormalTriangles()
  */
 void DLLEXPORT HUD_DrawTransparentTriangles()
 {
-	if (g_pParticleMan)
-		g_pParticleMan->Update();
+    if( g_pParticleMan )
+        g_pParticleMan->Update();
 
 	// Handled in V_CalcRefdef.
 	// RenderFog();

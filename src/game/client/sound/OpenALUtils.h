@@ -23,57 +23,57 @@
 template <auto Function>
 struct DeleterWrapper final
 {
-	template <typename T>
+    template <typename T>
 	constexpr void operator()(T* object) const
-	{
-		Function(object);
-	}
+    {
+        Function( object );
+    }
 };
 
 struct ContextSwitcher
 {
-	ALCcontext* const Previous;
+    ALCcontext* const Previous;
 
-	const bool Success;
+    const bool Success;
 
-	ContextSwitcher(ALCcontext* context, spdlog::logger& logger)
-		: Previous(alcGetCurrentContext()),
-		  Success(ALC_FALSE != alcMakeContextCurrent(context))
-	{
-		if (!Success)
-		{
-			logger.error("Couldn't make OpenAL context current");
-		}
-	}
+    ContextSwitcher( ALCcontext* context, spdlog::logger& logger )
+        : Previous( alcGetCurrentContext() ),
+          Success( ALC_FALSE != alcMakeContextCurrent( context ) )
+    {
+        if( !Success )
+        {
+            logger.error( "Couldn't make OpenAL context current" );
+        }
+    }
 
-	~ContextSwitcher()
-	{
-		alcMakeContextCurrent(Previous);
-	}
+    ~ContextSwitcher()
+    {
+        alcMakeContextCurrent( Previous );
+    }
 
-	operator bool() const { return Success; }
+    operator bool() const { return Success; }
 };
 
-inline bool CheckOpenALContextExtension(ALCdevice* device, const char* name, spdlog::logger& logger)
+inline bool CheckOpenALContextExtension( ALCdevice* device, const char* name, spdlog::logger& logger )
 {
-	if (ALC_FALSE == alcIsExtensionPresent(device, name))
-	{
-		logger.error("OpenAL does not provide extension \"{}\", required for music playback", name);
-		return false;
-	}
+    if( ALC_FALSE == alcIsExtensionPresent( device, name ) )
+    {
+        logger.error( "OpenAL does not provide extension \"{}\", required for music playback", name );
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
-inline bool CheckOpenALExtension(const char* name, spdlog::logger& logger)
+inline bool CheckOpenALExtension( const char* name, spdlog::logger& logger )
 {
-	if (ALC_FALSE == alIsExtensionPresent(name))
-	{
-		logger.error("OpenAL does not provide extension \"{}\", required for music playback", name);
-		return false;
-	}
+    if( ALC_FALSE == alIsExtensionPresent( name ) )
+    {
+        logger.error( "OpenAL does not provide extension \"{}\", required for music playback", name );
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 constexpr ALuint NullBuffer = 0;
@@ -83,104 +83,104 @@ struct OpenALBuffer final
 {
 	constexpr OpenALBuffer() noexcept = default;
 
-	OpenALBuffer(const OpenALBuffer&) = delete;
-	OpenALBuffer& operator=(const OpenALBuffer&) = delete;
+    OpenALBuffer( const OpenALBuffer& ) = delete;
+    OpenALBuffer& operator=( const OpenALBuffer& ) = delete;
 
 	constexpr OpenALBuffer(OpenALBuffer&& other) noexcept
-		: Id(other.Id)
-	{
-		other.Id = NullBuffer;
-	}
+        : Id( other.Id )
+    {
+        other.Id = NullBuffer;
+    }
 
 	constexpr OpenALBuffer& operator=(OpenALBuffer&& other) noexcept
-	{
-		if (this != &other)
-		{
-			Delete();
-			Id = other.Id;
-			other.Id = NullBuffer;
-		}
+    {
+        if( this != &other )
+        {
+            Delete();
+            Id = other.Id;
+            other.Id = NullBuffer;
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	~OpenALBuffer()
-	{
-		Delete();
-	}
+    ~OpenALBuffer()
+    {
+        Delete();
+    }
 
-	static OpenALBuffer Create()
-	{
-		OpenALBuffer buffer;
-		alGenBuffers(1, &buffer.Id);
-		return buffer;
-	}
+    static OpenALBuffer Create()
+    {
+        OpenALBuffer buffer;
+        alGenBuffers( 1, &buffer.Id );
+        return buffer;
+    }
 
 	constexpr bool IsValid() const { return Id != NullBuffer; }
 
-	void Delete()
-	{
-		if (Id != NullBuffer)
-		{
-			alDeleteBuffers(1, &Id);
-			Id = NullBuffer;
-		}
-	}
+    void Delete()
+    {
+        if( Id != NullBuffer )
+        {
+            alDeleteBuffers( 1, &Id );
+            Id = NullBuffer;
+        }
+    }
 
 	constexpr auto operator<=>(const OpenALBuffer&) const = default;
 
-	ALuint Id = NullBuffer;
+    ALuint Id = NullBuffer;
 };
 
 struct OpenALSource final
 {
 	constexpr OpenALSource() noexcept = default;
 
-	OpenALSource(const OpenALSource&) = delete;
-	OpenALSource& operator=(const OpenALSource&) = delete;
+    OpenALSource( const OpenALSource& ) = delete;
+    OpenALSource& operator=( const OpenALSource& ) = delete;
 
 	constexpr OpenALSource(OpenALSource&& other) noexcept
-		: Id(other.Id)
-	{
-		other.Id = NullSource;
-	}
+        : Id( other.Id )
+    {
+        other.Id = NullSource;
+    }
 
 	constexpr OpenALSource& operator=(OpenALSource&& other) noexcept
-	{
-		if (this != &other)
-		{
-			Delete();
-			Id = other.Id;
-			other.Id = NullSource;
-		}
+    {
+        if( this != &other )
+        {
+            Delete();
+            Id = other.Id;
+            other.Id = NullSource;
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	~OpenALSource()
-	{
-		Delete();
-	}
+    ~OpenALSource()
+    {
+        Delete();
+    }
 
-	static OpenALSource Create()
-	{
-		OpenALSource source;
-		alGenSources(1, &source.Id);
-		return source;
-	}
+    static OpenALSource Create()
+    {
+        OpenALSource source;
+        alGenSources( 1, &source.Id );
+        return source;
+    }
 
 	constexpr bool IsValid() const { return Id != NullSource; }
 
-	void Delete()
-	{
-		if (Id != NullSource)
-		{
-			alDeleteSources(1, &Id);
-			Id = NullSource;
-		}
-	}
+    void Delete()
+    {
+        if( Id != NullSource )
+        {
+            alDeleteSources( 1, &Id );
+            Id = NullSource;
+        }
+    }
 
 	constexpr auto operator<=>(const OpenALSource&) const = default;
 
-	ALuint Id = NullSource;
+    ALuint Id = NullSource;
 };

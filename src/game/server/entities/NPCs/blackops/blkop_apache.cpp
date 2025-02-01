@@ -19,12 +19,12 @@
 class COFBlackOpsApache : public CApache
 {
 public:
-	void OnCreate() override
-	{
-		CApache::OnCreate();
+    void OnCreate() override
+    {
+        CApache::OnCreate();
 
-		pev->model = MAKE_STRING("models/blkop_apache.mdl");
-	}
+        pev->model = MAKE_STRING( "models/blkop_apache.mdl" );
+    }
 };
 
-LINK_ENTITY_TO_CLASS(monster_blkop_apache, COFBlackOpsApache);
+LINK_ENTITY_TO_CLASS( monster_blkop_apache, COFBlackOpsApache );

@@ -38,14 +38,14 @@ using TextureName = eastl::fixed_string<char, TextureNameMax>;
 
 struct TextureNameHash : public TransparentStringHash
 {
-	using TransparentStringHash::operator();
+    using TransparentStringHash::operator();
 
-	[[nodiscard]] size_t operator()(const TextureName& txt) const { return hash_type{}(txt.c_str()); }
+    [[nodiscard]] size_t operator()( const TextureName& txt ) const { return hash_type{}( txt.c_str() ); }
 };
 
 struct Material
 {
-	char Type{};
+    char Type{};
 };
 
 /**
@@ -56,34 +56,34 @@ struct Material
 class MaterialSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 public:
-	MaterialSystem() = default;
-	MaterialSystem(const MaterialSystem&) = delete;
-	MaterialSystem& operator=(const MaterialSystem&) = delete;
+    MaterialSystem() = default;
+    MaterialSystem( const MaterialSystem& ) = delete;
+    MaterialSystem& operator=( const MaterialSystem& ) = delete;
 
-	const char* GetName() const override { return "MaterialSystem"; }
+    const char* GetName() const override { return "MaterialSystem"; }
 
-	bool Initialize() override;
-	void PostInitialize() override {}
-	void Shutdown() override;
+    bool Initialize() override;
+    void PostInitialize() override {}
+    void Shutdown() override;
 
-	void HandleNetworkDataBlock(NetworkDataBlock& block) override;
+    void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-	void LoadMaterials(std::span<const std::string> fileNames);
+    void LoadMaterials( std::span<const std::string> fileNames );
 
-	static const char* StripTexturePrefix(const char* name);
+    static const char* StripTexturePrefix( const char* name );
 
 	/**
 	 *	@brief given texture name, find texture type.
 	 *	If not found, return type 'concrete'.
 	 */
-	char FindTextureType(const char* name) const;
+    char FindTextureType( const char* name ) const;
 
 private:
-	bool ParseConfiguration(const json& input);
+    bool ParseConfiguration( const json& input );
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	std::unordered_map<TextureName, Material, TextureNameHash, TransparentEqual> m_Materials;
+    std::shared_ptr<spdlog::logger> m_Logger;
+    std::unordered_map<TextureName, Material, TextureNameHash, TransparentEqual> m_Materials;
 };
 
 inline MaterialSystem g_MaterialSystem;

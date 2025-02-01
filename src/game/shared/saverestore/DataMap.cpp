@@ -16,48 +16,48 @@
 #include "cbase.h"
 #include "DataMap.h"
 
-BASEPTR DataMap_FindFunctionAddress(const DataMap& dataMap, const char* name)
+BASEPTR DataMap_FindFunctionAddress( const DataMap& dataMap, const char* name )
 {
-	for (auto map = &dataMap; map; map = map->BaseMap)
-	{
-		for (const auto& member : map->Members)
-		{
-			auto function = std::get_if<DataFunctionDescription>(&member);
+    for( auto map = &dataMap; map; map = map->BaseMap )
+    {
+        for( const auto& member : map->Members )
+        {
+            auto function = std::get_if<DataFunctionDescription>( &member );
 
-			if (!function)
-			{
-				continue;
-			}
+            if( !function )
+            {
+                continue;
+            }
 
-			if (name == function->Name)
-			{
-				return function->Address;
-			}
-		}
-	}
+            if( name == function->Name )
+            {
+                return function->Address;
+            }
+        }
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
-const char* DataMap_FindFunctionName(const DataMap& dataMap, BASEPTR address)
+const char* DataMap_FindFunctionName( const DataMap& dataMap, BASEPTR address )
 {
-	for (auto map = &dataMap; map; map = map->BaseMap)
-	{
-		for (const auto& member : map->Members)
-		{
-			auto function = std::get_if<DataFunctionDescription>(&member);
+    for( auto map = &dataMap; map; map = map->BaseMap )
+    {
+        for( const auto& member : map->Members )
+        {
+            auto function = std::get_if<DataFunctionDescription>( &member );
 
-			if (!function)
-			{
-				continue;
-			}
+            if( !function )
+            {
+                continue;
+            }
 
-			if (address == function->Address)
-			{
-				return function->Name.c_str();
-			}
-		}
-	}
+            if( address == function->Address )
+            {
+                return function->Name.c_str();
+            }
+        }
+    }
 
-	return nullptr;
+    return nullptr;
 }

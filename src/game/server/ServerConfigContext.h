@@ -28,23 +28,23 @@
  */
 struct ServerConfigContext
 {
-	MapState& State;
+    MapState& State;
 
-	std::vector<std::string> SentencesFiles;
-	std::vector<std::string> MaterialsFiles;
-	std::vector<std::string> SkillFiles;
+    std::vector<std::string> SentencesFiles;
+    std::vector<std::string> MaterialsFiles;
+    std::vector<std::string> SkillFiles;
 
-	std::vector<std::string> GlobalModelReplacementFiles;
-	std::vector<std::string> GlobalSentenceReplacementFiles;
-	std::vector<std::string> GlobalSoundReplacementFiles;
+    std::vector<std::string> GlobalModelReplacementFiles;
+    std::vector<std::string> GlobalSentenceReplacementFiles;
+    std::vector<std::string> GlobalSoundReplacementFiles;
 
-	PlayerInventory SpawnInventory;
+    PlayerInventory SpawnInventory;
 
-	EntityTemplateMap EntityTemplates;
+    EntityTemplateMap EntityTemplates;
 
-	std::string EntityClassificationsFileName;
+    std::string EntityClassificationsFileName;
 
-	std::string HudReplacementFile;
+    std::string HudReplacementFile;
 
-	WeaponHudReplacements WeaponHudReplacementFiles;
+    WeaponHudReplacements WeaponHudReplacementFiles;
 };

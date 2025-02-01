@@ -22,169 +22,169 @@
 
 bool CHudFlashlight::Init()
 {
-	m_fFade = 0;
-	m_fOn = false;
+    m_fFade = 0;
+    m_fOn = false;
 
-	g_ClientUserMessages.RegisterHandler("Flashlight", &CHudFlashlight::MsgFunc_Flashlight, this);
-	g_ClientUserMessages.RegisterHandler("FlashBat", &CHudFlashlight::MsgFunc_FlashBat, this);
+    g_ClientUserMessages.RegisterHandler( "Flashlight", &CHudFlashlight::MsgFunc_Flashlight, this );
+    g_ClientUserMessages.RegisterHandler( "FlashBat", &CHudFlashlight::MsgFunc_FlashBat, this );
 
-	m_iFlags |= HUD_ACTIVE;
+    m_iFlags |= HUD_ACTIVE;
 
-	gHUD.AddHudElem(this);
+    gHUD.AddHudElem( this );
 
-	return true;
+    return true;
 }
 
 void CHudFlashlight::Reset()
 {
-	m_fFade = 0;
-	m_fOn = false;
+    m_fFade = 0;
+    m_fOn = false;
 }
 
 bool CHudFlashlight::VidInit()
 {
-	auto setup = [](const char* empty, const char* full, const char* beam)
-	{
-		const int HUD_flash_empty = gHUD.GetSpriteIndex(empty);
-		const int HUD_flash_full = gHUD.GetSpriteIndex(full);
+    auto setup = []( const char* empty, const char* full, const char* beam )
+    {
+        const int HUD_flash_empty = gHUD.GetSpriteIndex( empty );
+        const int HUD_flash_full = gHUD.GetSpriteIndex( full );
 
-		LightData data;
+        LightData data;
 
-		data.m_hSprite1 = gHUD.GetSprite(HUD_flash_empty);
-		data.m_hSprite2 = gHUD.GetSprite(HUD_flash_full);
-		data.m_prc1 = &gHUD.GetSpriteRect(HUD_flash_empty);
-		data.m_prc2 = &gHUD.GetSpriteRect(HUD_flash_full);
+        data.m_hSprite1 = gHUD.GetSprite( HUD_flash_empty );
+        data.m_hSprite2 = gHUD.GetSprite( HUD_flash_full );
+        data.m_prc1 = &gHUD.GetSpriteRect( HUD_flash_empty );
+        data.m_prc2 = &gHUD.GetSpriteRect( HUD_flash_full );
 
-		if (beam)
-		{
-			const int HUD_flash_beam = gHUD.GetSpriteIndex(beam);
-			data.m_hBeam = gHUD.GetSprite(HUD_flash_beam);
-			data.m_prcBeam = &gHUD.GetSpriteRect(HUD_flash_beam);
-		}
+        if( beam )
+        {
+            const int HUD_flash_beam = gHUD.GetSpriteIndex( beam );
+            data.m_hBeam = gHUD.GetSprite( HUD_flash_beam );
+            data.m_prcBeam = &gHUD.GetSpriteRect( HUD_flash_beam );
+        }
 
-		data.m_iWidth = data.m_prc2->right - data.m_prc2->left;
+        data.m_iWidth = data.m_prc2->right - data.m_prc2->left;
 
-		return data;
-	};
+        return data;
+    };
 
-	m_Flashlight = setup("flash_empty", "flash_full", "flash_beam");
+    m_Flashlight = setup( "flash_empty", "flash_full", "flash_beam" );
 	// NVG doesn't have a beam.
-	m_Nightvision = setup("nvg_empty", "nvg_full", nullptr);
+    m_Nightvision = setup( "nvg_empty", "nvg_full", nullptr );
 
-	m_nvSprite = SPR_Load("sprites/of_nv_b.spr");
+    m_nvSprite = SPR_Load( "sprites/of_nv_b.spr" );
 
-	return true;
+    return true;
 }
 
-void CHudFlashlight::MsgFunc_FlashBat(const char* pszName, BufferReader& reader)
+void CHudFlashlight::MsgFunc_FlashBat( const char* pszName, BufferReader& reader )
 {
-	int x = reader.ReadByte();
-	m_iBat = x;
-	m_flBat = ((float)x) / 100.0;
+    int x = reader.ReadByte();
+    m_iBat = x;
+    m_flBat = ( (float)x ) / 100.0;
 }
 
-void CHudFlashlight::MsgFunc_Flashlight(const char* pszName, BufferReader& reader)
+void CHudFlashlight::MsgFunc_Flashlight( const char* pszName, BufferReader& reader )
 {
-	m_SuitLightType = static_cast<SuitLightType>(reader.ReadByte());
-	m_fOn = 0 != reader.ReadByte();
-	int x = reader.ReadByte();
-	m_iBat = x;
-	m_flBat = ((float)x) / 100.0;
+    m_SuitLightType = static_cast<SuitLightType>( reader.ReadByte() );
+    m_fOn = 0 != reader.ReadByte();
+    int x = reader.ReadByte();
+    m_iBat = x;
+    m_flBat = ( (float)x ) / 100.0;
 
 	// Always update this, so that changing to flashlight type disables NVG effects
-	gHUD.SetNightVisionState(m_SuitLightType == SuitLightType::Nightvision && m_fOn);
+    gHUD.SetNightVisionState( m_SuitLightType == SuitLightType::Nightvision && m_fOn );
 }
 
-bool CHudFlashlight::Draw(float flTime)
+bool CHudFlashlight::Draw( float flTime )
 {
-	if ((gHUD.m_iHideHUDDisplay & (HIDEHUD_FLASHLIGHT | HIDEHUD_ALL)) != 0)
-		return true;
+    if( ( gHUD.m_iHideHUDDisplay & ( HIDEHUD_FLASHLIGHT | HIDEHUD_ALL ) ) != 0 )
+        return true;
 
-	int x, y;
-	Rect rc;
+    int x, y;
+    Rect rc;
 
-	if (!gHUD.HasSuit())
-		return true;
+    if( !gHUD.HasSuit() )
+        return true;
 
-	const int a = m_fOn ? 225 : MIN_ALPHA;
+    const int a = m_fOn ? 225 : MIN_ALPHA;
 
-	const auto& originalColor = m_flBat < 0.20 ? RGB_REDISH : gHUD.m_HudItemColor;
+    const auto& originalColor = m_flBat < 0.20 ? RGB_REDISH : gHUD.m_HudItemColor;
 
-	const auto color = originalColor.Scale(a);
+    const auto color = originalColor.Scale( a );
 
-	auto data = GetLightData();
+    auto data = GetLightData();
 
-	y = (data->m_prc1->bottom - data->m_prc2->top) / 2;
-	x = ScreenWidth - data->m_iWidth - data->m_iWidth / 2;
+    y = ( data->m_prc1->bottom - data->m_prc2->top ) / 2;
+    x = ScreenWidth - data->m_iWidth - data->m_iWidth / 2;
 
 	// Draw the flashlight casing
-	SPR_Set(data->m_hSprite1, color);
-	SPR_DrawAdditive(0, x, y, data->m_prc1);
+    SPR_Set( data->m_hSprite1, color );
+    SPR_DrawAdditive( 0, x, y, data->m_prc1 );
 
-	if (m_fOn)
-	{ // draw the flashlight beam
-		x = ScreenWidth - data->m_iWidth / 2;
+    if( m_fOn )
+    { // draw the flashlight beam
+        x = ScreenWidth - data->m_iWidth / 2;
 
-		if (data->m_hBeam != 0)
-		{
-			SPR_Set(data->m_hBeam, color);
-			SPR_DrawAdditive(0, x, y, data->m_prcBeam);
-		}
+        if( data->m_hBeam != 0 )
+        {
+            SPR_Set( data->m_hBeam, color );
+            SPR_DrawAdditive( 0, x, y, data->m_prcBeam );
+        }
 
-		if (m_SuitLightType == SuitLightType::Nightvision)
-		{
-			DrawNightVision();
-		}
-	}
+        if( m_SuitLightType == SuitLightType::Nightvision )
+        {
+            DrawNightVision();
+        }
+    }
 
 	// draw the flashlight energy level
-	x = ScreenWidth - data->m_iWidth - data->m_iWidth / 2;
-	int iOffset = data->m_iWidth * (1.0 - m_flBat);
-	if (iOffset < data->m_iWidth)
-	{
-		rc = *data->m_prc2;
-		rc.left += iOffset;
+    x = ScreenWidth - data->m_iWidth - data->m_iWidth / 2;
+    int iOffset = data->m_iWidth * ( 1.0 - m_flBat );
+    if( iOffset < data->m_iWidth )
+    {
+        rc = *data->m_prc2;
+        rc.left += iOffset;
 
-		SPR_Set(data->m_hSprite2, color);
-		SPR_DrawAdditive(0, x + iOffset, y, &rc);
-	}
+        SPR_Set( data->m_hSprite2, color );
+        SPR_DrawAdditive( 0, x + iOffset, y, &rc );
+    }
 
 
-	return true;
+    return true;
 }
 
 void CHudFlashlight::DrawNightVision()
 {
-	static int lastFrame = 0;
+    static int lastFrame = 0;
 
-	auto frameIndex = rand() % gEngfuncs.pfnSPR_Frames(m_nvSprite);
+    auto frameIndex = rand() % gEngfuncs.pfnSPR_Frames( m_nvSprite );
 
-	if (frameIndex == lastFrame)
-		frameIndex = (frameIndex + 1) % gEngfuncs.pfnSPR_Frames(m_nvSprite);
+    if( frameIndex == lastFrame )
+        frameIndex = ( frameIndex + 1 ) % gEngfuncs.pfnSPR_Frames( m_nvSprite );
 
-	lastFrame = frameIndex;
+    lastFrame = frameIndex;
 
-	if (0 != m_nvSprite)
-	{
-		const auto width = gEngfuncs.pfnSPR_Width(m_nvSprite, 0);
-		const auto height = gEngfuncs.pfnSPR_Height(m_nvSprite, 0);
+    if( 0 != m_nvSprite )
+    {
+        const auto width = gEngfuncs.pfnSPR_Width( m_nvSprite, 0 );
+        const auto height = gEngfuncs.pfnSPR_Height( m_nvSprite, 0 );
 
-		gEngfuncs.pfnSPR_Set(m_nvSprite, 0, 170, 0);
+        gEngfuncs.pfnSPR_Set( m_nvSprite, 0, 170, 0 );
 
-		Rect drawingRect;
+        Rect drawingRect;
 
-		for (auto x = 0; x < gHUD.m_scrinfo.iWidth; x += width)
-		{
-			drawingRect.left = 0;
-			drawingRect.right = x + width >= gHUD.m_scrinfo.iWidth ? gHUD.m_scrinfo.iWidth - x : width;
+        for( auto x = 0; x < gHUD.m_scrinfo.iWidth; x += width )
+        {
+            drawingRect.left = 0;
+            drawingRect.right = x + width >= gHUD.m_scrinfo.iWidth ? gHUD.m_scrinfo.iWidth - x : width;
 
-			for (auto y = 0; y < gHUD.m_scrinfo.iHeight; y += height)
-			{
-				drawingRect.top = 0;
-				drawingRect.bottom = y + height >= gHUD.m_scrinfo.iHeight ? gHUD.m_scrinfo.iHeight - y : height;
+            for( auto y = 0; y < gHUD.m_scrinfo.iHeight; y += height )
+            {
+                drawingRect.top = 0;
+                drawingRect.bottom = y + height >= gHUD.m_scrinfo.iHeight ? gHUD.m_scrinfo.iHeight - y : height;
 
-				gEngfuncs.pfnSPR_DrawAdditive(frameIndex, x, y, &drawingRect);
-			}
-		}
-	}
+                gEngfuncs.pfnSPR_DrawAdditive( frameIndex, x, y, &drawingRect );
+            }
+        }
+    }
 }

@@ -23,61 +23,61 @@ const int MAX_CHANGE_KEYVALUES = 16;
  */
 class CTriggerChangeKeyValue : public CBaseDelay
 {
-	DECLARE_CLASS(CTriggerChangeKeyValue, CBaseDelay);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CTriggerChangeKeyValue, CBaseDelay );
+    DECLARE_DATAMAP();
 
 public:
-	int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+    int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Spawn() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void Spawn() override;
 
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
 private:
-	string_t m_changeTargetName;
-	int m_cTargets;
-	string_t m_iKey[MAX_CHANGE_KEYVALUES];
-	string_t m_iValue[MAX_CHANGE_KEYVALUES];
+    string_t m_changeTargetName;
+    int m_cTargets;
+    string_t m_iKey[MAX_CHANGE_KEYVALUES];
+    string_t m_iValue[MAX_CHANGE_KEYVALUES];
 };
 
-LINK_ENTITY_TO_CLASS(trigger_changekeyvalue, CTriggerChangeKeyValue);
+LINK_ENTITY_TO_CLASS( trigger_changekeyvalue, CTriggerChangeKeyValue );
 
-BEGIN_DATAMAP(CTriggerChangeKeyValue)
-DEFINE_FIELD(m_changeTargetName, FIELD_STRING),
-	DEFINE_FIELD(m_cTargets, FIELD_INTEGER),
-	DEFINE_ARRAY(m_iKey, FIELD_STRING, MAX_CHANGE_KEYVALUES),
-	DEFINE_ARRAY(m_iValue, FIELD_STRING, MAX_CHANGE_KEYVALUES),
-	END_DATAMAP();
+BEGIN_DATAMAP( CTriggerChangeKeyValue )
+    DEFINE_FIELD( m_changeTargetName, FIELD_STRING ),
+    DEFINE_FIELD( m_cTargets, FIELD_INTEGER ),
+    DEFINE_ARRAY( m_iKey, FIELD_STRING, MAX_CHANGE_KEYVALUES ),
+    DEFINE_ARRAY( m_iValue, FIELD_STRING, MAX_CHANGE_KEYVALUES ),
+END_DATAMAP();
 
-bool CTriggerChangeKeyValue::KeyValue(KeyValueData* pkvd)
+bool CTriggerChangeKeyValue::KeyValue( KeyValueData* pkvd )
 {
 	// Make sure base class keys are handled properly
-	if (FStrEq("origin", pkvd->szKeyName) || FStrEq("target", pkvd->szKeyName) || FStrEq("targetname", pkvd->szKeyName) || FStrEq("classname", pkvd->szKeyName))
-	{
-		return CBaseDelay::KeyValue(pkvd);
-	}
-	else if (FStrEq("changetarget", pkvd->szKeyName))
-	{
-		m_changeTargetName = ALLOC_STRING(pkvd->szValue);
-		return true;
-	}
-	else if (m_cTargets < MAX_CHANGE_KEYVALUES)
-	{
-		char temp[256];
+    if( FStrEq( "origin", pkvd->szKeyName ) || FStrEq( "target", pkvd->szKeyName ) || FStrEq( "targetname", pkvd->szKeyName ) || FStrEq( "classname", pkvd->szKeyName ) )
+    {
+        return CBaseDelay::KeyValue( pkvd );
+    }
+    else if( FStrEq( "changetarget", pkvd->szKeyName ) )
+    {
+        m_changeTargetName = ALLOC_STRING( pkvd->szValue );
+        return true;
+    }
+    else if( m_cTargets < MAX_CHANGE_KEYVALUES )
+    {
+        char temp[256];
 
-		UTIL_StripToken(pkvd->szKeyName, temp);
-		m_iKey[m_cTargets] = ALLOC_STRING(temp);
+        UTIL_StripToken( pkvd->szKeyName, temp );
+        m_iKey[m_cTargets] = ALLOC_STRING( temp );
 
-		UTIL_StripToken(pkvd->szValue, temp);
-		m_iValue[m_cTargets] = ALLOC_STRING(temp);
+        UTIL_StripToken( pkvd->szValue, temp );
+        m_iValue[m_cTargets] = ALLOC_STRING( temp );
 
-		++m_cTargets;
+        ++m_cTargets;
 
-		return true;
-	}
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 void CTriggerChangeKeyValue::Spawn()
@@ -85,15 +85,15 @@ void CTriggerChangeKeyValue::Spawn()
 	// Nothing
 }
 
-void CTriggerChangeKeyValue::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CTriggerChangeKeyValue::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	for (auto target : UTIL_FindEntitiesByTargetname(STRING(pev->target)))
-	{
-		UTIL_InitializeKeyValues(target, m_iKey, m_iValue, m_cTargets);
+    for( auto target : UTIL_FindEntitiesByTargetname( STRING( pev->target ) ) )
+    {
+        UTIL_InitializeKeyValues( target, m_iKey, m_iValue, m_cTargets );
 
-		if (!FStringNull(m_changeTargetName))
-		{
-			target->pev->target = m_changeTargetName;
-		}
-	}
+        if( !FStringNull( m_changeTargetName ) )
+        {
+            target->pev->target = m_changeTargetName;
+        }
+    }
 }

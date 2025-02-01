@@ -24,9 +24,9 @@
 
 enum class IncludeAddResult
 {
-	Success = 0,
-	AlreadyIncluded,
-	CouldNotResolvePath
+    Success = 0,
+    AlreadyIncluded,
+    CouldNotResolvePath
 };
 
 /**
@@ -39,29 +39,29 @@ public:
 	 *	@brief Adds a new filename to the set of included filenames.
 	 *	@return One of the IncludeAddResult enum values.
 	 */
-	IncludeAddResult Add(const char* fileName)
-	{
-		char localPath[MAX_PATH_LENGTH]{};
+    IncludeAddResult Add( const char* fileName )
+    {
+        char localPath[MAX_PATH_LENGTH]{};
 
 		// This also normalizes slashes.
-		if (!g_pFileSystem->GetLocalPath(fileName, localPath, std::size(localPath)))
-		{
-			return IncludeAddResult::CouldNotResolvePath;
-		}
+        if( !g_pFileSystem->GetLocalPath( fileName, localPath, std::size( localPath ) ) )
+        {
+            return IncludeAddResult::CouldNotResolvePath;
+        }
 
 		// Use lowercase filenames so case-insensitive filesystems don't cause problems.
-		auto lowered = ToLower(localPath);
+        auto lowered = ToLower( localPath );
 
-		if (m_Included.insert(std::move(lowered)).second)
-		{
-			return IncludeAddResult::Success;
-		}
-		else
-		{
-			return IncludeAddResult::AlreadyIncluded;
-		}
-	}
+        if( m_Included.insert( std::move( lowered ) ).second )
+        {
+            return IncludeAddResult::Success;
+        }
+        else
+        {
+            return IncludeAddResult::AlreadyIncluded;
+        }
+    }
 
 private:
-	std::unordered_set<std::string> m_Included;
+    std::unordered_set<std::string> m_Included;
 };

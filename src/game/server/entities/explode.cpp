@@ -27,115 +27,115 @@
 class CShower : public CBaseEntity
 {
 public:
-	void OnCreate() override;
-	void Precache() override;
-	void Spawn() override;
-	void Think() override;
-	void Touch(CBaseEntity* pOther) override;
-	int ObjectCaps() override { return FCAP_DONT_SAVE; }
+    void OnCreate() override;
+    void Precache() override;
+    void Spawn() override;
+    void Think() override;
+    void Touch( CBaseEntity* pOther ) override;
+    int ObjectCaps() override { return FCAP_DONT_SAVE; }
 };
 
-LINK_ENTITY_TO_CLASS(spark_shower, CShower);
+LINK_ENTITY_TO_CLASS( spark_shower, CShower );
 
 void CShower::OnCreate()
 {
-	CBaseEntity::OnCreate();
+    CBaseEntity::OnCreate();
 
 	// Need a model, just use the grenade, we don't draw it anyway
-	pev->model = MAKE_STRING("models/grenade.mdl");
+    pev->model = MAKE_STRING( "models/grenade.mdl" );
 }
 
 void CShower::Precache()
 {
-	PrecacheModel(STRING(pev->model));
+    PrecacheModel( STRING( pev->model ) );
 }
 
 void CShower::Spawn()
 {
-	Precache();
+    Precache();
 
-	pev->velocity = RANDOM_FLOAT(200, 300) * pev->angles;
-	pev->velocity.x += RANDOM_FLOAT(-100.f, 100.f);
-	pev->velocity.y += RANDOM_FLOAT(-100.f, 100.f);
-	if (pev->velocity.z >= 0)
-		pev->velocity.z += 200;
-	else
-		pev->velocity.z -= 200;
-	pev->movetype = MOVETYPE_BOUNCE;
-	pev->gravity = 0.5;
-	pev->nextthink = gpGlobals->time + 0.1;
-	pev->solid = SOLID_NOT;
-	SetModel(STRING(pev->model));
-	SetSize(g_vecZero, g_vecZero);
-	pev->effects |= EF_NODRAW;
-	pev->speed = RANDOM_FLOAT(0.5, 1.5);
+    pev->velocity = RANDOM_FLOAT( 200, 300 ) * pev->angles;
+    pev->velocity.x += RANDOM_FLOAT( -100.f, 100.f );
+    pev->velocity.y += RANDOM_FLOAT( -100.f, 100.f );
+    if( pev->velocity.z >= 0 )
+        pev->velocity.z += 200;
+    else
+        pev->velocity.z -= 200;
+    pev->movetype = MOVETYPE_BOUNCE;
+    pev->gravity = 0.5;
+    pev->nextthink = gpGlobals->time + 0.1;
+    pev->solid = SOLID_NOT;
+    SetModel( STRING( pev->model ) );
+    SetSize( g_vecZero, g_vecZero );
+    pev->effects |= EF_NODRAW;
+    pev->speed = RANDOM_FLOAT( 0.5, 1.5 );
 
-	pev->angles = g_vecZero;
+    pev->angles = g_vecZero;
 }
 
 void CShower::Think()
 {
-	UTIL_Sparks(pev->origin);
+    UTIL_Sparks( pev->origin );
 
-	pev->speed -= 0.1;
-	if (pev->speed > 0)
-		pev->nextthink = gpGlobals->time + 0.1;
-	else
-		UTIL_Remove(this);
-	pev->flags &= ~FL_ONGROUND;
+    pev->speed -= 0.1;
+    if( pev->speed > 0 )
+        pev->nextthink = gpGlobals->time + 0.1;
+    else
+        UTIL_Remove( this );
+    pev->flags &= ~FL_ONGROUND;
 }
 
-void CShower::Touch(CBaseEntity* pOther)
+void CShower::Touch( CBaseEntity* pOther )
 {
-	if ((pev->flags & FL_ONGROUND) != 0)
-		pev->velocity = pev->velocity * 0.1;
-	else
-		pev->velocity = pev->velocity * 0.6;
+    if( ( pev->flags & FL_ONGROUND ) != 0 )
+        pev->velocity = pev->velocity * 0.1;
+    else
+        pev->velocity = pev->velocity * 0.6;
 
-	if ((pev->velocity.x * pev->velocity.x + pev->velocity.y * pev->velocity.y) < 10.0)
-		pev->speed = 0;
+    if( ( pev->velocity.x * pev->velocity.x + pev->velocity.y * pev->velocity.y ) < 10.0 )
+        pev->speed = 0;
 }
 
 class CEnvExplosion : public CBaseMonster
 {
-	DECLARE_CLASS(CEnvExplosion, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CEnvExplosion, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	void Smoke();
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
+    void Spawn() override;
+    void Smoke();
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
-	int m_iMagnitude;  // how large is the fireball? how much damage?
-	int m_spriteScale; // what's the exact fireball sprite scale?
+    int m_iMagnitude;  // how large is the fireball? how much damage?
+    int m_spriteScale; // what's the exact fireball sprite scale?
 };
 
-BEGIN_DATAMAP(CEnvExplosion)
-DEFINE_FIELD(m_iMagnitude, FIELD_INTEGER),
-	DEFINE_FIELD(m_spriteScale, FIELD_INTEGER),
-	DEFINE_FUNCTION(Smoke),
-	END_DATAMAP();
+BEGIN_DATAMAP( CEnvExplosion )
+    DEFINE_FIELD( m_iMagnitude, FIELD_INTEGER ),
+    DEFINE_FIELD( m_spriteScale, FIELD_INTEGER ),
+    DEFINE_FUNCTION( Smoke ),
+END_DATAMAP();
 
-LINK_ENTITY_TO_CLASS(env_explosion, CEnvExplosion);
+LINK_ENTITY_TO_CLASS( env_explosion, CEnvExplosion );
 
-bool CEnvExplosion::KeyValue(KeyValueData* pkvd)
+bool CEnvExplosion::KeyValue( KeyValueData* pkvd )
 {
-	if (FStrEq(pkvd->szKeyName, "iMagnitude"))
-	{
-		m_iMagnitude = atoi(pkvd->szValue);
-		return true;
-	}
+    if( FStrEq( pkvd->szKeyName, "iMagnitude" ) )
+    {
+        m_iMagnitude = atoi( pkvd->szValue );
+        return true;
+    }
 
-	return CBaseEntity::KeyValue(pkvd);
+    return CBaseEntity::KeyValue( pkvd );
 }
 
 void CEnvExplosion::Spawn()
 {
-	pev->solid = SOLID_NOT;
-	pev->effects = EF_NODRAW;
+    pev->solid = SOLID_NOT;
+    pev->effects = EF_NODRAW;
 
-	pev->movetype = MOVETYPE_NONE;
+    pev->movetype = MOVETYPE_NONE;
 	/*
 	if ( m_iMagnitude > 250 )
 	{
@@ -143,8 +143,8 @@ void CEnvExplosion::Spawn()
 	}
 	*/
 
-	float flSpriteScale;
-	flSpriteScale = (m_iMagnitude - 50) * 0.6;
+    float flSpriteScale;
+    flSpriteScale = ( m_iMagnitude - 50 ) * 0.6;
 
 	/*
 	if ( flSpriteScale > 50 )
@@ -152,112 +152,112 @@ void CEnvExplosion::Spawn()
 		flSpriteScale = 50;
 	}
 	*/
-	if (flSpriteScale < 10)
-	{
-		flSpriteScale = 10;
-	}
+    if( flSpriteScale < 10 )
+    {
+        flSpriteScale = 10;
+    }
 
-	m_spriteScale = (int)flSpriteScale;
+    m_spriteScale = (int)flSpriteScale;
 }
 
-void CEnvExplosion::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	TraceResult tr;
+    TraceResult tr;
 
-	pev->model = string_t::Null; // invisible
-	pev->solid = SOLID_NOT;		 // intangible
+    pev->model = string_t::Null; // invisible
+    pev->solid = SOLID_NOT;         // intangible
 
-	Vector vecSpot; // trace starts here!
+    Vector vecSpot; // trace starts here!
 
-	vecSpot = pev->origin + Vector(0, 0, 8);
+    vecSpot = pev->origin + Vector( 0, 0, 8 );
 
-	UTIL_TraceLine(vecSpot, vecSpot + Vector(0, 0, -40), ignore_monsters, edict(), &tr);
+    UTIL_TraceLine( vecSpot, vecSpot + Vector( 0, 0, -40 ), ignore_monsters, edict(), &tr );
 
 	// Pull out of the wall a bit
-	if (tr.flFraction != 1.0)
-	{
-		pev->origin = tr.vecEndPos + (tr.vecPlaneNormal * (m_iMagnitude - 24) * 0.6);
-	}
-	else
-	{
-		pev->origin = pev->origin;
-	}
+    if( tr.flFraction != 1.0 )
+    {
+        pev->origin = tr.vecEndPos + ( tr.vecPlaneNormal * ( m_iMagnitude - 24 ) * 0.6 );
+    }
+    else
+    {
+        pev->origin = pev->origin;
+    }
 
 	// draw decal
-	if ((pev->spawnflags & SF_ENVEXPLOSION_NODECAL) == 0)
-	{
-		if (RANDOM_FLOAT(0, 1) < 0.5)
-		{
-			UTIL_DecalTrace(&tr, DECAL_SCORCH1);
-		}
-		else
-		{
-			UTIL_DecalTrace(&tr, DECAL_SCORCH2);
-		}
-	}
+    if( ( pev->spawnflags & SF_ENVEXPLOSION_NODECAL ) == 0 )
+    {
+        if( RANDOM_FLOAT( 0, 1 ) < 0.5 )
+        {
+            UTIL_DecalTrace( &tr, DECAL_SCORCH1 );
+        }
+        else
+        {
+            UTIL_DecalTrace( &tr, DECAL_SCORCH2 );
+        }
+    }
 
 	// draw fireball
-	UTIL_ExplosionEffect(pev->origin, g_sModelIndexFireball,
-		(pev->spawnflags & SF_ENVEXPLOSION_NOFIREBALL) == 0 ? static_cast<byte>(m_spriteScale) : 0,
-		15, TE_EXPLFLAG_NONE,
-		MSG_PAS, pev->origin);
+    UTIL_ExplosionEffect( pev->origin, g_sModelIndexFireball,
+        ( pev->spawnflags & SF_ENVEXPLOSION_NOFIREBALL ) == 0 ? static_cast<byte>( m_spriteScale ) : 0,
+        15, TE_EXPLFLAG_NONE,
+        MSG_PAS, pev->origin );
 
 	// do damage
-	if ((pev->spawnflags & SF_ENVEXPLOSION_NODAMAGE) == 0)
-	{
-		RadiusDamage(this, this, m_iMagnitude, DMG_BLAST);
-	}
+    if( ( pev->spawnflags & SF_ENVEXPLOSION_NODAMAGE ) == 0 )
+    {
+        RadiusDamage( this, this, m_iMagnitude, DMG_BLAST );
+    }
 
-	SetThink(&CEnvExplosion::Smoke);
-	pev->nextthink = gpGlobals->time + 0.3;
+    SetThink( &CEnvExplosion::Smoke );
+    pev->nextthink = gpGlobals->time + 0.3;
 
 	// draw sparks
-	if ((pev->spawnflags & SF_ENVEXPLOSION_NOSPARKS) == 0)
-	{
-		int sparkCount = RANDOM_LONG(0, 3);
+    if( ( pev->spawnflags & SF_ENVEXPLOSION_NOSPARKS ) == 0 )
+    {
+        int sparkCount = RANDOM_LONG( 0, 3 );
 
-		for (int i = 0; i < sparkCount; i++)
-		{
-			Create("spark_shower", pev->origin, tr.vecPlaneNormal, nullptr);
-		}
-	}
+        for( int i = 0; i < sparkCount; i++ )
+        {
+            Create( "spark_shower", pev->origin, tr.vecPlaneNormal, nullptr );
+        }
+    }
 }
 
 void CEnvExplosion::Smoke()
 {
-	if ((pev->spawnflags & SF_ENVEXPLOSION_NOSMOKE) == 0)
-	{
-		MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_SMOKE);
-		WRITE_COORD(pev->origin.x);
-		WRITE_COORD(pev->origin.y);
-		WRITE_COORD(pev->origin.z);
-		WRITE_SHORT(g_sModelIndexSmoke);
-		WRITE_BYTE((byte)m_spriteScale); // scale * 10
-		WRITE_BYTE(12);					 // framerate
-		MESSAGE_END();
-	}
+    if( ( pev->spawnflags & SF_ENVEXPLOSION_NOSMOKE ) == 0 )
+    {
+        MESSAGE_BEGIN( MSG_PAS, SVC_TEMPENTITY, pev->origin );
+        WRITE_BYTE( TE_SMOKE );
+        WRITE_COORD( pev->origin.x );
+        WRITE_COORD( pev->origin.y );
+        WRITE_COORD( pev->origin.z );
+        WRITE_SHORT( g_sModelIndexSmoke );
+        WRITE_BYTE( ( byte )m_spriteScale ); // scale * 10
+        WRITE_BYTE( 12 );                     // framerate
+        MESSAGE_END();
+    }
 
-	if ((pev->spawnflags & SF_ENVEXPLOSION_REPEATABLE) == 0)
-	{
-		UTIL_Remove(this);
-	}
+    if( ( pev->spawnflags & SF_ENVEXPLOSION_REPEATABLE ) == 0 )
+    {
+        UTIL_Remove( this );
+    }
 }
 
 // HACKHACK -- create one of these and fake a keyvalue to get the right explosion setup
-void ExplosionCreate(const Vector& center, const Vector& angles, CBaseEntity* owner, int magnitude, bool doDamage)
+void ExplosionCreate( const Vector& center, const Vector& angles, CBaseEntity* owner, int magnitude, bool doDamage )
 {
-	KeyValueData kvd;
-	char buf[128];
+    KeyValueData kvd;
+    char buf[128];
 
-	CBaseEntity* pExplosion = CBaseEntity::Create("env_explosion", center, angles, owner);
-	sprintf(buf, "%3d", magnitude);
-	kvd.szKeyName = "iMagnitude";
-	kvd.szValue = buf;
-	pExplosion->KeyValue(&kvd);
-	if (!doDamage)
-		pExplosion->pev->spawnflags |= SF_ENVEXPLOSION_NODAMAGE;
+    CBaseEntity* pExplosion = CBaseEntity::Create( "env_explosion", center, angles, owner );
+    sprintf( buf, "%3d", magnitude );
+    kvd.szKeyName = "iMagnitude";
+    kvd.szValue = buf;
+    pExplosion->KeyValue( &kvd );
+    if( !doDamage )
+        pExplosion->pev->spawnflags |= SF_ENVEXPLOSION_NODAMAGE;
 
-	pExplosion->Spawn();
-	pExplosion->Use(nullptr, nullptr, USE_TOGGLE, 0);
+    pExplosion->Spawn();
+    pExplosion->Use( nullptr, nullptr, USE_TOGGLE, 0 );
 }

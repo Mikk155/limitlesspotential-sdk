@@ -29,33 +29,33 @@ class MusicSystem;
 class SoundSystem final : public ISoundSystem
 {
 public:
-	~SoundSystem() override;
+    ~SoundSystem() override;
 
-	bool Create();
+    bool Create();
 
-	void Update() override;
+    void Update() override;
 
-	void Block() override;
+    void Block() override;
 
-	void Unblock() override;
+    void Unblock() override;
 
-	void Pause() override;
+    void Pause() override;
 
-	void Resume() override;
+    void Resume() override;
 
-	IGameSoundSystem* GetGameSoundSystem() override;
+    IGameSoundSystem* GetGameSoundSystem() override;
 
-	IMusicSystem* GetMusicSystem() override;
+    IMusicSystem* GetMusicSystem() override;
 
-	const std::shared_ptr<spdlog::logger>& GetLogger() { return m_Logger; }
+    const std::shared_ptr<spdlog::logger>& GetLogger() { return m_Logger; }
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
+    std::shared_ptr<spdlog::logger> m_Logger;
 
-	std::unique_ptr<GameSoundSystem> m_GameSoundSystem;
-	std::unique_ptr<MusicSystem> m_MusicSystem;
+    std::unique_ptr<GameSoundSystem> m_GameSoundSystem;
+    std::unique_ptr<MusicSystem> m_MusicSystem;
 
-	bool m_Blocked{false};
-	bool m_Paused{false};
+    bool m_Blocked{false};
+    bool m_Paused{false};
 };
 }

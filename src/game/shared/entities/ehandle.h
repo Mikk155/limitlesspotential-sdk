@@ -26,17 +26,17 @@ class CBaseEntity;
 class BaseEntityHandle
 {
 public:
-	edict_t* GetEdict() const;
+    edict_t* GetEdict() const;
 
-	CBaseEntity* InternalGetEntity() const;
-	void InternalSetEntity(CBaseEntity* entity);
+    CBaseEntity* InternalGetEntity() const;
+    void InternalSetEntity( CBaseEntity* entity );
 
 	constexpr bool operator==(const BaseEntityHandle& other) const = default;
 	constexpr bool operator!=(const BaseEntityHandle& other) const = default;
 
 private:
-	edict_t* m_Edict = nullptr;
-	int m_SerialNumber = 0;
+    edict_t* m_Edict = nullptr;
+    int m_SerialNumber = 0;
 };
 
 /**
@@ -48,63 +48,63 @@ template <typename TBaseEntity>
 class EntityHandle : protected BaseEntityHandle
 {
 public:
-	TBaseEntity* operator=(TBaseEntity* entity);
+    TBaseEntity* operator=( TBaseEntity* entity );
 
 	/**
 	 *	@brief Gets the entity this handle points to,
 	 *	or @c nullptr if it does not point to a valid entity.
 	 */
-	TBaseEntity* Get() const;
+    TBaseEntity* Get() const;
 
 	/**
 	 *	@brief Gets the entity this handle points to as @c TOtherBaseEntity,
 	 *	or @c nullptr if it does not point to a valid entity.
 	 */
-	template <typename TOtherBaseEntity>
-	TOtherBaseEntity* Get() const;
+    template <typename TOtherBaseEntity>
+    TOtherBaseEntity* Get() const;
 
-	operator TBaseEntity*();
-	TBaseEntity* operator->();
+    operator TBaseEntity*();
+    TBaseEntity* operator->();
 
-	bool operator==(const EntityHandle<TBaseEntity>& other) { return Get() == other.Get(); }
-	bool operator!=(const EntityHandle<TBaseEntity>& other) { return !(*this == other); }
+    bool operator==( const EntityHandle<TBaseEntity>& other ) { return Get() == other.Get(); }
+    bool operator!=( const EntityHandle<TBaseEntity>& other ) { return !( *this == other ); }
 };
 
 template <typename TBaseEntity>
-TBaseEntity* EntityHandle<TBaseEntity>::operator=(TBaseEntity* entity)
+TBaseEntity* EntityHandle<TBaseEntity>::operator=( TBaseEntity* entity )
 {
-	InternalSetEntity(entity);
-	return entity;
+    InternalSetEntity( entity );
+    return entity;
 }
 
 template <typename TBaseEntity>
 TBaseEntity* EntityHandle<TBaseEntity>::Get() const
 {
-	return static_cast<TBaseEntity*>(InternalGetEntity());
+    return static_cast<TBaseEntity*>( InternalGetEntity() );
 }
 
 template <typename TBaseEntity>
 template <typename TOtherBaseEntity>
 TOtherBaseEntity* EntityHandle<TBaseEntity>::Get() const
 {
-	auto entity = this->Get();
+    auto entity = this->Get();
 
 	// In debug builds this verifies that the dynamic type is the expected type.
-	assert(!entity || dynamic_cast<TOtherBaseEntity*>(entity));
+    assert( !entity || dynamic_cast<TOtherBaseEntity*>( entity ) );
 
-	return static_cast<TOtherBaseEntity*>(entity);
+    return static_cast<TOtherBaseEntity*>( entity );
 }
 
 template <typename TBaseEntity>
 EntityHandle<TBaseEntity>::operator TBaseEntity*()
 {
-	return Get();
+    return Get();
 }
 
 template <typename TBaseEntity>
 TBaseEntity* EntityHandle<TBaseEntity>::operator->()
 {
-	return Get();
+    return Get();
 }
 
 using EHANDLE = EntityHandle<CBaseEntity>;

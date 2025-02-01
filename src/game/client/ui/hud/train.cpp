@@ -22,46 +22,46 @@
 
 bool CHudTrain::Init()
 {
-	g_ClientUserMessages.RegisterHandler("Train", &CHudTrain::MsgFunc_Train, this);
+    g_ClientUserMessages.RegisterHandler( "Train", &CHudTrain::MsgFunc_Train, this );
 
-	m_iPos = 0;
-	m_iFlags = 0;
-	gHUD.AddHudElem(this);
+    m_iPos = 0;
+    m_iFlags = 0;
+    gHUD.AddHudElem( this );
 
-	return true;
+    return true;
 }
 
 bool CHudTrain::VidInit()
 {
-	m_hSprite = gHUD.GetSprite(gHUD.GetSpriteIndex("train_controls"));
+    m_hSprite = gHUD.GetSprite( gHUD.GetSpriteIndex( "train_controls" ) );
 
-	return true;
+    return true;
 }
 
-bool CHudTrain::Draw(float fTime)
+bool CHudTrain::Draw( float fTime )
 {
-	if (0 != m_iPos)
-	{
-		SPR_Set(m_hSprite, gHUD.m_HudColor);
+    if( 0 != m_iPos )
+    {
+        SPR_Set( m_hSprite, gHUD.m_HudColor );
 
 		// This should show up to the right and part way up the armor number
-		const int y = ScreenHeight - SPR_Height(m_hSprite, 0) - gHUD.m_iFontHeight;
-		const int x = ScreenWidth / 3 + SPR_Width(m_hSprite, 0) / 4;
+        const int y = ScreenHeight - SPR_Height( m_hSprite, 0 ) - gHUD.m_iFontHeight;
+        const int x = ScreenWidth / 3 + SPR_Width( m_hSprite, 0 ) / 4;
 
-		SPR_DrawAdditive(m_iPos - 1, x, y, nullptr);
-	}
+        SPR_DrawAdditive( m_iPos - 1, x, y, nullptr );
+    }
 
-	return true;
+    return true;
 }
 
 
-void CHudTrain::MsgFunc_Train(const char* pszName, BufferReader& reader)
+void CHudTrain::MsgFunc_Train( const char* pszName, BufferReader& reader )
 {
 	// update Train data
-	m_iPos = reader.ReadByte();
+    m_iPos = reader.ReadByte();
 
-	if (0 != m_iPos)
-		m_iFlags |= HUD_ACTIVE;
-	else
-		m_iFlags &= ~HUD_ACTIVE;
+    if( 0 != m_iPos )
+        m_iFlags |= HUD_ACTIVE;
+    else
+        m_iFlags &= ~HUD_ACTIVE;
 }

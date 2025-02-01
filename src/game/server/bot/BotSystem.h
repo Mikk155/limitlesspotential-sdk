@@ -28,22 +28,22 @@
 class BotSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "Bots"; }
+    const char* GetName() const override { return "Bots"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
+    void PostInitialize() override {}
 
-	void Shutdown() override;
+    void Shutdown() override;
 
-	void RunFrame();
-
-private:
-	void AddBot(const char* name);
+    void RunFrame();
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	float m_LastUpdateTime = 0;
+    void AddBot( const char* name );
+
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
+    float m_LastUpdateTime = 0;
 };
 
 inline BotSystem g_Bots;

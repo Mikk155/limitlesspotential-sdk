@@ -24,12 +24,12 @@
 class HudSpriteConfigSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "HudSpriteConfig"; }
-	bool Initialize() override;
-	void PostInitialize() override {}
-	void Shutdown() override {}
+    const char* GetName() const override { return "HudSpriteConfig"; }
+    bool Initialize() override;
+    void PostInitialize() override {}
+    void Shutdown() override {}
 
-	std::vector<HudSprite> Load(const char* fileName);
+    std::vector<HudSprite> Load( const char* fileName );
 };
 
 inline HudSpriteConfigSystem g_HudSpriteConfig;
@@ -37,4 +37,4 @@ inline HudSpriteConfigSystem g_HudSpriteConfig;
 /**
  *	@brief Finds and returns the matching sprite name @p spriteName in the given sprite list @p sprites
  */
-const HudSprite* GetSpriteList(const std::vector<HudSprite>& sprites, const char* spriteName);
+const HudSprite* GetSpriteList( const std::vector<HudSprite>& sprites, const char* spriteName );

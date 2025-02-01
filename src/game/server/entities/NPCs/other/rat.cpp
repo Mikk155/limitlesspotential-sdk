@@ -21,58 +21,58 @@
 class CRat : public CBaseMonster
 {
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	void SetYawSpeed() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
 
-	bool HasHumanGibs() override { return true; }
+    bool HasHumanGibs() override { return true; }
 };
-LINK_ENTITY_TO_CLASS(monster_rat, CRat);
+LINK_ENTITY_TO_CLASS( monster_rat, CRat );
 
 void CRat::OnCreate()
 {
-	CBaseMonster::OnCreate();
+    CBaseMonster::OnCreate();
 
-	pev->health = 8;
-	pev->model = MAKE_STRING("models/bigrat.mdl");
+    pev->health = 8;
+    pev->model = MAKE_STRING( "models/bigrat.mdl" );
 
-	SetClassification("insect");
+    SetClassification( "insect" );
 }
 
 void CRat::SetYawSpeed()
 {
-	int ys;
+    int ys;
 
-	switch (m_Activity)
-	{
-	case ACT_IDLE:
-	default:
-		ys = 45;
-		break;
-	}
+    switch ( m_Activity )
+    {
+    case ACT_IDLE:
+    default:
+        ys = 45;
+        break;
+    }
 
-	pev->yaw_speed = ys;
+    pev->yaw_speed = ys;
 }
 
 void CRat::Spawn()
 {
-	Precache();
+    Precache();
 
-	SetModel(STRING(pev->model));
-	SetSize(Vector(0, 0, 0), Vector(0, 0, 0));
+    SetModel( STRING( pev->model ) );
+    SetSize( Vector( 0, 0, 0 ), Vector( 0, 0, 0 ) );
 
-	pev->solid = SOLID_SLIDEBOX;
-	pev->movetype = MOVETYPE_STEP;
-	m_bloodColor = BLOOD_COLOR_RED;
-	pev->view_ofs = Vector(0, 0, 6); // position of the eyes relative to monster's origin.
-	m_flFieldOfView = 0.5;			 // indicates the width of this monster's forward view cone ( as a dotproduct result )
-	m_MonsterState = MONSTERSTATE_NONE;
+    pev->solid = SOLID_SLIDEBOX;
+    pev->movetype = MOVETYPE_STEP;
+    m_bloodColor = BLOOD_COLOR_RED;
+    pev->view_ofs = Vector( 0, 0, 6 ); // position of the eyes relative to monster's origin.
+    m_flFieldOfView = 0.5;             // indicates the width of this monster's forward view cone ( as a dotproduct result )
+    m_MonsterState = MONSTERSTATE_NONE;
 
-	MonsterInit();
+    MonsterInit();
 }
 
 void CRat::Precache()
 {
-	PrecacheModel(STRING(pev->model));
+    PrecacheModel( STRING( pev->model ) );
 }

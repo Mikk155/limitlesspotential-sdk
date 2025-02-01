@@ -19,17 +19,17 @@
 class CZombieBarney : public CZombie
 {
 public:
-	void OnCreate() override
-	{
-		CZombie::OnCreate();
+    void OnCreate() override
+    {
+        CZombie::OnCreate();
 
-		pev->health = GetSkillFloat("zombie_barney_health"sv);
-		pev->model = MAKE_STRING("models/zombie_barney.mdl");
-	}
+        pev->health = GetSkillFloat( "zombie_barney_health"sv );
+        pev->model = MAKE_STRING( "models/zombie_barney.mdl" );
+    }
 
 protected:
-	float GetOneSlashDamage() override { return GetSkillFloat("zombie_barney_dmg_one_slash"sv); }
-	float GetBothSlashDamage() override { return GetSkillFloat("zombie_barney_dmg_both_slash"sv); }
+    float GetOneSlashDamage() override { return GetSkillFloat( "zombie_barney_dmg_one_slash"sv ); }
+    float GetBothSlashDamage() override { return GetSkillFloat( "zombie_barney_dmg_both_slash"sv ); }
 };
 
-LINK_ENTITY_TO_CLASS(monster_zombie_barney, CZombieBarney);
+LINK_ENTITY_TO_CLASS( monster_zombie_barney, CZombieBarney );

@@ -20,22 +20,22 @@ class CBasePlayer;
 class CHUDIconTrigger : public CBaseToggle
 {
 public:
-	void Spawn() override;
+    void Spawn() override;
 
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void UpdateUser(CBasePlayer* pPlayer);
+    void UpdateUser( CBasePlayer* pPlayer );
 
-	float m_flNextActiveTime;
-	int m_nCustomIndex;
-	string_t m_iszCustomName;
-	bool m_fIsActive;
-	int m_nLeft;
-	int m_nTop;
-	int m_nWidth;
-	int m_nHeight;
+    float m_flNextActiveTime;
+    int m_nCustomIndex;
+    string_t m_iszCustomName;
+    bool m_fIsActive;
+    int m_nLeft;
+    int m_nTop;
+    int m_nWidth;
+    int m_nHeight;
 };
 
-void RefreshCustomHUD(CBasePlayer* pPlayer);
+void RefreshCustomHUD( CBasePlayer* pPlayer );

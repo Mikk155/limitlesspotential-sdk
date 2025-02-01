@@ -17,27 +17,27 @@
 
 enum FrustumSide
 {
-	RIGHT = 0,
-	LEFT = 1,
-	BOTTOM = 2,
-	TOP = 3,
-	BACK = 4,
-	FRONT = 5,
+    RIGHT = 0,
+    LEFT = 1,
+    BOTTOM = 2,
+    TOP = 3,
+    BACK = 4,
+    FRONT = 5,
 };
 
 struct CFrustum
 {
-	void CalculateFrustum();
+    void CalculateFrustum();
 
-	bool PointInsideFrustum(float x, float y, float z);
+    bool PointInsideFrustum( float x, float y, float z );
 
-	bool SphereInsideFrustum(float x, float y, float z, float radius);
+    bool SphereInsideFrustum( float x, float y, float z, float radius );
 
-	bool PlaneInsideFrustum(float x, float y, float z, float size);
+    bool PlaneInsideFrustum( float x, float y, float z, float size );
 
 private:
-	void NormalizeFrustumPlane(float frustum[6][4], int side);
+    void NormalizeFrustumPlane( float frustum[6][4], int side );
 
 public:
-	float g_flFrustum[6][4];
+    float g_flFrustum[6][4];
 };

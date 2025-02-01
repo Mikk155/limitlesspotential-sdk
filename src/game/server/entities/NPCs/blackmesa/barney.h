@@ -26,70 +26,70 @@ namespace GuardBodyGroup
 {
 enum GuardBodyGroup
 {
-	Weapons = 1
+    Weapons = 1
 };
 }
 
 class CBarney : public CTalkMonster
 {
-	DECLARE_CLASS(CBarney, CTalkMonster);
-	DECLARE_DATAMAP();
-	DECLARE_CUSTOM_SCHEDULES();
+    DECLARE_CLASS( CBarney, CTalkMonster );
+    DECLARE_DATAMAP();
+    DECLARE_CUSTOM_SCHEDULES();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	void SetYawSpeed() override;
-	int ISoundMask() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
+    int ISoundMask() override;
 
-	bool HasHumanGibs() override { return true; }
+    bool HasHumanGibs() override { return true; }
 
 	/**
 	 *	@brief shoots one round from the pistol at the enemy barney is facing.
 	 */
-	virtual void GuardFirePistol();
+    virtual void GuardFirePistol();
 
 	/**
 	 *	@brief barney says "Freeze!"
 	 */
-	void AlertSound() override;
+    void AlertSound() override;
 
-	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
+    void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
 
-	void RunTask(const Task_t* pTask) override;
-	void StartTask(const Task_t* pTask) override;
-	int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
-	bool CheckRangeAttack1(float flDot, float flDist) override;
+    void RunTask( const Task_t* pTask ) override;
+    void StartTask( const Task_t* pTask ) override;
+    int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
+    bool CheckRangeAttack1( float flDot, float flDist ) override;
 
-	void DeclineFollowing() override;
+    void DeclineFollowing() override;
 
 	// Override these to set behavior
-	const Schedule_t* GetScheduleOfType(int Type) override;
-	const Schedule_t* GetSchedule() override;
-	MONSTERSTATE GetIdealState() override;
+    const Schedule_t* GetScheduleOfType( int Type ) override;
+    const Schedule_t* GetSchedule() override;
+    MONSTERSTATE GetIdealState() override;
 
-	void DeathSound() override;
-	void PainSound() override;
+    void DeathSound() override;
+    void PainSound() override;
 
-	void TalkInit() override;
+    void TalkInit() override;
 
-	void TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
-	void Killed(CBaseEntity* attacker, int iGib) override;
+    void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
+    void Killed( CBaseEntity* attacker, int iGib ) override;
 
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	float m_painTime;
-	float m_checkAttackTime;
-	bool m_lastAttackCheck;
+    float m_painTime;
+    float m_checkAttackTime;
+    bool m_lastAttackCheck;
 
 
 	// Used during spawn to set initial values, not restored
-	int m_iGuardBody;
+    int m_iGuardBody;
 
 protected:
-	virtual void DropWeapon();
+    virtual void DropWeapon();
 
-	virtual void SpeakKilledEnemy();
+    virtual void SpeakKilledEnemy();
 };

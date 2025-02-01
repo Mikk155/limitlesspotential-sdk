@@ -26,27 +26,27 @@ class CBasePlayer;
 class PersistentInventorySystem final
 {
 private:
-	struct PersistentPlayerInventory
-	{
-		std::string PlayerId;
-		PlayerInventory Inventory;
-	};
+    struct PersistentPlayerInventory
+    {
+        std::string PlayerId;
+        PlayerInventory Inventory;
+    };
 
 public:
-	void NewMapStarted();
+    void NewMapStarted();
 
-	void InitializeFromPlayers();
+    void InitializeFromPlayers();
 
-	bool TryApplyToPlayer(CBasePlayer* player);
-
-private:
-	static std::string GetPlayerId(CBasePlayer* player);
+    bool TryApplyToPlayer( CBasePlayer* player );
 
 private:
-	std::array<PersistentPlayerInventory, MAX_PLAYERS> m_Inventories;
+    static std::string GetPlayerId( CBasePlayer* player );
 
-	bool m_InitializedInventories = false;
-	int m_ExpectedSpawnCount = 0;
+private:
+    std::array<PersistentPlayerInventory, MAX_PLAYERS> m_Inventories;
+
+    bool m_InitializedInventories = false;
+    int m_ExpectedSpawnCount = 0;
 };
 
 inline PersistentInventorySystem g_PersistentInventory;

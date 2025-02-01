@@ -17,15 +17,15 @@
 
 enum SniperRifleAnim
 {
-	SNIPERRIFLE_DRAW = 0,
-	SNIPERRIFLE_SLOWIDLE,
-	SNIPERRIFLE_FIRE,
-	SNIPERRIFLE_FIRELASTROUND,
-	SNIPERRIFLE_RELOAD1,
-	SNIPERRIFLE_RELOAD2,
-	SNIPERRIFLE_RELOAD3,
-	SNIPERRIFLE_SLOWIDLE2,
-	SNIPERRIFLE_HOLSTER
+    SNIPERRIFLE_DRAW = 0,
+    SNIPERRIFLE_SLOWIDLE,
+    SNIPERRIFLE_FIRE,
+    SNIPERRIFLE_FIRELASTROUND,
+    SNIPERRIFLE_RELOAD1,
+    SNIPERRIFLE_RELOAD2,
+    SNIPERRIFLE_RELOAD3,
+    SNIPERRIFLE_SLOWIDLE2,
+    SNIPERRIFLE_HOLSTER
 };
 
 /**
@@ -33,43 +33,43 @@ enum SniperRifleAnim
  */
 class CSniperRifle : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CSniperRifle, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CSniperRifle, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Precache() override;
+    void OnCreate() override;
+    void Precache() override;
 
-	bool Deploy() override;
+    bool Deploy() override;
 
-	void Holster() override;
+    void Holster() override;
 
-	void WeaponIdle() override;
+    void WeaponIdle() override;
 
-	void PrimaryAttack() override;
+    void PrimaryAttack() override;
 
-	void SecondaryAttack() override;
+    void SecondaryAttack() override;
 
-	void Reload() override;
+    void Reload() override;
 
-	bool GetWeaponInfo(WeaponInfo& info) override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
 
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	void ToggleZoom();
+    void ToggleZoom();
 
 private:
-	unsigned short m_usSniper;
+    unsigned short m_usSniper;
 
-	bool m_bReloading;
-	float m_flReloadStart;
+    bool m_bReloading;
+    float m_flReloadStart;
 };

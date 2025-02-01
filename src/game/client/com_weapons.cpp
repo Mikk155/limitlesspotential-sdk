@@ -35,16 +35,16 @@ HUD_SendWeaponAnim
 Change weapon model animation
 =====================
 */
-void HUD_SendWeaponAnim(int iAnim, int body, bool force)
+void HUD_SendWeaponAnim( int iAnim, int body, bool force )
 {
 	// Don't actually change it.
-	if (!g_runfuncs && !force)
-		return;
+    if( !g_runfuncs && !force )
+        return;
 
-	g_currentanim = iAnim;
+    g_currentanim = iAnim;
 
 	// Tell animation system new info
-	gEngfuncs.pfnWeaponAnim(iAnim, body);
+    gEngfuncs.pfnWeaponAnim( iAnim, body );
 }
 
 /*
@@ -56,17 +56,17 @@ Retrieve current predicted weapon animation
 */
 int HUD_GetWeaponAnim()
 {
-	return g_currentanim;
+    return g_currentanim;
 }
 
 // Play a sound if we are seeing this command for the first time
-void EMIT_SOUND_PREDICTED(CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
-	int flags, int pitch)
+void EMIT_SOUND_PREDICTED( CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
+    int flags, int pitch )
 {
-	if (!g_runfuncs || !g_finalstate)
-		return;
+    if( !g_runfuncs || !g_finalstate )
+        return;
 
-	CL_StartSound(g_ViewEntity, channel, sample, g_finalstate->playerstate.origin, volume, attenuation, pitch, flags);
+    CL_StartSound( g_ViewEntity, channel, sample, g_finalstate->playerstate.origin, volume, attenuation, pitch, flags );
 }
 
 /*
@@ -76,19 +76,19 @@ HUD_PlaybackEvent
 Directly queue up an event on the client
 =====================
 */
-void HUD_PlaybackEvent(int flags, const edict_t* pInvoker, unsigned short eventindex, float delay,
-	const float* origin, const float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2)
+void HUD_PlaybackEvent( int flags, const edict_t* pInvoker, unsigned short eventindex, float delay,
+    const float* origin, const float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 )
 {
-	Vector org;
-	Vector ang;
+    Vector org;
+    Vector ang;
 
-	if (!g_runfuncs || !g_finalstate)
-		return;
+    if( !g_runfuncs || !g_finalstate )
+        return;
 
 	// Weapon prediction events are assumed to occur at the player's origin
-	org = g_finalstate->playerstate.origin;
-	ang = v_client_aimangles;
-	gEngfuncs.pfnPlaybackEvent(flags, pInvoker, eventindex, delay, org, ang, fparam1, fparam2, iparam1, iparam2, bparam1, bparam2);
+    org = g_finalstate->playerstate.origin;
+    ang = v_client_aimangles;
+    gEngfuncs.pfnPlaybackEvent( flags, pInvoker, eventindex, delay, org, ang, fparam1, fparam2, iparam1, iparam2, bparam1, bparam2 );
 }
 
 /*
@@ -97,7 +97,7 @@ HUD_SetMaxSpeed
 
 =====================
 */
-void HUD_SetMaxSpeed(const edict_t* ed, float speed)
+void HUD_SetMaxSpeed( const edict_t* ed, float speed )
 {
 }
 
@@ -112,7 +112,7 @@ Always 0.0 on client, even if not predicting weapons ( won't get called
 */
 float UTIL_WeaponTimeBase()
 {
-	return 0.0;
+    return 0.0;
 }
 
 /*
@@ -123,5 +123,5 @@ stub functions for such things as precaching.  So we don't have to modify weapon
  is compiled into both game and client .dlls.
 ======================
 */
-unsigned short stub_PrecacheEvent(int type, const char* s) { return 0; }
-void stub_SetModel(edict_t* e, const char* m) {}
+unsigned short stub_PrecacheEvent( int type, const char* s ) { return 0; }
+void stub_SetModel( edict_t* e, const char* m ) {}

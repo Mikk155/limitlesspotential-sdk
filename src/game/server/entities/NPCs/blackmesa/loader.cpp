@@ -20,141 +20,141 @@
  */
 class COFLoader : public CBaseMonster
 {
-	DECLARE_CLASS(COFLoader, CBaseMonster);
+    DECLARE_CLASS( COFLoader, CBaseMonster );
 
 public:
-	int ISoundMask() override { return bits_SOUND_NONE; }
+    int ISoundMask() override { return bits_SOUND_NONE; }
 
-	void OnCreate() override;
-	void Precache() override;
+    void OnCreate() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void SetYawSpeed() override;
+    void SetYawSpeed() override;
 
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
-	void TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
+    void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
+    void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
 
-	void StartTask(const Task_t* pTask) override;
+    void StartTask( const Task_t* pTask ) override;
 
-	void UpdateOnRemove() override
-	{
-		BaseClass::UpdateOnRemove();
+    void UpdateOnRemove() override
+    {
+        BaseClass::UpdateOnRemove();
 
 		// Make sure the loader stops playing these.
-		StopSound(CHAN_BODY, "ambience/warn2.wav");
-		StopSound(CHAN_BODY, "ambience/turretrot1.wav");
+        StopSound( CHAN_BODY, "ambience/warn2.wav" );
+        StopSound( CHAN_BODY, "ambience/turretrot1.wav" );
 
-		StopSound(CHAN_VOICE, "ambience/warn2.wav");
-		StopSound(CHAN_VOICE, "ambience/turretrot1.wav");
-	}
+        StopSound( CHAN_VOICE, "ambience/warn2.wav" );
+        StopSound( CHAN_VOICE, "ambience/turretrot1.wav" );
+    }
 
-	void SetTurnActivity();
+    void SetTurnActivity();
 };
 
-LINK_ENTITY_TO_CLASS(monster_op4loader, COFLoader);
+LINK_ENTITY_TO_CLASS( monster_op4loader, COFLoader );
 
 void COFLoader::OnCreate()
 {
-	CBaseMonster::OnCreate();
+    CBaseMonster::OnCreate();
 
-	pev->health = 8;
-	pev->model = MAKE_STRING("models/loader.mdl");
+    pev->health = 8;
+    pev->model = MAKE_STRING( "models/loader.mdl" );
 
-	SetClassification("player_ally");
+    SetClassification( "player_ally" );
 }
 
 void COFLoader::Precache()
 {
-	PrecacheModel(STRING(pev->model));
-	PrecacheSound("ambience/loader_step1.wav");
-	PrecacheSound("ambience/loader_hydra1.wav");
+    PrecacheModel( STRING( pev->model ) );
+    PrecacheSound( "ambience/loader_step1.wav" );
+    PrecacheSound( "ambience/loader_hydra1.wav" );
 }
 
 void COFLoader::Spawn()
 {
-	Precache();
+    Precache();
 
-	SetModel(STRING(pev->model));
+    SetModel( STRING( pev->model ) );
 
-	if (FStrEq(STRING(pev->model), "models/player.mdl") || FStrEq(STRING(pev->model), "models/holo.mdl"))
-	{
-		SetSize(VEC_HULL_MIN, VEC_HULL_MAX);
-	}
-	else
-	{
-		SetSize(VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
-	}
+    if( FStrEq( STRING( pev->model ), "models/player.mdl" ) || FStrEq( STRING( pev->model ), "models/holo.mdl" ) )
+    {
+        SetSize( VEC_HULL_MIN, VEC_HULL_MAX );
+    }
+    else
+    {
+        SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
+    }
 
-	pev->solid = SOLID_SLIDEBOX;
-	pev->movetype = MOVETYPE_STEP;
-	m_bloodColor = DONT_BLEED;
-	m_MonsterState = MONSTERSTATE_NONE;
-	m_flFieldOfView = 0.5f;
-	pev->takedamage = DAMAGE_NO;
+    pev->solid = SOLID_SLIDEBOX;
+    pev->movetype = MOVETYPE_STEP;
+    m_bloodColor = DONT_BLEED;
+    m_MonsterState = MONSTERSTATE_NONE;
+    m_flFieldOfView = 0.5f;
+    pev->takedamage = DAMAGE_NO;
 
-	m_AllowFollow = false;
-	MonsterInit();
+    m_AllowFollow = false;
+    MonsterInit();
 }
 
 void COFLoader::SetYawSpeed()
 {
-	pev->yaw_speed = 90;
+    pev->yaw_speed = 90;
 }
 
-bool COFLoader::TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType)
+bool COFLoader::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
 	// Don't take damage
-	return true;
+    return true;
 }
 
-void COFLoader::TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
+void COFLoader::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	UTIL_Ricochet(ptr->vecEndPos, g_engfuncs.pfnRandomFloat(1.0, 2.0));
+    UTIL_Ricochet( ptr->vecEndPos, g_engfuncs.pfnRandomFloat( 1.0, 2.0 ) );
 }
 
-void COFLoader::HandleAnimEvent(MonsterEvent_t* pEvent)
+void COFLoader::HandleAnimEvent( MonsterEvent_t* pEvent )
 {
-	CBaseMonster::HandleAnimEvent(pEvent);
+    CBaseMonster::HandleAnimEvent( pEvent );
 }
 
-void COFLoader::StartTask(const Task_t* pTask)
+void COFLoader::StartTask( const Task_t* pTask )
 {
-	float newYawAngle;
+    float newYawAngle;
 
-	switch (pTask->iTask)
-	{
-	case TASK_TURN_LEFT:
-		newYawAngle = UTIL_AngleMod(pev->angles.y) + pTask->flData;
-		break;
+    switch ( pTask->iTask )
+    {
+    case TASK_TURN_LEFT:
+        newYawAngle = UTIL_AngleMod( pev->angles.y ) + pTask->flData;
+        break;
 
-	case TASK_TURN_RIGHT:
-		newYawAngle = UTIL_AngleMod(pev->angles.y) - pTask->flData;
-		break;
+    case TASK_TURN_RIGHT:
+        newYawAngle = UTIL_AngleMod( pev->angles.y ) - pTask->flData;
+        break;
 
-	default:
-		CBaseMonster::StartTask(pTask);
-		return;
-	}
+    default:
+        CBaseMonster::StartTask( pTask );
+        return;
+    }
 
-	pev->ideal_yaw = UTIL_AngleMod(newYawAngle);
+    pev->ideal_yaw = UTIL_AngleMod( newYawAngle );
 
-	SetTurnActivity();
+    SetTurnActivity();
 }
 
 void COFLoader::SetTurnActivity()
 {
-	const auto difference = FlYawDiff();
+    const auto difference = FlYawDiff();
 
-	if (difference <= -45 && LookupActivity(ACT_TURN_RIGHT) != -1)
-	{
-		m_IdealActivity = ACT_TURN_RIGHT;
-	}
-	else if (difference > 45.0 && LookupActivity(ACT_TURN_LEFT) != -1)
-	{
-		m_IdealActivity = ACT_TURN_LEFT;
-	}
+    if( difference <= -45 && LookupActivity( ACT_TURN_RIGHT ) != -1 )
+    {
+        m_IdealActivity = ACT_TURN_RIGHT;
+    }
+    else if( difference > 45.0 && LookupActivity( ACT_TURN_LEFT ) != -1 )
+    {
+        m_IdealActivity = ACT_TURN_LEFT;
+    }
 }

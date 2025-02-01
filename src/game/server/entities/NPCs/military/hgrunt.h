@@ -35,8 +35,8 @@ namespace HGruntBodyGroup
 {
 enum HGruntBodyGroup
 {
-	Head = 1,
-	Weapons = 2
+    Head = 1,
+    Weapons = 2
 };
 }
 
@@ -44,10 +44,10 @@ namespace HGruntHead
 {
 enum HGruntHead
 {
-	Grunt = 0,
-	Commander,
-	Shotgun,
-	M203
+    Grunt = 0,
+    Commander,
+    Shotgun,
+    M203
 };
 }
 
@@ -55,9 +55,9 @@ namespace HGruntWeapon
 {
 enum HGruntWeapon
 {
-	Blank = 0,
-	MP5,
-	Shotgun,
+    Blank = 0,
+    MP5,
+    Shotgun,
 };
 }
 
@@ -74,60 +74,60 @@ enum HGruntWeapon
 
 enum
 {
-	SCHED_GRUNT_SUPPRESS = LAST_COMMON_SCHEDULE + 1,
-	SCHED_GRUNT_ESTABLISH_LINE_OF_FIRE, //!< move to a location to set up an attack against the enemy. (usually when a friendly is in the way).
-	SCHED_GRUNT_COVER_AND_RELOAD,
-	SCHED_GRUNT_SWEEP,
-	SCHED_GRUNT_FOUND_ENEMY,
-	SCHED_GRUNT_REPEL,
-	SCHED_GRUNT_REPEL_ATTACK,
-	SCHED_GRUNT_REPEL_LAND,
-	SCHED_GRUNT_WAIT_FACE_ENEMY,
-	SCHED_GRUNT_TAKECOVER_FAILED, //!< special schedule type that forces analysis of conditions and picks the best possible schedule to recover from this type of failure.
-	SCHED_GRUNT_ELOF_FAIL,
+    SCHED_GRUNT_SUPPRESS = LAST_COMMON_SCHEDULE + 1,
+    SCHED_GRUNT_ESTABLISH_LINE_OF_FIRE, //!< move to a location to set up an attack against the enemy. (usually when a friendly is in the way).
+    SCHED_GRUNT_COVER_AND_RELOAD,
+    SCHED_GRUNT_SWEEP,
+    SCHED_GRUNT_FOUND_ENEMY,
+    SCHED_GRUNT_REPEL,
+    SCHED_GRUNT_REPEL_ATTACK,
+    SCHED_GRUNT_REPEL_LAND,
+    SCHED_GRUNT_WAIT_FACE_ENEMY,
+    SCHED_GRUNT_TAKECOVER_FAILED, //!< special schedule type that forces analysis of conditions and picks the best possible schedule to recover from this type of failure.
+    SCHED_GRUNT_ELOF_FAIL,
 };
 
 enum
 {
-	TASK_GRUNT_FACE_TOSS_DIR = LAST_COMMON_TASK + 1,
-	TASK_GRUNT_SPEAK_SENTENCE,
-	TASK_GRUNT_CHECK_FIRE,
+    TASK_GRUNT_FACE_TOSS_DIR = LAST_COMMON_TASK + 1,
+    TASK_GRUNT_SPEAK_SENTENCE,
+    TASK_GRUNT_CHECK_FIRE,
 };
 
 #define bits_COND_GRUNT_NOFIRE (bits_COND_SPECIAL1)
 
 enum HGRUNT_SENTENCE_TYPES
 {
-	HGRUNT_SENT_NONE = -1,
-	HGRUNT_SENT_GREN = 0,
-	HGRUNT_SENT_ALERT,
-	HGRUNT_SENT_MONSTER,
-	HGRUNT_SENT_COVER,
-	HGRUNT_SENT_THROW,
-	HGRUNT_SENT_CHARGE,
-	HGRUNT_SENT_TAUNT,
+    HGRUNT_SENT_NONE = -1,
+    HGRUNT_SENT_GREN = 0,
+    HGRUNT_SENT_ALERT,
+    HGRUNT_SENT_MONSTER,
+    HGRUNT_SENT_COVER,
+    HGRUNT_SENT_THROW,
+    HGRUNT_SENT_CHARGE,
+    HGRUNT_SENT_TAUNT,
 };
 
 class CHGrunt : public CSquadMonster
 {
-	DECLARE_CLASS(CHGrunt, CSquadMonster);
-	DECLARE_DATAMAP();
-	DECLARE_CUSTOM_SCHEDULES();
+    DECLARE_CLASS( CHGrunt, CSquadMonster );
+    DECLARE_DATAMAP();
+    DECLARE_CUSTOM_SCHEDULES();
 
 public:
-	void OnCreate() override;
-	void Spawn() override;
-	void Precache() override;
-	void SetYawSpeed() override;
+    void OnCreate() override;
+    void Spawn() override;
+    void Precache() override;
+    void SetYawSpeed() override;
 
-	bool HasHumanGibs() override { return true; }
+    bool HasHumanGibs() override { return true; }
 
 	/**
 	 *	@brief Overridden for human grunts because they hear the DANGER sound
 	 *	that is made by hand grenades and other dangerous items.
 	 */
-	int ISoundMask() override;
-	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
+    int ISoundMask() override;
+    void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
 
 	/**
 	 *	@brief this is overridden for human grunts because they can throw/shoot grenades when they can't see their
@@ -137,9 +137,9 @@ public:
 	 *	ALSO, grenades will not be tossed if there is a friendly in front, this is a bad bug.
 	 *	Friendly machine gun fire avoidance will unecessarily prevent the throwing of a grenade as well.
 	 */
-	bool FCanCheckAttacks() override;
+    bool FCanCheckAttacks() override;
 
-	bool CheckMeleeAttack1(float flDot, float flDist) override;
+    bool CheckMeleeAttack1( float flDot, float flDist ) override;
 
 	/**
 	 *	@brief overridden for HGrunt, cause FCanCheckAttacks() doesn't disqualify all attacks based on
@@ -147,37 +147,37 @@ public:
 	 *	the HGrunt can attack when the enemy is occluded (throw grenade over wall, etc).
 	 *	We must disqualify the machine gun attack if the enemy is occluded.
 	 */
-	bool CheckRangeAttack1(float flDot, float flDist) override;
+    bool CheckRangeAttack1( float flDot, float flDist ) override;
 
 	/**
 	 *	@brief this checks the Grunt's grenade attack.
 	 */
-	bool CheckRangeAttack2(float flDot, float flDist) override;
+    bool CheckRangeAttack2( float flDot, float flDist ) override;
 
 	/**
 	 *	@brief overridden for the grunt because he actually uses ammo! (base class doesn't)
 	 */
-	void CheckAmmo() override;
-	void SetActivity(Activity NewActivity) override;
-	void StartTask(const Task_t* pTask) override;
-	void RunTask(const Task_t* pTask) override;
-	void DeathSound() override;
-	void PainSound() override;
-	void IdleSound() override;
+    void CheckAmmo() override;
+    void SetActivity( Activity NewActivity ) override;
+    void StartTask( const Task_t* pTask ) override;
+    void RunTask( const Task_t* pTask ) override;
+    void DeathSound() override;
+    void PainSound() override;
+    void IdleSound() override;
 
 	/**
 	 *	@brief return the end of the barrel
 	 */
-	Vector GetGunPosition() override;
+    Vector GetGunPosition() override;
 
-	virtual void Shoot(bool firstShotInBurst);
+    virtual void Shoot( bool firstShotInBurst );
 
-	void PrescheduleThink() override;
+    void PrescheduleThink() override;
 
 	/**
 	 *	@brief make gun fly through the air.
 	 */
-	void GibMonster() override;
+    void GibMonster() override;
 
 	/**
 	 *	@brief say your cued up sentence.
@@ -187,65 +187,65 @@ public:
 	 *	Now the sentence is played after we know for sure that there is a valid path.
 	 *	The schedule may still fail but in most cases, well after the grunt has started moving.
 	 */
-	void SpeakSentence();
+    void SpeakSentence();
 
-	CBaseEntity* Kick();
-	const Schedule_t* GetSchedule() override;
-	const Schedule_t* GetScheduleOfType(int Type) override;
+    CBaseEntity* Kick();
+    const Schedule_t* GetSchedule() override;
+    const Schedule_t* GetScheduleOfType( int Type ) override;
 
 	/**
 	 *	@brief make sure we're not taking it in the helmet
 	 */
-	void TraceAttack(CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
+    void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
 	/**
 	 *	@brief overridden for the grunt because the grunt needs to forget that he is in cover if he's hurt.
 	 *	(Obviously not in a safe place anymore).
 	 */
-	bool TakeDamage(CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType) override;
+    bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
 	/**
 	 *	@brief overridden because Alien Grunts are Human Grunt's nemesis.
 	 */
-	Relationship IRelationship(CBaseEntity* pTarget) override;
+    Relationship IRelationship( CBaseEntity* pTarget ) override;
 
 	/**
 	 *	@brief someone else is talking - don't speak
 	 */
-	virtual bool FOkToSpeak();
-	void JustSpoke();
+    virtual bool FOkToSpeak();
+    void JustSpoke();
 
 	// checking the feasibility of a grenade toss is kind of costly, so we do it every couple of seconds,
 	// not every server frame.
-	float m_flNextGrenadeCheck;
-	float m_flNextPainTime;
-	float m_flLastEnemySightTime;
+    float m_flNextGrenadeCheck;
+    float m_flNextPainTime;
+    float m_flLastEnemySightTime;
 
-	Vector m_vecTossVelocity;
+    Vector m_vecTossVelocity;
 
-	bool m_fThrowGrenade;
-	bool m_fStanding;
-	bool m_fFirstEncounter; //!< only put on the handsign show in the squad's first encounter.
-	int m_cClipSize;
+    bool m_fThrowGrenade;
+    bool m_fStanding;
+    bool m_fFirstEncounter; //!< only put on the handsign show in the squad's first encounter.
+    int m_cClipSize;
 
-	int m_voicePitch;
+    int m_voicePitch;
 
-	int m_iBrassShell;
-	int m_iShotgunShell;
+    int m_iBrassShell;
+    int m_iShotgunShell;
 
-	int m_iSentence;
+    int m_iSentence;
 
-	static const char* pGruntSentences[];
+    static const char* pGruntSentences[];
 
 protected:
-	bool CheckRangeAttack2Core(float flDot, float flDist, float grenadeSpeed);
+    bool CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpeed );
 
-	virtual std::tuple<int, Activity> GetSequenceForActivity(Activity NewActivity);
+    virtual std::tuple<int, Activity> GetSequenceForActivity( Activity NewActivity );
 
 	/**
 	 *	@brief Gets a reference to the global grunt question variable used to communicate between grunts
 	 */
-	virtual int& GetGruntQuestion();
+    virtual int& GetGruntQuestion();
 };
 
 /**
@@ -253,42 +253,42 @@ protected:
  */
 class CHGruntRepel : public CBaseMonster
 {
-	DECLARE_CLASS(CHGruntRepel, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CHGruntRepel, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	void Spawn() override;
-	void Precache() override;
-	void RepelUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
-	int m_iSpriteTexture; // Don't save, precache
+    void Spawn() override;
+    void Precache() override;
+    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    int m_iSpriteTexture; // Don't save, precache
 
 protected:
 	/**
 	 *	@brief Precaches all repel assets
 	 *	@param classname Must be a string literal
 	 */
-	void PrecacheCore(const char* classname);
+    void PrecacheCore( const char* classname );
 
 	/**
 	 *	@brief Creates a monster in a repel state
 	 *	@param classname Must be a string literal
 	 */
-	void CreateMonster(const char* classname);
+    void CreateMonster( const char* classname );
 };
 
 class CDeadHGrunt : public CBaseMonster
 {
 public:
-	void OnCreate() override;
-	void Spawn() override;
+    void OnCreate() override;
+    void Spawn() override;
 
-	bool HasHumanGibs() override { return true; }
+    bool HasHumanGibs() override { return true; }
 
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	int m_iPose; // which sequence to display	-- temporary, don't need to save
-	static constexpr const char* m_szPoses[3] = {"deadstomach", "deadside", "deadsitting"};
+    int m_iPose; // which sequence to display    -- temporary, don't need to save
+    static constexpr const char* m_szPoses[3] = {"deadstomach", "deadside", "deadsitting"};
 
 protected:
-	void SpawnCore();
+    void SpawnCore();
 };

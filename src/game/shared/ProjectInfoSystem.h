@@ -23,17 +23,17 @@
 
 struct LibraryInfo
 {
-	int MajorVersion = -1;
-	int MinorVersion = -1;
-	int PatchVersion = -1;
+    int MajorVersion = -1;
+    int MinorVersion = -1;
+    int PatchVersion = -1;
 
-	std::string ReleaseType;
+    std::string ReleaseType;
 
-	std::string BranchName;
-	std::string TagName;
-	std::string CommitHash;
+    std::string BranchName;
+    std::string TagName;
+    std::string CommitHash;
 
-	std::string BuildTimestamp;
+    std::string BuildTimestamp;
 };
 
 /**
@@ -42,33 +42,33 @@ struct LibraryInfo
 class ProjectInfoSystem final : public IGameSystem
 {
 public:
-	const char* GetName() const override { return "ProjectInfo"; }
+    const char* GetName() const override { return "ProjectInfo"; }
 
-	bool Initialize() override;
+    bool Initialize() override;
 
-	void PostInitialize() override {}
-	void Shutdown() override {}
+    void PostInitialize() override {}
+    void Shutdown() override {}
 
-	const LibraryInfo* GetLocalInfo() const { return &m_LocalInfo; }
+    const LibraryInfo* GetLocalInfo() const { return &m_LocalInfo; }
 
-	const LibraryInfo* GetServerInfo() const { return &m_ServerInfo; }
+    const LibraryInfo* GetServerInfo() const { return &m_ServerInfo; }
 
-	void SetServerInfo(LibraryInfo info)
-	{
-		m_ServerInfo = std::move(info);
-	}
+    void SetServerInfo( LibraryInfo info )
+    {
+        m_ServerInfo = std::move( info );
+    }
 
-	static bool IsAlphaBuild(const LibraryInfo& info);
-
-private:
-	static void PrintLocalInfo();
-	void PrintAllInfo();
-
-	static void PrintLibraryInfo(std::string_view name, const LibraryInfo& info);
+    static bool IsAlphaBuild( const LibraryInfo& info );
 
 private:
-	static const LibraryInfo m_LocalInfo;
-	LibraryInfo m_ServerInfo{};
+    static void PrintLocalInfo();
+    void PrintAllInfo();
+
+    static void PrintLibraryInfo( std::string_view name, const LibraryInfo& info );
+
+private:
+    static const LibraryInfo m_LocalInfo;
+    LibraryInfo m_ServerInfo{};
 };
 
 inline ProjectInfoSystem g_ProjectInfo;

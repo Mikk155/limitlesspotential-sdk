@@ -22,52 +22,52 @@ constexpr std::string_view CampaignSchemaName{"Campaign"sv};
 
 static std::string GetCampaignSelectSchema()
 {
-	return R"(
+    return R"(
 {
-	"$schema": "http://json-schema.org/draft-07/schema#",
-	"title": "Campaign Definition",
-	"type": "object",
-	"properties": {
-		"Label": {
-			"type": "string",
-			"pattern": "^.+$"
-		},
-		"Description": {
-			"type": "string"
-		},
-		"CampaignMap": {
-			"type": "string",
-			"pattern": "^.+$"
-		},
-		"TrainingMap": {
-			"type": "string",
-			"pattern": "^.+$"
-		}
-	},
-	"required": [
-		"Label"
-	]
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Campaign Definition",
+    "type": "object",
+    "properties": {
+        "Label": {
+            "type": "string",
+            "pattern": "^.+$"
+        },
+        "Description": {
+            "type": "string"
+        },
+        "CampaignMap": {
+            "type": "string",
+            "pattern": "^.+$"
+        },
+        "TrainingMap": {
+            "type": "string",
+            "pattern": "^.+$"
+        }
+    },
+    "required": [
+        "Label"
+    ]
 })";
 }
 
 bool CampaignSelectSystem::Initialize()
 {
-	m_Logger = g_Logging.CreateLogger("ui.campaign");
-	g_JSON.RegisterSchema(CampaignSchemaName, &GetCampaignSelectSchema);
-	return true;
+    m_Logger = g_Logging.CreateLogger( "ui.campaign" );
+    g_JSON.RegisterSchema( CampaignSchemaName, &GetCampaignSelectSchema );
+    return true;
 }
 
 void CampaignSelectSystem::Shutdown()
 {
-	g_Logging.RemoveLogger(m_Logger);
-	m_Logger.reset();
+    g_Logging.RemoveLogger( m_Logger );
+    m_Logger.reset();
 }
 
 std::vector<CampaignInfo> CampaignSelectSystem::LoadCampaigns()
 {
-	std::vector<CampaignInfo> campaigns;
+    std::vector<CampaignInfo> campaigns;
 
-	FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
+    FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
 
 	if (auto fileName = g_pFileSystem->FindFirst("campaigns/*.json", &handle); fileName)
 	{

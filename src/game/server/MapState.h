@@ -29,21 +29,21 @@
 class MapState final
 {
 public:
-	MapState() = default;
-	~MapState() = default;
+    MapState() = default;
+    ~MapState() = default;
 
-	MapState(const MapState&) = delete;
-	MapState& operator=(const MapState&) = delete;
+    MapState( const MapState& ) = delete;
+    MapState& operator=( const MapState& ) = delete;
 
-	MapState(MapState&&) = default;
-	MapState& operator=(MapState&&) = default;
+    MapState( MapState&& ) = default;
+    MapState& operator=( MapState&& ) = default;
 
-	std::optional<RGB24> m_HudColor;
-	std::optional<RGB24> m_CrosshairColor;
-	std::optional<SuitLightType> m_LightType;
+    std::optional<RGB24> m_HudColor;
+    std::optional<RGB24> m_CrosshairColor;
+    std::optional<SuitLightType> m_LightType;
 
 	// Initialized during config load.
-	std::unique_ptr<const ReplacementMap> m_GlobalModelReplacement;
-	std::unique_ptr<const ReplacementMap> m_GlobalSentenceReplacement;
-	std::unique_ptr<const ReplacementMap> m_GlobalSoundReplacement;
+    std::unique_ptr<const ReplacementMap> m_GlobalModelReplacement;
+    std::unique_ptr<const ReplacementMap> m_GlobalSentenceReplacement;
+    std::unique_ptr<const ReplacementMap> m_GlobalSoundReplacement;
 };

@@ -40,48 +40,48 @@ class SpectatorPanel : public Panel //, public vgui::CDefaultInputSignal
 {
 
 public:
-	SpectatorPanel(int x, int y, int wide, int tall);
-	virtual ~SpectatorPanel();
+    SpectatorPanel( int x, int y, int wide, int tall );
+    virtual ~SpectatorPanel();
 
-	void ActionSignal(int cmd);
+    void ActionSignal( int cmd );
 
 	// InputSignal overrides.
 public:
-	void Initialize();
-	void Update();
+    void Initialize();
+    void Update();
 
 
 
 public:
-	void EnableInsetView(bool isEnabled);
-	void ShowMenu(bool isVisible);
+    void EnableInsetView( bool isEnabled );
+    void ShowMenu( bool isVisible );
 
-	DropDownButton* m_OptionButton;
+    DropDownButton* m_OptionButton;
 	//	CommandButton     *	m_HideButton;
 	// ColorButton	  *	m_PrevPlayerButton;
 	// ColorButton	  *	m_NextPlayerButton;
-	CImageButton* m_PrevPlayerButton;
-	CImageButton* m_NextPlayerButton;
-	DropDownButton* m_CamButton;
+    CImageButton* m_PrevPlayerButton;
+    CImageButton* m_NextPlayerButton;
+    DropDownButton* m_CamButton;
 
-	CTransparentPanel* m_TopBorder;
-	CTransparentPanel* m_BottomBorder;
+    CTransparentPanel* m_TopBorder;
+    CTransparentPanel* m_BottomBorder;
 
-	ColorButton* m_InsetViewButton;
+    ColorButton* m_InsetViewButton;
 
-	DropDownButton* m_BottomMainButton;
-	CImageLabel* m_TimerImage;
-	Label* m_BottomMainLabel;
-	Label* m_CurrentTime;
-	Label* m_ExtraInfo;
-	Panel* m_Separator;
+    DropDownButton* m_BottomMainButton;
+    CImageLabel* m_TimerImage;
+    Label* m_BottomMainLabel;
+    Label* m_CurrentTime;
+    Label* m_ExtraInfo;
+    Panel* m_Separator;
 
-	Label* m_TeamScores[TEAM_NUMBER];
+    Label* m_TeamScores[TEAM_NUMBER];
 
-	CImageLabel* m_TopBanner;
+    CImageLabel* m_TopBanner;
 
-	bool m_menuVisible;
-	bool m_insetVisible;
+    bool m_menuVisible;
+    bool m_insetVisible;
 };
 
 
@@ -90,18 +90,18 @@ class CSpectatorHandler_Command : public ActionSignal
 {
 
 private:
-	SpectatorPanel* m_pFather;
-	int m_cmd;
+    SpectatorPanel* m_pFather;
+    int m_cmd;
 
 public:
-	CSpectatorHandler_Command(SpectatorPanel* panel, int cmd)
-	{
-		m_pFather = panel;
-		m_cmd = cmd;
-	}
+    CSpectatorHandler_Command( SpectatorPanel* panel, int cmd )
+    {
+        m_pFather = panel;
+        m_cmd = cmd;
+    }
 
-	void actionPerformed(Panel* panel) override
-	{
-		m_pFather->ActionSignal(m_cmd);
-	}
+    void actionPerformed( Panel* panel ) override
+    {
+        m_pFather->ActionSignal( m_cmd );
+    }
 };

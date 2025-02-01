@@ -19,29 +19,29 @@
 
 enum egon_e
 {
-	EGON_IDLE1 = 0,
-	EGON_FIDGET1,
-	EGON_ALTFIREON,
-	EGON_ALTFIRECYCLE,
-	EGON_ALTFIREOFF,
-	EGON_FIRE1,
-	EGON_FIRE2,
-	EGON_FIRE3,
-	EGON_FIRE4,
-	EGON_DRAW,
-	EGON_HOLSTER
+    EGON_IDLE1 = 0,
+    EGON_FIDGET1,
+    EGON_ALTFIREON,
+    EGON_ALTFIRECYCLE,
+    EGON_ALTFIREOFF,
+    EGON_FIRE1,
+    EGON_FIRE2,
+    EGON_FIRE3,
+    EGON_FIRE4,
+    EGON_DRAW,
+    EGON_HOLSTER
 };
 
 enum EGON_FIRESTATE
 {
-	FIRE_OFF,
-	FIRE_CHARGE
+    FIRE_OFF,
+    FIRE_CHARGE
 };
 
 enum EGON_FIREMODE
 {
-	FIRE_NARROW,
-	FIRE_WIDE
+    FIRE_NARROW,
+    FIRE_WIDE
 };
 
 #define EGON_PRIMARY_VOLUME 450
@@ -53,65 +53,65 @@ enum EGON_FIREMODE
 
 class CEgon : public CBasePlayerWeapon
 {
-	DECLARE_CLASS(CEgon, CBasePlayerWeapon);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CEgon, CBasePlayerWeapon );
+    DECLARE_DATAMAP();
 
 public:
-	void OnCreate() override;
-	void Precache() override;
-	bool GetWeaponInfo(WeaponInfo& info) override;
-	void IncrementAmmo(CBasePlayer* pPlayer) override;
+    void OnCreate() override;
+    void Precache() override;
+    bool GetWeaponInfo( WeaponInfo& info ) override;
+    void IncrementAmmo( CBasePlayer* pPlayer ) override;
 
-	bool Deploy() override;
-	void Holster() override;
+    bool Deploy() override;
+    void Holster() override;
 
-	void UpdateEffect(const Vector& startPoint, const Vector& endPoint, float timeBlend);
+    void UpdateEffect( const Vector& startPoint, const Vector& endPoint, float timeBlend );
 
-	void CreateEffect();
-	void DestroyEffect();
+    void CreateEffect();
+    void DestroyEffect();
 
-	void EndAttack();
-	void Attack();
-	void PrimaryAttack() override;
-	bool ShouldWeaponIdle() override { return true; }
-	void WeaponIdle() override;
+    void EndAttack();
+    void Attack();
+    void PrimaryAttack() override;
+    bool ShouldWeaponIdle() override { return true; }
+    void WeaponIdle() override;
 
-	float m_flAmmoUseTime; // since we use < 1 point of ammo per update, we subtract ammo on a timer.
+    float m_flAmmoUseTime; // since we use < 1 point of ammo per update, we subtract ammo on a timer.
 
-	float GetPulseInterval();
-	float GetDischargeInterval();
+    float GetPulseInterval();
+    float GetDischargeInterval();
 
-	void Fire(const Vector& vecOrigSrc, const Vector& vecDir);
+    void Fire( const Vector& vecOrigSrc, const Vector& vecDir );
 
-	bool HasAmmo();
+    bool HasAmmo();
 
-	void UseAmmo(int count);
+    void UseAmmo( int count );
 
-	CBeam* m_pBeam;
-	CBeam* m_pNoise;
-	CSprite* m_pSprite;
+    CBeam* m_pBeam;
+    CBeam* m_pNoise;
+    CSprite* m_pSprite;
 
-	bool UseDecrement() override
-	{
-#if defined(CLIENT_WEAPONS)
-		return true;
+    bool UseDecrement() override
+    {
+#if defined( CLIENT_WEAPONS )
+        return true;
 #else
-		return false;
+        return false;
 #endif
-	}
+    }
 
-	void GetWeaponData(weapon_data_t& data) override;
+    void GetWeaponData( weapon_data_t& data ) override;
 
-	void SetWeaponData(const weapon_data_t& data) override;
+    void SetWeaponData( const weapon_data_t& data ) override;
 
-	unsigned short m_usEgonStop;
+    unsigned short m_usEgonStop;
 
 private:
-	float m_shootTime;
-	EGON_FIREMODE m_fireMode;
-	float m_shakeTime;
-	bool m_deployed;
-	int m_fireState;
+    float m_shootTime;
+    EGON_FIREMODE m_fireMode;
+    float m_shakeTime;
+    bool m_deployed;
+    int m_fireState;
 
-	unsigned short m_usEgonFire;
+    unsigned short m_usEgonFire;
 };

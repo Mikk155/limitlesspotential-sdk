@@ -40,9 +40,9 @@ constexpr auto SF_SCRIPT_NORESETENTITY = 256;
 
 enum SS_INTERRUPT
 {
-	SS_INTERRUPT_IDLE = 0,
-	SS_INTERRUPT_BY_NAME,
-	SS_INTERRUPT_AI,
+    SS_INTERRUPT_IDLE = 0,
+    SS_INTERRUPT_BY_NAME,
+    SS_INTERRUPT_AI,
 };
 
 // when a monster finishes an AI scripted sequence, we can choose
@@ -64,93 +64,93 @@ enum SS_INTERRUPT
  */
 class CCineMonster : public CBaseMonster
 {
-	DECLARE_CLASS(CCineMonster, CBaseMonster);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CCineMonster, CBaseMonster );
+    DECLARE_DATAMAP();
 
 public:
-	static inline std::shared_ptr<spdlog::logger> AIScriptLogger;
+    static inline std::shared_ptr<spdlog::logger> AIScriptLogger;
 
-	void OnCreate() override;
-	void Spawn() override;
-	bool KeyValue(KeyValueData* pkvd) override;
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	void Blocked(CBaseEntity* pOther) override;
-	void Touch(CBaseEntity* pOther) override;
+    void OnCreate() override;
+    void Spawn() override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Blocked( CBaseEntity* pOther ) override;
+    void Touch( CBaseEntity* pOther ) override;
 	// Don't allow player to +use this.
-	int ObjectCaps() override { return (CBaseMonster::ObjectCaps() & ~(FCAP_ACROSS_TRANSITION | FCAP_IMPULSE_USE)); }
+    int ObjectCaps() override { return ( CBaseMonster::ObjectCaps() & ~( FCAP_ACROSS_TRANSITION | FCAP_IMPULSE_USE ) ); }
 
 	/**
 	 *	@brief Find an entity that I'm interested in and precache the sounds he'll need in the sequence.
 	 */
-	void Activate() override;
+    void Activate() override;
 
-	void CineThink();
-	void Pain();
-	void Die();
+    void CineThink();
+    void Pain();
+    void Die();
 
 	/**
 	 *	@brief find all the cinematic entities with my targetname and tell them to wait before starting
 	 */
-	void DelayStart(bool state);
+    void DelayStart( bool state );
 
 	/**
 	 *	@brief find a viable entity
 	 */
-	bool FindEntity();
+    bool FindEntity();
 
 	/**
 	 *	@brief make the entity enter a scripted sequence
 	 */
-	virtual void PossessEntity();
+    virtual void PossessEntity();
 
 	/**
 	 *	@brief find all the cinematic entities with my targetname and stop them from playing
 	 */
-	void CancelScript();
+    void CancelScript();
 
 	/**
 	 *	@brief lookup a sequence name and setup the target monster to play it
 	 */
-	virtual bool StartSequence(CBaseMonster* pTarget, string_t iszSeq, bool completeOnEmpty);
+    virtual bool StartSequence( CBaseMonster* pTarget, string_t iszSeq, bool completeOnEmpty );
 
 	/**
 	 *	@brief returns false, scripted sequences cannot possess entities regardless of state.
 	 */
-	virtual bool FCanOverrideState();
+    virtual bool FCanOverrideState();
 
 	/**
 	 *	@brief called when a scripted sequence animation sequence is done playing
 	 *	(or when an AI Scripted Sequence doesn't supply an animation sequence to play).
 	 *	Expects the CBaseMonster pointer to the monster that the sequence possesses.
 	 */
-	void SequenceDone(CBaseMonster* pMonster);
+    void SequenceDone( CBaseMonster* pMonster );
 
 	/**
 	 *	@brief When a monster finishes a scripted sequence,
 	 *	we have to fix up its state and schedule for it to return to a normal AI monster.
 	 *	@details Scripted sequences just dirty the Schedule and drop the monster in Idle State.
 	 */
-	virtual void FixScriptMonsterSchedule(CBaseMonster* pMonster);
-	bool CanInterrupt();
-	void AllowInterrupt(bool fAllow);
-	int IgnoreConditions() override;
+    virtual void FixScriptMonsterSchedule( CBaseMonster* pMonster );
+    bool CanInterrupt();
+    void AllowInterrupt( bool fAllow );
+    int IgnoreConditions() override;
 
-	string_t m_iszIdle;	  //!< string index for idle animation
-	string_t m_iszPlay;	  //!< string index for scripted animation
-	string_t m_iszEntity; //!< entity that is wanted for this script
-	int m_fMoveTo;
-	int m_iFinishSchedule;
-	float m_flRadius; //!< range to search
-	float m_flRepeat; //!< repeat rate
+    string_t m_iszIdle;      //!< string index for idle animation
+    string_t m_iszPlay;      //!< string index for scripted animation
+    string_t m_iszEntity; //!< entity that is wanted for this script
+    int m_fMoveTo;
+    int m_iFinishSchedule;
+    float m_flRadius; //!< range to search
+    float m_flRepeat; //!< repeat rate
 
-	int m_iDelay;
-	float m_startTime;
+    int m_iDelay;
+    float m_startTime;
 
-	int m_saved_movetype;
-	int m_saved_solid;
-	int m_saved_effects;
+    int m_saved_movetype;
+    int m_saved_solid;
+    int m_saved_effects;
 	//	Vector m_vecOrigOrigin;
-	bool m_interruptable;
+    bool m_interruptable;
 };
 
 class CCineAI : public CCineMonster
@@ -160,17 +160,17 @@ class CCineAI : public CCineMonster
 	 *	overridden for CCineAI because it's ok for them to not have an animation sequence for the monster to play.
 	 *	For a regular Scripted Sequence, that situation is an error.
 	 */
-	bool StartSequence(CBaseMonster* pTarget, string_t iszSeq, bool completeOnEmpty) override;
+    bool StartSequence( CBaseMonster* pTarget, string_t iszSeq, bool completeOnEmpty ) override;
 
 	/**
 	 *	@brief make the entity carry out the scripted sequence instructions, but without destroying the monster's state.
 	 */
-	void PossessEntity() override;
+    void PossessEntity() override;
 
 	/**
 	 *	@brief returns true because scripted AI can possess entities regardless of their state.
 	 */
-	bool FCanOverrideState() override;
+    bool FCanOverrideState() override;
 
 	/**
 	 *	@brief When a monster finishes a scripted sequence,
@@ -179,5 +179,5 @@ class CCineAI : public CCineMonster
 	 *	-Dirty the monster's schedule and drop out of the  sequence in their current state.
 	 *	-Select a specific AMBUSH schedule, regardless of state.
 	 */
-	void FixScriptMonsterSchedule(CBaseMonster* pMonster) override;
+    void FixScriptMonsterSchedule( CBaseMonster* pMonster ) override;
 };

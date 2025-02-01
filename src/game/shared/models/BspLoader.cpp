@@ -21,29 +21,29 @@
 // Pull in tools header for definitions. Don't call any of its functions!
 #include "../../utils/common/bspfile.h"
 
-std::optional<BspData> BspLoader::Load(const char* fileName)
+std::optional<BspData> BspLoader::Load( const char* fileName )
 {
-	const auto contents = FileSystem_LoadFileIntoBuffer(fileName, FileContentFormat::Binary);
+    const auto contents = FileSystem_LoadFileIntoBuffer( fileName, FileContentFormat::Binary );
 
-	if (contents.size() < sizeof(dheader_t))
-	{
-		return {};
-	}
+    if( contents.size() < sizeof( dheader_t ) )
+    {
+        return {};
+    }
 
-	dheader_t header;
+    dheader_t header;
 
-	std::memcpy(&header, contents.data(), sizeof(dheader_t));
+    std::memcpy( &header, contents.data(), sizeof( dheader_t ) );
 
-	if (header.version != BSPVERSION)
-	{
-		return {};
-	}
+    if( header.version != BSPVERSION )
+    {
+        return {};
+    }
 
-	BspData data;
+    BspData data;
 
-	const auto& modelLump = header.lumps[LUMP_MODELS];
+    const auto& modelLump = header.lumps[LUMP_MODELS];
 
-	data.SubModelCount = static_cast<std::size_t>(modelLump.filelen) / sizeof(dmodel_t);
+    data.SubModelCount = static_cast<std::size_t>( modelLump.filelen ) / sizeof( dmodel_t );
 
-	return data;
+    return data;
 }

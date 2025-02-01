@@ -31,36 +31,36 @@
 class EntityTemplatesSection final : public GameConfigSection<ServerConfigContext>
 {
 public:
-	explicit EntityTemplatesSection() = default;
+    explicit EntityTemplatesSection() = default;
 
-	std::string_view GetName() const override final { return "EntityTemplates"; }
+    std::string_view GetName() const override final { return "EntityTemplates"; }
 
-	json::value_t GetType() const override final { return json::value_t::object; }
+    json::value_t GetType() const override final { return json::value_t::object; }
 
-	std::string GetSchema() const override final
-	{
-		return R"|(
+    std::string GetSchema() const override final
+    {
+        return R"|( 
 "properties": {
-	"^.+$": {
-		"title": "Template FileName",
-		"type": "string"
-	}
-})|";
-	}
+    "^.+$": {
+        "title": "Template FileName",
+        "type": "string"
+    }
+} )|";
+    }
 
-	bool TryParse(GameConfigContext<ServerConfigContext>& context) const override final
-	{
-		EntityTemplateMap templateMap;
+    bool TryParse( GameConfigContext<ServerConfigContext>& context ) const override final
+    {
+        EntityTemplateMap templateMap;
 
-		for (const auto& [key, value] : context.Input.items())
-		{
-			templateMap.insert_or_assign(key, value.get<std::string>());
-		}
+        for( const auto& [key, value] : context.Input.items() )
+        {
+            templateMap.insert_or_assign( key, value.get<std::string>() );
+        }
 
-		templateMap.insert(context.Data.EntityTemplates.begin(), context.Data.EntityTemplates.end());
+        templateMap.insert( context.Data.EntityTemplates.begin(), context.Data.EntityTemplates.end() );
 
-		context.Data.EntityTemplates = std::move(templateMap);
+        context.Data.EntityTemplates = std::move( templateMap );
 
-		return true;
-	}
+        return true;
+    }
 };

@@ -28,60 +28,60 @@ using MoveDonePtr = TBASEPTR<CBaseToggle>;
  */
 class CBaseToggle : public CBaseAnimating
 {
-	DECLARE_CLASS(CBaseToggle, CBaseAnimating);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CBaseToggle, CBaseAnimating );
+    DECLARE_DATAMAP();
 
 public:
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	TOGGLE_STATE m_toggle_state;
-	float m_flActivateFinished; // like attack_finished, but for doors
-	float m_flMoveDistance;		// how far a door should slide or rotate
-	float m_flWait;
-	float m_flLip;
+    TOGGLE_STATE m_toggle_state;
+    float m_flActivateFinished; // like attack_finished, but for doors
+    float m_flMoveDistance;        // how far a door should slide or rotate
+    float m_flWait;
+    float m_flLip;
 
-	Vector m_vecPosition1;
-	Vector m_vecPosition2;
-	Vector m_vecAngle1;
-	Vector m_vecAngle2;
+    Vector m_vecPosition1;
+    Vector m_vecPosition2;
+    Vector m_vecAngle1;
+    Vector m_vecAngle2;
 
-	MoveDonePtr m_pfnCallWhenMoveDone;
-	Vector m_vecFinalDest;
-	Vector m_vecFinalAngle;
+    MoveDonePtr m_pfnCallWhenMoveDone;
+    Vector m_vecFinalDest;
+    Vector m_vecFinalAngle;
 
-	float GetDelay() override { return m_flWait; }
+    float GetDelay() override { return m_flWait; }
 
 	// common member functions
 	/**
 	 *	@brief calculate pev->velocity and pev->nextthink to reach vecDest from pev->origin traveling at flSpeed
 	 */
-	void LinearMove(Vector vecDest, float flSpeed);
+    void LinearMove( Vector vecDest, float flSpeed );
 
 	/**
 	 *	@brief After moving, set origin to exact final destination, call "move done" function
 	 */
-	void LinearMoveDone();
+    void LinearMoveDone();
 
 	/**
 	 *	@brief calculate pev->velocity and pev->nextthink to reach vecDest from pev->origin traveling at flSpeed
 	 *	Just like LinearMove, but rotational.
 	 */
-	void AngularMove(Vector vecDestAngle, float flSpeed);
+    void AngularMove( Vector vecDestAngle, float flSpeed );
 
 	/**
 	 *	@brief After rotating, set angle to exact final angle, call "move done" function
 	 */
-	void AngularMoveDone();
+    void AngularMoveDone();
 
-	static float AxisValue(int flags, const Vector& angles);
-	static void AxisDir(CBaseEntity* entity);
-	static float AxisDelta(int flags, const Vector& angle1, const Vector& angle2);
+    static float AxisValue( int flags, const Vector& angles );
+    static void AxisDir( CBaseEntity* entity );
+    static float AxisDelta( int flags, const Vector& angle1, const Vector& angle2 );
 
-	template <typename T>
-	MoveDonePtr MoveDoneSet(TBASEPTR<T> func, const char* name)
-	{
-		return FunctionSet<T>(m_pfnCallWhenMoveDone, func, name);
-	}
+    template <typename T>
+    MoveDonePtr MoveDoneSet( TBASEPTR<T> func, const char* name )
+    {
+        return FunctionSet<T>( m_pfnCallWhenMoveDone, func, name );
+    }
 };
 
 #define SetMoveDone(a) MoveDoneSet(a, #a)

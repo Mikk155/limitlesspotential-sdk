@@ -20,7 +20,7 @@ cvar_t displaysoundlist = {"displaysoundlist", "0"};
 
 // multiplayer server rules
 cvar_t fragsleft = {"mp_fragsleft", "0", FCVAR_SERVER | FCVAR_UNLOGGED}; // Don't spam console/log files/users with this changing
-cvar_t timeleft = {"mp_timeleft", "0", FCVAR_SERVER | FCVAR_UNLOGGED};	 // "      "
+cvar_t timeleft = {"mp_timeleft", "0", FCVAR_SERVER | FCVAR_UNLOGGED};     // "      "
 
 // multiplayer server rules
 cvar_t fraglimit = {"mp_fraglimit", "0", FCVAR_SERVER};
@@ -57,24 +57,24 @@ cvar_t sv_schedule_debug{"sv_schedule_debug", "0", FCVAR_SERVER};
 
 static bool SV_InitServer()
 {
-	if (!FileSystem_LoadFileSystem())
-	{
-		return false;
-	}
+    if( !FileSystem_LoadFileSystem() )
+    {
+        return false;
+    }
 
-	if (UTIL_IsValveGameDirectory())
-	{
-		g_engfuncs.pfnServerPrint("This mod has detected that it is being run from a Valve game directory which is not supported\n"
-								  "Run this mod from its intended location\n\nThe game will now shut down\n");
-		return false;
-	}
+    if( UTIL_IsValveGameDirectory() )
+    {
+        g_engfuncs.pfnServerPrint( "This mod has detected that it is being run from a Valve game directory which is not supported\n"
+                                  "Run this mod from its intended location\n\nThe game will now shut down\n" );
+        return false;
+    }
 
-	if (!g_Server.Initialize())
-	{
-		return false;
-	}
+    if( !g_Server.Initialize() )
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 // Register your console variables here
@@ -83,66 +83,66 @@ void GameDLLInit()
 {
 	// Register cvars here:
 
-	g_psv_gravity = CVAR_GET_POINTER("sv_gravity");
-	g_psv_aim = CVAR_GET_POINTER("sv_aim");
-	g_footsteps = CVAR_GET_POINTER("mp_footsteps");
-	g_psv_cheats = CVAR_GET_POINTER("sv_cheats");
+    g_psv_gravity = CVAR_GET_POINTER( "sv_gravity" );
+    g_psv_aim = CVAR_GET_POINTER( "sv_aim" );
+    g_footsteps = CVAR_GET_POINTER( "mp_footsteps" );
+    g_psv_cheats = CVAR_GET_POINTER( "sv_cheats" );
 
-	if (!SV_InitServer())
-	{
-		g_engfuncs.pfnServerPrint("Error initializing server\n");
+    if( !SV_InitServer() )
+    {
+        g_engfuncs.pfnServerPrint( "Error initializing server\n" );
 		// Shut the game down as soon as possible.
-		SERVER_COMMAND("quit\n");
-		return;
-	}
+        SERVER_COMMAND( "quit\n" );
+        return;
+    }
 
-	CVAR_REGISTER(&displaysoundlist);
-	CVAR_REGISTER(&allow_spectators);
+    CVAR_REGISTER( &displaysoundlist );
+    CVAR_REGISTER( &allow_spectators );
 
-	CVAR_REGISTER(&fraglimit);
-	CVAR_REGISTER(&timelimit);
+    CVAR_REGISTER( &fraglimit );
+    CVAR_REGISTER( &timelimit );
 
-	CVAR_REGISTER(&fragsleft);
-	CVAR_REGISTER(&timeleft);
+    CVAR_REGISTER( &fragsleft );
+    CVAR_REGISTER( &timeleft );
 
-	CVAR_REGISTER(&friendlyfire);
-	CVAR_REGISTER(&forcerespawn);
-	CVAR_REGISTER(&aimcrosshair);
-	CVAR_REGISTER(&decalfrequency);
-	CVAR_REGISTER(&teamlist);
-	CVAR_REGISTER(&teamoverride);
-	CVAR_REGISTER(&defaultteam);
+    CVAR_REGISTER( &friendlyfire );
+    CVAR_REGISTER( &forcerespawn );
+    CVAR_REGISTER( &aimcrosshair );
+    CVAR_REGISTER( &decalfrequency );
+    CVAR_REGISTER( &teamlist );
+    CVAR_REGISTER( &teamoverride );
+    CVAR_REGISTER( &defaultteam );
 
-	CVAR_REGISTER(&mp_chattime);
+    CVAR_REGISTER( &mp_chattime );
 
-	CVAR_REGISTER(&sv_allowbunnyhopping);
+    CVAR_REGISTER( &sv_allowbunnyhopping );
 
 	// BEGIN REGISTER CVARS FOR OPPOSING FORCE
 
-	CVAR_REGISTER(&ctfplay);
-	CVAR_REGISTER(&ctf_autoteam);
-	CVAR_REGISTER(&ctf_capture);
+    CVAR_REGISTER( &ctfplay );
+    CVAR_REGISTER( &ctf_autoteam );
+    CVAR_REGISTER( &ctf_capture );
 
-	CVAR_REGISTER(&spamdelay);
-	CVAR_REGISTER(&multipower);
+    CVAR_REGISTER( &spamdelay );
+    CVAR_REGISTER( &multipower );
 
-	CVAR_REGISTER(&sv_entityinfo_enabled);
-	CVAR_REGISTER(&sv_entityinfo_eager);
+    CVAR_REGISTER( &sv_entityinfo_enabled );
+    CVAR_REGISTER( &sv_entityinfo_eager );
 
 	// END REGISTER CVARS FOR OPPOSING FORCE
 
 	// Default to on in debug builds to match original behavior.
 #ifdef DEBUG
-	sv_schedule_debug.string = "1";
+    sv_schedule_debug.string = "1";
 #endif
 
-	CVAR_REGISTER(&sv_schedule_debug);
+    CVAR_REGISTER( &sv_schedule_debug );
 
 	// Link user messages immediately so there are no race conditions.
-	LinkUserMessages();
+    LinkUserMessages();
 }
 
 void GameDLLShutdown()
 {
-	g_Server.Shutdown();
+    g_Server.Shutdown();
 }

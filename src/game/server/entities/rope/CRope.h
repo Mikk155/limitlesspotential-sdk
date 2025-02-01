@@ -25,11 +25,11 @@ struct RopeSampleData;
  */
 struct Spring
 {
-	size_t p1;
-	size_t p2;
-	float restLength;
-	float hookConstant;
-	float springDampning;
+    size_t p1;
+    size_t p2;
+    float restLength;
+    float hookConstant;
+    float springDampning;
 };
 
 /**
@@ -38,55 +38,55 @@ struct Spring
  */
 class CRope : public CBaseDelay
 {
-	DECLARE_CLASS(CRope, CBaseDelay);
-	DECLARE_DATAMAP();
+    DECLARE_CLASS( CRope, CBaseDelay );
+    DECLARE_DATAMAP();
 
 public:
-	static const size_t MAX_SEGMENTS = 63;
+    static const size_t MAX_SEGMENTS = 63;
 
-	static const size_t MAX_SAMPLES = 64;
+    static const size_t MAX_SAMPLES = 64;
 
-	static const size_t MAX_TEMP_SAMPLES = 5;
+    static const size_t MAX_TEMP_SAMPLES = 5;
 
 public:
-	CRope();
-	~CRope();
+    CRope();
+    ~CRope();
 
-	bool KeyValue(KeyValueData* pkvd) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
 
-	void Precache() override;
+    void Precache() override;
 
-	void Spawn() override;
+    void Spawn() override;
 
-	void UpdateOnRemove() override;
+    void UpdateOnRemove() override;
 
-	void Think() override;
+    void Think() override;
 
-	void Touch(CBaseEntity* pOther) override;
+    void Touch( CBaseEntity* pOther ) override;
 
-	void PostRestore() override;
+    void PostRestore() override;
 
-	void InitializeRopeSim();
+    void InitializeRopeSim();
 
-	void InitializeSprings(const size_t uiNumSprings);
+    void InitializeSprings( const size_t uiNumSprings );
 
-	void RunSimOnSamples();
+    void RunSimOnSamples();
 
 	/**
 	 *	Computes forces on the given sample list.
 	 *	@param pSystem List of sample data. CRope::m_NumSamples elements large.
 	 */
-	void ComputeForces(RopeSampleData* pSystem);
+    void ComputeForces( RopeSampleData* pSystem );
 
 	/**
 	 *	Computes forces on the given sample list.
 	 *	@param ppSystem List of samples. CRope::m_NumSamples elements large.
 	 */
-	void ComputeForces(CRopeSample** ppSystem);
+    void ComputeForces( CRopeSample** ppSystem );
 
-	void ComputeSampleForce(RopeSampleData& data);
+    void ComputeSampleForce( RopeSampleData& data );
 
-	void ComputeSpringForce(RopeSampleData& first, RopeSampleData& second, const Spring& spring);
+    void ComputeSpringForce( RopeSampleData& first, RopeSampleData& second, const Spring& spring );
 
 	/**
 	 *	Runs RK4 integration.
@@ -94,139 +94,139 @@ public:
 	 *	@param ppSampleSource Previous sample state.
 	 *	@param ppSampleTarget Next sample state.
 	 */
-	void RK4Integrate(const float flDeltaTime, CRopeSample** ppSampleSource, CRopeSample** ppSampleTarget);
+    void RK4Integrate( const float flDeltaTime, CRopeSample** ppSampleSource, CRopeSample** ppSampleTarget );
 
 	/**
 	 *	Traces model positions and angles and corrects them.
 	 *	@param ppPrimarySegs Visible segments.
 	 *	@param ppHiddenSegs hidden segments.
 	 */
-	void TraceModels(CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs);
+    void TraceModels( CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs );
 
 	/**
 	 *	Traces model positions and angles, makes visible segments visible and hidden segments hidden.
 	 */
-	void SetRopeSegments(const size_t uiNumSegments,
-		CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs);
+    void SetRopeSegments( const size_t uiNumSegments,
+        CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs );
 
 	/**
 	 *	Moves the attached object up.
 	 *	@param flDeltaTime Time between previous and current movement.
 	 *	@return true if the object is still on the rope, false otherwise.
 	 */
-	bool MoveUp(const float flDeltaTime);
+    bool MoveUp( const float flDeltaTime );
 
 	/**
 	 *	Moves the attached object down.
 	 *	@param flDeltaTime Time between previous and current movement.
 	 *	@return true if the object is still on the rope, false otherwise.
 	 */
-	bool MoveDown(const float flDeltaTime);
+    bool MoveDown( const float flDeltaTime );
 
-	Vector GetAttachedObjectsVelocity() const;
+    Vector GetAttachedObjectsVelocity() const;
 
 	/**
 	 *	Applies force from the player. Only applies if there is currently an object attached to the rope.
 	 */
-	void ApplyForceFromPlayer(const Vector& vecForce);
+    void ApplyForceFromPlayer( const Vector& vecForce );
 
-	void ApplyForceToSegment(const Vector& vecForce, const size_t uiSegment);
+    void ApplyForceToSegment( const Vector& vecForce, const size_t uiSegment );
 
-	void AttachObjectToSegment(CRopeSegment* pSegment);
+    void AttachObjectToSegment( CRopeSegment* pSegment );
 
-	void DetachObject();
+    void DetachObject();
 
-	bool IsObjectAttached() const { return m_bObjectAttached != false; }
+    bool IsObjectAttached() const { return m_bObjectAttached != false; }
 
-	bool IsAcceptingAttachment() const;
+    bool IsAcceptingAttachment() const;
 
-	size_t GetNumSegments() const { return m_uiSegments; }
+    size_t GetNumSegments() const { return m_uiSegments; }
 
-	CRopeSegment** GetSegments() { return seg; }
+    CRopeSegment** GetSegments() { return seg; }
 
-	CRopeSegment** GetAltSegments() { return altseg; }
+    CRopeSegment** GetAltSegments() { return altseg; }
 
-	bool GetToggleValue() const { return m_bToggle != false; }
+    bool GetToggleValue() const { return m_bToggle != false; }
 
-	bool IsSoundAllowed() const { return m_bMakeSound != false; }
+    bool IsSoundAllowed() const { return m_bMakeSound != false; }
 
-	void SetSoundAllowed(const bool bAllowed)
-	{
-		m_bMakeSound = bAllowed;
-	}
+    void SetSoundAllowed( const bool bAllowed )
+    {
+        m_bMakeSound = bAllowed;
+    }
 
-	bool ShouldCreak() const;
+    bool ShouldCreak() const;
 
 	/**
 	 *	Plays a creak sound.
 	 */
-	void Creak();
+    void Creak();
 
-	string_t GetBodyModel() const { return m_iszBodyModel; }
+    string_t GetBodyModel() const { return m_iszBodyModel; }
 
-	string_t GetEndingModel() const { return m_iszEndingModel; }
+    string_t GetEndingModel() const { return m_iszEndingModel; }
 
-	float GetSegmentLength(size_t uiSegmentIndex) const;
+    float GetSegmentLength( size_t uiSegmentIndex ) const;
 
-	float GetRopeLength() const;
+    float GetRopeLength() const;
 
-	Vector GetRopeOrigin() const;
+    Vector GetRopeOrigin() const;
 
-	bool IsValidSegmentIndex(const size_t uiSegment) const;
+    bool IsValidSegmentIndex( const size_t uiSegment ) const;
 
-	Vector GetSegmentOrigin(const size_t uiSegment) const;
+    Vector GetSegmentOrigin( const size_t uiSegment ) const;
 
-	Vector GetSegmentAttachmentPoint(const size_t uiSegment) const;
+    Vector GetSegmentAttachmentPoint( const size_t uiSegment ) const;
 
-	void SetAttachedObjectsSegment(CRopeSegment* pSegment);
+    void SetAttachedObjectsSegment( CRopeSegment* pSegment );
 
 	/**
 	 *	@param uiSegmentIndex Segment index.
 	 *	@return The segment direction normal from its origin.
 	 */
-	Vector GetSegmentDirFromOrigin(const size_t uiSegmentIndex) const;
+    Vector GetSegmentDirFromOrigin( const size_t uiSegmentIndex ) const;
 
-	Vector GetAttachedObjectsPosition() const;
+    Vector GetAttachedObjectsPosition() const;
 
 private:
-	size_t m_uiSegments;
+    size_t m_uiSegments;
 
-	CRopeSegment* seg[MAX_SEGMENTS];
-	CRopeSegment* altseg[MAX_SEGMENTS];
+    CRopeSegment* seg[MAX_SEGMENTS];
+    CRopeSegment* altseg[MAX_SEGMENTS];
 
-	bool m_bToggle;
+    bool m_bToggle;
 
-	bool m_bInitialDeltaTime;
+    bool m_bInitialDeltaTime;
 
-	float m_flLastTime;
+    float m_flLastTime;
 
-	Vector m_vecLastEndPos;
-	Vector m_vecGravity;
-	float m_flHookConstant;
-	float m_flSpringDampning;
+    Vector m_vecLastEndPos;
+    Vector m_vecGravity;
+    float m_flHookConstant;
+    float m_flSpringDampning;
 
-	CRopeSample* m_CurrentSys[MAX_SAMPLES];
-	CRopeSample* m_TargetSys[MAX_SAMPLES];
-	RopeSampleData* m_TempSys[MAX_TEMP_SAMPLES];
+    CRopeSample* m_CurrentSys[MAX_SAMPLES];
+    CRopeSample* m_TargetSys[MAX_SAMPLES];
+    RopeSampleData* m_TempSys[MAX_TEMP_SAMPLES];
 
-	size_t m_uiNumSamples;
+    size_t m_uiNumSamples;
 
-	Spring* m_pSprings;
+    Spring* m_pSprings;
 
-	size_t m_SpringCnt;
+    size_t m_SpringCnt;
 
-	bool m_bSpringsInitialized;
+    bool m_bSpringsInitialized;
 
-	bool m_bObjectAttached;
+    bool m_bObjectAttached;
 
-	size_t m_uiAttachedObjectsSegment;
-	float m_flAttachedObjectsOffset;
-	float m_flDetachTime;
+    size_t m_uiAttachedObjectsSegment;
+    float m_flAttachedObjectsOffset;
+    float m_flDetachTime;
 
-	string_t m_iszBodyModel;
-	string_t m_iszEndingModel;
+    string_t m_iszBodyModel;
+    string_t m_iszEndingModel;
 
-	bool m_bDisallowPlayerAttachment;
+    bool m_bDisallowPlayerAttachment;
 
-	bool m_bMakeSound;
+    bool m_bMakeSound;
 };

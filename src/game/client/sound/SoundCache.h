@@ -40,57 +40,57 @@ class SoundCache final
 {
 private:
 	// Comparer that allows us to access the sound name in the set without making copies.
-	struct LookupComparer
-	{
-		using is_transparent = void;
+    struct LookupComparer
+    {
+        using is_transparent = void;
 
-		explicit LookupComparer(std::vector<Sound>* cache)
-			: m_Cache(cache)
-		{
-		}
+        explicit LookupComparer( std::vector<Sound>* cache )
+            : m_Cache( cache )
+        {
+        }
 
-		bool operator()(std::size_t lhs, std::size_t rhs) const
-		{
-			return UTIL_CompareI(ToStringView((*m_Cache)[lhs].Name), ToStringView((*m_Cache)[rhs].Name)) < 0;
-		}
+        bool operator()( std::size_t lhs, std::size_t rhs ) const
+        {
+            return UTIL_CompareI( ToStringView( ( *m_Cache )[lhs].Name ), ToStringView( ( *m_Cache )[rhs].Name ) ) < 0;
+        }
 
-		bool operator()(std::string_view lhs, std::size_t rhs) const
-		{
-			return UTIL_CompareI(lhs, ToStringView((*m_Cache)[rhs].Name)) < 0;
-		}
+        bool operator()( std::string_view lhs, std::size_t rhs ) const
+        {
+            return UTIL_CompareI( lhs, ToStringView( ( *m_Cache )[rhs].Name ) ) < 0;
+        }
 
-		bool operator()(std::size_t lhs, std::string_view rhs) const
-		{
-			return UTIL_CompareI(ToStringView((*m_Cache)[lhs].Name), rhs) < 0;
-		}
+        bool operator()( std::size_t lhs, std::string_view rhs ) const
+        {
+            return UTIL_CompareI( ToStringView( ( *m_Cache )[lhs].Name ), rhs ) < 0;
+        }
 
-	private:
-		std::vector<Sound>* const m_Cache;
-	};
+    private:
+        std::vector<Sound>* const m_Cache;
+    };
 
 public:
-	explicit SoundCache(std::shared_ptr<spdlog::logger> logger);
+    explicit SoundCache( std::shared_ptr<spdlog::logger> logger );
 
-	SoundIndex FindName(const RelativeFilename& fileName);
+    SoundIndex FindName( const RelativeFilename& fileName );
 
-	Sound* GetSound(SoundIndex index);
+    Sound* GetSound( SoundIndex index );
 
-	bool LoadSound(Sound& sound);
+    bool LoadSound( Sound& sound );
 
-	void ClearBuffers();
+    void ClearBuffers();
 
-	void Clear();
-
-private:
-	std::optional<std::tuple<ALint, ALint>> TryLoadCuePoints(
-		const std::string& fileName, ALint sampleCount, int channelCount);
+    void Clear();
 
 private:
-	std::shared_ptr<spdlog::logger> m_Logger;
-	std::vector<Sound> m_Sounds;
+    std::optional<std::tuple<ALint, ALint>> TryLoadCuePoints( 
+        const std::string& fileName, ALint sampleCount, int channelCount );
 
-	std::set<std::size_t, LookupComparer> m_SoundLookup{LookupComparer{&m_Sounds}};
+private:
+    std::shared_ptr<spdlog::logger> m_Logger;
+    std::vector<Sound> m_Sounds;
 
-	std::unique_ptr<nqr::NyquistIO> m_Loader;
+    std::set<std::size_t, LookupComparer> m_SoundLookup{LookupComparer{&m_Sounds}};
+
+    std::unique_ptr<nqr::NyquistIO> m_Loader;
 };
 }

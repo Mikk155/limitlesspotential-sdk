@@ -23,46 +23,46 @@
 class CHalfLifeRules : public CGameRules
 {
 public:
-	static constexpr char GameModeName[] = "singleplayer";
+    static constexpr char GameModeName[] = "singleplayer";
 
-	CHalfLifeRules();
+    CHalfLifeRules();
 
-	const char* GetGameModeName() const override { return GameModeName; }
+    const char* GetGameModeName() const override { return GameModeName; }
 
-	void Think() override;
-	bool IsAllowedToSpawn(CBaseEntity* pEntity) override;
+    void Think() override;
+    bool IsAllowedToSpawn( CBaseEntity* pEntity ) override;
 
-	bool FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon) override;
-	bool GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch = false) override;
+    bool FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon ) override;
+    bool GetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch = false ) override;
 
-	bool IsMultiplayer() override { return false; }
-	bool IsDeathmatch() override { return false; }
-	bool IsCoOp() override { return false; }
-	bool IsCTF() override { return false; }
+    bool IsMultiplayer() override { return false; }
+    bool IsDeathmatch() override { return false; }
+    bool IsCoOp() override { return false; }
+    bool IsCTF() override { return false; }
 
-	bool ClientConnected(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128]) override;
-	void InitHUD(CBasePlayer* pl) override;
-	void ClientDisconnected(edict_t* pClient) override;
+    bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] ) override;
+    void InitHUD( CBasePlayer* pl ) override;
+    void ClientDisconnected( edict_t* pClient ) override;
 
-	void PlayerThink(CBasePlayer* pPlayer) override;
-	bool FPlayerCanRespawn(CBasePlayer* pPlayer) override;
-	float FlPlayerSpawnTime(CBasePlayer* pPlayer) override;
+    void PlayerThink( CBasePlayer* pPlayer ) override;
+    bool FPlayerCanRespawn( CBasePlayer* pPlayer ) override;
+    float FlPlayerSpawnTime( CBasePlayer* pPlayer ) override;
 
-	bool AllowAutoTargetCrosshair() override;
+    bool AllowAutoTargetCrosshair() override;
 
-	int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) override;
-	void PlayerKilled(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override;
-	void DeathNotice(CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor) override;
+    int IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled ) override;
+    void PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
+    void DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
 
-	void PlayerGotItem(CBasePlayer* player, CBaseItem* item) override;
+    void PlayerGotItem( CBasePlayer* player, CBaseItem* item ) override;
 
-	int DeadPlayerWeapons(CBasePlayer* pPlayer) override;
+    int DeadPlayerWeapons( CBasePlayer* pPlayer ) override;
 
-	int DeadPlayerAmmo(CBasePlayer* pPlayer) override;
+    int DeadPlayerAmmo( CBasePlayer* pPlayer ) override;
 
-	const char* GetTeamID(CBaseEntity* pEntity) override { return ""; }
-	int PlayerRelationship(CBasePlayer* pPlayer, CBaseEntity* pTarget) override;
+    const char* GetTeamID( CBaseEntity* pEntity ) override { return ""; }
+    int PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget ) override;
 
 private:
-	ScopedClientCommand m_VModEnableCommand;
+    ScopedClientCommand m_VModEnableCommand;
 };
