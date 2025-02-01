@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_spore_launcher.mdl",
+    "data": {},
+    "title": "weapon_sporelauncher::classname",
+    "description": "weapon_sporelauncher::classname::description"
+}

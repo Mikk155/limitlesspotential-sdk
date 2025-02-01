@@ -1,0 +1,58 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -32,
+            -32,
+            -32
+        ],
+        [
+            32,
+            32,
+            32
+        ]
+    ],
+    "studio": "models/turret.mdl",
+    "data": {
+        "orientation": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_turret::orientation::0",
+                    "description": "monster_turret::orientation::0::description"
+                },
+                "1": {
+                    "title": "monster_turret::orientation::1",
+                    "description": "monster_turret::orientation::1::description"
+                }
+            },
+            "title": "monster_turret::orientation",
+            "description": "monster_turret::orientation::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_turret::spawnflags::32",
+                    "description": "monster_turret::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "monster_turret::spawnflags::64",
+                    "description": "monster_turret::spawnflags::64::description"
+                }
+            }
+        }
+    },
+    "title": "monster_turret::classname",
+    "description": "monster_turret::classname::description"
+}

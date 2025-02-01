@@ -1,0 +1,36 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "RenderFields",
+        "Ammo"
+    ],
+    "studio": true,
+    "data": {
+        "model": {
+            "variable": "studio",
+            "value": "models/w_rpgammo.mdl",
+            "title": "CustomKeys::model"
+        },
+        "sequence": {
+            "variable": "choices",
+            "choices": {
+                "0": {
+                    "title": "ammo_rpgclip::sequence::0",
+                    "description": "ammo_rpgclip::sequence::0::description"
+                },
+                "1": {
+                    "title": "ammo_rpgclip::sequence::1",
+                    "description": "ammo_rpgclip::sequence::1::description"
+                }
+            },
+            "title": "ammo_rpgclip::sequence",
+            "description": "ammo_rpgclip::sequence::description"
+        }
+    },
+    "title": "ammo_rpgclip::classname",
+    "description": "ammo_rpgclip::classname::description"
+}

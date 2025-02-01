@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Item"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/w_medkit.mdl",
+    "data": {
+        "health_amount": {
+            "variable": "string",
+            "title": "item_healthkit::health_amount",
+            "description": "item_healthkit::health_amount::description"
+        }
+    },
+    "title": "item_healthkit::classname",
+    "description": "item_healthkit::classname::description"
+}

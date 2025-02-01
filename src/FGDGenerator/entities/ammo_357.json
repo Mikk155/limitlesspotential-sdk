@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "RenderFields",
+        "Ammo"
+    ],
+    "studio": true,
+    "data": {
+        "model": {
+            "variable": "studio",
+            "value": "models/w_357ammobox.mdl",
+            "title": "CustomKeys::model"
+        }
+    },
+    "title": "ammo_357::classname",
+    "description": "ammo_357::classname::description"
+}

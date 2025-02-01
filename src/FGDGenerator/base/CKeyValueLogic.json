@@ -1,0 +1,149 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Base",
+    "data":
+    {
+        "m_sTargetEntity":
+        {
+            "variable": "target_destination",
+            "title": "CKeyValueLogic::m_sTargetEntity",
+            "description": "CKeyValueLogic::m_sTargetEntity::description"
+        },
+        "m_sSourceEntity":
+        {
+            "variable": "target_destination",
+            "title": "CKeyValueLogic::m_sSourceEntity",
+            "description": "CKeyValueLogic::m_sSourceEntity::description"
+        },
+        "m_sKeyName":
+        {
+            "variable": "string",
+            "title": "CKeyValueLogic::m_sKeyName",
+            "description": "CKeyValueLogic::m_sKeyName::description"
+        },
+        "m_sSourceKeyName":
+        {
+            "variable": "string",
+            "title": "CKeyValueLogic::m_sSourceKeyName",
+            "description": "CKeyValueLogic::m_sSourceKeyName::description"
+        },
+        "m_sValue":
+        {
+            "variable": "string",
+            "title": "CKeyValueLogic::m_sValue",
+            "description": "CKeyValueLogic::m_sValue::description"
+        },
+        "m_FloatConversion":
+        {
+            "variable": "choices",
+            "choices":
+            {
+                "0": {
+                  "title": "CKeyValueLogic::m_FloatConversion::0",
+                  "description": "CKeyValueLogic::m_FloatConversion::0::description"
+                },
+                "1": {
+                  "title": "CKeyValueLogic::m_FloatConversion::1",
+                  "description": "CKeyValueLogic::m_FloatConversion::1::description"
+                },
+                "2": {
+                  "title": "CKeyValueLogic::m_FloatConversion::2",
+                  "description": "CKeyValueLogic::m_FloatConversion::2::description"
+                },
+                "3": {
+                  "title": "CKeyValueLogic::m_FloatConversion::3",
+                  "description": "CKeyValueLogic::m_FloatConversion::3::description"
+                },
+                "4": {
+                  "title": "CKeyValueLogic::m_FloatConversion::4",
+                  "description": "CKeyValueLogic::m_FloatConversion::4::description"
+                },
+                "5": {
+                  "title": "CKeyValueLogic::m_FloatConversion::5",
+                  "description": "CKeyValueLogic::m_FloatConversion::5::description"
+                },
+                "6": {
+                  "title": "CKeyValueLogic::m_FloatConversion::6",
+                  "description": "CKeyValueLogic::m_FloatConversion::6::description"
+                },
+                "7": {
+                  "title": "CKeyValueLogic::m_FloatConversion::7",
+                  "description": "CKeyValueLogic::m_FloatConversion::7::description"
+                },
+                "8": {
+                  "title": "CKeyValueLogic::m_FloatConversion::8",
+                  "description": "CKeyValueLogic::m_FloatConversion::8::description"
+                },
+                "9": {
+                  "title": "CKeyValueLogic::m_FloatConversion::9",
+                  "description": "CKeyValueLogic::m_FloatConversion::9::description"
+                }
+            },
+            "title": "CKeyValueLogic::m_FloatConversion",
+            "description": "CKeyValueLogic::m_FloatConversion::description"
+        },
+        "m_iMaxTargets":
+        {
+            "variable": "integer",
+            "value": 1,
+            "title": "CKeyValueLogic::m_iMaxTargets",
+            "description": "CKeyValueLogic::m_iMaxTargets::description"
+        },
+        "m_SkipVector_X":
+        {
+            "variable": "choices",
+            "choices": {
+                "0":{
+                    "title": "No"
+                },
+                "1":{
+                    "title": "Yes"
+                }
+            },
+            "title": "CKeyValueLogic::m_SkipVector_X",
+            "description": "CKeyValueLogic::m_SkipVector_X::description"
+        },
+        "m_SkipVector_Y":
+        {
+            "variable": "choices",
+            "choices": {
+                "0":{
+                    "title": "No"
+                },
+                "1":{
+                    "title": "Yes"
+                }
+            },
+            "title": "CKeyValueLogic::m_SkipVector_Y",
+            "description": "CKeyValueLogic::m_SkipVector_Y::description"
+        },
+        "m_SkipVector_Z":
+        {
+            "variable": "choices",
+            "choices": {
+                "0":{
+                    "title": "No"
+                },
+                "1":{
+                    "title": "Yes"
+                }
+            },
+            "title": "CKeyValueLogic::m_SkipVector_Z",
+            "description": "CKeyValueLogic::m_SkipVector_Z::description"
+        },
+        "m_SkipVector_A":
+        {
+            "variable": "choices",
+            "choices": {
+                "0":{
+                    "title": "No"
+                },
+                "1":{
+                    "title": "Yes"
+                }
+            },
+            "title": "CKeyValueLogic::m_SkipVector_A",
+            "description": "CKeyValueLogic::m_SkipVector_A::description"
+        }
+    }
+}

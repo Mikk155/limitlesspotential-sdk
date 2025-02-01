@@ -1,0 +1,25 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Item"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/w_antidote.mdl",
+    "data": {},
+    "title": "item_antidote::classname",
+    "description": "item_antidote::classname::description"
+}

@@ -1,0 +1,18 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "BaseTank",
+        "ZHLT"
+    ],
+    "data": {
+        "iMagnitude": {
+            "variable": "integer",
+            "value": "100",
+            "title": "func_tankmortar::iMagnitude",
+            "description": "func_tankmortar::iMagnitude::description"
+        }
+    },
+    "title": "func_tankmortar::classname",
+    "description": "func_tankmortar::classname::description"
+}

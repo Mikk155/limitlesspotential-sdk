@@ -1,0 +1,75 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "delay": {
+            "variable": "string",
+            "value": "0",
+            "title": "env_blowercannon::delay",
+            "description": "env_blowercannon::delay::description"
+        },
+        "zoffset": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_blowercannon::zoffset",
+            "description": "env_blowercannon::zoffset::description"
+        },
+        "weaptype": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "1": {
+                    "title": "env_blowercannon::weaptype::1",
+                    "description": "env_blowercannon::weaptype::1::description"
+                },
+                "2": {
+                    "title": "env_blowercannon::weaptype::2",
+                    "description": "env_blowercannon::weaptype::2::description"
+                },
+                "3": {
+                    "title": "env_blowercannon::weaptype::3",
+                    "description": "env_blowercannon::weaptype::3::description"
+                },
+                "4": {
+                    "title": "env_blowercannon::weaptype::4",
+                    "description": "env_blowercannon::weaptype::4::description"
+                }
+            },
+            "title": "env_blowercannon::weaptype",
+            "description": "env_blowercannon::weaptype::description"
+        },
+        "firetype": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "1": {
+                    "title": "env_blowercannon::firetype::1",
+                    "description": "env_blowercannon::firetype::1::description"
+                },
+                "2": {
+                    "title": "env_blowercannon::firetype::2",
+                    "description": "env_blowercannon::firetype::2::description"
+                }
+            },
+            "title": "env_blowercannon::firetype",
+            "description": "env_blowercannon::firetype::description"
+        }
+    },
+    "title": "env_blowercannon::classname",
+    "description": "env_blowercannon::classname::description"
+}

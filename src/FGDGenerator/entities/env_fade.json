@@ -1,0 +1,48 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_fade::spawnflags::1",
+                    "description": "env_fade::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_fade::spawnflags::2",
+                    "description": "env_fade::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "env_fade::spawnflags::4",
+                    "description": "env_fade::spawnflags::4::description"
+                }
+            }
+        },
+        "duration": {
+            "variable": "string",
+            "value": "2",
+            "title": "env_fade::duration",
+            "description": "env_fade::duration::description"
+        },
+        "holdtime": {
+            "variable": "string",
+            "value": "0",
+            "title": "env_fade::holdtime",
+            "description": "env_fade::holdtime::description"
+        },
+        "renderamt": {
+            "variable": "integer",
+            "value": "255",
+            "title": "env_fade::renderamt",
+            "description": "env_fade::renderamt::description"
+        },
+        "rendercolor": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "env_fade::rendercolor",
+            "description": "env_fade::rendercolor::description"
+        }
+    },
+    "title": "env_fade::classname",
+    "description": "env_fade::classname::description"
+}

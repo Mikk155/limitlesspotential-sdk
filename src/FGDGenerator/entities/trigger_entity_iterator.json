@@ -1,0 +1,127 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -12,
+            -12,
+            -12
+        ],
+        [
+            12,
+            12,
+            12
+        ]
+    ],
+    "color": [
+        255,
+        255,
+        0
+    ],
+    "data": {
+        "name_filter": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_iterator::name_filter",
+            "description": "trigger_entity_iterator::name_filter::description"
+        },
+        "classname_filter": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_entity_iterator::classname_filter",
+            "description": "trigger_entity_iterator::classname_filter::description"
+        },
+        "status_filter": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_entity_iterator::status_filter::0",
+                    "description": "trigger_entity_iterator::status_filter::0::description"
+                },
+                "1": {
+                    "title": "trigger_entity_iterator::status_filter::1",
+                    "description": "trigger_entity_iterator::status_filter::1::description"
+                },
+                "2": {
+                    "title": "trigger_entity_iterator::status_filter::2",
+                    "description": "trigger_entity_iterator::status_filter::2::description"
+                }
+            },
+            "title": "trigger_entity_iterator::status_filter",
+            "description": "trigger_entity_iterator::status_filter::description"
+        },
+        "delay_between_triggers": {
+            "variable": "float",
+            "value": "0.0",
+            "title": "trigger_entity_iterator::delay_between_triggers",
+            "description": "trigger_entity_iterator::delay_between_triggers::description"
+        },
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_iterator::target",
+            "description": "trigger_entity_iterator::target::description"
+        },
+        "triggerstate": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_entity_iterator::triggerstate::0",
+                    "description": "trigger_entity_iterator::triggerstate::0::description"
+                },
+                "1": {
+                    "title": "trigger_entity_iterator::triggerstate::1",
+                    "description": "trigger_entity_iterator::triggerstate::1::description"
+                },
+                "2": {
+                    "title": "trigger_entity_iterator::triggerstate::2",
+                    "description": "trigger_entity_iterator::triggerstate::2::description"
+                }
+            },
+            "title": "trigger_entity_iterator::triggerstate",
+            "description": "trigger_entity_iterator::triggerstate::description"
+        },
+        "run_mode": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_entity_iterator::run_mode::0",
+                    "description": "trigger_entity_iterator::run_mode::0::description"
+                },
+                "1": {
+                    "title": "trigger_entity_iterator::run_mode::1",
+                    "description": "trigger_entity_iterator::run_mode::1::description"
+                },
+                "2": {
+                    "title": "trigger_entity_iterator::run_mode::2",
+                    "description": "trigger_entity_iterator::run_mode::2::description"
+                }
+            },
+            "title": "trigger_entity_iterator::run_mode",
+            "description": "trigger_entity_iterator::run_mode::description"
+        },
+        "trigger_after_run": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_iterator::trigger_after_run",
+            "description": "trigger_entity_iterator::trigger_after_run::description"
+        },
+        "maximum_runs": {
+            "variable": "integer",
+            "value": "0",
+            "title": "trigger_entity_iterator::maximum_runs",
+            "description": "trigger_entity_iterator::maximum_runs::description"
+        },
+        "delay_between_runs": {
+            "variable": "float",
+            "value": "0.5",
+            "title": "trigger_entity_iterator::delay_between_runs",
+            "description": "trigger_entity_iterator::delay_between_runs::description"
+        }
+    },
+    "title": "trigger_entity_iterator::classname",
+    "description": "trigger_entity_iterator::classname::description"
+}

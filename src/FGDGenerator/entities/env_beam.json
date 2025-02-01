@@ -1,0 +1,144 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFxChoices",
+        "SF1_StartOn"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "LightningStart": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "env_beam::LightningStart",
+            "description": "env_beam::LightningStart::description"
+        },
+        "LightningEnd": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "env_beam::LightningEnd",
+            "description": "env_beam::LightningEnd::description"
+        },
+        "renderamt": {
+            "variable": "integer",
+            "value": "100",
+            "title": "env_beam::renderamt",
+            "description": "env_beam::renderamt::description"
+        },
+        "rendercolor": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "env_beam::rendercolor",
+            "description": "env_beam::rendercolor::description"
+        },
+        "Radius": {
+            "variable": "integer",
+            "value": "256",
+            "title": "env_beam::Radius",
+            "description": "env_beam::Radius::description"
+        },
+        "life": {
+            "variable": "string",
+            "value": "1",
+            "title": "env_beam::life",
+            "description": "env_beam::life::description"
+        },
+        "BoltWidth": {
+            "variable": "integer",
+            "value": "20",
+            "title": "env_beam::BoltWidth",
+            "description": "env_beam::BoltWidth::description"
+        },
+        "NoiseAmplitude": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_beam::NoiseAmplitude",
+            "description": "env_beam::NoiseAmplitude::description"
+        },
+        "texture": {
+            "variable": "sprite",
+            "value": "sprites/laserbeam.spr",
+            "title": "env_beam::texture",
+            "description": "env_beam::texture::description"
+        },
+        "TextureScroll": {
+            "variable": "integer",
+            "value": "35",
+            "title": "env_beam::TextureScroll",
+            "description": "env_beam::TextureScroll::description"
+        },
+        "framerate": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_beam::framerate",
+            "description": "env_beam::framerate::description"
+        },
+        "framestart": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_beam::framestart",
+            "description": "env_beam::framestart::description"
+        },
+        "StrikeTime": {
+            "variable": "string",
+            "value": "1",
+            "title": "env_beam::StrikeTime",
+            "description": "env_beam::StrikeTime::description"
+        },
+        "damage": {
+            "variable": "string",
+            "value": "0",
+            "title": "env_beam::damage",
+            "description": "env_beam::damage::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "2": {
+                    "title": "env_beam::spawnflags::2",
+                    "description": "env_beam::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "env_beam::spawnflags::4",
+                    "description": "env_beam::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "env_beam::spawnflags::8",
+                    "description": "env_beam::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "env_beam::spawnflags::16",
+                    "description": "env_beam::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "env_beam::spawnflags::32",
+                    "description": "env_beam::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "env_beam::spawnflags::64",
+                    "description": "env_beam::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "env_beam::spawnflags::128",
+                    "description": "env_beam::spawnflags::128::description"
+                },
+                "256": {
+                    "title": "env_beam::spawnflags::256",
+                    "description": "env_beam::spawnflags::256::description"
+                }
+            }
+        }
+    },
+    "title": "env_beam::classname",
+    "description": "env_beam::classname::description"
+}

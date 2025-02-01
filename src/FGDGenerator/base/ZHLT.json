@@ -1,0 +1,39 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "zhlt_lightflags": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "ZHLT::zhlt_lightflags::0",
+                    "description": "ZHLT::zhlt_lightflags::0::description"
+                },
+                "1": {
+                    "title": "ZHLT::zhlt_lightflags::1",
+                    "description": "ZHLT::zhlt_lightflags::1::description"
+                },
+                "2": {
+                    "title": "ZHLT::zhlt_lightflags::2",
+                    "description": "ZHLT::zhlt_lightflags::2::description"
+                },
+                "3": {
+                    "title": "ZHLT::zhlt_lightflags::3",
+                    "description": "ZHLT::zhlt_lightflags::3::description"
+                },
+                "6": {
+                    "title": "ZHLT::zhlt_lightflags::6",
+                    "description": "ZHLT::zhlt_lightflags::6::description"
+                }
+            },
+            "title": "ZHLT::zhlt_lightflags",
+            "description": "ZHLT::zhlt_lightflags::description"
+        },
+        "light_origin": {
+            "variable": "string",
+            "title": "ZHLT::light_origin",
+            "description": "ZHLT::light_origin::description"
+        }
+    }
+}

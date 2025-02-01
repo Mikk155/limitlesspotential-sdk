@@ -1,0 +1,26 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Trigger",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_counter::spawnflags::1",
+                    "description": "trigger_counter::spawnflags::1::description"
+                }
+            }
+        },
+        "count": {
+            "variable": "integer",
+            "value": "2",
+            "title": "trigger_counter::count",
+            "description": "trigger_counter::count::description"
+        }
+    },
+    "title": "trigger_counter::classname",
+    "description": "trigger_counter::classname::description"
+}

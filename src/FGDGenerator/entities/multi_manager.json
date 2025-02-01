@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "color": [
+        255,
+        128,
+        0
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "multi_manager::spawnflags::1",
+                    "description": "multi_manager::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "multi_manager::classname",
+    "description": "multi_manager::classname::description"
+}

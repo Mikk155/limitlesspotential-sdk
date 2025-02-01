@@ -1,0 +1,122 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "Global",
+        "ReplacementFiles"
+    ],
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "Breakable::target",
+            "description": "Breakable::target::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "1",
+            "title": "Breakable::health",
+            "description": "Breakable::health::description"
+        },
+        "material": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "Breakable::material::0",
+                    "description": "Breakable::material::0::description"
+                },
+                "1": {
+                    "title": "Breakable::material::1",
+                    "description": "Breakable::material::1::description"
+                },
+                "2": {
+                    "title": "Breakable::material::2",
+                    "description": "Breakable::material::2::description"
+                },
+                "3": {
+                    "title": "Breakable::material::3",
+                    "description": "Breakable::material::3::description"
+                },
+                "4": {
+                    "title": "Breakable::material::4",
+                    "description": "Breakable::material::4::description"
+                },
+                "5": {
+                    "title": "Breakable::material::5",
+                    "description": "Breakable::material::5::description"
+                },
+                "6": {
+                    "title": "Breakable::material::6",
+                    "description": "Breakable::material::6::description"
+                },
+                "7": {
+                    "title": "Breakable::material::7",
+                    "description": "Breakable::material::7::description"
+                },
+                "8": {
+                    "title": "Breakable::material::8",
+                    "description": "Breakable::material::8::description"
+                }
+            },
+            "title": "Breakable::material",
+            "description": "Breakable::material::description"
+        },
+        "explosion": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "Breakable::explosion::0",
+                    "description": "Breakable::explosion::0::description"
+                },
+                "1": {
+                    "title": "Breakable::explosion::1",
+                    "description": "Breakable::explosion::1::description"
+                },
+                "2": {
+                    "title": "Breakable::explosion::2",
+                    "description": "Breakable::explosion::2::description"
+                }
+            },
+            "title": "Breakable::explosion",
+            "description": "Breakable::explosion::description"
+        },
+        "direction": {
+            "variable": "vector",
+            "value": "",
+            "title": "Breakable::direction",
+            "description": "Breakable::direction::description"
+        },
+        "direction_speed": {
+            "variable": "float",
+            "value": "200",
+            "title": "Breakable::direction_speed",
+            "description": "Breakable::direction_speed::description"
+        },
+        "delay": {
+            "variable": "string",
+            "value": "0",
+            "title": "Breakable::delay",
+            "description": "Breakable::delay::description"
+        },
+        "gibmodel": {
+            "variable": "studio",
+            "value": "",
+            "title": "Breakable::gibmodel",
+            "description": "Breakable::gibmodel::description"
+        },
+        "spawnobject": {
+            "variable": "string",
+            "value": "",
+            "title": "Breakable::spawnobject",
+            "description": "Breakable::spawnobject::description"
+        },
+        "explodemagnitude": {
+            "variable": "integer",
+            "value": "0",
+            "title": "Breakable::explodemagnitude",
+            "description": "Breakable::explodemagnitude::description"
+        }
+    }
+}

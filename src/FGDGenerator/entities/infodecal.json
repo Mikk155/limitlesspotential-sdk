@@ -1,0 +1,13 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "texture": {
+            "variable": "decal",
+            "title": "infodecal::texture",
+            "description": "infodecal::texture::description"
+        }
+    },
+    "title": "infodecal::classname",
+    "description": "infodecal::classname::description"
+}

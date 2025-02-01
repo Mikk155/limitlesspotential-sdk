@@ -1,0 +1,37 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "BaseTank",
+        "UseLineOfSight",
+        "ZHLT"
+    ],
+    "data": {
+        "bullet": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "func_tank::bullet::0",
+                    "description": "func_tank::bullet::0::description"
+                },
+                "1": {
+                    "title": "func_tank::bullet::1",
+                    "description": "func_tank::bullet::1::description"
+                },
+                "2": {
+                    "title": "func_tank::bullet::2",
+                    "description": "func_tank::bullet::2::description"
+                },
+                "3": {
+                    "title": "func_tank::bullet::3",
+                    "description": "func_tank::bullet::3::description"
+                }
+            },
+            "title": "func_tank::bullet",
+            "description": "func_tank::bullet::description"
+        }
+    },
+    "title": "func_tank::classname",
+    "description": "func_tank::classname::description"
+}

@@ -1,0 +1,49 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "studio": "models/skeleton.mdl",
+    "data": {
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_skeleton_dead::pose::0",
+                    "description": "monster_skeleton_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_skeleton_dead::pose::1",
+                    "description": "monster_skeleton_dead::pose::1::description"
+                },
+                "2": {
+                    "title": "monster_skeleton_dead::pose::2",
+                    "description": "monster_skeleton_dead::pose::2::description"
+                },
+                "3": {
+                    "title": "monster_skeleton_dead::pose::3",
+                    "description": "monster_skeleton_dead::pose::3::description"
+                }
+            },
+            "title": "monster_skeleton_dead::pose",
+            "description": "monster_skeleton_dead::pose::description"
+        }
+    },
+    "title": "monster_skeleton_dead::classname",
+    "description": "monster_skeleton_dead::classname::description"
+}

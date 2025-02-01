@@ -1,0 +1,115 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "color": [
+        255,
+        0,
+        255
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "scripted_sentence::spawnflags::1",
+                    "description": "scripted_sentence::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "scripted_sentence::spawnflags::2",
+                    "description": "scripted_sentence::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "scripted_sentence::spawnflags::4",
+                    "description": "scripted_sentence::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "scripted_sentence::spawnflags::8",
+                    "description": "scripted_sentence::spawnflags::8::description"
+                }
+            }
+        },
+        "sentence": {
+            "variable": "string",
+            "value": "",
+            "title": "scripted_sentence::sentence",
+            "description": "scripted_sentence::sentence::description"
+        },
+        "entity": {
+            "variable": "string",
+            "value": "",
+            "title": "scripted_sentence::entity",
+            "description": "scripted_sentence::entity::description"
+        },
+        "duration": {
+            "variable": "string",
+            "value": "3",
+            "title": "scripted_sentence::duration",
+            "description": "scripted_sentence::duration::description"
+        },
+        "radius": {
+            "variable": "integer",
+            "value": "512",
+            "title": "scripted_sentence::radius",
+            "description": "scripted_sentence::radius::description"
+        },
+        "refire": {
+            "variable": "string",
+            "value": "3",
+            "title": "scripted_sentence::refire",
+            "description": "scripted_sentence::refire::description"
+        },
+        "listener": {
+            "variable": "string",
+            "value": "",
+            "title": "scripted_sentence::listener",
+            "description": "scripted_sentence::listener::description"
+        },
+        "volume": {
+            "variable": "string",
+            "value": "10",
+            "title": "scripted_sentence::volume",
+            "description": "scripted_sentence::volume::description"
+        },
+        "attenuation": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "scripted_sentence::attenuation::0",
+                    "description": "scripted_sentence::attenuation::0::description"
+                },
+                "1": {
+                    "title": "scripted_sentence::attenuation::1",
+                    "description": "scripted_sentence::attenuation::1::description"
+                },
+                "2": {
+                    "title": "scripted_sentence::attenuation::2",
+                    "description": "scripted_sentence::attenuation::2::description"
+                },
+                "3": {
+                    "title": "scripted_sentence::attenuation::3",
+                    "description": "scripted_sentence::attenuation::3::description"
+                }
+            },
+            "title": "scripted_sentence::attenuation",
+            "description": "scripted_sentence::attenuation::description"
+        }
+    },
+    "title": "scripted_sentence::classname",
+    "description": "scripted_sentence::classname::description"
+}

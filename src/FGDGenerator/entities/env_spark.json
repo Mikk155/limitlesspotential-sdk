@@ -1,0 +1,41 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "MaxDelay": {
+            "variable": "string",
+            "value": "0",
+            "title": "env_spark::MaxDelay",
+            "description": "env_spark::MaxDelay::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "env_spark::spawnflags::32",
+                    "description": "env_spark::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "env_spark::spawnflags::64",
+                    "description": "env_spark::spawnflags::64::description"
+                }
+            }
+        }
+    },
+    "title": "env_spark::classname",
+    "description": "env_spark::classname::description"
+}

@@ -1,0 +1,84 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "m_iszEntity": {
+            "variable": "target_generic",
+            "title": "BaseScriptedSequence::m_iszEntity",
+            "description": "BaseScriptedSequence::m_iszEntity::description"
+        },
+        "m_iszPlay": {
+            "variable": "string",
+            "title": "BaseScriptedSequence::m_iszPlay",
+            "description": "BaseScriptedSequence::m_iszPlay::description"
+        },
+        "m_flRadius": {
+            "variable": "integer",
+            "value": 512,
+            "title": "BaseScriptedSequence::m_flRadius",
+            "description": "BaseScriptedSequence::m_flRadius::description"
+        },
+        "m_flRepeat": {
+            "variable": "integer",
+            "value": 0,
+            "title": "BaseScriptedSequence::m_flRepeat",
+            "description": "BaseScriptedSequence::m_flRepeat::description"
+        },
+        "m_fMoveTo": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "BaseScriptedSequence::m_fMoveTo::0",
+                    "description": "BaseScriptedSequence::m_fMoveTo::0::description"
+                },
+                "1": {
+                    "title": "BaseScriptedSequence::m_fMoveTo::1",
+                    "description": "BaseScriptedSequence::m_fMoveTo::1::description"
+                },
+                "2": {
+                    "title": "BaseScriptedSequence::m_fMoveTo::2",
+                    "description": "BaseScriptedSequence::m_fMoveTo::2::description"
+                },
+                "4": {
+                    "title": "BaseScriptedSequence::m_fMoveTo::4",
+                    "description": "BaseScriptedSequence::m_fMoveTo::4::description"
+                },
+                "5": {
+                    "title": "BaseScriptedSequence::m_fMoveTo::5",
+                    "description": "BaseScriptedSequence::m_fMoveTo::5::description"
+                }
+            },
+            "title": "BaseScriptedSequence::m_fMoveTo",
+            "description": "BaseScriptedSequence::m_fMoveTo::description"
+        },
+        "m_iFinishSchedule": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "BaseScriptedSequence::m_iFinishSchedule::0",
+                    "description": "BaseScriptedSequence::m_iFinishSchedule::0::description"
+                },
+                "1": {
+                    "title": "BaseScriptedSequence::m_iFinishSchedule::1",
+                    "description": "BaseScriptedSequence::m_iFinishSchedule::1::description"
+                }
+            },
+            "title": "BaseScriptedSequence::m_iFinishSchedule",
+            "description": "BaseScriptedSequence::m_iFinishSchedule::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "4": {
+                    "title": "BaseScriptedSequence::spawnflags::4",
+                    "description": "BaseScriptedSequence::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "BaseScriptedSequence::spawnflags::8",
+                    "description": "BaseScriptedSequence::spawnflags::8::description"
+                }
+            }
+        }
+    }
+}

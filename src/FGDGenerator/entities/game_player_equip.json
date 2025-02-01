@@ -1,0 +1,19 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_player_equip::spawnflags::1",
+                    "description": "game_player_equip::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "game_player_equip::classname",
+    "description": "game_player_equip::classname::description"
+}

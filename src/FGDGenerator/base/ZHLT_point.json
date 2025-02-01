@@ -1,0 +1,32 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "_fade": {
+            "variable": "float",
+            "value": 1.0,
+            "title": "ZHLT_point::_fade",
+            "description": "ZHLT_point::_fade::description"
+        },
+        "_falloff": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "ZHLT_point::_falloff::0",
+                    "description": "ZHLT_point::_falloff::0::description"
+                },
+                "1": {
+                    "title": "ZHLT_point::_falloff::1",
+                    "description": "ZHLT_point::_falloff::1::description"
+                },
+                "2": {
+                    "title": "ZHLT_point::_falloff::2",
+                    "description": "ZHLT_point::_falloff::2::description"
+                }
+            },
+            "title": "ZHLT_point::_falloff",
+            "description": "ZHLT_point::_falloff::description"
+        }
+    }
+}

@@ -1,0 +1,113 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "TalkMonster"
+    ],
+    "studio": "models/hgrunt_opfor.mdl",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_human_grunt_ally::netname",
+            "description": "monster_human_grunt_ally::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_human_grunt_ally::spawnflags::32",
+                    "description": "monster_human_grunt_ally::spawnflags::32::description"
+                }
+            }
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "3",
+            "choices": {
+                "0": {
+                    "title": "monster_human_grunt_ally::weapons::0",
+                    "description": "monster_human_grunt_ally::weapons::0::description"
+                },
+                "1": {
+                    "title": "monster_human_grunt_ally::weapons::1",
+                    "description": "monster_human_grunt_ally::weapons::1::description"
+                },
+                "3": {
+                    "title": "monster_human_grunt_ally::weapons::3",
+                    "description": "monster_human_grunt_ally::weapons::3::description"
+                },
+                "5": {
+                    "title": "monster_human_grunt_ally::weapons::5",
+                    "description": "monster_human_grunt_ally::weapons::5::description"
+                },
+                "8": {
+                    "title": "monster_human_grunt_ally::weapons::8",
+                    "description": "monster_human_grunt_ally::weapons::8::description"
+                },
+                "10": {
+                    "title": "monster_human_grunt_ally::weapons::10",
+                    "description": "monster_human_grunt_ally::weapons::10::description"
+                },
+                "16": {
+                    "title": "monster_human_grunt_ally::weapons::16",
+                    "description": "monster_human_grunt_ally::weapons::16::description"
+                }
+            },
+            "title": "monster_human_grunt_ally::weapons",
+            "description": "monster_human_grunt_ally::weapons::description"
+        },
+        "head": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_human_grunt_ally::head::-1",
+                    "description": "monster_human_grunt_ally::head::-1::description"
+                },
+                "0": {
+                    "title": "monster_human_grunt_ally::head::0",
+                    "description": "monster_human_grunt_ally::head::0::description"
+                },
+                "1": {
+                    "title": "monster_human_grunt_ally::head::1",
+                    "description": "monster_human_grunt_ally::head::1::description"
+                },
+                "2": {
+                    "title": "monster_human_grunt_ally::head::2",
+                    "description": "monster_human_grunt_ally::head::2::description"
+                },
+                "3": {
+                    "title": "monster_human_grunt_ally::head::3",
+                    "description": "monster_human_grunt_ally::head::3::description"
+                },
+                "4": {
+                    "title": "monster_human_grunt_ally::head::4",
+                    "description": "monster_human_grunt_ally::head::4::description"
+                },
+                "5": {
+                    "title": "monster_human_grunt_ally::head::5",
+                    "description": "monster_human_grunt_ally::head::5::description"
+                },
+                "6": {
+                    "title": "monster_human_grunt_ally::head::6",
+                    "description": "monster_human_grunt_ally::head::6::description"
+                },
+                "7": {
+                    "title": "monster_human_grunt_ally::head::7",
+                    "description": "monster_human_grunt_ally::head::7::description"
+                }
+            },
+            "title": "monster_human_grunt_ally::head",
+            "description": "monster_human_grunt_ally::head::description"
+        }
+    },
+    "title": "monster_human_grunt_ally::classname",
+    "description": "monster_human_grunt_ally::classname::description"
+}

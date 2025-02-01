@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_9mmhandgun.mdl",
+    "data": {},
+    "title": "weapon_9mmhandgun::classname",
+    "description": "weapon_9mmhandgun::classname::description"
+}

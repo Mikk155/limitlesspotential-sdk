@@ -1,0 +1,33 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Sequence"
+    ],
+    "studio": "models/gonome.mdl",
+    "data": {
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_gonome_dead::pose::0",
+                    "description": "monster_gonome_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_gonome_dead::pose::1",
+                    "description": "monster_gonome_dead::pose::1::description"
+                },
+                "2": {
+                    "title": "monster_gonome_dead::pose::2",
+                    "description": "monster_gonome_dead::pose::2::description"
+                }
+            },
+            "title": "monster_gonome_dead::pose",
+            "description": "monster_gonome_dead::pose::description"
+        }
+    },
+    "title": "monster_gonome_dead::classname",
+    "description": "monster_gonome_dead::classname::description"
+}

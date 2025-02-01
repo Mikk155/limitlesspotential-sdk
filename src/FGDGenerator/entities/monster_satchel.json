@@ -1,0 +1,15 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Weapon",
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Sequence"
+    ],
+    "studio": "models/w_satchel.mdl",
+    "data": {},
+    "title": "monster_satchel::classname",
+    "description": "monster_satchel::classname::description"
+}

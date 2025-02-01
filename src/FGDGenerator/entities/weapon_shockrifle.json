@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_shock.mdl",
+    "data": {},
+    "title": "weapon_shockrifle::classname",
+    "description": "weapon_shockrifle::classname::description"
+}

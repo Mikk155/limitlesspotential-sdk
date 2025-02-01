@@ -1,0 +1,48 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay"
+    ],
+    "sprite": "sprites/trigger_auto.spr",
+    "iconsprite": "sprites/trigger_auto.spr",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_auto::spawnflags::1",
+                    "description": "trigger_auto::spawnflags::1::description"
+                }
+            }
+        },
+        "globalstate": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_auto::globalstate",
+            "description": "trigger_auto::globalstate::description"
+        },
+        "triggerstate": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_auto::triggerstate::0",
+                    "description": "trigger_auto::triggerstate::0::description"
+                },
+                "1": {
+                    "title": "trigger_auto::triggerstate::1",
+                    "description": "trigger_auto::triggerstate::1::description"
+                },
+                "2": {
+                    "title": "trigger_auto::triggerstate::2",
+                    "description": "trigger_auto::triggerstate::2::description"
+                }
+            },
+            "title": "trigger_auto::triggerstate",
+            "description": "trigger_auto::triggerstate::description"
+        }
+    },
+    "title": "trigger_auto::classname",
+    "description": "trigger_auto::classname::description"
+}

@@ -1,0 +1,6 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "title": "game_precache::classname",
+    "description": "game_precache::classname::description"
+}

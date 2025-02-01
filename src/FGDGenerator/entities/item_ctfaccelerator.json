@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFItem"
+    ],
+    "studio": "models/w_accelerator.mdl",
+    "data": {},
+    "title": "item_ctfaccelerator::classname",
+    "description": "item_ctfaccelerator::classname::description"
+}

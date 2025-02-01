@@ -1,0 +1,23 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -32,
+            -32,
+            0
+        ],
+        [
+            32,
+            32,
+            64
+        ]
+    ],
+    "color": [
+        255,
+        255,
+        0
+    ],
+    "title": "info_node_air::classname",
+    "description": "info_node_air::classname::description"
+}

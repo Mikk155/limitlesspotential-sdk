@@ -1,0 +1,64 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target"
+    ],
+    "data": {
+        "message": {
+            "variable": "string",
+            "title": "env_message::message",
+            "description": "env_message::message::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_message::spawnflags::1",
+                    "description": "env_message::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_message::spawnflags::2",
+                    "description": "env_message::spawnflags::2::description"
+                }
+            }
+        },
+        "messagesound": {
+            "variable": "sound",
+            "value": "",
+            "title": "env_message::messagesound",
+            "description": "env_message::messagesound::description"
+        },
+        "messagevolume": {
+            "variable": "string",
+            "value": "10",
+            "title": "env_message::messagevolume",
+            "description": "env_message::messagevolume::description"
+        },
+        "messageattenuation": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "env_message::messageattenuation::0",
+                    "description": "env_message::messageattenuation::0::description"
+                },
+                "1": {
+                    "title": "env_message::messageattenuation::1",
+                    "description": "env_message::messageattenuation::1::description"
+                },
+                "2": {
+                    "title": "env_message::messageattenuation::2",
+                    "description": "env_message::messageattenuation::2::description"
+                },
+                "3": {
+                    "title": "env_message::messageattenuation::3",
+                    "description": "env_message::messageattenuation::3::description"
+                }
+            },
+            "title": "env_message::messageattenuation",
+            "description": "env_message::messageattenuation::description"
+        }
+    },
+    "title": "env_message::classname",
+    "description": "env_message::classname::description"
+}

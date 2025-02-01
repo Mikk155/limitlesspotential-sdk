@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_traincontrols::target",
+            "description": "func_traincontrols::target::description"
+        }
+    },
+    "title": "func_traincontrols::classname",
+    "description": "func_traincontrols::classname::description"
+}

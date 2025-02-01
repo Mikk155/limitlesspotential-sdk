@@ -1,0 +1,18 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "BaseTank",
+        "ZHLT"
+    ],
+    "data": {
+        "laserentity": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_tanklaser::laserentity",
+            "description": "func_tanklaser::laserentity::description"
+        }
+    },
+    "title": "func_tanklaser::classname",
+    "description": "func_tanklaser::classname::description"
+}

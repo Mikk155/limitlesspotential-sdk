@@ -1,0 +1,20 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "m_uselos": {
+            "variable": "choices",
+            "value": 1,
+            "choices": {
+                "0": {
+                    "title": "No"
+                },
+                "1": {
+                    "title": "Yes"
+                }
+            },
+            "title": "UseLineOfSight::m_uselos",
+            "description": "UseLineOfSight::m_uselos::description"
+        }
+    }
+}

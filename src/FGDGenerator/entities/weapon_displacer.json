@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_displacer.mdl",
+    "data": {},
+    "title": "weapon_displacer::classname",
+    "description": "weapon_displacer::classname::description"
+}

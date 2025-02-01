@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "BaseZombie",
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "studio": "models/zombie.mdl",
+    "data": {},
+    "title": "monster_zombie::classname",
+    "description": "monster_zombie::classname::description"
+}

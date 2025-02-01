@@ -1,0 +1,35 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Master"
+    ],
+    "data": {
+        "intarget": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "game_zone_player::intarget",
+            "description": "game_zone_player::intarget::description"
+        },
+        "outtarget": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "game_zone_player::outtarget",
+            "description": "game_zone_player::outtarget::description"
+        },
+        "incount": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "game_zone_player::incount",
+            "description": "game_zone_player::incount::description"
+        },
+        "outcount": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "game_zone_player::outcount",
+            "description": "game_zone_player::outcount::description"
+        }
+    },
+    "title": "game_zone_player::classname",
+    "description": "game_zone_player::classname::description"
+}

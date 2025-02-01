@@ -1,0 +1,35 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Breakable",
+        "RenderFields",
+        "Angles",
+        "ZHLT",
+        "minlight"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_breakable::spawnflags::1",
+                    "description": "func_breakable::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "func_breakable::spawnflags::2",
+                    "description": "func_breakable::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "func_breakable::spawnflags::4",
+                    "description": "func_breakable::spawnflags::4::description"
+                },
+                "256": {
+                    "title": "func_breakable::spawnflags::256",
+                    "description": "func_breakable::spawnflags::256::description"
+                }
+            }
+        }
+    },
+    "title": "func_breakable::classname",
+    "description": "func_breakable::classname::description"
+}

@@ -1,0 +1,25 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master"
+    ],
+    "data": {
+        "dmg": {
+            "variable": "string",
+            "value": "999",
+            "title": "game_player_hurt::dmg",
+            "description": "game_player_hurt::dmg::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_player_hurt::spawnflags::1",
+                    "description": "game_player_hurt::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "game_player_hurt::classname",
+    "description": "game_player_hurt::classname::description"
+}

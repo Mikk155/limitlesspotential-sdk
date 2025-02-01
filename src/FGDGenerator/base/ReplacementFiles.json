@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "modellist": {
+            "variable": "string",
+            "value": "",
+            "title": "ReplacementFiles::modellist",
+            "description": "ReplacementFiles::modellist::description"
+        },
+        "soundlist": {
+            "variable": "string",
+            "value": "",
+            "title": "ReplacementFiles::soundlist",
+            "description": "ReplacementFiles::soundlist::description"
+        },
+        "sentencelist": {
+            "variable": "string",
+            "value": "",
+            "title": "ReplacementFiles::sentencelist",
+            "description": "ReplacementFiles::sentencelist::description"
+        }
+    }
+}

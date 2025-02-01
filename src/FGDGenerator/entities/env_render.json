@@ -1,0 +1,49 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "RenderFields"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "color": [
+        100,
+        100,
+        0
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_render::spawnflags::1",
+                    "description": "env_render::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_render::spawnflags::2",
+                    "description": "env_render::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "env_render::spawnflags::4",
+                    "description": "env_render::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "env_render::spawnflags::8",
+                    "description": "env_render::spawnflags::8::description"
+                }
+            }
+        }
+    },
+    "title": "env_render::classname",
+    "description": "env_render::classname::description"
+}

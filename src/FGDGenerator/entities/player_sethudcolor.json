@@ -1,0 +1,42 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "hud_color": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "player_sethudcolor::hud_color",
+            "description": "player_sethudcolor::hud_color::description"
+        },
+        "action": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "player_sethudcolor::action::0",
+                    "description": "player_sethudcolor::action::0::description"
+                },
+                "1": {
+                    "title": "player_sethudcolor::action::1",
+                    "description": "player_sethudcolor::action::1::description"
+                }
+            },
+            "title": "player_sethudcolor::action",
+            "description": "player_sethudcolor::action::description"
+        }
+    },
+    "title": "player_sethudcolor::classname",
+    "description": "player_sethudcolor::classname::description"
+}

@@ -1,0 +1,188 @@
+{
+    "$schema": "../schema.json",
+
+    "Class": "Solid",
+
+    "title": "worldspawn::classname",
+    "description": "worldspawn::classname::description",
+
+    "data":
+    {
+        "message":
+        {
+            "variable": "string",
+
+            "title": "worldspawn::message",
+            "description": "worldspawn::message::description"
+        },
+
+        "skyname":
+        {
+            "variable": "string",
+
+            "title": "worldspawn::skyname",
+            "description": "worldspawn::skyname::description"
+        },
+
+        "light": 
+        { 
+            "variable": "integer" ,
+
+            "title": "worldspawn::light",
+            "description": "worldspawn::light::description"
+        },
+
+        "WaveHeight": 
+        { 
+            "variable": "string",
+
+            "title": "worldspawn::WaveHeight",
+            "description": "worldspawn::WaveHeight::description"
+        },
+        "MaxRange":
+        {
+            "variable": "integer",
+            "value": 4096,
+
+            "title": "worldspawn::MaxRange",
+            "description": "worldspawn::MaxRange::description"
+        },
+
+        "minhullsize":
+        {
+            "variable": "vector",
+            "value": "-4096 -4096 -4096",
+            "title": "minhullsize"
+        },
+        "maxhullsize":
+        {
+            "variable": "vector",
+            "value": "4096 4096 4096",
+            "title": "maxhullsize"
+        },
+
+        "chaptertitle":
+        {
+            "variable": "string",
+
+            "title": "worldspawn::chaptertitle",
+            "description": "worldspawn::chaptertitle::description"
+        },
+
+        "startdark":
+        {
+            "variable": "choices",
+            "value": 0,
+            "choices":
+            {
+                "0":
+                {
+                    "title": "No"
+                },
+                "1":
+                {
+                    "title": "Yes"
+                }
+            },
+
+            "title": "worldspawn::startdark",
+            "description": "worldspawn::startdark::description"
+        },
+
+        "gametitle":
+        {
+            "variable": "string",
+
+            "title": "worldspawn::gametitle",
+            "description": "worldspawn::gametitle::description"
+        },
+
+        "newunit":
+        { 
+            "variable": "choices", 
+            "value": 0,
+            "choices":
+            {
+                "0":
+                {
+                    "title": "worldspawn::newunit::0",
+                    "description": "worldspawn::newunit::0::description"
+                },
+                "1":
+                {
+                    "title": "worldspawn::newunit::1",
+                    "description": "worldspawn::newunit::1::description"
+                }
+            },
+
+            "title": "worldspawn::newunit",
+            "description": "worldspawn::newunit::description"
+        },
+
+        "mapteams":
+        {
+            "variable": "string",
+            "value": "grunt;scientist",
+
+            "title": "worldspawn::mapteams",
+            "description": "worldspawn::mapteams::description"
+        },
+
+        "defaultteam":
+        {
+            "variable": "choices",
+            "value": 0,
+            "choices":
+            {
+                "0":
+                {
+                    "title": "worldspawn::defaultteam::0",
+                    "description": "worldspawn::defaultteam::0::description"
+                },
+                "1":
+                {
+                    "title": "worldspawn::defaultteam::1",
+                    "description": "worldspawn::defaultteam::1::description"
+                }
+            },
+
+            "title": "worldspawn::defaultteam",
+            "description": "worldspawn::defaultteam::description"
+        },
+
+        "freeroam":
+        {
+            "variable": "choices",
+            "value": -1,
+            "choices":
+            {
+                "-1":
+                {
+                    "title": "worldspawn::freeroam::-1",
+                    "description": "worldspawn::freeroam::-1::description"
+                },
+                "0":
+                {
+                    "title": "worldspawn::freeroam::0",
+                    "description": "worldspawn::freeroam::0::description"
+                },
+                "1":
+                {
+                    "title": "worldspawn::freeroam::1",
+                    "description": "worldspawn::freeroam::1::description"
+                }
+            },
+
+            "title": "worldspawn::freeroam",
+            "description": "worldspawn::freeroam::description"
+        },
+
+        "mapcfg":
+        {
+            "variable": "string",
+
+            "title": "worldspawn::mapcfg",
+            "description": "worldspawn::mapcfg::description"
+        }
+    }
+}

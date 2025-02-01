@@ -1,0 +1,42 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Target",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_geneworm_hit::spawnflags::1",
+                    "description": "trigger_geneworm_hit::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "trigger_geneworm_hit::spawnflags::2",
+                    "description": "trigger_geneworm_hit::spawnflags::2::description"
+                },
+                "8": {
+                    "title": "trigger_geneworm_hit::spawnflags::8",
+                    "description": "trigger_geneworm_hit::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "trigger_geneworm_hit::spawnflags::16",
+                    "description": "trigger_geneworm_hit::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "trigger_geneworm_hit::spawnflags::32",
+                    "description": "trigger_geneworm_hit::spawnflags::32::description"
+                }
+            }
+        },
+        "delay": {
+            "variable": "string",
+            "value": "0",
+            "title": "trigger_geneworm_hit::delay",
+            "description": "trigger_geneworm_hit::delay::description"
+        }
+    },
+    "title": "trigger_geneworm_hit::classname",
+    "description": "trigger_geneworm_hit::classname::description"
+}

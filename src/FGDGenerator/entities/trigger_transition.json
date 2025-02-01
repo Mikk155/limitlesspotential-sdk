@@ -1,0 +1,7 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "data": {},
+    "title": "trigger_transition::classname",
+    "description": "trigger_transition::classname::description"
+}

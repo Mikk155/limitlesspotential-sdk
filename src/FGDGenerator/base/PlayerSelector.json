@@ -1,0 +1,70 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "m_iPlayerSelector_1": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "PlayerSelector::0",
+                    "description": "PlayerSelector::0::description"
+                },
+                "1": {
+                    "title": "Yes",
+                    "description": "Yes::description"
+                }
+            },
+            "title": "PlayerSelector::m_iPlayerSelector_1",
+            "description": "PlayerSelector::m_iPlayerSelector_1::description"
+        },
+        "m_iPlayerSelector_2": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "PlayerSelector::0",
+                    "description": "PlayerSelector::0::description"
+                },
+                "2": {
+                    "title": "Yes",
+                    "description": "Yes::description"
+                }
+            },
+            "title": "PlayerSelector::m_iPlayerSelector_2",
+            "description": "PlayerSelector::m_iPlayerSelector_2::description"
+        },
+        "m_iPlayerSelector_4": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "PlayerSelector::0",
+                    "description": "PlayerSelector::0::description"
+                },
+                "4": {
+                    "title": "Yes",
+                    "description": "Yes::description"
+                }
+            },
+            "title": "PlayerSelector::m_iPlayerSelector_4",
+            "description": "PlayerSelector::m_iPlayerSelector_4::description"
+        },
+        "m_iPlayerSelector_8": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "PlayerSelector::0",
+                    "description": "PlayerSelector::0::description"
+                },
+                "8": {
+                    "title": "Yes",
+                    "description": "Yes::description"
+                }
+            },
+            "title": "PlayerSelector::m_iPlayerSelector_8",
+            "description": "PlayerSelector::m_iPlayerSelector_8::description"
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/strooper.mdl",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_shocktrooper::netname",
+            "description": "monster_shocktrooper::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_shocktrooper::spawnflags::32",
+                    "description": "monster_shocktrooper::spawnflags::32::description"
+                }
+            }
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "3",
+            "choices": {
+                "1": {
+                    "title": "monster_shocktrooper::weapons::1",
+                    "description": "monster_shocktrooper::weapons::1::description"
+                },
+                "3": {
+                    "title": "monster_shocktrooper::weapons::3",
+                    "description": "monster_shocktrooper::weapons::3::description"
+                },
+                "5": {
+                    "title": "monster_shocktrooper::weapons::5",
+                    "description": "monster_shocktrooper::weapons::5::description"
+                },
+                "8": {
+                    "title": "monster_shocktrooper::weapons::8",
+                    "description": "monster_shocktrooper::weapons::8::description"
+                },
+                "10": {
+                    "title": "monster_shocktrooper::weapons::10",
+                    "description": "monster_shocktrooper::weapons::10::description"
+                }
+            },
+            "title": "monster_shocktrooper::weapons",
+            "description": "monster_shocktrooper::weapons::description"
+        }
+    },
+    "title": "monster_shocktrooper::classname",
+    "description": "monster_shocktrooper::classname::description"
+}

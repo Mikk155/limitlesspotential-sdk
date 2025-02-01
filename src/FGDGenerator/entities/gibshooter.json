@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles",
+        "gibshooterbase"
+    ],
+    "title": "gibshooter::classname",
+    "description": "gibshooter::classname::description"
+}

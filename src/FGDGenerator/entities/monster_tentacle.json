@@ -1,0 +1,92 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -32,
+            -32,
+            0
+        ],
+        [
+            32,
+            32,
+            64
+        ]
+    ],
+    "studio": "models/tentacle2.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "64": {
+                    "title": "monster_tentacle::spawnflags::64",
+                    "description": "monster_tentacle::spawnflags::64::description"
+                }
+            }
+        },
+        "sweeparc": {
+            "variable": "integer",
+            "value": "130",
+            "title": "monster_tentacle::sweeparc",
+            "description": "monster_tentacle::sweeparc::description"
+        },
+        "sound": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_tentacle::sound::-1",
+                    "description": "monster_tentacle::sound::-1::description"
+                },
+                "0": {
+                    "title": "monster_tentacle::sound::0",
+                    "description": "monster_tentacle::sound::0::description"
+                },
+                "1": {
+                    "title": "monster_tentacle::sound::1",
+                    "description": "monster_tentacle::sound::1::description"
+                },
+                "2": {
+                    "title": "monster_tentacle::sound::2",
+                    "description": "monster_tentacle::sound::2::description"
+                }
+            },
+            "title": "monster_tentacle::sound",
+            "description": "monster_tentacle::sound::description"
+        },
+        "height0": {
+            "variable": "integer",
+            "value": "0",
+            "title": "monster_tentacle::height0",
+            "description": "monster_tentacle::height0::description"
+        },
+        "height1": {
+            "variable": "integer",
+            "value": "256",
+            "title": "monster_tentacle::height1",
+            "description": "monster_tentacle::height1::description"
+        },
+        "height2": {
+            "variable": "integer",
+            "value": "448",
+            "title": "monster_tentacle::height2",
+            "description": "monster_tentacle::height2::description"
+        },
+        "height3": {
+            "variable": "integer",
+            "value": "640",
+            "title": "monster_tentacle::height3",
+            "description": "monster_tentacle::height3::description"
+        }
+    },
+    "title": "monster_tentacle::classname",
+    "description": "monster_tentacle::classname::description"
+}

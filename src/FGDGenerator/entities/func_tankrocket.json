@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "BaseTank",
+        "ZHLT"
+    ],
+    "title": "func_tankrocket::classname",
+    "description": "func_tankrocket::classname::description"
+}

@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay"
+    ],
+    "data": {},
+    "title": "trigger_playerfreeze::classname",
+    "description": "trigger_playerfreeze::classname::description"
+}

@@ -1,0 +1,23 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -8,
+            -8,
+            -8
+        ],
+        [
+            8,
+            8,
+            8
+        ]
+    ],
+    "color": [
+        255,
+        255,
+        0
+    ],
+    "title": "logic_campaignselect::classname",
+    "description": "logic_campaignselect::classname::description"
+}

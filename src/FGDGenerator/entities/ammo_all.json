@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "RenderFields",
+        "Ammo"
+    ],
+    "studio": true,
+    "data": {
+        "model": {
+            "variable": "studio",
+            "value": "",
+            "title": "CustomKeys::model"
+        }
+    },
+    "title": "ammo_all::classname",
+    "description": "ammo_all::classname::description"
+}

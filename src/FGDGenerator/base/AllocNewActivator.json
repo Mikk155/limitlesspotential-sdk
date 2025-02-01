@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data":
+    {
+        "m_Activator":
+        {
+            "variable": "target_destination",
+            "value": "!activator",
+            "title": "AllocNewActivator::m_Activator",
+            "description": "AllocNewActivator::m_Activator::description"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "delay": {
+            "variable": "float",
+            "value": 0.0,
+            "title": "CBaseDelay::delay",
+            "description": "CBaseDelay::delay::description"
+        },
+        "killtarget": {
+            "variable": "target_destination",
+            "title": "CBaseDelay::killtarget",
+            "description": "CBaseDelay::killtarget::description"
+        }
+    }
+}

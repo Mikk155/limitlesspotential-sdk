@@ -1,0 +1,28 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_funnel::spawnflags::1",
+                    "description": "env_funnel::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "env_funnel::classname",
+    "description": "env_funnel::classname::description"
+}

@@ -1,0 +1,9 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target"
+    ],
+    "title": "info_pitworm_steam_lock::classname",
+    "description": "info_pitworm_steam_lock::classname::description"
+}

@@ -1,0 +1,23 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -4,
+            -4,
+            -4
+        ],
+        [
+            4,
+            4,
+            4
+        ]
+    ],
+    "color": [
+        200,
+        100,
+        50
+    ],
+    "title": "info_displacer_earth_target::classname",
+    "description": "info_displacer_earth_target::classname::description"
+}

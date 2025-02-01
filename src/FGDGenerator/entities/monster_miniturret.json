@@ -1,0 +1,58 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -32
+        ],
+        [
+            16,
+            16,
+            32
+        ]
+    ],
+    "studio": "models/miniturret.mdl",
+    "data": {
+        "orientation": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_miniturret::orientation::0",
+                    "description": "monster_miniturret::orientation::0::description"
+                },
+                "1": {
+                    "title": "monster_miniturret::orientation::1",
+                    "description": "monster_miniturret::orientation::1::description"
+                }
+            },
+            "title": "monster_miniturret::orientation",
+            "description": "monster_miniturret::orientation::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_miniturret::spawnflags::32",
+                    "description": "monster_miniturret::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "monster_turret::spawnflags::64",
+                    "description": "monster_turret::spawnflags::64::description"
+                }
+            }
+        }
+    },
+    "title": "monster_miniturret::classname",
+    "description": "monster_miniturret::classname::description"
+}

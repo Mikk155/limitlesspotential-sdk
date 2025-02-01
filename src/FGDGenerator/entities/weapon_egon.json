@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_egon.mdl",
+    "data": {},
+    "title": "weapon_egon::classname",
+    "description": "weapon_egon::classname::description"
+}

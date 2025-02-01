@@ -1,0 +1,99 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Global",
+        "RenderFields",
+        "Angles",
+        "ZHLT",
+        "UseLineOfSight",
+        "Master",
+        "ReplacementFiles"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "5",
+            "title": "func_button::speed",
+            "description": "func_button::speed::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "",
+            "title": "func_button::health",
+            "description": "func_button::health::description"
+        },
+        "lip": {
+            "variable": "integer",
+            "value": "",
+            "title": "func_button::lip",
+            "description": "func_button::lip::description"
+        },
+        "sounds": {
+            "variable": "sound",
+            "value": "",
+            "title": "func_button::sounds",
+            "description": "func_button::sounds::description"
+        },
+        "wait": {
+            "variable": "choices",
+            "value": "3",
+            "choices": {
+                "-1": {
+                    "title": "func_button::wait::-1",
+                    "description": "func_button::wait::-1::description"
+                }
+            },
+            "title": "func_button::wait",
+            "description": "func_button::wait::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_button::spawnflags::1",
+                    "description": "func_button::spawnflags::1::description"
+                },
+                "32": {
+                    "title": "func_button::spawnflags::32",
+                    "description": "func_button::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "func_button::spawnflags::64",
+                    "description": "func_button::spawnflags::64::description"
+                },
+                "256": {
+                    "title": "func_button::spawnflags::256",
+                    "description": "func_button::spawnflags::256::description"
+                }
+            }
+        },
+        "locked_sound": {
+            "variable": "sound",
+            "value": "",
+            "title": "func_button::locked_sound",
+            "description": "func_button::locked_sound::description"
+        },
+        "unlocked_sound": {
+            "variable": "sound",
+            "value": "",
+            "title": "func_button::unlocked_sound",
+            "description": "func_button::unlocked_sound::description"
+        },
+        "locked_sentence": {
+            "variable": "string",
+            "value": "",
+            "title": "func_button::locked_sentence",
+            "description": "func_button::locked_sentence::description"
+        },
+        "unlocked_sentence": {
+            "variable": "string",
+            "value": "",
+            "title": "func_button::unlocked_sentence",
+            "description": "func_button::unlocked_sentence::description"
+        }
+    },
+    "title": "func_button::classname",
+    "description": "func_button::classname::description"
+}

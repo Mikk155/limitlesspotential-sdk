@@ -1,0 +1,22 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "data": {
+        "section": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_endsection::section",
+            "description": "trigger_endsection::section::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_endsection::spawnflags::1",
+                    "description": "trigger_endsection::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "trigger_endsection::classname",
+    "description": "trigger_endsection::classname::description"
+}

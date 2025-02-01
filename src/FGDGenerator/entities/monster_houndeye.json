@@ -1,0 +1,44 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/houndeye.mdl",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_houndeye::netname",
+            "description": "monster_houndeye::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_houndeye::spawnflags::32",
+                    "description": "monster_houndeye::spawnflags::32::description"
+                }
+            }
+        }
+    },
+    "title": "monster_houndeye::classname",
+    "description": "monster_houndeye::classname::description"
+}

@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_m40a1.mdl",
+    "data": {},
+    "title": "weapon_sniperrifle::classname",
+    "description": "weapon_sniperrifle::classname::description"
+}

@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_crossbow.mdl",
+    "data": {
+        "sequence": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "weapon_crossbow::sequence::0",
+                    "description": "weapon_crossbow::sequence::0::description"
+                },
+                "1": {
+                    "title": "weapon_crossbow::sequence::1",
+                    "description": "weapon_crossbow::sequence::1::description"
+                }
+            },
+            "title": "weapon_crossbow::sequence",
+            "description": "weapon_crossbow::sequence::description"
+        }
+    },
+    "title": "weapon_crossbow::classname",
+    "description": "weapon_crossbow::classname::description"
+}

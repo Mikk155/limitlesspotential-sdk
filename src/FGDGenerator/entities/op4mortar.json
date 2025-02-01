@@ -1,0 +1,80 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "op4mortar::spawnflags::1",
+                    "description": "op4mortar::spawnflags::1::description"
+                },
+                "16": {
+                    "title": "op4mortar::spawnflags::16",
+                    "description": "op4mortar::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "op4mortar::spawnflags::32",
+                    "description": "op4mortar::spawnflags::32::description"
+                }
+            }
+        },
+        "mortar_velocity": {
+            "variable": "integer",
+            "value": "800",
+            "title": "op4mortar::mortar_velocity",
+            "description": "op4mortar::mortar_velocity::description"
+        },
+        "h_min": {
+            "variable": "integer",
+            "value": "-90",
+            "title": "op4mortar::h_min",
+            "description": "op4mortar::h_min::description"
+        },
+        "h_max": {
+            "variable": "integer",
+            "value": "90",
+            "title": "op4mortar::h_max",
+            "description": "op4mortar::h_max::description"
+        },
+        "mindist": {
+            "variable": "integer",
+            "value": "256",
+            "title": "op4mortar::mindist",
+            "description": "op4mortar::mindist::description"
+        },
+        "maxdist": {
+            "variable": "integer",
+            "value": "2048",
+            "title": "op4mortar::maxdist",
+            "description": "op4mortar::maxdist::description"
+        },
+        "enemytype": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "op4mortar::enemytype::0",
+                    "description": "op4mortar::enemytype::0::description"
+                },
+                "1": {
+                    "title": "op4mortar::enemytype::1",
+                    "description": "op4mortar::enemytype::1::description"
+                },
+                "2": {
+                    "title": "op4mortar::enemytype::2",
+                    "description": "op4mortar::enemytype::2::description"
+                }
+            },
+            "title": "op4mortar::enemytype",
+            "description": "op4mortar::enemytype::description"
+        },
+        "firedelay": {
+            "variable": "integer",
+            "value": "5",
+            "title": "op4mortar::firedelay",
+            "description": "op4mortar::firedelay::description"
+        }
+    },
+    "title": "op4mortar::classname",
+    "description": "op4mortar::classname::description"
+}

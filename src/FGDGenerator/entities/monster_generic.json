@@ -1,0 +1,48 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "RenderFields",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -36
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "4": {
+                    "title": "monster_generic::spawnflags::4",
+                    "description": "monster_generic::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "monster_generic::spawnflags::8",
+                    "description": "monster_generic::spawnflags::8::description"
+                }
+            }
+        },
+        "body": {
+            "variable": "integer",
+            "value": "0",
+            "title": "monster_generic::body",
+            "description": "monster_generic::body::description"
+        }
+    },
+    "title": "monster_generic::classname",
+    "description": "monster_generic::classname::description"
+}

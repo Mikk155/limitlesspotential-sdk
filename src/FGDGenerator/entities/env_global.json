@@ -1,0 +1,74 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master"
+    ],
+    "color": [
+        255,
+        255,
+        128
+    ],
+    "data": {
+        "globalstate": {
+            "variable": "string",
+            "value": "",
+            "title": "env_global::globalstate",
+            "description": "env_global::globalstate::description"
+        },
+        "triggermode": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "env_global::triggermode::0",
+                    "description": "env_global::triggermode::0::description"
+                },
+                "1": {
+                    "title": "env_global::triggermode::1",
+                    "description": "env_global::triggermode::1::description"
+                },
+                "2": {
+                    "title": "env_global::triggermode::2",
+                    "description": "env_global::triggermode::2::description"
+                },
+                "3": {
+                    "title": "env_global::triggermode::3",
+                    "description": "env_global::triggermode::3::description"
+                }
+            },
+            "title": "env_global::triggermode",
+            "description": "env_global::triggermode::description"
+        },
+        "initialstate": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "env_global::initialstate::0",
+                    "description": "env_global::initialstate::0::description"
+                },
+                "1": {
+                    "title": "env_global::initialstate::1",
+                    "description": "env_global::initialstate::1::description"
+                },
+                "2": {
+                    "title": "env_global::initialstate::2",
+                    "description": "env_global::initialstate::2::description"
+                }
+            },
+            "title": "env_global::initialstate",
+            "description": "env_global::initialstate::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_global::spawnflags::1",
+                    "description": "env_global::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "env_global::classname",
+    "description": "env_global::classname::description"
+}

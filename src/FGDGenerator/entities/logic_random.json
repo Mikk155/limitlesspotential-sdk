@@ -1,0 +1,88 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "target1": {
+            "variable": "target_destination",
+            "title": "logic_random::target1",
+            "description": "logic_random::target1::description"
+        },
+        "target2": {
+            "variable": "target_destination",
+            "title": "logic_random::target2",
+            "description": "logic_random::target2::description"
+        },
+        "target3": {
+            "variable": "target_destination",
+            "title": "logic_random::target3",
+            "description": "logic_random::target3::description"
+        },
+        "target4": {
+            "variable": "target_destination",
+            "title": "logic_random::target4",
+            "description": "logic_random::target4::description"
+        },
+        "target5": {
+            "variable": "target_destination",
+            "title": "logic_random::target5",
+            "description": "logic_random::target5::description"
+        },
+        "target6": {
+            "variable": "target_destination",
+            "title": "logic_random::target6",
+            "description": "logic_random::target6::description"
+        },
+        "target7": {
+            "variable": "target_destination",
+            "title": "logic_random::target7",
+            "description": "logic_random::target7::description"
+        },
+        "target8": {
+            "variable": "target_destination",
+            "title": "logic_random::target8",
+            "description": "logic_random::target8::description"
+        },
+        "target9": {
+            "variable": "target_destination",
+            "title": "logic_random::target9",
+            "description": "logic_random::target9::description"
+        },
+        "target10": {
+            "variable": "target_destination",
+            "title": "logic_random::target10",
+            "description": "logic_random::target10::description"
+        },
+        "target11": {
+            "variable": "target_destination",
+            "title": "logic_random::target11",
+            "description": "logic_random::target11::description"
+        },
+        "target12": {
+            "variable": "target_destination",
+            "title": "logic_random::target12",
+            "description": "logic_random::target12::description"
+        },
+        "target13": {
+            "variable": "target_destination",
+            "title": "logic_random::target13",
+            "description": "logic_random::target13::description"
+        },
+        "target14": {
+            "variable": "target_destination",
+            "title": "logic_random::target14",
+            "description": "logic_random::target14::description"
+        },
+        "target15": {
+            "variable": "target_destination",
+            "title": "logic_random::target15",
+            "description": "logic_random::target15::description"
+        },
+        "target16": {
+            "variable": "target_destination",
+            "title": "logic_random::target16",
+            "description": "logic_random::target16::description"
+        }
+    },
+    "title": "logic_random::classname",
+    "description": "logic_random::classname::description"
+}

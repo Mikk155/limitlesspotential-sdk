@@ -1,0 +1,17 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/pit_worm_up.mdl",
+    "data": {},
+    "title": "monster_pitworm::classname",
+    "description": "monster_pitworm::classname::description"
+}

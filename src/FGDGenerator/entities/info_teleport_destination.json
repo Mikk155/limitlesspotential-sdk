@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -36
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "color": [
+        0,
+        255,
+        0
+    ],
+    "offset": [
+        0,
+        0,
+        36
+    ],
+    "title": "info_teleport_destination::classname",
+    "description": "info_teleport_destination::classname::description"
+}

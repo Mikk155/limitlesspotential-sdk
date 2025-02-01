@@ -1,0 +1,27 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Target"
+    ],
+    "data": {
+        "mortar_axis": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "func_op4mortarcontroller::mortar_axis::0",
+                    "description": "func_op4mortarcontroller::mortar_axis::0::description"
+                },
+                "1": {
+                    "title": "func_op4mortarcontroller::mortar_axis::1",
+                    "description": "func_op4mortarcontroller::mortar_axis::1::description"
+                }
+            },
+            "title": "func_op4mortarcontroller::mortar_axis",
+            "description": "func_op4mortarcontroller::mortar_axis::description"
+        }
+    },
+    "title": "func_op4mortarcontroller::classname",
+    "description": "func_op4mortarcontroller::classname::description"
+}

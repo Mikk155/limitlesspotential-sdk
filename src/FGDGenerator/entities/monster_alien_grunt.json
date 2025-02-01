@@ -1,0 +1,29 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "squadmonster"
+    ],
+    "size": [
+        [
+            -32,
+            -32,
+            0
+        ],
+        [
+            32,
+            32,
+            64
+        ]
+    ],
+    "studio": "models/agrunt.mdl",
+    "title": "monster_alien_grunt::classname",
+    "description": "monster_alien_grunt::classname::description"
+}

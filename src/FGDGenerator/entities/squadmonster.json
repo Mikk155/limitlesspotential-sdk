@@ -1,0 +1,19 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "title": "squadmonster::netname",
+            "description": "squadmonster::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "squadmonster::spawnflags::32",
+                    "description": "squadmonster::spawnflags::32::description"
+                }
+            }
+        }
+    }
+}

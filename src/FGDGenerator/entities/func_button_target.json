@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Target",
+        "Angles",
+        "Master",
+        "RenderFields",
+        "ZHLT",
+        "SF2_StartOn"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_button_target::spawnflags::1",
+                    "description": "func_button_target::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "func_button_target::classname",
+    "description": "func_button_target::classname::description"
+}

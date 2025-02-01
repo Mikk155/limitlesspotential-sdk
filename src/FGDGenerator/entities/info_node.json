@@ -1,0 +1,23 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -24,
+            -24,
+            -4
+        ],
+        [
+            24,
+            24,
+            4
+        ]
+    ],
+    "color": [
+        255,
+        255,
+        0
+    ],
+    "title": "info_node::classname",
+    "description": "info_node::classname::description"
+}

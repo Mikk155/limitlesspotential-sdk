@@ -1,0 +1,60 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay"
+    ],
+    "sprite": "sprites/trigger_camera.spr",
+    "iconsprite": "sprites/trigger_camera.spr",
+    "data": {
+        "wait": {
+            "variable": "integer",
+            "value": "10",
+            "title": "trigger_camera::wait",
+            "description": "trigger_camera::wait::description"
+        },
+        "moveto": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_camera::moveto",
+            "description": "trigger_camera::moveto::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_camera::spawnflags::1",
+                    "description": "trigger_camera::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "trigger_camera::spawnflags::2",
+                    "description": "trigger_camera::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "trigger_camera::spawnflags::4",
+                    "description": "trigger_camera::spawnflags::4::description"
+                }
+            }
+        },
+        "speed": {
+            "variable": "string",
+            "value": "0",
+            "title": "trigger_camera::speed",
+            "description": "trigger_camera::speed::description"
+        },
+        "acceleration": {
+            "variable": "string",
+            "value": "500",
+            "title": "trigger_camera::acceleration",
+            "description": "trigger_camera::acceleration::description"
+        },
+        "deceleration": {
+            "variable": "string",
+            "value": "500",
+            "title": "trigger_camera::deceleration",
+            "description": "trigger_camera::deceleration::description"
+        }
+    },
+    "title": "trigger_camera::classname",
+    "description": "trigger_camera::classname::description"
+}

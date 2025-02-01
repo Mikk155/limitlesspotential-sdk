@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_desert_eagle.mdl",
+    "data": {},
+    "title": "weapon_eagle::classname",
+    "description": "weapon_eagle::classname::description"
+}

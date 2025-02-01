@@ -1,0 +1,50 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Door",
+        "ZHLT"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_water::spawnflags::1",
+                    "description": "func_water::spawnflags::1::description"
+                },
+                "256": {
+                    "title": "func_water::spawnflags::256",
+                    "description": "func_water::spawnflags::256::description"
+                }
+            }
+        },
+        "skin": {
+            "variable": "choices",
+            "value": "-3",
+            "choices": {
+                "-3": {
+                    "title": "func_water::skin::-3",
+                    "description": "func_water::skin::-3::description"
+                },
+                "-4": {
+                    "title": "func_water::skin::-4",
+                    "description": "func_water::skin::-4::description"
+                },
+                "-5": {
+                    "title": "func_water::skin::-5",
+                    "description": "func_water::skin::-5::description"
+                }
+            },
+            "title": "func_water::skin",
+            "description": "func_water::skin::description"
+        },
+        "WaveHeight": {
+            "variable": "string",
+            "value": "3.2",
+            "title": "func_water::WaveHeight",
+            "description": "func_water::WaveHeight::description"
+        }
+    },
+    "title": "func_water::classname",
+    "description": "func_water::classname::description"
+}

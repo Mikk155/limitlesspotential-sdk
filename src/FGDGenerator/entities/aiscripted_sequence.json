@@ -1,0 +1,19 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "color": [ 164, 0, 255 ],
+    "size":
+    [
+        [ -16, -16, 0 ],
+        [ 16, 16, 72 ]
+    ],
+    "studio": "models/editor/aiscripted_sequence.mdl",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "BaseScriptedSequence"
+    ],
+    "title": "aiscripted_sequence::classname",
+    "description": "aiscripted_sequence::classname::description"
+}

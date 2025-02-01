@@ -1,0 +1,7 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "title": "func_ladder::classname",
+    "description": "func_ladder::classname::description"
+}

@@ -1,0 +1,59 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target"
+    ],
+    "size": [
+        [
+            -32,
+            -32,
+            -32
+        ],
+        [
+            32,
+            32,
+            32
+        ]
+    ],
+    "color": [
+        0,
+        255,
+        0
+    ],
+    "iconsprite": "sprites/env_warpball.spr",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_warpball::spawnflags::1",
+                    "description": "env_warpball::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_warpball::spawnflags::2",
+                    "description": "env_warpball::spawnflags::2::description"
+                }
+            }
+        },
+        "radius": {
+            "variable": "string",
+            "value": "256",
+            "title": "env_warpball::radius",
+            "description": "env_warpball::radius::description"
+        },
+        "warp_target": {
+            "variable": "string",
+            "value": "",
+            "title": "env_warpball::warp_target",
+            "description": "env_warpball::warp_target::description"
+        },
+        "damage_delay": {
+            "variable": "string",
+            "value": "0",
+            "title": "env_warpball::damage_delay",
+            "description": "env_warpball::damage_delay::description"
+        }
+    },
+    "title": "env_warpball::classname",
+    "description": "env_warpball::classname::description"
+}

@@ -1,0 +1,140 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Target",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_hurt::spawnflags::1",
+                    "description": "trigger_hurt::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "trigger_hurt::spawnflags::2",
+                    "description": "trigger_hurt::spawnflags::2::description"
+                },
+                "8": {
+                    "title": "trigger_hurt::spawnflags::8",
+                    "description": "trigger_hurt::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "trigger_hurt::spawnflags::16",
+                    "description": "trigger_hurt::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "trigger_hurt::spawnflags::32",
+                    "description": "trigger_hurt::spawnflags::32::description"
+                }
+            }
+        },
+        "dmg": {
+            "variable": "integer",
+            "value": "10",
+            "title": "trigger_hurt::dmg",
+            "description": "trigger_hurt::dmg::description"
+        },
+        "delay": {
+            "variable": "string",
+            "value": "0",
+            "title": "trigger_hurt::delay",
+            "description": "trigger_hurt::delay::description"
+        },
+        "damagetype": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_hurt::damagetype::0",
+                    "description": "trigger_hurt::damagetype::0::description"
+                },
+                "1": {
+                    "title": "trigger_hurt::damagetype::1",
+                    "description": "trigger_hurt::damagetype::1::description"
+                },
+                "2": {
+                    "title": "trigger_hurt::damagetype::2",
+                    "description": "trigger_hurt::damagetype::2::description"
+                },
+                "4": {
+                    "title": "trigger_hurt::damagetype::4",
+                    "description": "trigger_hurt::damagetype::4::description"
+                },
+                "8": {
+                    "title": "trigger_hurt::damagetype::8",
+                    "description": "trigger_hurt::damagetype::8::description"
+                },
+                "16": {
+                    "title": "trigger_hurt::damagetype::16",
+                    "description": "trigger_hurt::damagetype::16::description"
+                },
+                "32": {
+                    "title": "trigger_hurt::damagetype::32",
+                    "description": "trigger_hurt::damagetype::32::description"
+                },
+                "64": {
+                    "title": "trigger_hurt::damagetype::64",
+                    "description": "trigger_hurt::damagetype::64::description"
+                },
+                "128": {
+                    "title": "trigger_hurt::damagetype::128",
+                    "description": "trigger_hurt::damagetype::128::description"
+                },
+                "256": {
+                    "title": "trigger_hurt::damagetype::256",
+                    "description": "trigger_hurt::damagetype::256::description"
+                },
+                "512": {
+                    "title": "trigger_hurt::damagetype::512",
+                    "description": "trigger_hurt::damagetype::512::description"
+                },
+                "1024": {
+                    "title": "trigger_hurt::damagetype::1024",
+                    "description": "trigger_hurt::damagetype::1024::description"
+                },
+                "16384": {
+                    "title": "trigger_hurt::damagetype::16384",
+                    "description": "trigger_hurt::damagetype::16384::description"
+                },
+                "32768": {
+                    "title": "trigger_hurt::damagetype::32768",
+                    "description": "trigger_hurt::damagetype::32768::description"
+                },
+                "65536": {
+                    "title": "trigger_hurt::damagetype::65536",
+                    "description": "trigger_hurt::damagetype::65536::description"
+                },
+                "131072": {
+                    "title": "trigger_hurt::damagetype::131072",
+                    "description": "trigger_hurt::damagetype::131072::description"
+                },
+                "262144": {
+                    "title": "trigger_hurt::damagetype::262144",
+                    "description": "trigger_hurt::damagetype::262144::description"
+                },
+                "524288": {
+                    "title": "trigger_hurt::damagetype::524288",
+                    "description": "trigger_hurt::damagetype::524288::description"
+                },
+                "1048576": {
+                    "title": "trigger_hurt::damagetype::1048576",
+                    "description": "trigger_hurt::damagetype::1048576::description"
+                },
+                "2097152": {
+                    "title": "trigger_hurt::damagetype::2097152",
+                    "description": "trigger_hurt::damagetype::2097152::description"
+                },
+                "4194304": {
+                    "title": "trigger_hurt::damagetype::4194304",
+                    "description": "trigger_hurt::damagetype::4194304::description"
+                }
+            },
+            "title": "trigger_hurt::damagetype",
+            "description": "trigger_hurt::damagetype::description"
+        }
+    },
+    "title": "trigger_hurt::classname",
+    "description": "trigger_hurt::classname::description"
+}

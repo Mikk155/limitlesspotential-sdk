@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Trigger",
+        "TeleportBase"
+    ],
+    "data": {},
+    "title": "trigger_teleport::classname",
+    "description": "trigger_teleport::classname::description"
+}

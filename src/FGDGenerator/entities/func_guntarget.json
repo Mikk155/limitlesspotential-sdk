@@ -1,0 +1,47 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "Angles",
+        "minlight",
+        "ZHLT"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "100",
+            "title": "func_guntarget::speed",
+            "description": "func_guntarget::speed::description"
+        },
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_guntarget::target",
+            "description": "func_guntarget::target::description"
+        },
+        "message": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_guntarget::message",
+            "description": "func_guntarget::message::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_guntarget::health",
+            "description": "func_guntarget::health::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_guntarget::spawnflags::1",
+                    "description": "func_guntarget::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "func_guntarget::classname",
+    "description": "func_guntarget::classname::description"
+}

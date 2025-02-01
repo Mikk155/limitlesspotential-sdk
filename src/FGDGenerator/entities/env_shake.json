@@ -1,0 +1,40 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_shake::spawnflags::1",
+                    "description": "env_shake::spawnflags::1::description"
+                }
+            }
+        },
+        "amplitude": {
+            "variable": "string",
+            "value": "4",
+            "title": "env_shake::amplitude",
+            "description": "env_shake::amplitude::description"
+        },
+        "radius": {
+            "variable": "string",
+            "value": "500",
+            "title": "env_shake::radius",
+            "description": "env_shake::radius::description"
+        },
+        "duration": {
+            "variable": "float",
+            "value": "1",
+            "title": "env_shake::duration",
+            "description": "env_shake::duration::description"
+        },
+        "frequency": {
+            "variable": "float",
+            "value": "2.5",
+            "title": "env_shake::frequency",
+            "description": "env_shake::frequency::description"
+        }
+    },
+    "title": "env_shake::classname",
+    "description": "env_shake::classname::description"
+}

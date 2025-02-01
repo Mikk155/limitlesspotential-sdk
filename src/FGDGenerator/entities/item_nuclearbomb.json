@@ -1,0 +1,37 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "OtherItem"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "data": {
+        "initialstate": {
+            "variable": "integer",
+            "value": 0,
+            "title": "item_nuclearbomb::initialstate",
+            "description": "item_nuclearbomb::initialstate::description"
+        },
+        "wait": {
+            "variable": "integer",
+            "value": 1,
+            "title": "item_nuclearbomb::wait",
+            "description": "item_nuclearbomb::wait::description"
+        }
+    },
+    "title": "item_nuclearbomb::classname",
+    "description": "item_nuclearbomb::classname::description"
+}

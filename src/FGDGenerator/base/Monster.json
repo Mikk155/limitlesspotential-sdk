@@ -1,0 +1,187 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "UseLineOfSight"
+    ],
+    "color": [
+        0,
+        200,
+        200
+    ],
+    "data": {
+        "health": {
+            "variable": "integer",
+            "title": "Monster::health",
+            "description": "Monster::health::description"
+        },
+        "classification": {
+            "variable": "string",
+            "title": "Monster::classification",
+            "description": "Monster::classification::description"
+        },
+        "is_player_ally": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "Monster::is_player_ally::0",
+                    "description": "Monster::is_player_ally::0::description"
+                },
+                "2": {
+                    "title": "Monster::is_player_ally::2",
+                    "description": "Monster::is_player_ally::2::description"
+                }
+            },
+            "title": "Monster::is_player_ally",
+            "description": "Monster::is_player_ally::description"
+        },
+        "TriggerTarget": {
+            "variable": "target_destination",
+            "title": "Monster::TriggerTarget",
+            "description": "Monster::TriggerTarget::description"
+        },
+        "TriggerCondition": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "Monster::TriggerCondition::0",
+                    "description": "Monster::TriggerCondition::0::description"
+                },
+                "1": {
+                    "title": "Monster::TriggerCondition::1",
+                    "description": "Monster::TriggerCondition::1::description"
+                },
+                "2": {
+                    "title": "Monster::TriggerCondition::2",
+                    "description": "Monster::TriggerCondition::2::description"
+                },
+                "3": {
+                    "title": "Monster::TriggerCondition::3",
+                    "description": "Monster::TriggerCondition::3::description"
+                },
+                "4": {
+                    "title": "Monster::TriggerCondition::4",
+                    "description": "Monster::TriggerCondition::4::description"
+                },
+                "7": {
+                    "title": "Monster::TriggerCondition::7",
+                    "description": "Monster::TriggerCondition::7::description"
+                },
+                "8": {
+                    "title": "Monster::TriggerCondition::8",
+                    "description": "Monster::TriggerCondition::8::description"
+                },
+                "9": {
+                    "title": "Monster::TriggerCondition::9",
+                    "description": "Monster::TriggerCondition::9::description"
+                },
+                "10": {
+                    "title": "Monster::TriggerCondition::10",
+                    "description": "Monster::TriggerCondition::10::description"
+                },
+                "11": {
+                    "title": "Monster::TriggerCondition::11",
+                    "description": "Monster::TriggerCondition::11::description"
+                }
+            },
+            "title": "Monster::TriggerCondition",
+            "description": "Monster::TriggerCondition::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "Monster::spawnflags::1",
+                    "description": "Monster::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "Monster::spawnflags::2",
+                    "description": "Monster::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "Monster::spawnflags::4",
+                    "description": "Monster::spawnflags::4::description"
+                },
+                "16": {
+                    "title": "Monster::spawnflags::16",
+                    "description": "Monster::spawnflags::16::description"
+                },
+                "128": {
+                    "title": "Monster::spawnflags::128",
+                    "description": "Monster::spawnflags::128::description"
+                },
+                "256": {
+                    "title": "Monster::spawnflags::256",
+                    "description": "Monster::spawnflags::256::description"
+                },
+                "512": {
+                    "title": "Monster::spawnflags::512",
+                    "description": "Monster::spawnflags::512::description"
+                }
+            }
+        },
+        "allow_item_dropping": {
+            "variable": "choices",
+            "value": 1,
+            "choices": {
+                "0": {
+                    "title": "Monster::allow_item_dropping::0",
+                    "description": "Monster::allow_item_dropping::0::description"
+                },
+                "1": {
+                    "title": "Monster::allow_item_dropping::1",
+                    "description": "Monster::allow_item_dropping::1::description"
+                }
+            },
+            "title": "Monster::allow_item_dropping",
+            "description": "Monster::allow_item_dropping::description"
+        },
+        "allow_follow": {
+            "variable": "choices",
+            "value": 1,
+            "choices": {
+                "0": {
+                    "title": "Monster::allow_follow::0",
+                    "description": "Monster::allow_follow::0::description"
+                },
+                "1": {
+                    "title": "Monster::allow_follow::1",
+                    "description": "Monster::allow_follow::1::description"
+                }
+            },
+            "title": "Monster::allow_follow",
+            "description": "Monster::allow_follow::description"
+        },
+        "UseSentence": {
+            "variable": "string",
+            "title": "Monster::UseSentence",
+            "description": "Monster::UseSentence::description"
+        },
+        "UnUseSentence": {
+            "variable": "string",
+            "title": "Monster::UnUseSentence",
+            "description": "Monster::UnUseSentence::description"
+        },
+        "freeroam": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "Monster::freeroam::0",
+                    "description": "Monster::freeroam::0::description"
+                },
+                "1": {
+                    "title": "Monster::freeroam::1",
+                    "description": "Monster::freeroam::1::description"
+                },
+                "2": {
+                    "title": "Monster::freeroam::2",
+                    "description": "Monster::freeroam::2::description"
+                }
+            },
+            "title": "Monster::freeroam",
+            "description": "Monster::freeroam::description"
+        }
+    }
+}

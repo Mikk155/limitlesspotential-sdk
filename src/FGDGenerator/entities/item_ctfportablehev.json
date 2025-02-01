@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFItem"
+    ],
+    "studio": "models/w_porthev.mdl",
+    "title": "item_ctfportablehev::classname",
+    "description": "item_ctfportablehev::classname::description"
+}

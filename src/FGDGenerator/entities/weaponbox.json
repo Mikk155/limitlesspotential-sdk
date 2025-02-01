@@ -1,0 +1,25 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            64
+        ]
+    ],
+    "color": [
+        0,
+        128,
+        0
+    ],
+    "studio": "models/w_chainammo.mdl",
+    "data": {},
+    "title": "weaponbox::classname",
+    "description": "weaponbox::classname::description"
+}

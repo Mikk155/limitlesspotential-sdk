@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Item"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/w_security.mdl",
+    "title": "item_security::classname",
+    "description": "item_security::classname::description"
+}

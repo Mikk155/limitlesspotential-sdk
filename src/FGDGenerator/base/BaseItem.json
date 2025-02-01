@@ -1,0 +1,109 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "Angles",
+        "CustomModel"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            32
+        ]
+    ],
+    "color": [
+        0,
+        0,
+        200
+    ],
+    "data": {
+        "respawn_delay": {
+            "variable": "string",
+            "value": "",
+            "title": "BaseItem::respawn_delay",
+            "description": "BaseItem::respawn_delay::description"
+        },
+        "stay_visible_during_respawn": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "BaseItem::stay_visible_during_respawn::0",
+                    "description": "BaseItem::stay_visible_during_respawn::0::description"
+                },
+                "1": {
+                    "title": "BaseItem::stay_visible_during_respawn::1",
+                    "description": "BaseItem::stay_visible_during_respawn::1::description"
+                }
+            },
+            "title": "BaseItem::stay_visible_during_respawn",
+            "description": "BaseItem::stay_visible_during_respawn::description"
+        },
+        "flash_on_respawn": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "BaseItem::flash_on_respawn::0",
+                    "description": "BaseItem::flash_on_respawn::0::description"
+                },
+                "1": {
+                    "title": "BaseItem::flash_on_respawn::1",
+                    "description": "BaseItem::flash_on_respawn::1::description"
+                }
+            },
+            "title": "BaseItem::flash_on_respawn",
+            "description": "BaseItem::flash_on_respawn::description"
+        },
+        "play_pickup_sound": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "BaseItem::play_pickup_sound::0",
+                    "description": "BaseItem::play_pickup_sound::0::description"
+                },
+                "1": {
+                    "title": "BaseItem::play_pickup_sound::1",
+                    "description": "BaseItem::play_pickup_sound::1::description"
+                }
+            },
+            "title": "BaseItem::play_pickup_sound",
+            "description": "BaseItem::play_pickup_sound::description"
+        },
+        "fall_mode": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "BaseItem::fall_mode::0",
+                    "description": "BaseItem::fall_mode::0::description"
+                },
+                "1": {
+                    "title": "BaseItem::fall_mode::1",
+                    "description": "BaseItem::fall_mode::1::description"
+                }
+            },
+            "title": "BaseItem::fall_mode",
+            "description": "BaseItem::fall_mode::description"
+        },
+        "trigger_on_spawn": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "BaseItem::trigger_on_spawn",
+            "description": "BaseItem::trigger_on_spawn::description"
+        },
+        "trigger_on_despawn": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "BaseItem::trigger_on_despawn",
+            "description": "BaseItem::trigger_on_despawn::description"
+        }
+    }
+}

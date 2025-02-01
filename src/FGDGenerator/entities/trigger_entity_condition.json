@@ -1,0 +1,63 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "condition": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "trigger_entity_condition::condition::0",
+                    "description": "trigger_entity_condition::condition::0::description"
+                },
+                "1": {
+                    "title": "trigger_entity_condition::condition::1",
+                    "description": "trigger_entity_condition::condition::1::description"
+                },
+                "2": {
+                    "title": "trigger_entity_condition::condition::2",
+                    "description": "trigger_entity_condition::condition::2::description"
+                },
+                "3": {
+                    "title": "trigger_entity_condition::condition::3",
+                    "description": "trigger_entity_condition::condition::3::description"
+                },
+                "4": {
+                    "title": "trigger_entity_condition::condition::4",
+                    "description": "trigger_entity_condition::condition::4::description"
+                }
+            },
+            "title": "trigger_entity_condition::condition",
+            "description": "trigger_entity_condition::condition::description"
+        },
+        "pass_target": {
+            "variable": "target_destination",
+            "title": "trigger_entity_condition::pass_target",
+            "description": "trigger_entity_condition::pass_target::description"
+        },
+        "fail_target": {
+            "variable": "target_destination",
+            "title": "trigger_entity_condition::fail_target",
+            "description": "trigger_entity_condition::fail_target::description"
+        },
+        "argument_1": {
+            "variable": "string",
+            "title": "trigger_entity_condition::argument_1",
+            "description": "trigger_entity_condition::argument_1::description"
+        }
+    },
+    "title": "trigger_entity_condition::classname",
+    "description": "trigger_entity_condition::classname::description"
+}

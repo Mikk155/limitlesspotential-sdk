@@ -1,0 +1,26 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles",
+        "ZHLT_point"
+    ],
+    "sprite": "sprites/lightbulb.spr",
+    "iconsprite": "sprites/lightbulb.spr",
+    "data": {
+        "pitch": {
+            "variable": "integer",
+            "value": "0",
+            "title": "light_environment::pitch",
+            "description": "light_environment::pitch::description"
+        },
+        "_light": {
+            "variable": "color255",
+            "value": "255 255 128 200",
+            "title": "light_environment::_light",
+            "description": "light_environment::_light::description"
+        }
+    },
+    "title": "light_environment::classname",
+    "description": "light_environment::classname::description"
+}

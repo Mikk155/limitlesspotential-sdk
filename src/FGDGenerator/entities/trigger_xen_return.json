@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Trigger"
+    ],
+    "data": {},
+    "title": "trigger_xen_return::classname",
+    "description": "trigger_xen_return::classname::description"
+}

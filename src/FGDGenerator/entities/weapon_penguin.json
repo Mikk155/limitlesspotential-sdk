@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_penguinnest.mdl",
+    "data": {},
+    "title": "weapon_penguin::classname",
+    "description": "weapon_penguin::classname::description"
+}

@@ -1,0 +1,55 @@
+{
+    "$schema": "../schema.json",
+	"Class": "Base",
+    "data":
+    {
+        "fire_on_recharge":
+        {
+            "variable": "target_destination",
+            "title": "BaseCharger::fire_on_recharge",
+            "description": "BaseCharger::fire_on_recharge::description"
+        },
+        "fire_on_empty": 
+        { 
+            "variable": "target_destination",
+            "title": "BaseCharger::fire_on_empty",
+            "description": "BaseCharger::fire_on_empty::description"
+        },
+        "fire_on_spawn": 
+        {
+            "variable": "choices", 
+            "value": 1,
+            "choices":
+            {
+                "0":
+                {
+                    "title": "No"
+                },
+                "1":
+                {
+                    "title": "Yes"
+                }
+            },
+            "title": "BaseCharger::fire_on_spawn",
+            "description": "BaseCharger::fire_on_spawn::description"
+        },
+        "total_juice": 
+        { 
+            "variable": "integer",
+            "title": "BaseCharger::total_juice",
+            "description": "BaseCharger::total_juice::description"
+        },
+        "recharge_delay": 
+        { 
+            "variable": "integer",
+            "title": "BaseCharger::recharge_delay",
+            "description": "BaseCharger::recharge_delay::description"
+        },
+        "charge_per_use": 
+        { 
+            "variable": "integer",
+            "title": "BaseCharger::charge_per_use",
+            "description": "BaseCharger::charge_per_use::description"
+        }
+    }
+}

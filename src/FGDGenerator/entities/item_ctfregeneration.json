@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFItem"
+    ],
+    "studio": "models/w_health.mdl",
+    "title": "item_ctfregeneration::classname",
+    "description": "item_ctfregeneration::classname::description"
+}

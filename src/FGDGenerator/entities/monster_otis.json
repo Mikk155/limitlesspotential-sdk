@@ -1,0 +1,103 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "TalkMonster",
+        "Sequence"
+    ],
+    "studio": "models/otis.mdl",
+    "data": {
+        "bodystate": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "monster_otis::bodystate::0",
+                    "description": "monster_otis::bodystate::0::description"
+                },
+                "1": {
+                    "title": "monster_otis::bodystate::1",
+                    "description": "monster_otis::bodystate::1::description"
+                },
+                "2": {
+                    "title": "monster_otis::bodystate::2",
+                    "description": "monster_otis::bodystate::2::description"
+                }
+            },
+            "title": "monster_otis::bodystate",
+            "description": "monster_otis::bodystate::description"
+        },
+        "skin": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_otis::skin::-1",
+                    "description": "monster_otis::skin::-1::description"
+                },
+                "0": {
+                    "title": "monster_otis::skin::0",
+                    "description": "monster_otis::skin::0::description"
+                },
+                "1": {
+                    "title": "monster_otis::skin::1",
+                    "description": "monster_otis::skin::1::description"
+                },
+                "2": {
+                    "title": "monster_otis::skin::2",
+                    "description": "monster_otis::skin::2::description"
+                }
+            },
+            "title": "monster_otis::skin",
+            "description": "monster_otis::skin::description"
+        },
+        "sleeves": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_otis::sleeves::-1",
+                    "description": "monster_otis::sleeves::-1::description"
+                },
+                "0": {
+                    "title": "monster_otis::sleeves::0",
+                    "description": "monster_otis::sleeves::0::description"
+                },
+                "1": {
+                    "title": "monster_otis::sleeves::1",
+                    "description": "monster_otis::sleeves::1::description"
+                }
+            },
+            "title": "monster_otis::sleeves",
+            "description": "monster_otis::sleeves::description"
+        },
+        "item": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_otis::item::0",
+                    "description": "monster_otis::item::0::description"
+                },
+                "1": {
+                    "title": "monster_otis::item::1",
+                    "description": "monster_otis::item::1::description"
+                },
+                "2": {
+                    "title": "monster_otis::item::2",
+                    "description": "monster_otis::item::2::description"
+                }
+            },
+            "title": "monster_otis::item",
+            "description": "monster_otis::item::description"
+        }
+    },
+    "title": "monster_otis::classname",
+    "description": "monster_otis::classname::description"
+}

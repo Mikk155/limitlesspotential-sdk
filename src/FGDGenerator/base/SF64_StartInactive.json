@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "64": {
+                    "title": "StartInactive",
+                    "description": "StartInactive::description"
+                }
+            }
+        }
+    }
+}

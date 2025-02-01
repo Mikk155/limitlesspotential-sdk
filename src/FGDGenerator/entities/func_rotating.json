@@ -1,0 +1,96 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "Angles",
+        "minlight",
+        "ZHLT",
+        "ReplacementFiles"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_rotating::speed",
+            "description": "func_rotating::speed::description"
+        },
+        "volume": {
+            "variable": "integer",
+            "value": "10",
+            "title": "func_rotating::volume",
+            "description": "func_rotating::volume::description"
+        },
+        "fanfriction": {
+            "variable": "integer",
+            "value": "20",
+            "title": "func_rotating::fanfriction",
+            "description": "func_rotating::fanfriction::description"
+        },
+        "sounds": {
+            "variable": "sound",
+            "value": "",
+            "title": "func_rotating::sounds",
+            "description": "func_rotating::sounds::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_rotating::spawnflags::1",
+                    "description": "func_rotating::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "func_rotating::spawnflags::2",
+                    "description": "func_rotating::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "func_rotating::spawnflags::4",
+                    "description": "func_rotating::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "func_rotating::spawnflags::8",
+                    "description": "func_rotating::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "func_rotating::spawnflags::16",
+                    "description": "func_rotating::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "func_rotating::spawnflags::32",
+                    "description": "func_rotating::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "func_rotating::spawnflags::64",
+                    "description": "func_rotating::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "func_rotating::spawnflags::128",
+                    "description": "func_rotating::spawnflags::128::description"
+                },
+                "256": {
+                    "title": "func_rotating::spawnflags::256",
+                    "description": "func_rotating::spawnflags::256::description"
+                },
+                "512": {
+                    "title": "func_rotating::spawnflags::512",
+                    "description": "func_rotating::spawnflags::512::description"
+                }
+            }
+        },
+        "spawnorigin": {
+            "variable": "string",
+            "value": "0 0 0",
+            "title": "func_rotating::spawnorigin",
+            "description": "func_rotating::spawnorigin::description"
+        },
+        "dmg": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_rotating::dmg",
+            "description": "func_rotating::dmg::description"
+        }
+    },
+    "title": "func_rotating::classname",
+    "description": "func_rotating::classname::description"
+}

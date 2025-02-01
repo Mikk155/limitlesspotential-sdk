@@ -1,0 +1,139 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "iconsprite": "sprites/speaker.spr",
+    "data": {
+        "radius": {
+            "variable": "integer",
+            "value": "128",
+            "title": "env_sound::radius",
+            "description": "env_sound::radius::description"
+        },
+        "roomtype": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "env_sound::roomtype::0",
+                    "description": "env_sound::roomtype::0::description"
+                },
+                "1": {
+                    "title": "env_sound::roomtype::1",
+                    "description": "env_sound::roomtype::1::description"
+                },
+                "2": {
+                    "title": "env_sound::roomtype::2",
+                    "description": "env_sound::roomtype::2::description"
+                },
+                "3": {
+                    "title": "env_sound::roomtype::3",
+                    "description": "env_sound::roomtype::3::description"
+                },
+                "4": {
+                    "title": "env_sound::roomtype::4",
+                    "description": "env_sound::roomtype::4::description"
+                },
+                "5": {
+                    "title": "env_sound::roomtype::5",
+                    "description": "env_sound::roomtype::5::description"
+                },
+                "6": {
+                    "title": "env_sound::roomtype::6",
+                    "description": "env_sound::roomtype::6::description"
+                },
+                "7": {
+                    "title": "env_sound::roomtype::7",
+                    "description": "env_sound::roomtype::7::description"
+                },
+                "8": {
+                    "title": "env_sound::roomtype::8",
+                    "description": "env_sound::roomtype::8::description"
+                },
+                "9": {
+                    "title": "env_sound::roomtype::9",
+                    "description": "env_sound::roomtype::9::description"
+                },
+                "10": {
+                    "title": "env_sound::roomtype::10",
+                    "description": "env_sound::roomtype::10::description"
+                },
+                "11": {
+                    "title": "env_sound::roomtype::11",
+                    "description": "env_sound::roomtype::11::description"
+                },
+                "12": {
+                    "title": "env_sound::roomtype::12",
+                    "description": "env_sound::roomtype::12::description"
+                },
+                "13": {
+                    "title": "env_sound::roomtype::13",
+                    "description": "env_sound::roomtype::13::description"
+                },
+                "14": {
+                    "title": "env_sound::roomtype::14",
+                    "description": "env_sound::roomtype::14::description"
+                },
+                "15": {
+                    "title": "env_sound::roomtype::15",
+                    "description": "env_sound::roomtype::15::description"
+                },
+                "16": {
+                    "title": "env_sound::roomtype::16",
+                    "description": "env_sound::roomtype::16::description"
+                },
+                "17": {
+                    "title": "env_sound::roomtype::17",
+                    "description": "env_sound::roomtype::17::description"
+                },
+                "18": {
+                    "title": "env_sound::roomtype::18",
+                    "description": "env_sound::roomtype::18::description"
+                },
+                "19": {
+                    "title": "env_sound::roomtype::19",
+                    "description": "env_sound::roomtype::19::description"
+                },
+                "20": {
+                    "title": "env_sound::roomtype::20",
+                    "description": "env_sound::roomtype::20::description"
+                },
+                "21": {
+                    "title": "env_sound::roomtype::21",
+                    "description": "env_sound::roomtype::21::description"
+                },
+                "22": {
+                    "title": "env_sound::roomtype::22",
+                    "description": "env_sound::roomtype::22::description"
+                },
+                "23": {
+                    "title": "env_sound::roomtype::23",
+                    "description": "env_sound::roomtype::23::description"
+                },
+                "24": {
+                    "title": "env_sound::roomtype::24",
+                    "description": "env_sound::roomtype::24::description"
+                },
+                "25": {
+                    "title": "env_sound::roomtype::25",
+                    "description": "env_sound::roomtype::25::description"
+                },
+                "26": {
+                    "title": "env_sound::roomtype::26",
+                    "description": "env_sound::roomtype::26::description"
+                },
+                "27": {
+                    "title": "env_sound::roomtype::27",
+                    "description": "env_sound::roomtype::27::description"
+                },
+                "28": {
+                    "title": "env_sound::roomtype::28",
+                    "description": "env_sound::roomtype::28::description"
+                }
+            },
+            "title": "env_sound::roomtype",
+            "description": "env_sound::roomtype::description"
+        }
+    },
+    "title": "env_sound::classname",
+    "description": "env_sound::classname::description"
+}

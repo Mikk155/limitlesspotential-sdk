@@ -1,0 +1,23 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "MonsterWithChildren"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "64": {
+                    "title": "BaseOsprey::spawnflags::64",
+                    "description": "BaseOsprey::spawnflags::64::description"
+                }
+            }
+        },
+        "initial_capacity": {
+            "variable": "integer",
+            "value": "0",
+            "title": "BaseOsprey::initial_capacity",
+            "description": "BaseOsprey::initial_capacity::description"
+        }
+    }
+}

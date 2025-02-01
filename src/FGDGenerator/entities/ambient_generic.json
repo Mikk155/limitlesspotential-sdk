@@ -1,0 +1,251 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "color": [
+        220,
+        220,
+        220
+    ],
+    "iconsprite": "sprites/editor/speaker.spr",
+    "data": {
+        "message": {
+            "variable": "sound",
+            "title": "Sound"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "10",
+            "title": "ambient_generic::health",
+            "description": "ambient_generic::health::description"
+        },
+        "playfrom": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "ambient_generic::playfrom",
+            "description": "ambient_generic::playfrom::description"
+        },
+        "preset": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "ambient_generic::preset::0",
+                    "description": "ambient_generic::preset::0::description"
+                },
+                "1": {
+                    "title": "ambient_generic::preset::1",
+                    "description": "ambient_generic::preset::1::description"
+                },
+                "2": {
+                    "title": "ambient_generic::preset::2",
+                    "description": "ambient_generic::preset::2::description"
+                },
+                "3": {
+                    "title": "ambient_generic::preset::3",
+                    "description": "ambient_generic::preset::3::description"
+                },
+                "4": {
+                    "title": "ambient_generic::preset::4",
+                    "description": "ambient_generic::preset::4::description"
+                },
+                "5": {
+                    "title": "ambient_generic::preset::5",
+                    "description": "ambient_generic::preset::5::description"
+                },
+                "6": {
+                    "title": "ambient_generic::preset::6",
+                    "description": "ambient_generic::preset::6::description"
+                },
+                "7": {
+                    "title": "ambient_generic::preset::7",
+                    "description": "ambient_generic::preset::7::description"
+                },
+                "8": {
+                    "title": "ambient_generic::preset::8",
+                    "description": "ambient_generic::preset::8::description"
+                },
+                "9": {
+                    "title": "ambient_generic::preset::9",
+                    "description": "ambient_generic::preset::9::description"
+                },
+                "10": {
+                    "title": "ambient_generic::preset::10",
+                    "description": "ambient_generic::preset::10::description"
+                },
+                "11": {
+                    "title": "ambient_generic::preset::11",
+                    "description": "ambient_generic::preset::11::description"
+                },
+                "12": {
+                    "title": "ambient_generic::preset::12",
+                    "description": "ambient_generic::preset::12::description"
+                },
+                "13": {
+                    "title": "ambient_generic::preset::13",
+                    "description": "ambient_generic::preset::13::description"
+                },
+                "14": {
+                    "title": "ambient_generic::preset::14",
+                    "description": "ambient_generic::preset::14::description"
+                },
+                "15": {
+                    "title": "ambient_generic::preset::15",
+                    "description": "ambient_generic::preset::15::description"
+                },
+                "16": {
+                    "title": "ambient_generic::preset::16",
+                    "description": "ambient_generic::preset::16::description"
+                },
+                "17": {
+                    "title": "ambient_generic::preset::17",
+                    "description": "ambient_generic::preset::17::description"
+                },
+                "18": {
+                    "title": "ambient_generic::preset::18",
+                    "description": "ambient_generic::preset::18::description"
+                },
+                "19": {
+                    "title": "ambient_generic::preset::19",
+                    "description": "ambient_generic::preset::19::description"
+                },
+                "20": {
+                    "title": "ambient_generic::preset::20",
+                    "description": "ambient_generic::preset::20::description"
+                },
+                "21": {
+                    "title": "ambient_generic::preset::21",
+                    "description": "ambient_generic::preset::21::description"
+                },
+                "22": {
+                    "title": "ambient_generic::preset::22",
+                    "description": "ambient_generic::preset::22::description"
+                },
+                "23": {
+                    "title": "ambient_generic::preset::23",
+                    "description": "ambient_generic::preset::23::description"
+                },
+                "24": {
+                    "title": "ambient_generic::preset::24",
+                    "description": "ambient_generic::preset::24::description"
+                },
+                "25": {
+                    "title": "ambient_generic::preset::25",
+                    "description": "ambient_generic::preset::25::description"
+                },
+                "26": {
+                    "title": "ambient_generic::preset::26",
+                    "description": "ambient_generic::preset::26::description"
+                },
+                "27": {
+                    "title": "ambient_generic::preset::27",
+                    "description": "ambient_generic::preset::27::description"
+                }
+            },
+            "title": "ambient_generic::preset",
+            "description": "ambient_generic::preset::description"
+        },
+        "volstart": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::volstart",
+            "description": "ambient_generic::volstart::description"
+        },
+        "fadein": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::fadein",
+            "description": "ambient_generic::fadein::description"
+        },
+        "fadeout": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::fadeout",
+            "description": "ambient_generic::fadeout::description"
+        },
+        "pitch": {
+            "variable": "integer",
+            "value": "100",
+            "title": "ambient_generic::pitch",
+            "description": "ambient_generic::pitch::description"
+        },
+        "pitchstart": {
+            "variable": "integer",
+            "value": "100",
+            "title": "ambient_generic::pitchstart",
+            "description": "ambient_generic::pitchstart::description"
+        },
+        "spinup": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::spinup",
+            "description": "ambient_generic::spinup::description"
+        },
+        "spindown": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::spindown",
+            "description": "ambient_generic::spindown::description"
+        },
+        "lfotype": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::lfotype",
+            "description": "ambient_generic::lfotype::description"
+        },
+        "lforate": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::lforate",
+            "description": "ambient_generic::lforate::description"
+        },
+        "lfomodpitch": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::lfomodpitch",
+            "description": "ambient_generic::lfomodpitch::description"
+        },
+        "lfomodvol": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::lfomodvol",
+            "description": "ambient_generic::lfomodvol::description"
+        },
+        "cspinup": {
+            "variable": "integer",
+            "value": "0",
+            "title": "ambient_generic::cspinup",
+            "description": "ambient_generic::cspinup::description"
+        },
+        "spawnflags": {
+            "value": "",
+            "choices": {
+                "1": {
+                    "title": "ambient_generic::spawnflags::1",
+                    "description": "ambient_generic::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "ambient_generic::spawnflags::2",
+                    "description": "ambient_generic::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "ambient_generic::spawnflags::4",
+                    "description": "ambient_generic::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "ambient_generic::spawnflags::8",
+                    "description": "ambient_generic::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "ambient_generic::spawnflags::16",
+                    "description": "ambient_generic::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "ambient_generic::spawnflags::32",
+                    "description": "ambient_generic::spawnflags::32::description"
+                }
+            }
+        }
+    },
+    "title": "ambient_generic::classname",
+    "description": "ambient_generic::classname::description"
+}

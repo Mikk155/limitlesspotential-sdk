@@ -1,0 +1,40 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_fog::spawnflags::1",
+                    "description": "env_fog::spawnflags::1::description"
+                }
+            }
+        },
+        "density": {
+            "variable": "string",
+            "value": "0.5",
+            "title": "env_fog::density",
+            "description": "env_fog::density::description"
+        },
+        "fogStartDistance": {
+            "variable": "integer",
+            "value": "1500",
+            "title": "env_fog::fogStartDistance",
+            "description": "env_fog::fogStartDistance::description"
+        },
+        "fogStopDistance": {
+            "variable": "integer",
+            "value": "2000",
+            "title": "env_fog::fogStopDistance",
+            "description": "env_fog::fogStopDistance::description"
+        },
+        "rendercolor": {
+            "variable": "color255",
+            "value": "255 255 255",
+            "title": "env_fog::rendercolor",
+            "description": "env_fog::rendercolor::description"
+        }
+    },
+    "title": "env_fog::classname",
+    "description": "env_fog::classname::description"
+}

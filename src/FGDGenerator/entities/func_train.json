@@ -1,0 +1,69 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "ZHLT",
+        "PlatSounds",
+        "minlight"
+    ],
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_train::target",
+            "description": "func_train::target::description"
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "64",
+            "title": "func_train::speed",
+            "description": "func_train::speed::description"
+        },
+        "dmg": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_train::dmg",
+            "description": "func_train::dmg::description"
+        },
+        "skin": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "func_train::skin::0",
+                    "description": "func_train::skin::0::description"
+                },
+                "-1": {
+                    "title": "func_train::skin::-1",
+                    "description": "func_train::skin::-1::description"
+                },
+                "-3": {
+                    "title": "func_train::skin::-3",
+                    "description": "func_train::skin::-3::description"
+                },
+                "-4": {
+                    "title": "func_train::skin::-4",
+                    "description": "func_train::skin::-4::description"
+                },
+                "-5": {
+                    "title": "func_train::skin::-5",
+                    "description": "func_train::skin::-5::description"
+                }
+            },
+            "title": "func_train::skin",
+            "description": "func_train::skin::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "8": {
+                    "title": "func_train::spawnflags::8",
+                    "description": "func_train::spawnflags::8::description"
+                }
+            }
+        }
+    },
+    "title": "func_train::classname",
+    "description": "func_train::classname::description"
+}

@@ -1,0 +1,221 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "Target",
+        "RenderFields",
+        "Global",
+        "Angles",
+        "Master",
+        "ReplacementFiles",
+        "minlight"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "BaseTank::spawnflags::1",
+                    "description": "BaseTank::spawnflags::1::description"
+                },
+                "16": {
+                    "title": "BaseTank::spawnflags::16",
+                    "description": "BaseTank::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "BaseTank::spawnflags::32",
+                    "description": "BaseTank::spawnflags::32::description"
+                }
+            }
+        },
+        "yawrate": {
+            "variable": "string",
+            "value": "30",
+            "title": "BaseTank::yawrate",
+            "description": "BaseTank::yawrate::description"
+        },
+        "yawrange": {
+            "variable": "string",
+            "value": "180",
+            "title": "BaseTank::yawrange",
+            "description": "BaseTank::yawrange::description"
+        },
+        "yawtolerance": {
+            "variable": "string",
+            "value": "15",
+            "title": "BaseTank::yawtolerance",
+            "description": "BaseTank::yawtolerance::description"
+        },
+        "pitchrate": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::pitchrate",
+            "description": "BaseTank::pitchrate::description"
+        },
+        "pitchrange": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::pitchrange",
+            "description": "BaseTank::pitchrange::description"
+        },
+        "pitchtolerance": {
+            "variable": "string",
+            "value": "5",
+            "title": "BaseTank::pitchtolerance",
+            "description": "BaseTank::pitchtolerance::description"
+        },
+        "barrel": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::barrel",
+            "description": "BaseTank::barrel::description"
+        },
+        "barrely": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::barrely",
+            "description": "BaseTank::barrely::description"
+        },
+        "barrelz": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::barrelz",
+            "description": "BaseTank::barrelz::description"
+        },
+        "spritesmoke": {
+            "variable": "string",
+            "value": "",
+            "title": "BaseTank::spritesmoke",
+            "description": "BaseTank::spritesmoke::description"
+        },
+        "spriteflash": {
+            "variable": "string",
+            "value": "",
+            "title": "BaseTank::spriteflash",
+            "description": "BaseTank::spriteflash::description"
+        },
+        "spritescale": {
+            "variable": "string",
+            "value": "1",
+            "title": "BaseTank::spritescale",
+            "description": "BaseTank::spritescale::description"
+        },
+        "rotatesound": {
+            "variable": "sound",
+            "value": "",
+            "title": "BaseTank::rotatesound",
+            "description": "BaseTank::rotatesound::description"
+        },
+        "firerate": {
+            "variable": "string",
+            "value": "1",
+            "title": "BaseTank::firerate",
+            "description": "BaseTank::firerate::description"
+        },
+        "bullet_damage": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::bullet_damage",
+            "description": "BaseTank::bullet_damage::description"
+        },
+        "persistence": {
+            "variable": "string",
+            "value": "1",
+            "title": "BaseTank::persistence",
+            "description": "BaseTank::persistence::description"
+        },
+        "firespread": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "BaseTank::firespread::0",
+                    "description": "BaseTank::firespread::0::description"
+                },
+                "1": {
+                    "title": "BaseTank::firespread::1",
+                    "description": "BaseTank::firespread::1::description"
+                },
+                "2": {
+                    "title": "BaseTank::firespread::2",
+                    "description": "BaseTank::firespread::2::description"
+                },
+                "3": {
+                    "title": "BaseTank::firespread::3",
+                    "description": "BaseTank::firespread::3::description"
+                },
+                "4": {
+                    "title": "BaseTank::firespread::4",
+                    "description": "BaseTank::firespread::4::description"
+                }
+            },
+            "title": "BaseTank::firespread",
+            "description": "BaseTank::firespread::description"
+        },
+        "minRange": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::minRange",
+            "description": "BaseTank::minRange::description"
+        },
+        "maxRange": {
+            "variable": "string",
+            "value": "0",
+            "title": "BaseTank::maxRange",
+            "description": "BaseTank::maxRange::description"
+        },
+        "enemytype": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "BaseTank::enemytype::0",
+                    "description": "BaseTank::enemytype::0::description"
+                },
+                "1": {
+                    "title": "BaseTank::enemytype::1",
+                    "description": "BaseTank::enemytype::1::description"
+                },
+                "2": {
+                    "title": "BaseTank::enemytype::2",
+                    "description": "BaseTank::enemytype::2::description"
+                }
+            },
+            "title": "BaseTank::enemytype",
+            "description": "BaseTank::enemytype::description"
+        },
+        "enable_target_laser": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "BaseTank::enable_target_laser::0",
+                    "description": "BaseTank::enable_target_laser::0::description"
+                },
+                "1": {
+                    "title": "BaseTank::enable_target_laser::1",
+                    "description": "BaseTank::enable_target_laser::1::description"
+                }
+            },
+            "title": "BaseTank::enable_target_laser",
+            "description": "BaseTank::enable_target_laser::description"
+        },
+        "target_laser_sprite": {
+            "variable": "sprite",
+            "value": "sprites/laserbeam.spr",
+            "title": "BaseTank::target_laser_sprite",
+            "description": "BaseTank::target_laser_sprite::description"
+        },
+        "target_laser_width": {
+            "variable": "integer",
+            "value": "1",
+            "title": "BaseTank::target_laser_width",
+            "description": "BaseTank::target_laser_width::description"
+        },
+        "target_laser_color": {
+            "variable": "color255",
+            "value": "255 0 0",
+            "title": "BaseTank::target_laser_color",
+            "description": "BaseTank::target_laser_color::description"
+        }
+    }
+}

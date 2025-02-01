@@ -1,0 +1,128 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Global",
+        "Angles",
+        "Master",
+        "ReplacementFiles",
+        "minlight"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "100",
+            "title": "Door::speed",
+            "description": "Door::speed::description"
+        },
+        "movesnd": {
+            "variable": "sound",
+            "value": "",
+            "title": "Door::movesnd",
+            "description": "Door::movesnd::description"
+        },
+        "stopsnd": {
+            "variable": "sound",
+            "value": "",
+            "title": "Door::stopsnd",
+            "description": "Door::stopsnd::description"
+        },
+        "wait": {
+            "variable": "choices",
+            "value": "4",
+            "choices": {
+                "-1": {
+                    "title": "Door::wait::-1",
+                    "description": "Door::wait::-1::description"
+                }
+            },
+            "title": "Door::wait",
+            "description": "Door::wait::description"
+        },
+        "lip": {
+            "variable": "integer",
+            "value": "",
+            "title": "Door::lip",
+            "description": "Door::lip::description"
+        },
+        "dmg": {
+            "variable": "integer",
+            "value": "0",
+            "title": "Door::dmg",
+            "description": "Door::dmg::description"
+        },
+        "message": {
+            "variable": "string",
+            "value": "",
+            "title": "Door::message",
+            "description": "Door::message::description"
+        },
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "Door::netname",
+            "description": "Door::netname::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "0",
+            "title": "Door::health",
+            "description": "Door::health::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "Door::spawnflags::1",
+                    "description": "Door::spawnflags::1::description"
+                },
+                "4": {
+                    "title": "Door::spawnflags::4",
+                    "description": "Door::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "Door::spawnflags::8",
+                    "description": "Door::spawnflags::8::description"
+                },
+                "32": {
+                    "title": "Door::spawnflags::32",
+                    "description": "Door::spawnflags::32::description"
+                },
+                "256": {
+                    "title": "Door::spawnflags::256",
+                    "description": "Door::spawnflags::256::description"
+                },
+                "512": {
+                    "title": "Door::spawnflags::512",
+                    "description": "Door::spawnflags::512::description"
+                }
+            }
+        },
+        "locked_sound": {
+            "variable": "sound",
+            "value": "",
+            "title": "Door::locked_sound",
+            "description": "Door::locked_sound::description"
+        },
+        "unlocked_sound": {
+            "variable": "sound",
+            "value": "",
+            "title": "Door::unlocked_sound",
+            "description": "Door::unlocked_sound::description"
+        },
+        "locked_sentence": {
+            "variable": "string",
+            "value": "",
+            "title": "Door::locked_sentence",
+            "description": "Door::locked_sentence::description"
+        },
+        "unlocked_sentence": {
+            "variable": "string",
+            "value": "",
+            "title": "Door::unlocked_sentence",
+            "description": "Door::unlocked_sentence::description"
+        }
+    }
+}

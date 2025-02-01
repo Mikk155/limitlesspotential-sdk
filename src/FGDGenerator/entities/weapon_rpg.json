@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_rpg.mdl",
+    "data": {
+        "sequence": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "weapon_rpg::sequence::0",
+                    "description": "weapon_rpg::sequence::0::description"
+                },
+                "1": {
+                    "title": "weapon_rpg::sequence::1",
+                    "description": "weapon_rpg::sequence::1::description"
+                }
+            },
+            "title": "weapon_rpg::sequence",
+            "description": "weapon_rpg::sequence::description"
+        }
+    },
+    "title": "weapon_rpg::classname",
+    "description": "weapon_rpg::classname::description"
+}

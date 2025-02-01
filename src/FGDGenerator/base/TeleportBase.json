@@ -1,0 +1,12 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "fire_on_teleport": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "TeleportBase::fire_on_teleport",
+            "description": "TeleportBase::fire_on_teleport::description"
+        }
+    }
+}

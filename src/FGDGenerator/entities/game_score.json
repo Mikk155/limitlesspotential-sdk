@@ -1,0 +1,29 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_score::spawnflags::1",
+                    "description": "game_score::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "game_score::spawnflags::2",
+                    "description": "game_score::spawnflags::2::description"
+                }
+            }
+        },
+        "points": {
+            "variable": "integer",
+            "value": "1",
+            "title": "game_score::points",
+            "description": "game_score::points::description"
+        }
+    },
+    "title": "game_score::classname",
+    "description": "game_score::classname::description"
+}

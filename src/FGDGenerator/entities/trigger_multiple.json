@@ -1,0 +1,17 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Trigger"
+    ],
+    "data": {
+        "wait": {
+            "variable": "integer",
+            "value": "10",
+            "title": "trigger_multiple::wait",
+            "description": "trigger_multiple::wait::description"
+        }
+    },
+    "title": "trigger_multiple::classname",
+    "description": "trigger_multiple::classname::description"
+}

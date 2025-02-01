@@ -1,0 +1,29 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "RenderFields",
+        "minlight",
+        "ZHLT"
+    ],
+    "data": {
+        "skin": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "func_illusionary::skin::-1",
+                    "description": "func_illusionary::skin::-1::description"
+                },
+                "-7": {
+                    "title": "func_illusionary::skin::-7",
+                    "description": "func_illusionary::skin::-7::description"
+                }
+            },
+            "title": "func_illusionary::skin",
+            "description": "func_illusionary::skin::description"
+        }
+    },
+    "title": "func_illusionary::classname",
+    "description": "func_illusionary::classname::description"
+}

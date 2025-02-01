@@ -1,0 +1,49 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "scale",
+        "RenderFields",
+        "Angles"
+    ],
+    "size": [
+        [
+            -4,
+            -4,
+            -4
+        ],
+        [
+            4,
+            4,
+            4
+        ]
+    ],
+    "sprite": true,
+    "data": {
+        "framerate": {
+            "variable": "float",
+            "value": "10.0",
+            "title": "env_sprite::framerate",
+            "description": "env_sprite::framerate::description"
+        },
+        "model": {
+            "variable": "sprite",
+            "value": "sprites/glow01.spr",
+            "title": "CustomKeys::sprite"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_sprite::spawnflags::1",
+                    "description": "env_sprite::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_sprite::spawnflags::2",
+                    "description": "env_sprite::spawnflags::2::description"
+                }
+            }
+        }
+    },
+    "title": "env_sprite::classname",
+    "description": "env_sprite::classname::description"
+}

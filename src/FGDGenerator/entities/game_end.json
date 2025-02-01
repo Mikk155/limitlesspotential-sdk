@@ -1,0 +1,9 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master"
+    ],
+    "title": "game_end::classname",
+    "description": "game_end::classname::description"
+}

@@ -1,0 +1,53 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -36
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "color": [
+        0,
+        255,
+        0
+    ],
+    "offset": [
+        0,
+        0,
+        36
+    ],
+    "data": {
+        "team_no": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "info_ctfspawn::team_no::0",
+                    "description": "info_ctfspawn::team_no::0::description"
+                },
+                "1": {
+                    "title": "info_ctfspawn::team_no::1",
+                    "description": "info_ctfspawn::team_no::1::description"
+                },
+                "2": {
+                    "title": "info_ctfspawn::team_no::2",
+                    "description": "info_ctfspawn::team_no::2::description"
+                }
+            },
+            "title": "info_ctfspawn::team_no",
+            "description": "info_ctfspawn::team_no::description"
+        }
+    },
+    "title": "info_ctfspawn::classname",
+    "description": "info_ctfspawn::classname::description"
+}

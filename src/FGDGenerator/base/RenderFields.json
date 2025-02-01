@@ -1,0 +1,53 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "RenderFxChoices"
+    ],
+    "data": {
+        "rendermode": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "RenderFields::rendermode::0",
+                    "description": "RenderFields::rendermode::0::description"
+                },
+                "1": {
+                    "title": "RenderFields::rendermode::1",
+                    "description": "RenderFields::rendermode::1::description"
+                },
+                "2": {
+                    "title": "RenderFields::rendermode::2",
+                    "description": "RenderFields::rendermode::2::description"
+                },
+                "3": {
+                    "title": "RenderFields::rendermode::3",
+                    "description": "RenderFields::rendermode::3::description"
+                },
+                "4": {
+                    "title": "RenderFields::rendermode::4",
+                    "description": "RenderFields::rendermode::4::description"
+                },
+                "5": {
+                    "title": "RenderFields::rendermode::5",
+                    "description": "RenderFields::rendermode::5::description"
+                }
+            },
+            "title": "RenderFields::rendermode",
+            "description": "RenderFields::rendermode::description"
+        },
+        "renderamt": {
+            "variable": "integer",
+            "value": "",
+            "title": "RenderFields::renderamt",
+            "description": "RenderFields::renderamt::description"
+        },
+        "rendercolor": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "RenderFields::rendercolor",
+            "description": "RenderFields::rendercolor::description"
+        }
+    }
+}

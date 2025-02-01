@@ -1,0 +1,86 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "Angles",
+        "minlight",
+        "ZHLT",
+        "ReplacementFiles"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_tracktrain::spawnflags::1",
+                    "description": "func_tracktrain::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "func_tracktrain::spawnflags::2",
+                    "description": "func_tracktrain::spawnflags::2::description"
+                },
+                "8": {
+                    "title": "func_tracktrain::spawnflags::8",
+                    "description": "func_tracktrain::spawnflags::8::description"
+                }
+            }
+        },
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_tracktrain::target",
+            "description": "func_tracktrain::target::description"
+        },
+        "sounds": {
+            "variable": "sound",
+            "value": "",
+            "title": "func_tracktrain::sounds",
+            "description": "func_tracktrain::sounds::description"
+        },
+        "wheels": {
+            "variable": "integer",
+            "value": "50",
+            "title": "func_tracktrain::wheels",
+            "description": "func_tracktrain::wheels::description"
+        },
+        "height": {
+            "variable": "integer",
+            "value": "4",
+            "title": "func_tracktrain::height",
+            "description": "func_tracktrain::height::description"
+        },
+        "startspeed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_tracktrain::startspeed",
+            "description": "func_tracktrain::startspeed::description"
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "64",
+            "title": "func_tracktrain::speed",
+            "description": "func_tracktrain::speed::description"
+        },
+        "dmg": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_tracktrain::dmg",
+            "description": "func_tracktrain::dmg::description"
+        },
+        "volume": {
+            "variable": "integer",
+            "value": "10",
+            "title": "func_tracktrain::volume",
+            "description": "func_tracktrain::volume::description"
+        },
+        "bank": {
+            "variable": "string",
+            "value": "0",
+            "title": "func_tracktrain::bank",
+            "description": "func_tracktrain::bank::description"
+        }
+    },
+    "title": "func_tracktrain::classname",
+    "description": "func_tracktrain::classname::description"
+}

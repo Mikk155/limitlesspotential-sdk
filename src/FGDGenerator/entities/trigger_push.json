@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Trigger",
+        "Angles"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_push::spawnflags::1",
+                    "description": "trigger_push::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "trigger_push::spawnflags::2",
+                    "description": "trigger_push::spawnflags::2::description"
+                }
+            }
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "40",
+            "title": "trigger_push::speed",
+            "description": "trigger_push::speed::description"
+        }
+    },
+    "title": "trigger_push::classname",
+    "description": "trigger_push::classname::description"
+}

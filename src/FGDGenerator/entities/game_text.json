@@ -1,0 +1,118 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_text::spawnflags::1",
+                    "description": "game_text::spawnflags::1::description"
+                }
+            }
+        },
+        "message": {
+            "variable": "string",
+            "value": "",
+            "title": "game_text::message",
+            "description": "game_text::message::description"
+        },
+        "x": {
+            "variable": "string",
+            "value": "-1",
+            "title": "game_text::x",
+            "description": "game_text::x::description"
+        },
+        "y": {
+            "variable": "string",
+            "value": "-1",
+            "title": "game_text::y",
+            "description": "game_text::y::description"
+        },
+        "effect": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "game_text::effect::0",
+                    "description": "game_text::effect::0::description"
+                },
+                "1": {
+                    "title": "game_text::effect::1",
+                    "description": "game_text::effect::1::description"
+                },
+                "2": {
+                    "title": "game_text::effect::2",
+                    "description": "game_text::effect::2::description"
+                }
+            },
+            "title": "game_text::effect",
+            "description": "game_text::effect::description"
+        },
+        "color": {
+            "variable": "color255",
+            "value": "100 100 100",
+            "title": "game_text::color",
+            "description": "game_text::color::description"
+        },
+        "color2": {
+            "variable": "color255",
+            "value": "240 110 0",
+            "title": "game_text::color2",
+            "description": "game_text::color2::description"
+        },
+        "fadein": {
+            "variable": "string",
+            "value": "1.5",
+            "title": "game_text::fadein",
+            "description": "game_text::fadein::description"
+        },
+        "fadeout": {
+            "variable": "string",
+            "value": "0.5",
+            "title": "game_text::fadeout",
+            "description": "game_text::fadeout::description"
+        },
+        "holdtime": {
+            "variable": "string",
+            "value": "1.2",
+            "title": "game_text::holdtime",
+            "description": "game_text::holdtime::description"
+        },
+        "fxtime": {
+            "variable": "string",
+            "value": "0.25",
+            "title": "game_text::fxtime",
+            "description": "game_text::fxtime::description"
+        },
+        "channel": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "1": {
+                    "title": "game_text::channel::1",
+                    "description": "game_text::channel::1::description"
+                },
+                "2": {
+                    "title": "game_text::channel::2",
+                    "description": "game_text::channel::2::description"
+                },
+                "3": {
+                    "title": "game_text::channel::3",
+                    "description": "game_text::channel::3::description"
+                },
+                "4": {
+                    "title": "game_text::channel::4",
+                    "description": "game_text::channel::4::description"
+                }
+            },
+            "title": "game_text::channel",
+            "description": "game_text::channel::description"
+        }
+    },
+    "title": "game_text::classname",
+    "description": "game_text::classname::description"
+}

@@ -1,0 +1,55 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "size": [ [ -8, -8, -8 ], [ 8, 8, 8 ] ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "path_track::spawnflags::1",
+                    "description": "path_track::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "path_track::spawnflags::2",
+                    "description": "path_track::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "path_track::spawnflags::4",
+                    "description": "path_track::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "path_track::spawnflags::8",
+                    "description": "path_track::spawnflags::8::description"
+                }
+            }
+        },
+        "target": {
+            "variable": "target_destination",
+            "title": "path_track::target",
+            "description": "path_track::target::description"
+        },
+        "message": {
+            "variable": "target_destination",
+            "title": "path_track::message",
+            "description": "path_track::message::description"
+        },
+        "altpath": {
+            "variable": "target_destination",
+            "title": "path_track::altpath",
+            "description": "path_track::altpath::description"
+        },
+        "netname": {
+            "variable": "target_destination",
+            "title": "path_track::netname",
+            "description": "path_track::netname::description"
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "path_track::speed",
+            "description": "path_track::speed::description"
+        }
+    },
+    "title": "path_track::classname",
+    "description": "path_track::classname::description"
+}

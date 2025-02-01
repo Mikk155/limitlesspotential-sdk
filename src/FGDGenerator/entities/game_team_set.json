@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_team_set::spawnflags::1",
+                    "description": "game_team_set::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "game_team_set::classname",
+    "description": "game_team_set::classname::description"
+}

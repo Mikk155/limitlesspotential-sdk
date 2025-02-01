@@ -1,0 +1,52 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [ "CKeyValueLogic", "Target", "CBaseDelay" ],
+    "data":
+    {
+        "m_iAppendSpaces":
+        {
+            "variable": "integer",
+            "title": "trigger_changevalue::m_iAppendSpaces",
+            "description": "trigger_changevalue::m_iAppendSpaces::description"
+        },
+        "m_iSetType":
+        {
+            "variable": "choices",
+            "choices": {
+                "0":{
+                    "title": "trigger_changevalue::m_iSetType::0"
+                },
+                "1":{
+                    "title": "trigger_changevalue::m_iSetType::1"
+                },
+                "2":{
+                    "title": "trigger_changevalue::m_iSetType::2"
+                },
+                "3":{
+                    "title": "trigger_changevalue::m_iSetType::3"
+                },
+                "4":{
+                    "title": "trigger_changevalue::m_iSetType::4"
+                },
+                "5":{
+                    "title": "trigger_changevalue::m_iSetType::5"
+                },
+                "6":{
+                    "title": "trigger_changevalue::m_iSetType::6"
+                },
+                //"7":{
+                //    "title": "trigger_changevalue::m_iSetType::7"
+                //},
+                //"8":{
+                //    "title": "trigger_changevalue::m_iSetType::8"
+                //},
+                "9":{
+                    "title": "trigger_changevalue::m_iSetType::9"
+                }
+            },
+            "title": "trigger_changevalue::m_iSetType",
+            "description": "trigger_changevalue::m_iSetType::description"
+        }
+    }
+}

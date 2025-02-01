@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Master"
+    ],
+    "data": {},
+    "title": "trigger_autosave::classname",
+    "description": "trigger_autosave::classname::description"
+}

@@ -1,0 +1,12 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Angles"
+    ],
+    "studio": "models/fungus(small).mdl",
+    "data": {},
+    "title": "xen_spore_small::classname",
+    "description": "xen_spore_small::classname::description"
+}

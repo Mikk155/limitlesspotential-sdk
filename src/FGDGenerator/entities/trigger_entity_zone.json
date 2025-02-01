@@ -1,0 +1,145 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "base": [
+        "Target",
+        "Master"
+    ],
+    "data": {
+        "m_iszEntity": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_zone::m_iszEntity",
+            "description": "trigger_entity_zone::m_iszEntity::description"
+        },
+        "message": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_zone::message",
+            "description": "trigger_entity_zone::message::description"
+        },
+        "m_InUse": {
+            "variable": "choices",
+            "value": -1,
+            "choices": {
+                "-1": {
+                    "title": "Target::m_UseType::-1",
+                    "description": "Target::m_UseType::-1::description"
+                },
+                "0": {
+                    "title": "Target::m_UseType::0",
+                    "description": "Target::m_UseType::0::description"
+                },
+                "1": {
+                    "title": "Target::m_UseType::1",
+                    "description": "Target::m_UseType::1::description"
+                },
+                "3": {
+                    "title": "Target::m_UseType::3",
+                    "description": "Target::m_UseType::3::description"
+                },
+                "2": {
+                    "title": "Target::m_UseType::2",
+                    "description": "Target::m_UseType::2::description"
+                },
+                "4": {
+                    "title": "Target::m_UseType::4",
+                    "description": "Target::m_UseType::4::description"
+                },
+                "5": {
+                    "title": "Target::m_UseType::5",
+                    "description": "Target::m_UseType::5::description"
+                },
+                "6": {
+                    "title": "Target::m_UseType::6",
+                    "description": "Target::m_UseType::6::description"
+                },
+                "7": {
+                    "title": "Target::m_UseType::7",
+                    "description": "Target::m_UseType::7::description"
+                },
+                "8": {
+                    "title": "Target::m_UseType::8",
+                    "description": "Target::m_UseType::8::description"
+                },
+                "9": {
+                    "title": "Target::m_UseType::9",
+                    "description": "Target::m_UseType::9::description"
+                }
+            },
+            "title": "trigger_entity_zone::m_InUse",
+            "description": "trigger_entity_zone::m_InUse::description"
+        },
+        "m_InValue": {
+            "variable": "float",
+            "title": "trigger_entity_zone::m_InValue",
+            "description": "trigger_entity_zone::m_InValue::description"
+        },
+        "netname": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_zone::netname",
+            "description": "trigger_entity_zone::netname::description"
+        },
+        "m_OutUse": {
+            "variable": "choices",
+            "value": -1,
+            "choices": {
+                "-1": {
+                    "title": "Target::m_UseType::-1",
+                    "description": "Target::m_UseType::-1::description"
+                },
+                "0": {
+                    "title": "Target::m_UseType::0",
+                    "description": "Target::m_UseType::0::description"
+                },
+                "1": {
+                    "title": "Target::m_UseType::1",
+                    "description": "Target::m_UseType::1::description"
+                },
+                "3": {
+                    "title": "Target::m_UseType::3",
+                    "description": "Target::m_UseType::3::description"
+                },
+                "2": {
+                    "title": "Target::m_UseType::2",
+                    "description": "Target::m_UseType::2::description"
+                },
+                "4": {
+                    "title": "Target::m_UseType::4",
+                    "description": "Target::m_UseType::4::description"
+                },
+                "5": {
+                    "title": "Target::m_UseType::5",
+                    "description": "Target::m_UseType::5::description"
+                },
+                "6": {
+                    "title": "Target::m_UseType::6",
+                    "description": "Target::m_UseType::6::description"
+                },
+                "7": {
+                    "title": "Target::m_UseType::7",
+                    "description": "Target::m_UseType::7::description"
+                },
+                "8": {
+                    "title": "Target::m_UseType::8",
+                    "description": "Target::m_UseType::8::description"
+                },
+                "9": {
+                    "title": "Target::m_UseType::9",
+                    "description": "Target::m_UseType::9::description"
+                }
+            },
+            "title": "trigger_entity_zone::m_OutUse",
+            "description": "trigger_entity_zone::m_OutUse::description"
+        },
+        "m_OutValue": {
+            "variable": "float",
+            "title": "trigger_entity_zone::m_OutValue",
+            "description": "trigger_entity_zone::m_OutValue::description"
+        }
+    },
+    "title": "trigger_entity_zone::classname",
+    "description": "trigger_entity_zone::classname::description"
+}

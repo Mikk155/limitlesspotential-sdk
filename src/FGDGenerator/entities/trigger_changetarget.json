@@ -1,0 +1,20 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay"
+    ],
+    "sprite": "sprites/trigger_changetarget.spr",
+    "iconsprite": "sprites/trigger_changetarget.spr",
+    "data": {
+        "m_iszNewTarget": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_changetarget::m_iszNewTarget",
+            "description": "trigger_changetarget::m_iszNewTarget::description"
+        }
+    },
+    "title": "trigger_changetarget::classname",
+    "description": "trigger_changetarget::classname::description"
+}

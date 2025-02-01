@@ -1,0 +1,25 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Item"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/w_oxygen.mdl",
+    "data": {},
+    "title": "item_airtank::classname",
+    "description": "item_airtank::classname::description"
+}

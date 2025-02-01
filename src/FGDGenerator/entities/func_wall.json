@@ -1,0 +1,13 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "base": [
+        "Global",
+        "RenderFields",
+        "minlight",
+        "ZHLT"
+    ],
+    "title": "func_wall::classname",
+    "description": "func_wall::classname::description"
+}

@@ -1,0 +1,12 @@
+{
+    "$schema": "../schema.json",
+	"Class": "Base",
+    "data":
+    {
+        "_minlight":
+        {
+            "variable": "string",
+            "title": "_minlight"
+        }
+    }
+}

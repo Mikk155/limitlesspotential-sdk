@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "base": [
+        "SF1_StartOff"
+    ],
+    "data": {
+        "density": {
+            "variable": "integer",
+            "value": "2",
+            "title": "env_bubbles::density",
+            "description": "env_bubbles::density::description"
+        },
+        "frequency": {
+            "variable": "integer",
+            "value": "2",
+            "title": "env_bubbles::frequency",
+            "description": "env_bubbles::frequency::description"
+        },
+        "current": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_bubbles::current",
+            "description": "env_bubbles::current::description"
+        }
+    },
+    "title": "env_bubbles::classname",
+    "description": "env_bubbles::classname::description"
+}

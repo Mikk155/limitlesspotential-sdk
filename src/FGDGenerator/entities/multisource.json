@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target"
+    ],
+    "color": [
+        128,
+        255,
+        128
+    ],
+    "sprite": "sprites/multisource.spr",
+    "iconsprite": "sprites/multisource.spr",
+    "data": {
+        "globalstate": {
+            "variable": "string",
+            "value": "",
+            "title": "multisource::globalstate",
+            "description": "multisource::globalstate::description"
+        }
+    },
+    "title": "multisource::classname",
+    "description": "multisource::classname::description"
+}

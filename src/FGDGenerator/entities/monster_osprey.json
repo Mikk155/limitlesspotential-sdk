@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "BaseOsprey"
+    ],
+    "size": [
+        [
+            -480,
+            -480,
+            -112
+        ],
+        [
+            480,
+            480,
+            24
+        ]
+    ],
+    "studio": "models/osprey.mdl",
+    "data": {},
+    "title": "monster_osprey::classname",
+    "description": "monster_osprey::classname::description"
+}

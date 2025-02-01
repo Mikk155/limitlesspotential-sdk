@@ -1,0 +1,52 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "data": {
+        "m_flSpread": {
+            "variable": "integer",
+            "value": "64",
+            "title": "func_mortar_field::m_flSpread",
+            "description": "func_mortar_field::m_flSpread::description"
+        },
+        "m_iCount": {
+            "variable": "integer",
+            "value": "1",
+            "title": "func_mortar_field::m_iCount",
+            "description": "func_mortar_field::m_iCount::description"
+        },
+        "m_fControl": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "func_mortar_field::m_fControl::0",
+                    "description": "func_mortar_field::m_fControl::0::description"
+                },
+                "1": {
+                    "title": "func_mortar_field::m_fControl::1",
+                    "description": "func_mortar_field::m_fControl::1::description"
+                },
+                "2": {
+                    "title": "func_mortar_field::m_fControl::2",
+                    "description": "func_mortar_field::m_fControl::2::description"
+                }
+            },
+            "title": "func_mortar_field::m_fControl",
+            "description": "func_mortar_field::m_fControl::description"
+        },
+        "m_iszXController": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_mortar_field::m_iszXController",
+            "description": "func_mortar_field::m_iszXController::description"
+        },
+        "m_iszYController": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_mortar_field::m_iszYController",
+            "description": "func_mortar_field::m_iszYController::description"
+        }
+    },
+    "title": "func_mortar_field::classname",
+    "description": "func_mortar_field::classname::description"
+}

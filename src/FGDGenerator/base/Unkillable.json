@@ -1,0 +1,22 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "unkillable": {
+            "variable": "choices",
+            "value": 0,
+            "choices": {
+                "0": {
+                    "title": "Unkillable::unkillable::0",
+                    "description": "Unkillable::unkillable::0::description"
+                },
+                "1": {
+                    "title": "Unkillable::unkillable::1",
+                    "description": "Unkillable::unkillable::1::description"
+                }
+            },
+            "title": "Unkillable::unkillable",
+            "description": "Unkillable::unkillable::description"
+        }
+    }
+}

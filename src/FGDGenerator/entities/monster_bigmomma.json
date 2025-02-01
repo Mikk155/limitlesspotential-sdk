@@ -1,0 +1,37 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "MonsterWithChildren"
+    ],
+    "size": [
+        [
+            -95,
+            -95,
+            0
+        ],
+        [
+            95,
+            95,
+            190
+        ]
+    ],
+    "studio": "models/big_mom.mdl",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_bigmomma::netname",
+            "description": "monster_bigmomma::netname::description"
+        }
+    },
+    "title": "monster_bigmomma::classname",
+    "description": "monster_bigmomma::classname::description"
+}

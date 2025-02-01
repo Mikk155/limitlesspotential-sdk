@@ -1,0 +1,23 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -36
+        ],
+        [
+            16,
+            16,
+            0
+        ]
+    ],
+    "studio": "models/barnacle.mdl",
+    "title": "monster_barnacle::classname",
+    "description": "monster_barnacle::classname::description"
+}

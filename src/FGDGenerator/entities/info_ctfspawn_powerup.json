@@ -1,0 +1,40 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "data": {
+        "team_no": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "info_ctfspawn_powerup::team_no::0",
+                    "description": "info_ctfspawn_powerup::team_no::0::description"
+                },
+                "1": {
+                    "title": "info_ctfspawn_powerup::team_no::1",
+                    "description": "info_ctfspawn_powerup::team_no::1::description"
+                },
+                "2": {
+                    "title": "info_ctfspawn_powerup::team_no::2",
+                    "description": "info_ctfspawn_powerup::team_no::2::description"
+                }
+            },
+            "title": "info_ctfspawn_powerup::team_no",
+            "description": "info_ctfspawn_powerup::team_no::description"
+        }
+    },
+    "title": "info_ctfspawn_powerup::classname",
+    "description": "info_ctfspawn_powerup::classname::description"
+}

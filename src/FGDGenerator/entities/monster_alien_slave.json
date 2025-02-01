@@ -1,0 +1,38 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "studio": "models/islave.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "64": {
+                    "title": "monster_alien_slave::spawnflags::64",
+                    "description": "monster_alien_slave::spawnflags::64::description"
+                }
+            }
+        }
+    },
+    "title": "monster_alien_slave::classname",
+    "description": "monster_alien_slave::classname::description"
+}

@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/blkop_apache.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "8": {
+                    "title": "monster_blkop_apache::spawnflags::8",
+                    "description": "monster_blkop_apache::spawnflags::8::description"
+                },
+                "64": {
+                    "title": "monster_blkop_apache::spawnflags::64",
+                    "description": "monster_blkop_apache::spawnflags::64::description"
+                }
+            }
+        }
+    },
+    "title": "monster_blkop_apache::classname",
+    "description": "monster_blkop_apache::classname::description"
+}

@@ -1,0 +1,113 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Sequence"
+    ],
+    "studio": "models/hgrunt_opfor.mdl",
+    "data": {
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_human_grunt_ally_dead::pose::0",
+                    "description": "monster_human_grunt_ally_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_human_grunt_ally_dead::pose::1",
+                    "description": "monster_human_grunt_ally_dead::pose::1::description"
+                },
+                "2": {
+                    "title": "monster_human_grunt_ally_dead::pose::2",
+                    "description": "monster_human_grunt_ally_dead::pose::2::description"
+                },
+                "3": {
+                    "title": "monster_human_grunt_ally_dead::pose::3",
+                    "description": "monster_human_grunt_ally_dead::pose::3::description"
+                },
+                "4": {
+                    "title": "monster_human_grunt_ally_dead::pose::4",
+                    "description": "monster_human_grunt_ally_dead::pose::4::description"
+                },
+                "5": {
+                    "title": "monster_human_grunt_ally_dead::pose::5",
+                    "description": "monster_human_grunt_ally_dead::pose::5::description"
+                },
+                "6": {
+                    "title": "monster_human_grunt_ally_dead::pose::6",
+                    "description": "monster_human_grunt_ally_dead::pose::6::description"
+                }
+            },
+            "title": "monster_human_grunt_ally_dead::pose",
+            "description": "monster_human_grunt_ally_dead::pose::description"
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "monster_human_grunt_ally_dead::weapons::0",
+                    "description": "monster_human_grunt_ally_dead::weapons::0::description"
+                },
+                "1": {
+                    "title": "monster_human_grunt_ally_dead::weapons::1",
+                    "description": "monster_human_grunt_ally_dead::weapons::1::description"
+                },
+                "8": {
+                    "title": "monster_human_grunt_ally_dead::weapons::8",
+                    "description": "monster_human_grunt_ally_dead::weapons::8::description"
+                },
+                "16": {
+                    "title": "monster_human_grunt_ally_dead::weapons::16",
+                    "description": "monster_human_grunt_ally_dead::weapons::16::description"
+                }
+            },
+            "title": "monster_human_grunt_ally_dead::weapons",
+            "description": "monster_human_grunt_ally_dead::weapons::description"
+        },
+        "head": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_human_grunt_ally_dead::head::0",
+                    "description": "monster_human_grunt_ally_dead::head::0::description"
+                },
+                "1": {
+                    "title": "monster_human_grunt_ally_dead::head::1",
+                    "description": "monster_human_grunt_ally_dead::head::1::description"
+                },
+                "2": {
+                    "title": "monster_human_grunt_ally_dead::head::2",
+                    "description": "monster_human_grunt_ally_dead::head::2::description"
+                },
+                "3": {
+                    "title": "monster_human_grunt_ally_dead::head::3",
+                    "description": "monster_human_grunt_ally_dead::head::3::description"
+                },
+                "4": {
+                    "title": "monster_human_grunt_ally_dead::head::4",
+                    "description": "monster_human_grunt_ally_dead::head::4::description"
+                },
+                "5": {
+                    "title": "monster_human_grunt_ally_dead::head::5",
+                    "description": "monster_human_grunt_ally_dead::head::5::description"
+                },
+                "6": {
+                    "title": "monster_human_grunt_ally_dead::head::6",
+                    "description": "monster_human_grunt_ally_dead::head::6::description"
+                },
+                "7": {
+                    "title": "monster_human_grunt_ally_dead::head::7",
+                    "description": "monster_human_grunt_ally_dead::head::7::description"
+                }
+            },
+            "title": "monster_human_grunt_ally_dead::head",
+            "description": "monster_human_grunt_ally_dead::head::description"
+        }
+    },
+    "title": "monster_human_grunt_ally_dead::classname",
+    "description": "monster_human_grunt_ally_dead::classname::description"
+}

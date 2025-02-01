@@ -1,0 +1,39 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "SF64_StartInactive"
+    ],
+    "size": [
+        [
+            -360,
+            -360,
+            -172
+        ],
+        [
+            360,
+            360,
+            8
+        ]
+    ],
+    "studio": "models/apache.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "8": {
+                    "title": "monster_apache::spawnflags::8",
+                    "description": "monster_apache::spawnflags::8::description"
+                }
+            }
+        }
+    },
+    "title": "monster_apache::classname",
+    "description": "monster_apache::classname::description"
+}

@@ -1,0 +1,7 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "title": "func_monsterclip::classname",
+    "description": "func_monsterclip::classname::description"
+}

@@ -1,0 +1,72 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "studio": "models/hgrunt.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_human_grunt::spawnflags::32",
+                    "description": "monster_human_grunt::spawnflags::32::description"
+                }
+            }
+        },
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_human_grunt::netname",
+            "description": "monster_human_grunt::netname::description"
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "3",
+            "choices": {
+                "1": {
+                    "title": "monster_human_grunt::weapons::1",
+                    "description": "monster_human_grunt::weapons::1::description"
+                },
+                "3": {
+                    "title": "monster_human_grunt::weapons::3",
+                    "description": "monster_human_grunt::weapons::3::description"
+                },
+                "5": {
+                    "title": "monster_human_grunt::weapons::5",
+                    "description": "monster_human_grunt::weapons::5::description"
+                },
+                "8": {
+                    "title": "monster_human_grunt::weapons::8",
+                    "description": "monster_human_grunt::weapons::8::description"
+                },
+                "10": {
+                    "title": "monster_human_grunt::weapons::10",
+                    "description": "monster_human_grunt::weapons::10::description"
+                }
+            },
+            "title": "monster_human_grunt::weapons",
+            "description": "monster_human_grunt::weapons::description"
+        }
+    },
+    "title": "monster_human_grunt::classname",
+    "description": "monster_human_grunt::classname::description"
+}

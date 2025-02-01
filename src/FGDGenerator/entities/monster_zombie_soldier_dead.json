@@ -1,0 +1,34 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/zombie_soldier.mdl",
+    "data": {
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_zombie_soldier_dead::pose::0",
+                    "description": "monster_zombie_soldier_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_zombie_soldier_dead::pose::1",
+                    "description": "monster_zombie_soldier_dead::pose::1::description"
+                }
+            },
+            "title": "monster_zombie_soldier_dead::pose",
+            "description": "monster_zombie_soldier_dead::pose::description"
+        }
+    },
+    "title": "monster_zombie_soldier_dead::classname",
+    "description": "monster_zombie_soldier_dead::classname::description"
+}

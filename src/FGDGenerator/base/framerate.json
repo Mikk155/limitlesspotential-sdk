@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "framerate": {
+            "variable": "integer",
+            "value": 0,
+            "title": "CustomKeys::framerate"
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Angles"
+    ],
+    "studio": "models/tree.mdl",
+    "data": {},
+    "title": "xen_tree::classname",
+    "description": "xen_tree::classname::description"
+}

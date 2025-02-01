@@ -1,0 +1,82 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "renderfx": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "RenderFxChoices::renderfx::0",
+                    "description": "RenderFxChoices::renderfx::0::description"
+                },
+                "1": {
+                    "title": "RenderFxChoices::renderfx::1",
+                    "description": "RenderFxChoices::renderfx::1::description"
+                },
+                "2": {
+                    "title": "RenderFxChoices::renderfx::2",
+                    "description": "RenderFxChoices::renderfx::2::description"
+                },
+                "3": {
+                    "title": "RenderFxChoices::renderfx::3",
+                    "description": "RenderFxChoices::renderfx::3::description"
+                },
+                "4": {
+                    "title": "RenderFxChoices::renderfx::4",
+                    "description": "RenderFxChoices::renderfx::4::description"
+                },
+                "9": {
+                    "title": "RenderFxChoices::renderfx::9",
+                    "description": "RenderFxChoices::renderfx::9::description"
+                },
+                "10": {
+                    "title": "RenderFxChoices::renderfx::10",
+                    "description": "RenderFxChoices::renderfx::10::description"
+                },
+                "11": {
+                    "title": "RenderFxChoices::renderfx::11",
+                    "description": "RenderFxChoices::renderfx::11::description"
+                },
+                "12": {
+                    "title": "RenderFxChoices::renderfx::12",
+                    "description": "RenderFxChoices::renderfx::12::description"
+                },
+                "13": {
+                    "title": "RenderFxChoices::renderfx::13",
+                    "description": "RenderFxChoices::renderfx::13::description"
+                },
+                "5": {
+                    "title": "RenderFxChoices::renderfx::5",
+                    "description": "RenderFxChoices::renderfx::5::description"
+                },
+                "6": {
+                    "title": "RenderFxChoices::renderfx::6",
+                    "description": "RenderFxChoices::renderfx::6::description"
+                },
+                "7": {
+                    "title": "RenderFxChoices::renderfx::7",
+                    "description": "RenderFxChoices::renderfx::7::description"
+                },
+                "8": {
+                    "title": "RenderFxChoices::renderfx::8",
+                    "description": "RenderFxChoices::renderfx::8::description"
+                },
+                "14": {
+                    "title": "RenderFxChoices::renderfx::14",
+                    "description": "RenderFxChoices::renderfx::14::description"
+                },
+                "15": {
+                    "title": "RenderFxChoices::renderfx::15",
+                    "description": "RenderFxChoices::renderfx::15::description"
+                },
+                "16": {
+                    "title": "RenderFxChoices::renderfx::16",
+                    "description": "RenderFxChoices::renderfx::16::description"
+                }
+            },
+            "title": "RenderFxChoices::renderfx",
+            "description": "RenderFxChoices::renderfx::description"
+        }
+    }
+}

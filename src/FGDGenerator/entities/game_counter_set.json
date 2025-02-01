@@ -1,0 +1,26 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_counter_set::spawnflags::1",
+                    "description": "game_counter_set::spawnflags::1::description"
+                }
+            }
+        },
+        "frags": {
+            "variable": "integer",
+            "value": "10",
+            "title": "game_counter_set::frags",
+            "description": "game_counter_set::frags::description"
+        }
+    },
+    "title": "game_counter_set::classname",
+    "description": "game_counter_set::classname::description"
+}

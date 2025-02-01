@@ -1,0 +1,51 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "base": [
+        "PlayerSelector"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "player_respawn::spawnflags::1",
+                    "description": "player_respawn::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "player_respawn::spawnflags::2",
+                    "description": "player_respawn::spawnflags::2::description"
+                }
+            }
+        },
+        "message": {
+            "variable": "target_destination",
+            "title": "player_respawn::message",
+            "description": "player_respawn::message::description"
+        },
+        "netname": {
+            "variable": "target_destination",
+            "title": "player_respawn::netname",
+            "description": "player_respawn::netname::description"
+        },
+        "target": {
+            "variable": "target_destination",
+            "title": "player_respawn::target",
+            "description": "player_respawn::target::description"
+        }
+    },
+    "title": "player_respawn::classname",
+    "description": "player_respawn::classname::description"
+}

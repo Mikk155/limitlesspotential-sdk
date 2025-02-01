@@ -1,0 +1,38 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "4": {
+                    "title": "CTFItem::spawnflags::4",
+                    "description": "CTFItem::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "CTFItem::spawnflags::8",
+                    "description": "CTFItem::spawnflags::8::description"
+                }
+            }
+        },
+        "team_no": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "CTFItem::team_no::0",
+                    "description": "CTFItem::team_no::0::description"
+                },
+                "1": {
+                    "title": "CTFItem::team_no::1",
+                    "description": "CTFItem::team_no::1::description"
+                },
+                "2": {
+                    "title": "CTFItem::team_no::2",
+                    "description": "CTFItem::team_no::2::description"
+                }
+            },
+            "title": "CTFItem::team_no",
+            "description": "CTFItem::team_no::description"
+        }
+    }
+}

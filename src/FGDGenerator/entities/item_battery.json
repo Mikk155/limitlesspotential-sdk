@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Item"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/w_battery.mdl",
+    "data": {
+        "armor_amount": {
+            "variable": "string",
+            "title": "item_battery::armor_amount",
+            "description": "item_battery::armor_amount::description"
+        }
+    },
+    "title": "item_battery::classname",
+    "description": "item_battery::classname::description"
+}

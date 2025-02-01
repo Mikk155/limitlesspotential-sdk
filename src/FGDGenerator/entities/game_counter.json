@@ -1,0 +1,37 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_counter::spawnflags::1",
+                    "description": "game_counter::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "game_counter::spawnflags::2",
+                    "description": "game_counter::spawnflags::2::description"
+                }
+            }
+        },
+        "frags": {
+            "variable": "integer",
+            "value": "0",
+            "title": "game_counter::frags",
+            "description": "game_counter::frags::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "10",
+            "title": "game_counter::health",
+            "description": "game_counter::health::description"
+        }
+    },
+    "title": "game_counter::classname",
+    "description": "game_counter::classname::description"
+}

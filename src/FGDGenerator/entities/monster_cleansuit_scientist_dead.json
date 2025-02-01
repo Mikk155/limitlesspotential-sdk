@@ -1,0 +1,85 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Sequence"
+    ],
+    "studio": "models/cleansuit_scientist.mdl",
+    "data": {
+        "body": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_cleansuit_scientist_dead::body::-1",
+                    "description": "monster_cleansuit_scientist_dead::body::-1::description"
+                },
+                "0": {
+                    "title": "monster_cleansuit_scientist_dead::body::0",
+                    "description": "monster_cleansuit_scientist_dead::body::0::description"
+                },
+                "1": {
+                    "title": "monster_cleansuit_scientist_dead::body::1",
+                    "description": "monster_cleansuit_scientist_dead::body::1::description"
+                },
+                "2": {
+                    "title": "monster_cleansuit_scientist_dead::body::2",
+                    "description": "monster_cleansuit_scientist_dead::body::2::description"
+                },
+                "3": {
+                    "title": "monster_cleansuit_scientist_dead::body::3",
+                    "description": "monster_cleansuit_scientist_dead::body::3::description"
+                }
+            },
+            "title": "monster_cleansuit_scientist_dead::body",
+            "description": "monster_cleansuit_scientist_dead::body::description"
+        },
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_cleansuit_scientist_dead::pose::0",
+                    "description": "monster_cleansuit_scientist_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_cleansuit_scientist_dead::pose::1",
+                    "description": "monster_cleansuit_scientist_dead::pose::1::description"
+                },
+                "2": {
+                    "title": "monster_cleansuit_scientist_dead::pose::2",
+                    "description": "monster_cleansuit_scientist_dead::pose::2::description"
+                },
+                "3": {
+                    "title": "monster_cleansuit_scientist_dead::pose::3",
+                    "description": "monster_cleansuit_scientist_dead::pose::3::description"
+                },
+                "4": {
+                    "title": "monster_cleansuit_scientist_dead::pose::4",
+                    "description": "monster_cleansuit_scientist_dead::pose::4::description"
+                },
+                "5": {
+                    "title": "monster_cleansuit_scientist_dead::pose::5",
+                    "description": "monster_cleansuit_scientist_dead::pose::5::description"
+                },
+                "6": {
+                    "title": "monster_cleansuit_scientist_dead::pose::6",
+                    "description": "monster_cleansuit_scientist_dead::pose::6::description"
+                },
+                "7": {
+                    "title": "monster_cleansuit_scientist_dead::pose::7",
+                    "description": "monster_cleansuit_scientist_dead::pose::7::description"
+                },
+                "8": {
+                    "title": "monster_cleansuit_scientist_dead::pose::8",
+                    "description": "monster_cleansuit_scientist_dead::pose::8::description"
+                }
+            },
+            "title": "monster_cleansuit_scientist_dead::pose",
+            "description": "monster_cleansuit_scientist_dead::pose::description"
+        }
+    },
+    "title": "monster_cleansuit_scientist_dead::classname",
+    "description": "monster_cleansuit_scientist_dead::classname::description"
+}

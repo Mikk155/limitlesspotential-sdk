@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles",
+        "bodygroup",
+        "RenderFields"
+    ],
+    "studio": true,
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "data": {
+        "model": {
+            "variable": "studio",
+            "title": "CustomKeys::model"
+        }
+    },
+    "title": "cycler::classname",
+    "description": "cycler::classname::description"
+}

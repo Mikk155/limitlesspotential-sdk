@@ -1,0 +1,54 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "iMagnitude": {
+            "variable": "integer",
+            "value": "100",
+            "title": "env_explosion::iMagnitude",
+            "description": "env_explosion::iMagnitude::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_explosion::spawnflags::1",
+                    "description": "env_explosion::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_explosion::spawnflags::2",
+                    "description": "env_explosion::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "env_explosion::spawnflags::4",
+                    "description": "env_explosion::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "env_explosion::spawnflags::8",
+                    "description": "env_explosion::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "env_explosion::spawnflags::16",
+                    "description": "env_explosion::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "env_explosion::spawnflags::32",
+                    "description": "env_explosion::spawnflags::32::description"
+                }
+            }
+        }
+    },
+    "title": "env_explosion::classname",
+    "description": "env_explosion::classname::description"
+}

@@ -1,0 +1,76 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/hgrunt_medic.mdl",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_human_medic_ally::netname",
+            "description": "monster_human_medic_ally::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_human_medic_ally::spawnflags::32",
+                    "description": "monster_human_medic_ally::spawnflags::32::description"
+                }
+            }
+        },
+        "head": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_human_medic_ally::head::-1",
+                    "description": "monster_human_medic_ally::head::-1::description"
+                },
+                "0": {
+                    "title": "monster_human_medic_ally::head::0",
+                    "description": "monster_human_medic_ally::head::0::description"
+                },
+                "1": {
+                    "title": "monster_human_medic_ally::head::1",
+                    "description": "monster_human_medic_ally::head::1::description"
+                }
+            },
+            "title": "monster_human_medic_ally::head",
+            "description": "monster_human_medic_ally::head::description"
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "2",
+            "choices": {
+                "0": {
+                    "title": "monster_human_medic_ally::weapons::0",
+                    "description": "monster_human_medic_ally::weapons::0::description"
+                },
+                "1": {
+                    "title": "monster_human_medic_ally::weapons::1",
+                    "description": "monster_human_medic_ally::weapons::1::description"
+                },
+                "2": {
+                    "title": "monster_human_medic_ally::weapons::2",
+                    "description": "monster_human_medic_ally::weapons::2::description"
+                },
+                "4": {
+                    "title": "monster_human_medic_ally::weapons::4",
+                    "description": "monster_human_medic_ally::weapons::4::description"
+                }
+            },
+            "title": "monster_human_medic_ally::weapons",
+            "description": "monster_human_medic_ally::weapons::description"
+        }
+    },
+    "title": "monster_human_medic_ally::classname",
+    "description": "monster_human_medic_ally::classname::description"
+}

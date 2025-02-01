@@ -1,0 +1,49 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "OtherItem"
+    ],
+    "studio": true,
+    "data": {
+        "model": {
+            "variable": "studio",
+            "value": "models/egg.mdl",
+            "title": "CustomModel::model"
+        },
+        "sequencename": {
+            "variable": "string",
+            "value": "idle",
+            "title": "item_generic::sequencename",
+            "description": "item_generic::sequencename::description"
+        },
+        "skin": {
+            "variable": "integer",
+            "value": "0",
+            "title": "item_generic::skin",
+            "description": "item_generic::skin::description"
+        },
+        "body": {
+            "variable": "integer",
+            "value": "0",
+            "title": "item_generic::body",
+            "description": "item_generic::body::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "item_generic::spawnflags::1",
+                    "description": "item_generic::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "item_generic::spawnflags::2",
+                    "description": "item_generic::spawnflags::2::description"
+                }
+            }
+        }
+    },
+    "title": "item_generic::classname",
+    "description": "item_generic::classname::description"
+}

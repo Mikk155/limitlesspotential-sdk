@@ -1,0 +1,69 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Target"
+    ],
+    "data": {
+        "team_no": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_ctfgeneric::team_no::0",
+                    "description": "trigger_ctfgeneric::team_no::0::description"
+                },
+                "1": {
+                    "title": "trigger_ctfgeneric::team_no::1",
+                    "description": "trigger_ctfgeneric::team_no::1::description"
+                },
+                "2": {
+                    "title": "trigger_ctfgeneric::team_no::2",
+                    "description": "trigger_ctfgeneric::team_no::2::description"
+                }
+            },
+            "title": "trigger_ctfgeneric::team_no",
+            "description": "trigger_ctfgeneric::team_no::description"
+        },
+        "trigger_delay": {
+            "variable": "string",
+            "value": "5",
+            "title": "trigger_ctfgeneric::trigger_delay",
+            "description": "trigger_ctfgeneric::trigger_delay::description"
+        },
+        "score": {
+            "variable": "string",
+            "value": "0",
+            "title": "trigger_ctfgeneric::score",
+            "description": "trigger_ctfgeneric::score::description"
+        },
+        "team_score": {
+            "variable": "string",
+            "value": "0",
+            "title": "trigger_ctfgeneric::team_score",
+            "description": "trigger_ctfgeneric::team_score::description"
+        },
+        "triggerstate": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_ctfgeneric::triggerstate::0",
+                    "description": "trigger_ctfgeneric::triggerstate::0::description"
+                },
+                "1": {
+                    "title": "trigger_ctfgeneric::triggerstate::1",
+                    "description": "trigger_ctfgeneric::triggerstate::1::description"
+                },
+                "2": {
+                    "title": "trigger_ctfgeneric::triggerstate::2",
+                    "description": "trigger_ctfgeneric::triggerstate::2::description"
+                }
+            },
+            "title": "trigger_ctfgeneric::triggerstate",
+            "description": "trigger_ctfgeneric::triggerstate::description"
+        }
+    },
+    "title": "trigger_ctfgeneric::classname",
+    "description": "trigger_ctfgeneric::classname::description"
+}

@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "sequence": {
+            "variable": "integer",
+            "title": "Sequence::sequence",
+            "description": "Sequence::sequence::description"
+        }
+    }
+}

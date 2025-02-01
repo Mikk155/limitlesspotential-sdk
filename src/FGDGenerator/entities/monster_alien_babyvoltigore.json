@@ -1,0 +1,17 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "squadmonster"
+    ],
+    "studio": "models/baby_voltigore.mdl",
+    "title": "monster_alien_babyvoltigore::classname",
+    "description": "monster_alien_babyvoltigore::classname::description"
+}

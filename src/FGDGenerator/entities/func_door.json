@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Door",
+        "UseLineOfSight",
+        "ZHLT"
+    ],
+    "title": "func_door::classname",
+    "description": "func_door::classname::description"
+}

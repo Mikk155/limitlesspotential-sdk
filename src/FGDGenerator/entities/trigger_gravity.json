@@ -1,0 +1,17 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Trigger"
+    ],
+    "data": {
+        "gravity": {
+            "variable": "integer",
+            "value": "1",
+            "title": "trigger_gravity::gravity",
+            "description": "trigger_gravity::gravity::description"
+        }
+    },
+    "title": "trigger_gravity::classname",
+    "description": "trigger_gravity::classname::description"
+}

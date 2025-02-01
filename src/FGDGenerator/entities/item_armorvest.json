@@ -1,0 +1,48 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "item_battery"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/barney_vest.mdl",
+    "data": {
+        "sequence": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "item_armorvest::sequence::0",
+                    "description": "item_armorvest::sequence::0::description"
+                },
+                "1": {
+                    "title": "item_armorvest::sequence::1",
+                    "description": "item_armorvest::sequence::1::description"
+                },
+                "2": {
+                    "title": "item_armorvest::sequence::2",
+                    "description": "item_armorvest::sequence::2::description"
+                },
+                "3": {
+                    "title": "item_armorvest::sequence::3",
+                    "description": "item_armorvest::sequence::3::description"
+                }
+            },
+            "title": "item_armorvest::sequence",
+            "description": "item_armorvest::sequence::description"
+        }
+    },
+    "title": "item_armorvest::classname",
+    "description": "item_armorvest::classname::description"
+}

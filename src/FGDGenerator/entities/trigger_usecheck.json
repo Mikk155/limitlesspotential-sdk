@@ -1,0 +1,93 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [ "Target", "CBaseDelay" ],
+    "data": {
+        "is_value": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_usecheck::is_value",
+            "description": "trigger_usecheck::is_value::description"
+        },
+        "value_int": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "1": {
+                    "title": "trigger_usecheck::value_int::1",
+                    "description": "trigger_usecheck::value_int::1::description"
+                },
+                "0": {
+                    "title": "trigger_usecheck::value_int::0",
+                    "description": "trigger_usecheck::value_int::0::description"
+                }
+            },
+            "title": "trigger_usecheck::value_int",
+            "description": "trigger_usecheck::value_int::description"
+        },
+        "value_comparator": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": { "title": "trigger_condition::m_iSetType::0", "description": "trigger_condition::m_iSetType::0::description" },
+                "1": { "title": "trigger_condition::m_iSetType::1", "description": "trigger_condition::m_iSetType::1::description" },
+                "2": { "title": "trigger_condition::m_iSetType::2", "description": "trigger_condition::m_iSetType::2::description" },
+                "3": { "title": "trigger_condition::m_iSetType::3", "description": "trigger_condition::m_iSetType::3::description" },
+                "4": { "title": "trigger_condition::m_iSetType::4", "description": "trigger_condition::m_iSetType::4::description" },
+                "5": { "title": "trigger_condition::m_iSetType::5", "description": "trigger_condition::m_iSetType::5::description" },
+                "6": { "title": "trigger_condition::m_iSetType::6", "description": "trigger_condition::m_iSetType::6::description" },
+                "7": { "title": "trigger_usecheck::m_iSetType::7", "description": "trigger_usecheck::m_iSetType::7::description" }
+            },
+            "title": "trigger_usecheck::value_comparator",
+            "description": "trigger_usecheck::value_comparator::description"
+        },
+        "is_usetype": {
+            "variable": "choices",
+            "value": -1,
+            "choices":
+            {
+                "-1": { "title": "Target::m_UseType::-1", "description": "Target::m_UseType::-1::description" },
+                "0": { "title": "Target::m_UseType::0", "description": "Target::m_UseType::0::description" },
+                "1": { "title": "Target::m_UseType::1", "description": "Target::m_UseType::1::description" },
+                "3": { "title": "Target::m_UseType::3", "description": "Target::m_UseType::3::description" },
+                "2": { "title": "Target::m_UseType::2", "description": "Target::m_UseType::2::description" },
+                "4": { "title": "Target::m_UseType::4", "description": "Target::m_UseType::4::description" },
+                "5": { "title": "Target::m_UseType::5", "description": "Target::m_UseType::5::description" },
+                "6": { "title": "Target::m_UseType::6", "description": "Target::m_UseType::6::description" },
+                "7": { "title": "Target::m_UseType::7", "description": "Target::m_UseType::7::description" },
+                "8": { "title": "Target::m_UseType::8", "description": "Target::m_UseType::8::description" },
+                "9": { "title": "Target::m_UseType::9", "description": "Target::m_UseType::9::description" }
+            },
+            "title": "trigger_usecheck::is_usetype",
+            "description": "trigger_usecheck::is_usetype::description"
+        },
+        "usetype_comparator": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": { "title": "trigger_condition::m_iSetType::0", "description": "trigger_condition::m_iSetType::0::description" },
+                "1": { "title": "trigger_condition::m_iSetType::1", "description": "trigger_condition::m_iSetType::1::description" },
+                "2": { "title": "trigger_condition::m_iSetType::2", "description": "trigger_condition::m_iSetType::2::description" },
+                "3": { "title": "trigger_condition::m_iSetType::3", "description": "trigger_condition::m_iSetType::3::description" },
+                "4": { "title": "trigger_condition::m_iSetType::4", "description": "trigger_condition::m_iSetType::4::description" },
+                "5": { "title": "trigger_condition::m_iSetType::5", "description": "trigger_condition::m_iSetType::5::description" }
+            },
+            "title": "trigger_usecheck::usetype_comparator",
+            "description": "trigger_usecheck::usetype_comparator::description"
+        },
+        "message": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_usecheck::message",
+            "description": "trigger_usecheck::message::description"
+        },
+        "netname": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_usecheck::netname",
+            "description": "trigger_usecheck::netname::description"
+        }
+    },
+    "title": "trigger_usecheck::classname",
+    "description": "trigger_usecheck::classname::description"
+}

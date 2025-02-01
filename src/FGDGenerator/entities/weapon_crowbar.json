@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_crowbar.mdl",
+    "data": {},
+    "title": "weapon_crowbar::classname",
+    "description": "weapon_crowbar::classname::description"
+}

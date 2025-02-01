@@ -1,0 +1,71 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "title": "Target::target",
+            "description": "Target::target::description"
+        },
+        "m_UseType":
+        {
+            "variable": "choices",
+            "value": -1,
+            "choices":
+            {
+                "-1": {
+                    "title": "Target::m_UseType::-1",
+                    "description": "Target::m_UseType::-1::description"
+                },
+                "0": {
+                    "title": "Target::m_UseType::0",
+                    "description": "Target::m_UseType::0::description"
+                },
+                "1": {
+                    "title": "Target::m_UseType::1",
+                    "description": "Target::m_UseType::1::description"
+                },
+                "3": {
+                    "title": "Target::m_UseType::3",
+                    "description": "Target::m_UseType::3::description"
+                },
+                "2": {
+                    "title": "Target::m_UseType::2",
+                    "description": "Target::m_UseType::2::description"
+                },
+                "4": {
+                    "title": "Target::m_UseType::4",
+                    "description": "Target::m_UseType::4::description"
+                },
+                "5": {
+                    "title": "Target::m_UseType::5",
+                    "description": "Target::m_UseType::5::description"
+                },
+                "6": {
+                    "title": "Target::m_UseType::6",
+                    "description": "Target::m_UseType::6::description"
+                },
+                "7": {
+                    "title": "Target::m_UseType::7",
+                    "description": "Target::m_UseType::7::description"
+                },
+                "8": {
+                    "title": "Target::m_UseType::8",
+                    "description": "Target::m_UseType::8::description"
+                },
+                "9": {
+                    "title": "Target::m_UseType::9",
+                    "description": "Target::m_UseType::9::description"
+                }
+            },
+            "title": "Target::m_UseType",
+            "description": "Target::m_UseType::description"
+        },
+        "m_UseValue":
+        {
+            "variable": "float",
+            "title": "Target::m_UseValue",
+            "description": "Target::m_UseValue::description"
+        }
+    }
+}

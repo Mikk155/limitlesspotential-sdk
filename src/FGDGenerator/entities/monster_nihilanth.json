@@ -1,0 +1,29 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -192,
+            -192,
+            0
+        ],
+        [
+            192,
+            192,
+            384
+        ]
+    ],
+    "studio": "models/nihilanth.mdl",
+    "data": {},
+    "title": "monster_nihilanth::classname",
+    "description": "monster_nihilanth::classname::description"
+}

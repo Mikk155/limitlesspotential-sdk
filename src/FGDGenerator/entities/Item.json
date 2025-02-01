@@ -1,0 +1,13 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "BaseItem"
+    ],
+    "color": [
+        0,
+        0,
+        200
+    ],
+    "data": {}
+}

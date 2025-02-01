@@ -1,0 +1,10 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFItem"
+    ],
+    "studio": "models/w_jumppack.mdl",
+    "title": "item_ctflongjump::classname",
+    "description": "item_ctflongjump::classname::description"
+}

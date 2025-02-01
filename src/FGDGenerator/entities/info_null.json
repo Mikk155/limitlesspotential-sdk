@@ -1,0 +1,6 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "title": "info_null::classname",
+    "description": "info_null::classname::description"
+}

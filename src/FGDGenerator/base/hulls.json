@@ -1,0 +1,34 @@
+{
+    "$schema": "../schema.json",
+	"Class": "Base",
+    "data":
+    {
+        "minhullsize":
+        {
+            "variable": "vector",
+            "title": "minhullsize"
+        },
+        "maxhullsize":
+        {
+            "variable": "vector",
+            "title": "maxhullsize"
+        },
+        "originhullsize":
+        {
+            "variable": "choices",
+            "title": "originhullsize",
+            "value": "0",
+            "choices": {
+                "1": {
+                    "title": "originhullsize::1",
+                    "description": "originhullsize::1::description"
+                },
+                "2": {
+                    "title": "originhullsize::0",
+                    "description": "originhullsize::0::description"
+                }
+            }
+        }
+        
+    }
+}

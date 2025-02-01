@@ -1,0 +1,12 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "child_classification": {
+            "variable": "string",
+            "value": "",
+            "title": "MonsterWithChildren::child_classification",
+            "description": "MonsterWithChildren::child_classification::description"
+        }
+    }
+}

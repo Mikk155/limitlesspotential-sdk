@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_pipe_wrench.mdl",
+    "data": {},
+    "title": "weapon_pipewrench::classname",
+    "description": "weapon_pipewrench::classname::description"
+}

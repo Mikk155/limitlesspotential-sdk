@@ -1,0 +1,46 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "PlatSounds"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "color": [
+        0,
+        128,
+        255
+    ],
+    "sprite": true,
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "env_spritetrain::target",
+            "description": "env_spritetrain::target::description"
+        },
+        "model": {
+            "variable": "sprite",
+            "value": "sprites/glow01.spr",
+            "title": "CustomKeys::model"
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "64",
+            "title": "env_spritetrain::speed",
+            "description": "env_spritetrain::speed::description"
+        }
+    },
+    "title": "env_spritetrain::classname",
+    "description": "env_spritetrain::classname::description"
+}

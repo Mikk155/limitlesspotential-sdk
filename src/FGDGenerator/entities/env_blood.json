@@ -1,0 +1,71 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "color": [
+        255,
+        0,
+        0
+    ],
+    "data": {
+        "color": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "env_blood::color::0",
+                    "description": "env_blood::color::0::description"
+                },
+                "1": {
+                    "title": "env_blood::color::1",
+                    "description": "env_blood::color::1::description"
+                }
+            },
+            "title": "env_blood::color",
+            "description": "env_blood::color::description"
+        },
+        "amount": {
+            "variable": "string",
+            "value": "100",
+            "title": "env_blood::amount",
+            "description": "env_blood::amount::description"
+        },
+        "spawnflags": {
+            "value": "",
+            "choices": {
+                "1": {
+                    "title": "env_blood::spawnflags::1",
+                    "description": "env_blood::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_blood::spawnflags::2",
+                    "description": "env_blood::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "env_blood::spawnflags::4",
+                    "description": "env_blood::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "env_blood::spawnflags::8",
+                    "description": "env_blood::spawnflags::8::description"
+                }
+            }
+        }
+    },
+    "title": "env_blood::classname",
+    "description": "env_blood::classname::description"
+}

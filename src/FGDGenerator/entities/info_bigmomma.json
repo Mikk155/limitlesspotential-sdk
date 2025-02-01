@@ -1,0 +1,74 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -24,
+            -24,
+            0
+        ],
+        [
+            24,
+            24,
+            16
+        ]
+    ],
+    "color": [
+        20,
+        190,
+        60
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "info_bigmomma::spawnflags::1",
+                    "description": "info_bigmomma::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "info_bigmomma::spawnflags::2",
+                    "description": "info_bigmomma::spawnflags::2::description"
+                }
+            }
+        },
+        "target": {
+            "variable": "target_destination",
+            "title": "info_bigmomma::target",
+            "description": "info_bigmomma::target::description"
+        },
+        "radius": {
+            "variable": "integer",
+            "value": "0",
+            "title": "info_bigmomma::radius",
+            "description": "info_bigmomma::radius::description"
+        },
+        "reachdelay": {
+            "variable": "integer",
+            "value": "0",
+            "title": "info_bigmomma::reachdelay",
+            "description": "info_bigmomma::reachdelay::description"
+        },
+        "reachtarget": {
+            "variable": "target_destination",
+            "title": "info_bigmomma::reachtarget",
+            "description": "info_bigmomma::reachtarget::description"
+        },
+        "reachsequence": {
+            "variable": "string",
+            "title": "info_bigmomma::reachsequence",
+            "description": "info_bigmomma::reachsequence::description"
+        },
+        "health": {
+            "variable": "integer",
+            "title": "info_bigmomma::health",
+            "description": "info_bigmomma::health::description"
+        },
+        "presequence": {
+            "variable": "string",
+            "title": "info_bigmomma::presequence",
+            "description": "info_bigmomma::presequence::description"
+        }
+    },
+    "title": "info_bigmomma::classname",
+    "description": "info_bigmomma::classname::description"
+}

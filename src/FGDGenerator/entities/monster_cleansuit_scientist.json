@@ -1,0 +1,47 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "TalkMonster",
+        "Sequence"
+    ],
+    "studio": "models/cleansuit_scientist.mdl",
+    "data": {
+        "body": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_cleansuit_scientist::body::-1",
+                    "description": "monster_cleansuit_scientist::body::-1::description"
+                },
+                "0": {
+                    "title": "monster_cleansuit_scientist::body::0",
+                    "description": "monster_cleansuit_scientist::body::0::description"
+                },
+                "1": {
+                    "title": "monster_cleansuit_scientist::body::1",
+                    "description": "monster_cleansuit_scientist::body::1::description"
+                },
+                "2": {
+                    "title": "monster_cleansuit_scientist::body::2",
+                    "description": "monster_cleansuit_scientist::body::2::description"
+                },
+                "3": {
+                    "title": "monster_cleansuit_scientist::body::3",
+                    "description": "monster_cleansuit_scientist::body::3::description"
+                }
+            },
+            "title": "monster_cleansuit_scientist::body",
+            "description": "monster_cleansuit_scientist::body::description"
+        }
+    },
+    "title": "monster_cleansuit_scientist::classname",
+    "description": "monster_cleansuit_scientist::classname::description"
+}

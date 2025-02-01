@@ -1,0 +1,30 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/islave.mdl",
+    "data": {
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_alien_slave_dead::pose::0",
+                    "description": "monster_alien_slave_dead::pose::0::description"
+                }
+            },
+            "title": "monster_alien_slave_dead::pose",
+            "description": "monster_alien_slave_dead::pose::description"
+        }
+    },
+    "title": "monster_alien_slave_dead::classname",
+    "description": "monster_alien_slave_dead::classname::description"
+}

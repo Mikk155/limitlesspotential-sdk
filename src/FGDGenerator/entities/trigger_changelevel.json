@@ -1,0 +1,76 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "data": {
+        "map": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_changelevel::map",
+            "description": "trigger_changelevel::map::description"
+        },
+        "landmark": {
+            "variable": "string",
+            "value": "",
+            "title": "trigger_changelevel::landmark",
+            "description": "trigger_changelevel::landmark::description"
+        },
+        "changetarget": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_changelevel::changetarget",
+            "description": "trigger_changelevel::changetarget::description"
+        },
+        "changedelay": {
+            "variable": "string",
+            "value": "0",
+            "title": "trigger_changelevel::changedelay",
+            "description": "trigger_changelevel::changedelay::description"
+        },
+        "use_persistent_level_change": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "trigger_changelevel::use_persistent_level_change::0",
+                    "description": "trigger_changelevel::use_persistent_level_change::0::description"
+                },
+                "1": {
+                    "title": "trigger_changelevel::use_persistent_level_change::1",
+                    "description": "trigger_changelevel::use_persistent_level_change::1::description"
+                }
+            },
+            "title": "trigger_changelevel::use_persistent_level_change",
+            "description": "trigger_changelevel::use_persistent_level_change::description"
+        },
+        "use_persistent_inventory": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "trigger_changelevel::use_persistent_inventory::0",
+                    "description": "trigger_changelevel::use_persistent_inventory::0::description"
+                },
+                "1": {
+                    "title": "trigger_changelevel::use_persistent_inventory::1",
+                    "description": "trigger_changelevel::use_persistent_inventory::1::description"
+                }
+            },
+            "title": "trigger_changelevel::use_persistent_inventory",
+            "description": "trigger_changelevel::use_persistent_inventory::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "trigger_changelevel::spawnflags::1",
+                    "description": "trigger_changelevel::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "trigger_changelevel::spawnflags::2",
+                    "description": "trigger_changelevel::spawnflags::2::description"
+                }
+            }
+        }
+    },
+    "title": "trigger_changelevel::classname",
+    "description": "trigger_changelevel::classname::description"
+}

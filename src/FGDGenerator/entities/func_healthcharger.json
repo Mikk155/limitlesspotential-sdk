@@ -1,0 +1,16 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Master",
+        "Global",
+        "BaseCharger",
+        "RenderFields",
+        "minlight",
+        "ZHLT",
+        "ReplacementFiles"
+    ],
+    "data": {},
+    "title": "func_healthcharger::classname",
+    "description": "func_healthcharger::classname::description"
+}

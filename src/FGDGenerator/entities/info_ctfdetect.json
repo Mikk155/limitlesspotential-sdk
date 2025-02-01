@@ -1,0 +1,56 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "data": {
+        "flagreturntime": {
+            "variable": "string",
+            "value": "30.0",
+            "title": "info_ctfdetect::flagreturntime",
+            "description": "info_ctfdetect::flagreturntime::description"
+        },
+        "basedefenddist": {
+            "variable": "string",
+            "value": "192.0",
+            "title": "info_ctfdetect::basedefenddist",
+            "description": "info_ctfdetect::basedefenddist::description"
+        },
+        "defendcarriertime": {
+            "variable": "string",
+            "value": "10.0",
+            "title": "info_ctfdetect::defendcarriertime",
+            "description": "info_ctfdetect::defendcarriertime::description"
+        },
+        "captureassisttime": {
+            "variable": "string",
+            "value": "10.0",
+            "title": "info_ctfdetect::captureassisttime",
+            "description": "info_ctfdetect::captureassisttime::description"
+        },
+        "poweruprespawntime": {
+            "variable": "string",
+            "value": "30.0",
+            "title": "info_ctfdetect::poweruprespawntime",
+            "description": "info_ctfdetect::poweruprespawntime::description"
+        },
+        "score_icon_namebm": {
+            "variable": "string",
+            "value": "item_ctfscorebm",
+            "title": "info_ctfdetect::score_icon_namebm",
+            "description": "info_ctfdetect::score_icon_namebm::description"
+        },
+        "score_icon_nameof": {
+            "variable": "string",
+            "value": "item_ctfscoreof",
+            "title": "info_ctfdetect::score_icon_nameof",
+            "description": "info_ctfdetect::score_icon_nameof::description"
+        },
+        "map_score_max": {
+            "variable": "string",
+            "value": "0",
+            "title": "info_ctfdetect::map_score_max",
+            "description": "info_ctfdetect::map_score_max::description"
+        }
+    },
+    "title": "info_ctfdetect::classname",
+    "description": "info_ctfdetect::classname::description"
+}

@@ -1,0 +1,59 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "iconsprite": "sprites/speaker.spr",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_soundmark::spawnflags::1",
+                    "description": "env_soundmark::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "env_soundmark::spawnflags::2",
+                    "description": "env_soundmark::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "env_soundmark::spawnflags::4",
+                    "description": "env_soundmark::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "env_soundmark::spawnflags::8",
+                    "description": "env_soundmark::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "env_soundmark::spawnflags::16",
+                    "description": "env_soundmark::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "env_soundmark::spawnflags::32",
+                    "description": "env_soundmark::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "env_soundmark::spawnflags::64",
+                    "description": "env_soundmark::spawnflags::64::description"
+                }
+            }
+        },
+        "sound_origin": {
+            "variable": "target_generic",
+            "value": "",
+            "title": "env_soundmark::sound_origin",
+            "description": "env_soundmark::sound_origin::description"
+        },
+        "sound_volume": {
+            "variable": "float",
+            "value": "1.0",
+            "title": "env_soundmark::sound_volume",
+            "description": "env_soundmark::sound_volume::description"
+        },
+        "sound_duration": {
+            "variable": "float",
+            "value": "0.3",
+            "title": "env_soundmark::sound_duration",
+            "description": "env_soundmark::sound_duration::description"
+        }
+    },
+    "title": "env_soundmark::classname",
+    "description": "env_soundmark::classname::description"
+}

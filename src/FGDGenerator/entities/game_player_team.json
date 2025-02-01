@@ -1,0 +1,33 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "game_player_team::spawnflags::1",
+                    "description": "game_player_team::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "game_player_team::spawnflags::2",
+                    "description": "game_player_team::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "game_player_team::spawnflags::4",
+                    "description": "game_player_team::spawnflags::4::description"
+                }
+            }
+        },
+        "target": {
+            "variable": "string",
+            "value": "",
+            "title": "game_player_team::target",
+            "description": "game_player_team::target::description"
+        }
+    },
+    "title": "game_player_team::classname",
+    "description": "game_player_team::classname::description"
+}

@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_satchel.mdl",
+    "data": {
+        "sequence": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "weapon_satchel::sequence::0",
+                    "description": "weapon_satchel::sequence::0::description"
+                },
+                "1": {
+                    "title": "weapon_satchel::sequence::1",
+                    "description": "weapon_satchel::sequence::1::description"
+                }
+            },
+            "title": "weapon_satchel::sequence",
+            "description": "weapon_satchel::sequence::description"
+        }
+    },
+    "title": "weapon_satchel::classname",
+    "description": "weapon_satchel::classname::description"
+}

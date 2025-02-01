@@ -1,0 +1,50 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Item"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/w_suit.mdl",
+    "data": {
+        "body": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "item_suit::body::0",
+                    "description": "item_suit::body::0::description"
+                },
+                "1": {
+                    "title": "item_suit::body::1",
+                    "description": "item_suit::body::1::description"
+                }
+            },
+            "title": "item_suit::body",
+            "description": "item_suit::body::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "item_suit::spawnflags::1",
+                    "description": "item_suit::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "item_suit::classname",
+    "description": "item_suit::classname::description"
+}

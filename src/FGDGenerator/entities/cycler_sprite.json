@@ -1,0 +1,18 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles",
+        "framerate",
+        "RenderFields"
+    ],
+    "sprite": true,
+    "data": {
+        "model": {
+            "variable": "sprite",
+            "title": "CustomKeys::sprite"
+        }
+    },
+    "title": "cycler_sprite::classname",
+    "description": "cycler_sprite::classname::description"
+}

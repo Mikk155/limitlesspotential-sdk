@@ -1,0 +1,90 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/massn.mdl",
+    "data": {
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_male_assassin::netname",
+            "description": "monster_male_assassin::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_male_assassin::spawnflags::32",
+                    "description": "monster_male_assassin::spawnflags::32::description"
+                }
+            }
+        },
+        "head": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "-1": {
+                    "title": "monster_male_assassin::head::-1",
+                    "description": "monster_male_assassin::head::-1::description"
+                },
+                "0": {
+                    "title": "monster_male_assassin::head::0",
+                    "description": "monster_male_assassin::head::0::description"
+                },
+                "1": {
+                    "title": "monster_male_assassin::head::1",
+                    "description": "monster_male_assassin::head::1::description"
+                },
+                "2": {
+                    "title": "monster_male_assassin::head::2",
+                    "description": "monster_male_assassin::head::2::description"
+                }
+            },
+            "title": "monster_male_assassin::head",
+            "description": "monster_male_assassin::head::description"
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "3",
+            "choices": {
+                "0": {
+                    "title": "monster_male_assassin::weapons::0",
+                    "description": "monster_male_assassin::weapons::0::description"
+                },
+                "1": {
+                    "title": "monster_male_assassin::weapons::1",
+                    "description": "monster_male_assassin::weapons::1::description"
+                },
+                "3": {
+                    "title": "monster_male_assassin::weapons::3",
+                    "description": "monster_male_assassin::weapons::3::description"
+                },
+                "5": {
+                    "title": "monster_male_assassin::weapons::5",
+                    "description": "monster_male_assassin::weapons::5::description"
+                },
+                "8": {
+                    "title": "monster_male_assassin::weapons::8",
+                    "description": "monster_male_assassin::weapons::8::description"
+                }
+            },
+            "title": "monster_male_assassin::weapons",
+            "description": "monster_male_assassin::weapons::description"
+        },
+        "standgroundrange": {
+            "variable": "string",
+            "value": "0.0",
+            "title": "monster_male_assassin::standgroundrange",
+            "description": "monster_male_assassin::standgroundrange::description"
+        }
+    },
+    "title": "monster_male_assassin::classname",
+    "description": "monster_male_assassin::classname::description"
+}

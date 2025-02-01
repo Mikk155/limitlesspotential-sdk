@@ -1,0 +1,63 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "Angles",
+        "minlight",
+        "ZHLT"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "100",
+            "title": "func_pendulum::speed",
+            "description": "func_pendulum::speed::description"
+        },
+        "distance": {
+            "variable": "integer",
+            "value": "90",
+            "title": "func_pendulum::distance",
+            "description": "func_pendulum::distance::description"
+        },
+        "damp": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_pendulum::damp",
+            "description": "func_pendulum::damp::description"
+        },
+        "dmg": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_pendulum::dmg",
+            "description": "func_pendulum::dmg::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_pendulum::spawnflags::1",
+                    "description": "func_pendulum::spawnflags::1::description"
+                },
+                "8": {
+                    "title": "func_pendulum::spawnflags::8",
+                    "description": "func_pendulum::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "func_pendulum::spawnflags::16",
+                    "description": "func_pendulum::spawnflags::16::description"
+                },
+                "64": {
+                    "title": "func_pendulum::spawnflags::64",
+                    "description": "func_pendulum::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "func_pendulum::spawnflags::128",
+                    "description": "func_pendulum::spawnflags::128::description"
+                }
+            }
+        }
+    },
+    "title": "func_pendulum::classname",
+    "description": "func_pendulum::classname::description"
+}

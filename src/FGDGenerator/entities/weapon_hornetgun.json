@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_hgun.mdl",
+    "data": {},
+    "title": "weapon_hornetgun::classname",
+    "description": "weapon_hornetgun::classname::description"
+}

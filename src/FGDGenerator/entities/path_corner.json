@@ -1,0 +1,61 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "size": [ [ -8, -8, -8 ], [ 8, 8, 8 ] ],
+    "color": [
+        247,
+        181,
+        82
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "path_corner::spawnflags::1",
+                    "description": "path_corner::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "path_corner::spawnflags::2",
+                    "description": "path_corner::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "path_corner::spawnflags::4",
+                    "description": "path_corner::spawnflags::4::description"
+                }
+            }
+        },
+        "target": {
+            "variable": "target_destination",
+            "title": "path_corner::target",
+            "description": "path_corner::target::description"
+        },
+        "message": {
+            "variable": "target_destination",
+            "title": "path_corner::message",
+            "description": "path_corner::message::description"
+        },
+        "wait": {
+            "variable": "integer",
+            "value": "0",
+            "title": "path_corner::wait",
+            "description": "path_corner::wait::description"
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "path_corner::speed",
+            "description": "path_corner::speed::description"
+        },
+        "yaw_speed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "path_corner::yaw_speed",
+            "description": "path_corner::yaw_speed::description"
+        }
+    },
+    "title": "path_corner::classname",
+    "description": "path_corner::classname::description"
+}

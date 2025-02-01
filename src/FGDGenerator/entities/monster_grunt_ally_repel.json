@@ -1,0 +1,109 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "TalkMonster"
+    ],
+    "studio": "models/hgrunt_opfor.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "monster_grunt_ally_repel::spawnflags::32",
+                    "description": "monster_grunt_ally_repel::spawnflags::32::description"
+                }
+            }
+        },
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monster_grunt_ally_repel::netname",
+            "description": "monster_grunt_ally_repel::netname::description"
+        },
+        "weapons": {
+            "variable": "choices",
+            "value": "3",
+            "choices": {
+                "1": {
+                    "title": "monster_grunt_ally_repel::weapons::1",
+                    "description": "monster_grunt_ally_repel::weapons::1::description"
+                },
+                "3": {
+                    "title": "monster_grunt_ally_repel::weapons::3",
+                    "description": "monster_grunt_ally_repel::weapons::3::description"
+                },
+                "5": {
+                    "title": "monster_grunt_ally_repel::weapons::5",
+                    "description": "monster_grunt_ally_repel::weapons::5::description"
+                },
+                "8": {
+                    "title": "monster_grunt_ally_repel::weapons::8",
+                    "description": "monster_grunt_ally_repel::weapons::8::description"
+                },
+                "10": {
+                    "title": "monster_grunt_ally_repel::weapons::10",
+                    "description": "monster_grunt_ally_repel::weapons::10::description"
+                },
+                "16": {
+                    "title": "monster_grunt_ally_repel::weapons::16",
+                    "description": "monster_grunt_ally_repel::weapons::16::description"
+                }
+            },
+            "title": "monster_grunt_ally_repel::weapons",
+            "description": "monster_grunt_ally_repel::weapons::description"
+        },
+        "head": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_grunt_ally_repel::head::-1",
+                    "description": "monster_grunt_ally_repel::head::-1::description"
+                },
+                "0": {
+                    "title": "monster_grunt_ally_repel::head::0",
+                    "description": "monster_grunt_ally_repel::head::0::description"
+                },
+                "1": {
+                    "title": "monster_grunt_ally_repel::head::1",
+                    "description": "monster_grunt_ally_repel::head::1::description"
+                },
+                "2": {
+                    "title": "monster_grunt_ally_repel::head::2",
+                    "description": "monster_grunt_ally_repel::head::2::description"
+                },
+                "3": {
+                    "title": "monster_grunt_ally_repel::head::3",
+                    "description": "monster_grunt_ally_repel::head::3::description"
+                },
+                "4": {
+                    "title": "monster_grunt_ally_repel::head::4",
+                    "description": "monster_grunt_ally_repel::head::4::description"
+                },
+                "5": {
+                    "title": "monster_grunt_ally_repel::head::5",
+                    "description": "monster_grunt_ally_repel::head::5::description"
+                },
+                "6": {
+                    "title": "monster_grunt_ally_repel::head::6",
+                    "description": "monster_grunt_ally_repel::head::6::description"
+                },
+                "7": {
+                    "title": "monster_grunt_ally_repel::head::7",
+                    "description": "monster_grunt_ally_repel::head::7::description"
+                }
+            },
+            "title": "monster_grunt_ally_repel::head",
+            "description": "monster_grunt_ally_repel::head::description"
+        }
+    },
+    "title": "monster_grunt_ally_repel::classname",
+    "description": "monster_grunt_ally_repel::classname::description"
+}

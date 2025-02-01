@@ -1,0 +1,79 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "TalkMonster",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "studio": "models/scientist.mdl",
+    "data": {
+        "body": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_scientist::body::-1",
+                    "description": "monster_scientist::body::-1::description"
+                },
+                "0": {
+                    "title": "monster_scientist::body::0",
+                    "description": "monster_scientist::body::0::description"
+                },
+                "1": {
+                    "title": "monster_scientist::body::1",
+                    "description": "monster_scientist::body::1::description"
+                },
+                "2": {
+                    "title": "monster_scientist::body::2",
+                    "description": "monster_scientist::body::2::description"
+                },
+                "3": {
+                    "title": "monster_scientist::body::3",
+                    "description": "monster_scientist::body::3::description"
+                }
+            },
+            "title": "monster_scientist::body",
+            "description": "monster_scientist::body::description"
+        },
+        "item": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_scientist::item::0",
+                    "description": "monster_scientist::item::0::description"
+                },
+                "1": {
+                    "title": "monster_scientist::item::1",
+                    "description": "monster_scientist::item::1::description"
+                },
+                "2": {
+                    "title": "monster_scientist::item::2",
+                    "description": "monster_scientist::item::2::description"
+                }
+            },
+            "title": "monster_scientist::item",
+            "description": "monster_scientist::item::description"
+        }
+    },
+    "title": "monster_scientist::classname",
+    "description": "monster_scientist::classname::description"
+}

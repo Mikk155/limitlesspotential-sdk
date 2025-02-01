@@ -1,0 +1,15 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Master",
+        "Global",
+        "BaseCharger",
+        "RenderFields",
+        "minlight",
+        "ZHLT",
+        "ReplacementFiles"
+    ],
+    "title": "func_recharge::classname",
+    "description": "func_recharge::classname::description"
+}

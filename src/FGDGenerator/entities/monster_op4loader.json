@@ -1,0 +1,27 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "RenderFields",
+        "Sequence"
+    ],
+    "studio": "models/loader.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "4": {
+                    "title": "monster_op4loader::spawnflags::4",
+                    "description": "monster_op4loader::spawnflags::4::description"
+                }
+            }
+        }
+    },
+    "title": "monster_op4loader::classname",
+    "description": "monster_op4loader::classname::description"
+}

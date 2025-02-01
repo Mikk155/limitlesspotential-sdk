@@ -1,0 +1,32 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "Angles",
+        "ZHLT"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_conveyor::spawnflags::1",
+                    "description": "func_conveyor::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "func_conveyor::spawnflags::2",
+                    "description": "func_conveyor::spawnflags::2::description"
+                }
+            }
+        },
+        "speed": {
+            "variable": "string",
+            "value": "100",
+            "title": "func_conveyor::speed",
+            "description": "func_conveyor::speed::description"
+        }
+    },
+    "title": "func_conveyor::classname",
+    "description": "func_conveyor::classname::description"
+}

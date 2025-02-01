@@ -1,0 +1,12 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "angles": {
+            "variable": "string",
+            "value": "0 0 0",
+            "title": "Angles::angles",
+            "description": "Angles::angles::description"
+        }
+    }
+}

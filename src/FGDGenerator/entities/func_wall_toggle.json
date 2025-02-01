@@ -1,0 +1,20 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "base": [
+        "func_wall"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_wall_toggle::spawnflags::1",
+                    "description": "func_wall_toggle::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "func_wall_toggle::classname",
+    "description": "func_wall_toggle::classname::description"
+}

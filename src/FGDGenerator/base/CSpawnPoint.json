@@ -1,0 +1,35 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "size": [
+        [
+            -16,
+            -16,
+            -36
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "color": [
+        0,
+        255,
+        0
+    ],
+    "offset": [
+        0,
+        0,
+        36
+    ],
+    "studio": "models/player.mdl",
+    "data": {
+        "m_flOffSet": {
+            "variable": "float",
+            "value": 256.0,
+            "title": "CSpawnPoint::m_flOffSet",
+            "description": "CSpawnPoint::m_flOffSet::description"
+        }
+    }
+}

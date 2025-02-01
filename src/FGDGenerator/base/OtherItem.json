@@ -1,0 +1,25 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "Angles",
+        "CustomModel"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            32
+        ]
+    ],
+    "color": [
+        0,
+        0,
+        200
+    ]
+}

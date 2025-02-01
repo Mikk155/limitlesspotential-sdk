@@ -1,0 +1,100 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Sequence"
+    ],
+    "studio": "models/otis.mdl",
+    "data": {
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_otis_dead::pose::0",
+                    "description": "monster_otis_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_otis_dead::pose::1",
+                    "description": "monster_otis_dead::pose::1::description"
+                },
+                "2": {
+                    "title": "monster_otis_dead::pose::2",
+                    "description": "monster_otis_dead::pose::2::description"
+                },
+                "3": {
+                    "title": "monster_otis_dead::pose::3",
+                    "description": "monster_otis_dead::pose::3::description"
+                },
+                "4": {
+                    "title": "monster_otis_dead::pose::4",
+                    "description": "monster_otis_dead::pose::4::description"
+                }
+            },
+            "title": "monster_otis_dead::pose",
+            "description": "monster_otis_dead::pose::description"
+        },
+        "bodystate": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "monster_otis_dead::bodystate::0",
+                    "description": "monster_otis_dead::bodystate::0::description"
+                },
+                "1": {
+                    "title": "monster_otis_dead::bodystate::1",
+                    "description": "monster_otis_dead::bodystate::1::description"
+                },
+                "2": {
+                    "title": "monster_otis_dead::bodystate::2",
+                    "description": "monster_otis_dead::bodystate::2::description"
+                }
+            },
+            "title": "monster_otis_dead::bodystate",
+            "description": "monster_otis_dead::bodystate::description"
+        },
+        "sleeves": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "monster_otis_dead::sleeves::-1",
+                    "description": "monster_otis_dead::sleeves::-1::description"
+                },
+                "0": {
+                    "title": "monster_otis_dead::sleeves::0",
+                    "description": "monster_otis_dead::sleeves::0::description"
+                },
+                "1": {
+                    "title": "monster_otis_dead::sleeves::1",
+                    "description": "monster_otis_dead::sleeves::1::description"
+                }
+            },
+            "title": "monster_otis_dead::sleeves",
+            "description": "monster_otis_dead::sleeves::description"
+        },
+        "item": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_otis_dead::item::0",
+                    "description": "monster_otis_dead::item::0::description"
+                },
+                "1": {
+                    "title": "monster_otis_dead::item::1",
+                    "description": "monster_otis_dead::item::1::description"
+                },
+                "2": {
+                    "title": "monster_otis_dead::item::2",
+                    "description": "monster_otis_dead::item::2::description"
+                }
+            },
+            "title": "monster_otis_dead::item",
+            "description": "monster_otis_dead::item::description"
+        }
+    },
+    "title": "monster_otis_dead::classname",
+    "description": "monster_otis_dead::classname::description"
+}

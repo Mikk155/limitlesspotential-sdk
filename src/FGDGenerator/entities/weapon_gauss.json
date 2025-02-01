@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_gauss.mdl",
+    "data": {
+        "sequence": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "weapon_gauss::sequence::0",
+                    "description": "weapon_gauss::sequence::0::description"
+                },
+                "1": {
+                    "title": "weapon_gauss::sequence::1",
+                    "description": "weapon_gauss::sequence::1::description"
+                }
+            },
+            "title": "weapon_gauss::sequence",
+            "description": "weapon_gauss::sequence::description"
+        }
+    },
+    "title": "weapon_gauss::classname",
+    "description": "weapon_gauss::classname::description"
+}

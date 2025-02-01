@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Master",
+        "Angles",
+        "TeleportBase"
+    ],
+    "color": [
+        0,
+        255,
+        0
+    ],
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "point_teleport::target",
+            "description": "point_teleport::target::description"
+        }
+    },
+    "title": "point_teleport::classname",
+    "description": "point_teleport::classname::description"
+}

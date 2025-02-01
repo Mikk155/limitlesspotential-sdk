@@ -1,0 +1,18 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "TalkMonster",
+        "Sequence"
+    ],
+    "studio": "models/recruit.mdl",
+    "data": {},
+    "title": "monster_recruit::classname",
+    "description": "monster_recruit::classname::description"
+}

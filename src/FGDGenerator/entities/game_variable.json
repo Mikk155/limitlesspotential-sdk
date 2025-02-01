@@ -1,0 +1,57 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [ "Master", "SF1_StartOn" ],
+    "data": {
+        "variable": {
+            "variable": "string",
+            "value": "",
+            "title": "game_variable::variable",
+            "description": "game_variable::variable::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "StartOn",
+                    "description": "StartOn"
+                },
+                "2": {
+                    "title": "game_variable::spawnflag::2",
+                    "description": "game_variable::spawnflag::2"
+                }
+            }
+        },
+        "type": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "game_variable::type::0",
+                    "description": "game_variable::type::0::description"
+                },
+                "1": {
+                    "title": "game_variable::type::1",
+                    "description": "game_variable::type::1::description"
+                },
+                "2": {
+                    "title": "game_variable::type::2",
+                    "description": "game_variable::type::2::description"
+                },
+                "3": {
+                    "title": "game_variable::type::3",
+                    "description": "game_variable::type::3::description"
+                }
+            },
+            "title": "game_variable::type",
+            "description": "game_variable::type::description"
+        },
+        "value": {
+            "variable": "string",
+            "value": "",
+            "title": "game_variable::value",
+            "description": "game_variable::value::description"
+        }
+    },
+    "title": "game_variable::classname",
+    "description": "game_variable::classname::description"
+}

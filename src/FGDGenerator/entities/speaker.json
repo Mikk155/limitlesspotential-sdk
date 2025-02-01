@@ -1,0 +1,82 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "sprite": "sprites/speaker.spr",
+    "iconsprite": "sprites/speaker.spr",
+    "data": {
+        "preset": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "speaker::preset::0",
+                    "description": "speaker::preset::0::description"
+                },
+                "1": {
+                    "title": "speaker::preset::1",
+                    "description": "speaker::preset::1::description"
+                },
+                "2": {
+                    "title": "speaker::preset::2",
+                    "description": "speaker::preset::2::description"
+                },
+                "3": {
+                    "title": "speaker::preset::3",
+                    "description": "speaker::preset::3::description"
+                },
+                "4": {
+                    "title": "speaker::preset::4",
+                    "description": "speaker::preset::4::description"
+                },
+                "5": {
+                    "title": "speaker::preset::5",
+                    "description": "speaker::preset::5::description"
+                },
+                "6": {
+                    "title": "speaker::preset::6",
+                    "description": "speaker::preset::6::description"
+                },
+                "7": {
+                    "title": "speaker::preset::7",
+                    "description": "speaker::preset::7::description"
+                },
+                "9": {
+                    "title": "speaker::preset::9",
+                    "description": "speaker::preset::9::description"
+                },
+                "11": {
+                    "title": "speaker::preset::11",
+                    "description": "speaker::preset::11::description"
+                },
+                "12": {
+                    "title": "speaker::preset::12",
+                    "description": "speaker::preset::12::description"
+                }
+            },
+            "title": "speaker::preset",
+            "description": "speaker::preset::description"
+        },
+        "message": {
+            "variable": "string",
+            "value": "",
+            "title": "speaker::message",
+            "description": "speaker::message::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "5",
+            "title": "speaker::health",
+            "description": "speaker::health::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "speaker::spawnflags::1",
+                    "description": "speaker::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "speaker::classname",
+    "description": "speaker::classname::description"
+}

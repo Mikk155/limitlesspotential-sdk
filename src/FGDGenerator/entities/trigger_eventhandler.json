@@ -1,0 +1,55 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "AllocNewActivator"
+    ],
+    "data": {
+        "m_Caller": {
+            "variable": "target_destination",
+            "value": "!this",
+            "title": "trigger_eventhandler::m_Caller",
+            "description": "trigger_eventhandler::m_Caller::description"
+        },
+        "event_type": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "trigger_eventhandler::event_type::0",
+                    "description": "trigger_eventhandler::event_type::0::description"
+                },
+                "1": {
+                    "title": "trigger_eventhandler::event_type::1",
+                    "description": "trigger_eventhandler::event_type::1::description"
+                },
+                "2": {
+                    "title": "trigger_eventhandler::event_type::2",
+                    "description": "trigger_eventhandler::event_type::2::description"
+                },
+                "3": {
+                    "title": "trigger_eventhandler::event_type::3",
+                    "description": "trigger_eventhandler::event_type::3::description"
+                },
+                "4": {
+                    "title": "trigger_eventhandler::event_type::4",
+                    "description": "trigger_eventhandler::event_type::4::description"
+                },
+                "5": {
+                    "title": "trigger_eventhandler::event_type::5",
+                    "description": "trigger_eventhandler::event_type::5::description"
+                },
+                "6": {
+                    "title": "trigger_eventhandler::event_type::6",
+                    "description": "trigger_eventhandler::event_type::6::description"
+                }
+            },
+            "title": "trigger_eventhandler::event_type",
+            "description": "trigger_eventhandler::event_type::description"
+        }
+    },
+    "title": "trigger_eventhandler::classname",
+    "description": "trigger_eventhandler::classname::description"
+}

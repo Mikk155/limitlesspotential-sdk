@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFItem"
+    ],
+    "studio": "models/w_backpack.mdl",
+    "data": {},
+    "title": "item_ctfbackpack::classname",
+    "description": "item_ctfbackpack::classname::description"
+}

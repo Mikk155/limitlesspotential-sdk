@@ -1,0 +1,40 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFAttributes"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "data": {
+        "skin": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "item_ctfbase::skin::0",
+                    "description": "item_ctfbase::skin::0::description"
+                }
+            },
+            "title": "item_ctfbase::skin",
+            "description": "item_ctfbase::skin::description"
+        },
+        "model": {
+            "variable": "studio",
+            "value": "models/civ_stand.mdl",
+            "title": "CustomModel::model"
+        }
+    },
+    "title": "item_ctfbase::classname",
+    "description": "item_ctfbase::classname::description"
+}

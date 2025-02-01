@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "StartOn",
+                    "description": "StartOn::description"
+                }
+            }
+        }
+    }
+}

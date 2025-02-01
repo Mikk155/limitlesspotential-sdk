@@ -1,0 +1,7425 @@
+{
+"languages":
+[
+    "english"
+],
+"No":
+{
+"english": "No"
+},
+"Yes":
+{
+"english": "Yes"
+},
+"Default":
+{
+"english": "Default"
+},
+"UseLineOfSight::m_uselos":
+{
+"english": "Use only in line of sight"
+},
+"trigger_changevalue::classname":
+{
+"english": "Change/Copy a value"
+},
+"trigger_changevalue::m_iSetType":
+{
+"english": "Set type"
+},
+"trigger_changevalue::m_iSetType::0":
+{
+"english": "Replace ( target = source )"
+},
+"trigger_changevalue::m_iSetType::1":
+{
+"english": "Add ( target += source )"
+},
+"trigger_changevalue::m_iSetType::2":
+{
+"english": "Multiply ( target += source )"
+},
+"trigger_changevalue::m_iSetType::3":
+{
+"english": "Substract ( target -= source )"
+},
+"trigger_changevalue::m_iSetType::4":
+{
+"english": "Divide ( target /= source )"
+},
+"trigger_changevalue::m_iSetType::5":
+{
+"english": "AND ( target &= source )"
+},
+"trigger_changevalue::m_iSetType::6":
+{
+"english": "OR ( target |= source )"
+},
+"trigger_changevalue::m_iSetType::7":
+{
+"english": "Direction to Angles"
+},
+"trigger_changevalue::m_iSetType::8":
+{
+"english": "Angles to Direction"
+},
+"trigger_changevalue::m_iSetType::9":
+{
+"english": "Append string ( target + m_iAppendSpaces + source )"
+},
+"trigger_changevalue::m_iAppendSpaces":
+{
+"english": "Spaces to append (Append)"
+},
+"trigger_condition::m_iSetType":
+{
+"english": "Check type"
+},
+"trigger_condition::m_iSetType::0":
+{
+"english": "Equal ( target == source )"
+},
+"trigger_condition::m_iSetType::1":
+{
+"english": "Not equal ( target != source )"
+},
+"trigger_condition::m_iSetType::2":
+{
+"english": "Less ( target < source )"
+},
+"trigger_condition::m_iSetType::3":
+{
+"english": "Greater ( target > source )"
+},
+"trigger_condition::m_iSetType::4":
+{
+"english": "Less or equal ( target <= source )"
+},
+"trigger_condition::m_iSetType::5":
+{
+"english": "Greater or equal ( target >= source )"
+},
+"trigger_condition::m_iSetType::6":
+{
+"english": "Logical AND ( (target & source) != 0 )"
+},
+"CKeyValueLogic::m_sTargetEntity":
+{
+"english": "Target Entity"
+},
+"CKeyValueLogic::m_sKeyName":
+{
+"english": "Target Key"
+},
+"CKeyValueLogic::m_sSourceKeyName":
+{
+"english": "Source Key"
+},
+"CKeyValueLogic::m_sValue":
+{
+"english": "Target Value"
+},
+"CKeyValueLogic::m_sSourceEntity":
+{
+"english": "Source Entity"
+},
+"CKeyValueLogic::m_FloatConversion":
+{
+"english": "float/int to string conversion"
+},
+"CKeyValueLogic::m_FloatConversion::0":
+{
+"english": "None (As-Is)"
+},
+"CKeyValueLogic::m_FloatConversion::1":
+{
+"english": "6 Decimals float"
+},
+"CKeyValueLogic::m_FloatConversion::2":
+{
+"english": "5 Decimals float"
+},
+"CKeyValueLogic::m_FloatConversion::3":
+{
+"english": "4 Decimals float"
+},
+"CKeyValueLogic::m_FloatConversion::4":
+{
+"english": "3 Decimals float"
+},
+"CKeyValueLogic::m_FloatConversion::5":
+{
+"english": "2 Decimals float"
+},
+"CKeyValueLogic::m_FloatConversion::6":
+{
+"english": "1 Decimal float"
+},
+"CKeyValueLogic::m_FloatConversion::7":
+{
+"english": "Rounded integer"
+},
+"CKeyValueLogic::m_FloatConversion::8":
+{
+"english": "Rounded UP integer"
+},
+"CKeyValueLogic::m_FloatConversion::9":
+{
+"english": "Rounded DOWN integer"
+},
+"CKeyValueLogic::m_iMaxTargets":
+{
+"english": "Max target entities (-1 all)"
+},
+"CKeyValueLogic::m_SkipVector_X":
+{
+"english": "Skip X/R"
+},
+"CKeyValueLogic::m_SkipVector_Y":
+{
+"english": "Skip Y/G"
+},
+"CKeyValueLogic::m_SkipVector_Z":
+{
+"english": "Skip Z/B"
+},
+"CKeyValueLogic::m_SkipVector_A":
+{
+"english": "Skip A"
+},
+"worldspawn::classname":
+{
+"english": "World entity"
+},
+"worldspawn::classname::description":
+{
+},
+"worldspawn::message":
+{
+"english": "Map Description / Title"
+},
+"worldspawn::message::description":
+{
+},
+"worldspawn::skyname":
+{
+"english": "environment map (cl_skyname)"
+},
+"worldspawn::skyname::description":
+{
+},
+"worldspawn::light":
+{
+"english": "Default light level"
+},
+"worldspawn::light::description":
+{
+},
+"worldspawn::WaveHeight":
+{
+"english": "Default Wave Height"
+},
+"worldspawn::WaveHeight::description":
+{
+},
+"worldspawn::MaxRange":
+{
+"english": "Max viewable distance"
+},
+"worldspawn::MaxRange::description":
+{
+},
+"worldspawn::chaptertitle":
+{
+"english": "Chapter Title Message"
+},
+"worldspawn::chaptertitle::description":
+{
+},
+"worldspawn::startdark":
+{
+"english": "Level Fade In"
+},
+"worldspawn::startdark::description":
+{
+},
+"worldspawn::gametitle":
+{
+"english": "Game whose title to display"
+},
+"worldspawn::gametitle::description":
+{
+},
+"worldspawn::newunit":
+{
+"english": "New Level Unit"
+},
+"worldspawn::newunit::description":
+{
+},
+"worldspawn::newunit::0":
+{
+"english": "No, keep current"
+},
+"worldspawn::newunit::0::description":
+{
+},
+"worldspawn::newunit::1":
+{
+"english": "Yes, clear previous levels"
+},
+"worldspawn::newunit::1::description":
+{
+},
+"worldspawn::mapteams":
+{
+"english": "Map Team List"
+},
+"worldspawn::mapteams::description":
+{
+},
+"worldspawn::defaultteam":
+{
+"english": "Default Team"
+},
+"worldspawn::defaultteam::description":
+{
+},
+"worldspawn::defaultteam::0":
+{
+"english": "Fewest Players"
+},
+"worldspawn::defaultteam::0::description":
+{
+},
+"worldspawn::defaultteam::1":
+{
+"english": "First Team"
+},
+"worldspawn::defaultteam::1::description":
+{
+},
+"worldspawn::freeroam":
+{
+"english": "Monster roaming"
+},
+"worldspawn::freeroam::description":
+{
+},
+"worldspawn::freeroam::-1":
+{
+"english": "Not defined (server operator)"
+},
+"worldspawn::freeroam::-1::description":
+{
+},
+"worldspawn::freeroam::0":
+{
+"english": "Disabled"
+},
+"worldspawn::freeroam::0::description":
+{
+},
+"worldspawn::freeroam::1":
+{
+"english": "Enabled"
+},
+"worldspawn::freeroam::1::description":
+{
+},
+"worldspawn::mapcfg":
+{
+"english": "Custom map cfg"
+},
+"worldspawn::mapcfg::description":
+{
+"english": "The json file defined for configuration, the path is within cfg/maps/ no need to specify .json, if not defined is maps/mapname.json"
+},
+
+"Mandatory::spawnflags::2048":
+{
+"english": "Only in SinglePlayer"
+},
+"Mandatory::spawnflags::2048::description":
+{
+"english": "This entity won't appear at all in a Multi-Player game"
+},
+"Mandatory::targetname":
+{
+"english": "Name"
+},
+"Mandatory::targetname::description":
+{
+},
+
+"Appearflags_notin":
+{
+"english": "Not In"
+},
+"Appearflags_onlyin":
+{
+"english": "Only In"
+},
+"Appearflags::appearflag_singleplayer":
+{
+"english": "Appearance Single Player"
+},
+"Appearflags::appearflag_multiplayer":
+{
+"english": "Appearance Multi Player"
+},
+"Appearflags::appearflag_cooperative":
+{
+"english": "Appearance Cooperative"
+},
+"Appearflags::appearflag_deathmatch":
+{
+"english": "Appearance Death Match"
+},
+"Appearflags::appearflag_cft":
+{
+"english": "Appearance Capture The Flag"
+},
+"Appearflags::appearflag_teamplay":
+{
+"english": "Appearance Team Play"
+},
+"Appearflags::appearflag_dedicated":
+{
+"english": "Appearance Dedicated Server"
+},
+"Appearflags::appearflag_skilleasy":
+{
+"english": "Appearance Difficulty Easy"
+},
+"Appearflags::appearflag_skillmedium":
+{
+"english": "Appearance Difficulty Medium"
+},
+"Appearflags::appearflag_skillhard":
+{
+"english": "Appearance Difficulty Hard"
+},
+"_minlight":
+{
+"english": "Minimum light level"
+},
+"minhullsize":
+{
+"english": "Custom Hull Minimum"
+},
+"maxhullsize":
+{
+"english": "Custom Hull Maximum"
+},
+"originhullsize":
+{
+"english": "Custom Hull Box"
+},
+"originhullsize::0":
+{
+"english": "Relative to the entity"
+},
+"originhullsize::1":
+{
+"english": "Absolute to the world"
+},
+"BaseCharger::fire_on_recharge":
+{
+"english": "Target To Fire On Recharge"
+},
+"BaseCharger::fire_on_recharge::description":
+{
+"english": "Target to trigger when the charger recharges itself"
+},
+"BaseCharger::fire_on_empty":
+{
+"english": "Target To Fire On Empty"
+},
+"BaseCharger::fire_on_empty::description":
+{
+"english": "Target to trigger when the charger runs out of juice"
+},
+"BaseCharger::fire_on_spawn":
+{
+"english": "Fire Targets On Map Spawn"
+},
+"BaseCharger::fire_on_spawn::description":
+{
+"english": "Whether to fire the `fire_on_recharge` target when the charger initially spawns"
+},
+"BaseCharger::total_juice":
+{
+"english": "Total Juice In Charger (-1 == Unlimited)"
+},
+"BaseCharger::total_juice::description":
+{
+"english": "Custom amount of juice in this charger. A value of **-1** enables unlimited juice. If not specified the amount specified in the skill configuration is used"
+},
+"BaseCharger::recharge_delay":
+{
+"english": "Recharge Delay"
+},
+"BaseCharger::recharge_delay::description":
+{
+"english": "Custom recharge delay. A value of **-1** disables recharging. If not specified the amount specified in the skill configuration is used"
+},
+"BaseCharger::charge_per_use":
+{
+"english": "Charge Per Use"
+},
+"BaseCharger::charge_per_use::description":
+{
+"english": "Amount of juice to discharge per interval. Default **1**. If set to **0** the charger will never discharge"
+},
+"AllocNewActivator::m_Activator":
+{
+"english": "New activator to pass"
+},
+"AllocNewActivator::m_Activator::description":
+{
+"english": "A targetname of a entity or either a special name !activator = current activator !caller = current caller !this = current entity !player = Nearest player"
+},
+"aiscripted_sequence::classname":
+{
+"english": "AI Scripted Sequence"
+},
+"spawnflags":
+{
+"english": ""
+},
+"spawnflags::description":
+{
+"english": ""
+},
+
+"-TODO": "Check out bellow labels",
+
+
+
+
+
+"trigger_entity_zone::classname":
+{
+"english": "Trigger for entities in zone"
+},
+"trigger_entity_zone::m_iszEntity":
+{
+"english": "Entity classname"
+},
+"trigger_entity_zone::message":
+{
+"english": "Inside Trigger Target"
+},
+"trigger_entity_zone::m_InUse":
+{
+"english": "Inside Trigger Type"
+},
+"trigger_entity_zone::m_InValue":
+{
+"english": "Inside Trigger value"
+},
+"trigger_entity_zone::netname":
+{
+"english": "Outside Trigger Target"
+},
+"trigger_entity_zone::m_OutUse":
+{
+"english": "Outside Trigger Type"
+},
+"trigger_entity_zone::m_OutValue":
+{
+"english": "Outside Trigger value"
+},
+"CustomKeys::model":
+{
+"english": "Model"
+},
+"CustomKeys::sprite":
+{
+"english": "Sprite"
+},
+"CustomKeys::scale":
+{
+"english": "Scale"
+},
+"Sound":
+{
+"english": "Sound"
+},
+"Sound::description":
+{
+"english": "Path/filename.wav to a sound file"
+},
+"CSpawnPoint::m_flOffSet":
+{
+"english": "Random offset if blocked"
+},
+"player_respawn::classname":
+{
+"english": "Re-spawn players"
+},
+"player_respawn::classname::description":
+{
+"english": "Re-spawn players and relocates them in a valid spawnpoint, don't set any spawnflags for targetting the activator player only."
+},
+"player_respawn::spawnflags::1":
+{
+"english": "Outside players"
+},
+"player_respawn::spawnflags::2":
+{
+"english": "Inside players"
+},
+"player_respawn::message":
+{
+"english": "Turn off spawnpoint"
+},
+"player_respawn::netname":
+{
+"english": "Turn on spawnpoint"
+},
+"player_respawn::target":
+{
+"english": "Non-Respawned trigger"
+},
+"player_respawn::target::description":
+{
+"english": "Fire this target for each not-respawned players and pass them as activator"
+},
+"ambient_generic::classname":
+{
+"english": "Universal Ambient"
+},
+"ambient_generic::health":
+{
+"english": "Volume (10 = loudest)"
+},
+"ambient_generic::playfrom":
+{
+"english": "Entity to play from"
+},
+"ambient_generic::playfrom::description":
+{
+"english": "Plays the sound on this entity's origin, if it's a brush model it is played on the center of the brush unless it has an origin texture"
+},
+"ambient_generic::preset":
+{
+"english": "Dynamic Presets"
+},
+"ambient_generic::preset::0":
+{
+"english": "None"
+},
+"ambient_generic::preset::1":
+{
+"english": "Huge Machine"
+},
+"ambient_generic::preset::2":
+{
+"english": "Big Machine"
+},
+"ambient_generic::preset::3":
+{
+"english": "Machine"
+},
+"ambient_generic::preset::4":
+{
+"english": "Slow Fade in"
+},
+"ambient_generic::preset::5":
+{
+"english": "Fade in"
+},
+"ambient_generic::preset::6":
+{
+"english": "Quick Fade in"
+},
+"ambient_generic::preset::7":
+{
+"english": "Slow Pulse"
+},
+"ambient_generic::preset::8":
+{
+"english": "Pulse"
+},
+"ambient_generic::preset::9":
+{
+"english": "Quick pulse"
+},
+"ambient_generic::preset::10":
+{
+"english": "Slow Oscillator"
+},
+"ambient_generic::preset::11":
+{
+"english": "Oscillator"
+},
+"ambient_generic::preset::12":
+{
+"english": "Quick Oscillator"
+},
+"ambient_generic::preset::13":
+{
+"english": "Grunge pitch"
+},
+"ambient_generic::preset::14":
+{
+"english": "Very low pitch"
+},
+"ambient_generic::preset::15":
+{
+"english": "Low pitch"
+},
+"ambient_generic::preset::16":
+{
+"english": "High pitch"
+},
+"ambient_generic::preset::17":
+{
+"english": "Very high pitch"
+},
+"ambient_generic::preset::18":
+{
+"english": "Screaming pitch"
+},
+"ambient_generic::preset::19":
+{
+"english": "Oscillate spinup/down"
+},
+"ambient_generic::preset::20":
+{
+"english": "Pulse spinup/down"
+},
+"ambient_generic::preset::21":
+{
+"english": "Random pitch"
+},
+"ambient_generic::preset::22":
+{
+"english": "Random pitch fast"
+},
+"ambient_generic::preset::23":
+{
+"english": "Incremental Spinup"
+},
+"ambient_generic::preset::24":
+{
+"english": "Alien"
+},
+"ambient_generic::preset::25":
+{
+"english": "Bizzare"
+},
+"ambient_generic::preset::26":
+{
+"english": "Planet X"
+},
+"ambient_generic::preset::27":
+{
+"english": "Haunted"
+},
+"ambient_generic::volstart":
+{
+"english": "Start Volume"
+},
+"ambient_generic::fadein":
+{
+"english": "Fade in time (0-100)"
+},
+"ambient_generic::fadeout":
+{
+"english": "Fade out time (0-100)"
+},
+"ambient_generic::pitch":
+{
+"english": "Pitch (> 100 = higher)"
+},
+"ambient_generic::pitchstart":
+{
+"english": "Start Pitch"
+},
+"ambient_generic::spinup":
+{
+"english": "Spin up time (0-100)"
+},
+"ambient_generic::spindown":
+{
+"english": "Spin down time (0-100)"
+},
+"ambient_generic::lfotype":
+{
+"english": "LFO type 0)off 1)sqr 2)tri 3)rnd"
+},
+"ambient_generic::lforate":
+{
+"english": "LFO rate (0-1000)"
+},
+"ambient_generic::lfomodpitch":
+{
+"english": "LFO mod pitch (0-100)"
+},
+"ambient_generic::lfomodvol":
+{
+"english": "LFO mod vol (0-100)"
+},
+"ambient_generic::cspinup":
+{
+"english": "Incremental spinup count"
+},
+"ambient_generic::spawnflags::1":
+{
+"english": "Play Everywhere"
+},
+"ambient_generic::spawnflags::2":
+{
+"english": "Small Radius"
+},
+"ambient_generic::spawnflags::4":
+{
+"english": "Medium Radius"
+},
+"ambient_generic::spawnflags::8":
+{
+"english": "Large Radius"
+},
+"ambient_generic::spawnflags::16":
+{
+"english": "Start Silent"
+},
+"ambient_generic::spawnflags::32":
+{
+"english": "Is NOT Looped"
+},
+"ammo_generic::classname":
+{
+"english": "Generic Ammo Item"
+},
+"ammo_generic::ammo_name":
+{
+"english": "Ammo Name (Required)"
+},
+"ammo_all::classname":
+{
+"english": "Gives all ammo types"
+},
+"ammo_all::note_1":
+{
+"english": "Combine with `trigger_changekeyvalue` to dynamically change ammo type"
+},
+"ammo_9mmclip::classname":
+{
+"english": "9mm Pistol Ammo"
+},
+"ammo_9mmar::classname":
+{
+"english": "9mm Assault Rifle Ammo"
+},
+"ammo_9mmbox::classname":
+{
+"english": "box of 200 9mm shells"
+},
+"ammo_argrenades::classname":
+{
+"english": "Assault Grenades"
+},
+"ammo_buckshot::classname":
+{
+"english": "Shotgun Ammo"
+},
+"ammo_357::classname":
+{
+"english": "357 Ammo"
+},
+"ammo_rpgclip::classname":
+{
+"english": "RPG Ammo"
+},
+"ammo_rpgclip::sequence":
+{
+"english": "Placement"
+},
+"ammo_rpgclip::sequence::0":
+{
+"english": "Normal (flat)"
+},
+"ammo_rpgclip::sequence::1":
+{
+"english": "Capped"
+},
+"ammo_gaussclip::classname":
+{
+"english": "Gauss Gun Ammo"
+},
+"ammo_crossbow::classname":
+{
+"english": "Crossbow Ammo"
+},
+"func_button_target::classname":
+{
+"english": "Target Button"
+},
+"func_button_target::spawnflags::1":
+{
+"english": "Use Activates"
+},
+"StartOff":
+{
+"english": "Start Off"
+},
+"StartOn":
+{
+"english": "Start On"
+},
+"cycler::classname":
+{
+"english": "Monster Cycler"
+},
+"CustomKeys::bodygroup":
+{
+"english": "Body Group"
+},
+"cycler_sprite::classname":
+{
+"english": "Sprite Cycler"
+},
+"CustomKeys::framerate":
+{
+"english": "Frames per second"
+},
+"env_beam::LightningStart":
+{
+"english": "Start Entity"
+},
+"env_beam::LightningEnd":
+{
+"english": "Ending Entity"
+},
+"env_beam::classname":
+{
+"english": "Energy Beam Effect"
+},
+"env_beam::renderamt":
+{
+"english": "Brightness (1 - 255)"
+},
+"env_beam::rendercolor":
+{
+"english": "Beam Color (R G B)"
+},
+"env_beam::Radius":
+{
+"english": "Radius"
+},
+"env_beam::life":
+{
+"english": "Life (seconds 0 = infinite)"
+},
+"env_beam::BoltWidth":
+{
+"english": "Width of beam (pixels*0.1 0-255)"
+},
+"env_beam::NoiseAmplitude":
+{
+"english": "Amount of noise (0-255)"
+},
+"env_beam::texture":
+{
+"english": "Sprite Name"
+},
+"env_beam::TextureScroll":
+{
+"english": "Texture Scroll Rate (0-100)"
+},
+"env_beam::framerate":
+{
+"english": "Frames per 10 seconds"
+},
+"env_beam::framestart":
+{
+"english": "Starting Frame"
+},
+"env_beam::StrikeTime":
+{
+"english": "Strike again time (secs)"
+},
+"env_beam::damage":
+{
+"english": "Damage / second"
+},
+"env_beam::spawnflags::2":
+{
+"english": "Toggle"
+},
+"env_beam::spawnflags::4":
+{
+"english": "Random Strike"
+},
+"env_beam::spawnflags::8":
+{
+"english": "Ring"
+},
+"env_beam::spawnflags::16":
+{
+"english": "StartSparks"
+},
+"env_beam::spawnflags::32":
+{
+"english": "EndSparks"
+},
+"env_beam::spawnflags::64":
+{
+"english": "Decal End"
+},
+"env_beam::spawnflags::128":
+{
+"english": "Shade Start"
+},
+"env_beam::spawnflags::256":
+{
+"english": "Shade End"
+},
+"env_beverage::classname":
+{
+"english": "Beverage Dispenser"
+},
+"env_beverage::health":
+{
+"english": "Capacity"
+},
+"env_beverage::skin":
+{
+"english": "Beverage Type"
+},
+"env_beverage::skin::0":
+{
+"english": "Coca-Cola"
+},
+"env_beverage::skin::1":
+{
+"english": "Sprite"
+},
+"env_beverage::skin::2":
+{
+"english": "Diet Coke"
+},
+"env_beverage::skin::3":
+{
+"english": "Orange"
+},
+"env_beverage::skin::4":
+{
+"english": "Surge"
+},
+"env_beverage::skin::5":
+{
+"english": "Moxie"
+},
+"env_blood::classname":
+{
+"english": "Blood Effects"
+},
+"env_blood::color":
+{
+"english": "Blood Color"
+},
+"env_blood::color::0":
+{
+"english": "Red (Human)"
+},
+"env_blood::color::1":
+{
+"english": "Yellow (Alien)"
+},
+"env_blood::amount":
+{
+"english": "Amount of blood (damage to simulate)"
+},
+"env_blood::spawnflags::1":
+{
+"english": "Random Direction"
+},
+"env_blood::spawnflags::2":
+{
+"english": "Blood Stream"
+},
+"env_blood::spawnflags::4":
+{
+"english": "On Player"
+},
+"env_blood::spawnflags::8":
+{
+"english": "Spray decals"
+},
+"env_bubbles::classname":
+{
+"english": "Bubble Volume"
+},
+"env_bubbles::density":
+{
+"english": "Bubble density"
+},
+"env_bubbles::frequency":
+{
+"english": "Bubble frequency"
+},
+"env_bubbles::current":
+{
+"english": "Speed of Current"
+},
+
+"next": true,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"Sequence::sequence":
+{
+"english": "Animation Sequence (editor)"
+},
+"ZHLT::zhlt_lightflags":
+{
+"english": "ZHLT Lightflags"
+},
+"ZHLT::zhlt_lightflags::0":
+{
+"english": "Default"
+},
+"ZHLT::zhlt_lightflags::1":
+{
+"english": "Embedded Fix"
+},
+"ZHLT::zhlt_lightflags::2":
+{
+"english": "Opaque (blocks light)"
+},
+"ZHLT::zhlt_lightflags::3":
+{
+"english": "Opaque + Embedded fix"
+},
+"ZHLT::zhlt_lightflags::6":
+{
+"english": "Opaque + Concave Fix"
+},
+"ZHLT::light_origin":
+{
+"english": "Light Origin Target"
+},
+"ZHLT_point::_fade":
+{
+"english": "ZHLT Fade"
+},
+"ZHLT_point::_falloff":
+{
+"english": "ZHLT Falloff"
+},
+"ZHLT_point::_falloff::0":
+{
+"english": "Default"
+},
+"ZHLT_point::_falloff::1":
+{
+"english": "Inverse Linear"
+},
+"ZHLT_point::_falloff::2":
+{
+"english": "Inverse Square"
+},
+"Angles::angles":
+{
+"english": "Pitch Yaw Roll (Y Z X)"
+},
+"ReplacementFiles::modellist":
+{
+"english": "Model replacement file"
+},
+"ReplacementFiles::soundlist":
+{
+"english": "Sound replacement file"
+},
+"ReplacementFiles::sentencelist":
+{
+"english": "Sentence replacement file"
+},
+"CustomModel::model":
+{
+"english": "Model"
+},
+"Target::target":
+{
+"english": "Target"
+},
+"Target::m_UseType":
+{
+"english": "Trigger Type"
+},
+"Target::m_UseType::-1":
+{
+"english": "Unset (Default)"
+},
+"Target::m_UseType::0":
+{
+"english": "Off"
+},
+"Target::m_UseType::1":
+{
+"english": "On"
+},
+"Target::m_UseType::2":
+{
+"english": "Set"
+},
+"Target::m_UseType::3":
+{
+"english": "Toggle"
+},
+"Target::m_UseType::4":
+{
+"english": "Kill"
+},
+"Target::m_UseType::5":
+{
+"english": "Same as input"
+},
+"Target::m_UseType::6":
+{
+"english": "Opposite as input"
+},
+"Target::m_UseType::7":
+{
+"english": "Touch"
+},
+"Target::m_UseType::8":
+{
+"english": "Lock"
+},
+"Target::m_UseType::9":
+{
+"english": "Unlock"
+},
+"Target::m_UseValue":
+{
+"english": "Value to pass"
+},
+"Global::globalname":
+{
+"english": "Global Entity Name"
+},
+"CBaseDelay::killtarget":
+{
+"english": "KillTarget"
+},
+"CBaseDelay::delay":
+{
+"english": "Delay before trigger"
+},
+"Master::master":
+{
+"english": "Master"
+},
+"StartInactive":
+{
+"english": "Start Inactive"
+},
+"StartInactive::description":
+{
+"english": "Start Inactive descrtiptiopnm"
+},
+"squadmonster::netname":
+{
+"english": "Squad Name"
+},
+"squadmonster::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"RenderFxChoices::renderfx":
+{
+"english": "Render FX"
+},
+"RenderFxChoices::renderfx::0":
+{
+"english": "Normal"
+},
+"RenderFxChoices::renderfx::1":
+{
+"english": "Slow Pulse"
+},
+"RenderFxChoices::renderfx::2":
+{
+"english": "Fast Pulse"
+},
+"RenderFxChoices::renderfx::3":
+{
+"english": "Slow Wide Pulse"
+},
+"RenderFxChoices::renderfx::4":
+{
+"english": "Fast Wide Pulse"
+},
+"RenderFxChoices::renderfx::9":
+{
+"english": "Slow Strobe"
+},
+"RenderFxChoices::renderfx::10":
+{
+"english": "Fast Strobe"
+},
+"RenderFxChoices::renderfx::11":
+{
+"english": "Faster Strobe"
+},
+"RenderFxChoices::renderfx::12":
+{
+"english": "Slow Flicker"
+},
+"RenderFxChoices::renderfx::13":
+{
+"english": "Fast Flicker"
+},
+"RenderFxChoices::renderfx::5":
+{
+"english": "Slow Fade Away"
+},
+"RenderFxChoices::renderfx::6":
+{
+"english": "Fast Fade Away"
+},
+"RenderFxChoices::renderfx::7":
+{
+"english": "Slow Become Solid"
+},
+"RenderFxChoices::renderfx::8":
+{
+"english": "Fast Become Solid"
+},
+"RenderFxChoices::renderfx::14":
+{
+"english": "Constant Glow"
+},
+"RenderFxChoices::renderfx::15":
+{
+"english": "Distort"
+},
+"RenderFxChoices::renderfx::16":
+{
+"english": "Hologram (Distort + fade)"
+},
+"RenderFields::rendermode":
+{
+"english": "Render Mode"
+},
+"RenderFields::rendermode::0":
+{
+"english": "Normal"
+},
+"RenderFields::rendermode::1":
+{
+"english": "Color"
+},
+"RenderFields::rendermode::2":
+{
+"english": "Texture"
+},
+"RenderFields::rendermode::3":
+{
+"english": "Glow"
+},
+"RenderFields::rendermode::4":
+{
+"english": "Solid"
+},
+"RenderFields::rendermode::5":
+{
+"english": "Additive"
+},
+"RenderFields::renderamt":
+{
+"english": "FX Amount (1 - 255)"
+},
+"RenderFields::rendercolor":
+{
+"english": "FX Color (R G B)"
+},
+"BaseItem::respawn_delay":
+{
+"english": "Respawn delay (-1 == Never)"
+},
+"BaseItem::stay_visible_during_respawn":
+{
+"english": "Stay Visible During Respawn"
+},
+"BaseItem::stay_visible_during_respawn::0":
+{
+"english": "No"
+},
+"BaseItem::stay_visible_during_respawn::1":
+{
+"english": "Yes"
+},
+"BaseItem::flash_on_respawn":
+{
+"english": "Flash On Respawn"
+},
+"BaseItem::flash_on_respawn::0":
+{
+"english": "No"
+},
+"BaseItem::flash_on_respawn::1":
+{
+"english": "Yes"
+},
+"BaseItem::play_pickup_sound":
+{
+"english": "Play Pickup Sound"
+},
+"BaseItem::play_pickup_sound::0":
+{
+"english": "No"
+},
+"BaseItem::play_pickup_sound::1":
+{
+"english": "Yes"
+},
+"BaseItem::fall_mode":
+{
+"english": "Fall Mode"
+},
+"BaseItem::fall_mode::0":
+{
+"english": "Fall"
+},
+"BaseItem::fall_mode::1":
+{
+"english": "Float"
+},
+"BaseItem::trigger_on_spawn":
+{
+"english": "Trigger On Spawn"
+},
+"BaseItem::trigger_on_despawn":
+{
+"english": "Trigger On Despawn"
+},
+"Ammo::ammo_amount":
+{
+"english": "Ammo Amount To Give (-1 == Maximum)"
+},
+"Weapon::default_ammo":
+{
+"english": "Default Ammo In Weapon (-1 == Maximum)"
+},
+"Unkillable::unkillable":
+{
+"english": "Is Unkillable"
+},
+"Unkillable::unkillable::0":
+{
+"english": "No"
+},
+"Unkillable::unkillable::1":
+{
+"english": "Yes"
+},
+"Monster::freeroam":
+{
+"english": "Monster roaming"
+},
+"Monster::freeroam::0":
+{
+"english": "Default (map freeroam)"
+},
+"Monster::freeroam::1":
+{
+"english": "Never"
+},
+"Monster::freeroam::2":
+{
+"english": "Always"
+},
+"Monster::health":
+{
+"english": "Custom health (leave undefined to use default)"
+},
+"Monster::classification":
+{
+"english": "Classification Override"
+},
+"Monster::is_player_ally":
+{
+"english": "Is Player Ally"
+},
+"Monster::is_player_ally::0":
+{
+"english": "Default"
+},
+"Monster::is_player_ally::1":
+{
+"english": "No"
+},
+"Monster::is_player_ally::2":
+{
+"english": "Yes"
+},
+"Monster::TriggerTarget":
+{
+"english": "TriggerTarget"
+},
+"Monster::TriggerCondition":
+{
+"english": "Trigger Condition"
+},
+"Monster::TriggerCondition::0":
+{
+"english": "No Trigger"
+},
+"Monster::TriggerCondition::1":
+{
+"english": "See Player, Mad at Player"
+},
+"Monster::TriggerCondition::2":
+{
+"english": "Take Damage"
+},
+"Monster::TriggerCondition::3":
+{
+"english": "50% Health Remaining"
+},
+"Monster::TriggerCondition::4":
+{
+"english": "Death"
+},
+"Monster::TriggerCondition::7":
+{
+"english": "Hear World"
+},
+"Monster::TriggerCondition::8":
+{
+"english": "Hear Player"
+},
+"Monster::TriggerCondition::9":
+{
+"english": "Hear Combat"
+},
+"Monster::TriggerCondition::10":
+{
+"english": "See Player Unconditional"
+},
+"Monster::TriggerCondition::11":
+{
+"english": "See Player, Not In Combat"
+},
+"Monster::spawnflags::1":
+{
+"english": "WaitTillSeen"
+},
+"Monster::spawnflags::2":
+{
+"english": "Gag"
+},
+"Monster::spawnflags::4":
+{
+"english": "MonsterClip"
+},
+"Monster::spawnflags::16":
+{
+"english": "Prisoner"
+},
+"Monster::spawnflags::128":
+{
+"english": "WaitForScript"
+},
+"Monster::spawnflags::256":
+{
+"english": "Pre-Disaster"
+},
+"Monster::spawnflags::512":
+{
+"english": "Fade Corpse"
+},
+"Monster::allow_item_dropping":
+{
+"english": "Allow Item Dropping"
+},
+"Monster::allow_item_dropping::0":
+{
+"english": "No"
+},
+"Monster::allow_item_dropping::1":
+{
+"english": "Yes"
+},
+"Monster::allow_follow":
+{
+"english": "Allow NPC to follow players"
+},
+"Monster::allow_follow::0":
+{
+"english": "No"
+},
+"Monster::allow_follow::1":
+{
+"english": "Yes"
+},
+"Monster::UseSentence":
+{
+"english": "Use Sentence"
+},
+"Monster::UnUseSentence":
+{
+"english": "Un-Use Sentence"
+},
+"MonsterWithChildren::child_classification":
+{
+"english": "Child classification"
+},
+"TalkMonster::suspicious":
+{
+"english": "Suspicious"
+},
+"TalkMonster::suspicious::0":
+{
+"english": "No"
+},
+"TalkMonster::suspicious::1":
+{
+"english": "Yes"
+},
+"gibshooterbase::m_iGibs":
+{
+"english": "Number of Gibs"
+},
+"gibshooterbase::delay":
+{
+"english": "Delay between shots"
+},
+"gibshooterbase::m_flVelocity":
+{
+"english": "Gib Velocity"
+},
+"gibshooterbase::m_flVariance":
+{
+"english": "Course Variance"
+},
+"gibshooterbase::m_flGibLife":
+{
+"english": "Gib Life"
+},
+"gibshooterbase::spawnflags::1":
+{
+"english": "Repeatable"
+},
+"Light::_light":
+{
+"english": "Brightness"
+},
+"Light::style":
+{
+"english": "Appearance"
+},
+"Light::style::0":
+{
+"english": "Normal"
+},
+"Light::style::10":
+{
+"english": "Fluorescent flicker"
+},
+"Light::style::2":
+{
+"english": "Slow, strong pulse"
+},
+"Light::style::11":
+{
+"english": "Slow pulse, noblack"
+},
+"Light::style::5":
+{
+"english": "Gentle pulse"
+},
+"Light::style::1":
+{
+"english": "Flicker A"
+},
+"Light::style::6":
+{
+"english": "Flicker B"
+},
+"Light::style::3":
+{
+"english": "Candle A"
+},
+"Light::style::7":
+{
+"english": "Candle B"
+},
+"Light::style::8":
+{
+"english": "Candle C"
+},
+"Light::style::4":
+{
+"english": "Fast strobe"
+},
+"Light::style::9":
+{
+"english": "Slow strobe"
+},
+"Light::pattern":
+{
+"english": "Custom Appearance"
+},
+"Breakable::target":
+{
+"english": "Target on break"
+},
+"Breakable::health":
+{
+"english": "Strength"
+},
+"Breakable::material":
+{
+"english": "Material type"
+},
+"Breakable::material::0":
+{
+"english": "Glass"
+},
+"Breakable::material::1":
+{
+"english": "Wood"
+},
+"Breakable::material::2":
+{
+"english": "Metal"
+},
+"Breakable::material::3":
+{
+"english": "Flesh"
+},
+"Breakable::material::4":
+{
+"english": "Cinder Block"
+},
+"Breakable::material::5":
+{
+"english": "Ceiling Tile"
+},
+"Breakable::material::6":
+{
+"english": "Computer"
+},
+"Breakable::material::7":
+{
+"english": "Unbreakable Glass"
+},
+"Breakable::material::8":
+{
+"english": "Rocks"
+},
+"Breakable::explosion":
+{
+"english": "Gibs Direction"
+},
+"Breakable::explosion::0":
+{
+"english": "Random"
+},
+"Breakable::explosion::1":
+{
+"english": "Relative to Attack"
+},
+"Breakable::explosion::2":
+{
+"english": "Relative to direction"
+},
+"Breakable::direction":
+{
+"english": "Direction (Gibs Direction 2)"
+},
+"Breakable::direction_speed":
+{
+"english": "Direction speed"
+},
+"Breakable::delay":
+{
+"english": "Delay before fire"
+},
+"Breakable::gibmodel":
+{
+"english": "Gib Model"
+},
+"Breakable::spawnobject":
+{
+"english": "Item To Spawn On Break"
+},
+"Breakable::spawnobject::description":
+{
+"english": "Name of the item to spawn when this entity is broken. Only items can be spawned by this entity. This includes all weapons, ammo and all item entities except CTF items."
+},
+"Breakable::explodemagnitude":
+{
+"english": "Explode Magnitude (0=none)"
+},
+"Door::speed":
+{
+"english": "Speed"
+},
+"Door::movesnd":
+{
+"english": "Move Sound"
+},
+"Door::stopsnd":
+{
+"english": "Stop Sound"
+},
+"Door::wait":
+{
+"english": "Delay before close"
+},
+"Door::wait::-1":
+{
+"english": "Stays open"
+},
+"Door::lip":
+{
+"english": "Lip"
+},
+"Door::dmg":
+{
+"english": "Damage inflicted when blocked"
+},
+"Door::message":
+{
+"english": "Message if triggered"
+},
+"Door::netname":
+{
+"english": "Fire on Close"
+},
+"Door::health":
+{
+"english": "Health (shoot open)"
+},
+"Door::spawnflags::1":
+{
+"english": "Starts Open"
+},
+"Door::spawnflags::4":
+{
+"english": "Don't link"
+},
+"Door::spawnflags::8":
+{
+"english": "Passable"
+},
+"Door::spawnflags::32":
+{
+"english": "Toggle"
+},
+"Door::spawnflags::256":
+{
+"english": "Use Only"
+},
+"Door::spawnflags::512":
+{
+"english": "Monsters Can't"
+},
+"Door::locked_sound":
+{
+"english": "Locked Sound"
+},
+"Door::unlocked_sound":
+{
+"english": "Unlocked Sound"
+},
+"Door::locked_sentence":
+{
+"english": "Locked Sentence"
+},
+"Door::unlocked_sentence":
+{
+"english": "Unlocked Sentence"
+},
+"BaseTank::spawnflags::1":
+{
+"english": "Active"
+},
+"BaseTank::spawnflags::16":
+{
+"english": "Only Direct"
+},
+"BaseTank::spawnflags::32":
+{
+"english": "Controllable"
+},
+"BaseTank::yawrate":
+{
+"english": "Yaw rate"
+},
+"BaseTank::yawrange":
+{
+"english": "Yaw range"
+},
+"BaseTank::yawtolerance":
+{
+"english": "Yaw tolerance"
+},
+"BaseTank::pitchrate":
+{
+"english": "Pitch rate"
+},
+"BaseTank::pitchrange":
+{
+"english": "Pitch range"
+},
+"BaseTank::pitchtolerance":
+{
+"english": "Pitch tolerance"
+},
+"BaseTank::barrel":
+{
+"english": "Barrel Length"
+},
+"BaseTank::barrely":
+{
+"english": "Barrel Horizontal"
+},
+"BaseTank::barrelz":
+{
+"english": "Barrel Vertical"
+},
+"BaseTank::spritesmoke":
+{
+"english": "Smoke Sprite"
+},
+"BaseTank::spriteflash":
+{
+"english": "Flash Sprite"
+},
+"BaseTank::spritescale":
+{
+"english": "Sprite scale"
+},
+"BaseTank::rotatesound":
+{
+"english": "Rotate Sound"
+},
+"BaseTank::firerate":
+{
+"english": "Rate of Fire"
+},
+"BaseTank::bullet_damage":
+{
+"english": "Damage Per Bullet"
+},
+"BaseTank::persistence":
+{
+"english": "Firing persistence"
+},
+"BaseTank::firespread":
+{
+"english": "Bullet accuracy"
+},
+"BaseTank::firespread::0":
+{
+"english": "Perfect Shot"
+},
+"BaseTank::firespread::1":
+{
+"english": "Small cone"
+},
+"BaseTank::firespread::2":
+{
+"english": "Medium cone"
+},
+"BaseTank::firespread::3":
+{
+"english": "Large cone"
+},
+"BaseTank::firespread::4":
+{
+"english": "Extra-large cone"
+},
+"BaseTank::minRange":
+{
+"english": "Minmum target range"
+},
+"BaseTank::maxRange":
+{
+"english": "Maximum target range"
+},
+"BaseTank::enemytype":
+{
+"english": "Enemy Type"
+},
+"BaseTank::enemytype::0":
+{
+"english": "Player"
+},
+"BaseTank::enemytype::1":
+{
+"english": "Ally"
+},
+"BaseTank::enemytype::2":
+{
+"english": "Random"
+},
+"BaseTank::enable_target_laser":
+{
+"english": "Enable Target Laser"
+},
+"BaseTank::enable_target_laser::0":
+{
+"english": "No"
+},
+"BaseTank::enable_target_laser::1":
+{
+"english": "Yes"
+},
+"BaseTank::target_laser_sprite":
+{
+"english": "Target Laser Beam Sprite"
+},
+"BaseTank::target_laser_width":
+{
+"english": "Target Laser Beam Width"
+},
+"BaseTank::target_laser_color":
+{
+"english": "Target Laser Beam Color"
+},
+"PlatSounds::movesnd":
+{
+"english": "Move Sound"
+},
+"PlatSounds::stopsnd":
+{
+"english": "Stop Sound"
+},
+"PlatSounds::volume":
+{
+"english": "Sound Volume 0.0 - 1.0"
+},
+"Trackchange::height":
+{
+"english": "Travel altitude"
+},
+"Trackchange::spawnflags::1":
+{
+"english": "Auto Activate train"
+},
+"Trackchange::spawnflags::2":
+{
+"english": "Relink track"
+},
+"Trackchange::spawnflags::8":
+{
+"english": "Start at Bottom"
+},
+"Trackchange::spawnflags::16":
+{
+"english": "Rotate Only"
+},
+"Trackchange::spawnflags::64":
+{
+"english": "X Axis"
+},
+"Trackchange::spawnflags::128":
+{
+"english": "Y Axis"
+},
+"Trackchange::rotation":
+{
+"english": "Spin amount"
+},
+"Trackchange::train":
+{
+"english": "Train to switch"
+},
+"Trackchange::toptrack":
+{
+"english": "Top track"
+},
+"Trackchange::bottomtrack":
+{
+"english": "Bottom track"
+},
+"Trackchange::speed":
+{
+"english": "Move/Rotate speed"
+},
+"Trigger::netname":
+{
+"english": "Target Path"
+},
+"Trigger::message":
+{
+"english": "Message"
+},
+"Trigger::spawnflags::1":
+{
+"english": "Monsters"
+},
+"Trigger::spawnflags::2":
+{
+"english": "No Clients"
+},
+"Trigger::spawnflags::4":
+{
+"english": "Pushables"
+},
+"BaseScriptedSequence::m_iszEntity":
+{
+"english": "Target Monster"
+},
+"BaseScriptedSequence::m_iszPlay":
+{
+"english": "Action Animation"
+},
+"BaseScriptedSequence::m_flRadius":
+{
+"english": "Search Radius"
+},
+"BaseScriptedSequence::m_flRepeat":
+{
+"english": "Repeat Rate ms"
+},
+"BaseScriptedSequence::m_fMoveTo":
+{
+"english": "Move to Position"
+},
+"BaseScriptedSequence::m_fMoveTo::0":
+{
+"english": "No"
+},
+"BaseScriptedSequence::m_fMoveTo::1":
+{
+"english": "Walk"
+},
+"BaseScriptedSequence::m_fMoveTo::2":
+{
+"english": "Run"
+},
+"BaseScriptedSequence::m_fMoveTo::4":
+{
+"english": "Instantaneous"
+},
+"BaseScriptedSequence::m_fMoveTo::5":
+{
+"english": "No - Turn to Face"
+},
+"BaseScriptedSequence::m_iFinishSchedule":
+{
+"english": "AI Schedule when done"
+},
+"BaseScriptedSequence::m_iFinishSchedule::0":
+{
+"english": "Default AI"
+},
+"BaseScriptedSequence::m_iFinishSchedule::1":
+{
+"english": "Ambush"
+},
+"BaseScriptedSequence::spawnflags::4":
+{
+"english": "Repeatable"
+},
+"BaseScriptedSequence::spawnflags::8":
+{
+"english": "Leave Corpse"
+},
+"ambient_music::classname":
+{
+"english": "Plays music"
+},
+"ambient_music::command":
+{
+"english": "Command"
+},
+"ambient_music::command::0":
+{
+"english": "Play"
+},
+"ambient_music::command::1":
+{
+"english": "Play looping"
+},
+"ambient_music::command::2":
+{
+"english": "Fadeout"
+},
+"ambient_music::command::3":
+{
+"english": "Stop"
+},
+"ambient_music::target_selector":
+{
+"english": "Target selector"
+},
+"ambient_music::target_selector::0":
+{
+"english": "All Players"
+},
+"ambient_music::target_selector::1":
+{
+"english": "Activator"
+},
+"ambient_music::target_selector::2":
+{
+"english": "Radius"
+},
+"ambient_music::radius":
+{
+"english": "Player radius (for Radius target selector)"
+},
+"ambient_music::remove_on_fire":
+{
+"english": "Remove on fire"
+},
+"ambient_music::remove_on_fire::0":
+{
+"english": "No"
+},
+"ambient_music::remove_on_fire::1":
+{
+"english": "Yes"
+},
+"env_beverage::skin::6":
+{
+"english": "Random"
+},
+"env_explosion::classname":
+{
+"english": "Explosion"
+},
+"env_explosion::iMagnitude":
+{
+"english": "Magnitude"
+},
+"env_explosion::spawnflags::1":
+{
+"english": "No Damage"
+},
+"env_explosion::spawnflags::2":
+{
+"english": "Repeatable"
+},
+"env_explosion::spawnflags::4":
+{
+"english": "No Fireball"
+},
+"env_explosion::spawnflags::8":
+{
+"english": "No Smoke"
+},
+"env_explosion::spawnflags::16":
+{
+"english": "No Decal"
+},
+"env_explosion::spawnflags::32":
+{
+"english": "No Sparks"
+},
+"env_global::classname":
+{
+"english": "Global State"
+},
+"env_global::globalstate":
+{
+"english": "Global State to Set"
+},
+"env_global::triggermode":
+{
+"english": "Trigger Mode"
+},
+"env_global::triggermode::0":
+{
+"english": "Off"
+},
+"env_global::triggermode::1":
+{
+"english": "On"
+},
+"env_global::triggermode::2":
+{
+"english": "Dead"
+},
+"env_global::triggermode::3":
+{
+"english": "Toggle"
+},
+"env_global::initialstate":
+{
+"english": "Initial State"
+},
+"env_global::initialstate::0":
+{
+"english": "Off"
+},
+"env_global::initialstate::1":
+{
+"english": "On"
+},
+"env_global::initialstate::2":
+{
+"english": "Dead"
+},
+"env_global::spawnflags::1":
+{
+"english": "Set Initial State"
+},
+"env_glow::classname":
+{
+"english": "Light Glow/Haze"
+},
+"env_fade::classname":
+{
+"english": "Screen Fade"
+},
+"env_fade::spawnflags::1":
+{
+"english": "Fade From"
+},
+"env_fade::spawnflags::2":
+{
+"english": "Modulate"
+},
+"env_fade::spawnflags::4":
+{
+"english": "Activator Only"
+},
+"env_fade::duration":
+{
+"english": "Duration (seconds)"
+},
+"env_fade::holdtime":
+{
+"english": "Hold Fade (seconds)"
+},
+"env_fade::renderamt":
+{
+"english": "Fade Alpha"
+},
+"env_fade::rendercolor":
+{
+"english": "Fade Color (R G B)"
+},
+"env_fog::classname":
+{
+"english": "Global Fog Controller"
+},
+"env_fog::spawnflags::1":
+{
+"english": "Fog Affects Skybox"
+},
+"env_fog::density":
+{
+"english": "Density (0.0-1.0)"
+},
+"env_fog::fogStartDistance":
+{
+"english": "Start Distance"
+},
+"env_fog::fogStopDistance":
+{
+"english": "Stop Distance"
+},
+"env_fog::rendercolor":
+{
+"english": "Color (R G B)"
+},
+"env_funnel::classname":
+{
+"english": "Large Portal Funnel"
+},
+"env_funnel::spawnflags::1":
+{
+"english": "Reverse"
+},
+"env_laser::classname":
+{
+"english": "Laser Beam Effect"
+},
+"env_laser::LaserTarget":
+{
+"english": "Target of Laser"
+},
+"env_laser::renderamt":
+{
+"english": "Brightness (1 - 255)"
+},
+"env_laser::rendercolor":
+{
+"english": "Beam Color (R G B)"
+},
+"env_laser::width":
+{
+"english": "Width of beam (pixels*0.1 0-255)"
+},
+"env_laser::NoiseAmplitude":
+{
+"english": "Amount of noise (0-255)"
+},
+"env_laser::texture":
+{
+"english": "Sprite Name"
+},
+"env_laser::EndSprite":
+{
+"english": "End Sprite"
+},
+"env_laser::TextureScroll":
+{
+"english": "Texture Scroll Rate (0-100)"
+},
+"env_laser::framestart":
+{
+"english": "Starting Frame"
+},
+"env_laser::damage":
+{
+"english": "Damage / second"
+},
+"env_laser::spawnflags::1":
+{
+"english": "Start On"
+},
+"env_laser::spawnflags::16":
+{
+"english": "StartSparks"
+},
+"env_laser::spawnflags::32":
+{
+"english": "EndSparks"
+},
+"env_laser::spawnflags::64":
+{
+"english": "Decal End"
+},
+"env_message::classname":
+{
+"english": "HUD Text Message"
+},
+"env_message::message":
+{
+"english": "Message Name"
+},
+"env_message::spawnflags::1":
+{
+"english": "Play Once"
+},
+"env_message::spawnflags::2":
+{
+"english": "All Clients"
+},
+"env_message::messagesound":
+{
+"english": "path/filename.wav of WAV"
+},
+"env_message::messagevolume":
+{
+"english": "Volume 0-10"
+},
+"env_message::messageattenuation":
+{
+"english": "Sound Radius"
+},
+"env_message::messageattenuation::0":
+{
+"english": "Small Radius"
+},
+"env_message::messageattenuation::1":
+{
+"english": "Medium Radius"
+},
+"env_message::messageattenuation::2":
+{
+"english": "Large  Radius"
+},
+"env_message::messageattenuation::3":
+{
+"english": "Play Everywhere"
+},
+"env_render::classname":
+{
+"english": "Render Controls"
+},
+"env_render::spawnflags::1":
+{
+"english": "No Renderfx"
+},
+"env_render::spawnflags::2":
+{
+"english": "No Renderamt"
+},
+"env_render::spawnflags::4":
+{
+"english": "No Rendermode"
+},
+"env_render::spawnflags::8":
+{
+"english": "No Rendercolor"
+},
+"env_shake::classname":
+{
+"english": "Screen Shake"
+},
+"env_shake::spawnflags::1":
+{
+"english": "GlobalShake"
+},
+"env_shake::amplitude":
+{
+"english": "Amplitude 0-16"
+},
+"env_shake::radius":
+{
+"english": "Effect radius"
+},
+"env_shake::duration":
+{
+"english": "Duration (seconds)"
+},
+"env_shake::frequency":
+{
+"english": "0.1 = jerk, 255.0 = rumble"
+},
+"env_shooter::classname":
+{
+"english": "Model Shooter"
+},
+"env_shooter::shootmodel":
+{
+"english": "Model or Sprite name"
+},
+"env_shooter::shootsounds":
+{
+"english": "Material Sound"
+},
+"env_shooter::shootsounds::-1":
+{
+"english": "None"
+},
+"env_shooter::shootsounds::0":
+{
+"english": "Glass"
+},
+"env_shooter::shootsounds::1":
+{
+"english": "Wood"
+},
+"env_shooter::shootsounds::2":
+{
+"english": "Metal"
+},
+"env_shooter::shootsounds::3":
+{
+"english": "Flesh"
+},
+"env_shooter::shootsounds::4":
+{
+"english": "Concrete"
+},
+"env_shooter::scale":
+{
+"english": "Gib Sprite Scale"
+},
+"env_shooter::skin":
+{
+"english": "Gib Skin"
+},
+"env_soundmark::classname":
+{
+"english": "Sound Ent"
+},
+"env_soundmark::classname::description":
+{
+"english": "Sound Ent is what monsters hears in the world, it doesn't emit any sound really"
+},
+"env_soundmark::spawnflags::1":
+{
+"english": "Gunshot, Explosions (COMBAT)"
+},
+"env_soundmark::spawnflags::2":
+{
+"english": "Door open/close, Class break (WORLD)"
+},
+"env_soundmark::spawnflags::4":
+{
+"english": "Walk, Fall, Splash, Shoot (PLAYER)"
+},
+"env_soundmark::spawnflags::8":
+{
+"english": "Dead body (CARCASS)"
+},
+"env_soundmark::spawnflags::16":
+{
+"english": "Gib or pork chop (MEAT)"
+},
+"env_soundmark::spawnflags::32":
+{
+"english": "Iminent danger (DANGER)"
+},
+"env_soundmark::spawnflags::64":
+{
+"english": "Trash cans, banana peels (GARBAGE)"
+},
+"env_soundmark::sound_origin":
+{
+"english": "Entity to play from"
+},
+"env_soundmark::sound_volume":
+{
+"english": "Volume"
+},
+"env_soundmark::sound_duration":
+{
+"english": "Duration"
+},
+"env_sound::classname":
+{
+"english": "DSP Sound"
+},
+"env_sound::radius":
+{
+"english": "Radius"
+},
+"env_sound::roomtype":
+{
+"english": "Room Type"
+},
+"env_sound::roomtype::0":
+{
+"english": "Normal (off)"
+},
+"env_sound::roomtype::1":
+{
+"english": "Generic"
+},
+"env_sound::roomtype::2":
+{
+"english": "Metal Small"
+},
+"env_sound::roomtype::3":
+{
+"english": "Metal Medium"
+},
+"env_sound::roomtype::4":
+{
+"english": "Metal Large"
+},
+"env_sound::roomtype::5":
+{
+"english": "Tunnel Small"
+},
+"env_sound::roomtype::6":
+{
+"english": "Tunnel Medium"
+},
+"env_sound::roomtype::7":
+{
+"english": "Tunnel Large"
+},
+"env_sound::roomtype::8":
+{
+"english": "Chamber Small"
+},
+"env_sound::roomtype::9":
+{
+"english": "Chamber Medium"
+},
+"env_sound::roomtype::10":
+{
+"english": "Chamber Large"
+},
+"env_sound::roomtype::11":
+{
+"english": "Bright Small"
+},
+"env_sound::roomtype::12":
+{
+"english": "Bright Medium"
+},
+"env_sound::roomtype::13":
+{
+"english": "Bright Large"
+},
+"env_sound::roomtype::14":
+{
+"english": "Water 1"
+},
+"env_sound::roomtype::15":
+{
+"english": "Water 2"
+},
+"env_sound::roomtype::16":
+{
+"english": "Water 3"
+},
+"env_sound::roomtype::17":
+{
+"english": "Concrete Small"
+},
+"env_sound::roomtype::18":
+{
+"english": "Concrete Medium"
+},
+"env_sound::roomtype::19":
+{
+"english": "Concrete Large"
+},
+"env_sound::roomtype::20":
+{
+"english": "Big 1"
+},
+"env_sound::roomtype::21":
+{
+"english": "Big 2"
+},
+"env_sound::roomtype::22":
+{
+"english": "Big 3"
+},
+"env_sound::roomtype::23":
+{
+"english": "Cavern Small"
+},
+"env_sound::roomtype::24":
+{
+"english": "Cavern Medium"
+},
+"env_sound::roomtype::25":
+{
+"english": "Cavern Large"
+},
+"env_sound::roomtype::26":
+{
+"english": "Weirdo 1"
+},
+"env_sound::roomtype::27":
+{
+"english": "Weirdo 2"
+},
+"env_sound::roomtype::28":
+{
+"english": "Weirdo 3"
+},
+"env_spark::classname":
+{
+"english": "Spark"
+},
+"env_spark::MaxDelay":
+{
+"english": "Max Delay"
+},
+"env_spark::spawnflags::32":
+{
+"english": "Toggle"
+},
+"env_spark::spawnflags::64":
+{
+"english": "Start ON"
+},
+"env_sprite::classname":
+{
+"english": "Sprite Effect"
+},
+"env_sprite::framerate":
+{
+"english": "Framerate"
+},
+"env_sprite::spawnflags::1":
+{
+"english": "Start on"
+},
+"env_sprite::spawnflags::2":
+{
+"english": "Play Once"
+},
+"func_breakable::classname":
+{
+"english": "Breakable Object"
+},
+"func_breakable::spawnflags::1":
+{
+"english": "Only Trigger"
+},
+"func_breakable::spawnflags::2":
+{
+"english": "Touch"
+},
+"func_breakable::spawnflags::4":
+{
+"english": "Pressure"
+},
+"func_breakable::spawnflags::256":
+{
+"english": "Instant Crowbar"
+},
+"func_button::classname":
+{
+"english": "Button"
+},
+"func_button::speed":
+{
+"english": "Speed"
+},
+"func_button::health":
+{
+"english": "Health (shootable if > 0)"
+},
+"func_button::lip":
+{
+"english": "Lip"
+},
+"func_button::sounds":
+{
+"english": "Sounds"
+},
+"func_button::wait":
+{
+"english": "Delay before reset"
+},
+"func_button::wait::-1":
+{
+"english": "Stays pressed"
+},
+"func_button::spawnflags::1":
+{
+"english": "Don't move"
+},
+"func_button::spawnflags::32":
+{
+"english": "Toggle"
+},
+"func_button::spawnflags::64":
+{
+"english": "Sparks"
+},
+"func_button::spawnflags::256":
+{
+"english": "Touch Activates"
+},
+"func_button::locked_sound":
+{
+"english": "Locked Sound"
+},
+"func_button::unlocked_sound":
+{
+"english": "Unlocked Sound"
+},
+"func_button::locked_sentence":
+{
+"english": "Locked Sentence"
+},
+"func_button::unlocked_sentence":
+{
+"english": "Unlocked Sentence"
+},
+"func_conveyor::classname":
+{
+"english": "Conveyor Belt"
+},
+"func_conveyor::spawnflags::1":
+{
+"english": "No Push"
+},
+"func_conveyor::spawnflags::2":
+{
+"english": "Not Solid"
+},
+"func_conveyor::speed":
+{
+"english": "Conveyor Speed"
+},
+"func_door::classname":
+{
+"english": "Basic door"
+},
+"func_door_rotating::classname":
+{
+"english": "Rotating door"
+},
+"func_door_rotating::spawnflags::2":
+{
+"english": "Reverse Dir"
+},
+"func_door_rotating::spawnflags::16":
+{
+"english": "One-way"
+},
+"func_door_rotating::spawnflags::64":
+{
+"english": "X Axis"
+},
+"func_door_rotating::spawnflags::128":
+{
+"english": "Y Axis"
+},
+"func_door_rotating::distance":
+{
+"english": "Distance (deg)"
+},
+"func_friction::classname":
+{
+"english": "Surface with a change in friction"
+},
+"func_friction::modifier":
+{
+"english": "Percentage of standard (0 - 100)"
+},
+"func_guntarget::classname":
+{
+"english": "Moving platform"
+},
+"func_guntarget::speed":
+{
+"english": "Speed (units per second)"
+},
+"func_guntarget::target":
+{
+"english": "First stop target"
+},
+"func_guntarget::message":
+{
+"english": "Fire on damage"
+},
+"func_guntarget::health":
+{
+"english": "Damage to Take"
+},
+"func_guntarget::spawnflags::1":
+{
+"english": "Start On"
+},
+"func_healthcharger::classname":
+{
+"english": "Wall health recharger"
+},
+"func_illusionary::classname":
+{
+"english": "Fake Wall/Light"
+},
+"func_illusionary::skin":
+{
+"english": "Contents"
+},
+"func_illusionary::skin::-1":
+{
+"english": "Empty"
+},
+"func_illusionary::skin::-7":
+{
+"english": "Volumetric Light"
+},
+"func_ladder::classname":
+{
+"english": "Ladder"
+},
+"func_monsterclip::classname":
+{
+"english": "Monster clip brush"
+},
+"func_mortar_field::classname":
+{
+"english": "Mortar Field"
+},
+"func_mortar_field::m_flSpread":
+{
+"english": "Spread Radius"
+},
+"func_mortar_field::m_iCount":
+{
+"english": "Repeat Count"
+},
+"func_mortar_field::m_fControl":
+{
+"english": "Targeting"
+},
+"func_mortar_field::m_fControl::0":
+{
+"english": "Random"
+},
+"func_mortar_field::m_fControl::1":
+{
+"english": "Activator"
+},
+"func_mortar_field::m_fControl::2":
+{
+"english": "Table"
+},
+"func_mortar_field::m_iszXController":
+{
+"english": "X Controller"
+},
+"func_mortar_field::m_iszYController":
+{
+"english": "Y Controller"
+},
+"func_pendulum::classname":
+{
+"english": "Swings back and forth"
+},
+"func_pendulum::speed":
+{
+"english": "Speed"
+},
+"func_pendulum::distance":
+{
+"english": "Distance (deg)"
+},
+"func_pendulum::damp":
+{
+"english": "Damping (0-1000)"
+},
+"func_pendulum::dmg":
+{
+"english": "Damage inflicted when blocked"
+},
+"func_pendulum::spawnflags::1":
+{
+"english": "Start ON"
+},
+"func_pendulum::spawnflags::8":
+{
+"english": "Passable"
+},
+"func_pendulum::spawnflags::16":
+{
+"english": "Auto-return"
+},
+"func_pendulum::spawnflags::64":
+{
+"english": "X Axis"
+},
+"func_pendulum::spawnflags::128":
+{
+"english": "Y Axis"
+},
+"func_pendulum::_minlight":
+{
+"english": "_minlight"
+},
+"func_plat::classname":
+{
+"english": "Elevator"
+},
+"func_plat::spawnflags::1":
+{
+"english": "Toggle"
+},
+"func_plat::height":
+{
+"english": "Travel altitude (can be negative)"
+},
+"func_plat::speed":
+{
+"english": "Speed"
+},
+"func_platrot::classname":
+{
+"english": "Moving Rotating platform"
+},
+"func_platrot::spawnflags::1":
+{
+"english": "Toggle"
+},
+"func_platrot::spawnflags::64":
+{
+"english": "X Axis"
+},
+"func_platrot::spawnflags::128":
+{
+"english": "Y Axis"
+},
+"func_platrot::speed":
+{
+"english": "Speed of rotation"
+},
+"func_platrot::height":
+{
+"english": "Travel altitude (can be negative)"
+},
+"func_platrot::rotation":
+{
+"english": "Spin amount"
+},
+"func_pushable::classname":
+{
+"english": "Pushable object"
+},
+"func_pushable::size":
+{
+"english": "Hull Size"
+},
+"func_pushable::size::0":
+{
+"english": "Point size"
+},
+"func_pushable::size::1":
+{
+"english": "Player size"
+},
+"func_pushable::size::2":
+{
+"english": "Big Size"
+},
+"func_pushable::size::3":
+{
+"english": "Player duck"
+},
+"func_pushable::size::4":
+{
+"english": "Custom (min/max hullsize)"
+},
+"func_pushable::spawnflags::128":
+{
+"english": "Breakable"
+},
+"func_pushable::friction":
+{
+"english": "Friction (0-400)"
+},
+"func_pushable::buoyancy":
+{
+"english": "Buoyancy"
+},
+"func_recharge::classname":
+{
+"english": "Battery recharger"
+},
+"func_rot_button::classname":
+{
+"english": "RotatingButton"
+},
+"func_rot_button::changetarget":
+{
+"english": "ChangeTarget Name"
+},
+"func_rot_button::speed":
+{
+"english": "Speed"
+},
+"func_rot_button::health":
+{
+"english": "Health (shootable if > 0)"
+},
+"func_rot_button::sounds":
+{
+"english": "Sounds"
+},
+"func_rot_button::wait":
+{
+"english": "Delay before reset"
+},
+"func_rot_button::wait::-1":
+{
+"english": "Stays pressed"
+},
+"func_rot_button::delay":
+{
+"english": "Delay before trigger"
+},
+"func_rot_button::distance":
+{
+"english": "Distance (deg)"
+},
+"func_rot_button::spawnflags::1":
+{
+"english": "Not solid"
+},
+"func_rot_button::spawnflags::2":
+{
+"english": "Reverse Dir"
+},
+"func_rot_button::spawnflags::32":
+{
+"english": "Toggle"
+},
+"func_rot_button::spawnflags::64":
+{
+"english": "X Axis"
+},
+"func_rot_button::spawnflags::128":
+{
+"english": "Y Axis"
+},
+"func_rot_button::spawnflags::256":
+{
+"english": "Touch Activates"
+},
+"func_rot_button::_minlight":
+{
+"english": "_minlight"
+},
+"func_rotating::classname":
+{
+"english": "Rotating Object"
+},
+"func_rotating::speed":
+{
+"english": "Rotation Speed"
+},
+"func_rotating::volume":
+{
+"english": "Volume (10 = loudest)"
+},
+"func_rotating::fanfriction":
+{
+"english": "Friction (0 - 100%)"
+},
+"func_rotating::sounds":
+{
+"english": "Fan Sound"
+},
+"func_rotating::spawnflags::1":
+{
+"english": "Start ON"
+},
+"func_rotating::spawnflags::2":
+{
+"english": "Reverse Direction"
+},
+"func_rotating::spawnflags::4":
+{
+"english": "X Axis"
+},
+"func_rotating::spawnflags::8":
+{
+"english": "Y Axis"
+},
+"func_rotating::spawnflags::16":
+{
+"english": "Acc/Dcc"
+},
+"func_rotating::spawnflags::32":
+{
+"english": "Fan Pain"
+},
+"func_rotating::spawnflags::64":
+{
+"english": "Not Solid"
+},
+"func_rotating::spawnflags::128":
+{
+"english": "Small Radius"
+},
+"func_rotating::spawnflags::256":
+{
+"english": "Medium Radius"
+},
+"func_rotating::spawnflags::512":
+{
+"english": "Large Radius"
+},
+"func_rotating::_minlight":
+{
+"english": "_minlight"
+},
+"func_rotating::spawnorigin":
+{
+"english": "X Y Z - Move here after lighting"
+},
+"func_rotating::dmg":
+{
+"english": "Damage inflicted when blocked"
+},
+"func_tank::classname":
+{
+"english": "Brush Gun Turret"
+},
+"func_tank::bullet":
+{
+"english": "Bullets"
+},
+"func_tank::bullet::0":
+{
+"english": "None"
+},
+"func_tank::bullet::1":
+{
+"english": "9mm"
+},
+"func_tank::bullet::2":
+{
+"english": "MP5"
+},
+"func_tank::bullet::3":
+{
+"english": "12mm"
+},
+"func_tankcontrols::classname":
+{
+"english": "Tank controls"
+},
+"func_tankcontrols::target":
+{
+"english": "Tank entity name"
+},
+"func_tanklaser::classname":
+{
+"english": "Brush Laser Turret"
+},
+"func_tanklaser::laserentity":
+{
+"english": "env_laser Entity"
+},
+"func_tankrocket::classname":
+{
+"english": "Brush Rocket Turret"
+},
+"func_tankmortar::classname":
+{
+"english": "Brush Mortar Turret"
+},
+"func_tankmortar::iMagnitude":
+{
+"english": "Explosion Magnitude"
+},
+"func_trackautochange::classname":
+{
+"english": "Automatic track changing platform"
+},
+"func_trackchange::classname":
+{
+"english": "Train track changing platform"
+},
+"func_tracktrain::classname":
+{
+"english": "Track Train"
+},
+"func_tracktrain::spawnflags::1":
+{
+"english": "No Pitch (X-rot)"
+},
+"func_tracktrain::spawnflags::2":
+{
+"english": "No User Control"
+},
+"func_tracktrain::spawnflags::8":
+{
+"english": "Passable"
+},
+"func_tracktrain::target":
+{
+"english": "First stop target"
+},
+"func_tracktrain::sounds":
+{
+"english": "Sound"
+},
+"func_tracktrain::wheels":
+{
+"english": "Distance between the wheels"
+},
+"func_tracktrain::height":
+{
+"english": "Height above track"
+},
+"func_tracktrain::startspeed":
+{
+"english": "Initial speed"
+},
+"func_tracktrain::speed":
+{
+"english": "Speed (units per second)"
+},
+"func_tracktrain::dmg":
+{
+"english": "Damage on crush"
+},
+"func_tracktrain::volume":
+{
+"english": "Volume (10 = loudest)"
+},
+"func_tracktrain::bank":
+{
+"english": "Bank angle on turns"
+},
+"func_traincontrols::classname":
+{
+"english": "Train Controls"
+},
+"func_traincontrols::target":
+{
+"english": "Train Name"
+},
+"func_train::classname":
+{
+"english": "Moving platform"
+},
+"func_train::target":
+{
+"english": "First stop target"
+},
+"func_train::speed":
+{
+"english": "Speed (units per second)"
+},
+"func_train::dmg":
+{
+"english": "Damage on crush"
+},
+"func_train::skin":
+{
+"english": "Contents"
+},
+"func_train::skin::0":
+{
+"english": "Solid"
+},
+"func_train::skin::-1":
+{
+"english": "Empty"
+},
+"func_train::skin::-3":
+{
+"english": "Water"
+},
+"func_train::skin::-4":
+{
+"english": "Slime"
+},
+"func_train::skin::-5":
+{
+"english": "Lava"
+},
+"func_train::spawnflags::8":
+{
+"english": "Not solid"
+},
+"func_wall::classname":
+{
+"english": "Wall"
+},
+"func_wall_toggle::classname":
+{
+"english": "Toggleable geometry"
+},
+"func_wall_toggle::spawnflags::1":
+{
+"english": "Starts Invisible"
+},
+"func_water::classname":
+{
+"english": "Liquid"
+},
+"func_water::spawnflags::1":
+{
+"english": "Starts Open"
+},
+"func_water::spawnflags::256":
+{
+"english": "Use Only"
+},
+"func_water::skin":
+{
+"english": "Contents"
+},
+"func_water::skin::-3":
+{
+"english": "Water"
+},
+"func_water::skin::-4":
+{
+"english": "Slime"
+},
+"func_water::skin::-5":
+{
+"english": "Lava"
+},
+"func_water::WaveHeight":
+{
+"english": "Wave Height"
+},
+"game_counter::classname":
+{
+"english": "Fires when it hits limit"
+},
+"game_counter::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"game_counter::spawnflags::2":
+{
+"english": "Reset On fire"
+},
+"game_counter::frags":
+{
+"english": "Initial Value"
+},
+"game_counter::health":
+{
+"english": "Limit Value"
+},
+"game_counter_set::classname":
+{
+"english": "Sets a game_counter"
+},
+"game_counter_set::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"game_counter_set::frags":
+{
+"english": "New Value"
+},
+"game_end::classname":
+{
+"english": "End this multiplayer game"
+},
+"game_player_equip::classname":
+{
+"english": "Initial player equipment"
+},
+"game_player_equip::spawnflags::1":
+{
+"english": "Use Only"
+},
+"game_player_hurt::classname":
+{
+"english": "Hurts player who fires"
+},
+"game_player_hurt::dmg":
+{
+"english": "Damage To Apply"
+},
+"game_player_hurt::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"game_player_team::classname":
+{
+"english": "Allows player to change teams"
+},
+"game_player_team::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"game_player_team::spawnflags::2":
+{
+"english": "Kill Player"
+},
+"game_player_team::spawnflags::4":
+{
+"english": "Gib Player"
+},
+"game_player_team::target":
+{
+"english": "game_team_master to use"
+},
+"game_score::classname":
+{
+"english": "Award/Deduct Points"
+},
+"game_score::spawnflags::1":
+{
+"english": "Allow Negative"
+},
+"game_score::spawnflags::2":
+{
+"english": "Team Points"
+},
+"game_score::points":
+{
+"english": "Points to add (+/-)"
+},
+"game_team_master::classname":
+{
+"english": "Team based master/relay"
+},
+"game_team_master::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"game_team_master::triggerstate":
+{
+"english": "Trigger State"
+},
+"game_team_master::triggerstate::0":
+{
+"english": "Off"
+},
+"game_team_master::triggerstate::1":
+{
+"english": "On"
+},
+"game_team_master::triggerstate::2":
+{
+"english": "Toggle"
+},
+"game_team_master::teamindex":
+{
+"english": "Team Index (-1 = no team)"
+},
+"game_team_set::classname":
+{
+"english": "Sets team of team_master"
+},
+"game_team_set::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"game_text::classname":
+{
+"english": "HUD Text Message"
+},
+"game_text::spawnflags::1":
+{
+"english": "All Players"
+},
+"game_text::message":
+{
+"english": "Message Text"
+},
+"game_text::x":
+{
+"english": "X (0 - 1.0 = left to right) (-1 centers)"
+},
+"game_text::y":
+{
+"english": "Y (0 - 1.0 = top to bottom) (-1 centers)"
+},
+"game_text::effect":
+{
+"english": "Text Effect"
+},
+"game_text::effect::0":
+{
+"english": "Fade In/Out"
+},
+"game_text::effect::1":
+{
+"english": "Credits"
+},
+"game_text::effect::2":
+{
+"english": "Scan Out"
+},
+"game_text::color":
+{
+"english": "Color1"
+},
+"game_text::color2":
+{
+"english": "Color2"
+},
+"game_text::fadein":
+{
+"english": "Fade in Time (or character scan time)"
+},
+"game_text::fadeout":
+{
+"english": "Fade Out Time"
+},
+"game_text::holdtime":
+{
+"english": "Hold Time"
+},
+"game_text::fxtime":
+{
+"english": "Scan time (scan effect only)"
+},
+"game_text::channel":
+{
+"english": "Text Channel"
+},
+"game_text::channel::1":
+{
+"english": "Channel 1"
+},
+"game_text::channel::2":
+{
+"english": "Channel 2"
+},
+"game_text::channel::3":
+{
+"english": "Channel 3"
+},
+"game_text::channel::4":
+{
+"english": "Channel 4"
+},
+"game_zone_player::classname":
+{
+"english": "Player Zone brush"
+},
+"game_zone_player::intarget":
+{
+"english": "Target for IN players"
+},
+"game_zone_player::outtarget":
+{
+"english": "Target for OUT players"
+},
+"game_zone_player::incount":
+{
+"english": "Counter for IN players"
+},
+"game_zone_player::outcount":
+{
+"english": "Counter for OUT players"
+},
+"gibshooter::classname":
+{
+"english": "Gib Shooter"
+},
+"infodecal::classname":
+{
+"english": "Decal"
+},
+"infodecal::texture":
+{
+"english": "texture"
+},
+"info_bigmomma::classname":
+{
+"english": "Big Mamma Node"
+},
+"info_bigmomma::spawnflags::1":
+{
+"english": "Run To Node"
+},
+"info_bigmomma::spawnflags::2":
+{
+"english": "Wait Indefinitely"
+},
+"info_bigmomma::target":
+{
+"english": "Next node"
+},
+"info_bigmomma::radius":
+{
+"english": "Radius"
+},
+"info_bigmomma::reachdelay":
+{
+"english": "Wait after approach"
+},
+"info_bigmomma::reachtarget":
+{
+"english": "Fire on approach"
+},
+"info_bigmomma::reachsequence":
+{
+"english": "Sequence on approach"
+},
+"info_bigmomma::health":
+{
+"english": "Health on approach"
+},
+"info_bigmomma::presequence":
+{
+"english": "Sequence before approach"
+},
+"info_intermission::classname":
+{
+"english": "Intermission Spot"
+},
+"info_landmark::classname":
+{
+"english": "Transition Landmark"
+},
+"info_node::classname":
+{
+"english": "ai node"
+},
+"info_node_air::classname":
+{
+"english": "ai air node"
+},
+"info_null::classname":
+{
+"english": "info_null (spotlight target)"
+},
+"info_player_deathmatch::classname":
+{
+"english": "Player deathmatch start"
+},
+"info_player_start::classname":
+{
+"english": "Player 1 start"
+},
+"info_target::classname":
+{
+"english": "Beam Target"
+},
+"info_teleport_destination::classname":
+{
+"english": "Teleport destination"
+},
+"item_airtank::classname":
+{
+"english": "Oxygen tank"
+},
+"item_antidote::classname":
+{
+"english": "Poison antidote"
+},
+"item_battery::classname":
+{
+"english": "HEV battery"
+},
+"item_battery::armor_amount":
+{
+"english": "Amount Of Armor To Give (-1 == Maximum)"
+},
+"item_healthkit::classname":
+{
+"english": "Small Health Kit"
+},
+"item_healthkit::health_amount":
+{
+"english": "Amount Of Health To Give (-1 == Maximum)"
+},
+"item_longjump::classname":
+{
+"english": "Longjump Module"
+},
+"item_security::classname":
+{
+"english": "Security card"
+},
+"item_suit::classname":
+{
+"english": "HEV Suit"
+},
+"item_suit::body":
+{
+"english": "Body"
+},
+"item_suit::body::0":
+{
+"english": "Standing"
+},
+"item_suit::body::1":
+{
+"english": "Laying Flat"
+},
+"item_suit::spawnflags::1":
+{
+"english": "Short Logon"
+},
+"light::classname":
+{
+"english": "Invisible lightsource"
+},
+"light::spawnflags::1":
+{
+"english": "Initially dark"
+},
+"light_spot::classname":
+{
+"english": "Spotlight"
+},
+"light_spot::_cone":
+{
+"english": "Inner (bright) angle"
+},
+"light_spot::_cone2":
+{
+"english": "Outer (fading) angle"
+},
+"light_spot::pitch":
+{
+"english": "Pitch"
+},
+"light_spot::_sky":
+{
+"english": "Is Sky"
+},
+"light_spot::_sky::0":
+{
+"english": "No"
+},
+"light_spot::_sky::1":
+{
+"english": "Yes"
+},
+"light_spot::spawnflags::1":
+{
+"english": "Initially dark"
+},
+"light_environment::classname":
+{
+"english": "Environment"
+},
+"light_environment::pitch":
+{
+"english": "Pitch"
+},
+"light_environment::_light":
+{
+"english": "Brightness"
+},
+"logic_campaignselect::classname":
+{
+"english": "Shows the campaign select menu on trigger (hlu_campaignselect map only)"
+},
+"logic_random::classname":
+{
+"english": "Random Trigger"
+},
+"logic_random::target1":
+{
+"english": "Target 1"
+},
+"logic_random::target2":
+{
+"english": "Target 2"
+},
+"logic_random::target3":
+{
+"english": "Target 3"
+},
+"logic_random::target4":
+{
+"english": "Target 4"
+},
+"logic_random::target5":
+{
+"english": "Target 5"
+},
+"logic_random::target6":
+{
+"english": "Target 6"
+},
+"logic_random::target7":
+{
+"english": "Target 7"
+},
+"logic_random::target8":
+{
+"english": "Target 8"
+},
+"logic_random::target9":
+{
+"english": "Target 9"
+},
+"logic_random::target10":
+{
+"english": "Target 10"
+},
+"logic_random::target11":
+{
+"english": "Target 11"
+},
+"logic_random::target12":
+{
+"english": "Target 12"
+},
+"logic_random::target13":
+{
+"english": "Target 13"
+},
+"logic_random::target14":
+{
+"english": "Target 14"
+},
+"logic_random::target15":
+{
+"english": "Target 15"
+},
+"logic_random::target16":
+{
+"english": "Target 16"
+},
+"game_variable::classname":
+{
+"english": "Game variables"
+},
+"game_variable::variable":
+{
+"english": "Game variable"
+},
+"game_variable::type":
+{
+"english": "Type of variable"
+},
+"game_variable::type::0":
+{
+"english": "Command"
+},
+"game_variable::type::1":
+{
+"english": "Console Variable"
+},
+"game_variable::type::2":
+{
+"english": "Skill Variable"
+},
+"game_variable::type::3":
+{
+"english": "Json Variable"
+},
+"game_variable::value":
+{
+"english": "Value"
+},
+"game_variable::spawnflag::2":
+{
+"english": "Don't Set"
+},
+"game_variable::spawnflag::2::description":
+{
+"english": "By default, the variable is stored in 'message' before being set, with this flag enabled this entity will only store the variable but not set."
+},
+"logic_isskill::classname":
+{
+"english": "Fires a target based on the current skill level"
+},
+"logic_isskill::skill1":
+{
+"english": "Target to fire for Easy"
+},
+"logic_isskill::skill2":
+{
+"english": "Target to fire for Medium"
+},
+"logic_isskill::skill3":
+{
+"english": "Target to fire for Hard"
+},
+"logic_setskill::classname":
+{
+"english": "Set skill level to specified value Some variables require a map change to take effect"
+},
+"logic_setskill::classname::description":
+{
+"english": "Changes the skill level setting. Due to how the skill system works some changes will only take effect after a map change.This entity is the equivalent of Quake 1's `trigger_setskill` but is a point entity that needs to be triggered. Its intended purpose is to be used in a campaign selection map."
+},
+"logic_setskill::skill_level":
+{
+"english": "Skill level to set"
+},
+"logic_setskill::skill_level::1":
+{
+"english": "Easy"
+},
+"logic_setskill::skill_level::2":
+{
+"english": "Medium"
+},
+"logic_setskill::skill_level::3":
+{
+"english": "Hard"
+},
+"logic_setskillvar::classname":
+{
+"english": "Set skill variables to a provided value"
+},
+"logic_setskillvar::var_name":
+{
+"english": "Variable name"
+},
+"logic_setskillvar::var_value":
+{
+"english": "Value (number)"
+},
+"func_door_momentary::classname":
+{
+"english": "Momentary/Continuous door"
+},
+"func_door_momentary::spawnflags::1":
+{
+"english": "Starts Open"
+},
+"func_button_rotating::classname":
+{
+"english": "Direct wheel control"
+},
+"func_button_rotating::speed":
+{
+"english": "Speed"
+},
+"func_button_rotating::sounds":
+{
+"english": "Sounds"
+},
+"func_button_rotating::distance":
+{
+"english": "Distance (deg)"
+},
+"func_button_rotating::returnspeed":
+{
+"english": "Auto-return speed"
+},
+"func_button_rotating::spawnflags::1":
+{
+"english": "Door Hack"
+},
+"func_button_rotating::spawnflags::2":
+{
+"english": "Not useable"
+},
+"func_button_rotating::spawnflags::16":
+{
+"english": "Auto Return"
+},
+"func_button_rotating::spawnflags::64":
+{
+"english": "X Axis"
+},
+"func_button_rotating::spawnflags::128":
+{
+"english": "Y Axis"
+},
+"func_button_rotating::_minlight":
+{
+"english": "_minlight"
+},
+"monster_alien_controller::classname":
+{
+"english": "Controller"
+},
+"monster_alien_grunt::classname":
+{
+"english": "Alien Grunt"
+},
+"monster_alien_slave::classname":
+{
+"english": "Vortigaunt"
+},
+"monster_alien_slave::spawnflags::64":
+{
+"english": "Ignore Player"
+},
+"monster_apache::classname":
+{
+"english": "Apache"
+},
+"monster_apache::spawnflags::8":
+{
+"english": "No Wreckage"
+},
+"monster_babycrab::classname":
+{
+"english": "Baby Headcrab"
+},
+"monster_barnacle::classname":
+{
+"english": "Barnacle Monster"
+},
+"monster_barney::classname":
+{
+"english": "Barney"
+},
+"monster_barney::bodystate":
+{
+"english": "bodystate"
+},
+"monster_barney::bodystate::0":
+{
+"english": "Blank"
+},
+"monster_barney::bodystate::1":
+{
+"english": "Gun Holstered"
+},
+"monster_barney::bodystate::2":
+{
+"english": "Gun Drawn"
+},
+"monster_barney_dead::classname":
+{
+"english": "Dead Barney"
+},
+"monster_barney_dead::bodystate":
+{
+"english": "bodystate"
+},
+"monster_barney_dead::bodystate::0":
+{
+"english": "Blank"
+},
+"monster_barney_dead::bodystate::1":
+{
+"english": "Gun Holstered"
+},
+"monster_barney_dead::bodystate::2":
+{
+"english": "Gun Drawn"
+},
+"monster_barney_dead::pose":
+{
+"english": "Pose"
+},
+"monster_barney_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_barney_dead::pose::1":
+{
+"english": "On side"
+},
+"monster_barney_dead::pose::2":
+{
+"english": "On stomach"
+},
+"monster_bigmomma::classname":
+{
+"english": "Big Mamma"
+},
+"monster_bigmomma::netname":
+{
+"english": "First node"
+},
+"monster_bloater::classname":
+{
+"english": "Bloater"
+},
+"monster_bullchicken::classname":
+{
+"english": "BullChicken"
+},
+"monster_cockroach::classname":
+{
+"english": "Cockroach"
+},
+"monster_flyer_flock::classname":
+{
+"english": "Flock of Flyers"
+},
+"monster_flyer_flock::iFlockSize":
+{
+"english": "Flock Size"
+},
+"monster_flyer_flock::flFlockRadius":
+{
+"english": "Flock Radius"
+},
+"monster_furniture::classname":
+{
+"english": "Monster Furniture"
+},
+"monster_gargantua::classname":
+{
+"english": "Gargantua"
+},
+"monster_generic::classname":
+{
+"english": "Generic Script Monster"
+},
+"monster_generic::spawnflags::4":
+{
+"english": "Not solid"
+},
+"monster_generic::spawnflags::8":
+{
+"english": "Head Controller"
+},
+"monster_generic::body":
+{
+"english": "Body"
+},
+"monster_gman::classname":
+{
+"english": "G-Man"
+},
+"monster_grunt_repel::classname":
+{
+"english": "Human Grunt (Repel)"
+},
+"monster_handgrenade::classname":
+{
+"english": "Live Handgrenade"
+},
+"monster_headcrab::classname":
+{
+"english": "Head Crab"
+},
+"monster_hevsuit_dead::classname":
+{
+"english": "Dead HEV Suit"
+},
+"monster_hevsuit_dead::pose":
+{
+"english": "Pose"
+},
+"monster_hevsuit_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_hevsuit_dead::pose::1":
+{
+"english": "Seated"
+},
+"monster_hevsuit_dead::pose::2":
+{
+"english": "On stomach"
+},
+"monster_hevsuit_dead::pose::3":
+{
+"english": "On Table"
+},
+"monster_hgrunt_dead::classname":
+{
+"english": "Dead Human Grunt"
+},
+"monster_hgrunt_dead::pose":
+{
+"english": "Pose"
+},
+"monster_hgrunt_dead::pose::0":
+{
+"english": "On stomach"
+},
+"monster_hgrunt_dead::pose::1":
+{
+"english": "On side"
+},
+"monster_hgrunt_dead::pose::2":
+{
+"english": "Seated"
+},
+"monster_hgrunt_dead::body":
+{
+"english": "Body"
+},
+"monster_hgrunt_dead::body::0":
+{
+"english": "Grunt with Gun"
+},
+"monster_hgrunt_dead::body::1":
+{
+"english": "Commander with Gun"
+},
+"monster_hgrunt_dead::body::2":
+{
+"english": "Grunt no Gun"
+},
+"monster_hgrunt_dead::body::3":
+{
+"english": "Commander no Gun"
+},
+"monster_houndeye::classname":
+{
+"english": "Houndeye"
+},
+"monster_houndeye::netname":
+{
+"english": "Squad Name"
+},
+"monster_houndeye::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_human_assassin::classname":
+{
+"english": "Human Assassin"
+},
+"monster_human_grunt::classname":
+{
+"english": "Human Grunt (camo)"
+},
+"monster_human_grunt::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_human_grunt::netname":
+{
+"english": "Squad Name"
+},
+"monster_human_grunt::weapons":
+{
+"english": "Weapons"
+},
+"monster_human_grunt::weapons::1":
+{
+"english": "9mmAR"
+},
+"monster_human_grunt::weapons::3":
+{
+"english": "9mmAR + HG"
+},
+"monster_human_grunt::weapons::5":
+{
+"english": "9mmAR + GL"
+},
+"monster_human_grunt::weapons::8":
+{
+"english": "Shotgun"
+},
+"monster_human_grunt::weapons::10":
+{
+"english": "Shotgun + HG"
+},
+"monster_ichthyosaur::classname":
+{
+"english": "Ichthyosaur"
+},
+"monster_leech::classname":
+{
+"english": "Leech"
+},
+"monster_miniturret::classname":
+{
+"english": "Mini Auto Turret"
+},
+"monster_miniturret::orientation":
+{
+"english": "Orientation"
+},
+"monster_miniturret::orientation::0":
+{
+"english": "Floor Mount"
+},
+"monster_miniturret::orientation::1":
+{
+"english": "Ceiling Mount"
+},
+"monster_miniturret::spawnflags::32":
+{
+"english": "Autostart"
+},
+"monster_nihilanth::classname":
+{
+"english": "Nihilanth"
+},
+"BaseOsprey::spawnflags::64":
+{
+"english": "Start Inactive"
+},
+"BaseOsprey::initial_capacity":
+{
+"english": "Initial NPC Capacity (0 == autodetect)"
+},
+"BaseOsprey::initial_capacity::description":
+{
+"english": "If set, this is the number of troops the Osprey will drop when it starts moving (up to **4** at a time). Otherwise the Osprey will count the number of troops in the map and will replenish them when they are killed. In both cases the Osprey will drop up to a maximum of **24** troops and will wait until they are killed to drop more"
+},
+"monster_osprey::classname":
+{
+"english": "Osprey"
+},
+"monster_rat::classname":
+{
+"english": "Rat (no ai?)"
+},
+"monster_satchel::classname":
+{
+"english": "Live Satchel Charge"
+},
+"monster_scientist::classname":
+{
+"english": "Scared Scientist"
+},
+"monster_scientist::body":
+{
+"english": "Body"
+},
+"monster_scientist::body::-1":
+{
+"english": "Random"
+},
+"monster_scientist::body::0":
+{
+"english": "Glasses"
+},
+"monster_scientist::body::1":
+{
+"english": "Einstein"
+},
+"monster_scientist::body::2":
+{
+"english": "Luther"
+},
+"monster_scientist::body::3":
+{
+"english": "Slick"
+},
+"monster_scientist::item":
+{
+"english": "Item"
+},
+"monster_scientist::item::0":
+{
+"english": "None"
+},
+"monster_scientist::item::1":
+{
+"english": "Clipboard"
+},
+"monster_scientist::item::2":
+{
+"english": "Stick"
+},
+"monster_scientist_dead::classname":
+{
+"english": "Dead Scientist"
+},
+"monster_scientist_dead::body":
+{
+"english": "Body"
+},
+"monster_scientist_dead::body::-1":
+{
+"english": "Random"
+},
+"monster_scientist_dead::body::0":
+{
+"english": "Glasses"
+},
+"monster_scientist_dead::body::1":
+{
+"english": "Einstein"
+},
+"monster_scientist_dead::body::2":
+{
+"english": "Luther"
+},
+"monster_scientist_dead::body::3":
+{
+"english": "Slick"
+},
+"monster_scientist_dead::pose":
+{
+"english": "Pose"
+},
+"monster_scientist_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_scientist_dead::pose::1":
+{
+"english": "On Stomach"
+},
+"monster_scientist_dead::pose::2":
+{
+"english": "Sitting"
+},
+"monster_scientist_dead::pose::3":
+{
+"english": "Hanging"
+},
+"monster_scientist_dead::pose::4":
+{
+"english": "Table1"
+},
+"monster_scientist_dead::pose::5":
+{
+"english": "Table2"
+},
+"monster_scientist_dead::pose::6":
+{
+"english": "Table3"
+},
+"monster_sitting_scientist::classname":
+{
+"english": "Sitting Scientist"
+},
+"monster_sitting_scientist::body":
+{
+"english": "Body"
+},
+"monster_sitting_scientist::body::-1":
+{
+"english": "Random"
+},
+"monster_sitting_scientist::body::0":
+{
+"english": "Glasses"
+},
+"monster_sitting_scientist::body::1":
+{
+"english": "Einstein"
+},
+"monster_sitting_scientist::body::2":
+{
+"english": "Luther"
+},
+"monster_sitting_scientist::body::3":
+{
+"english": "Slick"
+},
+"monster_sitting_scientist::suspicious":
+{
+"english": "Suspicious"
+},
+"monster_sitting_scientist::suspicious::0":
+{
+"english": "No"
+},
+"monster_sitting_scientist::suspicious::1":
+{
+"english": "Yes"
+},
+"monster_sentry::classname":
+{
+"english": "Sentry Turret Gun"
+},
+"monster_sentry::spawnflags::32":
+{
+"english": "Autostart"
+},
+"monster_sentry::spawnflags::64":
+{
+"english": "Start Inactive"
+},
+"monster_snark::classname":
+{
+"english": "Armed Snark"
+},
+"monster_tentacle::classname":
+{
+"english": "Tentacle Arm"
+},
+"monster_tentacle::spawnflags::64":
+{
+"english": "Tentacle3"
+},
+"monster_tentacle::sweeparc":
+{
+"english": "Sweep Arc"
+},
+"monster_tentacle::sound":
+{
+"english": "Tap Sound"
+},
+"monster_tentacle::sound::-1":
+{
+"english": "None"
+},
+"monster_tentacle::sound::0":
+{
+"english": "Silo"
+},
+"monster_tentacle::sound::1":
+{
+"english": "Dirt"
+},
+"monster_tentacle::sound::2":
+{
+"english": "Water"
+},
+"monster_tentacle::height0":
+{
+"english": "Height for floor level"
+},
+"monster_tentacle::height0::description":
+{
+"english": "Sets the height for the given floor level. There are **4** levels, starting at **0**. See the TWHL documentation for the default values."
+},
+"monster_tentacle::height1":
+{
+"english": "Height for level 1"
+},
+"monster_tentacle::height1::description":
+{
+"english": "Sets the height for the given floor level. There are **4** levels, starting at **0**. See the TWHL documentation for the default values."
+},
+"monster_tentacle::height2":
+{
+"english": "Height for level 1"
+},
+"monster_tentacle::height2::description":
+{
+"english": "Sets the height for the given floor level. There are **4** levels, starting at **0**. See the TWHL documentation for the default values."
+},
+"monster_tentacle::height3":
+{
+"english": "Height for level 3"
+},
+"monster_tentacle::height3::description":
+{
+"english": "Sets the height for the given floor level. There are **4** levels, starting at **0**. See the TWHL documentation for the default values."
+},
+"monster_tripmine::classname":
+{
+"english": "Active Tripmine"
+},
+"monster_tripmine::spawnflags::1":
+{
+"english": "Instant On"
+},
+"monster_turret::classname":
+{
+"english": "Auto Turret"
+},
+"monster_turret::orientation":
+{
+"english": "Orientation"
+},
+"monster_turret::orientation::0":
+{
+"english": "Floor Mount"
+},
+"monster_turret::orientation::1":
+{
+"english": "Ceiling Mount"
+},
+"monster_turret::spawnflags::32":
+{
+"english": "Autostart"
+},
+"monster_turret::spawnflags::64":
+{
+"english": "Start Inactive"
+},
+"monster_zombie::classname":
+{
+"english": "Scientist Zombie"
+},
+"monster_zombie::allow_headcrab":
+{
+"english": "Headcrab can jump"
+},
+"monstermaker::classname":
+{
+"english": "Monster Maker"
+},
+"monstermaker::target":
+{
+"english": "Target On Release"
+},
+"monstermaker::monstertype":
+{
+"english": "Monster Type"
+},
+"monstermaker::netname":
+{
+"english": "Childrens' Name"
+},
+"monstermaker::spawnflags::1":
+{
+"english": "Start ON"
+},
+"monstermaker::spawnflags::4":
+{
+"english": "Cyclic"
+},
+"monstermaker::spawnflags::8":
+{
+"english": "MonsterClip"
+},
+"monstermaker::monstercount":
+{
+"english": "Number of Monsters"
+},
+"monstermaker::delay":
+{
+"english": "Frequency"
+},
+"monstermaker::m_imaxlivechildren":
+{
+"english": "Max live children"
+},
+"multi_manager::classname":
+{
+"english": "MultiTarget Manager"
+},
+"multi_manager::spawnflags::1":
+{
+"english": "multithreaded"
+},
+"multisource::classname":
+{
+"english": "Multisource"
+},
+"multisource::globalstate":
+{
+"english": "Global State Master"
+},
+"path_corner::classname":
+{
+"english": "Moving platform stop"
+},
+"path_corner::spawnflags::1":
+{
+"english": "Wait for retrigger"
+},
+"path_corner::spawnflags::2":
+{
+"english": "Teleport"
+},
+"path_corner::spawnflags::4":
+{
+"english": "Fire once"
+},
+"path_corner::target":
+{
+"english": "Next stop target"
+},
+"path_corner::message":
+{
+"english": "Fire On Pass"
+},
+"path_corner::wait":
+{
+"english": "Wait here (secs)"
+},
+"path_corner::speed":
+{
+"english": "New Train Speed"
+},
+"path_corner::yaw_speed":
+{
+"english": "New Train rot. Speed"
+},
+"path_track::classname":
+{
+"english": "Train Track Path"
+},
+"path_track::spawnflags::1":
+{
+"english": "Disabled"
+},
+"path_track::spawnflags::2":
+{
+"english": "Fire once"
+},
+"path_track::spawnflags::4":
+{
+"english": "Branch Reverse"
+},
+"path_track::spawnflags::8":
+{
+"english": "Disable train"
+},
+"path_track::target":
+{
+"english": "Next stop target"
+},
+"path_track::message":
+{
+"english": "Fire On Pass"
+},
+"path_track::altpath":
+{
+"english": "Branch Path"
+},
+"path_track::netname":
+{
+"english": "Fire on dead end"
+},
+"path_track::speed":
+{
+"english": "New Train Speed"
+},
+"trigger_entity_condition::classname":
+{
+"english": "Fires a target based on whether the activator match the condition"
+},
+"trigger_entity_condition::pass_target":
+{
+"english": "Target To Fire On Pass"
+},
+"trigger_entity_condition::fail_target":
+{
+"english": "Target To Fire On Fail"
+},
+"trigger_entity_condition::condition":
+{
+"english": "Condition to check"
+},
+"trigger_entity_condition::condition::0":
+{
+"english": "Is Player"
+},
+"trigger_entity_condition::condition::1":
+{
+"english": "Has Suit"
+},
+"trigger_entity_condition::condition::2":
+{
+"english": "Has Weapon/s (arg1)"
+},
+"trigger_entity_condition::condition::2::description":
+{
+"english": "Checks if it's a player and if it haves the weapon listed in argument_1, supports item_longjump, if argument_1 is empty we'll check if the player have any weapon."
+},
+"trigger_entity_condition::condition::3":
+{
+"english": "Is Monster"
+},
+"trigger_entity_condition::condition::4":
+{
+"english": "Is Alive"
+},
+"trigger_entity_condition::argument_1":
+{
+"english": "Argument 1"
+},
+"player_loadsaved::classname":
+{
+"english": "Load Auto-Saved game"
+},
+"player_loadsaved::duration":
+{
+"english": "Fade Duration (seconds)"
+},
+"player_loadsaved::holdtime":
+{
+"english": "Hold Fade (seconds)"
+},
+"player_loadsaved::renderamt":
+{
+"english": "Fade Alpha"
+},
+"player_loadsaved::rendercolor":
+{
+"english": "Fade Color (R G B)"
+},
+"player_loadsaved::messagetime":
+{
+"english": "Show Message delay"
+},
+"player_loadsaved::message":
+{
+"english": "Message To Display"
+},
+"player_loadsaved::loadtime":
+{
+"english": "Reload delay"
+},
+"player_sethealth::classname":
+{
+"english": "Set player's health and/or armor"
+},
+"player_sethealth::classname::description":
+{
+"english": "This entity allows level designers to change the activating player's health and/or armor."
+},
+"player_sethealth::all_players":
+{
+"english": "Affect All Players"
+},
+"player_sethealth::all_players::0":
+{
+"english": "No"
+},
+"player_sethealth::all_players::1":
+{
+"english": "Yes"
+},
+"player_sethealth::set_health":
+{
+"english": "Set Player's Health"
+},
+"player_sethealth::set_health::description":
+{
+"english": "Whether to set the player's health"
+},
+"player_sethealth::set_health::0":
+{
+"english": "No"
+},
+"player_sethealth::set_health::1":
+{
+"english": "Yes"
+},
+"player_sethealth::set_armor":
+{
+"english": "Set Player's Armor"
+},
+"player_sethealth::set_armor::description":
+{
+"english": "Whether to set the player's armor"
+},
+"player_sethealth::set_armor::0":
+{
+"english": "No"
+},
+"player_sethealth::set_armor::1":
+{
+"english": "Yes"
+},
+"player_sethealth::health_to_set":
+{
+"english": "Health Value To Set"
+},
+"player_sethealth::health_to_set::description":
+{
+"english": "Amount to set the player's health to. Must be in the range **[1, 100]**"
+},
+"player_sethealth::armor_to_set":
+{
+"english": "Armor Value To Set"
+},
+"player_sethealth::armor_to_set::description":
+{
+"english": "",
+"spanish": "Amount to set the player's armor to. Must be in the range **[0, 100]**"
+},
+"player_sethudcolor::classname":
+{
+"english": "Set or reset player hud color"
+},
+"player_sethudcolor::hud_color":
+{
+"english": "Hud Color (R G B)"
+},
+"player_sethudcolor::action":
+{
+"english": "Action To Take"
+},
+"player_sethudcolor::action::0":
+{
+"english": "Set color"
+},
+"player_sethudcolor::action::1":
+{
+"english": "Reset color"
+},
+"player_setcrosshaircolor::classname":
+{
+"english": "Set or reset player crosshair color"
+},
+"player_setcrosshaircolor::crosshair_color":
+{
+"english": "Crosshair Color (R G B)"
+},
+"player_setcrosshaircolor::action":
+{
+"english": "Action To Take"
+},
+"player_setcrosshaircolor::action::0":
+{
+"english": "Set color"
+},
+"player_setcrosshaircolor::action::1":
+{
+"english": "Reset color"
+},
+"player_setsuitlighttype::classname":
+{
+"english": "Set player's suit light type"
+},
+"player_setsuitlighttype::all_players":
+{
+"english": "Affect All Players"
+},
+"player_setsuitlighttype::all_players::description":
+{
+"english": "Whether to affect all players or the activating player"
+},
+"player_setsuitlighttype::all_players::0":
+{
+"english": "No"
+},
+"player_setsuitlighttype::all_players::1":
+{
+"english": "Yes"
+},
+"player_setsuitlighttype::light_type":
+{
+"english": "Light Type"
+},
+"player_setsuitlighttype::light_type::0":
+{
+"english": "Flashlight"
+},
+"player_setsuitlighttype::light_type::1":
+{
+"english": "Night Vision"
+},
+"player_weaponstrip::classname":
+{
+"english": "Strips player's weapons"
+},
+"player_weaponstrip::classname::description":
+{
+"english": "Strip individual weapons ammo and items by key 'weapon_357' value 'target to fire if striped' ammo and weapons are special and can be matched as 'ammo_*' or 'weapon_*'"
+},
+"player_weaponstrip::spawnflags::1":
+{
+"english": "Strip keyvalues only"
+},
+"player_weaponstrip::spawnflags::1::description":
+{
+"english": "If this flag bit is not set, the whole ammo, weapons suit and longjump will be removed"
+},
+"PlayerSelector::0":
+{
+"english": "Don't Filter"
+},
+"PlayerSelector::m_iPlayerSelector_1":
+{
+"english": "Activator Player"
+},
+"PlayerSelector::m_iPlayerSelector_2":
+{
+"english": "Alive Players"
+},
+"PlayerSelector::m_iPlayerSelector_4":
+{
+"english": "Dead Players"
+},
+"PlayerSelector::m_iPlayerSelector_8":
+{
+"english": "All (non-activator) Players"
+},
+"scripted_sentence::classname":
+{
+"english": "Scripted Sentence"
+},
+"scripted_sentence::spawnflags::1":
+{
+"english": "Fire Once"
+},
+"scripted_sentence::spawnflags::2":
+{
+"english": "Followers Only"
+},
+"scripted_sentence::spawnflags::4":
+{
+"english": "Interrupt Speech"
+},
+"scripted_sentence::spawnflags::8":
+{
+"english": "Concurrent"
+},
+"scripted_sentence::sentence":
+{
+"english": "Sentence Name"
+},
+"scripted_sentence::entity":
+{
+"english": "Speaker Entity"
+},
+"scripted_sentence::duration":
+{
+"english": "Sentence Time"
+},
+"scripted_sentence::radius":
+{
+"english": "Search Radius"
+},
+"scripted_sentence::refire":
+{
+"english": "Delay Before Refire"
+},
+"scripted_sentence::listener":
+{
+"english": "Listener"
+},
+"scripted_sentence::volume":
+{
+"english": "Volume 0-10"
+},
+"scripted_sentence::attenuation":
+{
+"english": "Sound Radius"
+},
+"scripted_sentence::attenuation::0":
+{
+"english": "Small Radius"
+},
+"scripted_sentence::attenuation::1":
+{
+"english": "Medium Radius"
+},
+"scripted_sentence::attenuation::2":
+{
+"english": "Large  Radius"
+},
+"scripted_sentence::attenuation::3":
+{
+"english": "Play Everywhere"
+},
+"scripted_sequence::classname":
+{
+"english": "Scripted Sequence"
+},
+"scripted_sequence::m_iszIdle":
+{
+"english": "Idle Animation"
+},
+"scripted_sequence::spawnflags::32":
+{
+"english": "No Interruptions"
+},
+"scripted_sequence::spawnflags::64":
+{
+"english": "Override AI"
+},
+"scripted_sequence::spawnflags::128":
+{
+"english": "No Script Movement"
+},
+"scripted_sequence::spawnflags::256":
+{
+"english": "No Reset Entity"
+},
+"speaker::classname":
+{
+"english": "Announcement Speaker"
+},
+"speaker::preset":
+{
+"english": "Announcement Presets"
+},
+"speaker::preset::0":
+{
+"english": "None"
+},
+"speaker::preset::1":
+{
+"english": "C1A0 Announcer"
+},
+"speaker::preset::2":
+{
+"english": "C1A1 Announcer"
+},
+"speaker::preset::3":
+{
+"english": "C1A2 Announcer"
+},
+"speaker::preset::4":
+{
+"english": "C1A3 Announcer"
+},
+"speaker::preset::5":
+{
+"english": "C1A4 Announcer"
+},
+"speaker::preset::6":
+{
+"english": "C2A1 Announcer"
+},
+"speaker::preset::7":
+{
+"english": "C2A2 Announcer"
+},
+"speaker::preset::9":
+{
+"english": "C2A4 Announcer"
+},
+"speaker::preset::11":
+{
+"english": "C3A1 Announcer"
+},
+"speaker::preset::12":
+{
+"english": "C3A2 Announcer"
+},
+"speaker::message":
+{
+"english": "Sentence Group Name"
+},
+"speaker::health":
+{
+"english": "Volume (10 = loudest)"
+},
+"speaker::spawnflags::1":
+{
+"english": "Start Silent"
+},
+"trigger_auto::classname":
+{
+"english": "AutoTrigger"
+},
+"trigger_auto::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"trigger_auto::globalstate":
+{
+"english": "Global State to Read"
+},
+"trigger_auto::triggerstate":
+{
+"english": "Trigger State"
+},
+"trigger_auto::triggerstate::0":
+{
+"english": "Off"
+},
+"trigger_auto::triggerstate::1":
+{
+"english": "On"
+},
+"trigger_auto::triggerstate::2":
+{
+"english": "Toggle"
+},
+"trigger_autosave::classname":
+{
+"english": "AutoSave Trigger"
+},
+"trigger_camera::classname":
+{
+"english": "Trigger Camera"
+},
+"trigger_camera::wait":
+{
+"english": "Hold time"
+},
+"trigger_camera::moveto":
+{
+"english": "Path Corner"
+},
+"trigger_camera::spawnflags::1":
+{
+"english": "Start At Player"
+},
+"trigger_camera::spawnflags::2":
+{
+"english": "Follow Player"
+},
+"trigger_camera::spawnflags::4":
+{
+"english": "Freeze Player"
+},
+"trigger_camera::speed":
+{
+"english": "Initial Speed"
+},
+"trigger_camera::acceleration":
+{
+"english": "Acceleration units/sec^2"
+},
+"trigger_camera::deceleration":
+{
+"english": "Stop Deceleration units/sec^2"
+},
+"trigger_changekeyvalue::classname":
+{
+"english": "Trigger Change Key Value"
+},
+"trigger_changekeyvalue::changetarget":
+{
+"english": "Change target"
+},
+"trigger_changelevel::classname":
+{
+"english": "Trigger: Change level"
+},
+"trigger_changelevel::map":
+{
+"english": "New map name"
+},
+"trigger_changelevel::landmark":
+{
+"english": "Landmark name"
+},
+"trigger_changelevel::changetarget":
+{
+"english": "Change Target"
+},
+"trigger_changelevel::changedelay":
+{
+"english": "Delay before change target"
+},
+"trigger_changelevel::use_persistent_level_change":
+{
+"english": "Use Persistent Level Change"
+},
+"trigger_changelevel::use_persistent_level_change::0":
+{
+"english": "No"
+},
+"trigger_changelevel::use_persistent_level_change::1":
+{
+"english": "Yes"
+},
+"trigger_changelevel::use_persistent_inventory":
+{
+"english": "Use Persistent Inventory (Co-op only)"
+},
+"trigger_changelevel::use_persistent_inventory::0":
+{
+"english": "No"
+},
+"trigger_changelevel::use_persistent_inventory::1":
+{
+"english": "Yes"
+},
+"trigger_changelevel::spawnflags::1":
+{
+"english": "No Intermission"
+},
+"trigger_changelevel::spawnflags::2":
+{
+"english": "USE Only"
+},
+"trigger_changetarget::classname":
+{
+"english": "Trigger Change Target"
+},
+"trigger_changetarget::m_iszNewTarget":
+{
+"english": "New Target"
+},
+"trigger_counter::classname":
+{
+"english": "Trigger counter"
+},
+"trigger_counter::spawnflags::1":
+{
+"english": "No Message"
+},
+"trigger_counter::count":
+{
+"english": "Count before activation"
+},
+"trigger_endsection::classname":
+{
+"english": "EndSection Trigger"
+},
+"trigger_endsection::section":
+{
+"english": "Section"
+},
+"trigger_endsection::spawnflags::1":
+{
+"english": "USE Only"
+},
+"trigger_gravity::classname":
+{
+"english": "Trigger Gravity"
+},
+"trigger_gravity::gravity":
+{
+"english": "Gravity (0-1)"
+},
+"trigger_hurt::classname":
+{
+"english": "Trigger player hurt"
+},
+"trigger_hurt::spawnflags::1":
+{
+"english": "Target Once"
+},
+"trigger_hurt::spawnflags::2":
+{
+"english": "Start Off"
+},
+"trigger_hurt::spawnflags::8":
+{
+"english": "No clients"
+},
+"trigger_hurt::spawnflags::16":
+{
+"english": "FireClientOnly"
+},
+"trigger_hurt::spawnflags::32":
+{
+"english": "TouchClientOnly"
+},
+"trigger_hurt::dmg":
+{
+"english": "Damage"
+},
+"trigger_hurt::delay":
+{
+"english": "Delay before trigger"
+},
+"trigger_hurt::damagetype":
+{
+"english": "Damage Type"
+},
+"trigger_hurt::damagetype::0":
+{
+"english": "GENERIC"
+},
+"trigger_hurt::damagetype::1":
+{
+"english": "CRUSH"
+},
+"trigger_hurt::damagetype::2":
+{
+"english": "BULLET"
+},
+"trigger_hurt::damagetype::4":
+{
+"english": "SLASH"
+},
+"trigger_hurt::damagetype::8":
+{
+"english": "BURN"
+},
+"trigger_hurt::damagetype::16":
+{
+"english": "FREEZE"
+},
+"trigger_hurt::damagetype::32":
+{
+"english": "FALL"
+},
+"trigger_hurt::damagetype::64":
+{
+"english": "BLAST"
+},
+"trigger_hurt::damagetype::128":
+{
+"english": "CLUB"
+},
+"trigger_hurt::damagetype::256":
+{
+"english": "SHOCK"
+},
+"trigger_hurt::damagetype::512":
+{
+"english": "SONIC"
+},
+"trigger_hurt::damagetype::1024":
+{
+"english": "ENERGYBEAM"
+},
+"trigger_hurt::damagetype::16384":
+{
+"english": "DROWN"
+},
+"trigger_hurt::damagetype::32768":
+{
+"english": "PARALYSE"
+},
+"trigger_hurt::damagetype::65536":
+{
+"english": "NERVEGAS"
+},
+"trigger_hurt::damagetype::131072":
+{
+"english": "POISON"
+},
+"trigger_hurt::damagetype::262144":
+{
+"english": "RADIATION"
+},
+"trigger_hurt::damagetype::524288":
+{
+"english": "DROWNRECOVER"
+},
+"trigger_hurt::damagetype::1048576":
+{
+"english": "CHEMICAL"
+},
+"trigger_hurt::damagetype::2097152":
+{
+"english": "SLOWBURN"
+},
+"trigger_hurt::damagetype::4194304":
+{
+"english": "SLOWFREEZE"
+},
+"trigger_monsterjump::classname":
+{
+"english": "Trigger monster jump"
+},
+"trigger_monsterjump::speed":
+{
+"english": "Jump Speed"
+},
+"trigger_monsterjump::height":
+{
+"english": "Jump Height"
+},
+"trigger_multiple::classname":
+{
+"english": "Trigger: Activate multiple"
+},
+"trigger_multiple::wait":
+{
+"english": "Delay before reset"
+},
+"trigger_once::classname":
+{
+"english": "Trigger: Activate once"
+},
+"trigger_push::classname":
+{
+"english": "Trigger player push"
+},
+"trigger_push::spawnflags::1":
+{
+"english": "Once Only"
+},
+"trigger_push::spawnflags::2":
+{
+"english": "Start Off"
+},
+"trigger_push::speed":
+{
+"english": "Speed of push"
+},
+"trigger_relay::classname":
+{
+"english": "Trigger Relay"
+},
+"trigger_relay::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"trigger_relay::triggerstate":
+{
+"english": "Trigger State"
+},
+"trigger_relay::triggerstate::0":
+{
+"english": "Off"
+},
+"trigger_relay::triggerstate::1":
+{
+"english": "On"
+},
+"trigger_relay::triggerstate::2":
+{
+"english": "Toggle"
+},
+"TeleportBase::fire_on_teleport":
+{
+"english": "Target To Fire On Teleport"
+},
+"trigger_teleport::classname":
+{
+"english": "Trigger teleport"
+},
+"point_teleport::classname":
+{
+"english": "Teleport target to this entity on trigger"
+},
+"point_teleport::target":
+{
+"english": "Target to teleport"
+},
+"trigger_transition::classname":
+{
+"english": "Trigger: Select Transition Area"
+},
+"weapon_crowbar::classname":
+{
+"english": "Crowbar"
+},
+"weapon_9mmhandgun::classname":
+{
+"english": "9mm Handgun"
+},
+"weapon_357::classname":
+{
+"english": "357 Handgun"
+},
+"weapon_9mmar::classname":
+{
+"english": "9mm Assault Rifle"
+},
+"weapon_shotgun::classname":
+{
+"english": "Shotgun"
+},
+"weapon_rpg::classname":
+{
+"english": "RPG"
+},
+"weapon_rpg::sequence":
+{
+"english": "Placement"
+},
+"weapon_rpg::sequence::0":
+{
+"english": "Normal (flat)"
+},
+"weapon_rpg::sequence::1":
+{
+"english": "Realistic (tilted)"
+},
+"weapon_gauss::classname":
+{
+"english": "Gauss Gun"
+},
+"weapon_gauss::sequence":
+{
+"english": "Placement"
+},
+"weapon_gauss::sequence::0":
+{
+"english": "Normal (flat)"
+},
+"weapon_gauss::sequence::1":
+{
+"english": "Realistic (tilted)"
+},
+"weapon_crossbow::classname":
+{
+"english": "Crossbow"
+},
+"weapon_crossbow::sequence":
+{
+"english": "Placement"
+},
+"weapon_crossbow::sequence::0":
+{
+"english": "Normal (flat)"
+},
+"weapon_crossbow::sequence::1":
+{
+"english": "Realistic (tilted)"
+},
+"weapon_egon::classname":
+{
+"english": "Egon Gun"
+},
+"weapon_tripmine::classname":
+{
+"english": "Tripmine Ammo"
+},
+"weapon_satchel::classname":
+{
+"english": "Satchel Charge Ammo"
+},
+"weapon_satchel::sequence":
+{
+"english": "Placement"
+},
+"weapon_satchel::sequence::0":
+{
+"english": "Normal (flat)"
+},
+"weapon_satchel::sequence::1":
+{
+"english": "On back"
+},
+"weapon_handgrenade::classname":
+{
+"english": "Handgrenade Ammo"
+},
+"weapon_snark::classname":
+{
+"english": "Squeak Grenade"
+},
+"weapon_hornetgun::classname":
+{
+"english": "Hornet Gun"
+},
+"weaponbox::classname":
+{
+"english": "Weapon/Ammo Container"
+},
+"xen_plantlight::classname":
+{
+"english": "Xen Plant Light"
+},
+"xen_hair::classname":
+{
+"english": "Xen Hair"
+},
+"xen_hair::spawnflags::1":
+{
+"english": "Sync Movement"
+},
+"xen_tree::classname":
+{
+"english": "Xen Tree"
+},
+"xen_spore_small::classname":
+{
+"english": "Xen Spore (small)"
+},
+"xen_spore_medium::classname":
+{
+"english": "Xen Spore (medium)"
+},
+"xen_spore_large::classname":
+{
+"english": "Xen Spore (large)"
+},
+"ammo_556::classname":
+{
+"english": "M249 Ammo"
+},
+"ammo_762::classname":
+{
+"english": "Sniper Ammo"
+},
+"ammo_spore::classname":
+{
+"english": "Spore"
+},
+"env_blowercannon::classname":
+{
+"english": "Blower Cannon"
+},
+"env_blowercannon::delay":
+{
+"english": "Delay"
+},
+"env_blowercannon::zoffset":
+{
+"english": "Z Offset"
+},
+"env_blowercannon::weaptype":
+{
+"english": "Weapon Type"
+},
+"env_blowercannon::weaptype::1":
+{
+"english": "Spore (Rocket)"
+},
+"env_blowercannon::weaptype::2":
+{
+"english": "Spore (Grenade)"
+},
+"env_blowercannon::weaptype::3":
+{
+"english": "Shock Beam"
+},
+"env_blowercannon::weaptype::4":
+{
+"english": "Displacer Ball"
+},
+"env_blowercannon::firetype":
+{
+"english": "Fire Type"
+},
+"env_blowercannon::firetype::1":
+{
+"english": "Toggle On/Off"
+},
+"env_blowercannon::firetype::2":
+{
+"english": "Fire When Triggered"
+},
+"env_electrified_wire::classname":
+{
+"english": "Electrified Wire"
+},
+"env_electrified_wire::segments":
+{
+"english": "Segments"
+},
+"env_electrified_wire::sparkfrequency":
+{
+"english": "Spark Frequency"
+},
+"env_electrified_wire::bodysparkfrequency":
+{
+"english": "Body Spark Frequency"
+},
+"env_electrified_wire::lightningfrequency":
+{
+"english": "Lightning Frequency"
+},
+"env_electrified_wire::xforce":
+{
+"english": "X Force"
+},
+"env_electrified_wire::yforce":
+{
+"english": "Y Force"
+},
+"env_electrified_wire::zforce":
+{
+"english": "Z Force"
+},
+"env_electrified_wire::disable":
+{
+"english": "Disable Use"
+},
+"env_electrified_wire::disable::0":
+{
+"english": "Not Disabled"
+},
+"env_electrified_wire::disable::1":
+{
+"english": "Disabled"
+},
+"env_electrified_wire::endingmodel":
+{
+"english": "Ending Model"
+},
+"env_electrified_wire::bodymodel":
+{
+"english": "Body Model"
+},
+"env_rope::classname":
+{
+"english": "Rope"
+},
+"env_rope::segments":
+{
+"english": "Segments"
+},
+"env_rope::disable":
+{
+"english": "Disable Use"
+},
+"env_rope::disable::0":
+{
+"english": "Not Disabled"
+},
+"env_rope::disable::1":
+{
+"english": "Disabled"
+},
+"env_rope::endingmodel":
+{
+"english": "Ending Model"
+},
+"env_rope::bodymodel":
+{
+"english": "Body Model"
+},
+"env_spritetrain::classname":
+{
+"english": "Sprite Train"
+},
+"env_spritetrain::target":
+{
+"english": "First stop target"
+},
+"env_spritetrain::speed":
+{
+"english": "Speed (units per second)"
+},
+"env_spritetrain::scale":
+{
+"english": "Sprite Scale"
+},
+"func_op4mortarcontroller::classname":
+{
+"english": "Op4 Mortar Controller"
+},
+"func_op4mortarcontroller::mortar_axis":
+{
+"english": "Axis"
+},
+"func_op4mortarcontroller::mortar_axis::0":
+{
+"english": "Vertical"
+},
+"func_op4mortarcontroller::mortar_axis::1":
+{
+"english": "Horizontal"
+},
+"info_displacer_xen_target::classname":
+{
+"english": "Displacer XEN Target"
+},
+"info_displacer_earth_target::classname":
+{
+"english": "Displacer EARTH Target"
+},
+"info_pitworm_steam_lock::classname":
+{
+"english": "Pitworm Steam Lock"
+},
+"item_generic::classname":
+{
+"english": "Generic scenery item"
+},
+"item_generic::sequencename":
+{
+"english": "Sequence Name"
+},
+"item_generic::skin":
+{
+"english": "Skin"
+},
+"item_generic::body":
+{
+"english": "Body"
+},
+"item_generic::spawnflags::1":
+{
+"english": "Drop to floor"
+},
+"item_generic::spawnflags::2":
+{
+"english": "Solid"
+},
+"item_nuclearbomb::classname":
+{
+"english": "Nuclear Bomb"
+},
+"item_nuclearbomb::initialstate":
+{
+"english": "Initial State"
+},
+"item_nuclearbomb::wait":
+{
+"english": "Wait"
+},
+"monster_alien_babyvoltigore::classname":
+{
+"english": "Baby Voltigore"
+},
+"monster_alien_voltigore::classname":
+{
+"english": "Voltigore"
+},
+"monster_alien_slave_dead::classname":
+{
+"english": "Dead Vortigaunt"
+},
+"monster_alien_slave_dead::pose":
+{
+"english": "Pose"
+},
+"monster_alien_slave_dead::pose::0":
+{
+"english": "On Stomach"
+},
+"monster_assassin_repel::classname":
+{
+"english": "Male Assassin (Repel)"
+},
+"monster_blkop_apache::classname":
+{
+"english": "Black Ops Apache"
+},
+"monster_blkop_apache::spawnflags::8":
+{
+"english": "NoWreckage"
+},
+"monster_blkop_apache::spawnflags::64":
+{
+"english": "Start Inactive"
+},
+"monster_blkop_osprey::classname":
+{
+"english": "Black Ops Osprey"
+},
+"monster_cleansuit_scientist::classname":
+{
+"english": "Cleansuit Scientist"
+},
+"monster_cleansuit_scientist::body":
+{
+"english": "Body"
+},
+"monster_cleansuit_scientist::body::-1":
+{
+"english": "Random"
+},
+"monster_cleansuit_scientist::body::0":
+{
+"english": "Glasses"
+},
+"monster_cleansuit_scientist::body::1":
+{
+"english": "Einstein"
+},
+"monster_cleansuit_scientist::body::2":
+{
+"english": "Luther"
+},
+"monster_cleansuit_scientist::body::3":
+{
+"english": "Slick"
+},
+"monster_cleansuit_scientist_dead::classname":
+{
+"english": "Dead Cleansuit Scientist"
+},
+"monster_cleansuit_scientist_dead::body":
+{
+"english": "Body"
+},
+"monster_cleansuit_scientist_dead::body::-1":
+{
+"english": "Random"
+},
+"monster_cleansuit_scientist_dead::body::0":
+{
+"english": "Glasses"
+},
+"monster_cleansuit_scientist_dead::body::1":
+{
+"english": "Einstein"
+},
+"monster_cleansuit_scientist_dead::body::2":
+{
+"english": "Luther"
+},
+"monster_cleansuit_scientist_dead::body::3":
+{
+"english": "Slick"
+},
+"monster_cleansuit_scientist_dead::pose":
+{
+"english": "Pose"
+},
+"monster_cleansuit_scientist_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_cleansuit_scientist_dead::pose::1":
+{
+"english": "On Stomach"
+},
+"monster_cleansuit_scientist_dead::pose::2":
+{
+"english": "Sitting"
+},
+"monster_cleansuit_scientist_dead::pose::3":
+{
+"english": "Hanging"
+},
+"monster_cleansuit_scientist_dead::pose::4":
+{
+"english": "Table1"
+},
+"monster_cleansuit_scientist_dead::pose::5":
+{
+"english": "Table2"
+},
+"monster_cleansuit_scientist_dead::pose::6":
+{
+"english": "Table3"
+},
+"monster_cleansuit_scientist_dead::pose::7":
+{
+"english": "Hi Mike!"
+},
+"monster_cleansuit_scientist_dead::pose::8":
+{
+"english": "Dead Against Wall"
+},
+"monster_sitting_cleansuit_scientist::classname":
+{
+"english": "Sitting Cleansuit Scientist"
+},
+"monster_sitting_cleansuit_scientist::body":
+{
+"english": "Body"
+},
+"monster_sitting_cleansuit_scientist::body::-1":
+{
+"english": "Random"
+},
+"monster_sitting_cleansuit_scientist::body::0":
+{
+"english": "Glasses"
+},
+"monster_sitting_cleansuit_scientist::body::1":
+{
+"english": "Einstein"
+},
+"monster_sitting_cleansuit_scientist::body::2":
+{
+"english": "Luther"
+},
+"monster_sitting_cleansuit_scientist::body::3":
+{
+"english": "Slick"
+},
+"monster_drillsergeant::classname":
+{
+"english": "Drill Sergeant"
+},
+"monster_geneworm::classname":
+{
+"english": "Gene Worm"
+},
+"monster_gonome::classname":
+{
+"english": "Gonome"
+},
+"monster_gonome_dead::classname":
+{
+"english": "Dead Gonome"
+},
+"monster_gonome_dead::pose":
+{
+"english": "Pose"
+},
+"monster_gonome_dead::pose::0":
+{
+"english": "On Stomach"
+},
+"monster_gonome_dead::pose::1":
+{
+"english": "On Back"
+},
+"monster_gonome_dead::pose::2":
+{
+"english": "On Side"
+},
+"monster_houndeye_dead::classname":
+{
+"english": "Dead Houndeye"
+},
+"monster_houndeye_dead::pose":
+{
+"english": "Pose"
+},
+"monster_houndeye_dead::pose::0":
+{
+"english": "Just plain dead"
+},
+"monster_grunt_ally_repel::classname":
+{
+"english": "Human Grunt Ally (Repel)"
+},
+"monster_grunt_ally_repel::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_grunt_ally_repel::netname":
+{
+"english": "Squad Name"
+},
+"monster_grunt_ally_repel::weapons":
+{
+"english": "Weapons"
+},
+"monster_grunt_ally_repel::weapons::1":
+{
+"english": "9mmAR"
+},
+"monster_grunt_ally_repel::weapons::3":
+{
+"english": "9mmAR + HG"
+},
+"monster_grunt_ally_repel::weapons::5":
+{
+"english": "9mmAR + GL"
+},
+"monster_grunt_ally_repel::weapons::8":
+{
+"english": "Shotgun"
+},
+"monster_grunt_ally_repel::weapons::10":
+{
+"english": "Shotgun + HG"
+},
+"monster_grunt_ally_repel::weapons::16":
+{
+"english": "Saw"
+},
+"monster_grunt_ally_repel::head":
+{
+"english": "Heads"
+},
+"monster_grunt_ally_repel::head::-1":
+{
+"english": "Default"
+},
+"monster_grunt_ally_repel::head::0":
+{
+"english": "Gas Mask"
+},
+"monster_grunt_ally_repel::head::1":
+{
+"english": "Beret"
+},
+"monster_grunt_ally_repel::head::2":
+{
+"english": "Ops Mask"
+},
+"monster_grunt_ally_repel::head::3":
+{
+"english": "Bandana White"
+},
+"monster_grunt_ally_repel::head::4":
+{
+"english": "Bandana Black"
+},
+"monster_grunt_ally_repel::head::5":
+{
+"english": "MP"
+},
+"monster_grunt_ally_repel::head::6":
+{
+"english": "Major"
+},
+"monster_grunt_ally_repel::head::7":
+{
+"english": "Beret (Black)"
+},
+"monster_human_grunt_ally::classname":
+{
+"english": "Human Grunt Ally (camo)"
+},
+"monster_human_grunt_ally::netname":
+{
+"english": "Squad Name"
+},
+"monster_human_grunt_ally::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_human_grunt_ally::weapons":
+{
+"english": "Weapons"
+},
+"monster_human_grunt_ally::weapons::0":
+{
+"english": "None"
+},
+"monster_human_grunt_ally::weapons::1":
+{
+"english": "9mmAR"
+},
+"monster_human_grunt_ally::weapons::3":
+{
+"english": "9mmAR + HG"
+},
+"monster_human_grunt_ally::weapons::5":
+{
+"english": "9mmAR + GL"
+},
+"monster_human_grunt_ally::weapons::8":
+{
+"english": "Shotgun"
+},
+"monster_human_grunt_ally::weapons::10":
+{
+"english": "Shotgun + HG"
+},
+"monster_human_grunt_ally::weapons::16":
+{
+"english": "Saw"
+},
+"monster_human_grunt_ally::head":
+{
+"english": "Heads"
+},
+"monster_human_grunt_ally::head::-1":
+{
+"english": "Default"
+},
+"monster_human_grunt_ally::head::0":
+{
+"english": "Gas Mask"
+},
+"monster_human_grunt_ally::head::1":
+{
+"english": "Beret"
+},
+"monster_human_grunt_ally::head::2":
+{
+"english": "Ops Mask"
+},
+"monster_human_grunt_ally::head::3":
+{
+"english": "Bandana White"
+},
+"monster_human_grunt_ally::head::4":
+{
+"english": "Bandana Black"
+},
+"monster_human_grunt_ally::head::5":
+{
+"english": "MP"
+},
+"monster_human_grunt_ally::head::6":
+{
+"english": "Major"
+},
+"monster_human_grunt_ally::head::7":
+{
+"english": "Beret (Black)"
+},
+"monster_human_grunt_ally_dead::classname":
+{
+"english": "Dead Human Grunt Ally"
+},
+"monster_human_grunt_ally_dead::pose":
+{
+"english": "Pose"
+},
+"monster_human_grunt_ally_dead::pose::0":
+{
+"english": "On stomach"
+},
+"monster_human_grunt_ally_dead::pose::1":
+{
+"english": "On side"
+},
+"monster_human_grunt_ally_dead::pose::2":
+{
+"english": "Seated"
+},
+"monster_human_grunt_ally_dead::pose::3":
+{
+"english": "Dead On Back"
+},
+"monster_human_grunt_ally_dead::pose::4":
+{
+"english": "Dead On Stomach"
+},
+"monster_human_grunt_ally_dead::pose::5":
+{
+"english": "Head Crabbed"
+},
+"monster_human_grunt_ally_dead::pose::6":
+{
+"english": "Dead Canyon"
+},
+"monster_human_grunt_ally_dead::weapons":
+{
+"english": "Weapons"
+},
+"monster_human_grunt_ally_dead::weapons::0":
+{
+"english": "None"
+},
+"monster_human_grunt_ally_dead::weapons::1":
+{
+"english": "9mmAR"
+},
+"monster_human_grunt_ally_dead::weapons::8":
+{
+"english": "Shotgun"
+},
+"monster_human_grunt_ally_dead::weapons::16":
+{
+"english": "Saw"
+},
+"monster_human_grunt_ally_dead::head":
+{
+"english": "Heads"
+},
+"monster_human_grunt_ally_dead::head::0":
+{
+"english": "Gas Mask"
+},
+"monster_human_grunt_ally_dead::head::1":
+{
+"english": "Beret"
+},
+"monster_human_grunt_ally_dead::head::2":
+{
+"english": "Ops Mask"
+},
+"monster_human_grunt_ally_dead::head::3":
+{
+"english": "Bandana White"
+},
+"monster_human_grunt_ally_dead::head::4":
+{
+"english": "Bandana Black"
+},
+"monster_human_grunt_ally_dead::head::5":
+{
+"english": "MP"
+},
+"monster_human_grunt_ally_dead::head::6":
+{
+"english": "Major"
+},
+"monster_human_grunt_ally_dead::head::7":
+{
+"english": "Beret (Black)"
+},
+"monster_human_medic_ally::classname":
+{
+"english": "Medic"
+},
+"monster_human_medic_ally::netname":
+{
+"english": "Squad Name"
+},
+"monster_human_medic_ally::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_human_medic_ally::head":
+{
+"english": "Heads"
+},
+"monster_human_medic_ally::head::-1":
+{
+"english": "Random"
+},
+"monster_human_medic_ally::head::0":
+{
+"english": "White"
+},
+"monster_human_medic_ally::head::1":
+{
+"english": "Black"
+},
+"monster_human_medic_ally::weapons":
+{
+"english": "Weapons"
+},
+"monster_human_medic_ally::weapons::0":
+{
+"english": "None"
+},
+"monster_human_medic_ally::weapons::1":
+{
+"english": "Desert Eagle"
+},
+"monster_human_medic_ally::weapons::2":
+{
+"english": "9mm Handgun"
+},
+"monster_human_medic_ally::weapons::4":
+{
+"english": "Hypodermic Needle"
+},
+"monster_human_torch_ally::classname":
+{
+"english": "Torch"
+},
+"monster_human_torch_ally::netname":
+{
+"english": "Squad Name"
+},
+"monster_human_torch_ally::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_human_torch_ally::weapons":
+{
+"english": "Weapons"
+},
+"monster_human_torch_ally::weapons::1":
+{
+"english": "Desert Eagle"
+},
+"monster_human_torch_ally::weapons::2":
+{
+"english": "Blow Torch"
+},
+"monster_human_torch_ally::weapons::5":
+{
+"english": "Desert Eagle + HG"
+},
+"monster_human_torch_ally::weapons::6":
+{
+"english": "Blow Torch + HG"
+},
+"monster_male_assassin::classname":
+{
+"english": "Male Assassin"
+},
+"monster_male_assassin::netname":
+{
+"english": "Squad Name"
+},
+"monster_male_assassin::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_male_assassin::head":
+{
+"english": "Heads"
+},
+"monster_male_assassin::head::-1":
+{
+"english": "Random"
+},
+"monster_male_assassin::head::0":
+{
+"english": "Ski Mask White"
+},
+"monster_male_assassin::head::1":
+{
+"english": "Ski Mask Black"
+},
+"monster_male_assassin::head::2":
+{
+"english": "Night Goggles"
+},
+"monster_male_assassin::weapons":
+{
+"english": "Weapons"
+},
+"monster_male_assassin::weapons::0":
+{
+"english": "None"
+},
+"monster_male_assassin::weapons::1":
+{
+"english": "9mmAR"
+},
+"monster_male_assassin::weapons::3":
+{
+"english": "9mmAR + HG"
+},
+"monster_male_assassin::weapons::5":
+{
+"english": "9mmAR + GL"
+},
+"monster_male_assassin::weapons::8":
+{
+"english": "Sniper Rifle"
+},
+"monster_male_assassin::standgroundrange":
+{
+"english": "Stand Ground Range"
+},
+"monster_op4loader::classname":
+{
+"english": "Loader machine"
+},
+"monster_op4loader::spawnflags::4":
+{
+"english": "Not solid"
+},
+"monster_otis::classname":
+{
+"english": "Otis"
+},
+"monster_otis::bodystate":
+{
+"english": "bodystate"
+},
+"monster_otis::bodystate::0":
+{
+"english": "Blank"
+},
+"monster_otis::bodystate::1":
+{
+"english": "Gun Holstered"
+},
+"monster_otis::bodystate::2":
+{
+"english": "Gun Drawn"
+},
+"monster_otis::skin":
+{
+"english": "head"
+},
+"monster_otis::skin::-1":
+{
+"english": "Random"
+},
+"monster_otis::skin::0":
+{
+"english": "Head with hair"
+},
+"monster_otis::skin::1":
+{
+"english": "Bald Head"
+},
+"monster_otis::skin::2":
+{
+"english": "Black head with hair"
+},
+"monster_otis::sleeves":
+{
+"english": "sleeves"
+},
+"monster_otis::sleeves::-1":
+{
+"english": "Random"
+},
+"monster_otis::sleeves::0":
+{
+"english": "Long"
+},
+"monster_otis::sleeves::1":
+{
+"english": "Short"
+},
+"monster_otis::item":
+{
+"english": "item"
+},
+"monster_otis::item::0":
+{
+"english": "None"
+},
+"monster_otis::item::1":
+{
+"english": "Clipboard"
+},
+"monster_otis::item::2":
+{
+"english": "Donut"
+},
+"monster_otis_dead::classname":
+{
+"english": "Dead Otis"
+},
+"monster_otis_dead::pose":
+{
+"english": "Pose"
+},
+"monster_otis_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_otis_dead::pose::1":
+{
+"english": "On side"
+},
+"monster_otis_dead::pose::2":
+{
+"english": "On stomach"
+},
+"monster_otis_dead::pose::3":
+{
+"english": "Stuffed in Vent"
+},
+"monster_otis_dead::pose::4":
+{
+"english": "Dead Sitting"
+},
+"monster_otis_dead::bodystate":
+{
+"english": "bodystate"
+},
+"monster_otis_dead::bodystate::0":
+{
+"english": "Blank"
+},
+"monster_otis_dead::bodystate::1":
+{
+"english": "Gun Holstered"
+},
+"monster_otis_dead::bodystate::2":
+{
+"english": "Gun Drawn"
+},
+"monster_otis_dead::sleeves":
+{
+"english": "sleeves"
+},
+"monster_otis_dead::sleeves::-1":
+{
+"english": "Random"
+},
+"monster_otis_dead::sleeves::0":
+{
+"english": "Long"
+},
+"monster_otis_dead::sleeves::1":
+{
+"english": "Short"
+},
+"monster_otis_dead::item":
+{
+"english": "item"
+},
+"monster_otis_dead::item::0":
+{
+"english": "None"
+},
+"monster_otis_dead::item::1":
+{
+"english": "Clipboard"
+},
+"monster_otis_dead::item::2":
+{
+"english": "Donut"
+},
+"monster_pitdrone::classname":
+{
+"english": "PitDrone"
+},
+"monster_pitdrone::initammo":
+{
+"english": "Initial Ammo"
+},
+"monster_pitworm::classname":
+{
+"english": "Pit Worm"
+},
+"monster_pitworm_up::classname":
+{
+"english": "Pit Worm Upright"
+},
+"monster_shockroach::classname":
+{
+"english": "Shock Roach"
+},
+"monster_zombie_barney::classname":
+{
+"english": "Barney Zombie"
+},
+"monster_zombie_soldier::classname":
+{
+"english": "Soldier Zombie"
+},
+"monster_zombie_soldier_dead::classname":
+{
+"english": "Dead Soldier Zombie"
+},
+"monster_zombie_soldier_dead::pose":
+{
+"english": "Pose"
+},
+"monster_zombie_soldier_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_zombie_soldier_dead::pose::1":
+{
+"english": "On stomach"
+},
+"monster_recruit::classname":
+{
+"english": "Recruit"
+},
+"monster_skeleton_dead::classname":
+{
+"english": "Dead Skeleton"
+},
+"monster_skeleton_dead::pose":
+{
+"english": "Pose"
+},
+"monster_skeleton_dead::pose::0":
+{
+"english": "On back"
+},
+"monster_skeleton_dead::pose::1":
+{
+"english": "Seated"
+},
+"monster_skeleton_dead::pose::2":
+{
+"english": "Against Wall"
+},
+"monster_skeleton_dead::pose::3":
+{
+"english": "On Stomach"
+},
+"monster_shocktrooper::classname":
+{
+"english": "Shock Trooper"
+},
+"monster_shocktrooper::netname":
+{
+"english": "Squad Name"
+},
+"monster_shocktrooper::spawnflags::32":
+{
+"english": "SquadLeader"
+},
+"monster_shocktrooper::weapons":
+{
+"english": "Weapons"
+},
+"monster_shocktrooper::weapons::1":
+{
+"english": "9mmAR"
+},
+"monster_shocktrooper::weapons::3":
+{
+"english": "9mmAR + HG"
+},
+"monster_shocktrooper::weapons::5":
+{
+"english": "9mmAR + GL"
+},
+"monster_shocktrooper::weapons::8":
+{
+"english": "Shotgun"
+},
+"monster_shocktrooper::weapons::10":
+{
+"english": "Shotgun + HG"
+},
+"op4mortar::classname":
+{
+"english": "Op4 Mortar"
+},
+"op4mortar::spawnflags::1":
+{
+"english": "Active"
+},
+"op4mortar::spawnflags::16":
+{
+"english": "Line of Sight"
+},
+"op4mortar::spawnflags::32":
+{
+"english": "Can Control"
+},
+"op4mortar::mortar_velocity":
+{
+"english": "Velocity"
+},
+"op4mortar::h_min":
+{
+"english": "Horiz MIN"
+},
+"op4mortar::h_max":
+{
+"english": "Horiz MAX"
+},
+"op4mortar::mindist":
+{
+"english": "Min Target Dist"
+},
+"op4mortar::maxdist":
+{
+"english": "Max Target Dist"
+},
+"op4mortar::enemytype":
+{
+"english": "Enemy Type"
+},
+"op4mortar::enemytype::0":
+{
+"english": "Player"
+},
+"op4mortar::enemytype::1":
+{
+"english": "Ally"
+},
+"op4mortar::enemytype::2":
+{
+"english": "Random"
+},
+"op4mortar::firedelay":
+{
+"english": "Fire Rate"
+},
+"pitworm_gibshooter::classname":
+{
+"english": "Pitworm Gib Shooter"
+},
+"trigger_geneworm_hit::classname":
+{
+"english": "Trigger GeneWorm Hit"
+},
+"trigger_geneworm_hit::spawnflags::1":
+{
+"english": "Target Once"
+},
+"trigger_geneworm_hit::spawnflags::2":
+{
+"english": "Start Off"
+},
+"trigger_geneworm_hit::spawnflags::8":
+{
+"english": "No clients"
+},
+"trigger_geneworm_hit::spawnflags::16":
+{
+"english": "FireClientOnly"
+},
+"trigger_geneworm_hit::spawnflags::32":
+{
+"english": "TouchClientOnly"
+},
+"trigger_geneworm_hit::delay":
+{
+"english": "Delay before trigger"
+},
+"trigger_playerfreeze::classname":
+{
+"english": "Trigger Player Freeze"
+},
+"trigger_xen_return::classname":
+{
+"english": "Return To Earth (self-tele)"
+},
+"weapon_displacer::classname":
+{
+"english": "Displacer"
+},
+"weapon_eagle::classname":
+{
+"english": "Desert Eagle"
+},
+"weapon_grapple::classname":
+{
+"english": "Barnacle Grapple"
+},
+"weapon_knife::classname":
+{
+"english": "Knife"
+},
+"weapon_m249::classname":
+{
+"english": "M249 SAW"
+},
+"weapon_penguin::classname":
+{
+"english": "Killer Penguin"
+},
+"weapon_pipewrench::classname":
+{
+"english": "Pipe Wrench"
+},
+"weapon_shockrifle::classname":
+{
+"english": "Shock Roach"
+},
+"weapon_sniperrifle::classname":
+{
+"english": "Sniper Rifle"
+},
+"weapon_sporelauncher::classname":
+{
+"english": "Spore Launcher"
+},
+"CTFAttributes::goal_no":
+{
+"english": "Team"
+},
+"CTFAttributes::goal_no::1":
+{
+"english": "Black Mesa"
+},
+"CTFAttributes::goal_no::2":
+{
+"english": "Opposing Force"
+},
+"CTFAttributes::goal_min":
+{
+"english": "Min Bounds"
+},
+"CTFAttributes::goal_max":
+{
+"english": "Max Bounds"
+},
+"CTFItem::spawnflags::4":
+{
+"english": "Random Spawn"
+},
+"CTFItem::spawnflags::8":
+{
+"english": "Ignore Spawn Team Setting"
+},
+"CTFItem::team_no":
+{
+"english": "Team"
+},
+"CTFItem::team_no::0":
+{
+"english": "Random"
+},
+"CTFItem::team_no::1":
+{
+"english": "Black Mesa"
+},
+"CTFItem::team_no::2":
+{
+"english": "Opposing Force"
+},
+"item_ctfflag::classname":
+{
+"english": "CTF Flag"
+},
+"item_ctfflag::skin":
+{
+"english": "Skin"
+},
+"item_ctfflag::skin::1":
+{
+"english": "Black Mesa"
+},
+"item_ctfflag::skin::2":
+{
+"english": "Opposing Force"
+},
+"item_ctfbase::classname":
+{
+"english": "CTF Goal"
+},
+"item_ctfbase::skin":
+{
+"english": "Skin"
+},
+"item_ctfbase::skin::0":
+{
+"english": "Default"
+},
+"info_ctfspawn::classname":
+{
+"english": "Player CTF Start"
+},
+"info_ctfspawn::team_no":
+{
+"english": "Team"
+},
+"info_ctfspawn::team_no::0":
+{
+"english": "Random"
+},
+"info_ctfspawn::team_no::1":
+{
+"english": "Black Mesa"
+},
+"info_ctfspawn::team_no::2":
+{
+"english": "Opposing Force"
+},
+"info_ctfdetect::classname":
+{
+"english": "CTF Detect"
+},
+"info_ctfdetect::flagreturntime":
+{
+"english": "Flag Return Time"
+},
+"info_ctfdetect::basedefenddist":
+{
+"english": "Base Defend Distance"
+},
+"info_ctfdetect::defendcarriertime":
+{
+"english": "Defend Carrier Time"
+},
+"info_ctfdetect::captureassisttime":
+{
+"english": "Capture Assist Time"
+},
+"info_ctfdetect::poweruprespawntime":
+{
+"english": "Powerup Respawn Time"
+},
+"info_ctfdetect::score_icon_namebm":
+{
+"english": "Non-Flag Black Mesa icon"
+},
+"info_ctfdetect::score_icon_nameof":
+{
+"english": "Non-Flag Opposing Force icon"
+},
+"info_ctfdetect::map_score_max":
+{
+"english": "Maximum Map Team Score"
+},
+"item_ctflongjump::classname":
+{
+"english": "Longjump Module for CTF"
+},
+"item_ctfportablehev::classname":
+{
+"english": "Portable HEV charger for CTF"
+},
+"item_ctfregeneration::classname":
+{
+"english": "Health regeneration for CTF"
+},
+"item_ctfaccelerator::classname":
+{
+"english": "Double Weapon Damage for CTF"
+},
+"item_ctfbackpack::classname":
+{
+"english": "Backpack Powerup for CTF"
+},
+"info_ctfspawn_powerup::classname":
+{
+"english": "CTF Powerup Spawn Spot"
+},
+"info_ctfspawn_powerup::team_no":
+{
+"english": "Team"
+},
+"info_ctfspawn_powerup::team_no::0":
+{
+"english": "Random"
+},
+"info_ctfspawn_powerup::team_no::1":
+{
+"english": "Black Mesa"
+},
+"info_ctfspawn_powerup::team_no::2":
+{
+"english": "Opposing Force"
+},
+"trigger_ctfgeneric::classname":
+{
+"english": "Trigger CTF Generic"
+},
+"trigger_ctfgeneric::team_no":
+{
+"english": "Team"
+},
+"trigger_ctfgeneric::team_no::0":
+{
+"english": "Both Teams"
+},
+"trigger_ctfgeneric::team_no::1":
+{
+"english": "Black Mesa Only"
+},
+"trigger_ctfgeneric::team_no::2":
+{
+"english": "Opposing Force Only"
+},
+"trigger_ctfgeneric::trigger_delay":
+{
+"english": "Re-activate delay"
+},
+"trigger_ctfgeneric::score":
+{
+"english": "Player Score"
+},
+"trigger_ctfgeneric::team_score":
+{
+"english": "Team Score"
+},
+"trigger_ctfgeneric::triggerstate":
+{
+"english": "Trigger State"
+},
+"trigger_ctfgeneric::triggerstate::0":
+{
+"english": "Off"
+},
+"trigger_ctfgeneric::triggerstate::1":
+{
+"english": "On"
+},
+"trigger_ctfgeneric::triggerstate::2":
+{
+"english": "Toggle"
+},
+"env_warpball::classname":
+{
+"english": "Warp In Ball"
+},
+"env_warpball::spawnflags::1":
+{
+"english": "Remove On fire"
+},
+"env_warpball::spawnflags::2":
+{
+"english": "Kill Center"
+},
+"env_warpball::radius":
+{
+"english": "Beam Radius"
+},
+"env_warpball::warp_target":
+{
+"english": "Warp Target"
+},
+"env_warpball::damage_delay":
+{
+"english": "Damage delay"
+},
+"item_helmet::classname":
+{
+"english": "Barney Helmet"
+},
+"item_helmet::sequence":
+{
+"english": "Orientation"
+},
+"item_helmet::sequence::0":
+{
+"english": "Vertical"
+},
+"item_helmet::sequence::1":
+{
+"english": "Horizontal"
+},
+"item_helmet::sequence::2":
+{
+"english": "Horizontal (Upside Down)"
+},
+"item_armorvest::classname":
+{
+"english": "Barney Vest"
+},
+"item_armorvest::sequence":
+{
+"english": "Orientation"
+},
+"item_armorvest::sequence::0":
+{
+"english": "Upright"
+},
+"item_armorvest::sequence::1":
+{
+"english": "Laying On Back"
+},
+"item_armorvest::sequence::2":
+{
+"english": "Laying On Front"
+},
+"item_armorvest::sequence::3":
+{
+"english": "Upright Leaning"
+},
+"monster_rosenberg::classname":
+{
+"english": "Dr. Rosenberg"
+},
+"trigger_usecheck::classname":
+{
+"english": "Test a Use value"
+},
+"trigger_usecheck::classname::description":
+{
+"english": "Fire true o false whatever the value received is the one specified"
+},
+"trigger_usecheck::is_value":
+{
+"english": "Value to read (undefined don't read)"
+},
+"trigger_usecheck::is_usetype":
+{
+"english": "Use Type to read (-1 don't read)"
+},
+"trigger_usecheck::value_int":
+{
+"english": "Value conversion"
+},
+"trigger_usecheck::value_int::0":
+{
+"english": "integer"
+},
+"trigger_usecheck::value_int::0::description":
+{
+"english": "Both values are converted into integer before the comparision"
+},
+"trigger_usecheck::value_int::1":
+{
+"english": "float"
+},
+"trigger_usecheck::value_int::1::description":
+{
+"english": "Both values are converted into float before the comparision"
+},
+"trigger_usecheck::value_comparator":
+{
+"english": "Value comparision"
+},
+"trigger_usecheck::m_iSetType::7":
+{
+"english": "Logical AND ( (source & target) != 0 )"
+},
+"trigger_usecheck::usetype_comparator":
+{
+"english": "Use Type comparision"
+},
+"trigger_usecheck::message":
+{
+"english": "Trigger on true"
+},
+"trigger_usecheck::netname":
+{
+"english": "Trigger on false"
+},
+"trigger_entity_iterator::classname":
+{
+"english": "Entity Iterator"
+},
+"trigger_entity_iterator::name_filter":
+{
+"english": "Filter Entities by Name"
+},
+"trigger_entity_iterator::classname_filter":
+{
+"english": "Filter Entities by Classname"
+},
+"trigger_entity_iterator::status_filter":
+{
+"english": "Filter Entities by Status"
+},
+"trigger_entity_iterator::status_filter::0":
+{
+"english": "No Filter (default)"
+},
+"trigger_entity_iterator::status_filter::1":
+{
+"english": "Only Living Entities"
+},
+"trigger_entity_iterator::status_filter::2":
+{
+"english": "Only Dead Entities"
+},
+"trigger_entity_iterator::delay_between_triggers":
+{
+"english": "Delay between Entities (secs)"
+},
+"trigger_entity_iterator::target":
+{
+"english": "Entity's Trigger Target"
+},
+"trigger_entity_iterator::triggerstate":
+{
+"english": "Entity's Trigger State"
+},
+"trigger_entity_iterator::triggerstate::0":
+{
+"english": "Off"
+},
+"trigger_entity_iterator::triggerstate::1":
+{
+"english": "On"
+},
+"trigger_entity_iterator::triggerstate::2":
+{
+"english": "Toggle"
+},
+"trigger_entity_iterator::run_mode":
+{
+"english": "Run Mode"
+},
+"trigger_entity_iterator::run_mode::0":
+{
+"english": "Run Once"
+},
+"trigger_entity_iterator::run_mode::1":
+{
+"english": "Run Once; Multi-threaded"
+},
+"trigger_entity_iterator::run_mode::2":
+{
+"english": "Toggle On/Off"
+},
+"trigger_entity_iterator::trigger_after_run":
+{
+"english": "Trigger at end of each Run"
+},
+"trigger_entity_iterator::maximum_runs":
+{
+"english": "Maximum Runs (0 for unlimited)"
+},
+"trigger_entity_iterator::delay_between_runs":
+{
+"english": "Delay before Restarting (secs)"
+},
+"game_precache::classname":
+{
+"english": "Precache content"
+},
+"game_precache::classname::description":
+{
+"english": "Precache it's values with the defined keys \"model\" for models \"sound\" for sounds \"generic\" for generic stuff \"other\" for entities classnames"
+},
+"trigger_eventhandler::classname":
+{
+"english": "trigger game events"
+},
+"trigger_eventhandler::classname::description":
+{
+"english": "Handles a game event and trigger it's target if matched"
+},
+"trigger_eventhandler::m_Caller":
+{
+"english": "New caller to pass"
+},
+"trigger_eventhandler::event_type":
+{
+"english": "Handle event type"
+},
+"trigger_eventhandler::event_type::0":
+{
+"english": "None"
+},
+"trigger_eventhandler::event_type::1":
+{
+"english": "Player has died"
+},
+"trigger_eventhandler::event_type::2":
+{
+"english": "Player left the server"
+},
+"trigger_eventhandler::event_type::3":
+{
+"english": "Player has been kiled (not suicide)"
+},
+"trigger_eventhandler::event_type::4":
+{
+"english": "Player has joined (game_playeractivate)"
+},
+"trigger_eventhandler::event_type::5":
+{
+"english": "Player has joined (game_playerjoin)"
+},
+"trigger_eventhandler::event_type::6":
+{
+"english": "Player has joined (game_playerspawn)"
+},
+"EOF": true
+}

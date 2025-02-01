@@ -1,0 +1,57 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "Angles",
+        "ZHLT_point"
+    ],
+    "sprite": "sprites/lightbulb.spr",
+    "iconsprite": "sprites/lightbulb.spr",
+    "data": {
+        "_cone": {
+            "variable": "integer",
+            "value": 30,
+            "title": "light_spot::_cone",
+            "description": "light_spot::_cone::description"
+        },
+        "_cone2": {
+            "variable": "integer",
+            "value": 45,
+            "title": "light_spot::_cone2",
+            "description": "light_spot::_cone2::description"
+        },
+        "pitch": {
+            "variable": "integer",
+            "value": -90,
+            "title": "light_spot::pitch",
+            "description": "light_spot::pitch::description"
+        },
+        "_sky": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "light_spot::_sky::0",
+                    "description": "light_spot::_sky::0::description"
+                },
+                "1": {
+                    "title": "light_spot::_sky::1",
+                    "description": "light_spot::_sky::1::description"
+                }
+            },
+            "title": "light_spot::_sky",
+            "description": "light_spot::_sky::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "light_spot::spawnflags::1",
+                    "description": "light_spot::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "light_spot::classname",
+    "description": "light_spot::classname::description"
+}

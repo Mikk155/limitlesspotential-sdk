@@ -1,0 +1,37 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [ "CKeyValueLogic", "Target", "CBaseDelay" ],
+    "data":
+    {
+        "m_iSetType":
+        {
+            "variable": "choices",
+            "choices": {
+                "0":{
+                    "title": "trigger_condition::m_iSetType::0"
+                },
+                "1":{
+                    "title": "trigger_condition::m_iSetType::1"
+                },
+                "2":{
+                    "title": "trigger_condition::m_iSetType::2"
+                },
+                "3":{
+                    "title": "trigger_condition::m_iSetType::3"
+                },
+                "4":{
+                    "title": "trigger_condition::m_iSetType::4"
+                },
+                "5":{
+                    "title": "trigger_condition::m_iSetType::5"
+                },
+                "6":{
+                    "title": "trigger_condition::m_iSetType::6"
+                }
+            },
+            "title": "trigger_condition::m_iSetType",
+            "description": "trigger_condition::m_iSetType::description"
+        }
+    }
+}

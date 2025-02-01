@@ -1,0 +1,52 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -8,
+            -8,
+            -8
+        ],
+        [
+            8,
+            8,
+            8
+        ]
+    ],
+    "data": {
+        "all_players": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "player_setsuitlighttype::all_players::0",
+                    "description": "player_setsuitlighttype::all_players::0::description"
+                },
+                "1": {
+                    "title": "player_setsuitlighttype::all_players::1",
+                    "description": "player_setsuitlighttype::all_players::1::description"
+                }
+            },
+            "title": "player_setsuitlighttype::all_players",
+            "description": "player_setsuitlighttype::all_players::description"
+        },
+        "light_type": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "player_setsuitlighttype::light_type::0",
+                    "description": "player_setsuitlighttype::light_type::0::description"
+                },
+                "1": {
+                    "title": "player_setsuitlighttype::light_type::1",
+                    "description": "player_setsuitlighttype::light_type::1::description"
+                }
+            },
+            "title": "player_setsuitlighttype::light_type",
+            "description": "player_setsuitlighttype::light_type::description"
+        }
+    },
+    "title": "player_setsuitlighttype::classname",
+    "description": "player_setsuitlighttype::classname::description"
+}

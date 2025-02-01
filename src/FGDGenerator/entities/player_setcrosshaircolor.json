@@ -1,0 +1,42 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "crosshair_color": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "player_setcrosshaircolor::crosshair_color",
+            "description": "player_setcrosshaircolor::crosshair_color::description"
+        },
+        "action": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "player_setcrosshaircolor::action::0",
+                    "description": "player_setcrosshaircolor::action::0::description"
+                },
+                "1": {
+                    "title": "player_setcrosshaircolor::action::1",
+                    "description": "player_setcrosshaircolor::action::1::description"
+                }
+            },
+            "title": "player_setcrosshaircolor::action",
+            "description": "player_setcrosshaircolor::action::description"
+        }
+    },
+    "title": "player_setcrosshaircolor::classname",
+    "description": "player_setcrosshaircolor::classname::description"
+}

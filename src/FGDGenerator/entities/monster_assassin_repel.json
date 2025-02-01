@@ -1,0 +1,16 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/massn.mdl",
+    "title": "monster_assassin_repel::classname",
+    "description": "monster_assassin_repel::classname::description"
+}

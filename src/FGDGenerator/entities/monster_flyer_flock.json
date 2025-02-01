@@ -1,0 +1,42 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "studio": "models/aflock.mdl",
+    "data": {
+        "iFlockSize": {
+            "variable": "integer",
+            "value": "8",
+            "title": "monster_flyer_flock::iFlockSize",
+            "description": "monster_flyer_flock::iFlockSize::description"
+        },
+        "flFlockRadius": {
+            "variable": "integer",
+            "value": "128",
+            "title": "monster_flyer_flock::flFlockRadius",
+            "description": "monster_flyer_flock::flFlockRadius::description"
+        }
+    },
+    "title": "monster_flyer_flock::classname",
+    "description": "monster_flyer_flock::classname::description"
+}

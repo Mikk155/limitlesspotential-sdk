@@ -1,0 +1,65 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "size": [
+        [
+            -4,
+            -4,
+            -4
+        ],
+        [
+            4,
+            4,
+            4
+        ]
+    ],
+    "data": {
+        "health": {
+            "variable": "integer",
+            "value": "10",
+            "title": "env_beverage::health",
+            "description": "env_beverage::health::description"
+        },
+        "skin": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "env_beverage::skin::0",
+                    "description": "env_beverage::skin::0::description"
+                },
+                "1": {
+                    "title": "env_beverage::skin::1",
+                    "description": "env_beverage::skin::1::description"
+                },
+                "2": {
+                    "title": "env_beverage::skin::2",
+                    "description": "env_beverage::skin::2::description"
+                },
+                "3": {
+                    "title": "env_beverage::skin::3",
+                    "description": "env_beverage::skin::3::description"
+                },
+                "4": {
+                    "title": "env_beverage::skin::4",
+                    "description": "env_beverage::skin::4::description"
+                },
+                "5": {
+                    "title": "env_beverage::skin::5",
+                    "description": "env_beverage::skin::5::description"
+                },
+                "6": {
+                    "title": "env_beverage::skin::6",
+                    "description": "env_beverage::skin::6::description"
+                }
+            },
+            "title": "env_beverage::skin",
+            "description": "env_beverage::skin::description"
+        }
+    },
+    "title": "env_beverage::classname",
+    "description": "env_beverage::classname::description"
+}

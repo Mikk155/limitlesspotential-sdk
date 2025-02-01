@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Angles"
+    ],
+    "studio": "models/hair.mdl",
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "xen_hair::spawnflags::1",
+                    "description": "xen_hair::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "xen_hair::classname",
+    "description": "xen_hair::classname::description"
+}

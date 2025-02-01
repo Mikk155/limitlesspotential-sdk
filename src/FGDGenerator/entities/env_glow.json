@@ -1,0 +1,35 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "scale",
+        "RenderFields"
+    ],
+    "size": [
+        [
+            -4,
+            -4,
+            -4
+        ],
+        [
+            4,
+            4,
+            4
+        ]
+    ],
+    "color": [
+        30,
+        100,
+        0
+    ],
+    "sprite": true,
+    "data": {
+        "model": {
+            "variable": "sprite",
+            "value": "sprites/glow01.spr",
+            "title": "CustomKeys::sprite"
+        }
+    },
+    "title": "env_glow::classname",
+    "description": "env_glow::classname::description"
+}

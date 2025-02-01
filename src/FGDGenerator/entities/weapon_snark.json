@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_squeak.mdl",
+    "data": {},
+    "title": "weapon_snark::classname",
+    "description": "weapon_snark::classname::description"
+}

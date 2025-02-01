@@ -1,0 +1,39 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Master"
+    ],
+    "data": {
+        "netname": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "Trigger::netname",
+            "description": "Trigger::netname::description"
+        },
+        "message": {
+            "variable": "string",
+            "value": "",
+            "title": "Trigger::message",
+            "description": "Trigger::message::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "Trigger::spawnflags::1",
+                    "description": "Trigger::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "Trigger::spawnflags::2",
+                    "description": "Trigger::spawnflags::2::description"
+                },
+                "4": {
+                    "title": "Trigger::spawnflags::4",
+                    "description": "Trigger::spawnflags::4::description"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "RenderFields",
+        "Ammo"
+    ],
+    "studio": true,
+    "data": {
+        "model": {
+            "variable": "studio",
+            "value": "models/w_9mmarclip.mdl",
+            "title": "CustomKeys::model"
+        }
+    },
+    "title": "ammo_9mmar::classname",
+    "description": "ammo_9mmar::classname::description"
+}

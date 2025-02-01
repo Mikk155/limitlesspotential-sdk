@@ -1,0 +1,11 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "master": {
+            "variable": "target_source",
+            "title": "Master::master",
+            "description": "Master::master::description"
+        }
+    }
+}

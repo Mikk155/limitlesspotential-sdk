@@ -1,0 +1,44 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "item_battery"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            36
+        ]
+    ],
+    "studio": "models/barney_helmet.mdl",
+    "data": {
+        "sequence": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "item_helmet::sequence::0",
+                    "description": "item_helmet::sequence::0::description"
+                },
+                "1": {
+                    "title": "item_helmet::sequence::1",
+                    "description": "item_helmet::sequence::1::description"
+                },
+                "2": {
+                    "title": "item_helmet::sequence::2",
+                    "description": "item_helmet::sequence::2::description"
+                }
+            },
+            "title": "item_helmet::sequence",
+            "description": "item_helmet::sequence::description"
+        }
+    },
+    "title": "item_helmet::classname",
+    "description": "item_helmet::classname::description"
+}

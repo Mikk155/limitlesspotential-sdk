@@ -1,0 +1,31 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "PlayerSelector"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "player_weaponstrip::spawnflags::1",
+                    "description": "player_weaponstrip::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "player_weaponstrip::classname",
+    "description": "player_weaponstrip::classname::description"
+}

@@ -1,0 +1,21 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "RenderFields",
+        "Ammo"
+    ],
+    "studio": true,
+    "data": {
+        "model": {
+            "variable": "studio",
+            "value": "models/w_crossbow_clip.mdl",
+            "title": "CustomKeys::model"
+        }
+    },
+    "title": "ammo_crossbow::classname",
+    "description": "ammo_crossbow::classname::description"
+}

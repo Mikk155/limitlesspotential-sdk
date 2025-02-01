@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Angles",
+        "Master"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "40",
+            "title": "trigger_monsterjump::speed",
+            "description": "trigger_monsterjump::speed::description"
+        },
+        "height": {
+            "variable": "integer",
+            "value": "128",
+            "title": "trigger_monsterjump::height",
+            "description": "trigger_monsterjump::height::description"
+        }
+    },
+    "title": "trigger_monsterjump::classname",
+    "description": "trigger_monsterjump::classname::description"
+}

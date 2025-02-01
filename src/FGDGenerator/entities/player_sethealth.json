@@ -1,0 +1,80 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -8,
+            -8,
+            -8
+        ],
+        [
+            8,
+            8,
+            8
+        ]
+    ],
+    "data": {
+        "all_players": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "player_sethealth::all_players::0",
+                    "description": "player_sethealth::all_players::0::description"
+                },
+                "1": {
+                    "title": "player_sethealth::all_players::1",
+                    "description": "player_sethealth::all_players::1::description"
+                }
+            },
+            "title": "player_sethealth::all_players",
+            "description": "player_sethealth::all_players::description"
+        },
+        "set_health": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "player_sethealth::set_health::0",
+                    "description": "player_sethealth::set_health::0::description"
+                },
+                "1": {
+                    "title": "player_sethealth::set_health::1",
+                    "description": "player_sethealth::set_health::1::description"
+                }
+            },
+            "title": "player_sethealth::set_health",
+            "description": "player_sethealth::set_health::description"
+        },
+        "set_armor": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "player_sethealth::set_armor::0",
+                    "description": "player_sethealth::set_armor::0::description"
+                },
+                "1": {
+                    "title": "player_sethealth::set_armor::1",
+                    "description": "player_sethealth::set_armor::1::description"
+                }
+            },
+            "title": "player_sethealth::set_armor",
+            "description": "player_sethealth::set_armor::description"
+        },
+        "health_to_set": {
+            "variable": "integer",
+            "value": "",
+            "title": "player_sethealth::health_to_set",
+            "description": "player_sethealth::health_to_set::description"
+        },
+        "armor_to_set": {
+            "variable": "integer",
+            "value": "",
+            "title": "player_sethealth::armor_to_set",
+            "description": "player_sethealth::armor_to_set::description"
+        }
+    },
+    "title": "player_sethealth::classname",
+    "description": "player_sethealth::classname::description"
+}

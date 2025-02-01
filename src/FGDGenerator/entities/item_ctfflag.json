@@ -1,0 +1,44 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CTFAttributes"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "data": {
+        "skin": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "1": {
+                    "title": "item_ctfflag::skin::1",
+                    "description": "item_ctfflag::skin::1::description"
+                },
+                "2": {
+                    "title": "item_ctfflag::skin::2",
+                    "description": "item_ctfflag::skin::2::description"
+                }
+            },
+            "title": "item_ctfflag::skin",
+            "description": "item_ctfflag::skin::description"
+        },
+        "model": {
+            "variable": "studio",
+            "value": "models/flag.mdl",
+            "title": "CustomModel::model"
+        }
+    },
+    "title": "item_ctfflag::classname",
+    "description": "item_ctfflag::classname::description"
+}

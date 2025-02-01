@@ -1,0 +1,20 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "BaseItem"
+    ],
+    "color": [
+        0,
+        0,
+        200
+    ],
+    "data": {
+        "default_ammo": {
+            "variable": "integer",
+            "value": "",
+            "title": "Weapon::default_ammo",
+            "description": "Weapon::default_ammo::description"
+        }
+    }
+}

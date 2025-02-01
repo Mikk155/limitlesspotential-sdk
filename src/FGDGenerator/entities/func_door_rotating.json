@@ -1,0 +1,39 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Door",
+        "UseLineOfSight",
+        "ZHLT"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "2": {
+                    "title": "func_door_rotating::spawnflags::2",
+                    "description": "func_door_rotating::spawnflags::2::description"
+                },
+                "16": {
+                    "title": "func_door_rotating::spawnflags::16",
+                    "description": "func_door_rotating::spawnflags::16::description"
+                },
+                "64": {
+                    "title": "func_door_rotating::spawnflags::64",
+                    "description": "func_door_rotating::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "func_door_rotating::spawnflags::128",
+                    "description": "func_door_rotating::spawnflags::128::description"
+                }
+            }
+        },
+        "distance": {
+            "variable": "integer",
+            "value": "90",
+            "title": "func_door_rotating::distance",
+            "description": "func_door_rotating::distance::description"
+        }
+    },
+    "title": "func_door_rotating::classname",
+    "description": "func_door_rotating::classname::description"
+}

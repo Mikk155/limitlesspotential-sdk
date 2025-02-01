@@ -1,0 +1,69 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles",
+        "gibshooterbase",
+        "scale",
+        "RenderFields"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "shootmodel": {
+            "variable": "studio",
+            "title": "env_shooter::shootmodel",
+            "description": "env_shooter::shootmodel::description"
+        },
+        "shootsounds": {
+            "variable": "choices",
+            "value": "-1",
+            "choices": {
+                "-1": {
+                    "title": "env_shooter::shootsounds::-1",
+                    "description": "env_shooter::shootsounds::-1::description"
+                },
+                "0": {
+                    "title": "env_shooter::shootsounds::0",
+                    "description": "env_shooter::shootsounds::0::description"
+                },
+                "1": {
+                    "title": "env_shooter::shootsounds::1",
+                    "description": "env_shooter::shootsounds::1::description"
+                },
+                "2": {
+                    "title": "env_shooter::shootsounds::2",
+                    "description": "env_shooter::shootsounds::2::description"
+                },
+                "3": {
+                    "title": "env_shooter::shootsounds::3",
+                    "description": "env_shooter::shootsounds::3::description"
+                },
+                "4": {
+                    "title": "env_shooter::shootsounds::4",
+                    "description": "env_shooter::shootsounds::4::description"
+                }
+            },
+            "title": "env_shooter::shootsounds",
+            "description": "env_shooter::shootsounds::description"
+        },
+        "skin": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_shooter::skin",
+            "description": "env_shooter::skin::description"
+        }
+    },
+    "title": "env_shooter::classname",
+    "description": "env_shooter::classname::description"
+}

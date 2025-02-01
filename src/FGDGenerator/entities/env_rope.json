@@ -1,0 +1,53 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "segments": {
+            "variable": "integer",
+            "value": "16",
+            "title": "env_rope::segments",
+            "description": "env_rope::segments::description"
+        },
+        "disable": {
+            "variable": "choices",
+            "choices": {
+                "0": {
+                    "title": "env_rope::disable::0",
+                    "description": "env_rope::disable::0::description"
+                },
+                "1": {
+                    "title": "env_rope::disable::1",
+                    "description": "env_rope::disable::1::description"
+                }
+            },
+            "title": "env_rope::disable",
+            "description": "env_rope::disable::description"
+        },
+        "endingmodel": {
+            "variable": "studio",
+            "value": "models/rope16.mdl",
+            "title": "env_rope::endingmodel",
+            "description": "env_rope::endingmodel::description"
+        },
+        "bodymodel": {
+            "variable": "studio",
+            "value": "models/rope16.mdl",
+            "title": "env_rope::bodymodel",
+            "description": "env_rope::bodymodel::description"
+        }
+    },
+    "title": "env_rope::classname",
+    "description": "env_rope::classname::description"
+}

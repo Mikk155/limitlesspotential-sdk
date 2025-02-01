@@ -1,0 +1,15 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "hulls",
+        "ReplacementFiles"
+    ],
+    "data": {
+        "model": {
+            "variable": "studio",
+            "title": "CustomModel::model",
+            "description": "CustomModel::model::description"
+        }
+    }
+}

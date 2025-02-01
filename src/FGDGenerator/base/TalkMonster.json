@@ -1,0 +1,22 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "suspicious": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "TalkMonster::suspicious::0",
+                    "description": "TalkMonster::suspicious::0::description"
+                },
+                "1": {
+                    "title": "TalkMonster::suspicious::1",
+                    "description": "TalkMonster::suspicious::1::description"
+                }
+            },
+            "title": "TalkMonster::suspicious",
+            "description": "TalkMonster::suspicious::description"
+        }
+    }
+}

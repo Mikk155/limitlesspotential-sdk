@@ -1,0 +1,19 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "base": [
+        "RenderFields",
+        "ZHLT"
+    ],
+    "data": {
+        "modifier": {
+            "variable": "integer",
+            "value": "15",
+            "title": "func_friction::modifier",
+            "description": "func_friction::modifier::description"
+        }
+    },
+    "title": "func_friction::classname",
+    "description": "func_friction::classname::description"
+}

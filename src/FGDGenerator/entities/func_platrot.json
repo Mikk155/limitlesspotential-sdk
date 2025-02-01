@@ -1,0 +1,50 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Global",
+        "RenderFields",
+        "PlatSounds",
+        "Angles",
+        "minlight",
+        "ZHLT"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_platrot::spawnflags::1",
+                    "description": "func_platrot::spawnflags::1::description"
+                },
+                "64": {
+                    "title": "func_platrot::spawnflags::64",
+                    "description": "func_platrot::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "func_platrot::spawnflags::128",
+                    "description": "func_platrot::spawnflags::128::description"
+                }
+            }
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "50",
+            "title": "func_platrot::speed",
+            "description": "func_platrot::speed::description"
+        },
+        "height": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_platrot::height",
+            "description": "func_platrot::height::description"
+        },
+        "rotation": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_platrot::rotation",
+            "description": "func_platrot::rotation::description"
+        }
+    },
+    "title": "func_platrot::classname",
+    "description": "func_platrot::classname::description"
+}

@@ -1,0 +1,22 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data":
+    {
+        "allow_headcrab":
+        {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "No"
+                },
+                "1": {
+                    "title": "Yes"
+                }
+            },
+            "title": "monster_zombie::allow_headcrab",
+            "description": "monster_zombie::allow_headcrab::description"
+        }
+    }
+}

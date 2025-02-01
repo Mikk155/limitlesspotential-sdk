@@ -1,0 +1,75 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "RenderFields",
+        "Global",
+        "PlatSounds"
+    ],
+    "data": {
+        "height": {
+            "variable": "integer",
+            "value": "0",
+            "title": "Trackchange::height",
+            "description": "Trackchange::height::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "Trackchange::spawnflags::1",
+                    "description": "Trackchange::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "Trackchange::spawnflags::2",
+                    "description": "Trackchange::spawnflags::2::description"
+                },
+                "8": {
+                    "title": "Trackchange::spawnflags::8",
+                    "description": "Trackchange::spawnflags::8::description"
+                },
+                "16": {
+                    "title": "Trackchange::spawnflags::16",
+                    "description": "Trackchange::spawnflags::16::description"
+                },
+                "64": {
+                    "title": "Trackchange::spawnflags::64",
+                    "description": "Trackchange::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "Trackchange::spawnflags::128",
+                    "description": "Trackchange::spawnflags::128::description"
+                }
+            }
+        },
+        "rotation": {
+            "variable": "integer",
+            "value": "0",
+            "title": "Trackchange::rotation",
+            "description": "Trackchange::rotation::description"
+        },
+        "train": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "Trackchange::train",
+            "description": "Trackchange::train::description"
+        },
+        "toptrack": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "Trackchange::toptrack",
+            "description": "Trackchange::toptrack::description"
+        },
+        "bottomtrack": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "Trackchange::bottomtrack",
+            "description": "Trackchange::bottomtrack::description"
+        },
+        "speed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "Trackchange::speed",
+            "description": "Trackchange::speed::description"
+        }
+    }
+}

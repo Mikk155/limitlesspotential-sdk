@@ -1,0 +1,17 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence",
+        "squadmonster"
+    ],
+    "studio": "models/voltigore.mdl",
+    "title": "monster_alien_voltigore::classname",
+    "description": "monster_alien_voltigore::classname::description"
+}

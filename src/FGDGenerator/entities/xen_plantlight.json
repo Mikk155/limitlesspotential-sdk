@@ -1,0 +1,13 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "RenderFields",
+        "Angles"
+    ],
+    "studio": "models/light.mdl",
+    "data": {},
+    "title": "xen_plantlight::classname",
+    "description": "xen_plantlight::classname::description"
+}

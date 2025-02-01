@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_357.mdl",
+    "data": {},
+    "title": "weapon_357::classname",
+    "description": "weapon_357::classname::description"
+}

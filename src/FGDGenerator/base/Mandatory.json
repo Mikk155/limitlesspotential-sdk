@@ -1,0 +1,24 @@
+{
+    "$schema": "../schema.json",
+	"Class": "Base",
+	"data":
+	{
+		"spawnflags":
+		{ 
+			"choices":
+			{
+				"2048":
+				{
+					"title": "Mandatory::spawnflags::2048",
+					"description": "Mandatory::spawnflags::2048::description"
+				}
+			}
+		},
+		"targetname":
+		{
+			"variable": "target_source",
+			"title": "Mandatory::targetname",
+			"description": "Mandatory::targetname::description"
+		}
+	}
+}

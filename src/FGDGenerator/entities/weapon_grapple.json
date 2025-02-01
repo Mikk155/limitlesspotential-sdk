@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_bgrap.mdl",
+    "data": {},
+    "title": "weapon_grapple::classname",
+    "description": "weapon_grapple::classname::description"
+}

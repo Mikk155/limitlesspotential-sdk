@@ -1,0 +1,27 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "base": [
+        "ReplacementFiles"
+    ],
+    "data": {
+        "movesnd": {
+            "variable": "sound",
+            "value": "",
+            "title": "PlatSounds::movesnd",
+            "description": "PlatSounds::movesnd::description"
+        },
+        "stopsnd": {
+            "variable": "sound",
+            "value": "",
+            "title": "PlatSounds::stopsnd",
+            "description": "PlatSounds::stopsnd::description"
+        },
+        "volume": {
+            "variable": "string",
+            "value": "0.85",
+            "title": "PlatSounds::volume",
+            "description": "PlatSounds::volume::description"
+        }
+    }
+}

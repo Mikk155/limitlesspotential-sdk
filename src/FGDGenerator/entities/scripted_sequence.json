@@ -1,0 +1,57 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "Angles",
+        "BaseScriptedSequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "color": [
+        255,
+        0,
+        255
+    ],
+    "data": {
+        "m_iszIdle": {
+            "variable": "string",
+            "value": "",
+            "title": "scripted_sequence::m_iszIdle",
+            "description": "scripted_sequence::m_iszIdle::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "32": {
+                    "title": "scripted_sequence::spawnflags::32",
+                    "description": "scripted_sequence::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "scripted_sequence::spawnflags::64",
+                    "description": "scripted_sequence::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "scripted_sequence::spawnflags::128",
+                    "description": "scripted_sequence::spawnflags::128::description"
+                },
+                "256": {
+                    "title": "scripted_sequence::spawnflags::256",
+                    "description": "scripted_sequence::spawnflags::256::description"
+                }
+            }
+        }
+    },
+    "title": "scripted_sequence::classname",
+    "description": "scripted_sequence::classname::description"
+}

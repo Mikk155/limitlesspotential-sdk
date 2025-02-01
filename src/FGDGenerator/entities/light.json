@@ -1,0 +1,74 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "_light": {
+            "variable": "color255",
+            "value": "255 255 128 200",
+            "title": "Light::_light",
+            "description": "Light::_light::description"
+        },
+        "style": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "Light::style::0",
+                    "description": "Light::style::0::description"
+                },
+                "10": {
+                    "title": "Light::style::10",
+                    "description": "Light::style::10::description"
+                },
+                "2": {
+                    "title": "Light::style::2",
+                    "description": "Light::style::2::description"
+                },
+                "11": {
+                    "title": "Light::style::11",
+                    "description": "Light::style::11::description"
+                },
+                "5": {
+                    "title": "Light::style::5",
+                    "description": "Light::style::5::description"
+                },
+                "1": {
+                    "title": "Light::style::1",
+                    "description": "Light::style::1::description"
+                },
+                "6": {
+                    "title": "Light::style::6",
+                    "description": "Light::style::6::description"
+                },
+                "3": {
+                    "title": "Light::style::3",
+                    "description": "Light::style::3::description"
+                },
+                "7": {
+                    "title": "Light::style::7",
+                    "description": "Light::style::7::description"
+                },
+                "8": {
+                    "title": "Light::style::8",
+                    "description": "Light::style::8::description"
+                },
+                "4": {
+                    "title": "Light::style::4",
+                    "description": "Light::style::4::description"
+                },
+                "9": {
+                    "title": "Light::style::9",
+                    "description": "Light::style::9::description"
+                }
+            },
+            "title": "Light::style",
+            "description": "Light::style::description"
+        },
+        "pattern": {
+            "variable": "string",
+            "value": "",
+            "title": "Light::pattern",
+            "description": "Light::pattern::description"
+        }
+    }
+}

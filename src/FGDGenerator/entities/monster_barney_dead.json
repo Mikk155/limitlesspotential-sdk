@@ -1,0 +1,66 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFields",
+        "Angles",
+        "Sequence"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "studio": "models/barney.mdl",
+    "data": {
+        "bodystate": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "0": {
+                    "title": "monster_barney_dead::bodystate::0",
+                    "description": "monster_barney_dead::bodystate::0::description"
+                },
+                "1": {
+                    "title": "monster_barney_dead::bodystate::1",
+                    "description": "monster_barney_dead::bodystate::1::description"
+                },
+                "2": {
+                    "title": "monster_barney_dead::bodystate::2",
+                    "description": "monster_barney_dead::bodystate::2::description"
+                }
+            },
+            "title": "monster_barney_dead::bodystate",
+            "description": "monster_barney_dead::bodystate::description"
+        },
+        "pose": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "monster_barney_dead::pose::0",
+                    "description": "monster_barney_dead::pose::0::description"
+                },
+                "1": {
+                    "title": "monster_barney_dead::pose::1",
+                    "description": "monster_barney_dead::pose::1::description"
+                },
+                "2": {
+                    "title": "monster_barney_dead::pose::2",
+                    "description": "monster_barney_dead::pose::2::description"
+                }
+            },
+            "title": "monster_barney_dead::pose",
+            "description": "monster_barney_dead::pose::description"
+        }
+    },
+    "title": "monster_barney_dead::classname",
+    "description": "monster_barney_dead::classname::description"
+}

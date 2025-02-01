@@ -1,0 +1,24 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Monster",
+        "Target",
+        "RenderFields",
+        "Angles",
+        "CustomModel",
+        "Unkillable",
+        "Sequence"
+    ],
+    "studio": "models/pit_drone.mdl",
+    "data": {
+        "initammo": {
+            "variable": "string",
+            "value": "6",
+            "title": "monster_pitdrone::initammo",
+            "description": "monster_pitdrone::initammo::description"
+        }
+    },
+    "title": "monster_pitdrone::classname",
+    "description": "monster_pitdrone::classname::description"
+}

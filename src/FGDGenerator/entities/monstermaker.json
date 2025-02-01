@@ -1,0 +1,80 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Angles"
+    ],
+    "color": [
+        245,
+        128,
+        96
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            0
+        ],
+        [
+            16,
+            16,
+            72
+        ]
+    ],
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "monstermaker::target",
+            "description": "monstermaker::target::description"
+        },
+        "monstertype": {
+            "variable": "string",
+            "value": "",
+            "title": "monstermaker::monstertype",
+            "description": "monstermaker::monstertype::description"
+        },
+        "netname": {
+            "variable": "string",
+            "value": "",
+            "title": "monstermaker::netname",
+            "description": "monstermaker::netname::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "monstermaker::spawnflags::1",
+                    "description": "monstermaker::spawnflags::1::description"
+                },
+                "4": {
+                    "title": "monstermaker::spawnflags::4",
+                    "description": "monstermaker::spawnflags::4::description"
+                },
+                "8": {
+                    "title": "monstermaker::spawnflags::8",
+                    "description": "monstermaker::spawnflags::8::description"
+                }
+            }
+        },
+        "monstercount": {
+            "variable": "integer",
+            "value": "-1",
+            "title": "monstermaker::monstercount",
+            "description": "monstermaker::monstercount::description"
+        },
+        "delay": {
+            "variable": "string",
+            "value": "5",
+            "title": "monstermaker::delay",
+            "description": "monstermaker::delay::description"
+        },
+        "m_imaxlivechildren": {
+            "variable": "integer",
+            "value": "5",
+            "title": "monstermaker::m_imaxlivechildren",
+            "description": "monstermaker::m_imaxlivechildren::description"
+        }
+    },
+    "title": "monstermaker::classname",
+    "description": "monstermaker::classname::description"
+}

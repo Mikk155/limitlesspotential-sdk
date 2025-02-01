@@ -1,0 +1,56 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "m_iGibs": {
+            "variable": "integer",
+            "value": "3",
+            "title": "gibshooterbase::m_iGibs",
+            "description": "gibshooterbase::m_iGibs::description"
+        },
+        "delay": {
+            "variable": "string",
+            "value": "0",
+            "title": "gibshooterbase::delay",
+            "description": "gibshooterbase::delay::description"
+        },
+        "m_flVelocity": {
+            "variable": "integer",
+            "value": "200",
+            "title": "gibshooterbase::m_flVelocity",
+            "description": "gibshooterbase::m_flVelocity::description"
+        },
+        "m_flVariance": {
+            "variable": "string",
+            "value": "0.15",
+            "title": "gibshooterbase::m_flVariance",
+            "description": "gibshooterbase::m_flVariance::description"
+        },
+        "m_flGibLife": {
+            "variable": "string",
+            "value": "4",
+            "title": "gibshooterbase::m_flGibLife",
+            "description": "gibshooterbase::m_flGibLife::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "gibshooterbase::spawnflags::1",
+                    "description": "gibshooterbase::spawnflags::1::description"
+                }
+            }
+        }
+    }
+}

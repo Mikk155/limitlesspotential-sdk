@@ -1,0 +1,65 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "RenderFields",
+        "Target",
+        "Angles",
+        "ZHLT",
+        "Master",
+        "ReplacementFiles",
+        "minlight"
+    ],
+    "data": {
+        "speed": {
+            "variable": "integer",
+            "value": "50",
+            "title": "func_button_rotating::speed",
+            "description": "func_button_rotating::speed::description"
+        },
+        "sounds": {
+            "variable": "sound",
+            "value": "",
+            "title": "func_button_rotating::sounds",
+            "description": "func_button_rotating::sounds::description"
+        },
+        "distance": {
+            "variable": "integer",
+            "value": "90",
+            "title": "func_button_rotating::distance",
+            "description": "func_button_rotating::distance::description"
+        },
+        "returnspeed": {
+            "variable": "integer",
+            "value": "0",
+            "title": "func_button_rotating::returnspeed",
+            "description": "func_button_rotating::returnspeed::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_button_rotating::spawnflags::1",
+                    "description": "func_button_rotating::spawnflags::1::description"
+                },
+                "2": {
+                    "title": "func_button_rotating::spawnflags::2",
+                    "description": "func_button_rotating::spawnflags::2::description"
+                },
+                "16": {
+                    "title": "func_button_rotating::spawnflags::16",
+                    "description": "func_button_rotating::spawnflags::16::description"
+                },
+                "64": {
+                    "title": "func_button_rotating::spawnflags::64",
+                    "description": "func_button_rotating::spawnflags::64::description"
+                },
+                "128": {
+                    "title": "func_button_rotating::spawnflags::128",
+                    "description": "func_button_rotating::spawnflags::128::description"
+                }
+            }
+        }
+    },
+    "title": "func_button_rotating::classname",
+    "description": "func_button_rotating::classname::description"
+}

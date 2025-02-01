@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_grenade.mdl",
+    "data": {},
+    "title": "weapon_handgrenade::classname",
+    "description": "weapon_handgrenade::classname::description"
+}

@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "data": {
+        "target": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "func_tankcontrols::target",
+            "description": "func_tankcontrols::target::description"
+        }
+    },
+    "title": "func_tankcontrols::classname",
+    "description": "func_tankcontrols::classname::description"
+}

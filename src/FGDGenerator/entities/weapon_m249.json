@@ -1,0 +1,14 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "Target",
+        "CBaseDelay",
+        "RenderFields",
+        "Weapon"
+    ],
+    "studio": "models/w_saw.mdl",
+    "data": {},
+    "title": "weapon_m249::classname",
+    "description": "weapon_m249::classname::description"
+}

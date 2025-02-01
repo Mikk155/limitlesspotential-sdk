@@ -1,0 +1,34 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Base",
+    "data": {
+        "goal_no": {
+            "variable": "choices",
+            "value": "1",
+            "choices": {
+                "1": {
+                    "title": "CTFAttributes::goal_no::1",
+                    "description": "CTFAttributes::goal_no::1::description"
+                },
+                "2": {
+                    "title": "CTFAttributes::goal_no::2",
+                    "description": "CTFAttributes::goal_no::2::description"
+                }
+            },
+            "title": "CTFAttributes::goal_no",
+            "description": "CTFAttributes::goal_no::description"
+        },
+        "goal_min": {
+            "variable": "string",
+            "value": "-16 -16 0",
+            "title": "CTFAttributes::goal_min",
+            "description": "CTFAttributes::goal_min::description"
+        },
+        "goal_max": {
+            "variable": "string",
+            "value": "16 16 72",
+            "title": "CTFAttributes::goal_max",
+            "description": "CTFAttributes::goal_max::description"
+        }
+    }
+}

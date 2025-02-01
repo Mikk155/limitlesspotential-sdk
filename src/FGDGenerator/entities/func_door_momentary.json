@@ -1,0 +1,20 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Solid",
+    "base": [
+        "Door",
+        "ZHLT"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "func_door_momentary::spawnflags::1",
+                    "description": "func_door_momentary::spawnflags::1::description"
+                }
+            }
+        }
+    },
+    "title": "func_door_momentary::classname",
+    "description": "func_door_momentary::classname::description"
+}

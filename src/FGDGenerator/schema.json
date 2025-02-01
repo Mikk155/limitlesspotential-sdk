@@ -1,0 +1,202 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties":
+    {
+        "$schema":
+        {
+            "type": "string"
+        },
+        "Class":
+        {
+            "type": "string",
+            "enum":
+            [
+                "Solid",
+                "Point",
+                "Base"
+            ],
+            "description": "Class type, in the FGD this is what goes in @{var}Class"
+        },
+        "size":
+        {
+            "type": "array",
+            "description": "Size of a Point Entity",
+            "items":
+            {
+                "type": "array",
+                "items":
+                {
+                    "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+            },
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "color":
+        {
+            "type": "array",
+            "description": "Color of a Point Entity",
+            "items":
+            {
+                "type": "integer"
+            },
+            "minItems": 3,
+            "maxItems": 3
+        },
+        "studio":
+        {
+            "oneOf":
+            [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "boolean"
+                }
+            ],
+            "description": "Studio model"
+        },
+        "sprite":
+        {
+            "oneOf":
+            [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "boolean"
+                }
+            ],
+            "description": "Sprite model"
+        },
+        "iconsprite":
+        {
+            "type": "string",
+            "description": "Sprite model (editor)"
+        },
+        "base":
+        {
+            "type": "array",
+            "description": "Base classes for this Class",
+            "items":
+            {
+                "type": "string"
+            }
+        },
+        "title":
+        {
+            "type": "string",
+            "description": "Short description referenced in ``docs/src/sentences.json``"
+        },
+        "description":
+        {
+            "type": "string",
+            "description": "Long description referenced in ``docs/src/sentences.json``"
+        },
+        "data":
+        {
+            "type": "object",
+            "patternProperties":
+            {
+                "^[a-zA-Z0-9_-]+$":
+                {
+                    "type": "object",
+                    "properties":
+                    {
+                        "variable":
+                        {
+                            "type": "string",
+                            "enum":
+                            [
+                                "string",
+                                "integer",
+                                "float",
+                                "choices",
+                                "target_destination",
+                                "target_source",
+                                "target_generic",
+                                "angle",
+                                "color255",
+                                "color1",
+                                "sound",
+                                "sprite",
+                                "studio",
+
+                                "decal",
+
+                                "vector",
+                                "target_name_or_class",
+                                "sky",
+                                "scale"
+                            ],
+                            "description": "KeyValue variable type"
+                        },
+                        "title":
+                        {
+                            "type": "string",
+                            "description": "Short description referenced in ``docs/src/sentences.json``"
+                        },
+                        "description":
+                        {
+                            "type": "string",
+                            "description": "Long description referenced in ``docs/src/sentences.json``"
+                        },
+                        "value":
+                        {
+                            "oneOf":
+                            [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "number"
+                                }
+                            ],
+                            "description": "Default value"
+                        },
+                        "choices":
+                        {
+                            "type": "object",
+                            "patternProperties":
+                            {
+                                "^[a-zA-Z0-9_-]+$":
+                                {
+                                    "type": "object",
+                                    "properties":
+                                    {
+                                        "title":
+                                        {
+                                            "type": "string",
+                                            "description": "Short description referenced in ``docs/src/sentences.json``"
+                                        },
+                                        "description":
+                                        {
+                                            "type": "string",
+                                            "description": "Long description referenced in ``docs/src/sentences.json``"
+                                        }
+                                    },
+                                    "required": [ "title" ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "description": "Choices if variable is \"choices\"",
+                            "additionalProperties": false
+                        }
+                    },
+                    "required": [ "variable", "title" ],
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "required":
+    [
+        "$schema",
+        "Class"
+    ],
+    "additionalProperties": false
+}

@@ -1,0 +1,207 @@
+{
+    "$schema": "../schema.json",
+	"Class": "Base",
+    "data":
+    {
+		"appearflag_singleplayer":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_singleplayer",
+			"description": "Appearflags::appearflag_singleplayer::description"
+		},
+		"appearflag_multiplayer":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_multiplayer",
+			"description": "Appearflags::appearflag_multiplayer::description"
+		},
+		"appearflag_cooperative":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_cooperative",
+			"description": "Appearflags::appearflag_cooperative::description"
+		},
+		"appearflag_deathmatch":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_deathmatch",
+			"description": "Appearflags::appearflag_deathmatch::description"
+		},
+		"appearflag_cft":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_cft",
+			"description": "Appearflags::appearflag_cft::description"
+		},
+		"appearflag_teamplay":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_teamplay",
+			"description": "Appearflags::appearflag_teamplay::description"
+		},
+		"appearflag_dedicated":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_dedicated",
+			"description": "Appearflags::appearflag_dedicated::description"
+		},
+		"appearflag_skilleasy":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_skilleasy",
+			"description": "Appearflags::appearflag_skilleasy::description"
+		},
+		"appearflag_skillmedium":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_skillmedium",
+			"description": "Appearflags::appearflag_skillmedium::description"
+		},
+		"appearflag_skillhard":
+		{
+			"variable": "choices",
+			"value": "0",
+			"choices": {
+				"-1": {
+					"title": "Appearflags_notin",
+					"description": "Appearflags_notin::description"
+				},
+				"0": {
+					"title": "Default"
+				},
+				"1": {
+					"title": "Appearflags_onlyin",
+					"description": "Appearflags_onlyin::description"
+				}
+			},
+			"title": "Appearflags::appearflag_skillhard",
+			"description": "Appearflags::appearflag_skillhard::description"
+		}
+	}
+}

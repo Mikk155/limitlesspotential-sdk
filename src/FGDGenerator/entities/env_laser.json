@@ -1,0 +1,101 @@
+{
+	"$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "RenderFxChoices",
+        "Angles"
+    ],
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "LaserTarget": {
+            "variable": "target_destination",
+            "title": "env_laser::LaserTarget",
+            "description": "env_laser::LaserTarget::description"
+        },
+        "renderamt": {
+            "variable": "integer",
+            "value": "100",
+            "title": "env_laser::renderamt",
+            "description": "env_laser::renderamt::description"
+        },
+        "rendercolor": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "env_laser::rendercolor",
+            "description": "env_laser::rendercolor::description"
+        },
+        "width": {
+            "variable": "integer",
+            "value": "20",
+            "title": "env_laser::width",
+            "description": "env_laser::width::description"
+        },
+        "NoiseAmplitude": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_laser::NoiseAmplitude",
+            "description": "env_laser::NoiseAmplitude::description"
+        },
+        "texture": {
+            "variable": "sprite",
+            "value": "sprites/laserbeam.spr",
+            "title": "env_laser::texture",
+            "description": "env_laser::texture::description"
+        },
+        "EndSprite": {
+            "variable": "sprite",
+            "title": "CustomKeys::sprite"
+        },
+        "TextureScroll": {
+            "variable": "integer",
+            "value": "35",
+            "title": "env_laser::TextureScroll",
+            "description": "env_laser::TextureScroll::description"
+        },
+        "framestart": {
+            "variable": "integer",
+            "value": "0",
+            "title": "env_laser::framestart",
+            "description": "env_laser::framestart::description"
+        },
+        "damage": {
+            "variable": "string",
+            "value": "100",
+            "title": "env_laser::damage",
+            "description": "env_laser::damage::description"
+        },
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "env_laser::spawnflags::1",
+                    "description": "env_laser::spawnflags::1::description"
+                },
+                "16": {
+                    "title": "env_laser::spawnflags::16",
+                    "description": "env_laser::spawnflags::16::description"
+                },
+                "32": {
+                    "title": "env_laser::spawnflags::32",
+                    "description": "env_laser::spawnflags::32::description"
+                },
+                "64": {
+                    "title": "env_laser::spawnflags::64",
+                    "description": "env_laser::spawnflags::64::description"
+                }
+            }
+        }
+    },
+    "title": "env_laser::classname",
+    "description": "env_laser::classname::description"
+}
