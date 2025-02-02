@@ -618,6 +618,14 @@ public:
      *    @details The entity's angles affect this offset.
      */
     Vector m_SoundOffset{};
+
+    /**
+     *  @brief Allocate a new entity instance for pActivator.
+     *  pActivator and pCaller should be the ones from your UseFunction
+     *  This function will return the updated instance with whatever the entity keyvalue m_Activator wants
+     */
+    CBaseEntity* AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget );
+    string_t m_sNewActivator;
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }

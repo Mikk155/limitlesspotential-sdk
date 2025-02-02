@@ -576,8 +576,6 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
         {
             CheckForBackwardsBounds( this );
         }
-
-        return true;
     }
     else if( FStrEq( pkvd->szKeyName, "maxhullsize" ) )
     {
@@ -588,11 +586,13 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
         {
             CheckForBackwardsBounds( this );
         }
-
-        return true;
     }
-
-    return false;
+    else if( FStrEq( pkvd->szKeyName, "m_Activator" ) )
+    {
+        m_sNewActivator = ALLOC_STRING( pkvd->szValue );
+    }
+    else return false;
+    return true;
 }
 
 void CBaseEntity::SetOrigin( const Vector& origin )
@@ -900,4 +900,33 @@ void CBaseEntity::EmitAmbientSound( const Vector& vecOrigin, const char* samp, f
 void CBaseEntity::StopSound( int channel, const char* sample )
 {
     sound::g_ServerSound.EmitSound( this, channel, sample, 0, 0, SND_STOP, PITCH_NORM );
+}
+
+CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget )
+{
+    if( !FStringNull( szNewTarget ) )
+    {
+        if( FStrEq( STRING( szNewTarget ), "!activator" ) )
+        {
+            return pActivator;
+        }
+        else if( FStrEq( STRING( szNewTarget ), "!caller" ) )
+        {
+            return pCaller;
+        }
+        else if( FStrEq( STRING( szNewTarget ), "!this" ) || FStrEq( STRING( szNewTarget ), "!self" ) )
+        {
+            return this;
+        }
+        else if( FStrEq( STRING( szNewTarget ), "!player" ) )
+        {
+            return static_cast<CBaseEntity*>( UTIL_FindNearestPlayer( pev->origin ) );
+        }
+        else
+        {
+            return UTIL_FindEntityByTargetname( nullptr, STRING( szNewTarget ) );
+        }
+    }
+
+    return pActivator;
 }

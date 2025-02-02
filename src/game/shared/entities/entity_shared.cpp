@@ -154,6 +154,8 @@ BEGIN_DATAMAP_NOBASE(CBaseEntity)
     DEFINE_FIELD( m_SoundReplacementFileName, FIELD_STRING ),
     DEFINE_FIELD( m_SentenceReplacementFileName, FIELD_STRING ),
 
+    DEFINE_FIELD( m_sNewActivator, FIELD_STRING ),
+
     DEFINE_FIELD( m_CustomHullMin, FIELD_VECTOR ),
     DEFINE_FIELD( m_CustomHullMax, FIELD_VECTOR ),
     DEFINE_FIELD( m_HasCustomHullMin, FIELD_BOOLEAN ),
