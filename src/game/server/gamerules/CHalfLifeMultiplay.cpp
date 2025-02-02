@@ -314,6 +314,9 @@ void CHalfLifeMultiplay::ClientDisconnected( edict_t* pClient )
             free( pszPlayerIPs[playerIndex] );
             pszPlayerIPs[playerIndex] = nullptr;
 
+            if( pPlayer->HasNamedPlayerWeapon( "weapon_satchel" ) )
+                DeactivateSatchels(pPlayer);
+
             pPlayer->RemoveAllItems( true ); // destroy all of the players weapons and items
 
             MESSAGE_BEGIN( MSG_ALL, gmsgSpectator );
