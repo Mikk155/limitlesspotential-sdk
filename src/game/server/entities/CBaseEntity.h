@@ -66,19 +66,7 @@ enum appearflags : int
 {
     NotIn = -1, // Does not appears when
     Default = 0, // Has no effect
-    OnlyIn = 1, // Only appears when
-
-    SkillEasy = 0,
-    SkillMedium,
-    SkillHard,
-    GameModeDeathmatch,
-    GameModeCooperative,
-    GameModeCaptureTheFlag,
-    GameModeTeamPlay,
-    GameModeMultiPlayer,
-    GameModeSinglePlayer,
-    ServerIsDedicated,
-    AppearflagsSize
+    OnlyIn = 1 // Only appears when
 };
 
 // people gib if their health is <= this at the time of death
@@ -638,7 +626,7 @@ public:
 	 */
     Vector m_SoundOffset{};
 
-    std::vector<appearflags> m_appearflags{ (int)appearflags::AppearflagsSize };
+    std::unordered_map<std::string_view, appearflags> m_appearflags;
     /**
      *    @brief Returns whatever a entity is fine to exists by the current rules it has.
      */
