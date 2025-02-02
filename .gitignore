@@ -2,10 +2,7 @@
 build/*
 
 # CSharp
-src/FGDGenerator/bin*
-src/FGDGenerator/obj*
-src/FGDGenerator/FGD*
-halflife-unified-sdk.sln
+src/FGDGenerator/FGD/*
 
 # Stuff
 stuff/*
