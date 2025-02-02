@@ -440,6 +440,7 @@ public:
 
     bool HasPlayerWeapon( CBasePlayerWeapon* checkWeapon );
     bool HasNamedPlayerWeapon( const char* pszItemName );
+    CBasePlayerWeapon* HasNamedPlayerWeaponPtr( const char* pszItemName );
     bool HasWeapons(); // do I have ANY weapons?
     void SelectPrevItem( int iItem );
     void SelectNextItem( int iItem );

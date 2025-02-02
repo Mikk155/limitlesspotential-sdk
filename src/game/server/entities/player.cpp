@@ -4607,6 +4607,11 @@ bool CBasePlayer::HasPlayerWeapon( CBasePlayerWeapon* checkWeapon )
 
 bool CBasePlayer::HasNamedPlayerWeapon( const char* pszItemName )
 {
+    return ( HasNamedPlayerWeaponPtr( pszItemName ) != nullptr );
+}
+
+CBasePlayerWeapon* CBasePlayer::HasNamedPlayerWeaponPtr( const char* pszItemName )
+{
     CBasePlayerWeapon* weapon;
     int i;
 
@@ -4618,13 +4623,13 @@ bool CBasePlayer::HasNamedPlayerWeapon( const char* pszItemName )
         {
             if( 0 == strcmp( pszItemName, STRING( weapon->pev->classname ) ) )
             {
-                return true;
+                return nullptr;
             }
             weapon = weapon->m_pNext;
         }
     }
 
-    return false;
+    return nullptr;
 }
 
 bool CBasePlayer::SwitchWeapon( CBasePlayerWeapon* weapon )
