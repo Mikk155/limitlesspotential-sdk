@@ -189,6 +189,8 @@ target_sources(server PRIVATE
 	entities/rope/CRopeSample.h
 	entities/rope/CRopeSegment.cpp
 	entities/rope/CRopeSegment.h
+
+	entities/trigger/entity_iterator.cpp
 	
 	entities/NPCs/basemonster.h
 	entities/NPCs/combat.cpp
