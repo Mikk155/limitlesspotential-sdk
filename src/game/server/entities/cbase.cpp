@@ -624,7 +624,7 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
         if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
             m_appearflags[appearflags::GameModeDeathmatch] = static_cast<appearflags>( abit );
     } }
-    else if( FStrEq( pkvd->szKeyName, "appearflag_cft" ) ) {
+    else if( FStrEq( pkvd->szKeyName, "appearflag_ctf" ) ) {
         if( int abit = atoi( pkvd->szValue ); abit == -1 || abit == 1 ) {
             m_appearflags[appearflags::GameModeCaptureTheFlag] = static_cast<appearflags>( abit );
     } }
