@@ -140,13 +140,18 @@ void CSatchelCharge::BounceSound()
     }
 }
 
-void DeactivateSatchels( CBasePlayer* pOwner )
+void DeactivateSatchels( CBasePlayer* pOwner, bool explode )
 {
     for( auto satchel : UTIL_FindEntitiesByClassname<CSatchelCharge>( "monster_satchel" ) )
     {
         if( satchel->pev->owner == pOwner->edict() )
         {
-            satchel->Deactivate();
+            if( explode ) {
+                satchel->Use( pOwner, pOwner, USE_ON, 0 );
+            }
+            else {
+                satchel->Deactivate();
+            }
         }
     }
 }

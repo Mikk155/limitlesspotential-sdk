@@ -1326,7 +1326,7 @@ void CHalfLifeCTFplay::ChangePlayerTeam( CBasePlayer* pPlayer, const char* pChar
         pPlayer->pev->deadflag = DEAD_RESPAWNABLE;
 
         if( pPlayer->HasNamedPlayerWeapon( "weapon_satchel" ) )
-            DeactivateSatchels( pPlayer );
+            DeactivateSatchels( pPlayer, false );
 
         pPlayer->RemoveAllItems( false );
 

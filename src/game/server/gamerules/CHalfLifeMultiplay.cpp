@@ -315,7 +315,7 @@ void CHalfLifeMultiplay::ClientDisconnected( edict_t* pClient )
             pszPlayerIPs[playerIndex] = nullptr;
 
             if( pPlayer->HasNamedPlayerWeapon( "weapon_satchel" ) )
-                DeactivateSatchels(pPlayer);
+                DeactivateSatchels(pPlayer, true);
 
             pPlayer->RemoveAllItems( true ); // destroy all of the players weapons and items
 
@@ -498,7 +498,7 @@ void CHalfLifeMultiplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKille
 
     if( pVictim->HasNamedPlayerWeapon( "weapon_satchel" ) )
     {
-        DeactivateSatchels( pVictim );
+        DeactivateSatchels( pVictim, true );
     }
 
     if( pVictim->IsPlayer() && !g_fGameOver && ( pVictim->m_iItems & CTFItem::ItemsMask ) != 0 )

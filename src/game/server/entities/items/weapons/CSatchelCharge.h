@@ -42,4 +42,4 @@ public:
  *    @brief removes all satchels owned by the provided player. Should only be used upon death.
  *    Made this global on purpose.
  */
-void DeactivateSatchels( CBasePlayer* pOwner );
+void DeactivateSatchels( CBasePlayer* pOwner, bool explode = false );

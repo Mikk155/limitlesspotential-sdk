@@ -16,6 +16,10 @@
 #include "cbase.h"
 #include "CSatchel.h"
 
+#ifndef CLIENT_DLL
+#include "items/weapons/CSatchelCharge.h"
+#endif
+
 LINK_ENTITY_TO_CLASS( weapon_satchel, CSatchel );
 
 BEGIN_DATAMAP( CSatchel )
@@ -169,19 +173,9 @@ void CSatchel::PrimaryAttack()
     {
         SendWeaponAnim( SATCHEL_RADIO_FIRE );
 
-        CBaseEntity* pSatchel = nullptr;
-
-        while( ( pSatchel = UTIL_FindEntityInSphere( pSatchel, m_pPlayer->pev->origin, 4096 ) ) != nullptr )
-        {
-            if( pSatchel->ClassnameIs( "monster_satchel" ) )
-            {
-                if( pSatchel->GetOwner() == m_pPlayer )
-                {
-                    pSatchel->Use( m_pPlayer, m_pPlayer, USE_ON, 0 );
-                    m_chargeReady = 2;
-                }
-            }
-        }
+#ifndef CLIENT_DLL
+        DeactivateSatchels(m_pPlayer, true);
+#endif
 
         m_chargeReady = 2;
         m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
