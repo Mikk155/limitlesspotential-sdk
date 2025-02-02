@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -22,9 +22,9 @@ LINK_ENTITY_TO_CLASS( weapon_gauss, CGauss );
 
 BEGIN_DATAMAP( CGauss )
     DEFINE_FIELD( m_fInAttack, FIELD_INTEGER ),
-	//	DEFINE_FIELD(m_flStartCharge, FIELD_TIME),
-	//	DEFINE_FIELD(m_flPlayAftershock, FIELD_TIME),
-	//	DEFINE_FIELD(m_flNextAmmoBurn, FIELD_TIME),
+    //    DEFINE_FIELD(m_flStartCharge, FIELD_TIME),
+    //    DEFINE_FIELD(m_flPlayAftershock, FIELD_TIME),
+    //    DEFINE_FIELD(m_flNextAmmoBurn, FIELD_TIME),
     DEFINE_FIELD( m_fPrimaryFire, FIELD_BOOLEAN ),
 END_DATAMAP();
 
@@ -103,7 +103,7 @@ void CGauss::Holster()
 
 void CGauss::PrimaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         PlayEmptySound();
@@ -131,13 +131,13 @@ void CGauss::PrimaryAttack()
 
 void CGauss::SecondaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         if( m_fInAttack != 0 )
         {
             m_pPlayer->EmitSoundDyn( CHAN_WEAPON, "weapons/electro4.wav", 1.0, ATTN_NORM, 0, 80 + RANDOM_LONG( 0, 0x3f ) );
-			// Have to send to the host as well because the client will predict the frame with m_fInAttack == 0
+            // Have to send to the host as well because the client will predict the frame with m_fInAttack == 0
             SendStopEvent( true );
             SendWeaponAnim( GAUSS_IDLE );
             m_fInAttack = 0;
@@ -165,7 +165,7 @@ void CGauss::SecondaryAttack()
         m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -1 ); // take one ammo just to start the spin
         m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase();
 
-		// spin up
+        // spin up
         m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
 
         SendWeaponAnim( GAUSS_SPINUP );
@@ -190,7 +190,7 @@ void CGauss::SecondaryAttack()
     {
         if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) > 0 )
         {
-			// during the charging process, eat one bit of ammo every once in a while
+            // during the charging process, eat one bit of ammo every once in a while
             if( UTIL_WeaponTimeBase() >= m_pPlayer->m_flNextAmmoBurn && m_pPlayer->m_flNextAmmoBurn != 1000 )
             {
                 m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -1 );
@@ -208,7 +208,7 @@ void CGauss::SecondaryAttack()
 
         if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
         {
-			// out of ammo! force the gun to fire
+            // out of ammo! force the gun to fire
             StartFire();
             m_fInAttack = 0;
             m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
@@ -218,7 +218,7 @@ void CGauss::SecondaryAttack()
 
         if( UTIL_WeaponTimeBase() >= m_pPlayer->m_flAmmoStartCharge )
         {
-			// don't eat any more ammo after gun is fully charged.
+            // don't eat any more ammo after gun is fully charged.
             m_pPlayer->m_flNextAmmoBurn = 1000;
         }
 
@@ -226,7 +226,7 @@ void CGauss::SecondaryAttack()
         if( pitch > 250 )
             pitch = 250;
 
-		// WeaponsLogger->debug("{} {} {}", m_fInAttack, m_iSoundState, pitch);
+        // WeaponsLogger->debug("{} {} {}", m_fInAttack, m_iSoundState, pitch);
 
         if( m_iSoundState == 0 )
             WeaponsLogger->debug( "sound state {}", m_iSoundState );
@@ -237,10 +237,10 @@ void CGauss::SecondaryAttack()
 
         m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
 
-		// m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
+        // m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
         if( m_pPlayer->m_flStartCharge < gpGlobals->time - 10 )
         {
-			// Player charged up too long. Zap him.
+            // Player charged up too long. Zap him.
             m_pPlayer->EmitSoundDyn( CHAN_WEAPON, "weapons/electro4.wav", 1.0, ATTN_NORM, 0, 80 + RANDOM_LONG( 0, 0x3f ) );
             m_pPlayer->EmitSoundDyn( CHAN_ITEM, "weapons/electro6.wav", 1.0, ATTN_NORM, 0, 75 + RANDOM_LONG( 0, 0x3f ) );
 
@@ -256,7 +256,7 @@ void CGauss::SecondaryAttack()
 #endif
             SendWeaponAnim( GAUSS_IDLE );
 
-			// Player may have been killed and this weapon dropped, don't execute any more code after this!
+            // Player may have been killed and this weapon dropped, don't execute any more code after this!
             return;
         }
     }
@@ -281,7 +281,7 @@ void CGauss::StartFire()
 
     if( m_fPrimaryFire )
     {
-		// fixed damage on primary attack
+        // fixed damage on primary attack
 #ifdef CLIENT_DLL
         flDamage = 20;
 #else
@@ -291,7 +291,7 @@ void CGauss::StartFire()
 
     if( m_fInAttack != 3 )
     {
-		// WeaponsLogger->debug("Time:{} Damage:{}", gpGlobals->time - m_pPlayer->m_flStartCharge, flDamage);
+        // WeaponsLogger->debug("Time:{} Damage:{}", gpGlobals->time - m_pPlayer->m_flStartCharge, flDamage);
 
 #ifndef CLIENT_DLL
         float flZVel = m_pPlayer->pev->velocity.z;
@@ -303,15 +303,15 @@ void CGauss::StartFire()
 
         if( g_Skill.GetValue( "gauss_vertical_force" ) == 0 )
         {
-			// Don't pop you up into the air.
+            // Don't pop you up into the air.
             m_pPlayer->pev->velocity.z = flZVel;
         }
 #endif
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
     }
 
-	// time until aftershock 'static discharge' sound
+    // time until aftershock 'static discharge' sound
     m_pPlayer->m_flPlayAftershock = gpGlobals->time + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 0.3, 0.8 );
 
     Fire( vecSrc, vecAiming, flDamage );
@@ -328,13 +328,13 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
         g_irunninggausspred = true;
 #endif
 
-	// The main firing event is sent unreliably so it won't be delayed.
+    // The main firing event is sent unreliably so it won't be delayed.
     PLAYBACK_EVENT_FULL( FEV_NOTHOST, m_pPlayer->edict(), m_usGaussFire, 0.0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, flDamage, 0.0, 0, 0, m_fPrimaryFire ? 1 : 0, 0 );
 
     SendStopEvent( false );
 
-	// WeaponsLogger->debug("{}\n{}", vecSrc, vecDest);
-	// WeaponsLogger->debug("{} {}", tr.flFraction, flMaxFrac);
+    // WeaponsLogger->debug("{}\n{}", vecSrc, vecDest);
+    // WeaponsLogger->debug("{} {}", tr.flFraction, flMaxFrac);
 
 #ifndef CLIENT_DLL
     Vector vecDest = vecSrc + vecDir * 8192;
@@ -350,7 +350,7 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
     {
         nMaxHits--;
 
-		// WeaponsLogger->debug(".");
+        // WeaponsLogger->debug(".");
         UTIL_TraceLine( vecSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr );
 
         if( 0 != tr.fAllSolid )
@@ -386,8 +386,8 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 
             if( n < 0.5 ) // 60 degrees
             {
-				// WeaponsLogger->debug("reflect {}", n);
-				// reflect
+                // WeaponsLogger->debug("reflect {}", n);
+                // reflect
                 Vector r;
 
                 r = 2.0 * tr.vecPlaneNormal * n + vecDir;
@@ -396,12 +396,12 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
                 vecSrc = tr.vecEndPos + vecDir * 8;
                 vecDest = vecSrc + vecDir * 8192;
 
-				// explode a bit
+                // explode a bit
                 m_pPlayer->RadiusDamage( tr.vecEndPos, this, m_pPlayer, flDamage * n, DMG_BLAST );
 
                 nTotal += 34;
 
-				// lose energy
+                // lose energy
                 if( n == 0 )
                     n = 0.1;
                 flDamage = flDamage * ( 1 - n );
@@ -410,18 +410,18 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
             {
                 nTotal += 13;
 
-				// limit it to one hole punch
+                // limit it to one hole punch
                 if( fHasPunched )
                     break;
                 fHasPunched = true;
 
-				// try punching through wall if secondary attack (primary is incapable of breaking through)
+                // try punching through wall if secondary attack (primary is incapable of breaking through)
                 if( !m_fPrimaryFire )
                 {
                     UTIL_TraceLine( tr.vecEndPos + vecDir * 8, vecDest, dont_ignore_monsters, pentIgnore, &beam_tr );
                     if( 0 == beam_tr.fAllSolid )
                     {
-						// trace backwards to find exit point
+                        // trace backwards to find exit point
                         UTIL_TraceLine( beam_tr.vecEndPos, tr.vecEndPos, dont_ignore_monsters, pentIgnore, &beam_tr );
 
                         float deltaLength = ( beam_tr.vecEndPos - tr.vecEndPos ).Length();
@@ -432,11 +432,11 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
                                 deltaLength = 1;
                             flDamage -= deltaLength;
 
-							// WeaponsLogger->debug("punch {}", deltaLength);
+                            // WeaponsLogger->debug("punch {}", deltaLength);
                             nTotal += 21;
 
-							// exit blast damage
-							// m_pPlayer->RadiusDamage(beam_tr.vecEndPos + vecDir * 8, this, m_pPlayer, flDamage, DMG_BLAST);
+                            // exit blast damage
+                            // m_pPlayer->RadiusDamage(beam_tr.vecEndPos + vecDir * 8, this, m_pPlayer, flDamage, DMG_BLAST);
                             const float damage_radius = flDamage * g_Skill.GetValue( "gauss_damage_radius" );
 
                             ::RadiusDamage( beam_tr.vecEndPos + vecDir * 8, this, m_pPlayer, flDamage, damage_radius, DMG_BLAST );
@@ -450,13 +450,13 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
                     }
                     else
                     {
-						// WeaponsLogger->debug("blocked {}", n);
+                        // WeaponsLogger->debug("blocked {}", n);
                         flDamage = 0;
                     }
                 }
                 else
                 {
-					// WeaponsLogger->debug("blocked solid");
+                    // WeaponsLogger->debug("blocked solid");
 
                     flDamage = 0;
                 }
@@ -469,14 +469,14 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
         }
     }
 #endif
-	// WeaponsLogger->debug("{} bytes", nTotal);
+    // WeaponsLogger->debug("{} bytes", nTotal);
 }
 
 void CGauss::WeaponIdle()
 {
     ResetEmptySound();
 
-	// play aftershock static discharge
+    // play aftershock static discharge
     if( 0 != m_pPlayer->m_flPlayAftershock && m_pPlayer->m_flPlayAftershock < gpGlobals->time )
     {
         switch ( RANDOM_LONG( 0, 3 ) )
@@ -526,15 +526,15 @@ void CGauss::WeaponIdle()
         }
 
         return;
-		// SendWeaponAnim(iAnim);
+        // SendWeaponAnim(iAnim);
     }
 }
 
 void CGauss::SendStopEvent( bool sendToHost )
 {
-	// This reliable event is used to stop the spinning sound
-	// It's delayed by a fraction of second to make sure it is delayed by 1 frame on the client
-	// It's sent reliably anyway, which could lead to other delays
+    // This reliable event is used to stop the spinning sound
+    // It's delayed by a fraction of second to make sure it is delayed by 1 frame on the client
+    // It's sent reliably anyway, which could lead to other delays
 
     int flags = FEV_RELIABLE | FEV_GLOBAL;
 

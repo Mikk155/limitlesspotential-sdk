@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -76,9 +76,9 @@ private:
 
     Channel* CreateChannel();
 
-	/**
-	 *	@brief Clears a channel in preparation to be reused.
-	 */
+    /**
+     *    @brief Clears a channel in preparation to be reused.
+     */
     void ClearChannel( Channel& channel );
 
     void RemoveChannel( Channel& channel );
@@ -130,7 +130,7 @@ private:
 
     int m_CurrentGameFrame{0};
 
-	// Force a room type update on startup.
+    // Force a room type update on startup.
     bool m_PreviousRoomOn{true};
     int m_PreviousRoomType{-1};
     float m_PreviousHFGain{-1.f};

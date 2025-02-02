@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -20,7 +20,7 @@
 struct AmmoType;
 
 /**
- *	@brief a single entity that can store weapons and ammo.
+ *    @brief a single entity that can store weapons and ammo.
  */
 class CWeaponBox : public CBaseEntity
 {
@@ -32,15 +32,15 @@ public:
     void Precache() override;
     void Spawn() override;
 
-	/**
-	 *	@brief try to add my contents to the toucher if the toucher is a player.
-	 */
+    /**
+     *    @brief try to add my contents to the toucher if the toucher is a player.
+     */
     void Touch( CBaseEntity* pOther ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
-	/**
-	 *	@brief is there anything in this box?
-	 */
+    /**
+     *    @brief is there anything in this box?
+     */
     bool IsEmpty();
     int GiveAmmo( int iCount, const char* szName, int* pIndex = nullptr );
     int GiveAmmo( int iCount, const AmmoType* type, int* pIndex = nullptr );
@@ -50,19 +50,19 @@ public:
 
     void RemoveWeapons();
 
-	/**
-	 *	@brief the think function that removes the box from the world.
-	 */
+    /**
+     *    @brief the think function that removes the box from the world.
+     */
     void Kill();
 
-	/**
-	 *	@brief is a weapon of this type already packed in this box?
-	 */
+    /**
+     *    @brief is a weapon of this type already packed in this box?
+     */
     bool HasWeapon( CBasePlayerWeapon* checkWeapon );
 
-	/**
-	 *	@brief Add this weapon to the box
-	 */
+    /**
+     *    @brief Add this weapon to the box
+     */
     bool PackWeapon( CBasePlayerWeapon* weapon );
     bool PackAmmo( string_t iszName, int iCount );
 

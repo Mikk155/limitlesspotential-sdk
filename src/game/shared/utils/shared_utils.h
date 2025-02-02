@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -96,7 +96,7 @@ inline const char* STRING( string_t offset )
 }
 
 /**
- *	@brief Use this instead of ALLOC_STRING on constant strings
+ *    @brief Use this instead of ALLOC_STRING on constant strings
  */
 inline string_t MAKE_STRING( const char* str )
 {
@@ -108,7 +108,7 @@ string_t ALLOC_STRING( const char* str );
 string_t ALLOC_STRING_VIEW( std::string_view str );
 
 /**
- *	@brief Version of ALLOC_STRING that parses and converts escape characters
+ *    @brief Version of ALLOC_STRING that parses and converts escape characters
  */
 string_t ALLOC_ESCAPED_STRING( const char* str );
 
@@ -122,19 +122,19 @@ void Con_Printf( const char* format, ... );
 void Con_DPrintf( const char* format, ... );
 
 /**
- *	@brief Gets the command line value for the given key
- *	@return Whether the key was specified on the command line
+ *    @brief Gets the command line value for the given key
+ *    @return Whether the key was specified on the command line
  */
 bool COM_GetParam( const char* name, const char** next );
 
 /**
- *	@brief Checks whether the given key was specified on the command line
+ *    @brief Checks whether the given key was specified on the command line
  */
 bool COM_HasParam( const char* name );
 
 /**
- *	@brief Fixes bounds vectors so that the min components are <= than the max components.
- *	This avoids the "backwards mins/maxs" engine error.
+ *    @brief Fixes bounds vectors so that the min components are <= than the max components.
+ *    This avoids the "backwards mins/maxs" engine error.
  */
 bool UTIL_FixBoundsVectors( Vector& mins, Vector& maxs );
 
@@ -174,12 +174,12 @@ constexpr std::string_view GetLongLibraryPrefix()
 inline char com_token[1500];
 
 /**
- *	@brief Parse a token out of a string
+ *    @brief Parse a token out of a string
  */
 const char* COM_Parse( const char* data );
 
 /**
- *	@brief Returns true if additional data is waiting to be processed on this line
+ *    @brief Returns true if additional data is waiting to be processed on this line
  */
 bool COM_TokenWaiting( const char* buffer );
 
@@ -238,9 +238,9 @@ struct fmt::formatter<Vector2D> : public fmt::formatter<float>
 };
 
 /**
- *	@brief Helper constant to allow the use of @c static_assert without an actual condition.
- *	Used mainly in <tt>if constexpr else</tt> branches.
- *	@details See https://en.cppreference.com/w/cpp/utility/variant/visit
+ *    @brief Helper constant to allow the use of @c static_assert without an actual condition.
+ *    Used mainly in <tt>if constexpr else</tt> branches.
+ *    @details See https://en.cppreference.com/w/cpp/utility/variant/visit
  */
 template <typename>
 inline constexpr bool always_false_v = false;

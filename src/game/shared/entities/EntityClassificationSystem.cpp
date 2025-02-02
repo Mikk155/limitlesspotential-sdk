@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -112,7 +112,7 @@ bool EntityClassificationSystem::Initialize()
 
     g_JSON.RegisterSchema( EntityClassificationsSchemaName, &GetEntityClassificationsSchema );
 
-	// Initialize classifications to default (for client side).
+    // Initialize classifications to default (for client side).
     Clear();
 
 #ifdef CLIENT_DLL
@@ -212,7 +212,7 @@ void EntityClassificationSystem::AddClassification( std::string&& name )
 {
     if( FindClassification( name ) )
     {
-		// Already added.
+        // Already added.
         return;
     }
 
@@ -223,13 +223,13 @@ void EntityClassificationSystem::Clear()
 {
     m_Classifications.clear();
 
-	// Add none as the first classification regardless of configuration settings.
+    // Add none as the first classification regardless of configuration settings.
     AddClassification( ENTCLASS_NONE_NAME );
 }
 
 bool EntityClassificationSystem::ParseConfiguration( const json& input )
 {
-	// Add classifications first so we can define circular relationships.
+    // Add classifications first so we can define circular relationships.
     for( const auto& [key, value] : input.items() )
     {
         AddClassification( std::string{key} );

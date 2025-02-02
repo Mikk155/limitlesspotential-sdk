@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -48,7 +48,7 @@ public:
     void BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
     void BlowerCannonThink();
 
-	// TODO: probably shadowing CBaseDelay
+    // TODO: probably shadowing CBaseDelay
     float m_flDelay;
     int m_iZOffset;
     WeaponType m_iWeaponType;
@@ -90,7 +90,7 @@ bool CBlowerCannon::KeyValue( KeyValueData* pkvd )
         return true;
     }
 
-	// TODO: should call base
+    // TODO: should call base
     return false;
 }
 
@@ -132,7 +132,7 @@ void CBlowerCannon::BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCal
 
 void CBlowerCannon::BlowerCannonThink()
 {
-	// The target may be spawned later on so keep the cannon going.
+    // The target may be spawned later on so keep the cannon going.
     if( auto pTarget = GetNextTarget(); pTarget )
     {
         Vector distance = pTarget->pev->origin - pev->origin;

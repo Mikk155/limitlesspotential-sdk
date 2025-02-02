@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -48,8 +48,8 @@ struct GameConfigContext final
 };
 
 /**
- *	@brief Defines a section of a game configuration, and the logic to parse it.
- *	@tparam DataContext The type of the data context this section operates on.
+ *    @brief Defines a section of a game configuration, and the logic to parse it.
+ *    @tparam DataContext The type of the data context this section operates on.
  */
 template <typename DataContext>
 class GameConfigSection
@@ -62,28 +62,28 @@ public:
     GameConfigSection& operator=( const GameConfigSection& ) = delete;
     virtual ~GameConfigSection() = default;
 
-	/**
-	 *	@brief Gets the name of this section
-	 */
+    /**
+     *    @brief Gets the name of this section
+     */
     virtual std::string_view GetName() const = 0;
 
-	/**
-	 *	@brief Gets the section type (e.g. @c object, @c array, etc).
-	 */
+    /**
+     *    @brief Gets the section type (e.g. @c object, @c array, etc).
+     */
     virtual json::value_t GetType() const = 0;
 
-	/**
-	 *	@brief Gets the schema for this section.
-	 *	@details @c title and @c type are provided by the game config system.
-	 *	For objects the schema should contain at minimum the object's @c properties.
-	 *	It can also contain @c required and other schema properties not provided automatically.
-	 *	This can be an empty string if no additional information is needed (e.g. a number with no validation required).
-	 */
+    /**
+     *    @brief Gets the schema for this section.
+     *    @details @c title and @c type are provided by the game config system.
+     *    For objects the schema should contain at minimum the object's @c properties.
+     *    It can also contain @c required and other schema properties not provided automatically.
+     *    This can be an empty string if no additional information is needed (e.g. a number with no validation required).
+     */
     virtual std::string GetSchema() const = 0;
 
-	/**
-	 *	@brief Tries to parse the given configuration.
-	 */
+    /**
+     *    @brief Tries to parse the given configuration.
+     */
     virtual bool TryParse( GameConfigContext<DataContext>& context ) const = 0;
 };
 
@@ -100,7 +100,7 @@ struct GameModeConfiguration final
 };
 
 /**
- *	@brief Contains the contents of a loaded game configuration, ready to be parsed.
+ *    @brief Contains the contents of a loaded game configuration, ready to be parsed.
  */
 template <typename DataContext>
 class GameConfig final
@@ -129,16 +129,16 @@ private:
 private:
     const GameConfigDefinition<DataContext>* m_Definition;
     std::shared_ptr<spdlog::logger> m_Logger;
-	// List of loaded file contents, in parse order.
+    // List of loaded file contents, in parse order.
     std::vector<GameConfigFileData> m_Contents;
 };
 
 /**
- *	@brief Immutable definition of a game configuration.
- *	Contains a set of sections that configuration files can use.
- *	Instances should be created with GameConfigLoader::CreateDefinition.
- *	@details Each section specifies what kind of data it supports, and provides a means of parsing it.
- *	@tparam DataContext Type of the data context this definition operates on.
+ *    @brief Immutable definition of a game configuration.
+ *    Contains a set of sections that configuration files can use.
+ *    Instances should be created with GameConfigLoader::CreateDefinition.
+ *    @details Each section specifies what kind of data it supports, and provides a means of parsing it.
+ *    @tparam DataContext Type of the data context this definition operates on.
  */
 template <typename DataContext>
 class GameConfigDefinition
@@ -165,10 +165,10 @@ public:
 
     const GameConfigSection<DataContext>* FindSection( std::string_view name ) const;
 
-	/**
-	 *	@brief Gets the complete JSON Schema for this definition.
-	 *	This includes all of the sections.
-	 */
+    /**
+     *    @brief Gets the complete JSON Schema for this definition.
+     *    This includes all of the sections.
+     */
     std::string GetSchema() const;
 
     std::optional<GameConfig<DataContext>> TryLoad( const char* fileName, const char* pathID = nullptr ) const;
@@ -194,7 +194,7 @@ private:
 };
 
 /**
- *	@brief Loads JSON-based configuration files and processes them according to a provided definition.
+ *    @brief Loads JSON-based configuration files and processes them according to a provided definition.
  */
 class GameConfigSystem final : public IGameSystem
 {
@@ -340,7 +340,7 @@ bool GameConfig<DataContext>::ShouldProcessSectionGroup( const json& input ) con
 
         if( !shouldUseSection.has_value() )
         {
-			// Error already reported
+            // Error already reported
             m_Logger->trace( "Skipping section group because an error occurred while evaluating condition" );
             return false;
         }
@@ -375,24 +375,24 @@ inline const GameConfigSection<DataContext>* GameConfigDefinition<DataContext>::
 template <typename DataContext>
 inline std::string GameConfigDefinition<DataContext>::GetSchema() const
 {
-	// A configuration is structured like this:
-	/*
-	{
-		"Includes": [
-			"some_filename.json"
-		],
-		"SectionGroups": [
-			{
-				"Condition": "<some condition>", // Optional.
-				"Sections": {
-					"SectionName": <Section data here> // Value can be any type chosen by section.
-				}
-			}
-		]
-	}
-	*/
+    // A configuration is structured like this:
+    /*
+    {
+        "Includes": [
+            "some_filename.json"
+        ],
+        "SectionGroups": [
+            {
+                "Condition": "<some condition>", // Optional.
+                "Sections": {
+                    "SectionName": <Section data here> // Value can be any type chosen by section.
+                }
+            }
+        ]
+    }
+    */
 
-	// This structure allows for future expansion without making breaking changes
+    // This structure allows for future expansion without making breaking changes
 
     const auto sections = [this]()
     {
@@ -488,7 +488,7 @@ std::optional<GameConfig<DataContext>> GameConfigDefinition<DataContext>::TryLoa
 {
     GameConfigIncludeStack includeStack;
 
-	// So you can't get a stack overflow including yourself over and over.
+    // So you can't get a stack overflow including yourself over and over.
     includeStack.Add( fileName );
 
     LoadContext loadContext{

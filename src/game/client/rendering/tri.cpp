@@ -31,7 +31,7 @@ void RenderFog()
 }
 
 /**
- *	@brief Non-transparent triangles-- add them here
+ *    @brief Non-transparent triangles-- add them here
  */
 void DLLEXPORT HUD_DrawNormalTriangles()
 {
@@ -39,13 +39,13 @@ void DLLEXPORT HUD_DrawNormalTriangles()
 }
 
 /**
- *	@brief Render any triangles with transparent rendermode needs here
+ *    @brief Render any triangles with transparent rendermode needs here
  */
 void DLLEXPORT HUD_DrawTransparentTriangles()
 {
     if( g_pParticleMan )
         g_pParticleMan->Update();
 
-	// Handled in V_CalcRefdef.
-	// RenderFog();
+    // Handled in V_CalcRefdef.
+    // RenderFog();
 }

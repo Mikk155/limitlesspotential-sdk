@@ -134,7 +134,7 @@ int CVoiceStatus::Init(
     IVoiceStatusHelper* pHelper,
     Panel** pParentPanel )
 {
-	// Setup the voice_modenable cvar.
+    // Setup the voice_modenable cvar.
     gEngfuncs.pfnRegisterVariable( "voice_modenable", "1", FCVAR_ARCHIVE );
 
     gEngfuncs.pfnRegisterVariable( "voice_clientdebug", "0", 0 );
@@ -239,12 +239,12 @@ bool CVoiceStatus::VidInit()
     if( m_pScoreboardBanned = vgui_LoadTGA( "gfx/vgui/640_voiceblocked.tga" ); m_pScoreboardBanned )
         m_pScoreboardBanned->setColor( Color( 255, 255, 255, 1 ) ); // Give just a tiny bit of translucency so software draws correctly.
 
-	// Figure out the voice head model height.
+    // Figure out the voice head model height.
     m_VoiceHeadModelHeight = 45;
     const auto fileContents = FileSystem_LoadFileIntoBuffer( "scripts/voicemodel.txt", FileContentFormat::Text );
     if( !fileContents.empty() )
     {
-		// TODO: token can potentially be larger than buffer.
+        // TODO: token can potentially be larger than buffer.
         char token[4096];
         gEngfuncs.COM_ParseFile( reinterpret_cast<const char*>( fileContents.data() ), token );
         if( token[0] >= '0' && token[0] <= '9' )
@@ -260,7 +260,7 @@ bool CVoiceStatus::VidInit()
 
 void CVoiceStatus::Frame( double frametime )
 {
-	// check server banned players once per second
+    // check server banned players once per second
     if( gEngfuncs.GetClientTime() - m_LastUpdateServerState > 1 )
     {
         UpdateServerState( false );
@@ -268,7 +268,7 @@ void CVoiceStatus::Frame( double frametime )
 
     m_BlinkTimer += frametime;
 
-	// Update speaker labels.
+    // Update speaker labels.
     if( m_pHelper->CanShowSpeakerLabels() )
     {
         for( int i = 0; i < MAX_VOICE_SPEAKERS; i++ )
@@ -300,15 +300,15 @@ void CVoiceStatus::CreateEntities()
 
         cl_entity_t* pClient = gEngfuncs.GetEntityByIndex( i + 1 );
 
-		// Don't show an icon if the player is not in our PVS.
+        // Don't show an icon if the player is not in our PVS.
         if( !pClient || pClient->curstate.messagenum < localPlayer->curstate.messagenum )
             continue;
 
-		// Don't show an icon for dead or spectating players (ie: invisible entities).
+        // Don't show an icon for dead or spectating players (ie: invisible entities).
         if( ( pClient->curstate.effects & EF_NODRAW ) != 0 )
             continue;
 
-		// Don't show an icon for the local player unless we're in thirdperson mode.
+        // Don't show an icon for the local player unless we're in thirdperson mode.
         if( pClient == localPlayer && !cam_thirdperson )
             continue;
 
@@ -332,7 +332,7 @@ void CVoiceStatus::CreateEntities()
 
         pEnt->origin = pEnt->origin + pClient->origin;
 
-		// Tell the engine.
+        // Tell the engine.
         gEngfuncs.CL_CreateVisibleEntity( ET_NORMAL, pEnt );
     }
 }
@@ -356,18 +356,18 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, bool bTalking )
 
     int iLocalPlayerIndex = gEngfuncs.GetLocalPlayer()->index;
 
-	// Is it the local player talking?
+    // Is it the local player talking?
     if( entindex == -1 )
     {
         m_bTalking = bTalking;
         if( bTalking )
         {
-			// Enable voice for them automatically if they try to talk.
+            // Enable voice for them automatically if they try to talk.
             gEngfuncs.pfnClientCmd( "voice_modenable 1" );
         }
 
-		// now set the player index to the correct index for the local player
-		// this will allow us to have the local player's icon flash in the scoreboard
+        // now set the player index to the correct index for the local player
+        // this will allow us to have the local player's icon flash in the scoreboard
         entindex = iLocalPlayerIndex;
 
         pVoiceLoopback = gEngfuncs.pfnGetCvarPointer( "voice_loopback" );
@@ -391,15 +391,15 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, bool bTalking )
             m_VoicePlayers[iClient] = true;
             m_VoiceEnabledPlayers[iClient] = true;
 
-			// If we don't have a label for this guy yet, then create one.
+            // If we don't have a label for this guy yet, then create one.
             if( !pLabel )
             {
-				// if this isn't the local player (unless they have voice_loopback on)
+                // if this isn't the local player (unless they have voice_loopback on)
                 if( ( entindex != iLocalPlayerIndex ) || ( pVoiceLoopback && 0 != pVoiceLoopback->value ) )
                 {
                     if( pLabel = GetFreeVoiceLabel(); pLabel )
                     {
-						// Get the name from the engine.
+                        // Get the name from the engine.
                         hud_player_info_t info;
                         memset( &info, 0, sizeof( info ) );
                         gEngfuncs.pfnGetPlayerInfo( entindex, &info );
@@ -433,7 +433,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, bool bTalking )
         {
             m_VoicePlayers[iClient] = false;
 
-			// If we have a label for this guy, kill it.
+            // If we have a label for this guy, kill it.
             if( pLabel )
             {
                 pLabel->m_pBackground->setVisible( false );
@@ -448,7 +448,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, bool bTalking )
 
 void CVoiceStatus::UpdateServerState( bool bForce )
 {
-	// Can't do anything when we're not in a level.
+    // Can't do anything when we're not in a level.
     char const* pLevelName = gEngfuncs.pfnGetLevelName();
     if( pLevelName[0] == 0 )
     {
@@ -483,8 +483,8 @@ void CVoiceStatus::UpdateServerState( bool bForce )
 
     for( unsigned long dw = 0; dw < VOICE_MAX_PLAYERS_DW; dw++ )
     {
-		// The ban mask is a 32 bit int, so make sure this doesn't silently break.
-		// Note that the server will also need updating.
+        // The ban mask is a 32 bit int, so make sure this doesn't silently break.
+        // Note that the server will also need updating.
         static_assert( MAX_PLAYERS <= 32, "The voice ban bit vector only supports up to 32 players" );
 
         unsigned long serverBanMask = 0;
@@ -505,7 +505,7 @@ void CVoiceStatus::UpdateServerState( bool bForce )
         if( serverBanMask != banMask )
             bChange = true;
 
-		// Ok, the server needs to be updated.
+        // Ok, the server needs to be updated.
         char numStr[512];
         sprintf( numStr, " %lx", banMask );
         strcat( str, numStr );
@@ -549,13 +549,13 @@ void CVoiceStatus::UpdateBanButton( int iClient )
     if( !HACK_GetPlayerUniqueID( iClient + 1, playerID ) )
         return;
 
-	// Figure out if it's blinking or not.
+    // Figure out if it's blinking or not.
     bool bBlink = fmod( m_BlinkTimer, SCOREBOARD_BLINK_FREQUENCY * 2 ) < SCOREBOARD_BLINK_FREQUENCY;
     bool bTalking = !!m_VoicePlayers[iClient];
     bool bBanned = m_BanMgr.GetPlayerBan( playerID );
     bool bNeverSpoken = !m_VoiceEnabledPlayers[iClient];
 
-	// Get the appropriate image to display on the panel.
+    // Get the appropriate image to display on the panel.
     if( bBanned )
     {
         pPanel->setImage( m_pScoreboardBanned );
@@ -658,7 +658,7 @@ CVoiceLabel* CVoiceStatus::GetFreeVoiceLabel()
 
 void CVoiceStatus::RepositionLabels()
 {
-	// find starting position to draw from, along right-hand side of screen
+    // find starting position to draw from, along right-hand side of screen
     int y = ScreenHeight / 2;
 
     int iconWide = 8, iconTall = 8;
@@ -667,7 +667,7 @@ void CVoiceStatus::RepositionLabels()
         m_pSpeakerLabelIcon->getSize( iconWide, iconTall );
     }
 
-	// Reposition active labels.
+    // Reposition active labels.
     for( int i = 0; i < MAX_VOICE_SPEAKERS; i++ )
     {
         CVoiceLabel* pLabel = &m_Labels[i];
@@ -683,20 +683,20 @@ void CVoiceStatus::RepositionLabels()
         int textWide, textTall;
         pLabel->m_pLabel->getContentSize( textWide, textTall );
 
-		// Don't let it stretch too far across their screen.
+        // Don't let it stretch too far across their screen.
         if( textWide > ( ScreenWidth * 2 ) / 3 )
             textWide = ( ScreenWidth * 2 ) / 3;
 
-		// Setup the background label to fit everything in.
+        // Setup the background label to fit everything in.
         int border = 2;
         int bgWide = textWide + iconWide + border * 3;
         int bgTall = std::max( textTall, iconTall ) + border * 2;
         pLabel->m_pBackground->setBounds( ScreenWidth - bgWide - 8, y, bgWide, bgTall );
 
-		// Put the text at the left.
+        // Put the text at the left.
         pLabel->m_pLabel->setBounds( border, ( bgTall - textTall ) / 2, textWide, textTall );
 
-		// Put the icon at the right.
+        // Put the icon at the right.
         int iconLeft = border + textWide + border;
         int iconTop = ( bgTall - iconTall ) / 2;
         if( pLabel->m_pIcon )
@@ -735,7 +735,7 @@ void CVoiceStatus::RepositionLabels()
 
 void CVoiceStatus::FreeBitmaps()
 {
-	// Delete all the images we have loaded.
+    // Delete all the images we have loaded.
     delete m_pLocalBitmap;
     m_pLocalBitmap = nullptr;
 
@@ -763,7 +763,7 @@ void CVoiceStatus::FreeBitmaps()
     delete m_pScoreboardBanned;
     m_pScoreboardBanned = nullptr;
 
-	// Clear references to the images in panels.
+    // Clear references to the images in panels.
     for( int i = 0; i < MAX_PLAYERS; i++ )
     {
         if( m_pBanButtons[i] )
@@ -821,7 +821,7 @@ void CVoiceStatus::SetPlayerBlockedState( int iPlayer, bool blocked )
         gEngfuncs.pfnConsolePrint( "CVoiceStatus::SetPlayerBlockedState part 2\n" );
     }
 
-	// Squelch or (try to) unsquelch this player.
+    // Squelch or (try to) unsquelch this player.
     if( 0 != gEngfuncs.pfnGetCvarFloat( "voice_clientdebug" ) )
     {
         char str[256];

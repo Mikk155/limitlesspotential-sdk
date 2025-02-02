@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -32,7 +32,7 @@ LINK_ENTITY_TO_CLASS( rope_segment, CRopeSegment );
 
 CRopeSegment::CRopeSegment()
 {
-	// TODO: move to in-class initializer?
+    // TODO: move to in-class initializer?
     m_iszModelName = MAKE_STRING( "models/rope16.mdl" );
 }
 
@@ -63,7 +63,7 @@ void CRopeSegment::Spawn()
 
 void CRopeSegment::Think()
 {
-	// Do nothing.
+    // Do nothing.
 }
 
 void CRopeSegment::Touch( CBaseEntity* pOther )
@@ -75,13 +75,13 @@ void CRopeSegment::Touch( CBaseEntity* pOther )
         return;
     }
 
-	// Electrified wires deal damage.
+    // Electrified wires deal damage.
     if( m_bCauseDamage )
     {
-		// Like trigger_hurt we need to deal half a second's worth of damage per touch to make this frametime-independent.
+        // Like trigger_hurt we need to deal half a second's worth of damage per touch to make this frametime-independent.
         if( m_LastDamageTime < gpGlobals->time )
         {
-			// 1 damage per tick is 30 damage per second at 30 FPS.
+            // 1 damage per tick is 30 damage per second at 30 FPS.
             const float damagePerHalfSecond = 30.f / 2;
             pOther->TakeDamage( this, this, damagePerHalfSecond, DMG_SHOCK );
             m_LastDamageTime = gpGlobals->time + 0.5f;
@@ -104,7 +104,7 @@ void CRopeSegment::Touch( CBaseEntity* pOther )
 
             if( vecVelocity.Length() > 0.5 )
             {
-				// Apply some external force to move the rope.
+                // Apply some external force to move the rope.
                 data.mApplyExternalForce = true;
 
                 data.mExternalForce = data.mExternalForce + vecVelocity * 750;
@@ -117,14 +117,14 @@ void CRopeSegment::Touch( CBaseEntity* pOther )
         }
         else
         {
-			// This segment cannot be grabbed, so grab the highest one if possible.
+            // This segment cannot be grabbed, so grab the highest one if possible.
             auto pRope = m_pSample->GetMasterRope();
 
             CRopeSegment* pSegment;
 
             if( pRope->GetNumSegments() <= 4 )
             {
-				// Fewer than 5 segments exist, so allow grabbing the last one.
+                // Fewer than 5 segments exist, so allow grabbing the last one.
                 pSegment = pRope->GetSegments()[pRope->GetNumSegments() - 1];
                 pSegment->SetCanBeGrabbed( true );
             }

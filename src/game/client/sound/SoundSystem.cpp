@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -209,14 +209,14 @@ void EV_PlaySound( int ent, const Vector& origin, int channel, const char* sampl
 {
     CL_StartSound( ent, channel, sample, origin, volume, attenuation, pitch, fFlags );
 
-	// gEngfuncs.pEventAPI->EV_PlaySound(ent, origin, channel, sample, volume, attenuation, fFlags, pitch);
+    // gEngfuncs.pEventAPI->EV_PlaySound(ent, origin, channel, sample, volume, attenuation, fFlags, pitch);
 }
 
 void EV_StopSound( int ent, int channel, const char* sample )
 {
     CL_StartSound( ent, channel, sample, vec3_origin, VOL_NORM, 1, PITCH_NORM, SND_STOP );
 
-	// gEngfuncs.pEventAPI->EV_StopSound(ent, channel, sample);
+    // gEngfuncs.pEventAPI->EV_StopSound(ent, channel, sample);
 }
 
 void PlaySound( int channel, const char* szSound, float vol )
@@ -225,7 +225,7 @@ void PlaySound( int channel, const char* szSound, float vol )
 
     CL_StartSound( g_ViewEntity, channel, szSound, v_origin, vol, 1.0, PITCH_NORM, 0 );
 
-	// gEngfuncs.pfnPlaySoundByName(szSound, vol);
+    // gEngfuncs.pfnPlaySoundByName(szSound, vol);
 }
 
 void PlaySoundByNameAtLocation( const char* szSound, float volume, const Vector& origin )
@@ -234,7 +234,7 @@ void PlaySoundByNameAtLocation( const char* szSound, float volume, const Vector&
 
     CL_StartSound( g_ViewEntity, CHAN_AUTO, szSound, origin, volume, 1.0, PITCH_NORM, 0 );
 
-	// gEngfuncs.pfnPlaySoundByNameAtLocation(szSound, 1.0, entity->attachment[0]);
+    // gEngfuncs.pfnPlaySoundByNameAtLocation(szSound, 1.0, entity->attachment[0]);
 }
 
 void CL_TempEntPlaySound( TEMPENTITY* pTemp, float damp )
@@ -242,7 +242,7 @@ void CL_TempEntPlaySound( TEMPENTITY* pTemp, float damp )
     bool isShell = false;
     float fvol = 0.8f;
 
-	// Note: RandomLong is inclusive so this value should be one less than the number of elements!
+    // Note: RandomLong is inclusive so this value should be one less than the number of elements!
     int count;
     const char* sounds[6]{};
 
@@ -331,7 +331,7 @@ void CL_TempEntPlaySound( TEMPENTITY* pTemp, float damp )
     }
     }
 
-	// Note: temp entities use baseline.origin to store off velocity. This is vertical movement speed.
+    // Note: temp entities use baseline.origin to store off velocity. This is vertical movement speed.
     const int bounceSpeed = std::abs( static_cast<int>( pTemp->entity.baseline.origin[2] ) );
 
     if( isShell && bounceSpeed < 200 )
@@ -363,7 +363,7 @@ void CL_TempEntPlaySound( TEMPENTITY* pTemp, float damp )
 
     CL_StartSound( -1, CHAN_AUTO, sounds[gEngfuncs.pfnRandomLong( 0, count )], pTemp->entity.origin, fvol, 1.0, pitch, 0 );
 
-	// S_StartDynamicSound(-1, CHAN_AUTO, sounds[gEngfuncs.pfnRandomLong(0, count)], pTemp->entity.origin, fvol, 1.0, 0, pitch);
+    // S_StartDynamicSound(-1, CHAN_AUTO, sounds[gEngfuncs.pfnRandomLong(0, count)], pTemp->entity.origin, fvol, 1.0, 0, pitch);
 }
 
 constexpr const char* RicochetSounds[] =
@@ -383,7 +383,7 @@ void R_RicochetSound( const Vector& pos )
 {
     R_RicochetSound( pos, gEngfuncs.pfnRandomLong( 0, 4 ) );
 
-	// gEngfuncs.pEfxAPI->R_RicochetSound(pos);
+    // gEngfuncs.pEfxAPI->R_RicochetSound(pos);
 }
 
 constexpr const char* ExplosionSounds[] =

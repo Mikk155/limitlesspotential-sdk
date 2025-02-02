@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -57,10 +57,10 @@ public:
 
     int Add( const char* str );
 
-	/**
-	 *	@brief Adds a string directly without validation.
-	 *	Only to be used for adding files precached by the engine.
-	 */
+    /**
+     *    @brief Adds a string directly without validation.
+     *    Only to be used for adding files precached by the engine.
+     */
     void AddUnchecked( const char* str );
 
     void Clear();

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -36,7 +36,7 @@ enum
 };
 
 /**
- *	@brief Bullsquid's spit projectile
+ *    @brief Bullsquid's spit projectile
  */
 class CSquidSpit : public CBaseEntity
 {
@@ -108,7 +108,7 @@ void CSquidSpit::Touch( CBaseEntity* pOther )
     TraceResult tr;
     int iPitch;
 
-	// splat sound
+    // splat sound
     iPitch = RANDOM_FLOAT( 90, 110 );
 
     EmitSoundDyn( CHAN_VOICE, "bullchicken/bc_acid1.wav", 1, ATTN_NORM, 0, iPitch );
@@ -126,11 +126,11 @@ void CSquidSpit::Touch( CBaseEntity* pOther )
     if( 0 == pOther->pev->takedamage )
     {
 
-		// make a splat on the wall
+        // make a splat on the wall
         UTIL_TraceLine( pev->origin, pev->origin + pev->velocity * 10, dont_ignore_monsters, edict(), &tr );
         UTIL_DecalTrace( &tr, DECAL_SPIT1 + RANDOM_LONG( 0, 1 ) );
 
-		// make some flecks
+        // make some flecks
         MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, tr.vecEndPos );
         WRITE_BYTE( TE_SPRITE_SPRAY );
         WRITE_COORD( tr.vecEndPos.x ); // pos
@@ -162,7 +162,7 @@ void CSquidSpit::Touch( CBaseEntity* pOther )
 #define BSQUID_AE_THROW (6)
 
 /**
- *	@brief big, spotty tentacle-mouthed meanie.
+ *    @brief big, spotty tentacle-mouthed meanie.
  */
 class CBullsquid : public CBaseMonster
 {
@@ -185,23 +185,23 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-	/**
-	 *	@brief OVERRIDDEN for bullsquid because it needs to know explicitly when the last attempt to chase the enemy failed,
-	 *	since that impacts its attack choices.
-	 */
+    /**
+     *    @brief OVERRIDDEN for bullsquid because it needs to know explicitly when the last attempt to chase the enemy failed,
+     *    since that impacts its attack choices.
+     */
     void StartTask( const Task_t* pTask ) override;
     void RunTask( const Task_t* pTask ) override;
 
-	/**
-	 *	@brief bullsquid is a big guy, so has a longer melee range than most monsters. This is the tailwhip attack
-	 */
+    /**
+     *    @brief bullsquid is a big guy, so has a longer melee range than most monsters. This is the tailwhip attack
+     */
     bool CheckMeleeAttack1( float flDot, float flDist ) override;
 
-	/**
-	 *	@brief bullsquid is a big guy, so has a longer melee range than most monsters.
-	 *	This is the bite attack.
-	 *	this attack will not be performed if the tailwhip attack is valid.
-	 */
+    /**
+     *    @brief bullsquid is a big guy, so has a longer melee range than most monsters.
+     *    This is the bite attack.
+     *    this attack will not be performed if the tailwhip attack is valid.
+     */
     bool CheckMeleeAttack2( float flDot, float flDist ) override;
     bool CheckRangeAttack1( float flDot, float flDist ) override;
     void RunAI() override;
@@ -209,21 +209,21 @@ public:
     const Schedule_t* GetSchedule() override;
     const Schedule_t* GetScheduleOfType( int Type ) override;
 
-	/**
-	 *	@brief overridden for bullsquid so we can keep track of how much time has passed since it was last injured
-	 */
+    /**
+     *    @brief overridden for bullsquid so we can keep track of how much time has passed since it was last injured
+     */
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
-	/**
-	 *	@brief overridden for bullsquid so that it can be made to ignore its love of headcrabs for a while.
-	 */
+    /**
+     *    @brief overridden for bullsquid so that it can be made to ignore its love of headcrabs for a while.
+     */
     Relationship IRelationship( CBaseEntity* pTarget ) override;
     int IgnoreConditions() override;
 
-	/**
-	 *	@brief Overridden for Bullsquid to deal with the feature that makes it lose interest in headcrabs for
-	 *	a while if something injures it.
-	 */
+    /**
+     *    @brief Overridden for Bullsquid to deal with the feature that makes it lose interest in headcrabs for
+     *    a while if something injures it.
+     */
     MONSTERSTATE GetIdealState() override;
 
     bool m_fCanThreatDisplay; // this is so the squid only does the "I see a headcrab!" dance one time.
@@ -256,7 +256,7 @@ int CBullsquid::IgnoreConditions()
 
     if( gpGlobals->time - m_flLastHurtTime <= 20 )
     {
-		// haven't been hurt in 20 seconds, so let the squid care about stink.
+        // haven't been hurt in 20 seconds, so let the squid care about stink.
         iIgnore = bits_COND_SMELL | bits_COND_SMELL_FOOD;
     }
 
@@ -264,7 +264,7 @@ int CBullsquid::IgnoreConditions()
     {
         if( m_hEnemy->ClassnameIs( "monster_headcrab" ) )
         {
-			// (Unless after a tasty headcrab)
+            // (Unless after a tasty headcrab)
             iIgnore = bits_COND_SMELL | bits_COND_SMELL_FOOD;
         }
     }
@@ -277,8 +277,8 @@ Relationship CBullsquid::IRelationship( CBaseEntity* pTarget )
 {
     if( gpGlobals->time - m_flLastHurtTime < 5 && pTarget->ClassnameIs( "monster_headcrab" ) )
     {
-		// if squid has been hurt in the last 5 seconds, and is getting relationship for a headcrab,
-		// tell squid to disregard crab.
+        // if squid has been hurt in the last 5 seconds, and is getting relationship for a headcrab,
+        // tell squid to disregard crab.
         return Relationship::None;
     }
 
@@ -290,8 +290,8 @@ bool CBullsquid::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, floa
     float flDist;
     Vector vecApex;
 
-	// if the squid is running, has an enemy, was hurt by the enemy, hasn't been hurt in the last 3 seconds, and isn't too close to the enemy,
-	// it will swerve. (whew).
+    // if the squid is running, has an enemy, was hurt by the enemy, hasn't been hurt in the last 3 seconds, and isn't too close to the enemy,
+    // it will swerve. (whew).
     if( m_hEnemy != nullptr && IsMoving() && attacker == m_hEnemy && gpGlobals->time - m_flLastHurtTime > 3 )
     {
         flDist = ( pev->origin - m_hEnemy->pev->origin ).Length2D();
@@ -309,7 +309,7 @@ bool CBullsquid::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, floa
 
     if( !attacker->ClassnameIs( "monster_headcrab" ) )
     {
-		// don't forget about headcrabs if it was a headcrab that hurt the squid.
+        // don't forget about headcrabs if it was a headcrab that hurt the squid.
         m_flLastHurtTime = gpGlobals->time;
     }
 
@@ -320,7 +320,7 @@ bool CBullsquid::CheckRangeAttack1( float flDot, float flDist )
 {
     if( IsMoving() && flDist >= 512 )
     {
-		// squid will far too far behind if he stops running to spit at this distance from the enemy.
+        // squid will far too far behind if he stops running to spit at this distance from the enemy.
         return false;
     }
 
@@ -330,19 +330,19 @@ bool CBullsquid::CheckRangeAttack1( float flDot, float flDist )
         {
             if( fabs( pev->origin.z - m_hEnemy->pev->origin.z ) > 256 )
             {
-				// don't try to spit at someone up really high or down really low.
+                // don't try to spit at someone up really high or down really low.
                 return false;
             }
         }
 
         if( IsMoving() )
         {
-			// don't spit again for a long time, resume chasing enemy.
+            // don't spit again for a long time, resume chasing enemy.
             m_flNextSpitTime = gpGlobals->time + 5;
         }
         else
         {
-			// not moving, so spit again pretty soon.
+            // not moving, so spit again pretty soon.
             m_flNextSpitTime = gpGlobals->time + 0.5;
         }
 
@@ -499,8 +499,8 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
 
             UTIL_MakeVectors( pev->angles );
 
-			// !!!HACKHACK - the spot at which the spit originates (in front of the mouth) was measured in 3ds and hardcoded here.
-			// we should be able to read the position of bones at runtime for this info.
+            // !!!HACKHACK - the spot at which the spit originates (in front of the mouth) was measured in 3ds and hardcoded here.
+            // we should be able to read the position of bones at runtime for this info.
             vecSpitOffset = ( gpGlobals->v_right * 8 + gpGlobals->v_forward * 37 + gpGlobals->v_up * 23 );
             vecSpitOffset = ( pev->origin + vecSpitOffset );
             vecSpitDir = ( ( m_hEnemy->pev->origin + m_hEnemy->pev->view_ofs ) - vecSpitOffset ).Normalize();
@@ -510,10 +510,10 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
             vecSpitDir.z += RANDOM_FLOAT( -0.05, 0 );
 
 
-			// do stuff for this event.
+            // do stuff for this event.
             AttackSound();
 
-			// spew the spittle temporary ents.
+            // spew the spittle temporary ents.
             MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpitOffset );
             WRITE_BYTE( TE_SPRITE_SPRAY );
             WRITE_COORD( vecSpitOffset.x ); // pos
@@ -535,13 +535,13 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case BSQUID_AE_BITE:
     {
-		// SOUND HERE!
+        // SOUND HERE!
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "bullsquid_dmg_bite"sv ), DMG_SLASH );
 
         if( pHurt )
         {
-			// pHurt->pev->punchangle.z = -15;
-			// pHurt->pev->punchangle.x = -45;
+            // pHurt->pev->punchangle.z = -15;
+            // pHurt->pev->punchangle.x = -45;
             pHurt->pev->velocity = pHurt->pev->velocity - gpGlobals->v_forward * 100;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_up * 100;
         }
@@ -563,7 +563,7 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case BSQUID_AE_BLINK:
     {
-		// close eye.
+        // close eye.
         pev->skin = 1;
     }
     break;
@@ -572,14 +572,14 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
     {
         float flGravity = g_psv_gravity->value;
 
-		// throw the squid up into the air on this frame.
+        // throw the squid up into the air on this frame.
         if( FBitSet( pev->flags, FL_ONGROUND ) )
         {
             pev->flags -= FL_ONGROUND;
         }
 
-		// jump into air for 0.8 (24/30) seconds
-		//			pev->velocity.z += (0.875 * flGravity) * 0.5;
+        // jump into air for 0.8 (24/30) seconds
+        //            pev->velocity.z += (0.875 * flGravity) * 0.5;
         pev->velocity.z += ( 0.625 * flGravity ) * 0.5;
     }
     break;
@@ -588,13 +588,13 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
     {
         int iPitch;
 
-		// squid throws its prey IF the prey is a client.
+        // squid throws its prey IF the prey is a client.
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, 0, 0 );
 
 
         if( pHurt )
         {
-			// croonchy bite sound
+            // croonchy bite sound
             iPitch = RANDOM_FLOAT( 90, 110 );
             switch ( RANDOM_LONG( 0, 1 ) )
             {
@@ -607,11 +607,11 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
             }
 
 
-			// pHurt->pev->punchangle.x = RANDOM_LONG(0,34) - 5;
-			// pHurt->pev->punchangle.z = RANDOM_LONG(0,49) - 25;
-			// pHurt->pev->punchangle.y = RANDOM_LONG(0,89) - 45;
+            // pHurt->pev->punchangle.x = RANDOM_LONG(0,34) - 5;
+            // pHurt->pev->punchangle.z = RANDOM_LONG(0,49) - 25;
+            // pHurt->pev->punchangle.y = RANDOM_LONG(0,89) - 45;
 
-			// screeshake transforms the viewmodel as well as the viewangle. No problems with seeing the ends of the viewmodels.
+            // screeshake transforms the viewmodel as well as the viewangle. No problems with seeing the ends of the viewmodels.
             UTIL_ScreenShake( pHurt->pev->origin, 25.0, 1.5, 0.7, 2 );
 
             if( pHurt->IsPlayer() )
@@ -720,12 +720,12 @@ void CBullsquid::AttackSound()
 
 void CBullsquid::RunAI()
 {
-	// first, do base class stuff
+    // first, do base class stuff
     CBaseMonster::RunAI();
 
     if( pev->skin != 0 )
     {
-		// close eye if it was open.
+        // close eye if it was open.
         pev->skin = 0;
     }
 
@@ -736,7 +736,7 @@ void CBullsquid::RunAI()
 
     if( m_hEnemy != nullptr && m_Activity == ACT_RUN )
     {
-		// chasing enemy. Sprint for last bit
+        // chasing enemy. Sprint for last bit
         if( ( pev->origin - m_hEnemy->pev->origin ).Length2D() < SQUID_SPRINT_DIST )
         {
             pev->framerate = 1.25;
@@ -843,7 +843,7 @@ Task_t tlSquidEat[] =
 };
 
 /**
- *	@brief squid walks to something tasty and eats it.
+ *    @brief squid walks to something tasty and eats it.
  */
 Schedule_t slSquidEat[] =
     {
@@ -853,8 +853,8 @@ Schedule_t slSquidEat[] =
                 bits_COND_HEAVY_DAMAGE |
                 bits_COND_NEW_ENEMY,
 
-			// even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-			// here or the monster won't detect these sounds at ALL while running this schedule.
+            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+            // here or the monster won't detect these sounds at ALL while running this schedule.
             bits_SOUND_MEAT |
                 bits_SOUND_CARCASS,
             "SquidEat"}};
@@ -879,9 +879,9 @@ Task_t tlSquidSniffAndEat[] =
 };
 
 /**
- *	@brief this is a bit different than just Eat.
- *	We use this schedule when the food is far away, occluded, or behind the squid.
- *	This schedule plays a sniff animation before going to the source of food.
+ *    @brief this is a bit different than just Eat.
+ *    We use this schedule when the food is far away, occluded, or behind the squid.
+ *    This schedule plays a sniff animation before going to the source of food.
  */
 Schedule_t slSquidSniffAndEat[] =
     {
@@ -891,8 +891,8 @@ Schedule_t slSquidSniffAndEat[] =
                 bits_COND_HEAVY_DAMAGE |
                 bits_COND_NEW_ENEMY,
 
-			// even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-			// here or the monster won't detect these sounds at ALL while running this schedule.
+            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+            // here or the monster won't detect these sounds at ALL while running this schedule.
             bits_SOUND_MEAT |
                 bits_SOUND_CARCASS,
             "SquidSniffAndEat"}};
@@ -914,7 +914,7 @@ Task_t tlSquidWallow[] =
 };
 
 /**
- *	@brief squid does this to stinky things.
+ *    @brief squid does this to stinky things.
  */
 Schedule_t slSquidWallow[] =
     {
@@ -924,8 +924,8 @@ Schedule_t slSquidWallow[] =
                 bits_COND_HEAVY_DAMAGE |
                 bits_COND_NEW_ENEMY,
 
-			// even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-			// here or the monster won't detect these sounds at ALL while running this schedule.
+            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+            // here or the monster won't detect these sounds at ALL while running this schedule.
             bits_SOUND_GARBAGE,
 
             "SquidWallow"}};
@@ -959,17 +959,17 @@ const Schedule_t* CBullsquid::GetSchedule()
 
             if( pSound && ( !FInViewCone( &pSound->m_vecOrigin ) || !FVisible( pSound->m_vecOrigin ) ) )
             {
-				// scent is behind or occluded
+                // scent is behind or occluded
                 return GetScheduleOfType( SCHED_SQUID_SNIFF_AND_EAT );
             }
 
-			// food is right out in the open. Just go get it.
+            // food is right out in the open. Just go get it.
             return GetScheduleOfType( SCHED_SQUID_EAT );
         }
 
         if( HasConditions( bits_COND_SMELL ) )
         {
-			// there's something stinky.
+            // there's something stinky.
             CSound* pSound;
 
             pSound = PBestScent();
@@ -981,10 +981,10 @@ const Schedule_t* CBullsquid::GetSchedule()
     }
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
@@ -992,7 +992,7 @@ const Schedule_t* CBullsquid::GetSchedule()
         {
             if( m_fCanThreatDisplay && IRelationship( m_hEnemy ) == Relationship::Hate )
             {
-				// this means squid sees a headcrab!
+                // this means squid sees a headcrab!
                 m_fCanThreatDisplay = false; // only do the headcrab dance once per lifetime.
                 return GetScheduleOfType( SCHED_SQUID_SEECRAB );
             }
@@ -1010,11 +1010,11 @@ const Schedule_t* CBullsquid::GetSchedule()
 
             if( pSound && ( !FInViewCone( &pSound->m_vecOrigin ) || !FVisible( pSound->m_vecOrigin ) ) )
             {
-				// scent is behind or occluded
+                // scent is behind or occluded
                 return GetScheduleOfType( SCHED_SQUID_SNIFF_AND_EAT );
             }
 
-			// food is right out in the open. Just go get it.
+            // food is right out in the open. Just go get it.
             return GetScheduleOfType( SCHED_SQUID_EAT );
         }
 
@@ -1152,17 +1152,17 @@ MONSTERSTATE CBullsquid::GetIdealState()
 
     iConditions = IScheduleFlags();
 
-	// If no schedule conditions, the new ideal state is probably the reason we're in here.
+    // If no schedule conditions, the new ideal state is probably the reason we're in here.
     switch ( m_MonsterState )
     {
     case MONSTERSTATE_COMBAT:
-		/*
-		COMBAT goes to ALERT upon death of enemy
-		*/
+        /*
+        COMBAT goes to ALERT upon death of enemy
+        */
         {
             if( m_hEnemy != nullptr && ( ( iConditions & ( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) ) != 0 ) && m_hEnemy->ClassnameIs( "monster_headcrab" ) )
             {
-				// if the squid has a headcrab enemy and something hurts it, it's going to forget about the crab for a while.
+                // if the squid has a headcrab enemy and something hurts it, it's going to forget about the crab for a while.
                 m_hEnemy = nullptr;
                 m_IdealMonsterState = MONSTERSTATE_ALERT;
             }

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -52,13 +52,13 @@ CBaseEntity* UTIL_FindEntityForward( CBaseEntity* pMe )
 void UTIL_ParametricRocket( CBaseEntity* entity, Vector vecOrigin, Vector vecAngles, CBaseEntity* owner )
 {
     entity->pev->startpos = vecOrigin;
-	// Trace out line to end pos
+    // Trace out line to end pos
     TraceResult tr;
     UTIL_MakeVectors( vecAngles );
     UTIL_TraceLine( entity->pev->startpos, entity->pev->startpos + gpGlobals->v_forward * 8192, ignore_monsters, owner->edict(), &tr );
     entity->pev->endpos = tr.vecEndPos;
 
-	// Now compute how long it will take based on current velocity
+    // Now compute how long it will take based on current velocity
     Vector vecTravel = entity->pev->endpos - entity->pev->startpos;
     float travelTime = 0.0;
     if( entity->pev->velocity.Length() > 0 )
@@ -133,7 +133,7 @@ int UTIL_EntitiesInBox( CBaseEntity** pList, int listMax, const Vector& mins, co
     if( !pEdict )
         return count;
 
-	// Ignore world.
+    // Ignore world.
     ++pEdict;
 
     for( int i = 1; i < gpGlobals->maxEntities; i++, pEdict++ )
@@ -180,7 +180,7 @@ int UTIL_MonstersInSphere( CBaseEntity** pList, int listMax, const Vector& cente
     if( !pEdict )
         return count;
 
-	// Ignore world.
+    // Ignore world.
     ++pEdict;
 
     for( int i = 1; i < gpGlobals->maxEntities; i++, pEdict++ )
@@ -191,8 +191,8 @@ int UTIL_MonstersInSphere( CBaseEntity** pList, int listMax, const Vector& cente
         if( ( pEdict->v.flags & ( FL_CLIENT | FL_MONSTER ) ) == 0 ) // Not a client/monster ?
             continue;
 
-		// Use origin for X & Y since they are centered for all monsters
-		// Now X
+        // Use origin for X & Y since they are centered for all monsters
+        // Now X
         delta = center.x - pEdict->v.origin.x; //(pEdict->v.absmin.x + pEdict->v.absmax.x)*0.5;
         delta *= delta;
 
@@ -200,7 +200,7 @@ int UTIL_MonstersInSphere( CBaseEntity** pList, int listMax, const Vector& cente
             continue;
         distance = delta;
 
-		// Now Y
+        // Now Y
         delta = center.y - pEdict->v.origin.y; //(pEdict->v.absmin.y + pEdict->v.absmax.y)*0.5;
         delta *= delta;
 
@@ -208,7 +208,7 @@ int UTIL_MonstersInSphere( CBaseEntity** pList, int listMax, const Vector& cente
         if( distance > radiusSquared )
             continue;
 
-		// Now Z
+        // Now Z
         delta = center.z - ( pEdict->v.absmin.z + pEdict->v.absmax.z ) * 0.5;
         delta *= delta;
 
@@ -278,9 +278,9 @@ CBaseEntity* UTIL_FindEntityByAccessor( CBaseEntity* pStartEntity, const char* s
 
     int index = pStartEntity ? ( pStartEntity->entindex() + 1 ) : 1;
 
-	// TODO: the engine checks the highest entity index that's been used, not maxentities
+    // TODO: the engine checks the highest entity index that's been used, not maxentities
 
-	// Allow the use of wildcards at the end of a token to perform prefix matching.
+    // Allow the use of wildcards at the end of a token to perform prefix matching.
     if( token.ends_with( '*' ) )
     {
         token = token.substr( 0, token.size() - 1 );
@@ -345,7 +345,7 @@ CBaseEntity* UTIL_FindEntityByTargetname( CBaseEntity* pStartEntity, const char*
 {
     if( szName[0] == '!' )
     {
-		// Target selectors can only return one entity so bow out after the first iteration.
+        // Target selectors can only return one entity so bow out after the first iteration.
         if( pStartEntity )
         {
             return nullptr;
@@ -469,8 +469,8 @@ CBasePlayer* UTIL_FindNearestPlayer( const Vector& origin )
 
 CBasePlayer* UTIL_FindClientInPVS( CBaseEntity* entity )
 {
-	// pfnFindClientInPVS returns the world if no players could be found.
-	// We translate this to nullptr to allow the return type to be CBasePlayer*.
+    // pfnFindClientInPVS returns the world if no players could be found.
+    // We translate this to nullptr to allow the return type to be CBasePlayer*.
 
     if( !entity )
     {
@@ -569,7 +569,7 @@ void UTIL_ScreenShake( const Vector& center, float amplitude, float frequency, f
             Vector delta = center - pPlayer->pev->origin;
             float distance = delta.Length();
 
-			// Had to get rid of this falloff - it didn't work well
+            // Had to get rid of this falloff - it didn't work well
             if( distance < radius )
                 localAmplitude = amplitude; // radius - distance;
         }
@@ -772,7 +772,7 @@ void UTIL_ShowMessage( const char* pString, CBasePlayer* pEntity )
 
 void UTIL_ShowMessageAll( const char* pString )
 {
-	// loop through all players
+    // loop through all players
     for( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
         CBasePlayer* pPlayer = UTIL_PlayerByIndex( i );
@@ -784,7 +784,7 @@ void UTIL_ShowMessageAll( const char* pString )
 // Overloaded to add IGNORE_GLASS
 void UTIL_TraceLine( const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t* pentIgnore, TraceResult* ptr )
 {
-	// TODO: define constants
+    // TODO: define constants
     TRACE_LINE( vecStart, vecEnd, ( igmon == ignore_monsters ? 1 : 0 ) | ( ignore_glass == ignoreGlass ? 0x100 : 0 ), pentIgnore, ptr );
 }
 
@@ -851,7 +851,7 @@ float UTIL_ApproachAngle( float target, float value, float speed )
 
     float delta = target - value;
 
-	// Speed is assumed to be positive
+    // Speed is assumed to be positive
     if( speed < 0 )
         speed = -speed;
 
@@ -889,7 +889,7 @@ float UTIL_SplineFraction( float value, float scale )
     value = scale * value;
     float valueSquared = value * value;
 
-	// Nice little ease-in, ease-out spline-like curve
+    // Nice little ease-in, ease-out spline-like curve
     return 3 * valueSquared - 2 * valueSquared * value;
 }
 
@@ -928,7 +928,7 @@ bool UTIL_IsMasterTriggered( string_t sMaster, CBaseEntity* pActivator )
         CBaseEntity::IOLogger->debug( "Master was null or not a master!" );
     }
 
-	// if this isn't a master entity, just say yes.
+    // if this isn't a master entity, just say yes.
     return true;
 }
 
@@ -990,7 +990,7 @@ void UTIL_BloodDrips( const Vector& origin, const Vector& direction, int color, 
 
     if( g_pGameRules->IsMultiplayer() )
     {
-		// scale up blood effect in multiplayer for better visibility
+        // scale up blood effect in multiplayer for better visibility
         amount *= 2;
     }
 
@@ -1050,7 +1050,7 @@ void UTIL_DecalTrace( TraceResult* pTrace, int decalNumber )
     if( pTrace->flFraction == 1.0 )
         return;
 
-	// Only decal BSP models
+    // Only decal BSP models
     if( pTrace->pHit )
     {
         CBaseEntity* pEntity = CBaseEntity::Instance( pTrace->pHit );
@@ -1190,11 +1190,11 @@ void UTIL_Ricochet( const Vector& position, float scale )
 
 bool UTIL_TeamsMatch( const char* pTeamName1, const char* pTeamName2 )
 {
-	// Everyone matches unless it's teamplay
+    // Everyone matches unless it's teamplay
     if( !g_pGameRules->IsTeamplay() )
         return true;
 
-	// Both on a team?
+    // Both on a team?
     if( *pTeamName1 != 0 && *pTeamName2 != 0 )
     {
         if( !stricmp( pTeamName1, pTeamName2 ) ) // Same Team?
@@ -1323,7 +1323,7 @@ void UTIL_BubbleTrail( Vector from, Vector to, int count )
         if( flHeight < 8 )
             return;
 
-		// UNDONE: do a ploink sound
+        // UNDONE: do a ploink sound
         flHeight = flHeight + to.z - from.z;
     }
 
@@ -1351,7 +1351,7 @@ void UTIL_Remove( CBaseEntity* pEntity )
     if( !pEntity )
         return;
 
-	// Ignore attempts to remove the world. This will cause all sorts of problems.
+    // Ignore attempts to remove the world. This will cause all sorts of problems.
     if( pEntity == CBaseEntity::World )
     {
         return;
@@ -1409,7 +1409,7 @@ void UTIL_InitializeKeyValues( CBaseEntity* entity, string_t* keys, string_t* va
         kvd.szValue = STRING( values[i] );
         kvd.fHandled = 0;
 
-		// Skip the classname the same way the engine does.
+        // Skip the classname the same way the engine does.
         if( FStrEq( kvd.szValue, classname ) )
         {
             continue;
@@ -1496,6 +1496,6 @@ Vector VecBModelOrigin( CBaseEntity* bModel )
 
 bool UTIL_IsMultiplayer()
 {
-	// Can be null during weapon registration.
+    // Can be null during weapon registration.
     return g_pGameRules != nullptr && g_pGameRules->IsMultiplayer();
 }

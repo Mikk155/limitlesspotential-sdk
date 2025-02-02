@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -22,7 +22,7 @@ LINK_ENTITY_TO_CLASS( weapon_shotgun, CShotgun );
 BEGIN_DATAMAP( CShotgun )
     DEFINE_FIELD( m_flNextReload, FIELD_TIME ),
     DEFINE_FIELD( m_fInSpecialReload, FIELD_INTEGER ),
-	// DEFINE_FIELD(m_iShell, FIELD_INTEGER),
+    // DEFINE_FIELD(m_iShell, FIELD_INTEGER),
     DEFINE_FIELD( m_flPumpTime, FIELD_TIME ),
 END_DATAMAP();
 
@@ -51,8 +51,8 @@ void CShotgun::Precache()
     PrecacheSound( "weapons/reload1.wav" ); // shotgun reload
     PrecacheSound( "weapons/reload3.wav" ); // shotgun reload
 
-	//	PrecacheSound ("weapons/sshell1.wav");	// shotgun reload - played on client
-	//	PrecacheSound ("weapons/sshell3.wav");	// shotgun reload - played on client
+    //    PrecacheSound ("weapons/sshell1.wav");    // shotgun reload - played on client
+    //    PrecacheSound ("weapons/sshell3.wav");    // shotgun reload - played on client
 
     PrecacheSound( "weapons/357_cock1.wav" ); // gun empty sound
     PrecacheSound( "weapons/scock1.wav" );    // cock gun
@@ -89,7 +89,7 @@ bool CShotgun::Deploy()
 
 void CShotgun::PrimaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         PlayEmptySound();
@@ -131,7 +131,7 @@ void CShotgun::PrimaryAttack()
     }
     else
     {
-		// regular old, untouched spread.
+        // regular old, untouched spread.
         vecDir = m_pPlayer->FireBulletsPlayer( 6, vecSrc, vecAiming, VECTOR_CONE_10DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0, 0, m_pPlayer, m_pPlayer->random_seed );
     }
 
@@ -139,10 +139,10 @@ void CShotgun::PrimaryAttack()
 
 
     if( 0 == GetMagazine1() && m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 
-	// if (GetMagazine1() != 0)
+    // if (GetMagazine1() != 0)
     m_flPumpTime = gpGlobals->time + 0.5;
 
     m_flNextPrimaryAttack = GetNextAttackDelay( 0.75 );
@@ -156,7 +156,7 @@ void CShotgun::PrimaryAttack()
 
 void CShotgun::SecondaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         PlayEmptySound();
@@ -185,7 +185,7 @@ void CShotgun::SecondaryAttack()
 
     m_pPlayer->pev->effects = m_pPlayer->pev->effects | EF_MUZZLEFLASH;
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     Vector vecSrc = m_pPlayer->GetGunPosition();
@@ -195,22 +195,22 @@ void CShotgun::SecondaryAttack()
 
     if( g_Skill.GetValue( "shotgun_double_wide_spread" ) != 0 )
     {
-		// tuned for deathmatch
+        // tuned for deathmatch
         vecDir = m_pPlayer->FireBulletsPlayer( 8, vecSrc, vecAiming, VECTOR_CONE_DM_DOUBLESHOTGUN, 2048, BULLET_PLAYER_BUCKSHOT, 0, 0, m_pPlayer, m_pPlayer->random_seed );
     }
     else
     {
-		// untouched default single player
+        // untouched default single player
         vecDir = m_pPlayer->FireBulletsPlayer( 12, vecSrc, vecAiming, VECTOR_CONE_10DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0, 0, m_pPlayer, m_pPlayer->random_seed );
     }
 
     PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usDoubleFire, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0 );
 
     if( 0 == GetMagazine1() && m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 
-	// if (GetMagazine1() != 0)
+    // if (GetMagazine1() != 0)
     m_flPumpTime = gpGlobals->time + 0.95;
 
     m_flNextPrimaryAttack = GetNextAttackDelay( 1.5 );
@@ -235,11 +235,11 @@ void CShotgun::Reload()
     if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 || GetMagazine1() == maxClip )
         return;
 
-	// don't reload until recoil is done
+    // don't reload until recoil is done
     if( m_flNextPrimaryAttack > UTIL_WeaponTimeBase() )
         return;
 
-	// check to see if we're ready to reload
+    // check to see if we're ready to reload
     if( m_fInSpecialReload == 0 )
     {
         SendWeaponAnim( SHOTGUN_START_RELOAD );
@@ -254,7 +254,7 @@ void CShotgun::Reload()
     {
         if( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
             return;
-		// was waiting for gun to move to side
+        // was waiting for gun to move to side
         m_fInSpecialReload = 2;
 
         if( RANDOM_LONG( 0, 1 ) )
@@ -269,7 +269,7 @@ void CShotgun::Reload()
     }
     else
     {
-		// Add them to the clip
+        // Add them to the clip
         AdjustMagazine1( 1 );
         m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -1 );
         m_fInSpecialReload = 1;
@@ -282,15 +282,15 @@ void CShotgun::WeaponIdle()
 
     m_pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
-	// Moved to ItemPostFrame
-	/*
-	if ( m_flPumpTime && m_flPumpTime < gpGlobals->time )
-	{
-		// play pumping sound
-		m_pPlayer->EmitSoundDyn(CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG(0,0x1f));
-		m_flPumpTime = 0;
-	}
-	*/
+    // Moved to ItemPostFrame
+    /*
+    if ( m_flPumpTime && m_flPumpTime < gpGlobals->time )
+    {
+        // play pumping sound
+        m_pPlayer->EmitSoundDyn(CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG(0,0x1f));
+        m_flPumpTime = 0;
+    }
+    */
 
     if( m_flTimeWeaponIdle < UTIL_WeaponTimeBase() )
     {
@@ -313,10 +313,10 @@ void CShotgun::WeaponIdle()
             }
             else
             {
-				// reload debounce has timed out
+                // reload debounce has timed out
                 SendWeaponAnim( SHOTGUN_PUMP );
 
-				// play cocking sound
+                // play cocking sound
                 m_pPlayer->EmitSoundDyn( CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG( 0, 0x1f ) );
                 m_fInSpecialReload = 0;
                 m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.5;
@@ -350,7 +350,7 @@ void CShotgun::ItemPostFrame()
 {
     if( 0 != m_flPumpTime && m_flPumpTime < gpGlobals->time )
     {
-		// play pumping sound
+        // play pumping sound
         m_pPlayer->EmitSoundDyn( CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG( 0, 0x1f ) );
         m_flPumpTime = 0;
     }

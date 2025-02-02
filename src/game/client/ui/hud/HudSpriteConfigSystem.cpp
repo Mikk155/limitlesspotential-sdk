@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -104,7 +104,7 @@ std::vector<HudSprite> HudSpriteConfigSystem::Load( const char* fileName )
     auto sprites = g_JSON.ParseJSONFile( fileName, {.SchemaName = HudSpriteConfigSchemaName}, ParseHudSpriteConfiguration )
                        .value_or( std::vector<HudSprite>{} );
 
-	// TODO: use a logger for hud messages?
+    // TODO: use a logger for hud messages?
     g_GameLogger->debug( "Loaded {} hud sprites from \"{}\"", sprites.size(), fileName );
 
     return sprites;

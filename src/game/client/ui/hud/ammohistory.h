@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -26,10 +26,10 @@ struct AmmoType;
 class WeaponsResource
 {
 private:
-	// Information about weapons & ammo
+    // Information about weapons & ammo
     std::array<WEAPON, MAX_WEAPONS> rgWeapons; // Weapons Array
 
-	// counts of weapons * ammo
+    // counts of weapons * ammo
     std::array<std::vector<WEAPON*>, MAX_WEAPON_SLOTS> rgSlots; // The slots currently in use by weapons.
     int riAmmo[MAX_AMMO_TYPES];                                    // count of each ammo type
 
@@ -48,9 +48,9 @@ public:
         memset( riAmmo, 0, sizeof riAmmo );
     }
 
-	constexpr int GetSlotCount() const { return static_cast<int>(rgSlots.size()); }
+    constexpr int GetSlotCount() const { return static_cast<int>(rgSlots.size()); }
 
-	///// WEAPON /////
+    ///// WEAPON /////
     std::uint64_t iOldWeaponBits;
 
     WEAPON* GetWeapon( int iId )
@@ -77,7 +77,7 @@ public:
 
     bool HasAmmo( WEAPON* p );
 
-	///// AMMO /////
+    ///// AMMO /////
     void SetAmmo( int iId, int iCount ) { riAmmo[iId] = iCount; }
 
     int CountAmmo( const AmmoType* type );

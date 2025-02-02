@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -42,9 +42,9 @@ BEGIN_DATAMAP( COsprey )
     DEFINE_ARRAY( m_vecOrigin, FIELD_POSITION_VECTOR, MAX_CARRY ),
     DEFINE_ARRAY( m_hRepel, FIELD_EHANDLE, 4 ),
 
-	// DEFINE_FIELD(m_iSoundState, FIELD_INTEGER),
-	// DEFINE_FIELD(m_iSpriteTexture, FIELD_INTEGER),
-	// DEFINE_FIELD(m_iPitch, FIELD_INTEGER),
+    // DEFINE_FIELD(m_iSoundState, FIELD_INTEGER),
+    // DEFINE_FIELD(m_iSpriteTexture, FIELD_INTEGER),
+    // DEFINE_FIELD(m_iPitch, FIELD_INTEGER),
 
     DEFINE_FIELD( m_iDoLeftSmokePuff, FIELD_INTEGER ),
     DEFINE_FIELD( m_iDoRightSmokePuff, FIELD_INTEGER ),
@@ -83,7 +83,7 @@ bool COsprey::KeyValue( KeyValueData* pkvd )
 void COsprey::Spawn()
 {
     Precache();
-	// motor
+    // motor
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
@@ -91,7 +91,7 @@ void COsprey::Spawn()
     SetSize( Vector( -400, -400, -100 ), Vector( 400, 400, 32 ) );
     SetOrigin( pev->origin );
 
-	// Set FL_FLY so the Osprey model is interpolated.
+    // Set FL_FLY so the Osprey model is interpolated.
     pev->flags |= FL_MONSTER | FL_FLY;
     pev->takedamage = DAMAGE_YES;
     m_flRightHealth = pev->health / 2;
@@ -149,8 +149,8 @@ void COsprey::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 
 void COsprey::FindAllThink()
 {
-	// Only search for units if the level designer didn't specify initial capacity.
-	// We can't set m_vecOrigin to a valid value here since we don't have one, so the default of world origin will be used.
+    // Only search for units if the level designer didn't specify initial capacity.
+    // We can't set m_vecOrigin to a valid value here since we don't have one, so the default of world origin will be used.
     if( m_iUnits == 0 )
     {
         CBaseEntity* pEntity = nullptr;
@@ -264,13 +264,13 @@ CBaseMonster* COsprey::MakeGrunt( Vector vecSrc )
             pBeam->SetThink( &CBeam::SUB_Remove );
             pBeam->pev->nextthink = gpGlobals->time + -4096.0 * tr.flFraction / pGrunt->pev->velocity.z + 0.5;
 
-			// AILogger->debug("{} at {:.0f}", i, m_vecOrigin[i]);
+            // AILogger->debug("{} at {:.0f}", i, m_vecOrigin[i]);
             pGrunt->m_vecLastPosition = m_vecOrigin[i];
             m_hGrunt[i] = pGrunt;
             return pGrunt;
         }
     }
-	// AILogger->debug("none dead");
+    // AILogger->debug("none dead");
     return nullptr;
 }
 
@@ -379,7 +379,7 @@ void COsprey::Flight()
 {
     float t = ( gpGlobals->time - m_startTime );
 
-	// Only update if delta time is non-zero. It's zero if we're not moving at all (usually because we have no target).
+    // Only update if delta time is non-zero. It's zero if we're not moving at all (usually because we have no target).
     if( m_dTime != 0 )
     {
         float scale = 1.0 / m_dTime;
@@ -397,11 +397,11 @@ void COsprey::Flight()
     UTIL_MakeAimVectors( pev->angles );
     float flSpeed = DotProduct( gpGlobals->v_forward, m_velocity );
 
-	// float flSpeed = DotProduct( gpGlobals->v_forward, pev->velocity );
+    // float flSpeed = DotProduct( gpGlobals->v_forward, pev->velocity );
 
     float idealtilt = ( 160 - flSpeed ) / 10.0;
 
-	// AILogger->debug("{} {}", flSpeed, flIdealtilt);
+    // AILogger->debug("{} {}", flSpeed, flIdealtilt);
     if( m_flRotortilt < idealtilt )
     {
         m_flRotortilt += 0.5;
@@ -420,7 +420,7 @@ void COsprey::Flight()
     if( m_iSoundState == 0 )
     {
         EmitSoundDyn( CHAN_STATIC, "apache/ap_rotor4.wav", 1.0, 0.15, 0, 110 );
-		// EmitSoundDyn(CHAN_STATIC, "apache/ap_whine1.wav", 0.5, 0.2, 0, 110 );
+        // EmitSoundDyn(CHAN_STATIC, "apache/ap_whine1.wav", 0.5, 0.2, 0, 110 );
 
         m_iSoundState = SND_CHANGE_PITCH; // hack for going through level transitions
     }
@@ -431,7 +431,7 @@ void COsprey::Flight()
         if( !g_pGameRules->IsMultiplayer() )
         {
             CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
-			// UNDONE: this needs to send different sounds to every player for multiplayer.
+            // UNDONE: this needs to send different sounds to every player for multiplayer.
             if( pPlayer )
             {
                 pitch = int( DotProduct( m_velocity - pPlayer->pev->velocity, ( pPlayer->pev->origin - pev->origin ).Normalize() ) );
@@ -445,15 +445,15 @@ void COsprey::Flight()
             }
         }
 
-		// Always update sound in multiplayer so new players can hear it.
+        // Always update sound in multiplayer so new players can hear it.
         if( g_pGameRules->IsMultiplayer() || pitch != m_iPitch )
         {
             m_iPitch = pitch;
             EmitSoundDyn( CHAN_STATIC, "apache/ap_rotor4.wav", 1.0, 0.15, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch );
-			// AILogger->debug("{:.0f}", pitch);
+            // AILogger->debug("{:.0f}", pitch);
         }
 
-		// EmitSoundDyn(CHAN_STATIC, "apache/ap_whine1.wav", flVol, 0.2, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch);
+        // EmitSoundDyn(CHAN_STATIC, "apache/ap_whine1.wav", flVol, 0.2, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch);
     }
 }
 
@@ -485,7 +485,7 @@ void COsprey::Killed( CBaseEntity* attacker, int iGib )
 
 void COsprey::CrashTouch( CBaseEntity* pOther )
 {
-	// only crash if we hit something solid
+    // only crash if we hit something solid
     if( pOther->pev->solid == SOLID_BSP )
     {
         SetTouch( nullptr );
@@ -502,7 +502,7 @@ void COsprey::DyingThink()
 
     pev->avelocity = pev->avelocity * 1.02;
 
-	// still falling?
+    // still falling?
     if( m_startTime > gpGlobals->time )
     {
         UTIL_MakeAimVectors( pev->angles );
@@ -510,8 +510,8 @@ void COsprey::DyingThink()
 
         Vector vecSpot = pev->origin + pev->velocity * 0.2;
 
-		// random explosions
-		// This just makes a dynamic light now
+        // random explosions
+        // This just makes a dynamic light now
         Vector explosionOrigin = vecSpot;
 
         explosionOrigin.x += RANDOM_FLOAT( -150, 150 );
@@ -522,7 +522,7 @@ void COsprey::DyingThink()
             RANDOM_LONG( 0, 29 ) + 30, 12, TE_EXPLFLAG_NONE,
             MSG_PVS, pev->origin );
 
-		// lots of smoke
+        // lots of smoke
         MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpot );
         WRITE_BYTE( TE_SMOKE );
         WRITE_COORD( vecSpot.x + RANDOM_FLOAT( -150, 150 ) );
@@ -538,41 +538,41 @@ void COsprey::DyingThink()
         MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpot );
         WRITE_BYTE( TE_BREAKMODEL );
 
-		// position
+        // position
         WRITE_COORD( vecSpot.x );
         WRITE_COORD( vecSpot.y );
         WRITE_COORD( vecSpot.z );
 
-		// size
+        // size
         WRITE_COORD( 800 );
         WRITE_COORD( 800 );
         WRITE_COORD( 132 );
 
-		// velocity
+        // velocity
         WRITE_COORD( pev->velocity.x );
         WRITE_COORD( pev->velocity.y );
         WRITE_COORD( pev->velocity.z );
 
-		// randomization
+        // randomization
         WRITE_BYTE( 50 );
 
-		// Model
+        // Model
         WRITE_SHORT( m_iTailGibs ); // model id#
 
-		// # of shards
+        // # of shards
         WRITE_BYTE( 8 ); // let client decide
 
-		// duration
+        // duration
         WRITE_BYTE( 200 ); // 10.0 seconds
 
-		// flags
+        // flags
 
         WRITE_BYTE( BREAK_METAL );
         MESSAGE_END();
 
 
 
-		// don't stop it we touch a entity
+        // don't stop it we touch a entity
         pev->flags &= ~FL_ONGROUND;
         pev->nextthink = gpGlobals->time + 0.2;
         return;
@@ -581,14 +581,14 @@ void COsprey::DyingThink()
     {
         Vector vecSpot = pev->origin + ( pev->mins + pev->maxs ) * 0.5;
 
-		/*
-		// This just makes a dynamic light now
-		UTIL_ExplosionEffect(vecSpot + Vector(0, 0, 512), m_iExplode,
-			250, 10, TE_EXPLFLAG_NONE,
-			MSG_BROADCAST);
-		*/
+        /*
+        // This just makes a dynamic light now
+        UTIL_ExplosionEffect(vecSpot + Vector(0, 0, 512), m_iExplode,
+            250, 10, TE_EXPLFLAG_NONE,
+            MSG_BROADCAST);
+        */
 
-		// gibs
+        // gibs
         MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpot );
         WRITE_BYTE( TE_SPRITE );
         WRITE_COORD( vecSpot.x );
@@ -599,19 +599,19 @@ void COsprey::DyingThink()
         WRITE_BYTE( 255 ); // brightness
         MESSAGE_END();
 
-		/*
-		MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
-			WRITE_BYTE( TE_SMOKE );
-			WRITE_COORD( vecSpot.x );
-			WRITE_COORD( vecSpot.y );
-			WRITE_COORD( vecSpot.z + 300 );
-			WRITE_SHORT( g_sModelIndexSmoke );
-			WRITE_BYTE( 250 ); // scale * 10
-			WRITE_BYTE( 6  ); // framerate
-		MESSAGE_END();
-		*/
+        /*
+        MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
+            WRITE_BYTE( TE_SMOKE );
+            WRITE_COORD( vecSpot.x );
+            WRITE_COORD( vecSpot.y );
+            WRITE_COORD( vecSpot.z + 300 );
+            WRITE_SHORT( g_sModelIndexSmoke );
+            WRITE_BYTE( 250 ); // scale * 10
+            WRITE_BYTE( 6  ); // framerate
+        MESSAGE_END();
+        */
 
-		// blast circle
+        // blast circle
         MESSAGE_BEGIN( MSG_PAS, SVC_TEMPENTITY, pev->origin );
         WRITE_BYTE( TE_BEAMCYLINDER );
         WRITE_COORD( pev->origin.x );
@@ -637,39 +637,39 @@ void COsprey::DyingThink()
 
         RadiusDamage( pev->origin, this, this, 300, DMG_BLAST );
 
-		// gibs
+        // gibs
         vecSpot = pev->origin + ( pev->mins + pev->maxs ) * 0.5;
         MESSAGE_BEGIN( MSG_PAS, SVC_TEMPENTITY, vecSpot );
         WRITE_BYTE( TE_BREAKMODEL );
 
-		// position
+        // position
         WRITE_COORD( vecSpot.x );
         WRITE_COORD( vecSpot.y );
         WRITE_COORD( vecSpot.z + 64 );
 
-		// size
+        // size
         WRITE_COORD( 800 );
         WRITE_COORD( 800 );
         WRITE_COORD( 128 );
 
-		// velocity
+        // velocity
         WRITE_COORD( m_velocity.x );
         WRITE_COORD( m_velocity.y );
         WRITE_COORD( fabs( m_velocity.z ) * 0.25 );
 
-		// randomization
+        // randomization
         WRITE_BYTE( 40 );
 
-		// Model
+        // Model
         WRITE_SHORT( m_iBodyGibs ); // model id#
 
-		// # of shards
+        // # of shards
         WRITE_BYTE( 128 );
 
-		// duration
+        // duration
         WRITE_BYTE( 200 ); // 10.0 seconds
 
-		// flags
+        // flags
 
         WRITE_BYTE( BREAK_METAL );
         MESSAGE_END();
@@ -714,10 +714,10 @@ void COsprey::ShowDamage()
 
 void COsprey::Update()
 {
-	// Look around so AI triggers work.
+    // Look around so AI triggers work.
     Look( 4092 );
 
-	// Listen for sounds so AI triggers work.
+    // Listen for sounds so AI triggers work.
     Listen();
 
     ShowDamage();
@@ -726,11 +726,11 @@ void COsprey::Update()
 
 bool COsprey::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Set enemy to last attacker.
-	// Ospreys are not capable of fighting so they'll get angry at whatever shoots at them, not whatever looks like an enemy.
+    // Set enemy to last attacker.
+    // Ospreys are not capable of fighting so they'll get angry at whatever shoots at them, not whatever looks like an enemy.
     m_hEnemy = Instance( attacker );
 
-	// It's on now!
+    // It's on now!
     m_MonsterState = MONSTERSTATE_COMBAT;
 
     return CBaseMonster::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
@@ -738,9 +738,9 @@ bool COsprey::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float f
 
 void COsprey::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	// AILogger->debug("{} {:.0f}", ptr->iHitgroup, flDamage);
+    // AILogger->debug("{} {:.0f}", ptr->iHitgroup, flDamage);
 
-	// only so much per engine
+    // only so much per engine
     if( ptr->iHitgroup == 3 )
     {
         if( m_flRightHealth < 0 )
@@ -759,10 +759,10 @@ void COsprey::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir,
         m_iDoLeftSmokePuff = 3 + ( flDamage / 5.0 );
     }
 
-	// hit hard, hits cockpit, hits engines
+    // hit hard, hits cockpit, hits engines
     if( flDamage > 50 || ptr->iHitgroup == 1 || ptr->iHitgroup == 2 || ptr->iHitgroup == 3 )
     {
-		// AILogger->debug("{:.0f}", flDamage);
+        // AILogger->debug("{:.0f}", flDamage);
         AddMultiDamage( attacker, this, flDamage, bitsDamageType );
     }
     else

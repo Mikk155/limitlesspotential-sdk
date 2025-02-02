@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -53,11 +53,11 @@ bool CHudStatusIcons::Draw( float flTime )
     if( 0 != gEngfuncs.IsSpectateOnly() )
         return true;
     {
-		// find starting position to draw from, along right-hand side of screen
+        // find starting position to draw from, along right-hand side of screen
         int x = 5;
         int y = ScreenHeight / 2;
 
-		// loop through icon list, and draw any valid icons drawing up from the middle of screen
+        // loop through icon list, and draw any valid icons drawing up from the middle of screen
         for( int i = 0; i < MAX_ICONSPRITES; i++ )
         {
             if( 0 != m_IconList[i].spr )
@@ -98,11 +98,11 @@ bool CHudStatusIcons::Draw( float flTime )
 
 // Message handler for StatusIcon message
 // accepts five values:
-//		byte   : true = ENABLE icon, false = DISABLE icon
-//		string : the sprite name to display
-//		byte   : red
-//		byte   : green
-//		byte   : blue
+//        byte   : true = ENABLE icon, false = DISABLE icon
+//        string : the sprite name to display
+//        byte   : red
+//        byte   : green
+//        byte   : blue
 void CHudStatusIcons::MsgFunc_StatusIcon( const char* pszName, BufferReader& reader )
 {
     const bool ShouldEnable = 0 != reader.ReadByte();
@@ -154,7 +154,7 @@ void CHudStatusIcons::MsgFunc_CustomIcon( const char* pszName, BufferReader& rea
 void CHudStatusIcons::EnableIcon( const char* pszIconName, const RGB24& color )
 {
     int i;
-	// check to see if the sprite is in the current list
+    // check to see if the sprite is in the current list
     for( i = 0; i < MAX_ICONSPRITES; i++ )
     {
         if( !stricmp( m_IconList[i].szSpriteName, pszIconName ) )
@@ -163,7 +163,7 @@ void CHudStatusIcons::EnableIcon( const char* pszIconName, const RGB24& color )
 
     if( i == MAX_ICONSPRITES )
     {
-		// icon not in list, so find an empty slot to add to
+        // icon not in list, so find an empty slot to add to
         for( i = 0; i < MAX_ICONSPRITES; i++ )
         {
             if( 0 == m_IconList[i].spr )
@@ -171,21 +171,21 @@ void CHudStatusIcons::EnableIcon( const char* pszIconName, const RGB24& color )
         }
     }
 
-	// if we've run out of space in the list, overwrite the first icon
+    // if we've run out of space in the list, overwrite the first icon
     if( i == MAX_ICONSPRITES )
     {
         i = 0;
     }
 
-	// Load the sprite and add it to the list
-	// the sprite must be listed in hud.json
+    // Load the sprite and add it to the list
+    // the sprite must be listed in hud.json
     int spr_index = gHUD.GetSpriteIndex( pszIconName );
     m_IconList[i].spr = gHUD.GetSprite( spr_index );
     m_IconList[i].rc = gHUD.GetSpriteRect( spr_index );
     m_IconList[i].color = color;
     strcpy( m_IconList[i].szSpriteName, pszIconName );
 
-	// Hack: Play Timer sound when a grenade icon is played (in 0.8 seconds)
+    // Hack: Play Timer sound when a grenade icon is played (in 0.8 seconds)
     if( strstr( m_IconList[i].szSpriteName, "grenade" ) )
     {
         cl_entity_t* pthisplayer = gEngfuncs.GetLocalPlayer();
@@ -195,12 +195,12 @@ void CHudStatusIcons::EnableIcon( const char* pszIconName, const RGB24& color )
 
 void CHudStatusIcons::DisableIcon( const char* pszIconName )
 {
-	// find the sprite is in the current list
+    // find the sprite is in the current list
     for( int i = 0; i < MAX_ICONSPRITES; i++ )
     {
         if( !stricmp( m_IconList[i].szSpriteName, pszIconName ) )
         {
-			// clear the item from the list
+            // clear the item from the list
             memset( &m_IconList[i], 0, sizeof( icon_sprite_t ) );
             return;
         }
@@ -219,7 +219,7 @@ void CHudStatusIcons::EnableCustomIcon( int nIndex, char* pszIconName, const RGB
         icon.spr = gEngfuncs.pfnSPR_Load( szTemp );
         icon.rc = aRect;
         icon.color = color;
-		// TODO: potential overflow
+        // TODO: potential overflow
         strcpy( icon.szSpriteName, pszIconName );
     }
 }

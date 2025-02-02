@@ -74,7 +74,7 @@ inline TeamFortressViewport* gViewPort = nullptr;
 
 #define CMENU_TOP (BUTTON_SIZE_Y * 4)
 
-// #define MAX_TEAMNAME_SIZE		64
+// #define MAX_TEAMNAME_SIZE        64
 #define MAX_BUTTON_SIZE 32
 
 // Map Briefing Window
@@ -124,7 +124,7 @@ public:
 
     virtual void paintBackground()
     {
-		// Do nothing, so the background's left transparent.
+        // Do nothing, so the background's left transparent.
     }
 
     virtual void setImage( const char* pImageName );
@@ -165,7 +165,7 @@ private:
     int m_iPlayerClass;
     bool m_bFlat;
 
-	// Submenus under this button
+    // Submenus under this button
     CCommandMenu* m_pSubMenu;
     CCommandMenu* m_pParentMenu;
     CommandLabel* m_pSubLabel;
@@ -181,19 +181,19 @@ public:
     bool m_bNoHighlight;
 
 public:
-	/**
-	 *	@brief special no bound to avoid leading spaces in name
-	 */
+    /**
+     *    @brief special no bound to avoid leading spaces in name
+     */
     static constexpr char UnboundKey = static_cast<char>( 255 );
 
     CommandButton( const char* text, int x, int y, int wide, int tall, bool bNoHighlight, bool bFlat );
-	// Constructors
+    // Constructors
     CommandButton( const char* text, int x, int y, int wide, int tall, bool bNoHighlight = false );
     CommandButton( int iPlayerClass, const char* text, int x, int y, int wide, int tall, bool bFlat );
 
     void Init();
 
-	// Menu Handling
+    // Menu Handling
     void AddSubMenu( CCommandMenu* pNewMenu );
     void AddSubLabel( CommandLabel* pSubLabel )
     {
@@ -212,7 +212,7 @@ public:
     CCommandMenu* getParentMenu();
     void setParentMenu( CCommandMenu* pParentMenu );
 
-	// Overloaded vgui functions
+    // Overloaded vgui functions
     virtual void paint();
     virtual void setText( const char* text );
     virtual void paintBackground();
@@ -251,11 +251,11 @@ public:
 
         if( isArmed() )
         {
-			// Highlight background
-			/*	getBgColor(bgcolor);
-			bgcolor.getColor(r, g, b, a);
-			drawSetColor( r,g,b,a );
-			drawFilledRect(0,0,_size[0],_size[1]);*/
+            // Highlight background
+            /*    getBgColor(bgcolor);
+            bgcolor.getColor(r, g, b, a);
+            drawSetColor( r,g,b,a );
+            drawFilledRect(0,0,_size[0],_size[1]);*/
 
             if( ArmedBorderColor )
             {
@@ -367,11 +367,11 @@ private:
     int m_iXOffset;
     int m_iYOffset;
 
-	// Buttons in this menu
+    // Buttons in this menu
     CommandButton* m_aButtons[MAX_BUTTONS];
     int m_iButtons;
 
-	// opens menu from top to bottom (false = default), or from bottom to top (true)?
+    // opens menu from top to bottom (false = default), or from bottom to top (true)?
     bool m_iDirection;
 
 public:
@@ -432,15 +432,15 @@ public:
     DropDownButton( const char* text, int x, int y, int wide, int tall, bool bNoHighlight, bool bFlat )
         : ColorButton( text, x, y, wide, tall, bNoHighlight, bFlat )
     {
-		// Put a > to show it's a submenu
+        // Put a > to show it's a submenu
         m_pOpenButton = new CImageLabel( "arrowup", XRES( CMENU_SIZE_X - 2 ), YRES( BUTTON_SIZE_Y - 2 ) );
         m_pOpenButton->setParent( this );
 
         int textwide, texttall;
         getSize( textwide, texttall );
 
-		// Reposition
-		m_pOpenButton->setPos(textwide - (m_pOpenButton->getImageWide() + 6), -2 /*(tall - m_pOpenButton->getImageTall()*2) / 2*/);
+        // Reposition
+        m_pOpenButton->setPos(textwide - (m_pOpenButton->getImageWide() + 6), -2 /*(tall - m_pOpenButton->getImageTall()*2) / 2*/);
         m_pOpenButton->setVisible( true );
     }
 
@@ -466,9 +466,9 @@ public:
         m_pOpenButton = new CImageLabel( text, 1, 1, wide - 2, tall - 2 );
         m_pOpenButton->setParent( this );
 
-		// Reposition
-		//	m_pOpenButton->setPos( x+1,y+1 );
-		//	m_pOpenButton->setSize(wide-2,tall-2);
+        // Reposition
+        //    m_pOpenButton->setPos( x+1,y+1 );
+        //    m_pOpenButton->setSize(wide-2,tall-2);
 
         m_pOpenButton->setVisible( true );
     }
@@ -502,7 +502,7 @@ private:
     int m_iUser2;
     int m_iUser3;
 
-	// VGUI Menus
+    // VGUI Menus
     void CreateTeamMenu();
     CMenuPanel* ShowTeamMenu();
     void CreateClassMenu();
@@ -513,14 +513,14 @@ private:
     void CreateCampaignSelectMenu();
     void ShowCampaignSelectMenu();
 
-	// Scheme handler
+    // Scheme handler
     CSchemeManager m_SchemeManager;
 
-	// MOTD
+    // MOTD
     bool m_iGotAllMOTD;
     char m_szMOTD[MAX_MOTD_LENGTH];
 
-	//  Command Menu Team buttons
+    //  Command Menu Team buttons
     CommandButton* m_pTeamButtons[6];
     CommandButton* m_pDisguiseButtons[5];
     BuildButton* m_pBuildButtons[3];
@@ -528,7 +528,7 @@ private:
 
     bool m_iAllowSpectators;
 
-	// Data for specific sections of the Command Menu
+    // Data for specific sections of the Command Menu
     int m_iValidClasses[5];
     bool m_iIsFeigning;
     int m_iIsSettingDetpack;
@@ -537,12 +537,12 @@ private:
     bool m_iRandomPC;
     char m_sTeamNames[5][MAX_TEAMNAME_SIZE];
 
-	// Localisation strings
+    // Localisation strings
     char m_sDetpackStrings[3][MAX_BUTTON_SIZE];
 
     char m_sMapName[64];
 
-	// helper function to update the player menu entries
+    // helper function to update the player menu entries
     void UpdatePlayerMenu( int menuIndex );
 
 public:
@@ -591,7 +591,7 @@ public:
 
     CCommandMenu* CreateSubMenu( CommandButton* pButton, CCommandMenu* pParentMenu, int iYOffset, int iXOffset = 0 );
 
-	// Data Handlers
+    // Data Handlers
     int GetValidClasses( int iTeam ) { return m_iValidClasses[iTeam]; };
     int GetNumberOfTeams() { return m_iNumberOfTeams; };
     bool GetIsFeigning() { return m_iIsFeigning; };
@@ -601,7 +601,7 @@ public:
     char* GetTeamName( int iTeam ) { return m_sTeamNames[iTeam]; };
     bool GetAllowSpectators() { return m_iAllowSpectators; };
 
-	// Message Handlers
+    // Message Handlers
     void MsgFunc_ValClass( const char* pszName, BufferReader& reader );
     void MsgFunc_TeamNames( const char* pszName, BufferReader& reader );
     void MsgFunc_Feign( const char* pszName, BufferReader& reader );
@@ -624,7 +624,7 @@ public:
     void MsgFunc_StatsPlayer( const char* pszName, BufferReader& reader );
     void MsgFunc_CmpgnSlct( BufferReader& reader );
 
-	// Input
+    // Input
     bool SlotInput( int iSlot );
 
     virtual void paintBackground();
@@ -635,7 +635,7 @@ public:
     void* operator new( size_t stAllocateBlock );
 
 public:
-	// VGUI Menus
+    // VGUI Menus
     CMenuPanel* m_pCurrentMenu;
     CTeamMenuPanel* m_pTeamMenu;
     CCampaignSelectPanel* m_CampaignSelectMenu = nullptr;
@@ -707,7 +707,7 @@ public:
     {
         CMenuHandler_StringCommand::actionPerformed( panel );
 
-		// Try to guess the player's new team (it'll be corrected if it's wrong)
+        // Try to guess the player's new team (it'll be corrected if it's wrong)
         if( 0 == strcmp( m_pszCommand, "jointeam 1" ) )
             g_iTeamNumber = 1;
         else if( 0 == strcmp( m_pszCommand, "jointeam 2" ) )
@@ -753,7 +753,7 @@ public:
 
     virtual void cursorMoved( int x, int y, Panel* panel )
     {
-		// gViewPort->SetCurrentCommandMenu( m_pSubMenu );
+        // gViewPort->SetCurrentCommandMenu( m_pSubMenu );
     }
 
     virtual void cursorEntered( Panel* panel )
@@ -851,7 +851,7 @@ public:
         else
             m_cvar->value = 1.0f;
 
-		// hide the menu
+        // hide the menu
         gViewPort->HideCommandMenu();
 
         gViewPort->UpdateSpectatorPanel();
@@ -1026,11 +1026,11 @@ public:
     virtual bool IsNotValid()
     {
         int iTeams = gViewPort->GetNumberOfTeams();
-		// Never valid if there's only 1 team
+        // Never valid if there's only 1 team
         if( iTeams == 1 )
             return true;
 
-		// Auto Team's always visible
+        // Auto Team's always visible
         if( m_iTeamNumber == 5 )
             return false;
 
@@ -1055,7 +1055,7 @@ public:
 
     virtual bool IsNotValid()
     {
-		// Only visible for spies
+        // Only visible for spies
 
         if( m_iFeignState == gViewPort->GetIsFeigning() )
             return false;
@@ -1073,7 +1073,7 @@ public:
 
     virtual bool IsNotValid()
     {
-		// Only visible if the server allows it
+        // Only visible if the server allows it
         if( gViewPort->GetAllowSpectators() )
             return false;
 
@@ -1102,11 +1102,11 @@ public:
     virtual bool IsNotValid()
     {
 
-		// if it's not tied to a specific team, then always show (for spies)
+        // if it's not tied to a specific team, then always show (for spies)
         if( !m_iValidTeamsBits )
             return false;
 
-		// if we're tied to a team make sure we can change to that team
+        // if we're tied to a team make sure we can change to that team
         int iTmp = 1 << ( gViewPort->GetNumberOfTeams() - 1 );
         if( m_iValidTeamsBits & iTmp )
             return false;
@@ -1190,7 +1190,7 @@ public:
         if( !level )
             return true;
 
-		// Does it match the current map name?
+        // Does it match the current map name?
         if( strcmp( m_szMapName, level ) )
             return true;
 
@@ -1239,7 +1239,7 @@ public:
     {
         m_cvar = gEngfuncs.pfnGetCvarPointer( cvarname );
 
-		// Put a > to show it's a submenu
+        // Put a > to show it's a submenu
         pLabelOn = new CImageLabel( "checked", 0, 0 );
         pLabelOn->setParent( this );
         pLabelOn->addInputSignal( this );
@@ -1252,12 +1252,12 @@ public:
         int textwide, texttall;
         getTextSize( textwide, texttall );
 
-		// Reposition
+        // Reposition
         pLabelOn->setPos( textwide, ( tall - pLabelOn->getTall() ) / 2 );
 
         pLabelOff->setPos( textwide, ( tall - pLabelOff->getTall() ) / 2 );
 
-		// Set text color to orange
+        // Set text color to orange
         setFgColor( Scheme::sc_primary1 );
     }
 
@@ -1319,7 +1319,7 @@ public:
     {
         m_cvar = gEngfuncs.pfnGetCvarPointer( cvarname );
 
-		// Put a > to show it's a submenu
+        // Put a > to show it's a submenu
         pLabelOn = new CImageLabel( "checked", 0, 0 );
         pLabelOn->setParent( this );
         pLabelOn->addInputSignal( this );
@@ -1328,7 +1328,7 @@ public:
         int textwide, texttall;
         getTextSize( textwide, texttall );
 
-		// Reposition
+        // Reposition
         pLabelOn->setPos( textwide, ( tall - pLabelOn->getTall() ) / 2 );
     }
 
@@ -1398,78 +1398,78 @@ public:
 class SpectToggleButton : public ToggleCommandButton
 {
 private:
-	cvar_t* m_cvar;
-	CImageLabel *	pLabelOn;
-	CImageLabel *	pLabelOff;
+    cvar_t* m_cvar;
+    CImageLabel *    pLabelOn;
+    CImageLabel *    pLabelOff;
 
 public:
 
-	SpectToggleButton( const char* cvarname, const char* text,int x,int y,int wide,int tall, bool flat ) :
-	  ToggleCommandButton( cvarname, text, x, y, wide, tall, flat, true )
-	 {
-		m_cvar = gEngfuncs.pfnGetCvarPointer( cvarname );
+    SpectToggleButton( const char* cvarname, const char* text,int x,int y,int wide,int tall, bool flat ) :
+      ToggleCommandButton( cvarname, text, x, y, wide, tall, flat, true )
+     {
+        m_cvar = gEngfuncs.pfnGetCvarPointer( cvarname );
 
-			// Put a > to show it's a submenu
-		pLabelOn = new CImageLabel( "checked", 0, 0 );
-		pLabelOn->setParent(this);
-		pLabelOn->addInputSignal(this);
+            // Put a > to show it's a submenu
+        pLabelOn = new CImageLabel( "checked", 0, 0 );
+        pLabelOn->setParent(this);
+        pLabelOn->addInputSignal(this);
 
-		pLabelOff = new CImageLabel( "unchecked", 0, 0 );
-		pLabelOff->setParent(this);
-		pLabelOff->setEnabled(true);
-		pLabelOff->addInputSignal(this);
+        pLabelOff = new CImageLabel( "unchecked", 0, 0 );
+        pLabelOff->setParent(this);
+        pLabelOff->setEnabled(true);
+        pLabelOff->addInputSignal(this);
 
-		int textwide, texttall;
-		getTextSize( textwide, texttall);
+        int textwide, texttall;
+        getTextSize( textwide, texttall);
 
-		// Reposition
-		pLabelOn->setPos( textwide, (tall - pLabelOn->getTall()) / 2 );
+        // Reposition
+        pLabelOn->setPos( textwide, (tall - pLabelOn->getTall()) / 2 );
 
-		pLabelOff->setPos( textwide, (tall - pLabelOff->getTall()) / 2 );
+        pLabelOff->setPos( textwide, (tall - pLabelOff->getTall()) / 2 );
 
-		// Set text color to orange
-		setFgColor(Scheme::sc_primary1);
-	}
+        // Set text color to orange
+        setFgColor(Scheme::sc_primary1);
+    }
 
-	virtual void paintBackground()
-	{
-		if ( isArmed())
-		{
-			drawSetColor( 143,143, 54, 125 );
-			drawFilledRect( 5, 0,_size[0] - 5,_size[1]);
-		}
-	}
+    virtual void paintBackground()
+    {
+        if ( isArmed())
+        {
+            drawSetColor( 143,143, 54, 125 );
+            drawFilledRect( 5, 0,_size[0] - 5,_size[1]);
+        }
+    }
 
-	virtual void paint()
-	{
+    virtual void paint()
+    {
 
-		if ( isArmed() )
-		{
-			setFgColor( 194, 202, 54, 0 );
-		}
-		else
-		{
-			setFgColor( 143, 143, 54, 15 );
-		}
+        if ( isArmed() )
+        {
+            setFgColor( 194, 202, 54, 0 );
+        }
+        else
+        {
+            setFgColor( 143, 143, 54, 15 );
+        }
 
-			if ( !m_cvar )
-		{
-			pLabelOff->setVisible(false);
-			pLabelOn->setVisible(false);
-		}
-		else if ( m_cvar->value )
-		{
-			pLabelOff->setVisible(false);
-			pLabelOn->setVisible(true);
-		}
-		else
-		{
-			pLabelOff->setVisible(true);
-			pLabelOn->setVisible(false);
-		}
+            if ( !m_cvar )
+        {
+            pLabelOff->setVisible(false);
+            pLabelOn->setVisible(false);
+        }
+        else if ( m_cvar->value )
+        {
+            pLabelOff->setVisible(false);
+            pLabelOn->setVisible(true);
+        }
+        else
+        {
+            pLabelOff->setVisible(true);
+            pLabelOn->setVisible(false);
+        }
 
-		Button::paint();
-	}
+        Button::paint();
+    }
 };
 */
 //============================================================
@@ -1486,10 +1486,10 @@ public:
     {
         m_bBeingDragged = false;
 
-		// Create the Drag Handler
+        // Create the Drag Handler
         addInputSignal( new CDragNDropHandler( this ) );
 
-		// Create the border (for dragging)
+        // Create the border (for dragging)
         m_pBorder = new LineBorder();
     }
 
@@ -1522,7 +1522,7 @@ public:
     {
         if( m_iTransparency )
         {
-			// Transparent black background
+            // Transparent black background
             drawSetColor( 0, 0, 0, m_iTransparency );
             drawFilledRect( 0, 0, _size[0], _size[1] );
         }
@@ -1584,7 +1584,7 @@ public:
     {
         setVisible( true );
 
-		// Note the open time, so we can delay input for a bit
+        // Note the open time, so we can delay input for a bit
         m_flOpenTime = gHUD.m_flTime;
     }
 
@@ -1596,7 +1596,7 @@ public:
         if( m_iRemoveMe )
             gViewPort->removeChild( this );
 
-		// This MenuPanel has now been deleted. Don't append code here.
+        // This MenuPanel has now been deleted. Don't append code here.
     }
 
     bool ShouldBeRemoved() { return m_iRemoveMe; };
@@ -1605,7 +1605,7 @@ public:
     bool IsActive() { return m_iIsActive; };
     float GetOpenTime() { return m_flOpenTime; };
 
-	// Numeric input
+    // Numeric input
     virtual bool SlotInput( int iSlot ) { return false; };
     virtual void SetActiveInfo( int iInput ){};
 };

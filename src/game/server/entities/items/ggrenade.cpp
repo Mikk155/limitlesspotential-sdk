@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -41,7 +41,7 @@ void CGrenade::OnCreate()
 
 void CGrenade::Precache()
 {
-	// Grenade exploded after save, but hasn't been removed yet. Don't precache.
+    // Grenade exploded after save, but hasn't been removed yet. Don't precache.
     if( !FStringNull( pev->model ) )
     {
         PrecacheModel( STRING( pev->model ) );
@@ -63,7 +63,7 @@ void CGrenade::Explode( TraceResult* pTrace, int bitsDamageType )
 
     pev->takedamage = DAMAGE_NO;
 
-	// Pull out of the wall a bit
+    // Pull out of the wall a bit
     if( pTrace->flFraction != 1.0 )
     {
         pev->origin = pTrace->vecEndPos + ( pTrace->vecPlaneNormal * 0.6 );
@@ -71,8 +71,8 @@ void CGrenade::Explode( TraceResult* pTrace, int bitsDamageType )
 
     int iContents = UTIL_PointContents( pev->origin );
 
-	// This makes a dynamic light and the explosion sprites/sound
-	// Send to PAS because of the sound
+    // This makes a dynamic light and the explosion sprites/sound
+    // Send to PAS because of the sound
     UTIL_ExplosionEffect( pev->origin, iContents != CONTENTS_WATER ? g_sModelIndexFireball : g_sModelIndexWExplosion,
         ( pev->dmg - 50 ) * .60, 15, TE_EXPLFLAG_NONE,
         MSG_PAS, pev->origin );
@@ -82,7 +82,7 @@ void CGrenade::Explode( TraceResult* pTrace, int bitsDamageType )
 
     pev->owner = nullptr; // can't traceline attack owner if this is set
 
-	// Counteract the + 1 in RadiusDamage.
+    // Counteract the + 1 in RadiusDamage.
     Vector origin = pev->origin;
     origin.z -= 1;
 
@@ -206,11 +206,11 @@ void CGrenade::DangerSoundThink()
 
 void CGrenade::BounceTouch( CBaseEntity* pOther )
 {
-	// don't hit the guy that launched this grenade
+    // don't hit the guy that launched this grenade
     if( pOther == GetOwner() )
         return;
 
-	// only do damage if we're moving fairly fast
+    // only do damage if we're moving fairly fast
     if( m_flNextAttack < gpGlobals->time && pev->velocity.Length() > 100 )
     {
         CBaseEntity* owner = GetOwner();
@@ -225,29 +225,29 @@ void CGrenade::BounceTouch( CBaseEntity* pOther )
     }
 
     Vector vecTestVelocity;
-	// pev->avelocity = Vector (300, 300, 300);
+    // pev->avelocity = Vector (300, 300, 300);
 
-	// this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
-	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity.
-	// trimming the Z velocity a bit seems to help quite a bit.
+    // this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
+    // or thrown very far tend to slow down too quickly for me to always catch just by testing velocity.
+    // trimming the Z velocity a bit seems to help quite a bit.
     vecTestVelocity = pev->velocity;
     vecTestVelocity.z *= 0.45;
 
     if( !m_fRegisteredSound && vecTestVelocity.Length() <= 60 )
     {
-		// CBaseEntity::Logger->debug("Grenade Registered!: {}", vecTestVelocity.Length());
+        // CBaseEntity::Logger->debug("Grenade Registered!: {}", vecTestVelocity.Length());
 
-		// grenade is moving really slow. It's probably very close to where it will ultimately stop moving.
-		// go ahead and emit the danger sound.
+        // grenade is moving really slow. It's probably very close to where it will ultimately stop moving.
+        // go ahead and emit the danger sound.
 
-		// register a radius louder than the explosion, so we make sure everyone gets out of the way
+        // register a radius louder than the explosion, so we make sure everyone gets out of the way
         CSoundEnt::InsertSound( bits_SOUND_DANGER, pev->origin, pev->dmg / 0.4, 0.3 );
         m_fRegisteredSound = true;
     }
 
     if( ( pev->flags & FL_ONGROUND ) != 0 )
     {
-		// add a bit of static friction
+        // add a bit of static friction
         pev->velocity = pev->velocity * 0.8;
 
         pev->sequence = RANDOM_LONG( 1, 1 );
@@ -255,7 +255,7 @@ void CGrenade::BounceTouch( CBaseEntity* pOther )
     }
     else
     {
-		// play bounce sound
+        // play bounce sound
         BounceSound();
     }
     pev->framerate = pev->velocity.Length() / 200.0;
@@ -270,20 +270,20 @@ void CGrenade::BounceTouch( CBaseEntity* pOther )
 
 void CGrenade::SlideTouch( CBaseEntity* pOther )
 {
-	// don't hit the guy that launched this grenade
+    // don't hit the guy that launched this grenade
     if( pOther->edict() == pev->owner )
         return;
 
-	// pev->avelocity = Vector (300, 300, 300);
+    // pev->avelocity = Vector (300, 300, 300);
 
     if( ( pev->flags & FL_ONGROUND ) != 0 )
     {
-		// add a bit of static friction
+        // add a bit of static friction
         pev->velocity = pev->velocity * 0.95;
 
         if( pev->velocity.x != 0 || pev->velocity.y != 0 )
         {
-			// maintain sliding sound
+            // maintain sliding sound
         }
     }
     else
@@ -354,21 +354,21 @@ CGrenade* CGrenade::ShootContact( CBaseEntity* owner, Vector vecStart, Vector ve
 {
     CGrenade* pGrenade = g_EntityDictionary->Create<CGrenade>( "grenade" );
     pGrenade->Spawn();
-	// contact grenades arc lower
+    // contact grenades arc lower
     pGrenade->pev->gravity = 0.5; // lower gravity since grenade is aerodynamic and engine doesn't know it.
     pGrenade->SetOrigin( vecStart );
     pGrenade->pev->velocity = vecVelocity;
     pGrenade->pev->angles = UTIL_VecToAngles( pGrenade->pev->velocity );
     pGrenade->pev->owner = owner->edict();
 
-	// make monsters afaid of it while in the air
+    // make monsters afaid of it while in the air
     pGrenade->SetThink( &CGrenade::DangerSoundThink );
     pGrenade->pev->nextthink = gpGlobals->time;
 
-	// Tumble in air
+    // Tumble in air
     pGrenade->pev->avelocity.x = RANDOM_FLOAT( -100, -500 );
 
-	// Explode on contact
+    // Explode on contact
     pGrenade->SetTouch( &CGrenade::ExplodeTouch );
 
     pGrenade->pev->dmg = GetSkillFloat( "plr_9mmAR_grenade"sv );
@@ -387,9 +387,9 @@ CGrenade* CGrenade::ShootTimed( CBaseEntity* owner, Vector vecStart, Vector vecV
 
     pGrenade->SetTouch( &CGrenade::BounceTouch ); // Bounce if touched
 
-	// Take one second off of the desired detonation time and set the think to PreDetonate. PreDetonate
-	// will insert a DANGER sound into the world sound list and delay detonation for one second so that
-	// the grenade explodes after the exact amount of time specified in the call to ShootTimed().
+    // Take one second off of the desired detonation time and set the think to PreDetonate. PreDetonate
+    // will insert a DANGER sound into the world sound list and delay detonation for one second so that
+    // the grenade explodes after the exact amount of time specified in the call to ShootTimed().
 
     pGrenade->pev->dmgtime = gpGlobals->time + time;
     pGrenade->SetThink( &CGrenade::TumbleThink );
@@ -405,8 +405,8 @@ CGrenade* CGrenade::ShootTimed( CBaseEntity* owner, Vector vecStart, Vector vecV
     pGrenade->pev->framerate = 1.0;
     pGrenade->ResetSequenceInfo();
 
-	// Tumble through the air
-	// pGrenade->pev->avelocity.x = -400;
+    // Tumble through the air
+    // pGrenade->pev->avelocity.x = -400;
 
     pGrenade->pev->gravity = 0.5;
     pGrenade->pev->friction = 0.8;
@@ -433,7 +433,7 @@ CGrenade* CGrenade::ShootSatchelCharge( CBaseEntity* owner, Vector vecStart, Vec
     pGrenade->pev->angles = g_vecZero;
     pGrenade->pev->owner = owner->edict();
 
-	// Detonate in "time" seconds
+    // Detonate in "time" seconds
     pGrenade->SetThink( nullptr );
     pGrenade->SetUse( &CGrenade::DetonateUse );
     pGrenade->SetTouch( &CGrenade::SlideTouch );

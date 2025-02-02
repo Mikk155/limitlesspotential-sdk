@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -77,7 +77,7 @@ public:
 
     void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	// Male Assassin never speaks
+    // Male Assassin never speaks
     bool FOkToSpeak() override { return false; }
 
     bool KeyValue( KeyValueData* pkvd ) override;
@@ -169,10 +169,10 @@ bool CMOFAssassin::CheckRangeAttack2( float flDot, float flDist )
 
 void CMOFAssassin::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	// check for helmet shot
+    // check for helmet shot
     if( ptr->iHitgroup == 11 )
     {
-		// it's head shot anyways
+        // it's head shot anyways
         ptr->iHitgroup = HITGROUP_HEAD;
     }
 
@@ -181,7 +181,7 @@ void CMOFAssassin::TraceAttack( CBaseEntity* attacker, float flDamage, Vector ve
 
 void CMOFAssassin::IdleSound()
 {
-	// Male Assassin doesn't make idle chat
+    // Male Assassin doesn't make idle chat
 }
 
 void CMOFAssassin::CheckAmmo()
@@ -211,7 +211,7 @@ void CMOFAssassin::Shoot( bool firstShotInBurst )
             }
             else
             {
-				// TODO: why is this 556? is 762 too damaging?
+                // TODO: why is this 556? is 762 too damaging?
                 FireBullets( 1, vecShootOrigin, vecShootDir, VECTOR_CONE_1DEGREES, 2048, BULLET_PLAYER_556 );
             }
 
@@ -229,7 +229,7 @@ void CMOFAssassin::Shoot( bool firstShotInBurst )
     {
         if( FBitSet( pev->weapons, HGRUNT_9MMAR ) )
         {
-			// the first round of the three round burst plays the sound and puts a sound in the world sound list.
+            // the first round of the three round burst plays the sound and puts a sound in the world sound list.
             if( RANDOM_LONG( 0, 1 ) )
             {
                 EmitSound( CHAN_WEAPON, "hgrunt/gr_mgun1.wav", 1, ATTN_NORM );
@@ -250,7 +250,7 @@ void CMOFAssassin::Shoot( bool firstShotInBurst )
 
 void CMOFAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
 {
-	// Override grunt events that require assassin-specific behavior
+    // Override grunt events that require assassin-specific behavior
     switch ( pEvent->event )
     {
     case HGRUNT_AE_DROP_GUN:
@@ -260,10 +260,10 @@ void CMOFAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         GetAttachment( 0, vecGunPos, vecGunAngles );
 
-		// switch to body group with no gun.
+        // switch to body group with no gun.
         SetBodygroup( MAssassinBodygroup::Weapons, MAssassinWeapon::Blank );
 
-		// now spawn a gun.
+        // now spawn a gun.
         if( FBitSet( pev->weapons, HGRUNT_9MMAR ) )
         {
             DropItem( "weapon_9mmar", vecGunPos, vecGunAngles );
@@ -285,7 +285,7 @@ void CMOFAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         if( pHurt )
         {
-			// SOUND HERE!
+            // SOUND HERE!
             UTIL_MakeVectors( pev->angles );
             pHurt->pev->punchangle.x = 15;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_forward * 100 + gpGlobals->v_up * 50;
@@ -326,10 +326,10 @@ void CMOFAssassin::Spawn()
 
     if( pev->weapons == 0 )
     {
-		// initialize to original values
+        // initialize to original values
         pev->weapons = HGRUNT_9MMAR | HGRUNT_HANDGRENADE;
-		// pev->weapons = HGRUNT_SHOTGUN;
-		// pev->weapons = HGRUNT_9MMAR | HGRUNT_GRENADELAUNCHER;
+        // pev->weapons = HGRUNT_SHOTGUN;
+        // pev->weapons = HGRUNT_9MMAR | HGRUNT_GRENADELAUNCHER;
     }
 
     if( m_iAssassinHead == MAssassinHead::Random )
@@ -371,7 +371,7 @@ void CMOFAssassin::Spawn()
 
 void CMOFAssassin::PainSound()
 {
-	// Male Assassin doesn't make pain sounds
+    // Male Assassin doesn't make pain sounds
 }
 
 std::tuple<int, Activity> CMOFAssassin::GetSequenceForActivity( Activity NewActivity )
@@ -381,16 +381,16 @@ std::tuple<int, Activity> CMOFAssassin::GetSequenceForActivity( Activity NewActi
     switch ( NewActivity )
     {
     case ACT_RANGE_ATTACK1:
-		// grunt is either shooting standing or shooting crouched
-		// Sniper uses the same set
+        // grunt is either shooting standing or shooting crouched
+        // Sniper uses the same set
         if( m_fStanding )
         {
-			// get aimable sequence
+            // get aimable sequence
             iSequence = LookupSequence( "standing_mp5" );
         }
         else
         {
-			// get crouching shoot
+            // get crouching shoot
             iSequence = LookupSequence( "crouching_mp5" );
         }
         break;
@@ -469,7 +469,7 @@ void CDeadMOFAssassin::Spawn()
 {
     SpawnCore();
 
-	// map old bodies onto new bodies
+    // map old bodies onto new bodies
     switch ( pev->body )
     {
     case 0: // Grunt with Gun

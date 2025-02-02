@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -66,14 +66,14 @@ void SentencesSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
         const std::string_view name = std::get<0>( sentence );
         const std::string_view value = std::get<1>( sentence );
 
-		// This should never happen since the server validates input at parse time.
+        // This should never happen since the server validates input at parse time.
         if( name.empty() || value.empty() )
         {
             block.ErrorMessage = "Invalid sentence in list";
             return;
         }
 
-		// Parse sentence contents.
+        // Parse sentence contents.
         Sentence sentenceToAdd;
 
         sentenceToAdd.Name = sentences::SentenceName{name.data(), name.size()};
@@ -153,7 +153,7 @@ bool SentencesSystem::SetSentenceWord( Channel& channel, SentenceChannel& senten
                 sentenceChannel.TimeCompressBuffer = OpenALBuffer::Create();
             }
 
-			// Detach buffer first so it can be modified.
+            // Detach buffer first so it can be modified.
             alSourcei( channel.Source.Id, AL_BUFFER, NullBuffer );
 
             if( !CreateTimeCompressedBuffer( channel, sentenceChannel, *wordSound ) )
@@ -178,7 +178,7 @@ bool SentencesSystem::SetSentenceWord( Channel& channel, SentenceChannel& senten
             }
         }
 
-		// Mix sentence-wide and word-specific pitch values.
+        // Mix sentence-wide and word-specific pitch values.
         const float pitch = std::clamp( channel.Pitch + ( word.Parameters.Pitch - PITCH_NORM ), 1, 255 ) / 100.f;
 
         alSourcef( channel.Source.Id, AL_GAIN, word.Parameters.Volume / 100.f );
@@ -271,7 +271,7 @@ void SentencesSystem::MoveMouth( Channel& channel, const Sound& sound )
 
     if( !entity )
     {
-		// Probably no map loaded.
+        // Probably no map loaded.
         return;
     }
 
@@ -283,7 +283,7 @@ void SentencesSystem::MoveMouth( Channel& channel, const Sound& sound )
     {
         const float sample = sound.Samples[static_cast<std::size_t>( sampleOffset ) + sampleIndex];
 
-		// Rescale the sample range from [-1, 1] to [-128, 127].
+        // Rescale the sample range from [-1, 1] to [-128, 127].
         const int scaledSample = std::clamp( 
             static_cast<int>( sample * 128 ),
             static_cast<int>( std::numeric_limits<std::int8_t>::min() ),
@@ -291,7 +291,7 @@ void SentencesSystem::MoveMouth( Channel& channel, const Sound& sound )
 
         average += std::abs( scaledSample );
 
-		// Find another sample to use.
+        // Find another sample to use.
         sampleIndex += 80 + ( scaledSample & 0x1F );
     }
 
@@ -327,7 +327,7 @@ bool SentencesSystem::CreateTimeCompressedBuffer( const Channel& channel, Senten
 
     const std::size_t numberOfActualSamples = ( size - startOffset - endOffsetFromEnd ) / sizeof(float);
 
-	// Use the logical number of samples to minimize loss of samples due to fractional calculations.
+    // Use the logical number of samples to minimize loss of samples due to fractional calculations.
     const std::size_t numberOfLogicalSamples = numberOfActualSamples / channelCount;
 
     std::vector<float> compressedData;
@@ -345,7 +345,7 @@ bool SentencesSystem::CreateTimeCompressedBuffer( const Channel& channel, Senten
 
         const std::size_t chunkEndPos = readIndex + currentChunkSize;
 
-		// The first iteration uses the full chunk, all others skip the skip fraction.
+        // The first iteration uses the full chunk, all others skip the skip fraction.
         if( isFirstIteration )
         {
             isFirstIteration = false;
@@ -366,7 +366,7 @@ bool SentencesSystem::CreateTimeCompressedBuffer( const Channel& channel, Senten
     ALint frequency = -1;
     alGetBufferi( wordSound.Buffer.Id, AL_FREQUENCY, &frequency );
 
-	// Clear error state.
+    // Clear error state.
     alGetError();
 
     alBufferData( sentenceChannel.TimeCompressBuffer.Id, wordSound.Format, compressedData.data(), compressedData.size() * sizeof(float), frequency );
@@ -390,7 +390,7 @@ bool SentencesSystem::UpdateSentencePlayback( Channel& channel, SentenceChannel&
 
     if( state != AL_STOPPED )
     {
-		// Time compressed sounds have already been modified to account for end clipping.
+        // Time compressed sounds have already been modified to account for end clipping.
         if( word.Parameters.End == 100 || word.Parameters.TimeCompress != 0 )
         {
             return false;

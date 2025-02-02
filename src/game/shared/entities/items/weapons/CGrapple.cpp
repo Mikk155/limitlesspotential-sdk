@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -143,7 +143,7 @@ void CGrapple::PrimaryAttack()
             if( m_pTip->GetGrappleType() > CGrappleTip::TargetClass::SMALL )
             {
                 m_pPlayer->pev->movetype = MOVETYPE_FLY;
-				// Tells the physics code that the player is not on a ladder
+                // Tells the physics code that the player is not on a ladder
                 m_pPlayer->pev->flags |= FL_IMMUNE_LAVA;
             }
 
@@ -167,7 +167,7 @@ void CGrapple::PrimaryAttack()
                 break;
 
             case CGrappleTip::TargetClass::SMALL:
-				// pTarget->BarnacleVictimGrabbed( this );
+                // pTarget->BarnacleVictimGrabbed( this );
                 m_pTip->SetOrigin( pTarget->Center() );
 
                 pTarget->pev->velocity = pTarget->pev->velocity + ( m_pPlayer->pev->origin - pTarget->pev->origin );
@@ -181,7 +181,7 @@ void CGrapple::PrimaryAttack()
             case CGrappleTip::TargetClass::MEDIUM:
             case CGrappleTip::TargetClass::LARGE:
             case CGrappleTip::TargetClass::FIXED:
-				// pTarget->BarnacleVictimGrabbed( this );
+                // pTarget->BarnacleVictimGrabbed( this );
 
                 if( m_pTip->GetGrappleType() != CGrappleTip::TargetClass::FIXED )
                     m_pTip->SetOrigin( pTarget->Center() );
@@ -292,7 +292,7 @@ void CGrapple::PrimaryAttack()
 
             if( tr.flFraction < 1.0 )
             {
-				// If we've hit a solid object see if we're hurting it
+                // If we've hit a solid object see if we're hurting it
                 if( !tr.pHit || FNullEnt( tr.pHit ) || GET_PRIVATE<CBaseEntity>( tr.pHit )->IsBSPModel() )
                 {
                     FindHullIntersection( vecSrc, tr, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX, m_pPlayer );

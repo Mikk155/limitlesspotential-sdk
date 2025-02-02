@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -72,7 +72,7 @@ void CSniperRifle::Holster()
 
 void CSniperRifle::WeaponIdle()
 {
-	// Update autoaim
+    // Update autoaim
     m_pPlayer->GetAutoaimVector( AUTOAIM_2DEGREES );
 
     ResetEmptySound();
@@ -122,7 +122,7 @@ void CSniperRifle::PrimaryAttack()
     Vector vecSrc = m_pPlayer->GetGunPosition();
     Vector vecAiming = m_pPlayer->GetAutoaimVector( AUTOAIM_2DEGREES );
 
-	// TODO: 8192 constant should be defined somewhere
+    // TODO: 8192 constant should be defined somewhere
     Vector vecShot = m_pPlayer->FireBulletsPlayer( 1,
         vecSrc, vecAiming, g_vecZero,
         8192, BULLET_PLAYER_762, 0, 0,
@@ -145,7 +145,7 @@ void CSniperRifle::SecondaryAttack()
 
     ToggleZoom();
 
-	// TODO: this doesn't really make sense
+    // TODO: this doesn't really make sense
     pev->nextthink = 0.1;
 
     m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;

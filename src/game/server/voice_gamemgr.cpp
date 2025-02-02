@@ -57,7 +57,7 @@ bool CVoiceGameMgr::Init(
     m_msgPlayerVoiceMask = REG_USER_MSG( "VoiceMask", VOICE_MAX_PLAYERS_DW * 4 * 2 );
     m_msgRequestState = REG_USER_MSG( "ReqState", 0 );
 
-	// register sv_alltalk if it hasn't been registered already
+    // register sv_alltalk if it hasn't been registered already
     if( !CVAR_GET_POINTER( "sv_alltalk" ) )
         CVAR_REGISTER( &sv_alltalk );
 
@@ -90,8 +90,8 @@ bool CVoiceGameMgr::Init(
                 }
             }
 
-			// Force it to update the masks now.
-			// UpdateMasks();
+            // Force it to update the masks now.
+            // UpdateMasks();
         } );
 
     m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", [this]( CBasePlayer* player, const auto& args )
@@ -113,7 +113,7 @@ bool CVoiceGameMgr::Init(
             Logger->debug( "CVoiceGameMgr::ClientCommand: vmodenable ({})", enable );
             g_PlayerModEnable[*playerClientIndex] = enable;
             g_bWantModEnable[*playerClientIndex] = false;
-			// UpdateMasks();
+            // UpdateMasks();
         } );
 
     return true;
@@ -133,7 +133,7 @@ void CVoiceGameMgr::SetHelper( IVoiceGameMgrHelper* pHelper )
 
 void CVoiceGameMgr::Update( double frametime )
 {
-	// Only update periodically.
+    // Only update periodically.
     m_UpdateInterval += frametime;
     if( m_UpdateInterval < UPDATE_INTERVAL )
         return;
@@ -146,7 +146,7 @@ void CVoiceGameMgr::ClientConnected( edict_t* pEdict )
 {
     int index = ENTINDEX( pEdict ) - 1;
 
-	// Clear out everything we use for deltas on this guy.
+    // Clear out everything we use for deltas on this guy.
     g_bWantModEnable[index] = true;
     g_SentGameRulesMasks[index].Init( 0 );
     g_SentBanMasks[index].Init( 0 );
@@ -182,7 +182,7 @@ void CVoiceGameMgr::UpdateMasks()
         if( !player )
             continue;
 
-		// Request the state of their "vmodenable" cvar.
+        // Request the state of their "vmodenable" cvar.
         if( g_bWantModEnable[iClient] )
         {
             MESSAGE_BEGIN( MSG_ONE, m_msgRequestState, nullptr, player );
@@ -192,7 +192,7 @@ void CVoiceGameMgr::UpdateMasks()
         CPlayerBitVec gameRulesMask;
         if( g_PlayerModEnable[iClient] )
         {
-			// Build a mask of who they can hear based on the game rules.
+            // Build a mask of who they can hear based on the game rules.
             for( int iOtherClient = 0; iOtherClient < m_nMaxPlayers; iOtherClient++ )
             {
                 CBasePlayer* otherPlayer = UTIL_PlayerByIndex( iOtherClient + 1 );
@@ -203,7 +203,7 @@ void CVoiceGameMgr::UpdateMasks()
             }
         }
 
-		// If this is different from what the client has, send an update.
+        // If this is different from what the client has, send an update.
         if( gameRulesMask != g_SentGameRulesMasks[iClient] ||
             g_BanMasks[iClient] != g_SentBanMasks[iClient] )
         {
@@ -220,7 +220,7 @@ void CVoiceGameMgr::UpdateMasks()
             MESSAGE_END();
         }
 
-		// Tell the engine.
+        // Tell the engine.
         for( int iOtherClient = 0; iOtherClient < m_nMaxPlayers; iOtherClient++ )
         {
             bool bCanHear = gameRulesMask[iOtherClient] && !g_BanMasks[iClient][iOtherClient];

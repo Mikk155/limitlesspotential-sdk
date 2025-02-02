@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -47,7 +47,7 @@ struct RoomEffect
 
 constexpr RoomEffect RoomEffects[RoomEffectCount] =
     {
-		// Note: the decay time and damping for generic are 0 in the engine. The legal minimum is 0.1.
+        // Note: the decay time and damping for generic are 0 in the engine. The legal minimum is 0.1.
         {&EAXREVERB_PRESET_GENERIC, 0.0, 0.1, 0.1},
         {&EAXREVERB_PRESET_ROOM, 0.417, 0.40000001, 0.66600001},
         {&EAXREVERB_PRESET_BATHROOM, 0.30000001, 1.499, 0.16599999},
@@ -62,7 +62,7 @@ constexpr RoomEffect RoomEffects[RoomEffectCount] =
         {&EAXREVERB_PRESET_STONECORRIDOR, 0.30000001, 2.697, 0.63800001},
         {&EAXREVERB_PRESET_STONECORRIDOR, 0.5, 2.697, 0.63800001},
         {&EAXREVERB_PRESET_STONECORRIDOR, 0.64999998, 2.697, 0.63800001},
-		// Note: the damping for underwater types is 0 in the engine.
+        // Note: the damping for underwater types is 0 in the engine.
         {&EAXREVERB_PRESET_UNDERWATER, 1.0, 1.499, 0.1},
         {&EAXREVERB_PRESET_UNDERWATER, 1.0, 2.4990001, 0.1},
         {&EAXREVERB_PRESET_UNDERWATER, 1.0, 3.4990001, 0.1},
@@ -87,7 +87,7 @@ void SetupEffect( ALuint effectId, unsigned int roomType )
         roomType = 0;
     }
 
-	// Based on http://openal.org/pipermail/openal/2014-March/000083.html
+    // Based on http://openal.org/pipermail/openal/2014-March/000083.html
 
     const auto& effectData = RoomEffects[roomType];
 
@@ -95,7 +95,7 @@ void SetupEffect( ALuint effectId, unsigned int roomType )
 
     reverb.flDecayTime = effectData.DecayTime;
     reverb.flDecayHFRatio = effectData.Damping;
-	// According to the above mail this should be assigned to flLateReverbGain but the original effects work better with this.
+    // According to the above mail this should be assigned to flLateReverbGain but the original effects work better with this.
     reverb.flGain = effectData.Volume;
 
     alEffecti( effectId, AL_EFFECT_TYPE, AL_EFFECT_EAXREVERB );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -25,7 +25,7 @@ bool CBaseDMStart::IsTriggered( CBaseEntity* pEntity )
 }
 
 /**
- *	@brief checks if the spot is clear of players
+ *    @brief checks if the spot is clear of players
  */
 bool IsSpawnPointValid( CBaseEntity* pPlayer, CBaseEntity* pSpot )
 {
@@ -38,7 +38,7 @@ bool IsSpawnPointValid( CBaseEntity* pPlayer, CBaseEntity* pSpot )
 
     while( ( ent = UTIL_FindEntityInSphere( ent, pSpot->pev->origin, 128 ) ) != nullptr )
     {
-		// if ent is a client, don't spawn on 'em
+        // if ent is a client, don't spawn on 'em
         if( ent->IsPlayer() && ent != pPlayer )
             return false;
     }
@@ -55,7 +55,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         const auto pszTeamSpotName = pPlayer->m_iTeamNum == CTFTeam::BlackMesa ? "ctfs1" : "ctfs2";
 
         pSpot = g_pLastSpawn;
-		// Randomize the start spot
+        // Randomize the start spot
         for( int i = RANDOM_LONG( 1, 5 ); i > 0; i-- )
             pSpot = UTIL_FindEntityByClassname( pSpot, pszTeamSpotName );
         if( FNullEnt( pSpot ) ) // skip over the null point
@@ -67,19 +67,19 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         {
             if( pSpot )
             {
-				// check if pSpot is valid
+                // check if pSpot is valid
                 if( IsSpawnPointValid( pPlayer, pSpot ) && pSpot->pev->origin != g_vecZero )
                 {
-					// if so, go to pSpot
+                    // if so, go to pSpot
                     return pSpot;
                 }
             }
-			// increment pSpot
+            // increment pSpot
             pSpot = UTIL_FindEntityByClassname( pSpot, pszTeamSpotName );
         } while( pSpot != pFirstSpot ); // loop if we're not back to the start
 
-		// Try a shared spawn spot
-		//  Randomize the start spot
+        // Try a shared spawn spot
+        //  Randomize the start spot
         for( int i = RANDOM_LONG( 1, 5 ); i > 0; i-- )
             pSpot = UTIL_FindEntityByClassname( pSpot, "ctfs0" );
         if( FNullEnt( pSpot ) ) // skip over the null point
@@ -91,24 +91,24 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         {
             if( pSpot )
             {
-				// check if pSpot is valid
+                // check if pSpot is valid
                 if( IsSpawnPointValid( pPlayer, pSpot ) && pSpot->pev->origin != g_vecZero )
                 {
-					// if so, go to pSpot
+                    // if so, go to pSpot
                     return pSpot;
                 }
             }
-			// increment pSpot
+            // increment pSpot
             pSpot = UTIL_FindEntityByClassname( pSpot, "ctfs0" );
         } while( pSpot != pFirstSpot ); // loop if we're not back to the start
 
-		// we haven't found a place to spawn yet,  so kill any guy at the first spawn point and spawn there
+        // we haven't found a place to spawn yet,  so kill any guy at the first spawn point and spawn there
         if( !FNullEnt( pSpot ) )
         {
             CBaseEntity* ent = nullptr;
             while( ( ent = UTIL_FindEntityInSphere( ent, pSpot->pev->origin, 128 ) ) != nullptr )
             {
-				// if ent is a client, kill em (unless they are ourselves)
+                // if ent is a client, kill em (unless they are ourselves)
                 if( ent->IsPlayer() && ent != pPlayer )
                     ent->TakeDamage( CBaseEntity::World, CBaseEntity::World, 300, DMG_GENERIC );
             }
@@ -116,7 +116,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         }
     }
 
-	// choose a info_player_deathmatch point
+    // choose a info_player_deathmatch point
     if( g_pGameRules->IsCoOp() )
     {
         pSpot = UTIL_FindEntityByClassname( g_pLastSpawn, "info_player_coop" );
@@ -129,7 +129,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
     else if( g_pGameRules->IsMultiplayer() )
     {
         pSpot = g_pLastSpawn;
-		// Randomize the start spot
+        // Randomize the start spot
         for( int i = RANDOM_LONG( 1, 5 ); i > 0; i-- )
             pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
         if( FNullEnt( pSpot ) ) // skip over the null point
@@ -141,7 +141,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         {
             if( pSpot )
             {
-				// check if pSpot is valid
+                // check if pSpot is valid
                 if( IsSpawnPointValid( pPlayer, pSpot ) )
                 {
                     if( pSpot->pev->origin == Vector( 0, 0, 0 ) )
@@ -150,21 +150,21 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
                         continue;
                     }
 
-					// if so, go to pSpot
+                    // if so, go to pSpot
                     return pSpot;
                 }
             }
-			// increment pSpot
+            // increment pSpot
             pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
         } while( pSpot != pFirstSpot ); // loop if we're not back to the start
 
-		// we haven't found a place to spawn yet,  so kill any guy at the first spawn point and spawn there
+        // we haven't found a place to spawn yet,  so kill any guy at the first spawn point and spawn there
         if( !FNullEnt( pSpot ) )
         {
             CBaseEntity* ent = nullptr;
             while( ( ent = UTIL_FindEntityInSphere( ent, pSpot->pev->origin, 128 ) ) != nullptr )
             {
-				// if ent is a client, kill em (unless they are ourselves)
+                // if ent is a client, kill em (unless they are ourselves)
                 if( ent->IsPlayer() && ent != pPlayer )
                     ent->TakeDamage( CBaseEntity::World, CBaseEntity::World, 300, DMG_GENERIC );
             }
@@ -172,7 +172,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         }
     }
 
-	// If startspot is set, (re)spawn there.
+    // If startspot is set, (re)spawn there.
     if( FStringNull( gpGlobals->startspot ) || 0 == strlen( STRING( gpGlobals->startspot ) ) )
     {
         pSpot = UTIL_FindEntityByClassname( nullptr, "info_player_start" );

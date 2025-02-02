@@ -14,25 +14,25 @@
 #include "Exports.h"
 
 /**
- *	@brief Sets the location of the input for chat text
+ *    @brief Sets the location of the input for chat text
  */
 void DLLEXPORT HUD_ChatInputPosition( int* x, int* y )
 {
     *y = gHUD.m_SayText.GetChatYInputPosition();
 
-	/*
-	if (g_iUser1 != 0 || 0 != gEngfuncs.IsSpectateOnly())
-	{
-		if (gHUD.m_Spectator.m_pip->value == INSET_OFF)
-		{
-			*y = YRES(PANEL_HEIGHT);
-		}
-		else
-		{
-			*y = YRES(gHUD.m_Spectator.m_OverviewData.insetWindowHeight + 5);
-		}
-	}
-	*/
+    /*
+    if (g_iUser1 != 0 || 0 != gEngfuncs.IsSpectateOnly())
+    {
+        if (gHUD.m_Spectator.m_pip->value == INSET_OFF)
+        {
+            *y = YRES(PANEL_HEIGHT);
+        }
+        else
+        {
+            *y = YRES(gHUD.m_Spectator.m_OverviewData.insetWindowHeight + 5);
+        }
+    }
+    */
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -150,8 +150,8 @@ void SpectatorPanel::Initialize()
     }
 
 
-	// Initialize command buttons.
-	//	m_OptionButton = new ColorButton( CHudTextMessage::BufferedLocaliseTextString( "#SPECT_OPTIONS" ), XRES(15), YRES(6), XRES(OPTIONS_BUTTON_X), YRES(20), false, false );
+    // Initialize command buttons.
+    //    m_OptionButton = new ColorButton( CHudTextMessage::BufferedLocaliseTextString( "#SPECT_OPTIONS" ), XRES(15), YRES(6), XRES(OPTIONS_BUTTON_X), YRES(20), false, false );
     m_OptionButton = new DropDownButton( CHudTextMessage::BufferedLocaliseTextString( "#SPECT_OPTIONS" ), XRES( 15 ), YRES( 6 ), XRES( OPTIONS_BUTTON_X ), YRES( 20 ), false, false );
     m_OptionButton->setParent( m_BottomBorder );
     m_OptionButton->setContentAlignment( vgui::Label::a_center );
@@ -172,7 +172,7 @@ void SpectatorPanel::Initialize()
     m_CamButton->setUnArmedColor( 143, 143, 54, 0 );
     m_CamButton->setArmedColor( 194, 202, 54, 0 );
 
-	//	m_PrevPlayerButton= new ColorButton("<", XRES( 15 + OPTIONS_BUTTON_X + 15 ), YRES(6), XRES(24), YRES(20), false, false );
+    //    m_PrevPlayerButton= new ColorButton("<", XRES( 15 + OPTIONS_BUTTON_X + 15 ), YRES(6), XRES(24), YRES(20), false, false );
     m_PrevPlayerButton = new CImageButton( "arrowleft", XRES( 15 + OPTIONS_BUTTON_X + 15 ), YRES( 6 ), XRES( 24 ), YRES( 20 ), false, false );
     m_PrevPlayerButton->setParent( m_BottomBorder );
     m_PrevPlayerButton->setContentAlignment( vgui::Label::a_center );
@@ -183,7 +183,7 @@ void SpectatorPanel::Initialize()
     m_PrevPlayerButton->setUnArmedColor( 143, 143, 54, 0 );
     m_PrevPlayerButton->setArmedColor( 194, 202, 54, 0 );
 
-	//	m_NextPlayerButton= new ColorButton(">", (ScreenWidth - (XRES ( CAMOPTIONS_BUTTON_X ) + 15)) - XRES ( 24 + 15 ), YRES(6), XRES(24), YRES(20),false, false );
+    //    m_NextPlayerButton= new ColorButton(">", (ScreenWidth - (XRES ( CAMOPTIONS_BUTTON_X ) + 15)) - XRES ( 24 + 15 ), YRES(6), XRES(24), YRES(20),false, false );
     m_NextPlayerButton = new CImageButton( "arrowright", ( ScreenWidth - ( XRES( CAMOPTIONS_BUTTON_X ) + 15 ) ) - XRES( 24 + 15 ), YRES( 6 ), XRES( 24 ), YRES( 20 ), false, false );
     m_NextPlayerButton->setParent( m_BottomBorder );
     m_NextPlayerButton->setContentAlignment( vgui::Label::a_center );
@@ -194,7 +194,7 @@ void SpectatorPanel::Initialize()
     m_NextPlayerButton->setUnArmedColor( 143, 143, 54, 0 );
     m_NextPlayerButton->setArmedColor( 194, 202, 54, 0 );
 
-	// Initialize the bottom title.
+    // Initialize the bottom title.
 
     float flLabelSize = ( ( ScreenWidth - ( XRES( CAMOPTIONS_BUTTON_X ) + 15 ) ) - XRES( 24 + 15 ) ) - XRES( ( 15 + OPTIONS_BUTTON_X + 15 ) + 38 );
 
@@ -237,7 +237,7 @@ void SpectatorPanel::Initialize()
 
     m_menuVisible = false;
     m_insetVisible = false;
-	//	m_HideButton->setVisible(false);
+    //    m_HideButton->setVisible(false);
     m_CamButton->setVisible( false );
     m_OptionButton->setVisible( false );
     m_NextPlayerButton->setVisible( false );
@@ -250,7 +250,7 @@ void SpectatorPanel::Initialize()
 
 void SpectatorPanel::ShowMenu( bool isVisible )
 {
-	//	m_HideButton->setVisible(isVisible);	m_HideButton->setArmed( false );
+    //    m_HideButton->setVisible(isVisible);    m_HideButton->setArmed( false );
     m_OptionButton->setVisible( isVisible );
     m_OptionButton->setArmed( false );
     m_CamButton->setVisible( isVisible );
@@ -280,7 +280,7 @@ void SpectatorPanel::ShowMenu( bool isVisible )
     {
         gViewPort->HideCommandMenu();
 
-		// if switching from visible menu to invisible menu, show help text
+        // if switching from visible menu to invisible menu, show help text
         if( m_menuVisible && this->isVisible() )
         {
             char string[64];
@@ -337,7 +337,7 @@ void SpectatorPanel::EnableInsetView( bool isEnabled )
 
     if( isEnabled )
     {
-		// short black bar to see full inset
+        // short black bar to see full inset
         m_TopBorder->setBounds( XRES( offset ), 0, XRES( 640 - offset ), PANEL_HEIGHT );
 
         if( 0 != gEngfuncs.IsSpectateOnly() )
@@ -354,8 +354,8 @@ void SpectatorPanel::EnableInsetView( bool isEnabled )
     }
     else
     {
-		// full black bar, no inset border
-		// show banner only in real HLTV mode
+        // full black bar, no inset border
+        // show banner only in real HLTV mode
         if( 0 != gEngfuncs.IsSpectateOnly() )
         {
             m_TopBanner->setVisible( true );

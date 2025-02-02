@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -26,7 +26,7 @@
 #include "utils/shared_utils.h"
 
 /**
- *	@brief Allows a configuration file to specify a set of templates to apply to entities of a specific class.
+ *    @brief Allows a configuration file to specify a set of templates to apply to entities of a specific class.
  */
 class EntityTemplatesSection final : public GameConfigSection<ServerConfigContext>
 {

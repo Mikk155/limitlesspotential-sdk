@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -56,7 +56,7 @@ Task_t tlBarneyEnemyDraw[] =
 };
 
 /**
- *	@brief much better looking draw schedule for when barney knows who he's gonna attack.
+ *    @brief much better looking draw schedule for when barney knows who he's gonna attack.
  */
 Schedule_t slBarneyEnemyDraw[] =
     {
@@ -108,8 +108,8 @@ Schedule_t slIdleBaStand[] =
                 bits_COND_PROVOKED,
 
             bits_SOUND_COMBAT | // sound flags - change these, and you'll break the talking code.
-								// bits_SOUND_PLAYER		|
-								// bits_SOUND_WORLD		|
+                                // bits_SOUND_PLAYER        |
+                                // bits_SOUND_WORLD        |
 
                 bits_SOUND_DANGER |
                 bits_SOUND_MEAT | // scents
@@ -247,7 +247,7 @@ void CBarney::GuardFirePistol()
 
     int pitchShift = RANDOM_LONG( 0, 20 );
 
-	// Only shift about half the time
+    // Only shift about half the time
     if( pitchShift > 10 )
         pitchShift = 0;
     else
@@ -256,7 +256,7 @@ void CBarney::GuardFirePistol()
 
     CSoundEnt::InsertSound( bits_SOUND_COMBAT, pev->origin, 384, 0.3 );
 
-	// UNDONE: Reload?
+    // UNDONE: Reload?
     m_cAmmoLoaded--; // take away a bullet!
 }
 
@@ -269,7 +269,7 @@ void CBarney::HandleAnimEvent( MonsterEvent_t* pEvent )
         break;
 
     case BARNEY_AE_DRAW:
-		// guard's bodygroup switches here so he can pull gun from holster
+        // guard's bodygroup switches here so he can pull gun from holster
         if( GetBodygroup( GuardBodyGroup::Weapons ) == NPCWeaponState::Holstered )
         {
             SetBodygroup( GuardBodyGroup::Weapons, NPCWeaponState::Drawn );
@@ -277,7 +277,7 @@ void CBarney::HandleAnimEvent( MonsterEvent_t* pEvent )
         break;
 
     case BARNEY_AE_HOLSTER:
-		// change bodygroup to replace gun in holster
+        // change bodygroup to replace gun in holster
         if( GetBodygroup( GuardBodyGroup::Weapons ) == NPCWeaponState::Drawn )
         {
             SetBodygroup( GuardBodyGroup::Weapons, NPCWeaponState::Holstered );
@@ -325,8 +325,8 @@ void CBarney::Precache()
     PrecacheSound( "barney/ba_die2.wav" );
     PrecacheSound( "barney/ba_die3.wav" );
 
-	// every new barney must call this, otherwise
-	// when a level is loaded, nobody will talk (time is reset to 0)
+    // every new barney must call this, otherwise
+    // when a level is loaded, nobody will talk (time is reset to 0)
     TalkInit();
     CTalkMonster::Precache();
 }
@@ -335,7 +335,7 @@ void CBarney::TalkInit()
 {
     CTalkMonster::TalkInit();
 
-	// scientists speach group names (group names are in sentences.txt)
+    // scientists speach group names (group names are in sentences.txt)
 
     m_szGrp[TLK_ANSWER] = "BA_ANSWER";
     m_szGrp[TLK_QUESTION] = "BA_QUESTION";
@@ -359,27 +359,27 @@ void CBarney::TalkInit()
     m_szGrp[TLK_WOUND] = "BA_WOUND";
     m_szGrp[TLK_MORTAL] = "BA_MORTAL";
 
-	// get voice for head - just one barney voice for now
+    // get voice for head - just one barney voice for now
     m_voicePitch = 100;
 }
 
 bool CBarney::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// make sure friends talk about it if player hurts talkmonsters...
+    // make sure friends talk about it if player hurts talkmonsters...
     bool ret = CTalkMonster::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
     if( !IsAlive() || pev->deadflag == DEAD_DYING )
         return ret;
 
     if( m_MonsterState != MONSTERSTATE_PRONE && ( attacker->pev->flags & FL_CLIENT ) != 0 )
     {
-		// This is a heurstic to determine if the player intended to harm me
-		// If I have an enemy, we can't establish intent (may just be crossfire)
+        // This is a heurstic to determine if the player intended to harm me
+        // If I have an enemy, we can't establish intent (may just be crossfire)
         if( m_hEnemy == nullptr )
         {
-			// If the player was facing directly at me, or I'm already suspicious, get mad
+            // If the player was facing directly at me, or I'm already suspicious, get mad
             if( ( m_afMemory & bits_MEMORY_SUSPICIOUS ) != 0 || IsFacing( attacker, pev->origin ) )
             {
-				// Alright, now I'm pissed!
+                // Alright, now I'm pissed!
                 PlaySentence( "BA_MAD", 4, VOL_NORM, ATTN_NORM );
 
                 Remember( bits_MEMORY_PROVOKED );
@@ -387,7 +387,7 @@ bool CBarney::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float f
             }
             else
             {
-				// Hey, be careful with that
+                // Hey, be careful with that
                 PlaySentence( "BA_SHOT", 4, VOL_NORM, ATTN_NORM );
                 Remember( bits_MEMORY_SUSPICIOUS );
             }
@@ -449,7 +449,7 @@ void CBarney::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir,
             flDamage = flDamage / 2;
         }
         break;
-		// TODO: Otis doesn't have a helmet, probably don't want his dome being bulletproof
+        // TODO: Otis doesn't have a helmet, probably don't want his dome being bulletproof
     case 10:
         if( ( bitsDamageType & ( DMG_BULLET | DMG_SLASH | DMG_CLUB ) ) != 0 )
         {
@@ -460,7 +460,7 @@ void CBarney::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir,
                 flDamage = 0.01;
             }
         }
-		// always a head shot
+        // always a head shot
         ptr->iHitgroup = HITGROUP_HEAD;
         break;
     }
@@ -495,15 +495,15 @@ const Schedule_t* CBarney::GetScheduleOfType( int Type )
     case SCHED_ARM_WEAPON:
         if( m_hEnemy != nullptr )
         {
-			// face enemy, then draw.
+            // face enemy, then draw.
             return slBarneyEnemyDraw;
         }
         break;
 
-		// Hook these to make a looping schedule
+        // Hook these to make a looping schedule
     case SCHED_TARGET_FACE:
-		// call base class default so that barney will talk
-		// when 'used'
+        // call base class default so that barney will talk
+        // when 'used'
         psched = CTalkMonster::GetScheduleOfType( Type );
 
         if( psched == slIdleStand )
@@ -515,13 +515,13 @@ const Schedule_t* CBarney::GetScheduleOfType( int Type )
         return slBaFollow;
 
     case SCHED_IDLE_STAND:
-		// call base class default so that scientist will talk
-		// when standing during idle
+        // call base class default so that scientist will talk
+        // when standing during idle
         psched = CTalkMonster::GetScheduleOfType( Type );
 
         if( psched == slIdleStand )
         {
-			// just look straight ahead.
+            // just look straight ahead.
             return slIdleBaStand;
         }
         else
@@ -556,18 +556,18 @@ const Schedule_t* CBarney::GetSchedule()
     {
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
-		// always act surprized with a new enemy
+        // always act surprized with a new enemy
         if( HasConditions( bits_COND_NEW_ENEMY ) && HasConditions( bits_COND_LIGHT_DAMAGE ) )
             return GetScheduleOfType( SCHED_SMALL_FLINCH );
 
-		// wait for one schedule to draw gun
+        // wait for one schedule to draw gun
         if( GetBodygroup( GuardBodyGroup::Weapons ) != NPCWeaponState::Drawn )
             return GetScheduleOfType( SCHED_ARM_WEAPON );
 
@@ -580,7 +580,7 @@ const Schedule_t* CBarney::GetSchedule()
     case MONSTERSTATE_IDLE:
         if( HasConditions( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) )
         {
-			// flinch if hurt
+            // flinch if hurt
             return GetScheduleOfType( SCHED_SMALL_FLINCH );
         }
 
@@ -588,7 +588,7 @@ const Schedule_t* CBarney::GetSchedule()
         {
             if( !m_hTargetEnt->IsAlive() )
             {
-				// UNDONE: Comment about the recently dead player here?
+                // UNDONE: Comment about the recently dead player here?
                 StopFollowing( false );
                 break;
             }
@@ -607,7 +607,7 @@ const Schedule_t* CBarney::GetSchedule()
             return GetScheduleOfType( SCHED_MOVE_AWAY );
         }
 
-		// try to say something about smells
+        // try to say something about smells
         TrySmellTalk();
         break;
     }
@@ -637,11 +637,11 @@ bool CBarney::KeyValue( KeyValueData* pkvd )
 }
 
 /**
- *	@brief DEAD BARNEY PROP
- *	@details Designer selects a pose in worldcraft, 0 through num_poses-1
- *	this value is added to what is selected as the 'first dead pose' among the monster's normal animations.
- *	All dead poses must appear sequentially in the model file.
- *	Be sure and set the m_iFirstPose properly!
+ *    @brief DEAD BARNEY PROP
+ *    @details Designer selects a pose in worldcraft, 0 through num_poses-1
+ *    this value is added to what is selected as the 'first dead pose' among the monster's normal animations.
+ *    All dead poses must appear sequentially in the model file.
+ *    Be sure and set the m_iFirstPose properly!
  */
 class CDeadBarney : public CBaseMonster
 {
@@ -664,7 +664,7 @@ void CDeadBarney::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8; // GetSkillFloat("barney_health"sv);
     pev->model = MAKE_STRING( "models/barney.mdl" );
 

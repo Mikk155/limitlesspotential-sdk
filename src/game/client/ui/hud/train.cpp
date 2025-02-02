@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,7 +44,7 @@ bool CHudTrain::Draw( float fTime )
     {
         SPR_Set( m_hSprite, gHUD.m_HudColor );
 
-		// This should show up to the right and part way up the armor number
+        // This should show up to the right and part way up the armor number
         const int y = ScreenHeight - SPR_Height( m_hSprite, 0 ) - gHUD.m_iFontHeight;
         const int x = ScreenWidth / 3 + SPR_Width( m_hSprite, 0 ) / 4;
 
@@ -57,7 +57,7 @@ bool CHudTrain::Draw( float fTime )
 
 void CHudTrain::MsgFunc_Train( const char* pszName, BufferReader& reader )
 {
-	// update Train data
+    // update Train data
     m_iPos = reader.ReadByte();
 
     if( 0 != m_iPos )

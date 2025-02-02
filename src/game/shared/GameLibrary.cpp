@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -86,12 +86,12 @@ void GameLibrary::RunFrame()
 
 void GameLibrary::AddGameSystems()
 {
-	// Done separately before game systems to avoid tightly coupling logging to json.
+    // Done separately before game systems to avoid tightly coupling logging to json.
     g_Logging.PreInitialize();
 
-	// Logging must initialize after JSON so that it can load the config file immediately.
-	// It must also initialize after concommands since it creates a few of those.
-	// It is safe to use loggers after logging has shut down so having it shut down first is not an issue.
+    // Logging must initialize after JSON so that it can load the config file immediately.
+    // It must also initialize after concommands since it creates a few of those.
+    // It is safe to use loggers after logging has shut down so having it shut down first is not an issue.
     g_GameSystems.Add( &g_ConCommands );
     g_GameSystems.Add( &g_JSON );
     g_GameSystems.Add( &g_Logging );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -95,8 +95,8 @@ void ServerSoundSystem::EmitAmbientSound( CBaseEntity* entity, const Vector& vec
 
 const char* ServerSoundSystem::CheckForSoundReplacement( const char* soundName ) const
 {
-	// Skip stream prefix. This effectively disables all sound streaming.
-	// That's not a problem since streaming has no advantages on modern systems.
+    // Skip stream prefix. This effectively disables all sound streaming.
+    // That's not a problem since streaming has no advantages on modern systems.
     if( soundName[0] == '*' )
     {
         ++soundName;
@@ -123,7 +123,7 @@ const char* ServerSoundSystem::CheckForSoundReplacement( CBaseEntity* entity, co
 static void BuildSoundMessage( int entityIndex, int channel, int soundIndex, int volumeInt, float attenuation,
     int flags, int pitch, const Vector& origin )
 {
-	// TODO: can compress this down by writing bits instead of bytes.
+    // TODO: can compress this down by writing bits instead of bytes.
     WRITE_BYTE( flags );
 
     if( ( flags & SND_VOLUME ) != 0 )
@@ -141,8 +141,8 @@ static void BuildSoundMessage( int entityIndex, int channel, int soundIndex, int
 
     if( soundIndex > std::numeric_limits<std::uint8_t>::max() )
     {
-		// This controls the maximum number of sounds and sentences.
-		// The cast to signed short is needed to ensure the engine writes values > 32767 properly.
+        // This controls the maximum number of sounds and sentences.
+        // The cast to signed short is needed to ensure the engine writes values > 32767 properly.
         WRITE_SHORT( static_cast<std::int16_t>( soundIndex ) );
     }
     else
@@ -295,7 +295,7 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
         return;
     }
 
-	// These messages are used by player physics code only.
+    // These messages are used by player physics code only.
     for( auto player : UTIL_FindPlayers() )
     {
         if( player == entity || !player->IsConnected() || !player->IsNetClient() )
@@ -326,7 +326,7 @@ void EMIT_SOUND_PREDICTED( CBaseEntity* entity, int channel, const char* sample,
         return;
     }
 
-	// If entity is not a player this will return false.
+    // If entity is not a player this will return false.
     if( 0 != g_engfuncs.pfnCanSkipPlayer( entity->edict() ) )
     {
         flags |= SND_NOTHOST;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -236,8 +236,8 @@ void COFNuclearBomb::Precache()
     PrecacheSound( "buttons/button4.wav" );
     PrecacheSound( "buttons/button6.wav" );
 
-	// The other entities are created here since a restore only calls Precache
-	// TODO: set the classname members for both entities
+    // The other entities are created here since a restore only calls Precache
+    // TODO: set the classname members for both entities
     m_pTimer = g_EntityDictionary->Create<COFNuclearBombTimer>( "item_nuclearbombtimer" );
 
     m_pTimer->pev->origin = pev->origin;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,7 +44,7 @@
 
 bool ClientLibrary::Initialize()
 {
-	// Enable buffering for non-debug print output so it isn't ignored outright by the engine.
+    // Enable buffering for non-debug print output so it isn't ignored outright by the engine.
     Con_SetPrintBufferingEnabled( true );
 
     if( !GameLibrary::Initialize() )
@@ -67,19 +67,19 @@ void ClientLibrary::HudInit()
     m_AllowDownload = g_ConCommands.GetCVar( "cl_allowdownload" );
     r_decals = g_ConCommands.GetCVar( "r_decals" );
 
-	// Has to be done here because music cvars don't exist at Initialize time.
+    // Has to be done here because music cvars don't exist at Initialize time.
     sound::CreateSoundSystem();
 }
 
 void ClientLibrary::VidInit()
 {
-	// Remove downloaded files only. The server is responsible for removing generated files.
-	// This has to happen now since not all cases are caught in RunFrame.
+    // Remove downloaded files only. The server is responsible for removing generated files.
+    // This has to happen now since not all cases are caught in RunFrame.
     g_NetworkData.RemoveNetworkDataFiles( "GAMEDOWNLOAD" );
 
-	// Hud vid init has been delayed until after the network data file has been received to allow use of its data.
-	// gHUD.VidInit();
-	// Needed by some UI code before the network data file is loaded.
+    // Hud vid init has been delayed until after the network data file has been received to allow use of its data.
+    // gHUD.VidInit();
+    // Needed by some UI code before the network data file is loaded.
     gHUD.UpdateScreenInfo();
 
     g_ClientPrediction.Reset();
@@ -114,7 +114,7 @@ void ClientLibrary::Shutdown()
 
     GameLibrary::Shutdown();
 
-	// Clear handlers in case of restart.
+    // Clear handlers in case of restart.
     g_ClientUserMessages.Clear();
 }
 
@@ -122,13 +122,13 @@ void ClientLibrary::RunFrame()
 {
     GameLibrary::RunFrame();
 
-	// Force the download cvar to enabled so we can download network data.
+    // Force the download cvar to enabled so we can download network data.
     if( m_AllowDownload->value == 0 )
     {
         gEngfuncs.Cvar_Set( m_AllowDownload->name, "1" );
     }
 
-	// Check connection status.
+    // Check connection status.
     net_status_t status;
     gEngfuncs.pNetAPI->Status( &status );
 
@@ -152,28 +152,28 @@ void ClientLibrary::RunFrame()
         m_Activated = false;
         m_NetworkDataFileLoaded = false;
 
-		// If we're connecting to a dedicated server then remove the local config files as well
-		// so the engine won't think the old locally generated one is what we need.
-		// The map name changes to a valid name after the server address has been initialized so
-		// this should wait long enough, but will run before the engine checks to see if precached files
-		// are present on the client side.
+        // If we're connecting to a dedicated server then remove the local config files as well
+        // so the engine won't think the old locally generated one is what we need.
+        // The map name changes to a valid name after the server address has been initialized so
+        // this should wait long enough, but will run before the engine checks to see if precached files
+        // are present on the client side.
         if( isConnected && mapName[0] != '\0' && status.remote_address.type != NA_LOOPBACK )
         {
             g_NetworkData.RemoveNetworkDataFiles( "GAMECONFIG" );
         }
 
-		// Stop all sounds if we connect, disconnect, start a new map using "map" (resets connection time), change servers or change maps.
+        // Stop all sounds if we connect, disconnect, start a new map using "map" (resets connection time), change servers or change maps.
         sound::g_SoundSystem->GetGameSoundSystem()->StopAllSounds();
 
-		// Clear sound replacement map on any change.
+        // Clear sound replacement map on any change.
         g_ReplacementMaps.Clear();
 
         if( !isConnected || m_ConnectionTime > status.connection_time || m_ServerAddress != status.remote_address )
         {
-			// Stop music playback if we disconnect or start a new map.
+            // Stop music playback if we disconnect or start a new map.
             sound::g_SoundSystem->GetMusicSystem()->Stop();
 
-			// Clear out old server info.
+            // Clear out old server info.
             g_ProjectInfo.SetServerInfo( LibraryInfo{} );
         }
 
@@ -196,7 +196,7 @@ void ClientLibrary::RunFrame()
         gpGlobals->mapname = MAKE_STRING( m_BaseMapName.c_str() );
     }
 
-	// Unblock audio if we can't find the window.
+    // Unblock audio if we can't find the window.
     if( auto window = FindWindow(); !window || ( SDL_GetWindowFlags( window ) & SDL_WINDOW_INPUT_FOCUS ) != 0 )
     {
         sound::g_SoundSystem->Unblock();
@@ -232,10 +232,10 @@ void ClientLibrary::CheckNetworkDataFile()
 {
     if( !m_NetworkDataFileLoaded )
     {
-		// Always set this so we only show errors once.
+        // Always set this so we only show errors once.
         m_NetworkDataFileLoaded = true;
 
-		// If the file failed to load for any reason then our client state will be invalid.
+        // If the file failed to load for any reason then our client state will be invalid.
         if( !g_NetworkData.TryLoadNetworkDataFile() )
         {
             g_GameLogger->critical( "Could not load network data file; disconnecting from server" );
@@ -266,7 +266,7 @@ void ClientLibrary::AddGameSystems()
 
 SDL_Window* ClientLibrary::FindWindow()
 {
-	// Find the game window. The window id is a unique identifier that increments starting from 1, so we can cache the value to speed up lookup.
+    // Find the game window. The window id is a unique identifier that increments starting from 1, so we can cache the value to speed up lookup.
     while( m_WindowId < std::numeric_limits<Uint32>::max() )
     {
         if( auto window = SDL_GetWindowFromID( m_WindowId ); window )
@@ -287,7 +287,7 @@ static void AddForwardedCommand( const char* name )
 
 void ClientLibrary::AddCheatCommands()
 {
-	// These need to show up in the console autocompletion list, but are handled on the server side.
+    // These need to show up in the console autocompletion list, but are handled on the server side.
     AddForwardedCommand( "cheat_god" );
     AddForwardedCommand( "cheat_unkillable" );
     AddForwardedCommand( "cheat_notarget" );

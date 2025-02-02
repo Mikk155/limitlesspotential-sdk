@@ -113,9 +113,9 @@ struct kblist_t
 kblist_t* g_kbkeys = nullptr;
 
 /**
- *	@brief Removes references to +use and replaces them with the keyname in the output string.
- *	If a binding is unfound, then the original text is retained.
- *	NOTE: Only works for text with +word in it.
+ *    @brief Removes references to +use and replaces them with the keyname in the output string.
+ *    If a binding is unfound, then the original text is retained.
+ *    NOTE: Only works for text with +word in it.
  */
 std::string KB_ConvertString( const char* in )
 {
@@ -142,7 +142,7 @@ std::string KB_ConvertString( const char* in )
             pBinding = nullptr;
             if( strlen( binding + 1 ) > 0 )
             {
-				// See if there is a binding for binding?
+                // See if there is a binding for binding?
                 pBinding = gEngfuncs.Key_LookupBinding( binding + 1 );
             }
 
@@ -176,8 +176,8 @@ std::string KB_ConvertString( const char* in )
 }
 
 /**
- *	@brief Allows the engine to get a kbutton_t directly ( so it can check +mlook state, etc )
- *	for saving out to .cfg files
+ *    @brief Allows the engine to get a kbutton_t directly ( so it can check +mlook state, etc )
+ *    for saving out to .cfg files
  */
 kbutton_t DLLEXPORT* KB_Find( const char* name )
 {
@@ -194,7 +194,7 @@ kbutton_t DLLEXPORT* KB_Find( const char* name )
 }
 
 /**
- *	@brief Add a kbutton_t* to the list of pointers the engine can retrieve via KB_Find
+ *    @brief Add a kbutton_t* to the list of pointers the engine can retrieve via KB_Find
  */
 void KB_Add( const char* name, kbutton_t* pkb )
 {
@@ -217,7 +217,7 @@ void KB_Add( const char* name, kbutton_t* pkb )
 }
 
 /**
- *	@brief Add kbutton_t definitions that the engine can query if needed
+ *    @brief Add kbutton_t definitions that the engine can query if needed
  */
 void KB_Init()
 {
@@ -229,7 +229,7 @@ void KB_Init()
 }
 
 /**
- *	@brief Clear kblist
+ *    @brief Clear kblist
  */
 void KB_Shutdown()
 {
@@ -296,7 +296,7 @@ void KeyUp( kbutton_t* b )
         return; // key up without coresponding down (menu pass through)
     if( 0 != b->down[0] || 0 != b->down[1] )
     {
-		// Con_Printf ("Keys down for button: '%c' '%c' '%c' (%d,%d,%d)!\n", b->down[0], b->down[1], c, b->down[0], b->down[1], c);
+        // Con_Printf ("Keys down for button: '%c' '%c' '%c' (%d,%d,%d)!\n", b->down[0], b->down[1], c, b->down[0], b->down[1], c);
         return; // some other key is still holding it down
     }
 
@@ -308,7 +308,7 @@ void KeyUp( kbutton_t* b )
 }
 
 /**
- *	@brief Return 1 to allow engine to process the key, otherwise, act on it as needed
+ *    @brief Return 1 to allow engine to process the key, otherwise, act on it as needed
  */
 int DLLEXPORT HUD_Key_Event( int down, int keynum, const char* pszCurrentBinding )
 {
@@ -453,24 +453,24 @@ void IN_ScoreDown()
 {
     KeyDown( &in_score );
     gHUD.m_Scoreboard.UserCmd_ShowScores();
-	/*
-	if ( gViewPort )
-	{
-		gViewPort->ShowScoreBoard();
-	}
-	*/
+    /*
+    if ( gViewPort )
+    {
+        gViewPort->ShowScoreBoard();
+    }
+    */
 }
 
 void IN_ScoreUp()
 {
     KeyUp( &in_score );
     gHUD.m_Scoreboard.UserCmd_HideScores();
-	/*
-	if ( gViewPort )
-	{
-		gViewPort->HideScoreBoard();
-	}
-	*/
+    /*
+    if ( gViewPort )
+    {
+        gViewPort->HideScoreBoard();
+    }
+    */
 }
 
 void IN_MLookUp()
@@ -483,12 +483,12 @@ void IN_MLookUp()
 }
 
 /**
- *	@brief <pre>
- *	Returns 0.25 if a key was pressed and released during the frame,
- *	0.5 if it was pressed and held
- *	0 if held then released, and
- *	1.0 if held for the entire time
- *	</pre>
+ *    @brief <pre>
+ *    Returns 0.25 if a key was pressed and released during the frame,
+ *    0.5 if it was pressed and held
+ *    0 if held then released, and
+ *    1.0 if held for the entire time
+ *    </pre>
  */
 float CL_KeyState( kbutton_t* key )
 {
@@ -500,19 +500,19 @@ float CL_KeyState( kbutton_t* key )
 
     if( impulsedown && !impulseup )
     {
-		// pressed and held this frame?
+        // pressed and held this frame?
         val = down ? 0.5 : 0.0;
     }
 
     if( impulseup && !impulsedown )
     {
-		// released this frame?
+        // released this frame?
         val = down ? 0.0 : 0.0;
     }
 
     if( !impulsedown && !impulseup )
     {
-		// held the entire frame?
+        // held the entire frame?
         val = down ? 1.0 : 0.0;
     }
 
@@ -520,23 +520,23 @@ float CL_KeyState( kbutton_t* key )
     {
         if( down )
         {
-			// released and re-pressed this frame
+            // released and re-pressed this frame
             val = 0.75;
         }
         else
         {
-			// pressed and released this frame
+            // pressed and released this frame
             val = 0.25;
         }
     }
 
-	// clear impulses
+    // clear impulses
     key->state &= 1;
     return val;
 }
 
 /**
- *	@brief Moves the local angle positions
+ *    @brief Moves the local angle positions
  */
 void CL_AdjustAngles( float frametime, Vector& viewangles )
 {
@@ -586,9 +586,9 @@ void CL_AdjustAngles( float frametime, Vector& viewangles )
 }
 
 /**
- *	@brief Send the intended movement message to the server
- *	@details if active == 1 then we are 1) not playing back demos ( where our commands are ignored ) and
- *	2 ) we have finished signing on to server
+ *    @brief Send the intended movement message to the server
+ *    @details if active == 1 then we are 1) not playing back demos ( where our commands are ignored ) and
+ *    2 ) we have finished signing on to server
  */
 void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
 {
@@ -598,8 +598,8 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
 
     if( 0 != active )
     {
-		// memset( viewangles, 0, sizeof( Vector ) );
-		// viewangles[ 0 ] = viewangles[ 1 ] = viewangles[ 2 ] = 0.0;
+        // memset( viewangles, 0, sizeof( Vector ) );
+        // viewangles[ 0 ] = viewangles[ 1 ] = viewangles[ 2 ] = 0.0;
         gEngfuncs.GetViewAngles( viewangles );
 
         CL_AdjustAngles( frametime, viewangles );
@@ -626,7 +626,7 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
             cmd->forwardmove -= cl_backspeed->value * CL_KeyState( &in_back );
         }
 
-		// adjust for speed key
+        // adjust for speed key
         if( ( in_speed.state & 1 ) != 0 )
         {
             cmd->forwardmove *= cl_movespeedkey->value;
@@ -634,11 +634,11 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
             cmd->upmove *= cl_movespeedkey->value;
         }
 
-		// clip to maxspeed
+        // clip to maxspeed
         spd = gEngfuncs.GetClientMaxspeed();
         if( spd != 0.0 )
         {
-			// scale the 3 speeds so that the total velocity is not > cl.maxspeed
+            // scale the 3 speeds so that the total velocity is not > cl.maxspeed
             float fmov = sqrt( ( cmd->forwardmove * cmd->forwardmove ) + ( cmd->sidemove * cmd->sidemove ) + ( cmd->upmove * cmd->upmove ) );
 
             if( fmov > spd )
@@ -650,7 +650,7 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
             }
         }
 
-		// Allow mice and other controllers to add their inputs
+        // Allow mice and other controllers to add their inputs
         IN_Move( frametime, cmd );
     }
 
@@ -659,16 +659,16 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
 
     cmd->weaponselect = g_weaponselect;
     g_weaponselect = 0;
-	//
-	// set button and flag bits
-	//
+    //
+    // set button and flag bits
+    //
     cmd->buttons = CL_ButtonBits( true );
 
-	// If they're in a modal dialog, ignore the attack button.
+    // If they're in a modal dialog, ignore the attack button.
     if( GetClientVoiceMgr()->IsInSquelchMode() )
         cmd->buttons &= ~IN_ATTACK;
 
-	// Using joystick?
+    // Using joystick?
     if( 0 != in_joystick->value )
     {
         if( cmd->forwardmove > 0 )
@@ -682,7 +682,7 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
     }
 
     gEngfuncs.GetViewAngles( viewangles );
-	// Set current view angles.
+    // Set current view angles.
 
     if( g_iAlive )
     {
@@ -696,7 +696,7 @@ void DLLEXPORT CL_CreateMove( float frametime, usercmd_t* cmd, int active )
 }
 
 /**
- *	@brief Returns 1 if health is <= 0
+ *    @brief Returns 1 if health is <= 0
  */
 bool CL_IsDead()
 {
@@ -704,8 +704,8 @@ bool CL_IsDead()
 }
 
 /**
- *	@brief Returns appropriate button info for keyboard and mouse state
- *	@param bResetState Set to 1 to clear old state info
+ *    @brief Returns appropriate button info for keyboard and mouse state
+ *    @param bResetState Set to 1 to clear old state info
  */
 int CL_ButtonBits( bool bResetState )
 {
@@ -786,7 +786,7 @@ int CL_ButtonBits( bool bResetState )
         bits |= IN_SCORE;
     }
 
-	// Dead or in intermission? Shore scoreboard, too
+    // Dead or in intermission? Shore scoreboard, too
     if( CL_IsDead() || gHUD.m_iIntermission )
     {
         bits |= IN_SCORE;
@@ -817,17 +817,17 @@ void CL_ResetButtonBits( int bits )
 {
     int bitsNew = CL_ButtonBits( false ) ^ bits;
 
-	// Has the attack button been changed
+    // Has the attack button been changed
     if( ( bitsNew & IN_ATTACK ) != 0 )
     {
-		// Was it pressed? or let go?
+        // Was it pressed? or let go?
         if( ( bits & IN_ATTACK ) != 0 )
         {
             KeyDown( &in_attack );
         }
         else
         {
-			// totally clear state
+            // totally clear state
             in_attack.state &= ~7;
         }
     }
@@ -909,13 +909,13 @@ void InitInput()
     m_forward = gEngfuncs.pfnRegisterVariable( "m_forward", "1", FCVAR_ARCHIVE );
     m_side = gEngfuncs.pfnRegisterVariable( "m_side", "0.8", FCVAR_ARCHIVE );
 
-	// Initialize third person camera controls.
+    // Initialize third person camera controls.
     CAM_Init();
-	// Initialize inputs
+    // Initialize inputs
     IN_Init();
-	// Initialize keyboard
+    // Initialize keyboard
     KB_Init();
-	// Initialize view system
+    // Initialize view system
     V_Init();
 }
 

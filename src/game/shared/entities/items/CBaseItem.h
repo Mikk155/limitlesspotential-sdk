@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,7 +44,7 @@ constexpr float ITEM_DEFAULT_RESPAWN_DELAY = -2;
 constexpr float ITEM_NEVER_RESPAWN_DELAY = -1;
 
 /**
- *	@brief Interface for item visitors.
+ *    @brief Interface for item visitors.
  */
 class IItemVisitor
 {
@@ -57,8 +57,8 @@ public:
 };
 
 /**
- *	@brief Base class for all items.
- *	@details Handles item setup in the world, pickup on touch, respawning.
+ *    @brief Base class for all items.
+ *    @details Handles item setup in the world, pickup on touch, respawning.
  */
 class CBaseItem : public CBaseAnimating
 {
@@ -74,34 +74,34 @@ public:
 
     virtual ItemType GetType() const = 0;
 
-	/**
-	 *	@brief Visits this item through the given visitor.
-	 */
+    /**
+     *    @brief Visits this item through the given visitor.
+     */
     virtual void Accept( IItemVisitor& visitor ) = 0;
 
-	/**
-	 *	@brief Items that have just spawned run this think to catch them when they hit the ground.
-	 *	Once we're sure that the object is grounded,
-	 *	we change its solid type to trigger and set it in a large box that helps the player get it.
-	 */
+    /**
+     *    @brief Items that have just spawned run this think to catch them when they hit the ground.
+     *    Once we're sure that the object is grounded,
+     *    we change its solid type to trigger and set it in a large box that helps the player get it.
+     */
     void FallThink();
 
     void ItemTouch( CBaseEntity* pOther );
 
-	/**
-	 *	@brief Tries to given this item to the player.
-	 */
+    /**
+     *    @brief Tries to given this item to the player.
+     */
     ItemAddResult AddToPlayer( CBasePlayer* player );
 
-	/**
-	 *	@brief make an item visible and tangible.
-	 */
+    /**
+     *    @brief make an item visible and tangible.
+     */
     void Materialize();
 
-	/**
-	 *	@brief the item is trying to rematerialize, should it do so now or wait longer?
-	 *	the item desires to become visible and tangible, if the game rules allow for it.
-	 */
+    /**
+     *    @brief the item is trying to rematerialize, should it do so now or wait longer?
+     *    the item desires to become visible and tangible, if the game rules allow for it.
+     */
     void AttemptToMaterialize();
 
 protected:
@@ -109,10 +109,10 @@ protected:
 
     virtual ItemAddResult Apply( CBasePlayer* player ) = 0;
 
-	/**
-	 *	@brief Returns the item that should be respawned after this one has been picked up.
-	 *	Can be this entity if it does not need to be cloned.
-	 */
+    /**
+     *    @brief Returns the item that should be respawned after this one has been picked up.
+     *    Can be this entity if it does not need to be cloned.
+     */
     virtual CBaseItem* GetItemToRespawn( const Vector& respawnPoint );
 
 private:
@@ -132,13 +132,13 @@ protected:
 
     bool m_PlayPickupSound = true;
 
-	/**
-	 *	@brief Target to trigger when this entity spawns/respawns
-	 */
+    /**
+     *    @brief Target to trigger when this entity spawns/respawns
+     */
     string_t m_TriggerOnSpawn;
 
-	/**
-	 *	@brief Target to trigger when this entity despawns (waiting to respawn, being removed)
-	 */
+    /**
+     *    @brief Target to trigger when this entity despawns (waiting to respawn, being removed)
+     */
     string_t m_TriggerOnDespawn;
 };

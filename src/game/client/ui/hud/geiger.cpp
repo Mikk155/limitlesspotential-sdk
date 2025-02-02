@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -42,7 +42,7 @@ bool CHudGeiger::VidInit()
 
 void CHudGeiger::MsgFunc_Geiger( const char* pszName, BufferReader& reader )
 {
-	// update geiger data
+    // update geiger data
     m_iGeigerRange = reader.ReadByte();
     m_iGeigerRange = m_iGeigerRange << 2;
 
@@ -58,7 +58,7 @@ bool CHudGeiger::Draw( float flTime )
 
     if( m_iGeigerRange <= 800 && m_iGeigerRange > 0 )
     {
-		// peicewise linear is better than continuous formula for this
+        // peicewise linear is better than continuous formula for this
         if( m_iGeigerRange > 600 )
         {
             pct = 2;
@@ -124,7 +124,7 @@ bool CHudGeiger::Draw( float flTime )
         {
             pct = 80;
             flvol = 0.9; // Con_Printf ( "range > 75\n");
-			// gflGeigerDelay = cl.time + GEIGERDELAY * 0.75;
+            // gflGeigerDelay = cl.time + GEIGERDELAY * 0.75;
             rg[0] = 4;
             rg[1] = 5;
             rg[2] = 6;
@@ -151,7 +151,7 @@ bool CHudGeiger::Draw( float flTime )
 
         if( ( rand() & 127 ) < pct || ( rand() & 127 ) < pct )
         {
-			// S_StartDynamicSound (-1, 0, rgsfx[rand() % i], r_origin, flvol, 1.0, 0, 100);
+            // S_StartDynamicSound (-1, 0, rgsfx[rand() % i], r_origin, flvol, 1.0, 0, 100);
             char sz[256];
 
             int j = rand() & 1;

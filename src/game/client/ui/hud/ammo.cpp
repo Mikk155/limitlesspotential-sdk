@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -43,7 +43,7 @@ int g_weaponselect = 0;
 
 void WeaponsResource::InitializeWeapons()
 {
-	// Reload weapons based on current level's weapon data.
+    // Reload weapons based on current level's weapon data.
     rgWeapons = {};
 
     for( int i = 0; i < g_WeaponData.GetCount(); ++i )
@@ -76,7 +76,7 @@ void WeaponsResource::PickupWeapon( WEAPON* wp )
     {
         auto& buckets = rgSlots[wp->Info->Slot];
 
-		// Use sorted insertion so search operations finds weapons in position order.
+        // Use sorted insertion so search operations finds weapons in position order.
         auto it = std::upper_bound( buckets.begin(), buckets.end(), wp, []( const auto lhs, const auto rhs )
             { return lhs->Info->Position < rhs->Info->Position; } );
 
@@ -149,7 +149,7 @@ bool WeaponsResource::HasAmmo( WEAPON* p )
     if( !p )
         return false;
 
-	// weapons with no primary ammo or unlimited ammo can always be selected
+    // weapons with no primary ammo or unlimited ammo can always be selected
     if( !p->AmmoTypes[0] || p->AmmoTypes[0]->MaximumCapacity == WEAPON_NOCLIP )
         return true;
 
@@ -238,7 +238,7 @@ void WeaponsResource::LoadWeaponSprites( WEAPON* pWeapon )
     }
     else
     {
-		// TODO: should this be using hAutoaim instead?
+        // TODO: should this be using hAutoaim instead?
         pWeapon->hZoomedAutoaim = pWeapon->hZoomedCrosshair; // default to zoomed crosshair
         pWeapon->rcZoomedAutoaim = pWeapon->rcZoomedCrosshair;
     }
@@ -298,12 +298,12 @@ WEAPON* WeaponsResource::GetNextActivePos( int iSlot, int iSlotPos )
 
     auto& weapons = rgSlots[iSlot];
 
-	// First find the one we're starting with.
+    // First find the one we're starting with.
     for( std::size_t i = 0; i < weapons.size(); ++i )
     {
         if( weapons[i]->Info->Position == iSlotPos )
         {
-			// Find first weapon that has ammo after this one.
+            // Find first weapon that has ammo after this one.
             while( ++i < weapons.size() )
             {
                 if( HasAmmo( weapons[i] ) )
@@ -394,19 +394,19 @@ void CHudAmmo::Reset()
 
 bool CHudAmmo::VidInit()
 {
-	// Load sprites for buckets (top row of weapon menu)
+    // Load sprites for buckets (top row of weapon menu)
     m_HUD_selection = gHUD.GetSpriteIndex( "selection" );
 
     for( int i = 0; i < MAX_WEAPON_SLOTS; ++i )
     {
-		// 10 becomes 0
+        // 10 becomes 0
         m_BucketSprites[i] = gHUD.GetSpriteIndex( fmt::format( "bucket{}", ( i + 1 ) % 10 ).c_str() );
     }
 
     const Rect bucketRect = gHUD.GetSpriteRect( m_BucketSprites[0] );
     gHR.iHistoryGap = std::max( gHR.iHistoryGap, bucketRect.bottom - bucketRect.top );
 
-	// Get weapon and ammo info from server info, load weapon sprites.
+    // Get weapon and ammo info from server info, load weapon sprites.
     gWR.InitializeWeapons();
 
     return true;
@@ -442,7 +442,7 @@ void CHudAmmo::Think()
     if( !gpActiveSel )
         return;
 
-	// has the player selected one?
+    // has the player selected one?
     if( ( gHUD.m_iKeyBits & IN_ATTACK ) != 0 )
     {
         if( gpActiveSel != ( WEAPON* )1 )
@@ -519,8 +519,8 @@ void WeaponsResource::SelectSlot( int iSlot, bool fAdvance, int iDirection )
 
         if( p && fastSwitch ) // check for fast weapon switch mode
         {
-			// if fast weapon switch is on, then weapons can be selected in a single keypress
-			// but only if there is only one item in the bucket
+            // if fast weapon switch is on, then weapons can be selected in a single keypress
+            // but only if there is only one item in the bucket
             WEAPON* p2 = GetNextActivePos( p->Info->Slot, p->Info->Position );
             if( !p2 )
             { // only one active item in bucket, so change directly to weapon
@@ -541,7 +541,7 @@ void WeaponsResource::SelectSlot( int iSlot, bool fAdvance, int iDirection )
 
     if( !p ) // no selection found
     {
-		// just display the weapon list, unless fastswitch is on just ignore it
+        // just display the weapon list, unless fastswitch is on just ignore it
         if( !fastSwitch )
             gpActiveSel = ( WEAPON* )1;
         else
@@ -571,7 +571,7 @@ void CHudAmmo::MsgFunc_AmmoPickup( const char* pszName, BufferReader& reader )
     int iIndex = reader.ReadByte();
     int iCount = reader.ReadByte();
 
-	// Add ammo to the history
+    // Add ammo to the history
     gHR.AddToHistory( HISTSLOT_AMMO, iIndex, abs( iCount ) );
 }
 
@@ -579,7 +579,7 @@ void CHudAmmo::MsgFunc_WeapPickup( const char* pszName, BufferReader& reader )
 {
     int iIndex = reader.ReadByte();
 
-	// Add the weapon to the history
+    // Add the weapon to the history
     gHR.AddToHistory( HISTSLOT_WEAP, iIndex );
 }
 
@@ -587,7 +587,7 @@ void CHudAmmo::MsgFunc_ItemPickup( const char* pszName, BufferReader& reader )
 {
     const char* szName = reader.ReadString();
 
-	// Add the weapon to the history
+    // Add the weapon to the history
     gHR.AddToHistory( HISTSLOT_ITEM, szName );
 }
 
@@ -629,7 +629,7 @@ void CHudAmmo::MsgFunc_CurWeapon( const char* pszName, BufferReader& reader )
     int iId = reader.ReadChar();
     int iClip = reader.ReadChar();
 
-	// detect if we're also on target
+    // detect if we're also on target
     const bool onTarget = iState > WeaponState::Active;
 
     if( iId < 1 )
@@ -642,7 +642,7 @@ void CHudAmmo::MsgFunc_CurWeapon( const char* pszName, BufferReader& reader )
 
     if( g_iUser1 != OBS_IN_EYE )
     {
-		// Is player dead???
+        // Is player dead???
         if( ( iId == -1 ) && ( iClip == -1 ) )
         {
             gHUD.m_fPlayerDead = true;
@@ -916,7 +916,7 @@ void CHudAmmo::DrawCrosshair( int x, int y )
         {
             if( 0 == IEngineStudio.IsHardware() )
             {
-				// Fall back to the regular render path for software
+                // Fall back to the regular render path for software
                 x -= ( crosshair.rect.right - crosshair.rect.left ) / 2;
                 y -= ( crosshair.rect.bottom - crosshair.rect.top ) / 2;
 
@@ -932,7 +932,7 @@ void CHudAmmo::DrawCrosshair( int x, int y )
 
             Rect rect;
 
-			// Trim a pixel border around it, since it blends.
+            // Trim a pixel border around it, since it blends.
             rect.left = crosshair.rect.left * flScale + ( flScale - 1 );
             rect.top = crosshair.rect.top * flScale + ( flScale - 1 );
             rect.right = crosshair.rect.right * flScale - ( flScale - 1 );
@@ -1001,13 +1001,13 @@ bool CHudAmmo::Draw( float flTime )
     if( ( gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) ) != 0 )
         return true;
 
-	// Draw Weapon Menu
+    // Draw Weapon Menu
     DrawWList( flTime );
 
-	// Draw ammo pickup history
+    // Draw ammo pickup history
     gHR.DrawAmmoHistory( flTime );
 
-	// Draw crosshair here so original engine behavior is mimicked pretty closely
+    // Draw crosshair here so original engine behavior is mimicked pretty closely
     {
         if( 0 != gHUD.m_pCvarCrosshair->value && m_DrawCrosshair )
         {
@@ -1019,7 +1019,7 @@ bool CHudAmmo::Draw( float flTime )
             Vector screen;
             gEngfuncs.pTriAPI->WorldToScreen( point, screen );
 
-			// Round the value so the crosshair doesn't jitter
+            // Round the value so the crosshair doesn't jitter
             screen = screen * 1000;
 
             for( int i = 0; i < 3; ++i )
@@ -1042,7 +1042,7 @@ bool CHudAmmo::Draw( float flTime )
     if( !m_pWeapon )
         return false;
 
-	// SPR_Draw Ammo
+    // SPR_Draw Ammo
     if( !m_pWeapon->AmmoTypes[0] && !m_pWeapon->AmmoTypes[1] )
         return false;
 
@@ -1058,17 +1058,17 @@ bool CHudAmmo::Draw( float flTime )
 
     const auto color = gHUD.GetHudItemColor( gHUD.m_HudItemColor.Scale( a ) );
 
-	// Does this weapon have a clip?
+    // Does this weapon have a clip?
     y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
 
-	// Does weapon have any ammo at all?
+    // Does weapon have any ammo at all?
     if( m_pWeapon->AmmoTypes[0] )
     {
         int iIconWidth = m_pWeapon->rcAmmo.right - m_pWeapon->rcAmmo.left;
 
         if( m_pWeapon->AmmoInMagazine >= 0 )
         {
-			// room for the number and the '|' and the current ammo
+            // room for the number and the '|' and the current ammo
 
             x = ScreenWidth - ( 8 * AmmoWidth ) - iIconWidth;
             x = gHUD.DrawHudNumber( x, y, iFlags | DHN_3DIGITS, m_pWeapon->AmmoInMagazine, color );
@@ -1083,40 +1083,40 @@ bool CHudAmmo::Draw( float flTime )
 
             x += AmmoWidth / 2;
 
-			// draw the | bar
+            // draw the | bar
             FillRGBA( x, y, iBarWidth, gHUD.m_iFontHeight, gHUD.m_HudItemColor, a );
 
             x += iBarWidth + AmmoWidth / 2;
 
-			// GL Seems to need the color to be scaled
+            // GL Seems to need the color to be scaled
             x = gHUD.DrawHudNumber( x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo( m_pWeapon->AmmoTypes[0] ), color );
         }
         else
         {
-			// SPR_Draw a bullets only line
+            // SPR_Draw a bullets only line
             x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
             x = gHUD.DrawHudNumber( x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo( m_pWeapon->AmmoTypes[0] ), color );
         }
 
-		// Draw the ammo Icon
+        // Draw the ammo Icon
         int iOffset = ( m_pWeapon->rcAmmo.bottom - m_pWeapon->rcAmmo.top ) / 8;
         SPR_Set( m_pWeapon->hAmmo, color );
         SPR_DrawAdditive( 0, x, y - iOffset, &m_pWeapon->rcAmmo );
     }
 
-	// Does weapon have seconday ammo?
+    // Does weapon have seconday ammo?
     if( m_pWeapon->AmmoTypes[1] )
     {
         int iIconWidth = m_pWeapon->rcAmmo2.right - m_pWeapon->rcAmmo2.left;
 
-		// Do we have secondary ammo?
+        // Do we have secondary ammo?
         if( gWR.CountAmmo( m_pWeapon->AmmoTypes[1] ) > 0 )
         {
             y -= gHUD.m_iFontHeight + gHUD.m_iFontHeight / 4;
             x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
             x = gHUD.DrawHudNumber( x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo( m_pWeapon->AmmoTypes[1] ), color );
 
-			// Draw the ammo Icon
+            // Draw the ammo Icon
             SPR_Set( m_pWeapon->hAmmo2, color );
             int iOffset = ( m_pWeapon->rcAmmo2.bottom - m_pWeapon->rcAmmo2.top ) / 8;
             SPR_DrawAdditive( 0, x, y - iOffset, &m_pWeapon->rcAmmo2 );
@@ -1140,7 +1140,7 @@ int DrawBar( int x, int y, int width, int height, float f )
     {
         int w = f * width;
 
-		// Always show at least one pixel if we have ammo.
+        // Always show at least one pixel if we have ammo.
         if( w <= 0 )
             w = 1;
         FillRGBA( x, y, w, height, RGB_GREENISH, 255 );
@@ -1170,7 +1170,7 @@ void DrawAmmoBar( WEAPON* p, int x, int y, int width, int height )
         x = DrawBar( x, y, width, height, f );
 
 
-		// Do we have secondary ammo too?
+        // Do we have secondary ammo too?
 
         if( p->AmmoTypes[1] )
         {
@@ -1207,7 +1207,7 @@ bool CHudAmmo::DrawWList( float flTime )
     y = 10; //!!!
 
 
-	// Ensure that there are available choices in the active slot
+    // Ensure that there are available choices in the active slot
     if( iActiveSlot > 0 )
     {
         if( !gWR.GetFirstPos( iActiveSlot ) )
@@ -1221,8 +1221,8 @@ bool CHudAmmo::DrawWList( float flTime )
     const int bucketWidth = bucketRect.right - bucketRect.left;
     const int bucketHeight = bucketRect.bottom - bucketRect.top;
 
-	// Determine how many slots to draw.
-	// Half-Life has 5, Opposing Force has 7 and we want to support as many as 10, one for each number key.
+    // Determine how many slots to draw.
+    // Half-Life has 5, Opposing Force has 7 and we want to support as many as 10, one for each number key.
     int slotsToDraw = MAX_WEAPON_SLOTS;
 
     for( int slot = MAX_WEAPON_SLOTS; slot > MAX_ALWAYS_VISIBLE_WEAPON_SLOTS; --slot )
@@ -1235,21 +1235,21 @@ bool CHudAmmo::DrawWList( float flTime )
         --slotsToDraw;
     }
 
-	// Draw top line
+    // Draw top line
     for( i = 0; i < slotsToDraw; i++ )
     {
         int iWidth;
 
-		/*
-		if (iActiveSlot == i)
-			a = 255;
-		else
-			a = 192;
-		*/
+        /*
+        if (iActiveSlot == i)
+            a = 255;
+        else
+            a = 192;
+        */
 
         SPR_Set( gHUD.GetSprite( m_BucketSprites[i] ), gHUD.m_HudItemColor );
 
-		// make active slot wide enough to accomodate gun pictures
+        // make active slot wide enough to accomodate gun pictures
         if( i == iActiveSlot )
         {
             WEAPON* p = gWR.GetFirstPos( iActiveSlot );
@@ -1269,15 +1269,15 @@ bool CHudAmmo::DrawWList( float flTime )
 
     x = 10;
 
-	// Draw all of the buckets
+    // Draw all of the buckets
     for( i = 0; i < slotsToDraw; i++ )
     {
         y = bucketHeight + 10;
 
         const int highestPositionInSlot = gWR.GetHighestPositionInSlot( i );
 
-		// If this is the active slot, draw the bigger pictures,
-		// otherwise just draw boxes
+        // If this is the active slot, draw the bigger pictures,
+        // otherwise just draw boxes
         if( i == iActiveSlot )
         {
             WEAPON* p = gWR.GetFirstPos( i );
@@ -1294,7 +1294,7 @@ bool CHudAmmo::DrawWList( float flTime )
 
                 const auto color = gHUD.m_HudItemColor;
 
-				// if active, then we must have ammo.
+                // if active, then we must have ammo.
 
                 if( gpActiveSel == p )
                 {
@@ -1306,7 +1306,7 @@ bool CHudAmmo::DrawWList( float flTime )
                 }
                 else
                 {
-					// Draw Weapon if Red if no ammo
+                    // Draw Weapon if Red if no ammo
 
                     const auto inactiveColor = gWR.HasAmmo( p ) ? gHUD.GetHudItemColor( color.Scale( 192 ) ) : RGB_REDISH.Scale( 128 );
 
@@ -1314,7 +1314,7 @@ bool CHudAmmo::DrawWList( float flTime )
                     SPR_DrawAdditive( 0, x, y, &p->rcInactive );
                 }
 
-				// Draw Ammo Bar
+                // Draw Ammo Bar
 
                 DrawAmmoBar( p, x + giABWidth / 2, y, giABWidth, giABHeight );
 
@@ -1325,7 +1325,7 @@ bool CHudAmmo::DrawWList( float flTime )
         }
         else
         {
-			// Draw Row of weapons.
+            // Draw Row of weapons.
 
             for( int iPos = 0; iPos <= highestPositionInSlot; iPos++ )
             {

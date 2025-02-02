@@ -40,8 +40,8 @@ void ClientCommandRegistry::Remove( const ClientCommand* command )
         return;
     }
 
-	// Can't rely on the command since it may be a double delete, in which case command is a dangling pointer.
-	// Search by address to be safe.
+    // Can't rely on the command since it may be a double delete, in which case command is a dangling pointer.
+    // Search by address to be safe.
     if( auto it = std::find_if( m_Commands.begin(), m_Commands.end(), [&]( const auto& candidate )
             { return candidate.second.get() == command; } );
         it != m_Commands.end() )

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -31,8 +31,8 @@ class FSFile;
 #define NO_NODE -1
 #define MAX_NODE_HULLS 4
 
-#define bits_NODE_LAND (1 << 0)	 // Land node, so nudge if necessary.
-#define bits_NODE_AIR (1 << 1)	 // Air node, don't nudge.
+#define bits_NODE_LAND (1 << 0)     // Land node, so nudge if necessary.
+#define bits_NODE_AIR (1 << 1)     // Air node, don't nudge.
 #define bits_NODE_WATER (1 << 2) // Water node, don't nudge.
 #define bits_NODE_GROUP_REALM (bits_NODE_LAND | bits_NODE_AIR | bits_NODE_WATER)
 
@@ -50,15 +50,15 @@ public:
     int m_cNumLinks;  // how many links this node has
     int m_iFirstLink; // index of this node's first link in the link pool.
 
-	// Where to start looking in the compressed routing table (offset into m_pRouteInfo).
-	// (4 hull sizes -- smallest to largest + fly/swim), and secondly, door capability.
-	//
+    // Where to start looking in the compressed routing table (offset into m_pRouteInfo).
+    // (4 hull sizes -- smallest to largest + fly/swim), and secondly, door capability.
+    //
     int m_pNextBestNode[MAX_NODE_HULLS][2];
 
-	// Used in finding the shortest path. m_fClosestSoFar is -1 if not visited.
-	// Then it is the distance to the source. If another path uses this node
-	// and has a closer distance, then m_iPreviousNode is also updated.
-	//
+    // Used in finding the shortest path. m_fClosestSoFar is -1 if not visited.
+    // Then it is the distance to the source. If another path uses this node
+    // and has a closer distance, then m_iPreviousNode is also updated.
+    //
     float m_flClosestSoFar; // Used in finding the shortest path.
     int m_iPreviousNode;
 
@@ -73,8 +73,8 @@ public:
 #define bits_LINK_SMALL_HULL (1 << 0) // headcrab box can fit through this connection
 #define bits_LINK_HUMAN_HULL (1 << 1) // player box can fit through this connection
 #define bits_LINK_LARGE_HULL (1 << 2) // big box can fit through this connection
-#define bits_LINK_FLY_HULL (1 << 3)	  // a flying big box can fit through this connection
-#define bits_LINK_DISABLED (1 << 4)	  // link is not valid when the set
+#define bits_LINK_FLY_HULL (1 << 3)      // a flying big box can fit through this connection
+#define bits_LINK_DISABLED (1 << 4)      // link is not valid when the set
 
 #define NODE_SMALL_HULL 0
 #define NODE_HUMAN_HULL 1
@@ -89,7 +89,7 @@ public:
 
     entvars_t* m_pLinkEnt; // the entity that blocks this connection (doors, etc)
 
-	// m_szLinkEntModelname is not necessarily nullptr terminated (so we can store it in a more alignment-friendly 4 bytes)
+    // m_szLinkEntModelname is not necessarily nullptr terminated (so we can store it in a more alignment-friendly 4 bytes)
     char m_szLinkEntModelname[4]; // the unique name of the brush model that blocks the connection (this is kept for save/restore)
 
     int m_afLinkInfo; // information about this link
@@ -118,7 +118,7 @@ class CGraph
 public:
     static inline std::shared_ptr<spdlog::logger> Logger;
 
-	// the graph has two flags, and should not be accessed unless both flags are true!
+    // the graph has two flags, and should not be accessed unless both flags are true!
     qboolean m_fGraphPresent;      // is the graph in memory?
     qboolean m_fGraphPointersSet; // are the entity pointers for the graph all set?
     qboolean m_fRoutingComplete;  // are the optimal routes computed, yet?
@@ -131,15 +131,15 @@ public:
     int m_cLinks;      // total number of links
     int m_nRouteInfo; // size of m_pRouteInfo in bytes.
 
-	// Tables for making nearest node lookup faster. SortedBy provided nodes in a
-	// order of a particular coordinate. Instead of doing a binary search, RangeStart
-	// and RangeEnd let you get to the part of SortedBy that you are interested in.
-	//
-	// Once you have a point of interest, the only way you'll find a closer point is
-	// if at least one of the coordinates is closer than the ones you have now. So we
-	// search each range. After the search is exhausted, we know we have the closest
-	// node.
-	//
+    // Tables for making nearest node lookup faster. SortedBy provided nodes in a
+    // order of a particular coordinate. Instead of doing a binary search, RangeStart
+    // and RangeEnd let you get to the part of SortedBy that you are interested in.
+    //
+    // Once you have a point of interest, the only way you'll find a closer point is
+    // if at least one of the coordinates is closer than the ones you have now. So we
+    // search each range. After the search is exhausted, we know we have the closest
+    // node.
+    //
 #define CACHE_SIZE 128
 #define NUM_RANGES 256
     DIST_INFO* m_di; // This is m_cNodes long, but the entries don't correspond to CNode entries.
@@ -159,21 +159,21 @@ public:
     int m_nHashLinks;
 
 
-	// kinda sleazy. In order to allow variety in active idles for monster groups in a room with more than one node,
-	// we keep track of the last node we searched from and store it here. Subsequent searches by other monsters will pick
-	// up where the last search stopped.
+    // kinda sleazy. In order to allow variety in active idles for monster groups in a room with more than one node,
+    // we keep track of the last node we searched from and store it here. Subsequent searches by other monsters will pick
+    // up where the last search stopped.
     int m_iLastActiveIdleSearch;
 
-	// another such system used to track the search for cover nodes, helps greatly with two monsters trying to get to the same node.
+    // another such system used to track the search for cover nodes, helps greatly with two monsters trying to get to the same node.
     int m_iLastCoverSearch;
 
-	// functions to create the graph
+    // functions to create the graph
     int LinkVisibleNodes( CLink* pLinkPool, FSFile& file, int* piBadNode );
     int RejectInlineLinks( CLink* pLinkPool, FSFile& file );
     int FindShortestPath( int* piPath, int iStart, int iDest, int iHull, int afCapMask );
     int FindNearestNode( const Vector& vecOrigin, CBaseEntity* pEntity );
     int FindNearestNode( const Vector& vecOrigin, int afNodeTypes );
-	// int		FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, bool *pfAlongLine );
+    // int        FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, bool *pfAlongLine );
     float PathLength( int iStart, int iDest, int iHull, int afCapMask );
     int NextNodeInRoute( int iCurrentNode, int iDest, int iHull, int iCap );
 
@@ -182,8 +182,8 @@ public:
         NODEGRAPH_DYNAMIC,
         NODEGRAPH_STATIC
     };
-	// A static query means we're asking about the possiblity of handling this entity at ANY time
-	// A dynamic query means we're asking about it RIGHT NOW.  So we should query the current state
+    // A static query means we're asking about the possiblity of handling this entity at ANY time
+    // A dynamic query means we're asking about it RIGHT NOW.  So we should query the current state
     bool HandleLinkEnt( int iNode, entvars_t* pevLinkEnt, int afCapMask, NODEQUERY queryType );
     entvars_t* LinkEntForLink( CLink* pLink, CNode* pNode );
     void ShowNodeConnections( int iNode );
@@ -312,7 +312,7 @@ public:
     CQueue(); // constructor
     inline bool Full() { return ( m_cSize == MAX_STACK_NODES ); }
     inline bool Empty() { return ( m_cSize == 0 ); }
-	// inline int Tail () { return ( m_queue[ m_tail ] ); }
+    // inline int Tail () { return ( m_queue[ m_tail ] ); }
     inline int Size() { return ( m_cSize ); }
     void Insert( int, float );
     int Remove( float& );
@@ -338,7 +338,7 @@ public:
     CQueuePriority(); // constructor
     inline bool Full() { return ( m_cSize == MAX_STACK_NODES ); }
     inline bool Empty() { return ( m_cSize == 0 ); }
-	// inline int Tail ( float & ) { return ( m_queue[ m_tail ].Id ); }
+    // inline int Tail ( float & ) { return ( m_queue[ m_tail ].Id ); }
     inline int Size() { return ( m_cSize ); }
     void Insert( int, float );
     int Remove( float& );

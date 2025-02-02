@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -85,7 +85,7 @@ Is the entity == the local player
 */
 bool EV_IsLocal( int idx )
 {
-	// check if we are in some way in first person spec mode
+    // check if we are in some way in first person spec mode
     if( IS_FIRSTPERSON_SPEC )
         return ( g_iUser2 == idx );
     else
@@ -109,10 +109,10 @@ void EV_GetGunPosition( event_args_t* args, Vector& pos, const Vector& origin )
 
     if( EV_IsPlayer( idx ) )
     {
-		// in spec mode use entity viewheigh, not own
+        // in spec mode use entity viewheigh, not own
         if( EV_IsLocal( idx ) && !IS_FIRSTPERSON_SPEC )
         {
-			// Grab predicted result for local player
+            // Grab predicted result for local player
             gEngfuncs.pEventAPI->EV_LocalPlayerViewheight( view_ofs );
         }
         else if( args->ducking == 1 )
@@ -189,13 +189,13 @@ Flag weapon/view model for muzzle flash
 */
 void EV_MuzzleFlash()
 {
-	// Add muzzle flash to current weapon model
+    // Add muzzle flash to current weapon model
     cl_entity_t* ent = GetViewEntity();
     if( !ent )
     {
         return;
     }
 
-	// Or in the muzzle flash
+    // Or in the muzzle flash
     ent->curstate.effects |= EF_MUZZLEFLASH;
 }

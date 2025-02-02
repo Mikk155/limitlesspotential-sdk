@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -27,14 +27,14 @@ public:
 
     void ActivateMultiTrigger( CBaseEntity* pActivator );
 
-	/**
-	 *	@brief the wait time has passed, so set back up for another activation
-	 */
+    /**
+     *    @brief the wait time has passed, so set back up for another activation
+     */
     void MultiWaitOver();
 
-	/**
-	 *	@brief If this is the USE function for a trigger, its state will toggle every time it's fired
-	 */
+    /**
+     *    @brief If this is the USE function for a trigger, its state will toggle every time it's fired
+     */
     void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
     void InitTrigger();

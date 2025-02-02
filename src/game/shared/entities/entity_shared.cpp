@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -109,7 +109,7 @@ BEGIN_DATAMAP_NOBASE( entvars_t )
     DEFINE_FIELD( waterlevel, FIELD_INTEGER ),
     DEFINE_FIELD( watertype, FIELD_INTEGER ),
 
-	// Having these fields be local to the individual levels makes it easier to test those levels individually.
+    // Having these fields be local to the individual levels makes it easier to test those levels individually.
     DEFINE_GLOBAL_FIELD( target, FIELD_STRING ),
     DEFINE_GLOBAL_FIELD( targetname, FIELD_STRING ),
     DEFINE_FIELD( netname, FIELD_STRING ),
@@ -167,7 +167,7 @@ END_DATAMAP();
 
 void CBaseEntity::OnCreate()
 {
-	// Nothing.
+    // Nothing.
 }
 
 void CBaseEntity::Construct()
@@ -181,7 +181,7 @@ void CBaseEntity::Construct()
 
 void CBaseEntity::OnDestroy()
 {
-	// Nothing.
+    // Nothing.
 }
 
 void CBaseEntity::Destruct()
@@ -262,7 +262,7 @@ bool CBaseEntity::Restore( CRestore& restore )
 void CBaseEntity::PostRestore()
 {
 #ifndef CLIENT_DLL
-	// Reinitialize the classification
+    // Reinitialize the classification
     SetClassification( STRING( m_ClassificationName ) );
 
     LoadReplacementFiles();
@@ -273,7 +273,7 @@ void CBaseEntity::PostRestore()
         mins = pev->mins; // Set model is about to destroy these
         maxs = pev->maxs;
 
-		// Don't use UTIL_PrecacheModel here because we're restoring an already-replaced name.
+        // Don't use UTIL_PrecacheModel here because we're restoring an already-replaced name.
         UTIL_PrecacheModelDirect( STRING( pev->model ) );
         SetModel( STRING( pev->model ) );
         SetSize( mins, maxs ); // Reset them
@@ -290,19 +290,19 @@ void CBaseEntity::MaybeSetChildClassification( CBaseEntity* child )
 
     const char* classification = STRING( m_ChildClassificationName );
 
-	// Special classifications start with !
+    // Special classifications start with !
     if( classification[0] == '!' )
     {
         if( FStrEq( classification, "!owner" ) )
         {
-			// Inherit my classification.
+            // Inherit my classification.
             child->SetCustomClassification( GetClassificationName() );
         }
         else if( FStrEq( classification, "!owner_or_default" ) )
         {
-			// If my classification was overridden use that, otherwise leave child class at default.
-			// Needed so Ospreys can spawn children that use their default class,
-			// which differs from the Osprey's default class.
+            // If my classification was overridden use that, otherwise leave child class at default.
+            // Needed so Ospreys can spawn children that use their default class,
+            // which differs from the Osprey's default class.
 
             if( HasCustomClassification() )
             {

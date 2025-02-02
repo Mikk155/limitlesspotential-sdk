@@ -118,18 +118,18 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
 {
     memset( m_pClassImages, 0, sizeof( m_pClassImages ) );
 
-	// Get the scheme used for the Titles
+    // Get the scheme used for the Titles
     CSchemeManager* pSchemes = gViewPort->GetSchemeManager();
 
-	// schemes
+    // schemes
     SchemeHandle_t hTitleScheme = pSchemes->getSchemeHandle( "Title Font" );
-	// SchemeHandle_t hClassWindowText = pSchemes->getSchemeHandle("Briefing Text");
+    // SchemeHandle_t hClassWindowText = pSchemes->getSchemeHandle("Briefing Text");
     SchemeHandle_t hStatsWindowText = pSchemes->getSchemeHandle( "CommandMenu Text" );
 
-	// color schemes
+    // color schemes
     int r, g, b, a;
 
-	// Create the title
+    // Create the title
     Label* pLabel = new Label( "", STATSMENU_TITLE_X, STATSMENU_TITLE_Y );
     pLabel->setParent( this );
     pLabel->setFont( pSchemes->getFont( hTitleScheme ) );
@@ -140,10 +140,10 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
     pLabel->setContentAlignment( vgui::Label::a_west );
     pLabel->setText( gHUD.m_TextMessage.BufferedLocaliseTextString( "#CTFTitle_EndGameStats" ) );
 
-	// Create the Scroll panel
+    // Create the Scroll panel
     m_pScrollPanel = new CTFScrollPanel( STATSMENU_WINDOW_X, STATSMENU_WINDOW_Y, STATSMENU_WINDOW_SIZE_X, STATSMENU_WINDOW_SIZE_Y );
     m_pScrollPanel->setParent( this );
-	// force the scrollbars on, so after the validate clientClip will be smaller
+    // force the scrollbars on, so after the validate clientClip will be smaller
     m_pScrollPanel->setScrollBarAutoVisible( false, false );
     m_pScrollPanel->setScrollBarVisible( true, true );
     m_pScrollPanel->setBorder( new LineBorder( Color( 0, 112, 0, 0 ) ) );
@@ -151,7 +151,7 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
 
     int clientWide = m_pScrollPanel->getClient()->getWide();
 
-	// turn scrollpanel back into auto show scrollbar mode and validate
+    // turn scrollpanel back into auto show scrollbar mode and validate
     m_pScrollPanel->setScrollBarAutoVisible( false, true );
     m_pScrollPanel->setScrollBarVisible( false, false );
     m_pScrollPanel->validate();
@@ -159,7 +159,7 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
     for( int i = 0; i < StatsTeamsCount; ++i )
     {
         char sz[256];
-		// TODO: this is using YRES for an X coord. Bugged in vanilla
+        // TODO: this is using YRES for an X coord. Bugged in vanilla
         int iXPos = STATSMENU_TOPLEFT_BUTTON_X + ( ( STATSMENU_BUTTON_SIZE_X + STATSMENU_BUTTON_SPACER_Y ) * i );
 
         strcpy( sz, CHudTextMessage::BufferedLocaliseTextString( sLocalisedStatsTeams[i] ) );
@@ -171,16 +171,16 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
         m_pButtons[i]->addInputSignal( new CHandler_MenuButtonOver( this, i ) );
         m_pButtons[i]->setParent( this );
 
-		// Create the Class Info Window
-		// m_pClassInfoPanel[i] = new CTransparentPanel( 255, CLASSMENU_WINDOW_X, CLASSMENU_WINDOW_Y, CLASSMENU_WINDOW_SIZE_X, CLASSMENU_WINDOW_SIZE_Y );
+        // Create the Class Info Window
+        // m_pClassInfoPanel[i] = new CTransparentPanel( 255, CLASSMENU_WINDOW_X, CLASSMENU_WINDOW_Y, CLASSMENU_WINDOW_SIZE_X, CLASSMENU_WINDOW_SIZE_Y );
         m_pClassInfoPanel[i] = new CTransparentPanel( 255, 0, 0, clientWide, STATSMENU_WINDOW_SIZE_Y );
         m_pClassInfoPanel[i]->setParent( m_pScrollPanel->getClient() );
-		// m_pClassInfoPanel[i]->setVisible( false );
+        // m_pClassInfoPanel[i]->setVisible( false );
 
-		// don't show class pic in lower resolutions
+        // don't show class pic in lower resolutions
         int textOffs = XRES( 8 );
 
-		// Create the Class Name Label
+        // Create the Class Name Label
         sprintf( sz, "#CTFTitleStats_%s", sCTFStatsSelection[i] );
         char* localName = CHudTextMessage::BufferedLocaliseTextString( sz );
         Label* pNameLabel = new Label( "", textOffs, STATSMENU_WINDOW_NAME_Y );
@@ -191,7 +191,7 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
         pSchemes->getBgColor( hTitleScheme, r, g, b, a );
         pNameLabel->setBgColor( r, g, b, a );
         pNameLabel->setContentAlignment( vgui::Label::a_west );
-		// pNameLabel->setBorder(new LineBorder());
+        // pNameLabel->setBorder(new LineBorder());
         pNameLabel->setText( "%s", localName );
 
         if( ScreenWidth >= BASE_XRES )
@@ -217,7 +217,7 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
         if( i == 3 )
             cText = "Spectator";
 
-		// Create the Text info window
+        // Create the Text info window
         m_pStatsWindow[i] = new TextPanel( cText, textOffs, STATSMENU_WINDOW_TEXT_Y, XRES( 250 ), STATSMENU_WINDOW_TEXT_Y );
         m_pStatsWindow[i]->setParent( m_pClassInfoPanel[i] );
         m_pStatsWindow[i]->setFont( pSchemes->getFont( hStatsWindowText ) );
@@ -226,13 +226,13 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
         pSchemes->getBgColor( hStatsWindowText, r, g, b, a );
         m_pStatsWindow[i]->setBgColor( r, g, b, a );
 
-		// Resize the Info panel to fit it all
+        // Resize the Info panel to fit it all
         int xx, yy;
         m_pStatsWindow[i]->getPos( xx, yy );
         int maxX = xx + wide;
         int maxY = yy + tall;
 
-		// check to see if the image goes lower than the text
+        // check to see if the image goes lower than the text
         if( m_pClassImages[i] != nullptr )
         {
             m_pClassImages[i]->getPos( xx, yy );
@@ -245,7 +245,7 @@ CStatsMenuPanel::CStatsMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int 
         m_pClassInfoPanel[i]->setSize( maxX, maxY );
     }
 
-	// Create the Cancel button
+    // Create the Cancel button
     m_pCancelButton = new CommandButton( gHUD.m_TextMessage.BufferedLocaliseTextString( "#CTFMenu_Cancel" ), XRES( 500 ), YRES( 40 ), STATSMENU_BUTTON_SIZE_X, STATSMENU_BUTTON_SIZE_Y );
     m_pCancelButton->setParent( this );
     m_pCancelButton->addActionSignal( new CMenuHandler_ScoreStatWindow( 0 ) );
@@ -334,7 +334,7 @@ void CStatsMenuPanel::MsgFunc_StatsInfo( const char* pszName, BufferReader& read
     const int iNumPlayers = reader.ReadByte();
     const int chunkId = reader.ReadByte();
 
-	// TODO: define constants for team counts and such
+    // TODO: define constants for team counts and such
     if( teamNum < 0 || teamNum > 2 )
     {
         return;
@@ -463,7 +463,7 @@ void CStatsMenuPanel::MsgFunc_StatsInfo( const char* pszName, BufferReader& read
             text = formatter( reinterpret_cast<const char*>( fileContents.data() ) );
         }
 
-		// If no file exists or the format string is invalid, fall back to the default format string.
+        // If no file exists or the format string is invalid, fall back to the default format string.
         if( text.empty() )
         {
             text = formatter( DefaultTeamStatInfoFormatString );
@@ -541,7 +541,7 @@ void CStatsMenuPanel::MsgFunc_StatsPlayer( const char* pszName, BufferReader& re
         text = formatter( reinterpret_cast<const char*>( fileContents.data() ) );
     }
 
-	// If no file exists or the format string is invalid, fall back to the default format string.
+    // If no file exists or the format string is invalid, fall back to the default format string.
     if( text.empty() )
     {
         text = formatter( DefaultPlayerStatInfoFormatString );

@@ -50,7 +50,7 @@ void CListBox::Term()
 {
     m_ItemOffset = 0;
 
-	// Free the LBItems.
+    // Free the LBItems.
     LBItem* pNext;
     for( LBItem* pItem = m_Items.m_pNext; pItem != &m_Items; pItem = pNext )
     {
@@ -63,7 +63,7 @@ void CListBox::Term()
 
 void CListBox::AddItem( Panel* panel )
 {
-	// Add the item.
+    // Add the item.
     LBItem* pItem = new LBItem;
     if( !pItem )
         return;
@@ -136,13 +136,13 @@ void CListBox::InternalLayout()
     int x, y, wide, tall;
     getBounds( x, y, wide, tall );
 
-	// Reposition the main panel and the scrollbar.
+    // Reposition the main panel and the scrollbar.
     m_ItemsPanel.setBounds( 0, 0, wide - 15, tall );
     m_ScrollBar.setBounds( wide - 15, 0, 15, tall );
 
     bool bNeedScrollbar = false;
 
-	// Reposition the items.
+    // Reposition the items.
     int curItem = 0;
     int curY = 0;
     int maxItem = GetScrollMax();
@@ -155,7 +155,7 @@ void CListBox::InternalLayout()
         }
         else if( curItem >= maxItem )
         {
-			// item is past the end of the items we care about
+            // item is past the end of the items we care about
             pItem->m_pPanel->setVisible( false );
         }
         else
@@ -165,7 +165,7 @@ void CListBox::InternalLayout()
             int itemWidth, itemHeight;
             pItem->m_pPanel->getSize( itemWidth, itemHeight );
 
-			// Don't change the item's height but change its width to fit the listbox.
+            // Don't change the item's height but change its width to fit the listbox.
             pItem->m_pPanel->setBounds( 0, curY, wide, itemHeight );
 
             curY += itemHeight;

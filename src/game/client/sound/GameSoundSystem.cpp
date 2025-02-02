@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -34,7 +34,7 @@ GameSoundSystem::~GameSoundSystem()
 {
     if( MakeCurrent() )
     {
-		// Destroy all sources first so none of the effects are still referenced.
+        // Destroy all sources first so none of the effects are still referenced.
         m_Channels.clear();
         m_Sentences.reset();
         m_SoundCache.reset();
@@ -108,7 +108,7 @@ bool GameSoundSystem::Create( std::shared_ptr<spdlog::logger> logger )
 
     ALCint attribs[3] = {0};
 
-	// We only need 1.
+    // We only need 1.
     attribs[0] = ALC_MAX_AUXILIARY_SENDS;
     attribs[1] = 1;
 
@@ -126,7 +126,7 @@ bool GameSoundSystem::Create( std::shared_ptr<spdlog::logger> logger )
         return false;
     }
 
-	// An active context is required to query these.
+    // An active context is required to query these.
     {
         const auto getOpenALString = []( ALenum param )
         {
@@ -194,16 +194,16 @@ bool GameSoundSystem::Create( std::shared_ptr<spdlog::logger> logger )
         return false;
     }
 
-	// Immediately initialize the slot to a valid effect.
+    // Immediately initialize the slot to a valid effect.
     UpdateRoomEffect();
 
     alDistanceModel( AL_LINEAR_DISTANCE );
 
-	// GoldSource uses units, where 16 units == 1 foot.
-	// See https://developer.valvesoftware.com/wiki/Dimensions
-	constexpr double feetPerMeter = 3.281;
-	constexpr double footInMeters = 1 / feetPerMeter;
-	constexpr double metersPerUnit = footInMeters / 16;
+    // GoldSource uses units, where 16 units == 1 foot.
+    // See https://developer.valvesoftware.com/wiki/Dimensions
+    constexpr double feetPerMeter = 3.281;
+    constexpr double footInMeters = 1 / feetPerMeter;
+    constexpr double metersPerUnit = footInMeters / 16;
     alListenerf( AL_METERS_PER_UNIT, static_cast<float>( metersPerUnit ) );
 
     alDopplerFactor( 0.f );
@@ -232,13 +232,13 @@ bool GameSoundSystem::Create( std::shared_ptr<spdlog::logger> logger )
 
 void GameSoundSystem::OnBeginNetworkDataProcessing()
 {
-	// Clear all references to sounds and sentences.
+    // Clear all references to sounds and sentences.
     StopAllSounds();
 
-	// Remove all sentences so we can load the incoming list.
+    // Remove all sentences so we can load the incoming list.
     m_Sentences->Clear();
 
-	// Clear the entire cache so we start fresh.
+    // Clear the entire cache so we start fresh.
     m_SoundCache->Clear();
 
     m_PrecacheMap.clear();
@@ -248,12 +248,12 @@ void GameSoundSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 {
     if( block.Name == "SoundList" )
     {
-		// The empty name, shouldn't be used.
+        // The empty name, shouldn't be used.
         m_PrecacheMap.push_back( SoundIndex{} );
 
         for( const auto& fileName : block.Data )
         {
-			// TODO: avoid constructing multiple strings here
+            // TODO: avoid constructing multiple strings here
             m_PrecacheMap.push_back( m_SoundCache->FindName( fileName.get<std::string>().c_str() ) );
         }
     }
@@ -285,7 +285,7 @@ void GameSoundSystem::Update()
 
     if( UTIL_IsMapLoaded() )
     {
-		// Use view entity values here.
+        // Use view entity values here.
         origin = v_origin;
         AngleVectors( v_client_aimangles, forward, right, up );
     }
@@ -305,7 +305,7 @@ void GameSoundSystem::Update()
     alListenerfv( AL_POSITION, origin );
     alListenerfv( AL_ORIENTATION, orientation );
 
-	// Update volume if changed. If we're currently blocked then volume is 0, so don't update it.
+    // Update volume if changed. If we're currently blocked then volume is 0, so don't update it.
     if( !m_Blocked && m_LastKnownVolume != m_Volume->value )
     {
         m_LastKnownVolume = m_Volume->value;
@@ -338,7 +338,7 @@ void GameSoundSystem::Unblock()
 
     m_Blocked = false;
 
-	// Unblock to user-set volume immediately.
+    // Unblock to user-set volume immediately.
     SetVolume();
 }
 
@@ -390,7 +390,7 @@ void GameSoundSystem::StartSound(
 
     if( soundOrSentence[0] != '!' )
     {
-		// Skip stream prefix.
+        // Skip stream prefix.
         if( soundOrSentence[0] == '*' )
         {
             ++soundOrSentence;
@@ -500,8 +500,8 @@ void GameSoundSystem::MsgFunc_EmitSound( const char* pszName, BufferReader& read
 
     if( ( flags & SND_LARGE_INDEX ) != 0 )
     {
-		// Cast the signed short back to an unsigned short so the index is correct.
-		// See ServerSoundSystem::EmitSound for why this is needed.
+        // Cast the signed short back to an unsigned short so the index is correct.
+        // See ServerSoundSystem::EmitSound for why this is needed.
         soundIndex = static_cast<std::uint16_t>( reader.ReadShort() );
     }
     else
@@ -688,7 +688,7 @@ void GameSoundSystem::ClearChannel( Channel& channel )
 
     alSourceStop( channel.Source.Id );
 
-	// Detach buffer in case this is a time compressed buffer.
+    // Detach buffer in case this is a time compressed buffer.
     alSourcei( channel.Source.Id, AL_BUFFER, NullBuffer );
 }
 
@@ -719,26 +719,26 @@ Channel* GameSoundSystem::FindDynamicChannel( int entityIndex, FilterFunction&& 
 
 Channel* GameSoundSystem::FindOrCreateChannel( int entityIndex, int channelIndex )
 {
-	// The engine's original behavior works like this:
-	// There are 128 channels. 4 ambient, 8 dynamic, 116 static.
-	// Ambient channels are left over from Quake 1 and are never used.
-	// For dynamic channels it depends on the channel index.
-	// CHAN_AUTO picks the first unused channel or the channel closest to finishing its sound.
-	// CHAN_VOICE prefers channels assigned to the current entity's voice channel,
-	// otherwise same as CHAN_AUTO.
-	// All other channels will reuse channels assigned to the current entity if
-	// they are the same channel or if the requested channel is -1, otherwise same as CHAN_AUTO.
-	// For static channels it always tries to find an unused static channel.
+    // The engine's original behavior works like this:
+    // There are 128 channels. 4 ambient, 8 dynamic, 116 static.
+    // Ambient channels are left over from Quake 1 and are never used.
+    // For dynamic channels it depends on the channel index.
+    // CHAN_AUTO picks the first unused channel or the channel closest to finishing its sound.
+    // CHAN_VOICE prefers channels assigned to the current entity's voice channel,
+    // otherwise same as CHAN_AUTO.
+    // All other channels will reuse channels assigned to the current entity if
+    // they are the same channel or if the requested channel is -1, otherwise same as CHAN_AUTO.
+    // For static channels it always tries to find an unused static channel.
 
-	// This sound system allocates channels on demand so it tries to follow the old rules first,
-	// falling back to allocating a channel if no in-use channels match.
+    // This sound system allocates channels on demand so it tries to follow the old rules first,
+    // falling back to allocating a channel if no in-use channels match.
     if( channelIndex != CHAN_STATIC && channelIndex != CHAN_AUTO )
     {
         Channel* channel = nullptr;
 
         if( channelIndex == CHAN_VOICE )
         {
-			// Always override existing voice lines.
+            // Always override existing voice lines.
             channel = FindDynamicChannel( entityIndex, [&]( Channel& channel )
                 { return channel.ChannelIndex == CHAN_VOICE; } );
         }
@@ -773,9 +773,9 @@ bool GameSoundSystem::SetupChannel( Channel& channel, int entityIndex, int chann
     channel.Pitch = pitch;
     channel.CreatedOnFrame = m_CurrentGameFrame;
 
-	// If attenuation is 0 then the sound will play everywhere.
-	// If the entity is the current view entity then it should always sound like it's playing "here".
-	// Make it relative to the listener to stop it from having 3D spatialization.
+    // If attenuation is 0 then the sound will play everywhere.
+    // If the entity is the current view entity then it should always sound like it's playing "here".
+    // Make it relative to the listener to stop it from having 3D spatialization.
     if( !isRelative && ( attenuation == 0 || entityIndex == g_ViewEntity ) )
     {
         isRelative = true;
@@ -811,7 +811,7 @@ bool GameSoundSystem::SetupChannel( Channel& channel, int entityIndex, int chann
             {
                 m_Sentences->InitMouth( channel.EntityIndex, channel.ChannelIndex );
 
-				// Can't just queue all of them because they don't always have the same format, which isn't supported by OpenAL.
+                // Can't just queue all of them because they don't always have the same format, which isn't supported by OpenAL.
                 return m_Sentences->SetSentenceWord( channel, sound );
             }
             else
@@ -829,9 +829,9 @@ bool GameSoundSystem::SetupChannel( Channel& channel, int entityIndex, int chann
 
     if( channelIndex != CHAN_STATIC )
     {
-		// Offset play start position if there are other sounds with the same sound starting this frame.
-		// This avoids the sounds stacking to essentially create a higher volume sound.
-		// Does not apply to sentences since they are rarely playing at the same time and need to play as intended.
+        // Offset play start position if there are other sounds with the same sound starting this frame.
+        // This avoids the sounds stacking to essentially create a higher volume sound.
+        // Does not apply to sentences since they are rarely playing at the same time and need to play as intended.
         if( std::holds_alternative<SoundIndex>( channel.Sound ) )
         {
             const auto& soundData = *m_SoundCache->GetSound( std::get<SoundIndex>( channel.Sound ) );
@@ -853,11 +853,11 @@ bool GameSoundSystem::SetupChannel( Channel& channel, int entityIndex, int chann
                     continue;
                 }
 
-				// Don't query this; it causes performance issues with HRTF enabled.
-				// ALint offset = -1;
-				// alGetSourcei(otherChannel.Source.Id, AL_BYTE_OFFSET, &offset);
+                // Don't query this; it causes performance issues with HRTF enabled.
+                // ALint offset = -1;
+                // alGetSourcei(otherChannel.Source.Id, AL_BYTE_OFFSET, &offset);
 
-				// if (offset == 0)
+                // if (offset == 0)
                 {
                     ALint frequency = 0;
                     alGetBufferi( soundData.Buffer.Id, AL_FREQUENCY, &frequency );
@@ -868,13 +868,13 @@ bool GameSoundSystem::SetupChannel( Channel& channel, int entityIndex, int chann
                     ALint size = 0;
                     alGetBufferi( soundData.Buffer.Id, AL_SIZE, &size );
 
-					// Need to convert the frequency to bytes for this to work.
+                    // Need to convert the frequency to bytes for this to work.
                     const ALint sampleSizeInBytes = channels * sizeof(float);
                     const ALint sampleRateInBytes = frequency * sampleSizeInBytes;
 
                     ALint skip = static_cast<ALint>( gEngfuncs.pfnRandomLong( 0, (int)( 0.1 * sampleRateInBytes ) ) );
 
-					// If the sound is empty or really short it could be out of range.
+                    // If the sound is empty or really short it could be out of range.
                     skip = std::clamp( skip, 0, std::max( 0, size - sampleSizeInBytes ) );
 
                     alSourcei( otherChannel.Source.Id, AL_BYTE_OFFSET, skip );
@@ -930,7 +930,7 @@ bool GameSoundSystem::AlterChannel( int entityIndex, int channelIndex, const Sou
 
 void GameSoundSystem::UpdateRoomEffect()
 {
-	// Allow users to disable room effects for the OpenAL version separately.
+    // Allow users to disable room effects for the OpenAL version separately.
     const bool roomOn = g_cl_snd_room_off->value == 0 && m_RoomOff->value == 0;
 
     if( roomOn )
@@ -952,7 +952,7 @@ void GameSoundSystem::UpdateRoomEffect()
         {
             m_PreviousRoomOn = roomOn;
 
-			// Force a reset if we're turning effects back on.
+            // Force a reset if we're turning effects back on.
             m_PreviousRoomType = -1;
             m_PreviousHFGain = -1;
         }
@@ -968,7 +968,7 @@ void GameSoundSystem::UpdateRoomEffect()
             m_PreviousHFGain = hfGain;
             alFilterf( m_Filter, AL_LOWPASS_GAINHF, hfGain );
 
-			// Re-attach the filter to all active sources.
+            // Re-attach the filter to all active sources.
             for( auto& channel : m_Channels )
             {
                 UpdateSourceEffect( channel.Source );
@@ -993,7 +993,7 @@ void GameSoundSystem::UpdateSounds()
 
     const int messagenum = localPlayer ? localPlayer->curstate.messagenum : 0;
 
-	// Update all sounds that are looping, clear finished sounds.
+    // Update all sounds that are looping, clear finished sounds.
     for( std::size_t index = 0; index < m_Channels.size(); )
     {
         auto& channel = m_Channels[index];
@@ -1046,18 +1046,18 @@ bool GameSoundSystem::UpdateSound( Channel& channel )
 
 void GameSoundSystem::Spatialize( Channel& channel, int messagenum )
 {
-	// Update sound channel position.
+    // Update sound channel position.
     if( channel.EntityIndex > 0 )
     {
         auto entity = gEngfuncs.GetEntityByIndex( channel.EntityIndex );
 
-		// Entities without a model are not sent to the client so there is no point in updating their position.
+        // Entities without a model are not sent to the client so there is no point in updating their position.
         if( entity && entity->model && entity->curstate.messagenum == messagenum )
         {
             ALint isRelative = AL_FALSE;
             alGetSourcei( channel.Source.Id, AL_SOURCE_RELATIVE, &isRelative );
 
-			// Don't update relative sources (always vec3_origin).
+            // Don't update relative sources (always vec3_origin).
             if( isRelative != AL_FALSE )
             {
                 return;

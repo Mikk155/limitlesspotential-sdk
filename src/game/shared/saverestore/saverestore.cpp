@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -102,7 +102,7 @@ unsigned short CSaveRestoreBuffer::TokenHash( const char* pszToken )
 #endif
     if( 0 == m_data.tokenCount || nullptr == m_data.pTokens )
     {
-		// if we're here it means trigger_changelevel is trying to actually save something when it's not supposed to.
+        // if we're here it means trigger_changelevel is trying to actually save something when it's not supposed to.
         Logger->error( "No token table array in TokenHash()!" );
         return 0;
     }
@@ -131,8 +131,8 @@ unsigned short CSaveRestoreBuffer::TokenHash( const char* pszToken )
         }
     }
 
-	// Token hash table full!!!
-	// [Consider doing overflow table(s) after the main table & limiting linear hash table search]
+    // Token hash table full!!!
+    // [Consider doing overflow table(s) after the main table & limiting linear hash table search]
     Logger->error( "CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!" );
     return 0;
 }
@@ -189,7 +189,7 @@ bool CSave::WriteFields( void* baseData, const DataMap& completeDataMap, const D
 
         WriteCount( fieldSize, m_data.pCurrentData - startPosition );
 
-		// Empty fields will not be written, write out the actual number of fields to be written
+        // Empty fields will not be written, write out the actual number of fields to be written
         ++( *fieldCount );
     }
 
@@ -273,15 +273,15 @@ bool CRestore::ReadFields( void* baseData, const DataMap& completeDataMap, const
 
     const int headerToken = BufferReadValue<short>();
 
-	// Check the struct name
+    // Check the struct name
     if( headerToken != TokenHash( currentDataMap.ClassName ) ) // Field Set marker
     {
-		// Logger->error("Expected {} found {}!", currentDataMap.ClassName, BufferPointer());
+        // Logger->error("Expected {} found {}!", currentDataMap.ClassName, BufferPointer());
         BufferRewind( 2 * sizeof(short) );
         return false;
     }
 
-	// Skip over the struct name
+    // Skip over the struct name
     const int fileCount = BufferReadValue<int>(); // Read field count
 
     int lastField = 0; // Make searches faster, most data is read/written in the same order
@@ -289,7 +289,7 @@ bool CRestore::ReadFields( void* baseData, const DataMap& completeDataMap, const
     m_CurrentCompleteDataMap = &completeDataMap;
     m_CurrentDataMap = &currentDataMap;
 
-	// Clear out base data
+    // Clear out base data
     for( const auto& member : currentDataMap.Members )
     {
         auto field = std::get_if<DataFieldDescription>( &member );
@@ -299,7 +299,7 @@ bool CRestore::ReadFields( void* baseData, const DataMap& completeDataMap, const
             continue;
         }
 
-		// Don't clear global fields
+        // Don't clear global fields
         if( !m_global || ( field->flags & FTYPEDESC_GLOBAL ) == 0 )
         {
             auto serializer = field->Serializer;

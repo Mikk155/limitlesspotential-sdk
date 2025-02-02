@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -49,7 +49,7 @@ LINK_ENTITY_TO_CLASS( crossbow_bolt, CCrossbowBolt );
 
 CCrossbowBolt* CCrossbowBolt::BoltCreate()
 {
-	// Create a new entity with CCrossbowBolt private data
+    // Create a new entity with CCrossbowBolt private data
     CCrossbowBolt* pBolt = g_EntityDictionary->Create<CCrossbowBolt>( "crossbow_bolt" );
     pBolt->Spawn();
 
@@ -95,7 +95,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity* pOther )
         TraceResult tr = UTIL_GetGlobalTrace();
         auto owner = GetOwner();
 
-		// UNDONE: this needs to call TraceAttack instead
+        // UNDONE: this needs to call TraceAttack instead
         ClearMultiDamage();
 
         if( pOther->IsPlayer() )
@@ -110,7 +110,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity* pOther )
         ApplyMultiDamage( this, owner );
 
         pev->velocity = Vector( 0, 0, 0 );
-		// play body "thwack" sound
+        // play body "thwack" sound
         switch ( RANDOM_LONG( 0, 1 ) )
         {
         case 0:
@@ -135,7 +135,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity* pOther )
 
         if( pOther->ClassnameIs( "worldspawn" ) )
         {
-			// if what we hit is static architecture, can stay around for a while.
+            // if what we hit is static architecture, can stay around for a while.
             Vector vecDir = pev->velocity.Normalize();
             SetOrigin( pev->origin - vecDir * 12 );
             pev->angles = UTIL_VecToAngles( vecDir );
@@ -297,7 +297,7 @@ void CCrossbow::FireSniperBolt()
 
     PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usCrossbow2, 0.0, g_vecZero, g_vecZero, 0, 0, GetMagazine1(), 0, 0, 0 );
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     Vector anglesAim = m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle;
@@ -338,7 +338,7 @@ void CCrossbow::FireBolt()
 
     PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usCrossbow, 0.0, g_vecZero, g_vecZero, 0, 0, GetMagazine1(), 0, 0, 0 );
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     Vector anglesAim = m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle;
@@ -369,7 +369,7 @@ void CCrossbow::FireBolt()
 #endif
 
     if( 0 == GetMagazine1() && m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 
     m_flNextPrimaryAttack = GetNextAttackDelay( 0.75 );

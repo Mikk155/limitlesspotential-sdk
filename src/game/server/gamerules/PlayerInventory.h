@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -35,8 +35,8 @@ struct PersistentWeaponState
 };
 
 /**
- *	@brief Represents a player's inventory.
- *	Can be copied to and from players.
+ *    @brief Represents a player's inventory.
+ *    Can be copied to and from players.
  */
 class PlayerInventory
 {
@@ -51,7 +51,7 @@ private:
 
     struct AmmoValue
     {
-		// Stored as string to avoid tying to map-specific indices.
+        // Stored as string to avoid tying to map-specific indices.
         std::string Name;
         int Count{};
     };

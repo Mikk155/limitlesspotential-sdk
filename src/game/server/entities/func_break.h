@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -38,7 +38,7 @@ enum Materials
 #define NUM_SHARDS 6 // this many shards spawned when breakable objects break;
 
 /**
- *	@brief bmodel that breaks into pieces after taking damage
+ *    @brief bmodel that breaks into pieces after taking damage
  */
 class CBreakable : public CBaseDelay
 {
@@ -46,25 +46,25 @@ class CBreakable : public CBaseDelay
     DECLARE_DATAMAP();
 
 public:
-	// basic functions
+    // basic functions
     void Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void BreakTouch( CBaseEntity* pOther );
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
-	/**
-	 *	@brief play shard sound when func_breakable takes damage.
-	 *	the more damage, the louder the shard sound.
-	 */
+    /**
+     *    @brief play shard sound when func_breakable takes damage.
+     *    the more damage, the louder the shard sound.
+     */
     void DamageSound();
 
-	/**
-	 *	@brief Special takedamage for func_breakable.
-	 *	Allows us to make exceptions that are breakable-specific
-	 */
+    /**
+     *    @brief Special takedamage for func_breakable.
+     *    Allows us to make exceptions that are breakable-specific
+     */
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
-	// To spark when hit
+    // To spark when hit
     void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
     bool IsBreakable();

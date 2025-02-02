@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -166,7 +166,7 @@ void CController::SetYawSpeed()
 
 bool CController::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// HACK HACK -- until we fix this.
+    // HACK HACK -- until we fix this.
     if( IsAlive() )
         PainSound();
     return CBaseMonster::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
@@ -174,15 +174,15 @@ bool CController::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
 
 void CController::Killed( CBaseEntity* attacker, int iGib )
 {
-	// shut off balls
-	/*
-	m_iBall[0] = 0;
-	m_iBallTime[0] = gpGlobals->time + 4.0;
-	m_iBall[1] = 0;
-	m_iBallTime[1] = gpGlobals->time + 4.0;
-	*/
+    // shut off balls
+    /*
+    m_iBall[0] = 0;
+    m_iBallTime[0] = gpGlobals->time + 4.0;
+    m_iBall[1] = 0;
+    m_iBallTime[1] = gpGlobals->time + 4.0;
+    */
 
-	// fade balls
+    // fade balls
     if( m_pBall[0] )
     {
         m_pBall[0]->SUB_StartFadeOut();
@@ -463,7 +463,7 @@ void CController::StartTask( const Task_t* pTask )
         }
         else
         {
-			// no way to get there =(
+            // no way to get there =(
             AILogger->debug( "GetPathToEnemyLKP failed!!" );
             TaskFail();
         }
@@ -485,7 +485,7 @@ void CController::StartTask( const Task_t* pTask )
         }
         else
         {
-			// no way to get there =(
+            // no way to get there =(
             AILogger->debug( "GetPathToEnemy failed!!" );
             TaskFail();
         }
@@ -523,7 +523,7 @@ Vector Intersect( Vector vecSrc, Vector vecDst, Vector vecMove, float flSpeed )
             t = t1;
     }
 
-	// AILogger->debug("Intersect {}", t);
+    // AILogger->debug("Intersect {}", t);
 
     if( t < 0.1 )
         t = 0.1;
@@ -679,14 +679,14 @@ const Schedule_t* CController::GetSchedule()
 
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_LIGHT_DAMAGE ) )
         {
-			// m_iFrustration++;
+            // m_iFrustration++;
         }
         if( HasConditions( bits_COND_HEAVY_DAMAGE ) )
         {
-			// m_iFrustration++;
+            // m_iFrustration++;
         }
     }
     break;
@@ -697,7 +697,7 @@ const Schedule_t* CController::GetSchedule()
 
 const Schedule_t* CController::GetScheduleOfType( int Type )
 {
-	// AILogger->debug( "{}", m_iFrustration);
+    // AILogger->debug( "{}", m_iFrustration);
     switch ( Type )
     {
     case SCHED_CHASE_ENEMY:
@@ -817,7 +817,7 @@ void CController::Move( float flInterval )
     Vector vecApex;
     CBaseEntity* pTargetEnt;
 
-	// Don't move if no valid route
+    // Don't move if no valid route
     if( FRouteClear() )
     {
         AILogger->debug( "Tried to move with no route!" );
@@ -828,9 +828,9 @@ void CController::Move( float flInterval )
     if( m_flMoveWaitFinished > gpGlobals->time )
         return;
 
-		// Debug, test movement code
+        // Debug, test movement code
 #if 0
-//	if ( CVAR_GET_FLOAT("stopmove" ) != 0 )
+//    if ( CVAR_GET_FLOAT("stopmove" ) != 0 )
     {
         if( m_movementGoal == MOVEGOAL_ENEMY )
             RouteSimplify( m_hEnemy );
@@ -841,32 +841,32 @@ void CController::Move( float flInterval )
     }
 #else
 // Debug, draw the route
-//	DrawRoute(this, m_Route, m_iRouteIndex, 0, 0, 255);
+//    DrawRoute(this, m_Route, m_iRouteIndex, 0, 0, 255);
 #endif
 
-	// if the monster is moving directly towards an entity (enemy for instance), we'll set this pointer
-	// to that entity for the CheckLocalMove and Triangulate functions.
+    // if the monster is moving directly towards an entity (enemy for instance), we'll set this pointer
+    // to that entity for the CheckLocalMove and Triangulate functions.
     pTargetEnt = nullptr;
 
     if( m_flGroundSpeed == 0 )
     {
         m_flGroundSpeed = 100;
-		// TaskFail( );
-		// return;
+        // TaskFail( );
+        // return;
     }
 
     flMoveDist = m_flGroundSpeed * flInterval;
 
     do
     {
-		// local move to waypoint.
+        // local move to waypoint.
         vecDir = ( m_Route[m_iRouteIndex].vecLocation - pev->origin ).Normalize();
         flWaypointDist = ( m_Route[m_iRouteIndex].vecLocation - pev->origin ).Length();
 
-		// MakeIdealYaw ( m_Route[ m_iRouteIndex ].vecLocation );
-		// ChangeYaw ( pev->yaw_speed );
+        // MakeIdealYaw ( m_Route[ m_iRouteIndex ].vecLocation );
+        // ChangeYaw ( pev->yaw_speed );
 
-		// if the waypoint is closer than CheckDist, CheckDist is the dist to waypoint
+        // if the waypoint is closer than CheckDist, CheckDist is the dist to waypoint
         if( flWaypointDist < DIST_TO_CHECK )
         {
             flCheckDist = flWaypointDist;
@@ -878,7 +878,7 @@ void CController::Move( float flInterval )
 
         if( ( m_Route[m_iRouteIndex].iType & ( ~bits_MF_NOT_TO_MASK ) ) == bits_MF_TO_ENEMY )
         {
-			// only on a PURE move to enemy ( i.e., ONLY MF_TO_ENEMY set, not MF_TO_ENEMY and DETOUR )
+            // only on a PURE move to enemy ( i.e., ONLY MF_TO_ENEMY set, not MF_TO_ENEMY and DETOUR )
             pTargetEnt = m_hEnemy;
         }
         else if( ( m_Route[m_iRouteIndex].iType & ~bits_MF_NOT_TO_MASK ) == bits_MF_TO_TARGETENT )
@@ -886,17 +886,17 @@ void CController::Move( float flInterval )
             pTargetEnt = m_hTargetEnt;
         }
 
-		// !!!BUGBUG - CheckDist should be derived from ground speed.
-		// If this fails, it should be because of some dynamic entity blocking this guy.
-		// We've already checked this path, so we should wait and time out if the entity doesn't move
+        // !!!BUGBUG - CheckDist should be derived from ground speed.
+        // If this fails, it should be because of some dynamic entity blocking this guy.
+        // We've already checked this path, so we should wait and time out if the entity doesn't move
         flDist = 0;
         if( CheckLocalMove( pev->origin, pev->origin + vecDir * flCheckDist, pTargetEnt, &flDist ) != LOCALMOVE_VALID )
         {
             CBaseEntity* pBlocker;
 
-			// Can't move, stop
+            // Can't move, stop
             Stop();
-			// Blocking entity is in global trace_ent
+            // Blocking entity is in global trace_ent
             pBlocker = CBaseEntity::Instance( gpGlobals->trace_ent );
             if( pBlocker )
             {
@@ -904,18 +904,18 @@ void CController::Move( float flInterval )
             }
             if( pBlocker && m_moveWaitTime > 0 && pBlocker->IsMoving() && !pBlocker->IsPlayer() && ( gpGlobals->time - m_flMoveWaitFinished ) > 3.0 )
             {
-				// Can we still move toward our target?
+                // Can we still move toward our target?
                 if( flDist < m_flGroundSpeed )
                 {
-					// Wait for a second
+                    // Wait for a second
                     m_flMoveWaitFinished = gpGlobals->time + m_moveWaitTime;
-					//				AILogger->debug("Move {}!!!", STRING(pBlocker->pev->classname));
+                    //                AILogger->debug("Move {}!!!", STRING(pBlocker->pev->classname));
                     return;
                 }
             }
             else
             {
-				// try to triangulate around whatever is in the way.
+                // try to triangulate around whatever is in the way.
                 if( FTriangulate( pev->origin, m_Route[m_iRouteIndex].vecLocation, flDist, pTargetEnt, &vecApex ) )
                 {
                     InsertWaypoint( vecApex, bits_MF_TO_DETOUR );
@@ -934,19 +934,19 @@ void CController::Move( float flInterval )
                     {
                         TaskFail();
                         AILogger->debug( "Failed to move!" );
-						// AILogger->debug("{}, {}, {}", pev->origin.z, (pev->origin + (vecDir * flCheckDist)).z, m_Route[m_iRouteIndex].vecLocation.z);
+                        // AILogger->debug("{}, {}, {}", pev->origin.z, (pev->origin + (vecDir * flCheckDist)).z, m_Route[m_iRouteIndex].vecLocation.z);
                     }
                     return;
                 }
             }
         }
 
-		// UNDONE: this is a hack to quit moving farther than it has looked ahead.
+        // UNDONE: this is a hack to quit moving farther than it has looked ahead.
         if( flCheckDist < flMoveDist )
         {
             MoveExecute( pTargetEnt, vecDir, flCheckDist / m_flGroundSpeed );
 
-			// AILogger->debug("{:.02f}", flInterval);
+            // AILogger->debug("{:.02f}", flInterval);
             AdvanceRoute( flWaypointDist );
             flMoveDist -= flCheckDist;
         }
@@ -968,7 +968,7 @@ void CController::Move( float flInterval )
         }
     } while( flMoveDist > 0 && flCheckDist > 0 );
 
-	// cut corner?
+    // cut corner?
     if( flWaypointDist < 128 )
     {
         if( m_movementGoal == MOVEGOAL_ENEMY )
@@ -1003,14 +1003,14 @@ int CController::CheckLocalMove( const Vector& vecStart, const Vector& vecEnd, C
 
     UTIL_TraceHull( vecStart + Vector( 0, 0, 32 ), vecEnd + Vector( 0, 0, 32 ), dont_ignore_monsters, large_hull, edict(), &tr );
 
-	// AILogger->debug("{:.0f} : {:.0f}", vecStart, vecEnd);
+    // AILogger->debug("{:.0f} : {:.0f}", vecStart, vecEnd);
 
     if( pflDist )
     {
         *pflDist = ( ( tr.vecEndPos - Vector( 0, 0, 32 ) ) - vecStart ).Length(); // get the distance.
     }
 
-	// AILogger->debug("check {} {} {}", tr.fStartSolid, tr.fAllSolid, tr.flFraction);
+    // AILogger->debug("check {} {} {}", tr.fStartSolid, tr.fAllSolid, tr.flFraction);
     if( 0 != tr.fStartSolid || tr.flFraction < 1.0 )
     {
         if( pTarget && pTarget->edict() == gpGlobals->trace_ent )
@@ -1026,10 +1026,10 @@ void CController::MoveExecute( CBaseEntity* pTargetEnt, const Vector& vecDir, fl
     if( m_IdealActivity != m_movementActivity )
         m_IdealActivity = m_movementActivity;
 
-	// AILogger->debug("move {:.4f} : {}", vecDir, flInterval);
+    // AILogger->debug("move {:.4f} : {}", vecDir, flInterval);
 
-	// float flTotal = m_flGroundSpeed * pev->framerate * flInterval;
-	// UTIL_MoveToOrigin ( edict(), m_Route[ m_iRouteIndex ].vecLocation, flTotal, MOVE_STRAFE );
+    // float flTotal = m_flGroundSpeed * pev->framerate * flInterval;
+    // UTIL_MoveToOrigin ( edict(), m_Route[ m_iRouteIndex ].vecLocation, flTotal, MOVE_STRAFE );
 
     m_velocity = m_velocity * 0.8 + m_flGroundSpeed * vecDir * 0.2;
 
@@ -1037,7 +1037,7 @@ void CController::MoveExecute( CBaseEntity* pTargetEnt, const Vector& vecDir, fl
 }
 
 /**
- *	@brief Controller bouncy ball attack
+ *    @brief Controller bouncy ball attack
  */
 class CControllerHeadBall : public CBaseMonster
 {
@@ -1071,7 +1071,7 @@ LINK_ENTITY_TO_CLASS( controller_head_ball, CControllerHeadBall );
 void CControllerHeadBall::Spawn()
 {
     Precache();
-	// motor
+    // motor
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
@@ -1124,7 +1124,7 @@ void CControllerHeadBall::HuntThink()
     WRITE_COORD( 0 );                      // decay
     MESSAGE_END();
 
-	// check world boundaries
+    // check world boundaries
     if( gpGlobals->time - pev->dmgtime > 5 || pev->renderamt < 64 || m_hEnemy == nullptr || m_hOwner == nullptr || pev->origin.x < -4096 || pev->origin.x > 4096 || pev->origin.y < -4096 || pev->origin.y > 4096 || pev->origin.z < -4096 || pev->origin.z > 4096 )
     {
         SetTouch( nullptr );
@@ -1175,7 +1175,7 @@ void CControllerHeadBall::HuntThink()
         pev->nextthink = gpGlobals->time + 0.3;
     }
 
-	// Crawl( );
+    // Crawl( );
 }
 
 void CControllerHeadBall::DieThink()
@@ -1185,7 +1185,7 @@ void CControllerHeadBall::DieThink()
 
 void CControllerHeadBall::MovetoTarget( Vector vecTarget )
 {
-	// accelerate
+    // accelerate
     float flSpeed = m_vecIdeal.Length();
     if( flSpeed == 0 )
     {
@@ -1265,7 +1265,7 @@ LINK_ENTITY_TO_CLASS( controller_energy_ball, CControllerZapBall );
 void CControllerZapBall::Spawn()
 {
     Precache();
-	// motor
+    // motor
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
@@ -1291,8 +1291,8 @@ void CControllerZapBall::Spawn()
 void CControllerZapBall::Precache()
 {
     PrecacheModel( "sprites/xspark4.spr" );
-	// PrecacheSound("debris/zap4.wav");
-	// PrecacheSound("weapons/electro4.wav");
+    // PrecacheSound("debris/zap4.wav");
+    // PrecacheSound("weapons/electro4.wav");
 }
 
 void CControllerZapBall::AnimateThink()

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -29,7 +29,7 @@
 class asIScriptContext;
 
 /**
- *	@brief Evaluates strings containing conditonal statements.
+ *    @brief Evaluates strings containing conditonal statements.
  */
 struct ConditionEvaluator final : public IGameSystem
 {
@@ -39,11 +39,11 @@ struct ConditionEvaluator final : public IGameSystem
     void PostInitialize() override {}
     void Shutdown() override;
 
-	/**
-	 *	@brief Evaluate a conditional expression
-	 *	@return If the conditional was successfully evaluated, returns the result.
-	 *		Otherwise, returns an empty optional.
-	 */
+    /**
+     *    @brief Evaluate a conditional expression
+     *    @return If the conditional was successfully evaluated, returns the result.
+     *        Otherwise, returns an empty optional.
+     */
     std::optional<bool> Evaluate( std::string_view conditional );
 
 private:

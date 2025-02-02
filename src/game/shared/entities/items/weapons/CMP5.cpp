@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -97,7 +97,7 @@ bool CMP5::Deploy()
 
 void CMP5::PrimaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         PlayEmptySound();
@@ -119,7 +119,7 @@ void CMP5::PrimaryAttack()
 
     m_pPlayer->pev->effects = m_pPlayer->pev->effects | EF_MUZZLEFLASH;
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     Vector vecSrc = m_pPlayer->GetGunPosition();
@@ -128,12 +128,12 @@ void CMP5::PrimaryAttack()
 
     if( g_Skill.GetValue( "smg_wide_spread" ) != 0 )
     {
-		// optimized multiplayer. Widened to make it easier to hit a moving player
+        // optimized multiplayer. Widened to make it easier to hit a moving player
         vecDir = m_pPlayer->FireBulletsPlayer( 1, vecSrc, vecAiming, VECTOR_CONE_6DEGREES, 8192, BULLET_PLAYER_MP5, 2, 0, m_pPlayer, m_pPlayer->random_seed );
     }
     else
     {
-		// single player spread
+        // single player spread
         vecDir = m_pPlayer->FireBulletsPlayer( 1, vecSrc, vecAiming, VECTOR_CONE_3DEGREES, 8192, BULLET_PLAYER_MP5, 2, 0, m_pPlayer, m_pPlayer->random_seed );
     }
 
@@ -147,7 +147,7 @@ void CMP5::PrimaryAttack()
     PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usMP5, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0 );
 
     if( 0 == GetMagazine1() && m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 
     m_flNextPrimaryAttack = GetNextAttackDelay( 0.1 );
@@ -160,7 +160,7 @@ void CMP5::PrimaryAttack()
 
 void CMP5::SecondaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         PlayEmptySound();
@@ -182,12 +182,12 @@ void CMP5::SecondaryAttack()
 
     m_pPlayer->AdjustAmmoByIndex( m_iSecondaryAmmoType, -1 );
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     UTIL_MakeVectors( m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle );
 
-	// we don't add in player velocity anymore.
+    // we don't add in player velocity anymore.
     CGrenade::ShootContact( m_pPlayer,
         m_pPlayer->pev->origin + m_pPlayer->pev->view_ofs + gpGlobals->v_forward * 16,
         gpGlobals->v_forward * 800 );
@@ -206,7 +206,7 @@ void CMP5::SecondaryAttack()
     m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 5; // idle pretty soon after shooting.
 
     if( 0 == m_pPlayer->GetAmmoCountByIndex( m_iSecondaryAmmoType ) )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 }
 

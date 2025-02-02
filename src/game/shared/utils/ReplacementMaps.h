@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -29,7 +29,7 @@
 using Replacements = std::unordered_map<std::string, std::string, TransparentStringHash, TransparentEqual>;
 
 /**
- *	@brief A map of string to string for replacements.
+ *    @brief A map of string to string for replacements.
  */
 struct ReplacementMap
 {
@@ -61,20 +61,20 @@ private:
 
 struct ReplacementMapOptions
 {
-	/**
-	 *	@brief If @c true, keys and values are stored as-is and looked up using case sensitive lookup.
-	 *	If @c false, keys and values are converted to lowercase and looked up by converting values to lowercase before looking them up.
-	 */
+    /**
+     *    @brief If @c true, keys and values are stored as-is and looked up using case sensitive lookup.
+     *    If @c false, keys and values are converted to lowercase and looked up by converting values to lowercase before looking them up.
+     */
     bool CaseSensitive = true;
 
-	/**
-	 *	@brief If @c true, searches all paths for the file.
-	 */
+    /**
+     *    @brief If @c true, searches all paths for the file.
+     */
     bool LoadFromAllPaths = false;
 };
 
 /**
- *	@brief Handles the registration of the replacement map schema and the loading and caching of files.
+ *    @brief Handles the registration of the replacement map schema and the loading and caching of files.
  */
 class ReplacementMapSystem final : public IGameSystem
 {
@@ -91,21 +91,21 @@ public:
 
     const ReplacementMap* Load( const std::string& fileName, const ReplacementMapOptions& options = {} );
 
-	/**
-	 *	@brief Loads multiple replacement files and merges them together. Last occurrence of a replacement wins.
-	 *	Not cached.
-	 */
+    /**
+     *    @brief Loads multiple replacement files and merges them together. Last occurrence of a replacement wins.
+     *    Not cached.
+     */
     std::unique_ptr<ReplacementMap> LoadMultiple( std::span<const std::string> fileNames, const ReplacementMapOptions& options = {} ) const;
 
-	/**
-	 *	@brief Serializes a replacement map into a JSON object.
-	 */
+    /**
+     *    @brief Serializes a replacement map into a JSON object.
+     */
     json Serialize( const ReplacementMap& map ) const;
 
-	/**
-	 *	@brief Deserializes a replacement map from a JSON object.
-	 *	If an error occurs during deserialization an empty map is returned.
-	 */
+    /**
+     *    @brief Deserializes a replacement map from a JSON object.
+     *    If an error occurs during deserialization an empty map is returned.
+     */
     std::unique_ptr<ReplacementMap> Deserialize( const json& input ) const;
 
 private:

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,7 +44,7 @@ void CFrustum::CalculateFrustum()
 
     float frustum[16]{};
 
-	// TODO: clean this up. It's a 4x4 matrix multiplication.
+    // TODO: clean this up. It's a 4x4 matrix multiplication.
     frustum[0] = proj[0] * modl[0] + proj[1] * modl[4] + proj[2] * modl[8] + proj[3] * modl[12];
     frustum[1] = proj[1] * modl[0] + proj[1] * modl[5] + proj[2] * modl[9] + proj[3] * modl[13];
     frustum[2] = proj[2] * modl[0] + proj[1] * modl[6] + proj[2] * modl[10] + proj[3] * modl[14];
@@ -139,7 +139,7 @@ bool CFrustum::PlaneInsideFrustum( float x, float y, float z, float size )
 
     for( int i = 0; i < 6; ++i )
     {
-		// Test every permutation of plane sizes.
+        // Test every permutation of plane sizes.
         for( int zAxis = 0; zAxis < 2; ++zAxis )
         {
             for( int yAxis = 0; yAxis < 2; ++yAxis )

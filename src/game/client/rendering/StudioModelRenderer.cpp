@@ -58,7 +58,7 @@ Init
 */
 void CStudioModelRenderer::Init()
 {
-	// Set up some variables shared with engine
+    // Set up some variables shared with engine
     m_pCvarHiModels = IEngineStudio.GetCvar( "cl_himodels" );
     m_pCvarDeveloper = IEngineStudio.GetCvar( "developer" );
     m_pCvarDrawEntities = IEngineStudio.GetCvar( "r_drawentities" );
@@ -67,7 +67,7 @@ void CStudioModelRenderer::Init()
 
     IEngineStudio.GetModelCounters( &m_pStudioModelCount, &m_pModelsDrawn );
 
-	// Get pointers to engine data structures
+    // Get pointers to engine data structures
     m_pbonetransform = ( float(*)[MAXSTUDIOBONES][3][4] )IEngineStudio.StudioGetBoneTransform();
     m_plighttransform = ( float(*)[MAXSTUDIOBONES][3][4] )IEngineStudio.StudioGetLightTransform();
     m_paliastransform = ( float(*)[3][4] )IEngineStudio.StudioGetAliasTransform();
@@ -131,7 +131,7 @@ void CStudioModelRenderer::StudioCalcBoneAdj( float dadt, float* adj, const byte
         i = pbonecontroller[j].index;
         if( i <= 3 )
         {
-			// check for 360% wrapping
+            // check for 360% wrapping
             if( ( pbonecontroller[j].type & STUDIO_RLOOP ) != 0 )
             {
                 if( abs( pcontroller1[i] - pcontroller2[i] ) > 128 )
@@ -155,7 +155,7 @@ void CStudioModelRenderer::StudioCalcBoneAdj( float dadt, float* adj, const byte
                     value = 1.0;
                 value = ( 1.0 - value ) * pbonecontroller[j].start + value * pbonecontroller[j].end;
             }
-			// Con_DPrintf( "%d %d %f : %f\n", m_pCurrentEntity->curstate.controller[j], m_pCurrentEntity->latched.prevcontroller[j], value, dadt );
+            // Con_DPrintf( "%d %d %f : %f\n", m_pCurrentEntity->curstate.controller[j], m_pCurrentEntity->latched.prevcontroller[j], value, dadt );
         }
         else
         {
@@ -163,7 +163,7 @@ void CStudioModelRenderer::StudioCalcBoneAdj( float dadt, float* adj, const byte
             if( value > 1.0 )
                 value = 1.0;
             value = ( 1.0 - value ) * pbonecontroller[j].start + value * pbonecontroller[j].end;
-			// Con_DPrintf("%d %f\n", mouthopen, value );
+            // Con_DPrintf("%d %f\n", mouthopen, value );
         }
         switch ( pbonecontroller[j].type & STUDIO_TYPES )
         {
@@ -205,18 +205,18 @@ void CStudioModelRenderer::StudioCalcBoneQuaterion( int frame, float s, mstudiob
         {
             panimvalue = ( mstudioanimvalue_t* )( ( byte* )panim + panim->offset[j + 3] );
             k = frame;
-			// DEBUG
+            // DEBUG
             if( panimvalue->num.total < panimvalue->num.valid )
                 k = 0;
             while( panimvalue->num.total <= k )
             {
                 k -= panimvalue->num.total;
                 panimvalue += panimvalue->num.valid + 1;
-				// DEBUG
+                // DEBUG
                 if( panimvalue->num.total < panimvalue->num.valid )
                     k = 0;
             }
-			// Bah, missing blend!
+            // Bah, missing blend!
             if( panimvalue->num.valid > k )
             {
                 angle1[j] = panimvalue[k + 1].value;
@@ -285,28 +285,28 @@ void CStudioModelRenderer::StudioCalcBonePosition( int frame, float s, mstudiobo
         if( panim->offset[j] != 0 )
         {
             panimvalue = ( mstudioanimvalue_t* )( ( byte* )panim + panim->offset[j] );
-			/*
-			if (i == 0 && j == 0)
-				Con_DPrintf("%d  %d:%d  %f\n", frame, panimvalue->num.valid, panimvalue->num.total, s );
-			*/
+            /*
+            if (i == 0 && j == 0)
+                Con_DPrintf("%d  %d:%d  %f\n", frame, panimvalue->num.valid, panimvalue->num.total, s );
+            */
 
             k = frame;
-			// DEBUG
+            // DEBUG
             if( panimvalue->num.total < panimvalue->num.valid )
                 k = 0;
-			// find span of values that includes the frame we want
+            // find span of values that includes the frame we want
             while( panimvalue->num.total <= k )
             {
                 k -= panimvalue->num.total;
                 panimvalue += panimvalue->num.valid + 1;
-				// DEBUG
+                // DEBUG
                 if( panimvalue->num.total < panimvalue->num.valid )
                     k = 0;
             }
-			// if we're inside the span
+            // if we're inside the span
             if( panimvalue->num.valid > k )
             {
-				// and there's more data in the span
+                // and there's more data in the span
                 if( panimvalue->num.valid > k + 1 )
                 {
                     pos[j] += ( panimvalue[k + 1].value * ( 1.0 - s ) + s * panimvalue[k + 2].value ) * pbone->scale[j];
@@ -318,7 +318,7 @@ void CStudioModelRenderer::StudioCalcBonePosition( int frame, float s, mstudiobo
             }
             else
             {
-				// are we at the end of the repeating values section and there's another section with data?
+                // are we at the end of the repeating values section and there's another section with data?
                 if( panimvalue->num.total <= k + 1 )
                 {
                     pos[j] += ( panimvalue[panimvalue->num.valid].value * ( 1.0 - s ) + s * panimvalue[panimvalue->num.valid + 2].value ) * pbone->scale[j];
@@ -410,7 +410,7 @@ StudioPlayerBlend
 */
 void CStudioModelRenderer::StudioPlayerBlend( mstudioseqdesc_t* pseqdesc, int* pBlend, float* pPitch )
 {
-	// calc up/down pointing
+    // calc up/down pointing
     *pBlend = ( *pPitch * 3 );
     if( *pBlend < pseqdesc->blendstart[0] )
     {
@@ -444,41 +444,41 @@ void CStudioModelRenderer::StudioSetUpTransform( bool trivial_accept )
     Vector angles;
     Vector modelpos;
 
-	// tweek model origin
-	// for (i = 0; i < 3; i++)
-	//	modelpos[i] = m_pCurrentEntity->origin[i];
+    // tweek model origin
+    // for (i = 0; i < 3; i++)
+    //    modelpos[i] = m_pCurrentEntity->origin[i];
 
     modelpos = m_pCurrentEntity->origin;
 
-	// TODO: should really be stored with the entity instead of being reconstructed
-	// TODO: should use a look-up table
-	// TODO: could cache lazily, stored in the entity
+    // TODO: should really be stored with the entity instead of being reconstructed
+    // TODO: should use a look-up table
+    // TODO: could cache lazily, stored in the entity
     angles[ROLL] = m_pCurrentEntity->curstate.angles[ROLL];
     angles[PITCH] = m_pCurrentEntity->curstate.angles[PITCH];
     angles[YAW] = m_pCurrentEntity->curstate.angles[YAW];
 
-	// Con_DPrintf("Angles %4.2f prev %4.2f for %i\n", angles[PITCH], m_pCurrentEntity->index);
-	// Con_DPrintf("movetype %d %d\n", m_pCurrentEntity->movetype, m_pCurrentEntity->aiment );
+    // Con_DPrintf("Angles %4.2f prev %4.2f for %i\n", angles[PITCH], m_pCurrentEntity->index);
+    // Con_DPrintf("movetype %d %d\n", m_pCurrentEntity->movetype, m_pCurrentEntity->aiment );
     if( m_pCurrentEntity->curstate.movetype == MOVETYPE_STEP )
     {
         float f = 0;
         float d;
 
-		// don't do it if the goalstarttime hasn't updated in a while.
+        // don't do it if the goalstarttime hasn't updated in a while.
 
-		// NOTE:  Because we need to interpolate multiplayer characters, the interpolation time limit
-		//  was increased to 1.0 s., which is 2x the max lag we are accounting for.
+        // NOTE:  Because we need to interpolate multiplayer characters, the interpolation time limit
+        //  was increased to 1.0 s., which is 2x the max lag we are accounting for.
 
         if( ( m_clTime < m_pCurrentEntity->curstate.animtime + 1.0f ) &&
             ( m_pCurrentEntity->curstate.animtime != m_pCurrentEntity->latched.prevanimtime ) )
         {
             f = ( m_clTime - m_pCurrentEntity->curstate.animtime ) / ( m_pCurrentEntity->curstate.animtime - m_pCurrentEntity->latched.prevanimtime );
-			// Con_DPrintf("%4.2f %.2f %.2f\n", f, m_pCurrentEntity->curstate.animtime, m_clTime);
+            // Con_DPrintf("%4.2f %.2f %.2f\n", f, m_pCurrentEntity->curstate.animtime, m_clTime);
         }
 
         if( m_fDoInterp )
         {
-			// ugly hack to interpolate angle, position. current is reached 0.1 seconds after being set
+            // ugly hack to interpolate angle, position. current is reached 0.1 seconds after being set
             f = f - 1.0;
         }
         else
@@ -496,11 +496,11 @@ void CStudioModelRenderer::StudioSetUpTransform( bool trivial_accept )
             }
         }
 
-		// NOTE:  Because multiplayer lag can be relatively large, we don't want to cap
-		//  f at 1.5 anymore.
-		// if (f > -1.0 && f < 1.5) {}
+        // NOTE:  Because multiplayer lag can be relatively large, we don't want to cap
+        //  f at 1.5 anymore.
+        // if (f > -1.0 && f < 1.5) {}
 
-		//			Con_DPrintf("%.0f %.0f\n",m_pCurrentEntity->msg_angles[0][YAW], m_pCurrentEntity->msg_angles[1][YAW] );
+        //            Con_DPrintf("%.0f %.0f\n",m_pCurrentEntity->msg_angles[0][YAW], m_pCurrentEntity->msg_angles[1][YAW] );
         for( i = 0; i < 3; i++ )
         {
             float ang1, ang2;
@@ -520,15 +520,15 @@ void CStudioModelRenderer::StudioSetUpTransform( bool trivial_accept )
 
             angles[i] += d * f;
         }
-		// Con_DPrintf("%.3f \n", f );
+        // Con_DPrintf("%.3f \n", f );
     }
     else if( m_pCurrentEntity->curstate.movetype != MOVETYPE_NONE )
     {
         angles = m_pCurrentEntity->angles;
     }
 
-	// Con_DPrintf("%.0f %0.f %0.f\n", modelpos[0], modelpos[1], modelpos[2] );
-	// Con_DPrintf("%.0f %0.f %0.f\n", angles[0], angles[1], angles[2] );
+    // Con_DPrintf("%.0f %0.f %0.f\n", modelpos[0], modelpos[1], modelpos[2] );
+    // Con_DPrintf("%.0f %0.f %0.f\n", angles[0], angles[1], angles[2] );
 
     angles[PITCH] = -angles[PITCH];
     AngleMatrix( angles, ( *m_protationmatrix ) );
@@ -548,11 +548,11 @@ void CStudioModelRenderer::StudioSetUpTransform( bool trivial_accept )
 
         ConcatTransforms( viewmatrix, ( *m_protationmatrix ), ( *m_paliastransform ) );
 
-		// do the scaling up of x and y to screen coordinates as part of the transform
-		// for the unclipped case (it would mess up clipping in the clipped case).
-		// Also scale down z, so 1/z is scaled 31 bits for free, and scale down x and y
-		// correspondingly so the projected x and y come out right
-		// FIXME: make this work for clipped case too?
+        // do the scaling up of x and y to screen coordinates as part of the transform
+        // for the unclipped case (it would mess up clipping in the clipped case).
+        // Also scale down z, so 1/z is scaled 31 bits for free, and scale down x and y
+        // correspondingly so the projected x and y come out right
+        // FIXME: make this work for clipped case too?
         if( trivial_accept )
         {
             for( i = 0; i < 4; i++ )
@@ -613,9 +613,9 @@ void CStudioModelRenderer::StudioCalcRotations( float pos[][3], vec4_t* q, mstud
     {
         f = 0; // bah, fix this bug with changing sequences too fast
     }
-	// BUG ( somewhere else ) but this code should validate this data.
-	// This could cause a crash if the frame # is negative, so we'll go ahead
-	//  and clamp it here
+    // BUG ( somewhere else ) but this code should validate this data.
+    // This could cause a crash if the frame # is negative, so we'll go ahead
+    //  and clamp it here
     else if( f < -0.01 )
     {
         f = -0.01;
@@ -623,17 +623,17 @@ void CStudioModelRenderer::StudioCalcRotations( float pos[][3], vec4_t* q, mstud
 
     frame = (int)f;
 
-	// Con_DPrintf("%d %.4f %.4f %.4f %.4f %d\n", m_pCurrentEntity->curstate.sequence, m_clTime, m_pCurrentEntity->animtime, m_pCurrentEntity->frame, f, frame );
+    // Con_DPrintf("%d %.4f %.4f %.4f %.4f %d\n", m_pCurrentEntity->curstate.sequence, m_clTime, m_pCurrentEntity->animtime, m_pCurrentEntity->frame, f, frame );
 
-	// Con_DPrintf( "%f %f %f\n", m_pCurrentEntity->angles[ROLL], m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->angles[YAW] );
+    // Con_DPrintf( "%f %f %f\n", m_pCurrentEntity->angles[ROLL], m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->angles[YAW] );
 
-	// Con_DPrintf("frame %d %d\n", frame1, frame2 );
+    // Con_DPrintf("frame %d %d\n", frame1, frame2 );
 
 
     dadt = StudioEstimateInterpolant();
     s = ( f - frame );
 
-	// add in programtic controllers
+    // add in programtic controllers
     pbone = ( mstudiobone_t* )( ( byte* )m_pStudioHeader + m_pStudioHeader->boneindex );
 
     StudioCalcBoneAdj( dadt, adj, m_pCurrentEntity->curstate.controller, m_pCurrentEntity->latched.prevcontroller, m_pCurrentEntity->mouth.mouthopen );
@@ -643,8 +643,8 @@ void CStudioModelRenderer::StudioCalcRotations( float pos[][3], vec4_t* q, mstud
         StudioCalcBoneQuaterion( frame, s, pbone, panim, adj, q[i] );
 
         StudioCalcBonePosition( frame, s, pbone, panim, adj, pos[i] );
-		// if (0 && i == 0)
-		//	Con_DPrintf("%d %d %d %d\n", m_pCurrentEntity->curstate.sequence, frame, j, k );
+        // if (0 && i == 0)
+        //    Con_DPrintf("%d %d %d %d\n", m_pCurrentEntity->curstate.sequence, frame, j, k );
     }
 
     if( ( pseqdesc->motiontype & STUDIO_X ) != 0 )
@@ -815,27 +815,27 @@ void CStudioModelRenderer::StudioSetupBones()
 
     pseqdesc = ( mstudioseqdesc_t* )( ( byte* )m_pStudioHeader + m_pStudioHeader->seqindex ) + m_pCurrentEntity->curstate.sequence;
 
-	// always want new gait sequences to start on frame zero
-	/*	if ( m_pPlayerInfo )
-	{
-		int playerNum = m_pCurrentEntity->index - 1;
+    // always want new gait sequences to start on frame zero
+    /*    if ( m_pPlayerInfo )
+    {
+        int playerNum = m_pCurrentEntity->index - 1;
 
-		// new jump gaitsequence?  start from frame zero
-		if ( m_nPlayerGaitSequences[ playerNum ] != m_pPlayerInfo->gaitsequence )
-		{
-	//		m_pPlayerInfo->gaitframe = 0.0;
-			gEngfuncs.Con_Printf( "Setting gaitframe to 0\n" );
-		}
+        // new jump gaitsequence?  start from frame zero
+        if ( m_nPlayerGaitSequences[ playerNum ] != m_pPlayerInfo->gaitsequence )
+        {
+    //        m_pPlayerInfo->gaitframe = 0.0;
+            gEngfuncs.Con_Printf( "Setting gaitframe to 0\n" );
+        }
 
-		m_nPlayerGaitSequences[ playerNum ] = m_pPlayerInfo->gaitsequence;
-//		gEngfuncs.Con_Printf( "index: %d     gaitsequence: %d\n",playerNum, m_pPlayerInfo->gaitsequence);
-	}
+        m_nPlayerGaitSequences[ playerNum ] = m_pPlayerInfo->gaitsequence;
+//        gEngfuncs.Con_Printf( "index: %d     gaitsequence: %d\n",playerNum, m_pPlayerInfo->gaitsequence);
+    }
 */
     f = StudioEstimateFrame( pseqdesc );
 
     if( m_pCurrentEntity->latched.prevframe > f )
     {
-		// Con_DPrintf("%f %f\n", m_pCurrentEntity->prevframe, f );
+        // Con_DPrintf("%f %f\n", m_pCurrentEntity->prevframe, f );
     }
 
     panim = StudioGetAnim( m_pRenderModel, pseqdesc );
@@ -875,7 +875,7 @@ void CStudioModelRenderer::StudioSetupBones()
         ( m_pCurrentEntity->latched.sequencetime + 0.2 > m_clTime ) &&
         ( m_pCurrentEntity->latched.prevsequence < m_pStudioHeader->numseq ) )
     {
-		// blend from last sequence
+        // blend from last sequence
         static float pos1b[MAXSTUDIOBONES][3];
         static vec4_t q1b[MAXSTUDIOBONES];
         float s;
@@ -887,7 +887,7 @@ void CStudioModelRenderer::StudioSetupBones()
 
         pseqdesc = ( mstudioseqdesc_t* )( ( byte* )m_pStudioHeader + m_pStudioHeader->seqindex ) + m_pCurrentEntity->latched.prevsequence;
         panim = StudioGetAnim( m_pRenderModel, pseqdesc );
-		// clip prevframe
+        // clip prevframe
         StudioCalcRotations( pos1b, q1b, pseqdesc, panim, m_pCurrentEntity->latched.prevframe );
 
         if( pseqdesc->numblends > 1 )
@@ -919,13 +919,13 @@ void CStudioModelRenderer::StudioSetupBones()
     }
     else
     {
-		// Con_DPrintf("prevframe = %4.2f\n", f);
+        // Con_DPrintf("prevframe = %4.2f\n", f);
         m_pCurrentEntity->latched.prevframe = f;
     }
 
     pbones = ( mstudiobone_t* )( ( byte* )m_pStudioHeader + m_pStudioHeader->boneindex );
 
-	// bounds checking
+    // bounds checking
     if( m_pPlayerInfo )
     {
         if( m_pPlayerInfo->gaitsequence >= m_pStudioHeader->numseq )
@@ -934,7 +934,7 @@ void CStudioModelRenderer::StudioSetupBones()
         }
     }
 
-	// calc gait animation
+    // calc gait animation
     if( m_pPlayerInfo && m_pPlayerInfo->gaitsequence != 0 )
     {
         if( m_pPlayerInfo->gaitsequence >= m_pStudioHeader->numseq )
@@ -988,8 +988,8 @@ void CStudioModelRenderer::StudioSetupBones()
             {
                 ConcatTransforms( ( *m_protationmatrix ), bonematrix, ( *m_pbonetransform )[i] );
 
-				// MatrixCopy should be faster...
-				// ConcatTransforms ((*m_protationmatrix), bonematrix, (*m_plighttransform)[i]);
+                // MatrixCopy should be faster...
+                // ConcatTransforms ((*m_protationmatrix), bonematrix, (*m_plighttransform)[i]);
                 MatrixCopy( ( *m_pbonetransform )[i], ( *m_plighttransform )[i] );
             }
             else
@@ -998,7 +998,7 @@ void CStudioModelRenderer::StudioSetupBones()
                 ConcatTransforms( ( *m_protationmatrix ), bonematrix, ( *m_plighttransform )[i] );
             }
 
-			// Apply client-side effects to the transformation matrix
+            // Apply client-side effects to the transformation matrix
             StudioFxTransform( m_pCurrentEntity, ( *m_pbonetransform )[i] );
         }
         else if( parent >= 0 && parent < m_pStudioHeader->numbones )
@@ -1064,7 +1064,7 @@ void CStudioModelRenderer::StudioMergeBones( model_t* subModel )
 
     if( m_pCurrentEntity->latched.prevframe > f )
     {
-		// Con_DPrintf("%f %f\n", m_pCurrentEntity->prevframe, f );
+        // Con_DPrintf("%f %f\n", m_pCurrentEntity->prevframe, f );
     }
 
     panim = StudioGetAnim( subModel, pseqdesc );
@@ -1098,8 +1098,8 @@ void CStudioModelRenderer::StudioMergeBones( model_t* subModel )
                 {
                     ConcatTransforms( ( *m_protationmatrix ), bonematrix, ( *m_pbonetransform )[i] );
 
-					// MatrixCopy should be faster...
-					// ConcatTransforms ((*m_protationmatrix), bonematrix, (*m_plighttransform)[i]);
+                    // MatrixCopy should be faster...
+                    // ConcatTransforms ((*m_protationmatrix), bonematrix, (*m_plighttransform)[i]);
                     MatrixCopy( ( *m_pbonetransform )[i], ( *m_plighttransform )[i] );
                 }
                 else
@@ -1108,7 +1108,7 @@ void CStudioModelRenderer::StudioMergeBones( model_t* subModel )
                     ConcatTransforms( ( *m_protationmatrix ), bonematrix, ( *m_plighttransform )[i] );
                 }
 
-				// Apply client-side effects to the transformation matrix
+                // Apply client-side effects to the transformation matrix
                 StudioFxTransform( m_pCurrentEntity, ( *m_pbonetransform )[i] );
             }
             else
@@ -1147,10 +1147,10 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
         if( m_pCurrentEntity->curstate.renderamt <= 0 || m_pCurrentEntity->curstate.renderamt > gEngfuncs.GetMaxClients() )
             return false;
 
-		// get copy of player
+        // get copy of player
         deadplayer = *( IEngineStudio.GetPlayerState( m_pCurrentEntity->curstate.renderamt - 1 ) ); // cl.frames[cl.parsecount & CL_UPDATE_MASK].playerstate[m_pCurrentEntity->curstate.renderamt-1];
 
-		// clear weapon, movement state
+        // clear weapon, movement state
         deadplayer.number = m_pCurrentEntity->curstate.renderamt;
         deadplayer.weaponmodel = 0;
         deadplayer.gaitsequence = 0;
@@ -1162,7 +1162,7 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
         save_interp = m_fDoInterp;
         m_fDoInterp = false;
 
-		// draw as though it were a player
+        // draw as though it were a player
         result = StudioDrawPlayer( flags, &deadplayer );
 
         m_fDoInterp = save_interp;
@@ -1178,7 +1178,7 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
 
     if( ( flags & STUDIO_RENDER ) != 0 )
     {
-		// see if the bounding box lets us trivially reject, also sets
+        // see if the bounding box lets us trivially reject, also sets
         if( 0 == IEngineStudio.StudioCheckBBox() )
             return false;
 
@@ -1203,7 +1203,7 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
     {
         StudioCalcAttachments();
         IEngineStudio.StudioClientEvents();
-		// copy attachments into global entity array
+        // copy attachments into global entity array
         if( m_pCurrentEntity->index > 0 )
         {
             cl_entity_t* ent = gEngfuncs.GetEntityByIndex( m_pCurrentEntity->index );
@@ -1219,10 +1219,10 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
 
         IEngineStudio.StudioEntityLight( &lighting );
 
-		// model and frame independant
+        // model and frame independant
         IEngineStudio.StudioSetupLighting( &lighting );
 
-		// get remap colors
+        // get remap colors
 
         m_nTopColor = m_pCurrentEntity->curstate.colormap & 0xFF;
         m_nBottomColor = ( m_pCurrentEntity->curstate.colormap & 0xFF00 ) >> 8;
@@ -1259,7 +1259,7 @@ void CStudioModelRenderer::StudioEstimateGait( entity_state_t* pplayer )
         return;
     }
 
-	// est_velocity = pplayer->velocity + pplayer->prediction_error;
+    // est_velocity = pplayer->velocity + pplayer->prediction_error;
     if( m_fGaitEstimation )
     {
         est_velocity = m_pCurrentEntity->origin - m_pPlayerInfo->prevgaitorigin;
@@ -1334,7 +1334,7 @@ void CStudioModelRenderer::StudioProcessGait( entity_state_t* pplayer )
     m_pCurrentEntity->latched.prevblending[0] = m_pCurrentEntity->curstate.blending[0];
     m_pCurrentEntity->latched.prevseqblending[0] = m_pCurrentEntity->curstate.blending[0];
 
-	// Con_DPrintf("%f %d\n", m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->blending[0] );
+    // Con_DPrintf("%f %d\n", m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->blending[0] );
 
     dt = ( m_clTime - m_clOldTime );
     if( dt < 0 )
@@ -1344,9 +1344,9 @@ void CStudioModelRenderer::StudioProcessGait( entity_state_t* pplayer )
 
     StudioEstimateGait( pplayer );
 
-	// Con_DPrintf("%f %f\n", m_pCurrentEntity->angles[YAW], m_pPlayerInfo->gaityaw );
+    // Con_DPrintf("%f %f\n", m_pCurrentEntity->angles[YAW], m_pPlayerInfo->gaityaw );
 
-	// calc side to side turning
+    // calc side to side turning
     flYaw = m_pCurrentEntity->angles[YAW] - m_pPlayerInfo->gaityaw;
     flYaw = flYaw - (int)( flYaw / 360 ) * 360;
     if( flYaw < -180 )
@@ -1367,7 +1367,7 @@ void CStudioModelRenderer::StudioProcessGait( entity_state_t* pplayer )
         flYaw = flYaw + 180;
     }
 
-	// adjust torso
+    // adjust torso
     m_pCurrentEntity->curstate.controller[0] = ( ( flYaw / 4.0 ) + 30 ) / ( 60.0 / 255.0 );
     m_pCurrentEntity->curstate.controller[1] = ( ( flYaw / 4.0 ) + 30 ) / ( 60.0 / 255.0 );
     m_pCurrentEntity->curstate.controller[2] = ( ( flYaw / 4.0 ) + 30 ) / ( 60.0 / 255.0 );
@@ -1389,7 +1389,7 @@ void CStudioModelRenderer::StudioProcessGait( entity_state_t* pplayer )
 
     pseqdesc = ( mstudioseqdesc_t* )( ( byte* )m_pStudioHeader + m_pStudioHeader->seqindex ) + pplayer->gaitsequence;
 
-	// calc gait frame
+    // calc gait frame
     if( pseqdesc->linearmovement[0] > 0 )
     {
         m_pPlayerInfo->gaitframe += ( m_flGaitMovement / pseqdesc->linearmovement[0] ) * pseqdesc->numframes;
@@ -1399,7 +1399,7 @@ void CStudioModelRenderer::StudioProcessGait( entity_state_t* pplayer )
         m_pPlayerInfo->gaitframe += pseqdesc->fps * dt;
     }
 
-	// do modulo
+    // do modulo
     m_pPlayerInfo->gaitframe = m_pPlayerInfo->gaitframe - (int)( m_pPlayerInfo->gaitframe / pseqdesc->numframes ) * pseqdesc->numframes;
     if( m_pPlayerInfo->gaitframe < 0 )
         m_pPlayerInfo->gaitframe += pseqdesc->numframes;
@@ -1471,7 +1471,7 @@ bool CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t* pplayer 
 
     if( ( flags & STUDIO_RENDER ) != 0 )
     {
-		// see if the bounding box lets us trivially reject, also sets
+        // see if the bounding box lets us trivially reject, also sets
         if( 0 == IEngineStudio.StudioCheckBBox() )
             return false;
 
@@ -1493,7 +1493,7 @@ bool CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t* pplayer 
     {
         StudioCalcAttachments();
         IEngineStudio.StudioClientEvents();
-		// copy attachments into global entity array
+        // copy attachments into global entity array
         if( m_pCurrentEntity->index > 0 )
         {
             cl_entity_t* ent = gEngfuncs.GetEntityByIndex( m_pCurrentEntity->index );
@@ -1506,7 +1506,7 @@ bool CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t* pplayer 
     {
         if( 0 != m_pCvarHiModels->value && m_pRenderModel != m_pCurrentEntity->model )
         {
-			// show highest resolution multiplayer model
+            // show highest resolution multiplayer model
             m_pCurrentEntity->curstate.body = 255;
         }
 
@@ -1520,17 +1520,17 @@ bool CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t* pplayer 
 
         IEngineStudio.StudioEntityLight( &lighting );
 
-		// model and frame independant
+        // model and frame independant
         IEngineStudio.StudioSetupLighting( &lighting );
 
         m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
 
-		// get remap colors
+        // get remap colors
         m_nTopColor = m_pPlayerInfo->topcolor;
         m_nBottomColor = m_pPlayerInfo->bottomcolor;
 
 
-		// bounds check
+        // bounds check
         if( m_nTopColor < 0 )
             m_nTopColor = 0;
         if( m_nTopColor > 360 )
@@ -1587,7 +1587,7 @@ void CStudioModelRenderer::StudioCalcAttachments()
         exit( -1 );
     }
 
-	// calculate attachment points
+    // calculate attachment points
     pattachment = ( mstudioattachment_t* )( ( byte* )m_pStudioHeader + m_pStudioHeader->attachmentindex );
     for( i = 0; i < m_pStudioHeader->numattachments; i++ )
     {
@@ -1643,7 +1643,7 @@ void CStudioModelRenderer::StudioRenderFinal_Software()
 {
     int i;
 
-	// Note, rendermode set here has effect in SW
+    // Note, rendermode set here has effect in SW
     IEngineStudio.SetupRenderer( 0 );
 
     if( m_pCvarDrawEntities->value == 2 )
@@ -1708,7 +1708,7 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 
             if( m_fDoInterp )
             {
-				// interpolation messes up bounding boxes.
+                // interpolation messes up bounding boxes.
                 m_pCurrentEntity->trivial_accept = 0;
             }
 

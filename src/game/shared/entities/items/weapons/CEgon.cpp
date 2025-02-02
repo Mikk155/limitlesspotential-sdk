@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -29,9 +29,9 @@
 LINK_ENTITY_TO_CLASS( weapon_egon, CEgon );
 
 BEGIN_DATAMAP( CEgon )
-//	DEFINE_FIELD(m_pBeam, FIELD_CLASSPTR),
-//	DEFINE_FIELD(m_pNoise, FIELD_CLASSPTR),
-//	DEFINE_FIELD(m_pSprite, FIELD_CLASSPTR),
+//    DEFINE_FIELD(m_pBeam, FIELD_CLASSPTR),
+//    DEFINE_FIELD(m_pNoise, FIELD_CLASSPTR),
+//    DEFINE_FIELD(m_pSprite, FIELD_CLASSPTR),
     DEFINE_FIELD( m_shootTime, FIELD_TIME ),
     DEFINE_FIELD( m_fireState, FIELD_INTEGER ),
     DEFINE_FIELD( m_fireMode, FIELD_INTEGER ),
@@ -134,7 +134,7 @@ void CEgon::UseAmmo( int count )
 
 void CEgon::Attack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
 
@@ -222,7 +222,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
     pentIgnore = m_pPlayer->edict();
     Vector tmpSrc = vecOrigSrc + gpGlobals->v_up * -8 + gpGlobals->v_right * 3;
 
-	// WeaponsLogger->debug(".");
+    // WeaponsLogger->debug(".");
 
     UTIL_TraceLine( vecOrigSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr );
 
@@ -259,7 +259,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
 #ifndef CLIENT_DLL
         if( pev->dmgtime < gpGlobals->time )
         {
-			// Narrow mode only does damage to the entity it hits
+            // Narrow mode only does damage to the entity it hits
             ClearMultiDamage();
             if( 0 != pEntity->pev->takedamage )
             {
@@ -278,7 +278,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
                 }
                 else
                 {
-					// Re-check in 5 seconds in case skill var changes.
+                    // Re-check in 5 seconds in case skill var changes.
                     m_flAmmoUseTime = gpGlobals->time + 5;
                 }
             }
@@ -293,7 +293,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
 #ifndef CLIENT_DLL
         if( pev->dmgtime < gpGlobals->time )
         {
-			// wide mode does damage to the ent, and radius damage
+            // wide mode does damage to the ent, and radius damage
             ClearMultiDamage();
             if( 0 != pEntity->pev->takedamage )
             {
@@ -303,7 +303,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
 
             if( GetSkillFloat( "egon_wide_radius_damage" ) != 0 )
             {
-				// radius damage a little more potent in multiplayer.
+                // radius damage a little more potent in multiplayer.
                 ::RadiusDamage( tr.vecEndPos, this, m_pPlayer, GetSkillFloat( "plr_egon_wide"sv ) / 4, 128, DMG_ENERGYBEAM | DMG_BLAST | DMG_ALWAYSGIB );
             }
 
@@ -321,7 +321,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
                 }
                 else
                 {
-					// Re-check in 5 seconds in case skill var changes.
+                    // Re-check in 5 seconds in case skill var changes.
                     m_flAmmoUseTime = gpGlobals->time + 5;
                 }
             }

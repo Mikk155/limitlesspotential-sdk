@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -18,7 +18,7 @@
 #include "CBaseToggle.h"
 
 /**
- *	@brief sounds that doors and buttons make when locked/unlocked
+ *    @brief sounds that doors and buttons make when locked/unlocked
  */
 struct locksound_t
 {
@@ -37,17 +37,17 @@ struct locksound_t
 };
 
 /**
- *	@brief play door or button locked or unlocked sounds.
- *	@details pass in pointer to valid locksound struct.
- *	if flocked is true, play 'door is locked' sound, otherwise play 'door is unlocked' sound
- *	NOTE: this routine is shared by doors and buttons
+ *    @brief play door or button locked or unlocked sounds.
+ *    @details pass in pointer to valid locksound struct.
+ *    if flocked is true, play 'door is locked' sound, otherwise play 'door is unlocked' sound
+ *    NOTE: this routine is shared by doors and buttons
  */
 void PlayLockSounds( CBaseEntity* entity, locksound_t* pls, bool flocked, bool fbutton );
 
 /**
- *	@brief Generic Button
- *	@details When a button is touched, it moves some distance in the direction of its angle,
- *	triggers all of its targets, waits some time, then returns to its original position where it can be triggered again.
+ *    @brief Generic Button
+ *    @details When a button is touched, it moves some distance in the direction of its angle,
+ *    triggers all of its targets, waits some time, then returns to its original position where it can be triggered again.
  */
 class CBaseButton : public CBaseToggle
 {
@@ -59,34 +59,34 @@ public:
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
-	/**
-	 *	@brief Starts the button moving "in/up".
-	 */
+    /**
+     *    @brief Starts the button moving "in/up".
+     */
     void ButtonActivate();
 
-	/**
-	 *	@brief Touching a button simply "activates" it.
-	 */
+    /**
+     *    @brief Touching a button simply "activates" it.
+     */
     void ButtonTouch( CBaseEntity* pOther );
 
-	/**
-	 *	@brief Makes flagged buttons spark when turned off
-	 */
+    /**
+     *    @brief Makes flagged buttons spark when turned off
+     */
     void ButtonSpark();
 
-	/**
-	 *	@brief Button has reached the "in/up" position.  Activate its "targets", and pause before "popping out".
-	 */
+    /**
+     *    @brief Button has reached the "in/up" position.  Activate its "targets", and pause before "popping out".
+     */
     void TriggerAndWait();
 
-	/**
-	 *	@brief Starts the button moving "out/down".
-	 */
+    /**
+     *    @brief Starts the button moving "out/down".
+     */
     void ButtonReturn();
 
-	/**
-	 *	@brief Button has returned to start state. Quiesce it.
-	 */
+    /**
+     *    @brief Button has returned to start state. Quiesce it.
+     */
     void ButtonBackHome();
 
     void ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
@@ -100,15 +100,15 @@ public:
     };
     BUTTON_CODE ButtonResponseToTouch();
 
-	// Buttons that don't take damage can be IMPULSE used
+    // Buttons that don't take damage can be IMPULSE used
     int ObjectCaps() override { return ( CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ) | ( pev->takedamage ? 0 : FCAP_IMPULSE_USE ); }
 
     bool m_fStayPushed; // button stays pushed in until touched again?
     bool m_fRotating;    // a rotating button?  default is a sliding button.
 
     string_t m_strChangeTarget; // if this field is not null, this is an index into the engine string array.
-								// when this button is touched, it's target entity's TARGET field will be set
-								// to the button's ChangeTarget. This allows you to make a func_train switch paths, etc.
+                                // when this button is touched, it's target entity's TARGET field will be set
+                                // to the button's ChangeTarget. This allows you to make a func_train switch paths, etc.
 
     locksound_t m_ls; // door lock sounds
 

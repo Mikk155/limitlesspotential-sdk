@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -18,7 +18,7 @@
 #include "CGameRules.h"
 
 /**
- *	@brief rules for the basic half life multiplayer competition
+ *    @brief rules for the basic half life multiplayer competition
  */
 class CHalfLifeMultiplay : public CGameRules
 {
@@ -77,9 +77,9 @@ public:
     }
 
 protected:
-	/**
-	 *	@brief Server is changing to a new level, check mapcycle.json for map name and setup info
-	 */
+    /**
+     *    @brief Server is changing to a new level, check mapcycle.json for map name and setup info
+     */
     virtual void ChangeLevel();
     virtual void GoToIntermission();
     float m_flIntermissionStartTime = 0;

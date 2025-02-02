@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -30,7 +30,7 @@ void WeaponDataSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
     {
         block.Data = json::array();
 
-		// Send all valid weapon info.
+        // Send all valid weapon info.
         for( const auto& info : m_WeaponInfos )
         {
             if( info.Id == WEAPON_NONE )

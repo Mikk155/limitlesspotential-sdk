@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -50,8 +50,8 @@ void EV_HookEvents();
 void IN_Commands();
 
 /**
- *	@brief Engine calls this to enumerate player collision hulls, for prediction.
- *	@return 0 if the hullnumber doesn't exist, 1 otherwise.
+ *    @brief Engine calls this to enumerate player collision hulls, for prediction.
+ *    @return 0 if the hullnumber doesn't exist, 1 otherwise.
  */
 int DLLEXPORT HUD_GetHullBounds( int hullnumber, float* mins, float* maxs )
 {
@@ -59,24 +59,24 @@ int DLLEXPORT HUD_GetHullBounds( int hullnumber, float* mins, float* maxs )
 }
 
 /**
- *	@brief Return 1 if the packet is valid.
- *	@param net_from Address of the sender.
- *	@param args Argument string.
- *	@param response_buffer Buffer to write a response message to.
- *	@param[in,out] response_buffer_size Initially holds the maximum size of @p response_buffer.
- *		Set to size of response message or 0 if sending no response.
+ *    @brief Return 1 if the packet is valid.
+ *    @param net_from Address of the sender.
+ *    @param args Argument string.
+ *    @param response_buffer Buffer to write a response message to.
+ *    @param[in,out] response_buffer_size Initially holds the maximum size of @p response_buffer.
+ *        Set to size of response message or 0 if sending no response.
  */
 int DLLEXPORT HUD_ConnectionlessPacket( const netadr_t* net_from, const char* args, char* response_buffer, int* response_buffer_size )
 {
-	// Parse stuff from args
-	// int max_buffer_size = *response_buffer_size;
+    // Parse stuff from args
+    // int max_buffer_size = *response_buffer_size;
 
-	// Zero it out since we aren't going to respond.
-	// If we wanted to response, we'd write data into response_buffer
+    // Zero it out since we aren't going to respond.
+    // If we wanted to response, we'd write data into response_buffer
     *response_buffer_size = 0;
 
-	// Since we don't listen for anything here, just respond that it's a bogus message
-	// If we didn't reject the message, we'd return 1 for success instead.
+    // Since we don't listen for anything here, just respond that it's a bogus message
+    // If we didn't reject the message, we'd return 1 for success instead.
     return 0;
 }
 
@@ -120,7 +120,7 @@ static bool CL_InitClient()
         return false;
     }
 
-	// get tracker interface, if any
+    // get tracker interface, if any
     return true;
 }
 
@@ -144,8 +144,8 @@ int DLLEXPORT Initialize( cl_enginefunc_t* pEnginefuncs, int iVersion )
 }
 
 /**
- *	@brief Called whenever the client connects to a server. Reinitializes all the hud variables.
- *	@details The original documentation for this and HUD_Init() were swapped.
+ *    @brief Called whenever the client connects to a server. Reinitializes all the hud variables.
+ *    @details The original documentation for this and HUD_Init() were swapped.
  */
 int DLLEXPORT HUD_VidInit()
 {
@@ -157,8 +157,8 @@ int DLLEXPORT HUD_VidInit()
 }
 
 /**
- *	@brief Called when the game initializes and whenever the vid_mode is changed so the HUD can reinitialize itself.
- *	@details The original documentation for this and HUD_VidInit() were swapped.
+ *    @brief Called when the game initializes and whenever the vid_mode is changed so the HUD can reinitialize itself.
+ *    @details The original documentation for this and HUD_VidInit() were swapped.
  */
 void DLLEXPORT HUD_Init()
 {
@@ -169,7 +169,7 @@ void DLLEXPORT HUD_Init()
 }
 
 /**
- *	@brief called every screen frame to redraw the HUD.
+ *    @brief called every screen frame to redraw the HUD.
  */
 int DLLEXPORT HUD_Redraw( float time, int intermission )
 {
@@ -179,9 +179,9 @@ int DLLEXPORT HUD_Redraw( float time, int intermission )
 }
 
 /**
- *	@brief called every time shared client dll/engine data gets changed,
- *	and gives the cdll a chance to modify the data.
- *	@return 1 if anything has been changed, 0 otherwise.
+ *    @brief called every time shared client dll/engine data gets changed,
+ *    and gives the cdll a chance to modify the data.
+ *    @return 1 if anything has been changed, 0 otherwise.
  */
 
 int DLLEXPORT HUD_UpdateClientData( client_data_t* pcldata, float flTime )
@@ -192,8 +192,8 @@ int DLLEXPORT HUD_UpdateClientData( client_data_t* pcldata, float flTime )
 }
 
 /**
- *	@brief Called at start and end of demos to restore to "non"HUD state.
- *	@details Never called in Steam Half-Life.
+ *    @brief Called at start and end of demos to restore to "non"HUD state.
+ *    @details Never called in Steam Half-Life.
  */
 void DLLEXPORT HUD_Reset()
 {
@@ -201,7 +201,7 @@ void DLLEXPORT HUD_Reset()
 }
 
 /**
- *	@brief Called by engine every frame that client .dll is loaded
+ *    @brief Called by engine every frame that client .dll is loaded
  */
 void DLLEXPORT HUD_Frame( double time )
 {
@@ -211,7 +211,7 @@ void DLLEXPORT HUD_Frame( double time )
 }
 
 /**
- *	@brief Called when a player starts or stops talking.
+ *    @brief Called when a player starts or stops talking.
  */
 void DLLEXPORT HUD_VoiceStatus( int entindex, qboolean bTalking )
 {
@@ -219,7 +219,7 @@ void DLLEXPORT HUD_VoiceStatus( int entindex, qboolean bTalking )
 }
 
 /**
- *	@brief Called when a director event message was received
+ *    @brief Called when a director event message was received
  */
 void DLLEXPORT HUD_DirectorMessage( int iSize, void* pbuf )
 {
@@ -234,7 +234,7 @@ void CL_UnloadParticleMan()
 
 void CL_LoadParticleMan()
 {
-	// Now implemented in the client library.
+    // Now implemented in the client library.
     auto particleManFactory = Sys_GetFactoryThis();
 
     g_pParticleMan = ( IParticleMan* )particleManFactory( PARTICLEMAN_INTERFACE, nullptr );
@@ -246,9 +246,9 @@ void CL_LoadParticleMan()
 }
 
 /**
- *	@brief Used by Steam Half-Life to load the client dll interface.
- *	If not present, the client dll will be unloaded, global destructors will run, the client dll will be loaded again
- *	and functions will be retrieved using <tt>GetProcAddress/dlsym</tt>.
+ *    @brief Used by Steam Half-Life to load the client dll interface.
+ *    If not present, the client dll will be unloaded, global destructors will run, the client dll will be loaded again
+ *    and functions will be retrieved using <tt>GetProcAddress/dlsym</tt>.
  */
 extern "C" void DLLEXPORT F( void* pv )
 {
@@ -305,25 +305,25 @@ extern "C" void DLLEXPORT F( void* pv )
 #include "cl_dll/IGameClientExports.h"
 
 /**
- *	@brief Exports functions that are used by the gameUI for UI dialogs
+ *    @brief Exports functions that are used by the gameUI for UI dialogs
  */
 class CClientExports : public IGameClientExports
 {
 public:
-	/**
-	 *	@brief returns the name of the server the user is connected to, if any
-	 *	@details Does not appear to be called in Steam Half-Life
-	 */
+    /**
+     *    @brief returns the name of the server the user is connected to, if any
+     *    @details Does not appear to be called in Steam Half-Life
+     */
     const char* GetServerHostName() override
     {
-		/*if (gViewPortInterface)
-		{
-			return gViewPortInterface->GetServerName();
-		}*/
+        /*if (gViewPortInterface)
+        {
+            return gViewPortInterface->GetServerName();
+        }*/
         return "";
     }
 
-	// ingame voice manipulation
+    // ingame voice manipulation
     bool IsPlayerGameVoiceMuted( int playerIndex ) override
     {
         if( GetClientVoiceMgr() )

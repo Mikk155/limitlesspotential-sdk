@@ -21,8 +21,8 @@
 
 void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
 {
-	// MOD AUTHORS: Modify the logic of this function if you want to restrict the observer to watching
-	//				only a subset of the players. e.g. Make it check the target's team.
+    // MOD AUTHORS: Modify the logic of this function if you want to restrict the observer to watching
+    //                only a subset of the players. e.g. Make it check the target's team.
 
     int iStart;
     if( m_hObserverTarget )
@@ -37,7 +37,7 @@ void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
     {
         iCurrent += iDir;
 
-		// Loop through the clients
+        // Loop through the clients
         if( iCurrent > gpGlobals->maxClients )
             iCurrent = 1;
         if( iCurrent < 1 )
@@ -48,26 +48,26 @@ void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
             continue;
         if( pEnt == this )
             continue;
-		// Don't spec observers or players who haven't picked a class yet
+        // Don't spec observers or players who haven't picked a class yet
         if( pEnt->IsObserver() || ( pEnt->pev->effects & EF_NODRAW ) != 0 )
             continue;
 
-		// MOD AUTHORS: Add checks on target here.
+        // MOD AUTHORS: Add checks on target here.
 
         m_hObserverTarget = pEnt;
         break;
 
     } while( iCurrent != iStart );
 
-	// Did we find a target?
+    // Did we find a target?
     if( m_hObserverTarget )
     {
-		// Move to the target
+        // Move to the target
         SetOrigin( m_hObserverTarget->pev->origin );
 
-		// Logger->debug("Now Tracking {}", STRING(m_hObserverTarget->pev->netname));
+        // Logger->debug("Now Tracking {}", STRING(m_hObserverTarget->pev->netname));
 
-		// Store the target in pev so the physics DLL can get to it
+        // Store the target in pev so the physics DLL can get to it
         if( pev->iuser1 != OBS_ROAMING )
             pev->iuser2 = m_hObserverTarget->entindex();
     }
@@ -75,11 +75,11 @@ void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
 
 void CBasePlayer::Observer_HandleButtons()
 {
-	// Slow down mouse clicks
+    // Slow down mouse clicks
     if( m_flNextObserverInput > gpGlobals->time )
         return;
 
-	// Jump changes from modes: Chase to Roaming
+    // Jump changes from modes: Chase to Roaming
     if( ( m_afButtonPressed & IN_JUMP ) != 0 )
     {
         if( pev->iuser1 == OBS_CHASE_LOCKED )
@@ -103,7 +103,7 @@ void CBasePlayer::Observer_HandleButtons()
         m_flNextObserverInput = gpGlobals->time + 0.2;
     }
 
-	// Attack moves to the next player
+    // Attack moves to the next player
     if( ( m_afButtonPressed & IN_ATTACK ) != 0 ) //&& pev->iuser1 != OBS_ROAMING )
     {
         Observer_FindNextPlayer( false );
@@ -111,7 +111,7 @@ void CBasePlayer::Observer_HandleButtons()
         m_flNextObserverInput = gpGlobals->time + 0.2;
     }
 
-	// Attack2 moves to the prev player
+    // Attack2 moves to the prev player
     if( ( m_afButtonPressed & IN_ATTACK2 ) != 0 ) // && pev->iuser1 != OBS_ROAMING )
     {
         Observer_FindNextPlayer( true );
@@ -125,14 +125,14 @@ void CBasePlayer::Observer_CheckTarget()
     if( pev->iuser1 == OBS_ROAMING )
         return;
 
-	// try to find a traget if we have no current one
+    // try to find a traget if we have no current one
     if( m_hObserverTarget == nullptr )
     {
         Observer_FindNextPlayer( false );
 
         if( m_hObserverTarget == nullptr )
         {
-			// no target found at all
+            // no target found at all
 
             int lastMode = pev->iuser1;
 
@@ -152,12 +152,12 @@ void CBasePlayer::Observer_CheckTarget()
         return;
     }
 
-	// check taget
+    // check taget
     if( target->pev->deadflag == DEAD_DEAD )
     {
         if( ( target->m_fDeadTime + 2.0f ) < gpGlobals->time )
         {
-			// 3 secs after death change target
+            // 3 secs after death change target
             Observer_FindNextPlayer( false );
             return;
         }
@@ -166,7 +166,7 @@ void CBasePlayer::Observer_CheckTarget()
 
 void CBasePlayer::Observer_CheckProperties()
 {
-	// try to find a traget if we have no current one
+    // try to find a traget if we have no current one
     if( pev->iuser1 == OBS_IN_EYE && m_hObserverTarget != nullptr )
     {
         CBasePlayer* target = UTIL_PlayerByIndex( m_hObserverTarget->entindex() );
@@ -175,19 +175,19 @@ void CBasePlayer::Observer_CheckProperties()
             return;
 
         int weapon = ( target->m_pActiveWeapon != nullptr ) ? target->m_pActiveWeapon->m_iId : 0;
-		// use fov of tracked client
+        // use fov of tracked client
         if( m_iFOV != target->m_iFOV || m_iObserverWeapon != weapon )
         {
             m_iFOV = target->m_iFOV;
             m_iClientFOV = m_iFOV;
-			// write fov before wepon data, so zoomed crosshair is set correctly
+            // write fov before wepon data, so zoomed crosshair is set correctly
             MESSAGE_BEGIN( MSG_ONE, gmsgSetFOV, nullptr, this );
             WRITE_BYTE( m_iFOV );
             MESSAGE_END();
 
 
             m_iObserverWeapon = weapon;
-			// send weapon update
+            // send weapon update
             MESSAGE_BEGIN( MSG_ONE, gmsgCurWeapon, nullptr, this );
             WRITE_BYTE( 1 ); // 1 = current weapon, not on target
             WRITE_BYTE( m_iObserverWeapon );
@@ -215,14 +215,14 @@ void CBasePlayer::Observer_CheckProperties()
 void CBasePlayer::Observer_SetMode( int iMode )
 {
 
-	// Just abort if we're changing to the mode we're already in
+    // Just abort if we're changing to the mode we're already in
     if( iMode == pev->iuser1 )
         return;
 
-	// is valid mode ?
+    // is valid mode ?
     if( iMode < OBS_CHASE_LOCKED || iMode > OBS_MAP_CHASE )
         iMode = OBS_IN_EYE; // now it is
-	// verify observer target again
+    // verify observer target again
     if( m_hObserverTarget != nullptr )
     {
         CBasePlayer* pEnt = ToBasePlayer( m_hObserverTarget );
@@ -233,15 +233,15 @@ void CBasePlayer::Observer_SetMode( int iMode )
             m_hObserverTarget = nullptr;
     }
 
-	// set spectator mode
+    // set spectator mode
     pev->iuser1 = iMode;
 
-	// if we are not roaming, we need a valid target to track
+    // if we are not roaming, we need a valid target to track
     if( ( iMode != OBS_ROAMING ) && ( m_hObserverTarget == nullptr ) )
     {
         Observer_FindNextPlayer( false );
 
-		// if we didn't find a valid target switch to roaming
+        // if we didn't find a valid target switch to roaming
         if( m_hObserverTarget == nullptr )
         {
             ClientPrint( this, HUD_PRINTCENTER, "#Spec_NoTarget" );
@@ -249,7 +249,7 @@ void CBasePlayer::Observer_SetMode( int iMode )
         }
     }
 
-	// set target if not roaming
+    // set target if not roaming
     if( pev->iuser1 == OBS_ROAMING )
     {
         pev->iuser2 = 0;
@@ -259,7 +259,7 @@ void CBasePlayer::Observer_SetMode( int iMode )
 
     pev->iuser3 = 0; // clear second target from death cam
 
-	// print spepctaor mode on client screen
+    // print spepctaor mode on client screen
 
     char modemsg[16];
     sprintf( modemsg, "#Spec_Mode%i", pev->iuser1 );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -111,7 +111,7 @@ void COFTorchAlly::OnCreate()
     pev->health = GetSkillFloat( "torch_ally_health"sv );
     pev->model = MAKE_STRING( "models/hgrunt_torch.mdl" );
 
-	// get voice pitch
+    // get voice pitch
     m_voicePitch = 95;
 }
 
@@ -148,10 +148,10 @@ void COFTorchAlly::GibMonster()
 
 void COFTorchAlly::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	// check for Torch fuel tank hit
+    // check for Torch fuel tank hit
     if( ptr->iHitgroup == 8 )
     {
-		// Make sure it kills this grunt
+        // Make sure it kills this grunt
         bitsDamageType = DMG_ALWAYSGIB | DMG_BLAST;
         flDamage = pev->health;
         ExplosionCreate( ptr->vecEndPos, pev->angles, this, 100, true );
@@ -162,7 +162,7 @@ void COFTorchAlly::TraceAttack( CBaseEntity* attacker, float flDamage, Vector ve
 
 void COFTorchAlly::Shoot()
 {
-	// Limit fire rate
+    // Limit fire rate
     if( m_hEnemy == nullptr || gpGlobals->time - m_flLastShot <= 0.11 )
     {
         return;
@@ -320,15 +320,15 @@ std::tuple<int, Activity> COFTorchAlly::GetSequenceForActivity( Activity NewActi
     switch ( NewActivity )
     {
     case ACT_RANGE_ATTACK1:
-		// grunt is either shooting standing or shooting crouched
+        // grunt is either shooting standing or shooting crouched
         if( m_fStanding )
         {
-			// get aimable sequence
+            // get aimable sequence
             iSequence = LookupSequence( "standing_mp5" );
         }
         else
         {
-			// get crouching shoot
+            // get crouching shoot
             iSequence = LookupSequence( "crouching_mp5" );
         }
         break;
@@ -379,7 +379,7 @@ void COFTorchAlly::MonsterThink()
         if( tr.flFraction != 1.0 )
         {
             m_pTorchBeam->pev->spawnflags &= ~SF_BEAM_SPARKSTART;
-			// TODO: looks like a bug to me, shouldn't be bitwise inverting
+            // TODO: looks like a bug to me, shouldn't be bitwise inverting
             m_pTorchBeam->pev->spawnflags |= ~SF_BEAM_SPARKEND;
 
             UTIL_DecalTrace( &tr, RANDOM_LONG( 0, 4 ) );
@@ -393,7 +393,7 @@ void COFTorchAlly::MonsterThink()
 }
 
 /**
- *	@brief when triggered, spawns a monster_human_torch_ally repelling down a line.
+ *    @brief when triggered, spawns a monster_human_torch_ally repelling down a line.
  */
 class COFTorchAllyRepel : public CBaseHGruntAllyRepel
 {

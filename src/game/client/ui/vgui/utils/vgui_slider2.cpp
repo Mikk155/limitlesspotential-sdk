@@ -202,10 +202,10 @@ void Slider2::recomputeValueFromNobPos()
             fvalue = frange * ( fnob / ( fwide - fnobsize ) );
         }
     }
-	// Take care of rounding issues.
+    // Take care of rounding issues.
     _value = (int)( fvalue + _range[0] + 0.5 );
 
-	// Clamp final result
+    // Clamp final result
     _value = ( _value < _range[1] ) ? _value : _range[1];
 }
 
@@ -270,15 +270,15 @@ void Slider2::paintBackground()
 
     if( _vertical )
     {
-		// background behind slider
+        // background behind slider
         drawSetColor( 40, 40, 40, 0 );
         drawFilledRect( 0, 0, wide, tall );
 
-		// slider front
+        // slider front
         drawSetColor( 0, 0, 0, 0 );
         drawFilledRect( 0, _nobPos[0], wide, _nobPos[1] );
 
-		// slider border
+        // slider border
         drawSetColor( 60, 60, 60, 0 );
         drawFilledRect( 0, _nobPos[0], wide, _nobPos[0] + 1 );        // top
         drawFilledRect( 0, _nobPos[1], wide, _nobPos[1] + 1 );        // bottom
@@ -287,7 +287,7 @@ void Slider2::paintBackground()
     }
     else
     {
-		//!! doesn't work
+        //!! doesn't work
 
         drawSetColor( Scheme::sc_secondary3 );
         drawFilledRect( 0, 0, wide, tall );

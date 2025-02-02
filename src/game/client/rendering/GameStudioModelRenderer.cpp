@@ -86,22 +86,22 @@ r_studio_interface_t studio =
 };
 
 /**
- *	@brief Export this function for the engine to use the studio renderer class to render objects.
+ *    @brief Export this function for the engine to use the studio renderer class to render objects.
  */
 int DLLEXPORT HUD_GetStudioModelInterface( int version, r_studio_interface_t** ppinterface, engine_studio_api_t* pstudio )
 {
     if( version != STUDIO_INTERFACE_VERSION )
         return 0;
 
-	// Point the engine to our callbacks
+    // Point the engine to our callbacks
     *ppinterface = &studio;
 
-	// Copy in engine helper functions
+    // Copy in engine helper functions
     memcpy( &IEngineStudio, pstudio, sizeof( IEngineStudio ) );
 
-	// Initialize local variables, etc.
+    // Initialize local variables, etc.
     R_StudioInit();
 
-	// Success
+    // Success
     return 1;
 }

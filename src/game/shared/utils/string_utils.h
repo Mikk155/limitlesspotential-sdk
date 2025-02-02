@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -23,7 +23,7 @@
 #include <EASTL/string.h>
 
 /**
- *	@brief String type that can store an integer value up to @c (u)int64_t without dynamic memory allocations.
+ *    @brief String type that can store an integer value up to @c (u)int64_t without dynamic memory allocations.
  */
 using IntegerString = eastl::fixed_string<char, 20 + 1>;
 
@@ -39,17 +39,17 @@ template <typename T, typename Allocator>
 }
 
 /**
- *	@brief Trims whitespace at the start of the given text.
+ *    @brief Trims whitespace at the start of the given text.
  */
 std::string_view TrimStart( std::string_view text );
 
 /**
- *	@brief Trims whitespace at the end of the given text.
+ *    @brief Trims whitespace at the end of the given text.
  */
 std::string_view TrimEnd( std::string_view text );
 
 /**
- *	@brief Trims whitespace at the start and end of the given text.
+ *    @brief Trims whitespace at the start and end of the given text.
  */
 std::string_view Trim( std::string_view text );
 
@@ -68,8 +68,8 @@ int UTIL_StringToInteger( std::string_view str );
 IntegerString UTIL_ToString( int iValue );
 
 /**
- *	@brief Parses a string that ends with an array index.
- *		The parsed index is always <tt>&gt;= 0</tt>.
+ *    @brief Parses a string that ends with an array index.
+ *        The parsed index is always <tt>&gt;= 0</tt>.
  */
 bool UTIL_ParseStringWithArrayIndex( std::string_view input, std::string_view& name, int& index );
 

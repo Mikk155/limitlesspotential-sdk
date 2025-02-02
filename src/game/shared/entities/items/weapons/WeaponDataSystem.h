@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -41,12 +41,12 @@ struct WeaponInfo
 
     std::array<WeaponAttackMode, MAX_WEAPON_ATTACK_MODES> AttackModeInfo;
 
-	// Initialized from map config.
+    // Initialized from map config.
     std::string HudConfigFileName{};
 };
 
 /**
- *	@brief Handles the networking of weapon metadata from server to client.
+ *    @brief Handles the networking of weapon metadata from server to client.
  */
 class WeaponDataSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
@@ -73,9 +73,9 @@ public:
 
     void Clear();
 
-	/**
-	 *	@brief Registers a new weapon.
-	 */
+    /**
+     *    @brief Registers a new weapon.
+     */
     int Register( WeaponInfo&& info );
 
     void SetWeaponHudConfigFileName( std::string_view className, std::string&& fileName );
@@ -84,8 +84,8 @@ private:
     WeaponInfo* GetMutableByName( std::string_view name );
 
 private:
-	// Public indices are 1-based, private ones are 0-based.
-	// Store one less than max since index 0 is not used.
+    // Public indices are 1-based, private ones are 0-based.
+    // Store one less than max since index 0 is not used.
     std::array<WeaponInfo, MAX_WEAPONS - 1> m_WeaponInfos;
 };
 

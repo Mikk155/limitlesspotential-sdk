@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -22,15 +22,15 @@
 #include "CRope.h"
 
 /**
- *	@brief The framerate that the rope aims to run at.
- *	Clamping simulation to this also fixes ropes being invisible in multiplayer.
+ *    @brief The framerate that the rope aims to run at.
+ *    Clamping simulation to this also fixes ropes being invisible in multiplayer.
  */
 constexpr float RopeFrameRate = 60.f;
 
 /**
- *	@brief Account for varying frame rates; adjust force to apply what was previously applied at 30 FPS.
- *	HL1 games were developed on machines running around 30 FPS so this is about right.
- *	This is independent of the framerate to allow for smoother ropes.
+ *    @brief Account for varying frame rates; adjust force to apply what was previously applied at 30 FPS.
+ *    HL1 games were developed on machines running around 30 FPS so this is about right.
+ *    This is independent of the framerate to allow for smoother ropes.
  */
 constexpr float RopeForceMultiplier = 30.f;
 
@@ -167,7 +167,7 @@ void CRope::Spawn()
 
     if( m_uiSegments > 2 )
     {
-		// CRopeSample** ppCurrentSys = m_CurrentSys;
+        // CRopeSample** ppCurrentSys = m_CurrentSys;
 
         for( size_t uiSeg = 1; uiSeg < m_uiSegments - 1; ++uiSeg )
         {
@@ -303,7 +303,7 @@ void CRope::Think()
 
 void CRope::Touch( CBaseEntity* pOther )
 {
-	// Nothing.
+    // Nothing.
 }
 
 void CRope::PostRestore()
@@ -362,7 +362,7 @@ void CRope::InitializeRopeSim()
     }
 
     {
-		// Zero out the anchored segment's mass so it stays in place.
+        // Zero out the anchored segment's mass so it stays in place.
         auto pSample = m_CurrentSys[0];
 
         pSample->GetData().mMassReciprocal = 0;
@@ -639,10 +639,10 @@ void CRope::RK4Integrate( const float flDeltaTime, CRopeSample** ppSampleSource,
 
         const Vector vecVelChange = 1.0f / 6.0f * ( pTemp1->mForce + ( pTemp2->mForce + pTemp3->mForce ) * 2 + pTemp4->mForce );
 
-		pTarget->GetData().mPosition = pSource->GetData().mPosition + (vecPosChange); //* flDeltaTime );
+        pTarget->GetData().mPosition = pSource->GetData().mPosition + (vecPosChange); //* flDeltaTime );
 
-		pTarget->GetData().mVelocity = pSource->GetData().mVelocity + (vecVelChange); //* flDeltaTime );
-	}
+        pTarget->GetData().mVelocity = pSource->GetData().mVelocity + (vecVelChange); //* flDeltaTime );
+    }
 }
 
 // TODO move to common header
@@ -652,517 +652,517 @@ static const Vector RIGHT(0, 1, 0);
 
 void GetAlignmentAngles(const Vector& vecTop, const Vector& vecBottom, Vector& vecOut)
 {
-	Vector vecDist = vecBottom - vecTop;
+    Vector vecDist = vecBottom - vecTop;
 
-	Vector vecResult = vecDist.Normalize();
+    Vector vecResult = vecDist.Normalize();
 
-	const float flRoll = acos(DotProduct(vecResult, RIGHT)) * (180.0 / PI);
+    const float flRoll = acos(DotProduct(vecResult, RIGHT)) * (180.0 / PI);
 
-	vecOut.z = -flRoll;
+    vecOut.z = -flRoll;
 
-	vecDist.y = 0;
+    vecDist.y = 0;
 
-	vecResult = vecDist.Normalize();
+    vecResult = vecDist.Normalize();
 
-	const float flPitch = acos(DotProduct(vecResult, DOWN)) * (180.0 / PI);
+    const float flPitch = acos(DotProduct(vecResult, DOWN)) * (180.0 / PI);
 
-	vecOut.x = (vecResult.x >= 0.0) ? flPitch : -flPitch;
-	vecOut.y = 0;
+    vecOut.x = (vecResult.x >= 0.0) ? flPitch : -flPitch;
+    vecOut.y = 0;
 }
 
 void TruncateEpsilon(Vector& vec)
 {
-	vec = ((vec * 10.0) + Vector(0.5, 0.5, 0.5)) / 10.0;
+    vec = ((vec * 10.0) + Vector(0.5, 0.5, 0.5)) / 10.0;
 }
 
 void CRope::TraceModels(CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs)
 {
-	if (m_uiSegments > 1)
-	{
-		Vector vecAngles;
+    if (m_uiSegments > 1)
+    {
+        Vector vecAngles;
 
-		GetAlignmentAngles(
-			m_CurrentSys[0]->GetData().mPosition,
-			m_CurrentSys[1]->GetData().mPosition,
-			vecAngles);
+        GetAlignmentAngles(
+            m_CurrentSys[0]->GetData().mPosition,
+            m_CurrentSys[1]->GetData().mPosition,
+            vecAngles);
 
-		(*ppPrimarySegs)->pev->angles = vecAngles;
-	}
+        (*ppPrimarySegs)->pev->angles = vecAngles;
+    }
 
-	TraceResult tr;
+    TraceResult tr;
 
-	if (m_bObjectAttached)
-	{
-		for (size_t uiSeg = 1; uiSeg < m_uiSegments; ++uiSeg)
-		{
-			CRopeSample* pSample = m_CurrentSys[uiSeg];
+    if (m_bObjectAttached)
+    {
+        for (size_t uiSeg = 1; uiSeg < m_uiSegments; ++uiSeg)
+        {
+            CRopeSample* pSample = m_CurrentSys[uiSeg];
 
-			Vector vecDist = pSample->GetData().mPosition - ppHiddenSegs[uiSeg]->pev->origin;
+            Vector vecDist = pSample->GetData().mPosition - ppHiddenSegs[uiSeg]->pev->origin;
 
-			vecDist = vecDist.Normalize();
+            vecDist = vecDist.Normalize();
 
-			const float flTraceDist = (uiSeg - m_uiAttachedObjectsSegment + 2) < 5 ? 50 : 10;
+            const float flTraceDist = (uiSeg - m_uiAttachedObjectsSegment + 2) < 5 ? 50 : 10;
 
-			const Vector vecTraceDist = vecDist * flTraceDist;
+            const Vector vecTraceDist = vecDist * flTraceDist;
 
-			const Vector vecEnd = pSample->GetData().mPosition + vecTraceDist;
+            const Vector vecEnd = pSample->GetData().mPosition + vecTraceDist;
 
-			UTIL_TraceLine(ppHiddenSegs[uiSeg]->pev->origin, vecEnd, ignore_monsters, edict(), &tr);
+            UTIL_TraceLine(ppHiddenSegs[uiSeg]->pev->origin, vecEnd, ignore_monsters, edict(), &tr);
 
-			if (tr.flFraction == 1.0 && 0 != tr.fAllSolid)
-			{
-				break;
-			}
+            if (tr.flFraction == 1.0 && 0 != tr.fAllSolid)
+            {
+                break;
+            }
 
-			if (tr.flFraction != 1.0 || 0 != tr.fStartSolid || 0 == tr.fInOpen)
-			{
-				Vector vecOrigin = tr.vecEndPos - vecTraceDist;
+            if (tr.flFraction != 1.0 || 0 != tr.fStartSolid || 0 == tr.fInOpen)
+            {
+                Vector vecOrigin = tr.vecEndPos - vecTraceDist;
 
-				TruncateEpsilon(vecOrigin);
+                TruncateEpsilon(vecOrigin);
 
-				ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
+                ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
 
-				Vector vecNormal = tr.vecPlaneNormal.Normalize() * 20000.0;
+                Vector vecNormal = tr.vecPlaneNormal.Normalize() * 20000.0;
 
-				auto& data = ppPrimarySegs[uiSeg]->GetSample()->GetData();
+                auto& data = ppPrimarySegs[uiSeg]->GetSample()->GetData();
 
-				data.mApplyExternalForce = true;
+                data.mApplyExternalForce = true;
 
-				data.mExternalForce = vecNormal;
+                data.mExternalForce = vecNormal;
 
-				data.mVelocity = g_vecZero;
-			}
-			else
-			{
-				Vector vecOrigin = pSample->GetData().mPosition;
+                data.mVelocity = g_vecZero;
+            }
+            else
+            {
+                Vector vecOrigin = pSample->GetData().mPosition;
 
-				TruncateEpsilon(vecOrigin);
+                TruncateEpsilon(vecOrigin);
 
-				ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
-			}
-		}
-	}
-	else
-	{
-		for (size_t uiSeg = 1; uiSeg < m_uiSegments; ++uiSeg)
-		{
-			UTIL_TraceLine(
-				ppHiddenSegs[uiSeg]->pev->origin,
-				m_CurrentSys[uiSeg]->GetData().mPosition,
-				ignore_monsters, edict(), &tr);
+                ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
+            }
+        }
+    }
+    else
+    {
+        for (size_t uiSeg = 1; uiSeg < m_uiSegments; ++uiSeg)
+        {
+            UTIL_TraceLine(
+                ppHiddenSegs[uiSeg]->pev->origin,
+                m_CurrentSys[uiSeg]->GetData().mPosition,
+                ignore_monsters, edict(), &tr);
 
-			if (tr.flFraction == 1.0)
-			{
-				Vector vecOrigin = m_CurrentSys[uiSeg]->GetData().mPosition;
+            if (tr.flFraction == 1.0)
+            {
+                Vector vecOrigin = m_CurrentSys[uiSeg]->GetData().mPosition;
 
-				TruncateEpsilon(vecOrigin);
+                TruncateEpsilon(vecOrigin);
 
-				ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
-			}
-			else
-			{
-				// CBaseEntity* pEnt = GET_PRIVATE( tr.pHit );
-				const Vector vecNormal = tr.vecPlaneNormal.Normalize();
+                ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
+            }
+            else
+            {
+                // CBaseEntity* pEnt = GET_PRIVATE( tr.pHit );
+                const Vector vecNormal = tr.vecPlaneNormal.Normalize();
 
-				Vector vecOrigin = tr.vecEndPos + vecNormal * 10.0;
+                Vector vecOrigin = tr.vecEndPos + vecNormal * 10.0;
 
-				TruncateEpsilon(vecOrigin);
+                TruncateEpsilon(vecOrigin);
 
-				ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
+                ppPrimarySegs[uiSeg]->SetOrigin(vecOrigin);
 
-				ppPrimarySegs[uiSeg]->GetSample()->GetData().mApplyExternalForce = true;
+                ppPrimarySegs[uiSeg]->GetSample()->GetData().mApplyExternalForce = true;
 
-				ppPrimarySegs[uiSeg]->GetSample()->GetData().mExternalForce = vecNormal * 40000.0;
-			}
-		}
-	}
+                ppPrimarySegs[uiSeg]->GetSample()->GetData().mExternalForce = vecNormal * 40000.0;
+            }
+        }
+    }
 
-	Vector vecAngles;
+    Vector vecAngles;
 
-	for (size_t uiSeg = 1; uiSeg < m_uiSegments; ++uiSeg)
-	{
-		auto pSegment = ppPrimarySegs[uiSeg - 1];
-		auto pSegment2 = ppPrimarySegs[uiSeg];
+    for (size_t uiSeg = 1; uiSeg < m_uiSegments; ++uiSeg)
+    {
+        auto pSegment = ppPrimarySegs[uiSeg - 1];
+        auto pSegment2 = ppPrimarySegs[uiSeg];
 
-		GetAlignmentAngles(pSegment->pev->origin, pSegment2->pev->origin, vecAngles);
+        GetAlignmentAngles(pSegment->pev->origin, pSegment2->pev->origin, vecAngles);
 
-		pSegment->pev->angles = vecAngles;
-	}
+        pSegment->pev->angles = vecAngles;
+    }
 
-	if (m_uiSegments > 1)
-	{
-		auto pSample = m_CurrentSys[m_uiNumSamples - 1];
+    if (m_uiSegments > 1)
+    {
+        auto pSample = m_CurrentSys[m_uiNumSamples - 1];
 
-		UTIL_TraceLine(m_vecLastEndPos, pSample->GetData().mPosition, ignore_monsters, edict(), &tr);
+        UTIL_TraceLine(m_vecLastEndPos, pSample->GetData().mPosition, ignore_monsters, edict(), &tr);
 
-		if (tr.flFraction == 1.0)
-		{
-			m_vecLastEndPos = pSample->GetData().mPosition;
-		}
-		else
-		{
-			m_vecLastEndPos = tr.vecEndPos;
+        if (tr.flFraction == 1.0)
+        {
+            m_vecLastEndPos = pSample->GetData().mPosition;
+        }
+        else
+        {
+            m_vecLastEndPos = tr.vecEndPos;
 
-			pSample->GetData().mApplyExternalForce = true;
+            pSample->GetData().mApplyExternalForce = true;
 
-			pSample->GetData().mExternalForce = tr.vecPlaneNormal.Normalize() * 40000.0;
-		}
+            pSample->GetData().mExternalForce = tr.vecPlaneNormal.Normalize() * 40000.0;
+        }
 
-		auto pSegment = ppPrimarySegs[m_uiNumSamples - 2];
+        auto pSegment = ppPrimarySegs[m_uiNumSamples - 2];
 
-		GetAlignmentAngles(pSegment->pev->origin, m_vecLastEndPos, vecAngles);
+        GetAlignmentAngles(pSegment->pev->origin, m_vecLastEndPos, vecAngles);
 
-		pSegment->pev->angles = vecAngles;
-	}
+        pSegment->pev->angles = vecAngles;
+    }
 }
 
 void CRope::SetRopeSegments(const size_t uiNumSegments,
-	CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs)
+    CRopeSegment** ppPrimarySegs, CRopeSegment** ppHiddenSegs)
 {
-	if (uiNumSegments > 0)
-	{
-		TraceModels(ppPrimarySegs, ppHiddenSegs);
+    if (uiNumSegments > 0)
+    {
+        TraceModels(ppPrimarySegs, ppHiddenSegs);
 
-		CRopeSegment** ppVisible = ppPrimarySegs;
-		CRopeSegment** ppActualHidden = ppHiddenSegs;
+        CRopeSegment** ppVisible = ppPrimarySegs;
+        CRopeSegment** ppActualHidden = ppHiddenSegs;
 
-		if (m_bToggle)
-		{
-			std::swap(ppVisible, ppActualHidden);
-		}
+        if (m_bToggle)
+        {
+            std::swap(ppVisible, ppActualHidden);
+        }
 
-		ppVisible[0]->pev->solid = SOLID_TRIGGER;
-		// TODO: maybe only set/unset the nodraw flag
-		ppVisible[0]->pev->effects = 0;
+        ppVisible[0]->pev->solid = SOLID_TRIGGER;
+        // TODO: maybe only set/unset the nodraw flag
+        ppVisible[0]->pev->effects = 0;
 
-		ppActualHidden[0]->pev->solid = SOLID_NOT;
-		ppActualHidden[0]->pev->effects = EF_NODRAW;
+        ppActualHidden[0]->pev->solid = SOLID_NOT;
+        ppActualHidden[0]->pev->effects = EF_NODRAW;
 
-		for (size_t uiIndex = 1; uiIndex < uiNumSegments; ++uiIndex)
-		{
-			CRopeSegment* pPrim = ppVisible[uiIndex];
-			CRopeSegment* pHidden = ppActualHidden[uiIndex];
+        for (size_t uiIndex = 1; uiIndex < uiNumSegments; ++uiIndex)
+        {
+            CRopeSegment* pPrim = ppVisible[uiIndex];
+            CRopeSegment* pHidden = ppActualHidden[uiIndex];
 
-			pPrim->pev->solid = SOLID_TRIGGER;
-			pPrim->pev->effects = 0;
+            pPrim->pev->solid = SOLID_TRIGGER;
+            pPrim->pev->effects = 0;
 
-			pHidden->pev->solid = SOLID_NOT;
-			pHidden->pev->effects = EF_NODRAW;
+            pHidden->pev->solid = SOLID_NOT;
+            pHidden->pev->effects = EF_NODRAW;
 
-			Vector vecOrigin = pPrim->pev->origin;
+            Vector vecOrigin = pPrim->pev->origin;
 
-			// vecOrigin.x += 10.0;
-			// vecOrigin.y += 10.0;
+            // vecOrigin.x += 10.0;
+            // vecOrigin.y += 10.0;
 
-			pHidden->SetOrigin(vecOrigin);
-		}
-	}
+            pHidden->SetOrigin(vecOrigin);
+        }
+    }
 }
 
 bool CRope::MoveUp(const float flDeltaTime)
 {
-	if (m_uiAttachedObjectsSegment > 4)
-	{
-		float flDistance = flDeltaTime * 128.0;
+    if (m_uiAttachedObjectsSegment > 4)
+    {
+        float flDistance = flDeltaTime * 128.0;
 
-		Vector vecOrigin, vecAngles;
+        Vector vecOrigin, vecAngles;
 
-		while (true)
-		{
-			float flOldDist = flDistance;
+        while (true)
+        {
+            float flOldDist = flDistance;
 
-			flDistance = 0;
+            flDistance = 0;
 
-			if (flOldDist <= 0)
-				break;
+            if (flOldDist <= 0)
+                break;
 
-			if (m_uiAttachedObjectsSegment <= 3)
-				break;
+            if (m_uiAttachedObjectsSegment <= 3)
+                break;
 
-			if (flOldDist > m_flAttachedObjectsOffset)
-			{
-				flDistance = flOldDist - m_flAttachedObjectsOffset;
+            if (flOldDist > m_flAttachedObjectsOffset)
+            {
+                flDistance = flOldDist - m_flAttachedObjectsOffset;
 
-				--m_uiAttachedObjectsSegment;
+                --m_uiAttachedObjectsSegment;
 
-				float flNewOffset = 0;
+                float flNewOffset = 0;
 
-				if (m_uiAttachedObjectsSegment < m_uiSegments)
-				{
-					auto pSegment = seg[m_uiAttachedObjectsSegment];
+                if (m_uiAttachedObjectsSegment < m_uiSegments)
+                {
+                    auto pSegment = seg[m_uiAttachedObjectsSegment];
 
-					pSegment->GetAttachment(0, vecOrigin, vecAngles);
+                    pSegment->GetAttachment(0, vecOrigin, vecAngles);
 
-					flNewOffset = (pSegment->pev->origin - vecOrigin).Length();
-				}
+                    flNewOffset = (pSegment->pev->origin - vecOrigin).Length();
+                }
 
-				m_flAttachedObjectsOffset = flNewOffset;
-			}
-			else
-			{
-				m_flAttachedObjectsOffset -= flOldDist;
-			}
-		}
-	}
+                m_flAttachedObjectsOffset = flNewOffset;
+            }
+            else
+            {
+                m_flAttachedObjectsOffset -= flOldDist;
+            }
+        }
+    }
 
-	return true;
+    return true;
 }
 
 bool CRope::MoveDown(const float flDeltaTime)
 {
-	if (!m_bObjectAttached)
-		return false;
+    if (!m_bObjectAttached)
+        return false;
 
-	float flDistance = flDeltaTime * 128.0;
+    float flDistance = flDeltaTime * 128.0;
 
-	Vector vecOrigin, vecAngles;
+    Vector vecOrigin, vecAngles;
 
-	CRopeSegment* pSegment;
+    CRopeSegment* pSegment;
 
-	bool bOnRope = true;
+    bool bOnRope = true;
 
-	bool bDoIteration = true;
+    bool bDoIteration = true;
 
-	while (bDoIteration)
-	{
-		bDoIteration = false;
+    while (bDoIteration)
+    {
+        bDoIteration = false;
 
-		if (flDistance > 0.0)
-		{
-			float flNewDist = flDistance;
-			float flSegLength = 0.0;
+        if (flDistance > 0.0)
+        {
+            float flNewDist = flDistance;
+            float flSegLength = 0.0;
 
-			while (bOnRope)
-			{
-				if (m_uiAttachedObjectsSegment < m_uiSegments)
-				{
-					pSegment = seg[m_uiAttachedObjectsSegment];
+            while (bOnRope)
+            {
+                if (m_uiAttachedObjectsSegment < m_uiSegments)
+                {
+                    pSegment = seg[m_uiAttachedObjectsSegment];
 
-					pSegment->GetAttachment(0, vecOrigin, vecAngles);
+                    pSegment->GetAttachment(0, vecOrigin, vecAngles);
 
-					flSegLength = (pSegment->pev->origin - vecOrigin).Length();
-				}
+                    flSegLength = (pSegment->pev->origin - vecOrigin).Length();
+                }
 
-				const float flOffset = flSegLength - m_flAttachedObjectsOffset;
+                const float flOffset = flSegLength - m_flAttachedObjectsOffset;
 
-				if (flNewDist <= flOffset)
-				{
-					m_flAttachedObjectsOffset += flNewDist;
-					flDistance = 0;
-					bDoIteration = true;
-					break;
-				}
+                if (flNewDist <= flOffset)
+                {
+                    m_flAttachedObjectsOffset += flNewDist;
+                    flDistance = 0;
+                    bDoIteration = true;
+                    break;
+                }
 
-				if (m_uiAttachedObjectsSegment + 1 == m_uiSegments)
-					bOnRope = false;
-				else
-					++m_uiAttachedObjectsSegment;
+                if (m_uiAttachedObjectsSegment + 1 == m_uiSegments)
+                    bOnRope = false;
+                else
+                    ++m_uiAttachedObjectsSegment;
 
-				flNewDist -= flOffset;
-				flSegLength = 0;
+                flNewDist -= flOffset;
+                flSegLength = 0;
 
-				m_flAttachedObjectsOffset = 0;
+                m_flAttachedObjectsOffset = 0;
 
-				if (flNewDist <= 0)
-					break;
-			}
-		}
-	}
+                if (flNewDist <= 0)
+                    break;
+            }
+        }
+    }
 
-	return bOnRope;
+    return bOnRope;
 }
 
 Vector CRope::GetAttachedObjectsVelocity() const
 {
-	if (!m_bObjectAttached)
-		return g_vecZero;
+    if (!m_bObjectAttached)
+        return g_vecZero;
 
-	return seg[m_uiAttachedObjectsSegment]->GetSample()->GetData().mVelocity;
+    return seg[m_uiAttachedObjectsSegment]->GetSample()->GetData().mVelocity;
 }
 
 void CRope::ApplyForceFromPlayer(const Vector& vecForce)
 {
-	if (!m_bObjectAttached)
-		return;
+    if (!m_bObjectAttached)
+        return;
 
-	float flForce = 20000.0 * RopeForceMultiplier * gpGlobals->frametime;
+    float flForce = 20000.0 * RopeForceMultiplier * gpGlobals->frametime;
 
-	if (m_uiSegments < 26)
-		flForce *= (m_uiSegments / 26.0);
+    if (m_uiSegments < 26)
+        flForce *= (m_uiSegments / 26.0);
 
-	const Vector vecScaledForce = vecForce * flForce;
+    const Vector vecScaledForce = vecForce * flForce;
 
-	ApplyForceToSegment(vecScaledForce, m_uiAttachedObjectsSegment);
+    ApplyForceToSegment(vecScaledForce, m_uiAttachedObjectsSegment);
 }
 
 void CRope::ApplyForceToSegment(const Vector& vecForce, const size_t uiSegment)
 {
-	if (uiSegment < m_uiSegments)
-	{
-		seg[uiSegment]->ApplyExternalForce(vecForce);
-	}
-	else if (uiSegment == m_uiSegments)
-	{
-		// Apply force to the last sample.
+    if (uiSegment < m_uiSegments)
+    {
+        seg[uiSegment]->ApplyExternalForce(vecForce);
+    }
+    else if (uiSegment == m_uiSegments)
+    {
+        // Apply force to the last sample.
 
-		auto& data = m_CurrentSys[uiSegment - 1]->GetData();
+        auto& data = m_CurrentSys[uiSegment - 1]->GetData();
 
-		data.mExternalForce = data.mExternalForce + vecForce;
+        data.mExternalForce = data.mExternalForce + vecForce;
 
-		data.mApplyExternalForce = true;
-	}
+        data.mApplyExternalForce = true;
+    }
 }
 
 void CRope::AttachObjectToSegment(CRopeSegment* pSegment)
 {
-	m_bObjectAttached = true;
+    m_bObjectAttached = true;
 
-	m_flDetachTime = 0;
+    m_flDetachTime = 0;
 
-	SetAttachedObjectsSegment(pSegment);
+    SetAttachedObjectsSegment(pSegment);
 
-	m_flAttachedObjectsOffset = 0;
+    m_flAttachedObjectsOffset = 0;
 }
 
 void CRope::DetachObject()
 {
-	m_bObjectAttached = false;
-	m_flDetachTime = gpGlobals->time;
+    m_bObjectAttached = false;
+    m_flDetachTime = gpGlobals->time;
 }
 
 bool CRope::IsAcceptingAttachment() const
 {
-	if (gpGlobals->time - m_flDetachTime > 2.0 && !m_bObjectAttached)
-	{
-		return !m_bDisallowPlayerAttachment;
-	}
+    if (gpGlobals->time - m_flDetachTime > 2.0 && !m_bObjectAttached)
+    {
+        return !m_bDisallowPlayerAttachment;
+    }
 
-	return false;
+    return false;
 }
 
 bool CRope::ShouldCreak() const
 {
-	if (m_bObjectAttached && m_bMakeSound)
-	{
-		CRopeSample* pSample = seg[m_uiAttachedObjectsSegment]->GetSample();
+    if (m_bObjectAttached && m_bMakeSound)
+    {
+        CRopeSample* pSample = seg[m_uiAttachedObjectsSegment]->GetSample();
 
-		if (pSample->GetData().mVelocity.Length() > 20.0)
-			return RANDOM_LONG(1, 5) == 1;
-	}
+        if (pSample->GetData().mVelocity.Length() > 20.0)
+            return RANDOM_LONG(1, 5) == 1;
+    }
 
-	return false;
+    return false;
 }
 
 void CRope::Creak()
 {
-	EmitSound(CHAN_BODY,
-		g_pszCreakSounds[RANDOM_LONG(0, std::size(g_pszCreakSounds) - 1)],
-		VOL_NORM, ATTN_NORM);
+    EmitSound(CHAN_BODY,
+        g_pszCreakSounds[RANDOM_LONG(0, std::size(g_pszCreakSounds) - 1)],
+        VOL_NORM, ATTN_NORM);
 }
 
 float CRope::GetSegmentLength(size_t uiSegmentIndex) const
 {
-	if (uiSegmentIndex < m_uiSegments)
-	{
-		Vector vecOrigin, vecAngles;
+    if (uiSegmentIndex < m_uiSegments)
+    {
+        Vector vecOrigin, vecAngles;
 
-		auto pSegment = seg[uiSegmentIndex];
+        auto pSegment = seg[uiSegmentIndex];
 
-		pSegment->GetAttachment(0, vecOrigin, vecAngles);
+        pSegment->GetAttachment(0, vecOrigin, vecAngles);
 
-		return (pSegment->pev->origin - vecOrigin).Length();
-	}
+        return (pSegment->pev->origin - vecOrigin).Length();
+    }
 
-	return 0;
+    return 0;
 }
 
 float CRope::GetRopeLength() const
 {
-	float flLength = 0;
+    float flLength = 0;
 
-	Vector vecOrigin, vecAngles;
+    Vector vecOrigin, vecAngles;
 
-	for (size_t uiIndex = 0; uiIndex < m_uiSegments; ++uiIndex)
-	{
-		auto pSegment = seg[uiIndex];
+    for (size_t uiIndex = 0; uiIndex < m_uiSegments; ++uiIndex)
+    {
+        auto pSegment = seg[uiIndex];
 
-		pSegment->GetAttachment(0, vecOrigin, vecAngles);
+        pSegment->GetAttachment(0, vecOrigin, vecAngles);
 
-		flLength += (pSegment->pev->origin - vecOrigin).Length();
-	}
+        flLength += (pSegment->pev->origin - vecOrigin).Length();
+    }
 
-	return flLength;
+    return flLength;
 }
 
 Vector CRope::GetRopeOrigin() const
 {
-	return m_CurrentSys[0]->GetData().mPosition;
+    return m_CurrentSys[0]->GetData().mPosition;
 }
 
 bool CRope::IsValidSegmentIndex(const size_t uiSegment) const
 {
-	return uiSegment < m_uiSegments;
+    return uiSegment < m_uiSegments;
 }
 
 Vector CRope::GetSegmentOrigin(const size_t uiSegment) const
 {
-	if (!IsValidSegmentIndex(uiSegment))
-		return g_vecZero;
+    if (!IsValidSegmentIndex(uiSegment))
+        return g_vecZero;
 
-	return m_CurrentSys[uiSegment]->GetData().mPosition;
+    return m_CurrentSys[uiSegment]->GetData().mPosition;
 }
 
 Vector CRope::GetSegmentAttachmentPoint(const size_t uiSegment) const
 {
-	if (!IsValidSegmentIndex(uiSegment))
-		return g_vecZero;
+    if (!IsValidSegmentIndex(uiSegment))
+        return g_vecZero;
 
-	Vector vecOrigin, vecAngles;
+    Vector vecOrigin, vecAngles;
 
-	auto pSegment = m_bToggle ? altseg[uiSegment] : seg[uiSegment];
+    auto pSegment = m_bToggle ? altseg[uiSegment] : seg[uiSegment];
 
-	pSegment->GetAttachment(0, vecOrigin, vecAngles);
+    pSegment->GetAttachment(0, vecOrigin, vecAngles);
 
-	return vecOrigin;
+    return vecOrigin;
 }
 
 void CRope::SetAttachedObjectsSegment(CRopeSegment* pSegment)
 {
-	for (size_t uiIndex = 0; uiIndex < m_uiSegments; ++uiIndex)
-	{
-		if (seg[uiIndex] == pSegment || altseg[uiIndex] == pSegment)
-		{
-			m_uiAttachedObjectsSegment = uiIndex;
-			break;
-		}
-	}
+    for (size_t uiIndex = 0; uiIndex < m_uiSegments; ++uiIndex)
+    {
+        if (seg[uiIndex] == pSegment || altseg[uiIndex] == pSegment)
+        {
+            m_uiAttachedObjectsSegment = uiIndex;
+            break;
+        }
+    }
 }
 
 Vector CRope::GetSegmentDirFromOrigin(const size_t uiSegmentIndex) const
 {
-	if (uiSegmentIndex >= m_uiSegments)
-		return g_vecZero;
+    if (uiSegmentIndex >= m_uiSegments)
+        return g_vecZero;
 
-	// There is one more sample than there are segments, so this is fine.
-	const Vector vecResult =
-		m_CurrentSys[uiSegmentIndex + 1]->GetData().mPosition -
-		m_CurrentSys[uiSegmentIndex]->GetData().mPosition;
+    // There is one more sample than there are segments, so this is fine.
+    const Vector vecResult =
+        m_CurrentSys[uiSegmentIndex + 1]->GetData().mPosition -
+        m_CurrentSys[uiSegmentIndex]->GetData().mPosition;
 
-	return vecResult.Normalize();
+    return vecResult.Normalize();
 }
 
 Vector CRope::GetAttachedObjectsPosition() const
 {
-	if (!m_bObjectAttached)
-		return g_vecZero;
+    if (!m_bObjectAttached)
+        return g_vecZero;
 
-	Vector vecResult;
+    Vector vecResult;
 
-	if (m_uiAttachedObjectsSegment < m_uiSegments)
-		vecResult = m_CurrentSys[m_uiAttachedObjectsSegment]->GetData().mPosition;
+    if (m_uiAttachedObjectsSegment < m_uiSegments)
+        vecResult = m_CurrentSys[m_uiAttachedObjectsSegment]->GetData().mPosition;
 
-	vecResult = vecResult +
-				(m_flAttachedObjectsOffset * GetSegmentDirFromOrigin(m_uiAttachedObjectsSegment));
+    vecResult = vecResult +
+                (m_flAttachedObjectsOffset * GetSegmentDirFromOrigin(m_uiAttachedObjectsSegment));
 
-	return vecResult;
+    return vecResult;
 }

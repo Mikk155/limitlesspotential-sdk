@@ -290,7 +290,7 @@ void CGrid::paint()
 
     Panel::paint();
 
-	// walk the grid looking for underlined rows
+    // walk the grid looking for underlined rows
     int y = 0;
     for( int row = 0; row < m_yRows; row++ )
     {

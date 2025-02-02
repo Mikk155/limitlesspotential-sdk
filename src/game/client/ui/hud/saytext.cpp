@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -59,11 +59,11 @@ void CHudSayText::InitHUDData()
 
 bool CHudSayText::VidInit()
 {
-	// Get font-related information.
+    // Get font-related information.
     int lineWidth = 0;
     GetConsoleStringSize( "", &lineWidth, &m_LineHeight );
 
-	// Calculate text area starting position now so chat input can position itself correctly.
+    // Calculate text area starting position now so chat input can position itself correctly.
     m_YStart = ScreenHeight - 60 - ( m_LineHeight * ( MAX_LINES + 2 ) );
 
     return true;
@@ -94,7 +94,7 @@ bool CHudSayText::Draw( float flTime )
     if( ( gViewPort && !gViewPort->AllowedToPrintText() ) || 0 == m_HUD_saytext->value )
         return true;
 
-	// make sure the scrolltime is within reasonable bounds, to guard against the clock being reset
+    // make sure the scrolltime is within reasonable bounds, to guard against the clock being reset
     m_ScrollTime = std::min( m_ScrollTime, flTime + m_HUD_saytext_time->value );
 
     if( m_ScrollTime <= flTime )
@@ -102,7 +102,7 @@ bool CHudSayText::Draw( float flTime )
         if( '\0' != *m_LineBuffer[0] )
         {
             m_ScrollTime = flTime + m_HUD_saytext_time->value;
-			// push the console up
+            // push the console up
             ScrollTextUp();
         }
         else
@@ -111,8 +111,8 @@ bool CHudSayText::Draw( float flTime )
         }
     }
 
-	// Set text color to con_color cvar value before drawing to ensure consistent color.
-	// The engine resets this color to that value after drawing a single string.
+    // Set text color to con_color cvar value before drawing to ensure consistent color.
+    // The engine resets this color to that value after drawing a single string.
     if( int r, g, b; sscanf( m_con_color->string, "%i %i %i", &r, &g, &b ) == 3 )
     {
         gEngfuncs.pfnDrawSetTextColor( r / 255.0f, g / 255.0f, b / 255.0f );
@@ -126,31 +126,31 @@ bool CHudSayText::Draw( float flTime )
         {
             if( *m_LineBuffer[i] == 2 && m_NameColors[i] )
             {
-				// it's a saytext string
+                // it's a saytext string
 
-				// Make a copy we can freely modify
+                // Make a copy we can freely modify
                 strncpy( line, m_LineBuffer[i], sizeof( line ) - 1 );
                 line[sizeof( line ) - 1] = '\0';
 
-				// draw the first x characters in the player color
+                // draw the first x characters in the player color
                 const std::size_t playerNameEndIndex = std::min( m_NameLengths[i], MAX_PLAYER_NAME_LENGTH + 31 );
 
-				// Cut off the actual text so we can print player name
+                // Cut off the actual text so we can print player name
                 line[playerNameEndIndex] = '\0';
 
                 gEngfuncs.pfnDrawSetTextColor( m_NameColors[i]->x, m_NameColors[i]->y, m_NameColors[i]->z );
                 const int x = DrawConsoleString( LINE_START, y, line + 1 ); // don't draw the control code at the start
 
-				// Reset last character
+                // Reset last character
                 line[playerNameEndIndex] = m_LineBuffer[i][playerNameEndIndex];
 
-				// color is reset after each string draw
-				// Print the text without player name
+                // color is reset after each string draw
+                // Print the text without player name
                 DrawConsoleString( x, y, line + m_NameLengths[i] );
             }
             else
             {
-				// normal draw
+                // normal draw
                 DrawConsoleString( LINE_START, y, m_LineBuffer[i] );
             }
         }
@@ -169,7 +169,7 @@ void CHudSayText::MsgFunc_SayText( const char* pszName, BufferReader& reader )
 
 void CHudSayText::SayTextPrint( const char* pszBuf, int iBufSize, int clientIndex )
 {
-	// Print it straight to the console
+    // Print it straight to the console
     ConsolePrint( pszBuf );
 
     if( gViewPort && gViewPort->AllowedToPrintText() == false )
@@ -178,7 +178,7 @@ void CHudSayText::SayTextPrint( const char* pszBuf, int iBufSize, int clientInde
     }
 
     int i;
-	// find an empty string slot
+    // find an empty string slot
     for( i = 0; i < MAX_LINES; i++ )
     {
         if( '\0' == *m_LineBuffer[i] )
@@ -186,7 +186,7 @@ void CHudSayText::SayTextPrint( const char* pszBuf, int iBufSize, int clientInde
     }
     if( i == MAX_LINES )
     {
-		// force scroll buffer up
+        // force scroll buffer up
         ScrollTextUp();
         i = MAX_LINES - 1;
     }
@@ -194,7 +194,7 @@ void CHudSayText::SayTextPrint( const char* pszBuf, int iBufSize, int clientInde
     m_NameLengths[i] = 0;
     m_NameColors[i] = nullptr;
 
-	// if it's a say message, search for the players name in the string
+    // if it's a say message, search for the players name in the string
     if( *pszBuf == 2 && clientIndex > 0 )
     {
         gEngfuncs.pfnGetPlayerInfo( clientIndex, &g_PlayerInfoList[clientIndex] );
@@ -214,10 +214,10 @@ void CHudSayText::SayTextPrint( const char* pszBuf, int iBufSize, int clientInde
 
     strncpy( m_LineBuffer[i], pszBuf, MAX_CHARS_PER_LINE );
 
-	// make sure the text fits in one line
+    // make sure the text fits in one line
     EnsureTextFitsInOneLineAndWrapIfHaveTo( i );
 
-	// Set scroll time
+    // Set scroll time
     if( i == 0 )
     {
         m_ScrollTime = gHUD.m_flTime + m_HUD_saytext_time->value;
@@ -234,17 +234,17 @@ void CHudSayText::EnsureTextFitsInOneLineAndWrapIfHaveTo( int line )
 
     if( ( line_width + LINE_START ) > GetMaxLineWidth() )
     { // string is too long to fit on line
-		// scan the string until we find what word is too long,  and wrap the end of the sentence after the word
+        // scan the string until we find what word is too long,  and wrap the end of the sentence after the word
         int length = LINE_START;
         int tmp_len = 0;
         char* last_break = nullptr;
         for( char* x = m_LineBuffer[line]; *x != 0; x++ )
         {
-			// check for a color change, if so skip past it
+            // check for a color change, if so skip past it
             if( x[0] == '/' && x[1] == '( ' )
             {
                 x += 2;
-				// skip forward until past mode specifier
+                // skip forward until past mode specifier
                 while( *x != 0 && *x != ' )' )
                     x++;
 
@@ -272,7 +272,7 @@ void CHudSayText::EnsureTextFitsInOneLineAndWrapIfHaveTo( int line )
 
                 x = last_break;
 
-				// find an empty string slot
+                // find an empty string slot
                 int j;
                 do
                 {
@@ -283,14 +283,14 @@ void CHudSayText::EnsureTextFitsInOneLineAndWrapIfHaveTo( int line )
                     }
                     if( j == MAX_LINES )
                     {
-						// need to make more room to display text, scroll stuff up then fix the pointers
+                        // need to make more room to display text, scroll stuff up then fix the pointers
                         int linesmoved = ScrollTextUp();
                         line -= linesmoved;
                         last_break = last_break - ( sizeof( m_LineBuffer[0] ) * linesmoved );
                     }
                 } while( j == MAX_LINES );
 
-				// copy remaining string into next buffer,  making sure it starts with a space character
+                // copy remaining string into next buffer,  making sure it starts with a space character
                 if( (char)*last_break == (char)' ' )
                 {
                     int linelen = strlen( m_LineBuffer[j] );
@@ -319,6 +319,6 @@ void CHudSayText::EnsureTextFitsInOneLineAndWrapIfHaveTo( int line )
 
 int CHudSayText::GetChatYInputPosition() const
 {
-	// The input position is above the text area, separated by an empty line.
+    // The input position is above the text area, separated by an empty line.
     return m_YStart - m_LineHeight * 2;
 }

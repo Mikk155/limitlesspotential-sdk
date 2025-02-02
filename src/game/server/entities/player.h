@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -32,8 +32,8 @@ class CBaseItem;
 class CRope;
 class CTFGoalFlag;
 
-#define PLAYER_FATAL_FALL_SPEED 1024															  // approx 60 feet
-#define PLAYER_MAX_SAFE_FALL_SPEED 580															  // approx 20 feet
+#define PLAYER_FATAL_FALL_SPEED 1024                                                              // approx 60 feet
+#define PLAYER_MAX_SAFE_FALL_SPEED 580                                                              // approx 20 feet
 #define DAMAGE_FOR_FALL_SPEED (float)100 / (PLAYER_FATAL_FALL_SPEED - PLAYER_MAX_SAFE_FALL_SPEED) // damage per unit per second.
 #define PLAYER_MIN_BOUNCE_SPEED 200
 #define PLAYER_FALL_PUNCH_THRESHHOLD (float)350 // won't punch player's screen/make scrape noise unless player falling at least this fast.
@@ -49,8 +49,8 @@ class CTFGoalFlag;
 #define PFLAG_ONSWING (1 << 0)
 #define PFLAG_ONTRAIN (1 << 1)
 #define PFLAG_ONBARNACLE (1 << 2)
-#define PFLAG_DUCKING (1 << 3)	// In the process of ducking, but totally squatted yet
-#define PFLAG_USING (1 << 4)	// Using a continuous entity
+#define PFLAG_DUCKING (1 << 3)    // In the process of ducking, but totally squatted yet
+#define PFLAG_USING (1 << 4)    // Using a continuous entity
 #define PFLAG_OBSERVER (1 << 5) // player is locked in stationary cam mode. Spectators can move, observers can't.
 #define PFLAG_ONROPE (1 << 6)
 
@@ -130,20 +130,20 @@ class CBasePlayer : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-	// Spectator camera
-	/**
-	 *	@brief Find the next client in the game for this player to spectate
-	 */
+    // Spectator camera
+    /**
+     *    @brief Find the next client in the game for this player to spectate
+     */
     void Observer_FindNextPlayer( bool bReverse );
 
-	/**
-	 *	@brief Handle buttons in observer mode
-	 */
+    /**
+     *    @brief Handle buttons in observer mode
+     */
     void Observer_HandleButtons();
 
-	/**
-	 *	@brief Attempt to change the observer mode
-	 */
+    /**
+     *    @brief Attempt to change the observer mode
+     */
     void Observer_SetMode( int iMode );
 
     void Observer_CheckTarget();
@@ -166,11 +166,11 @@ public:
     int m_iWeaponFlash;        // brightness of the weapon flash
     float m_flStopExtraSoundTime;
 
-	/**
-	 *	@brief What type of suit light the player can use
-	 *	@details The initial value here is the default
-	 *	To change this setting at runtime call @see SetSuitLightType so that player state is updated properly
-	 */
+    /**
+     *    @brief What type of suit light the player can use
+     *    @details The initial value here is the default
+     *    To change this setting at runtime call @see SetSuitLightType so that player state is updated properly
+     */
     SuitLightType m_SuitLightType = SuitLightType::Flashlight;
     float m_flFlashLightTime; // Time until next battery draw/Recharge
     int m_iFlashBattery;      // Flashlight Battery Draw
@@ -192,7 +192,7 @@ public:
     float m_fNextSuicideTime;       // the time after which the player can next use the suicide command
 
 
-	// these are time-sensitive things that we keep track of
+    // these are time-sensitive things that we keep track of
     float m_flTimeStepSound;  // when the last stepping sound was made
     float m_flTimeWeaponIdle; // when to play another weapon idle animation.
     float m_flSwimTime;          // how long player has been underwater
@@ -240,7 +240,7 @@ public:
     int m_iFOV;          // field of view
     int m_iClientFOV; // client's known FOV
 
-	// Opposing Force specific
+    // Opposing Force specific
 
     const char* m_szTeamModel;
     CTFTeam m_iTeamNum;
@@ -275,7 +275,7 @@ public:
     float m_flShieldTime;
     float m_flJumpTime;
 
-	// usable player weapons
+    // usable player weapons
     CBasePlayerWeapon* m_rgpPlayerWeapons[MAX_WEAPON_SLOTS];
     CBasePlayerWeapon* m_pActiveWeapon;
     CBasePlayerWeapon* m_pClientActiveWeapon; // client version of the active weapon
@@ -283,15 +283,15 @@ public:
 
     std::uint64_t m_WeaponBits;
 
-	// Not saved, used to update client.
+    // Not saved, used to update client.
     std::uint64_t m_ClientWeaponBits;
 
-	// Not saved, tracks the last time the engine called GetWeaponData.
+    // Not saved, tracks the last time the engine called GetWeaponData.
     float m_LastWeaponDataUpdateTime{0};
 
     std::uint32_t m_HudFlags = 0;
 
-	// shared ammo slots
+    // shared ammo slots
     int m_rgAmmo[MAX_AMMO_TYPES];
     int m_rgAmmoLast[MAX_AMMO_TYPES];
 
@@ -313,7 +313,7 @@ public:
 
     bool HasHumanGibs() override { return true; }
 
-	//	void Think() override;
+    //    void Think() override;
     virtual void Jump();
     virtual void Duck();
     virtual void PreThink();
@@ -322,12 +322,12 @@ public:
     bool GiveHealth( float flHealth, int bitsDamageType ) override;
     void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	/**
-	 *	@brief NOTE: each call to TakeDamage with bitsDamageType set to
-	 *	a time-based damage type will cause the damage time countdown to be reset.
-	 *	Thus the ongoing effects of poison, radiation etc are implemented
-	 *	with subsequent calls to TakeDamage using DMG_GENERIC.
-	 */
+    /**
+     *    @brief NOTE: each call to TakeDamage with bitsDamageType set to
+     *    a time-based damage type will cause the damage time countdown to be reset.
+     *    Thus the ongoing effects of poison, radiation etc are implemented
+     *    with subsequent calls to TakeDamage using DMG_GENERIC.
+     */
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
     void Killed( CBaseEntity* attacker, int iGib ) override;
     Vector BodyTarget( const Vector& posSrc ) override { return Center() + pev->view_ofs * RANDOM_FLOAT( 0.5, 1.1 ); } // position to shoot at
@@ -338,33 +338,33 @@ public:
 
     bool IsBot() const { return ( pev->flags & FL_FAKECLIENT ) != 0; }
 
-	/**
-	 *	@brief Bots should return false for this, they can't receive NET messages
-	 *	Spectators should return true for this
-	 */
+    /**
+     *    @brief Bots should return false for this, they can't receive NET messages
+     *    Spectators should return true for this
+     */
     bool IsNetClient() override { return !IsBot(); }
 
     const char* TeamID() override;
 
     void PostRestore() override;
 
-	/**
-	 *	@brief Marks everything as new so the player will resend this to the hud.
-	 */
+    /**
+     *    @brief Marks everything as new so the player will resend this to the hud.
+     */
     void RenewItems();
 
-	/**
-	 *	@brief call this when a player dies to pack up the appropriate weapons and ammo items,
-	 *	and to destroy anything that shouldn't be packed.
-	 *	This is pretty brute force :(
-	 */
+    /**
+     *    @brief call this when a player dies to pack up the appropriate weapons and ammo items,
+     *    and to destroy anything that shouldn't be packed.
+     *    This is pretty brute force :(
+     */
     void PackDeadPlayerItems();
     void RemoveAllItems( bool removeSuit );
     bool SwitchWeapon( CBasePlayerWeapon* weapon );
 
-	/**
-	 *	@brief Equips an appropriate weapon for the player if they don't have one equipped already.
-	 */
+    /**
+     *    @brief Equips an appropriate weapon for the player if they don't have one equipped already.
+     */
     void EquipWeapon();
 
     void SetWeaponBit( int id );
@@ -378,17 +378,17 @@ public:
 
     void SetHasJetpack( bool state );
 
-	/**
-	 *	@brief resends any changed player HUD info to the client.
-	 *	Called every frame by PlayerPreThink
-	 *	Also called at start of demo recording and playback by ForceClientDllUpdate to ensure the demo gets messages
-	 *	reflecting all of the HUD state info.
-	 */
+    /**
+     *    @brief resends any changed player HUD info to the client.
+     *    Called every frame by PlayerPreThink
+     *    Also called at start of demo recording and playback by ForceClientDllUpdate to ensure the demo gets messages
+     *    reflecting all of the HUD state info.
+     */
     virtual void UpdateClientData();
 
     void UpdateCTFHud();
 
-	// Player is moved across the transition by other means
+    // Player is moved across the transition by other means
     int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
     void Precache() override;
     bool IsOnLadder();
@@ -401,41 +401,41 @@ public:
 
     void SetSuitLightType( SuitLightType type );
 
-	/**
-	 *	@brief updates the position of the player's reserved sound slot in the sound list.
-	 */
+    /**
+     *    @brief updates the position of the player's reserved sound slot in the sound list.
+     */
     void UpdatePlayerSound();
     void DeathSound() override;
 
-	/**
-	 *	@brief Set the activity based on an event or current state
-	 */
+    /**
+     *    @brief Set the activity based on an event or current state
+     */
     void SetAnimation( PLAYER_ANIM playerAnim );
     char m_szAnimExtention[32];
 
-	// custom player functions
+    // custom player functions
     virtual void ImpulseCommands();
     void CheatImpulseCommands( int iImpulse );
 
-	/**
-	 *	@brief find an intermission spot and send the player off into observer mode
-	 */
+    /**
+     *    @brief find an intermission spot and send the player off into observer mode
+     */
     void StartDeathCam();
     void StartObserver( Vector vecPosition, Vector vecViewAngle );
 
     void AddPoints( int score, bool bAllowNegativeScore );
     void AddPointsToTeam( int score, bool bAllowNegativeScore );
 
-	/**
-	 *	@brief Add a weapon to the player (Item == Weapon == Selectable Object)
-	 */
+    /**
+     *    @brief Add a weapon to the player (Item == Weapon == Selectable Object)
+     */
     ItemAddResult AddPlayerWeapon( CBasePlayerWeapon* weapon );
 
     bool RemovePlayerWeapon( CBasePlayerWeapon* weapon );
 
-	/**
-	 *	@brief drop the named item, or if no name, the active item.
-	 */
+    /**
+     *    @brief drop the named item, or if no name, the active item.
+     */
     void DropPlayerWeapon( const char* pszItemName );
 
     bool HasPlayerWeapon( CBasePlayerWeapon* checkWeapon );
@@ -450,28 +450,28 @@ private:
     void DeployWeapon( CBasePlayerWeapon* weapon );
 
 public:
-	/**
-	 *	@brief Called every frame by the player PreThink
-	 */
+    /**
+     *    @brief Called every frame by the player PreThink
+     */
     void ItemPreFrame();
 
-	/**
-	 *	@brief Called every frame by the player PostThink
-	 */
+    /**
+     *    @brief Called every frame by the player PostThink
+     */
     void ItemPostFrame();
     CBaseItem* GiveNamedItem( std::string_view className, std::optional<int> defaultAmmo = std::nullopt );
     void EnableControl( bool fControl );
 
-	/**
-	 *	@brief Returns the unique ID for the ammo, or -1 if error
-	 */
+    /**
+     *    @brief Returns the unique ID for the ammo, or -1 if error
+     */
     int GiveAmmo( int iAmount, const char* szName );
 
     int GiveMagazine( CBasePlayerWeapon* weapon, int attackMode );
 
-	/**
-	 *	@brief makes sure the client has all the necessary ammo info, if values have changed
-	 */
+    /**
+     *    @brief makes sure the client has all the necessary ammo info, if values have changed
+     */
     void SendAmmoUpdate();
     void SendSingleAmmoUpdate( int ammoIndex, bool clearLastState );
 
@@ -483,17 +483,17 @@ public:
     void PlayerDeathThink();
     void PlayerUse();
 
-	/**
-	 *	@brief Play suit update if it's time
-	 */
+    /**
+     *    @brief Play suit update if it's time
+     */
     void CheckSuitUpdate();
 
-	/**
-	 *	@brief add sentence to suit playlist queue.
-	 *	@param name Name of the sentence or sentence group to play. If null, clears out the playlist queue.
-	 *	@param iNoRepeatTime if specified, then we won't repeat playback of this word or sentence
-	 *		for at least that number of seconds.
-	 */
+    /**
+     *    @brief add sentence to suit playlist queue.
+     *    @param name Name of the sentence or sentence group to play. If null, clears out the playlist queue.
+     *    @param iNoRepeatTime if specified, then we won't repeat playback of this word or sentence
+     *        for at least that number of seconds.
+     */
     void SetSuitUpdate( const char* name, int iNoRepeatTime );
 
     void UpdateGeigerCounter();
@@ -511,37 +511,37 @@ public:
 
     int AdjustAmmoByIndex( int ammoIndex, int count );
 
-	/**
-	 *	@brief return player light level plus virtual muzzle flash
-	 */
+    /**
+     *    @brief return player light level plus virtual muzzle flash
+     */
     int Illumination() override;
 
     void ResetAutoaim();
 
-	/**
-	 *	@brief set crosshair position to point to enemey
-	 */
+    /**
+     *    @brief set crosshair position to point to enemey
+     */
     Vector GetAutoaimVector( float flDelta );
 
     Vector GetAutoaimVectorFromPoint( const Vector& vecSrc, float flDelta );
     Vector AutoaimDeflection( const Vector& vecSrc, float flDist, float flDelta );
 
-	/**
-	 *	@brief When recording a demo, we need to have the server tell us the entire client state
-	 *	so that the client side .dll can behave correctly.
-	 *	Reset stuff so that the state is transmitted.
-	 */
+    /**
+     *    @brief When recording a demo, we need to have the server tell us the entire client state
+     *    so that the client side .dll can behave correctly.
+     *    Reset stuff so that the state is transmitted.
+     */
     void ForceClientDllUpdate();
 
-	/**
-	 *	@brief UNDONE:  Determine real frame limit, 8 is a placeholder.
-	 *	Note:  -1 means no custom frames present.
-	 */
+    /**
+     *    @brief UNDONE:  Determine real frame limit, 8 is a placeholder.
+     *    Note:  -1 means no custom frames present.
+     */
     void SetCustomDecalFrames( int nFrames );
 
-	/**
-	 *	@brief Returns the # of custom frames this player's custom clan logo contains.
-	 */
+    /**
+     *    @brief Returns the # of custom frames this player's custom clan logo contains.
+     */
     int GetCustomDecalFrames();
 
     float m_flStartCharge;
@@ -549,7 +549,7 @@ public:
     float m_flPlayAftershock;
     float m_flNextAmmoBurn; // while charging, when to absorb another unit of player's ammo?
 
-	// Player ID
+    // Player ID
     void InitStatusBar();
     void UpdateStatusBar();
     int m_izSBarState[SBAR_END];
@@ -560,10 +560,10 @@ public:
 
     void UpdateEntityInfo();
 
-	// Not saved, reset on map change.
+    // Not saved, reset on map change.
     float m_NextEntityInfoUpdateTime;
 
-	// Assume this is false on map start since the client clears it anyway.
+    // Assume this is false on map start since the client clears it anyway.
     bool m_EntityInfoEnabled{false};
 
     float m_flNextChatTime;
@@ -588,10 +588,10 @@ public:
 
     bool m_bRestored;
 
-	// True if the player is currently spawning.
+    // True if the player is currently spawning.
     bool m_bIsSpawning = false;
 
-	// Whether to fire game_playerspawn next time we check for updates.
+    // Whether to fire game_playerspawn next time we check for updates.
     bool m_FireSpawnTarget = false;
 
     bool IsOnRope() const { return ( m_afPhysicsFlags & PFLAG_ONROPE ) != 0; }
@@ -621,7 +621,7 @@ private:
     float m_flLastClimbTime = 0;
     bool m_bIsClimbing = false;
 
-	// For saving and level changes.
+    // For saving and level changes.
     int m_HudColor = RGB_HUD_COLOR.ToInteger();
     int m_CrosshairColor = RGB_CROSSHAIR_COLOR.ToInteger();
 
@@ -630,16 +630,16 @@ private:
     bool m_JetpackEnabled = false;
 
 public:
-	/**
-	 *	@brief Sets the player's hud color
-	 *	@details The player must be fully connected and ready to receive user messages for this to work
-	 */
+    /**
+     *    @brief Sets the player's hud color
+     *    @details The player must be fully connected and ready to receive user messages for this to work
+     */
     void SetHudColor( RGB24 color );
 
-	/**
-	 *	@brief Sets the player's crosshair color
-	 *	@details The player must be fully connected and ready to receive user messages for this to work
-	 */
+    /**
+     *    @brief Sets the player's crosshair color
+     *    @details The player must be fully connected and ready to receive user messages for this to work
+     */
     void SetCrosshairColor( RGB24 color );
 
     void SendScoreInfo( CBasePlayer* destination );
@@ -815,12 +815,12 @@ inline CPlayerEnumeratorWithStart UTIL_FindPlayers( CBasePlayer* pStartEntity )
 }
 
 /**
- *	@brief Find a player with a case-insensitive name search.
+ *    @brief Find a player with a case-insensitive name search.
  */
 CBasePlayer* FindPlayerByName( const char* name );
 
 /**
- *	@brief Tag type to log player info in the form <tt>\"netname&lt;userid&gt;&lt;steamid&gt;&lt;teamname&gt;\"</tt>.
+ *    @brief Tag type to log player info in the form <tt>\"netname&lt;userid&gt;&lt;steamid&gt;&lt;teamname&gt;\"</tt>.
  */
 struct PlayerLogInfo
 {
@@ -830,7 +830,7 @@ struct PlayerLogInfo
 template <>
 struct fmt::formatter<PlayerLogInfo>
 {
-	constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
+    constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
     {
         auto it = ctx.begin();
 
@@ -861,8 +861,8 @@ inline void MESSAGE_BEGIN( int msg_dest, int msg_type, const float* pOrigin = nu
 }
 
 /**
- *	@brief Prints to the given player's console.
- *	Uses fmtlib format strings.
+ *    @brief Prints to the given player's console.
+ *    Uses fmtlib format strings.
  */
 template <typename... Args>
 void UTIL_ConsolePrint( CBasePlayer* player, fmt::format_string<Args...> fmt, Args&&... args )
@@ -876,7 +876,7 @@ void UTIL_ConsolePrint( CBasePlayer* player, fmt::format_string<Args...> fmt, Ar
 }
 
 /**
- *	@brief Prints to the given player's console.
+ *    @brief Prints to the given player's console.
  */
 inline void UTIL_ConsolePrint( CBasePlayer* player, const char* msg )
 {
@@ -888,6 +888,6 @@ inline bool gInitHUD = true;
 inline bool giPrecacheGrunt = false;
 
 /**
- *	@brief Display the game title if this key is set
+ *    @brief Display the game title if this key is set
  */
 inline std::string g_DisplayTitleName;

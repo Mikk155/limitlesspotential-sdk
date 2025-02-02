@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -46,14 +46,14 @@ void PM_ShowClipBox()
     if( 0 == pmove->runfuncs )
         return;
 
-	// More debugging, draw the particle bbox for player and for the entity we are looking directly at.
-	//  aslo prints entity info to the console overlay.
-	// if ( !pmove->server )
-	//	return;
+    // More debugging, draw the particle bbox for player and for the entity we are looking directly at.
+    //  aslo prints entity info to the console overlay.
+    // if ( !pmove->server )
+    //    return;
 
-	// Draw entity in center of view
-	// Also draws the normal to the clip plane that intersects our movement ray.  Leaves a particle
-	//  trail at the intersection point.
+    // Draw entity in center of view
+    // Also draws the normal to the clip plane that intersects our movement ray.  Leaves a particle
+    //  trail at the intersection point.
     PM_ViewEntity();
 
     org = pmove->origin;
@@ -67,22 +67,22 @@ void PM_ShowClipBox()
         org = org - offset;
     }
 
-	// Show our BBOX in particles.
+    // Show our BBOX in particles.
     PM_DrawBBox( pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], org, 0 != pmove->server ? 132 : 0, 0.1 );
 
     PM_ParticleLine( org, org, 0 != pmove->server ? 132 : 0, 0.1, 5.0 );
-	/*
-		{
-			int i;
-			for ( i = 0; i < pmove->numphysent; i++ )
-			{
-				if ( pmove->physents[ i ].info >= 1 && pmove->physents[ i ].info <= 4 )
-				{
-					PM_DrawBBox( pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], pmove->physents[i].origin, 132, 0.1 );
-				}
-			}
-		}
-	*/
+    /*
+        {
+            int i;
+            for ( i = 0; i < pmove->numphysent; i++ )
+            {
+                if ( pmove->physents[ i ].info >= 1 && pmove->physents[ i ].info <= 4 )
+                {
+                    PM_DrawBBox( pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], pmove->physents[i].origin, 132, 0.1 );
+                }
+            }
+        }
+    */
 #endif
 }
 
@@ -100,7 +100,7 @@ void PM_ParticleLine( Vector start, Vector end, int pcolor, float life, float ve
     Vector curpos;
     Vector diff;
     int i;
-	// Determine distance;
+    // Determine distance;
 
     diff = end - start;
 
@@ -167,7 +167,7 @@ void PM_DrawPhysEntBBox( int num, int pcolor, float life )
             p[j] = tmp;
         }
 
-		// If the bbox should be rotated, do that
+        // If the bbox should be rotated, do that
         if( pe->angles != g_vecZero )
         {
             Vector forward, right, up;
@@ -182,7 +182,7 @@ void PM_DrawPhysEntBBox( int num, int pcolor, float life )
             }
         }
 
-		// Offset by entity origin, if any.
+        // Offset by entity origin, if any.
         for( j = 0; j < 8; j++ )
             p[j] = p[j] + org;
 
@@ -301,7 +301,7 @@ void PM_ViewEntity()
         pcolor = 111;
     }
 
-	// Draw the hull or bbox.
+    // Draw the hull or bbox.
     if( trace.ent > 0 )
     {
         PM_DrawPhysEntBBox( trace.ent, pcolor, 0.3f );

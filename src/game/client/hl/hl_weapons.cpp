@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -96,7 +96,7 @@ Vector CBaseEntity::FireBulletsPlayer( unsigned int cShots, Vector vecSrc, Vecto
     {
         if( attacker == nullptr )
         {
-			// get circular gaussian spread
+            // get circular gaussian spread
             do
             {
                 x = RANDOM_FLOAT( -0.5, 0.5 ) + RANDOM_FLOAT( -0.5, 0.5 );
@@ -106,8 +106,8 @@ Vector CBaseEntity::FireBulletsPlayer( unsigned int cShots, Vector vecSrc, Vecto
         }
         else
         {
-			// Use player's random seed.
-			//  get circular gaussian spread
+            // Use player's random seed.
+            //  get circular gaussian spread
             x = UTIL_SharedRandomFloat( shared_rand + iShot, -0.5, 0.5 ) + UTIL_SharedRandomFloat( shared_rand + ( 1 + iShot ), -0.5, 0.5 );
             y = UTIL_SharedRandomFloat( shared_rand + ( 2 + iShot ), -0.5, 0.5 ) + UTIL_SharedRandomFloat( shared_rand + ( 3 + iShot ), -0.5, 0.5 );
             z = x * x + y * y;
@@ -125,7 +125,7 @@ CBasePlayer::Killed
 */
 void CBasePlayer::Killed( CBaseEntity* attacker, int iGib )
 {
-	// Holster weapon immediately, to allow it to cleanup
+    // Holster weapon immediately, to allow it to cleanup
     if( m_pActiveWeapon )
         m_pActiveWeapon->Holster();
 
@@ -190,11 +190,11 @@ void UTIL_ParticleBoxes()
 
     gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );
 
-	// Store off the old count
+    // Store off the old count
     gEngfuncs.pEventAPI->EV_PushPMStates();
 
     player = gEngfuncs.GetLocalPlayer();
-	// Now add in all of the players.
+    // Now add in all of the players.
     gEngfuncs.pEventAPI->EV_SetSolidPlayers( player->index - 1 );
 
     for( idx = 1; idx < 100; idx++ )
@@ -234,21 +234,21 @@ void HUD_SetupServerEngineInterface()
         return;
     }
 
-	// Set up pointer ( dummy object )
+    // Set up pointer ( dummy object )
     gpGlobals = &Globals;
 
-	// So strings use the correct base address.
+    // So strings use the correct base address.
     gpGlobals->pStringBase = "";
 
-	// Fill in current time ( probably not needed )
+    // Fill in current time ( probably not needed )
     gpGlobals->time = gEngfuncs.GetClientTime();
 
-	// Fake functions
+    // Fake functions
     g_engfuncs.pfnPrecacheEvent = stub_PrecacheEvent;
     g_engfuncs.pfnSetModel = stub_SetModel;
     g_engfuncs.pfnSetClientMaxspeed = HUD_SetMaxSpeed;
 
-	// Handled locally
+    // Handled locally
     g_engfuncs.pfnPlaybackEvent = HUD_PlaybackEvent;
     g_engfuncs.pfnAlertMessage = AlertMessage;
     g_engfuncs.pfnServerPrint = ServerPrint;
@@ -256,7 +256,7 @@ void HUD_SetupServerEngineInterface()
     g_engfuncs.pfnCreateEntity = CreateEntity;
     g_engfuncs.pfnFindEntityByVars = FindEntityByVars;
 
-	// Pass through to engine
+    // Pass through to engine
     g_engfuncs.pfnPrecacheEvent = gEngfuncs.pfnPrecacheEvent;
     g_engfuncs.pfnRandomFloat = gEngfuncs.pfnRandomFloat;
     g_engfuncs.pfnRandomLong = gEngfuncs.pfnRandomLong;
@@ -281,7 +281,7 @@ Retruns the last position that we stored for egon beam endpoint.
 */
 Vector HUD_GetLastOrg()
 {
-	// Return last origin
+    // Return last origin
     return previousorigin;
 }
 
@@ -294,7 +294,7 @@ Remember our exact predicted origin so we can draw the egon to the right positio
 */
 void HUD_SetLastOrg()
 {
-	// Offset final origin by view_offset
+    // Offset final origin by view_offset
     previousorigin = g_finalstate->playerstate.origin + g_finalstate->client.view_ofs;
 }
 
@@ -308,14 +308,14 @@ void SetLocalBody( int id, int body )
 }
 
 /**
- *	@brief Client calls this during prediction, after it has moved the player and updated any info changed into @p to.
- *	@param from Incoming state.
- *	@param to Outgoing state. This should be @p from, modified by predicted actions.
- *	@param cmd The command that caused the movement, etc.
- *	@param runfuncs 1 if this is the first time we've predicted this command. If so, sounds and effects should play,
- *		otherwise they should be ignored.
- *	@param time the current client clock based on prediction.
- *	@param random_seed Random number generator seed shared between server and client.
+ *    @brief Client calls this during prediction, after it has moved the player and updated any info changed into @p to.
+ *    @param from Incoming state.
+ *    @param to Outgoing state. This should be @p from, modified by predicted actions.
+ *    @param cmd The command that caused the movement, etc.
+ *    @param runfuncs 1 if this is the first time we've predicted this command. If so, sounds and effects should play,
+ *        otherwise they should be ignored.
+ *    @param time the current client clock based on prediction.
+ *    @param random_seed Random number generator seed shared between server and client.
  */
 void DLLEXPORT HUD_PostRunCmd( local_state_t* from, local_state_t* to, usercmd_t* cmd, int runfuncs, double time, unsigned int random_seed )
 {
@@ -342,7 +342,7 @@ void DLLEXPORT HUD_PostRunCmd( local_state_t* from, local_state_t* to, usercmd_t
         g_irunninggausspred = false;
     }
 
-	// All games can use FOV state
+    // All games can use FOV state
     g_lastFOV = to->client.fov;
     g_CurrentWeaponId = to->client.m_iId;
 }

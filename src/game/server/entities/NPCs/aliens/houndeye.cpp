@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -54,7 +54,7 @@ enum
 #define HOUND_AE_CLOSE_EYE 7
 
 /**
- *	@brief spooky sonic dog.
+ *    @brief spooky sonic dog.
  */
 class CHoundeye : public CSquadMonster
 {
@@ -87,15 +87,15 @@ public:
         return recruit->ClassnameIs( GetClassname() );
     }
 
-	/**
-	 *	@brief writes a color vector to the network based on the size of the group.
-	 */
+    /**
+     *    @brief writes a color vector to the network based on the size of the group.
+     */
     void WriteBeamColor();
 
-	/**
-	 *	@brief overridden for houndeyes so that they try to get within half of their max attack radius
-	 *	before attacking, so as to increase their chances of doing damage.
-	 */
+    /**
+     *    @brief overridden for houndeyes so that they try to get within half of their max attack radius
+     *    before attacking, so as to increase their chances of doing damage.
+     */
     bool CheckRangeAttack1( float flDot, float flDist ) override;
     bool FValidateHintType( short sHint ) override;
     bool FCanActiveIdle() override;
@@ -161,7 +161,7 @@ bool CHoundeye::FCanActiveIdle()
 
             if( pMember != nullptr && pMember != this && pMember->m_iHintNode != NO_NODE )
             {
-				// someone else in the group is active idling right now!
+                // someone else in the group is active idling right now!
                 return false;
             }
         }
@@ -219,15 +219,15 @@ void CHoundeye::SetActivity( Activity NewActivity )
 
     if( m_MonsterState == MONSTERSTATE_COMBAT && NewActivity == ACT_IDLE && RANDOM_LONG( 0, 1 ) )
     {
-		// play pissed idle.
+        // play pissed idle.
         iSequence = LookupSequence( "madidle" );
 
         m_Activity = NewActivity; // Go ahead and set this so it doesn't keep trying when the anim is not present
 
-		// In case someone calls this with something other than the ideal activity
+        // In case someone calls this with something other than the ideal activity
         m_IdealActivity = m_Activity;
 
-		// Set to the desired anim, or default anim if the desired is not present
+        // Set to the desired anim, or default anim if the desired is not present
         if( iSequence > ACTIVITY_NOT_AVAILABLE )
         {
             pev->sequence = iSequence; // Set to the reset anim (if it's there)
@@ -247,7 +247,7 @@ void CHoundeye::HandleAnimEvent( MonsterEvent_t* pEvent )
     switch ( pEvent->event )
     {
     case HOUND_AE_WARN:
-		// do stuff for this event.
+        // do stuff for this event.
         WarnSound();
         break;
 
@@ -268,7 +268,7 @@ void CHoundeye::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 
     case HOUND_AE_THUMP:
-		// emit the shockwaves
+        // emit the shockwaves
         SonicAttack();
         break;
 
@@ -457,7 +457,7 @@ void CHoundeye::WriteBeamColor()
         switch ( SquadCount() )
         {
         case 2:
-			// no case for 0 or 1, cause those are impossible for monsters in Squads.
+            // no case for 0 or 1, cause those are impossible for monsters in Squads.
             bRed = 101;
             bGreen = 133;
             bBlue = 221;
@@ -482,7 +482,7 @@ void CHoundeye::WriteBeamColor()
     }
     else
     {
-		// solo houndeye - weakest beam
+        // solo houndeye - weakest beam
         bRed = 188;
         bGreen = 220;
         bBlue = 255;
@@ -511,7 +511,7 @@ void CHoundeye::SonicAttack()
         break;
     }
 
-	// blast circles
+    // blast circles
     MESSAGE_BEGIN( MSG_PAS, SVC_TEMPENTITY, pev->origin );
     WRITE_BYTE( TE_BEAMCYLINDER );
     WRITE_COORD( pev->origin.x );
@@ -556,7 +556,7 @@ void CHoundeye::SonicAttack()
 
 
     CBaseEntity* pEntity = nullptr;
-	// iterate on all entities in the vicinity.
+    // iterate on all entities in the vicinity.
     while( ( pEntity = UTIL_FindEntityInSphere( pEntity, pev->origin, HOUNDEYE_MAX_ATTACK_RADIUS ) ) != nullptr )
     {
         if( pEntity->pev->takedamage != DAMAGE_NO )
@@ -564,18 +564,18 @@ void CHoundeye::SonicAttack()
             if( !pEntity->ClassnameIs( "monster_houndeye" ) )
             { // houndeyes don't hurt other houndeyes with their attack
 
-				// houndeyes do FULL damage if the ent in question is visible. Half damage otherwise.
-				// This means that you must get out of the houndeye's attack range entirely to avoid damage.
-				// Calculate full damage first
+                // houndeyes do FULL damage if the ent in question is visible. Half damage otherwise.
+                // This means that you must get out of the houndeye's attack range entirely to avoid damage.
+                // Calculate full damage first
 
                 if( SquadCount() > 1 )
                 {
-					// squad gets attack bonus.
+                    // squad gets attack bonus.
                     flAdjustedDamage = GetSkillFloat( "houndeye_dmg_blast"sv ) + GetSkillFloat( "houndeye_dmg_blast"sv ) * ( HOUNDEYE_SQUAD_BONUS * ( SquadCount() - 1 ) );
                 }
                 else
                 {
-					// solo
+                    // solo
                     flAdjustedDamage = GetSkillFloat( "houndeye_dmg_blast"sv );
                 }
 
@@ -587,19 +587,19 @@ void CHoundeye::SonicAttack()
                 {
                     if( pEntity->IsPlayer() )
                     {
-						// if this entity is a client, and is not in full view, inflict half damage. We do this so that players still
-						// take the residual damage if they don't totally leave the houndeye's effective radius. We restrict it to clients
-						// so that monsters in other parts of the level don't take the damage and get pissed.
+                        // if this entity is a client, and is not in full view, inflict half damage. We do this so that players still
+                        // take the residual damage if they don't totally leave the houndeye's effective radius. We restrict it to clients
+                        // so that monsters in other parts of the level don't take the damage and get pissed.
                         flAdjustedDamage *= 0.5;
                     }
                     else if( !pEntity->ClassnameIs( "func_breakable" ) && !pEntity->ClassnameIs( "func_pushable" ) )
                     {
-						// do not hurt nonclients through walls, but allow damage to be done to breakables
+                        // do not hurt nonclients through walls, but allow damage to be done to breakables
                         flAdjustedDamage = 0;
                     }
                 }
 
-				// AILogger->debug("Damage: {}", flAdjustedDamage);
+                // AILogger->debug("Damage: {}", flAdjustedDamage);
 
                 if( flAdjustedDamage > 0 )
                 {
@@ -654,40 +654,40 @@ void CHoundeye::StartTask( const Task_t* pTask )
     {
         m_IdealActivity = ACT_RANGE_ATTACK1;
 
-		/*
-					if ( InSquad() )
-					{
-						// see if there is a battery to connect to.
-						CSquadMonster *pSquad = m_pSquadLeader;
+        /*
+                    if ( InSquad() )
+                    {
+                        // see if there is a battery to connect to.
+                        CSquadMonster *pSquad = m_pSquadLeader;
 
-						while ( pSquad )
-						{
-							if ( pSquad->m_iMySlot == bits_SLOT_HOUND_BATTERY )
-							{
-								// draw a beam.
-								MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
-									WRITE_BYTE( TE_BEAMENTS );
-									WRITE_SHORT(entindex());
-									WRITE_SHORT(pSquad->entindex());
-									WRITE_SHORT( m_iSpriteTexture );
-									WRITE_BYTE( 0 ); // framestart
-									WRITE_BYTE( 0 ); // framerate
-									WRITE_BYTE( 10 ); // life
-									WRITE_BYTE( 40 );  // width
-									WRITE_BYTE( 10 );   // noise
-									WRITE_BYTE( 0  );   // r, g, b
-									WRITE_BYTE( 50 );   // r, g, b
-									WRITE_BYTE( 250);   // r, g, b
-									WRITE_BYTE( 255 );	// brightness
-									WRITE_BYTE( 30 );		// speed
-								MESSAGE_END();
-								break;
-							}
+                        while ( pSquad )
+                        {
+                            if ( pSquad->m_iMySlot == bits_SLOT_HOUND_BATTERY )
+                            {
+                                // draw a beam.
+                                MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
+                                    WRITE_BYTE( TE_BEAMENTS );
+                                    WRITE_SHORT(entindex());
+                                    WRITE_SHORT(pSquad->entindex());
+                                    WRITE_SHORT( m_iSpriteTexture );
+                                    WRITE_BYTE( 0 ); // framestart
+                                    WRITE_BYTE( 0 ); // framerate
+                                    WRITE_BYTE( 10 ); // life
+                                    WRITE_BYTE( 40 );  // width
+                                    WRITE_BYTE( 10 );   // noise
+                                    WRITE_BYTE( 0  );   // r, g, b
+                                    WRITE_BYTE( 50 );   // r, g, b
+                                    WRITE_BYTE( 250);   // r, g, b
+                                    WRITE_BYTE( 255 );    // brightness
+                                    WRITE_BYTE( 30 );        // speed
+                                MESSAGE_END();
+                                break;
+                            }
 
-							pSquad = pSquad->m_pSquadNext;
-						}
-					}
-		*/
+                            pSquad = pSquad->m_pSquadNext;
+                        }
+                    }
+        */
 
         break;
     }
@@ -781,13 +781,13 @@ void CHoundeye::RunTask( const Task_t* pTask )
 
 void CHoundeye::PrescheduleThink()
 {
-	// if the hound is mad and is running, make hunt noises.
+    // if the hound is mad and is running, make hunt noises.
     if( m_MonsterState == MONSTERSTATE_COMBAT && m_Activity == ACT_RUN && RANDOM_FLOAT( 0, 1 ) < 0.2 )
     {
         WarnSound();
     }
 
-	// at random, initiate a blink if not already blinking or sleeping
+    // at random, initiate a blink if not already blinking or sleeping
     if( !m_fDontBlink )
     {
         if( ( pev->skin == 0 ) && RANDOM_LONG( 0, 0x7F ) == 0 )
@@ -800,7 +800,7 @@ void CHoundeye::PrescheduleThink()
         }
     }
 
-	// if you are the leader, average the origins of each pack member to get an approximate center.
+    // if you are the leader, average the origins of each pack member to get an approximate center.
     if( IsLeader() )
     {
         CSquadMonster* pSquadMember;
@@ -886,12 +886,12 @@ Task_t tlHoundSleep[] =
         {TASK_HOUND_FALL_ASLEEP, (float)0},
         {TASK_WAIT_RANDOM, (float)25},
         {TASK_HOUND_CLOSE_EYE, (float)0},
-		//{ TASK_WAIT,				(float)10				},
-		//{ TASK_WAIT_RANDOM,			(float)10				},
+        //{ TASK_WAIT,                (float)10                },
+        //{ TASK_WAIT_RANDOM,            (float)10                },
 };
 
 /**
- *	@brief lie down and fall asleep
+ *    @brief lie down and fall asleep
  */
 Schedule_t slHoundSleep[] =
     {
@@ -918,7 +918,7 @@ Task_t tlHoundWakeLazy[] =
 };
 
 /**
- *	@brief wake and stand up lazily
+ *    @brief wake and stand up lazily
  */
 Schedule_t slHoundWakeLazy[] =
     {
@@ -938,7 +938,7 @@ Task_t tlHoundWakeUrgent[] =
 };
 
 /**
- *	@brief wake and stand up with great urgency!
+ *    @brief wake and stand up with great urgency!
  */
 Schedule_t slHoundWakeUrgent[] =
     {
@@ -1011,7 +1011,7 @@ Task_t tlHoundCombatFailPVS[] =
 };
 
 /**
- *	@brief hound fails in combat with client in the PVS
+ *    @brief hound fails in combat with client in the PVS
  */
 Schedule_t slHoundCombatFailPVS[] =
     {
@@ -1034,7 +1034,7 @@ Task_t tlHoundCombatFailNoPVS[] =
 };
 
 /**
- *	@brief hound fails in combat with no client in the PVS. Don't keep peeping!
+ *    @brief hound fails in combat with no client in the PVS. Don't keep peeping!
  */
 Schedule_t slHoundCombatFailNoPVS[] =
     {
@@ -1065,7 +1065,7 @@ const Schedule_t* CHoundeye::GetScheduleOfType( int Type )
 {
     if( m_fAsleep )
     {
-		// if the hound is sleeping, must wake and stand!
+        // if the hound is sleeping, must wake and stand!
         if( HasConditions( bits_COND_HEAR_SOUND ) )
         {
             CSound* pWakeSound;
@@ -1078,22 +1078,22 @@ const Schedule_t* CHoundeye::GetScheduleOfType( int Type )
 
                 if( FLSoundVolume( pWakeSound ) >= HOUNDEYE_SOUND_STARTLE_VOLUME )
                 {
-					// awakened by a loud sound
+                    // awakened by a loud sound
                     return &slHoundWakeUrgent[0];
                 }
             }
-			// sound was not loud enough to scare the bejesus out of houndeye
+            // sound was not loud enough to scare the bejesus out of houndeye
             return &slHoundWakeLazy[0];
         }
         else if( HasConditions( bits_COND_NEW_ENEMY ) )
         {
-			// get up fast, to fight.
+            // get up fast, to fight.
             return &slHoundWakeUrgent[0];
         }
 
         else
         {
-			// hound is waking up on its own
+            // hound is waking up on its own
             return &slHoundWakeLazy[0];
         }
     }
@@ -1101,12 +1101,12 @@ const Schedule_t* CHoundeye::GetScheduleOfType( int Type )
     {
     case SCHED_IDLE_STAND:
     {
-		// we may want to sleep instead of stand!
+        // we may want to sleep instead of stand!
         if( InSquad() && !IsLeader() && !m_fAsleep && RANDOM_LONG( 0, 29 ) < 1 )
         {
             return &slHoundSleep[0];
         }
-		// Marphy Fact Files Fix - Restore squad leader leaderlook animation
+        // Marphy Fact Files Fix - Restore squad leader leaderlook animation
         if( InSquad() && IsLeader() && !m_fAsleep && RANDOM_LONG( 0, 14 ) < 1 )
         {
             return &slHoundGuardPack[0];
@@ -1119,14 +1119,14 @@ const Schedule_t* CHoundeye::GetScheduleOfType( int Type )
     case SCHED_RANGE_ATTACK1:
     {
         return &slHoundRangeAttack[0];
-		/*
-					if ( InSquad() )
-					{
-						return &slHoundRangeAttack[ RANDOM_LONG( 0, 1 ) ];
-					}
+        /*
+                    if ( InSquad() )
+                    {
+                        return &slHoundRangeAttack[ RANDOM_LONG( 0, 1 ) ];
+                    }
 
-					return &slHoundRangeAttack[ 1 ];
-		*/
+                    return &slHoundRangeAttack[ 1 ];
+        */
     }
     case SCHED_SPECIAL_ATTACK1:
     {
@@ -1150,12 +1150,12 @@ const Schedule_t* CHoundeye::GetScheduleOfType( int Type )
         {
             if( UTIL_FindClientInPVS( this ) )
             {
-				// client in PVS
+                // client in PVS
                 return &slHoundCombatFailPVS[0];
             }
             else
             {
-				// client has taken off!
+                // client has taken off!
                 return &slHoundCombatFailNoPVS[0];
             }
         }
@@ -1177,10 +1177,10 @@ const Schedule_t* CHoundeye::GetSchedule()
     {
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
@@ -1194,7 +1194,7 @@ const Schedule_t* CHoundeye::GetSchedule()
 
                 if( tr.flFraction == 1.0 )
                 {
-					// it's clear behind, so the hound will jump
+                    // it's clear behind, so the hound will jump
                     return GetScheduleOfType( SCHED_HOUND_HOP_RETREAT );
                 }
             }
@@ -1238,7 +1238,7 @@ void CDeadHoundeye::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8;
     pev->model = MAKE_STRING( "models/houndeye_dead.mdl" );
 

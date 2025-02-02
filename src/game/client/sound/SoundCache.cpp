@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -36,13 +36,13 @@ SoundIndex SoundCache::FindName( const RelativeFilename& fileName )
 
     if( m_Sounds.size() >= static_cast<std::size_t>( std::numeric_limits<int>::max() ) )
     {
-		// Chances are you'll run out of memory before this happens.
+        // Chances are you'll run out of memory before this happens.
         m_Logger->warn( "Out of sound slots, cannot load {} (maximum {})",
             fileName.c_str(), std::numeric_limits<int>::max() );
         return {};
     }
 
-	// Store as lowercase to ensure that extension-based lookups succeed.
+    // Store as lowercase to ensure that extension-based lookups succeed.
     RelativeFilename copy = fileName;
 
     copy.make_lower();
@@ -97,12 +97,12 @@ bool SoundCache::LoadSound( Sound& sound )
 
     if( !g_pFileSystem->GetLocalPath( completeFileName.c_str(), absolutePath.data(), absolutePath.size() ) )
     {
-		// TODO: add support for EASTL types to fmt formatting.
+        // TODO: add support for EASTL types to fmt formatting.
         m_Logger->error( "Could not find sound file {}", sound.Name.c_str() );
         return false;
     }
 
-	// Trim the size to the actual string's size.
+    // Trim the size to the actual string's size.
     absolutePath.resize( strlen( absolutePath.c_str() ) );
 
     nqr::AudioData data;
@@ -117,7 +117,7 @@ bool SoundCache::LoadSound( Sound& sound )
         return false;
     }
 
-	// Clear error state.
+    // Clear error state.
     alGetError();
 
     const ALenum format = data.channelCount == 1 ? AL_FORMAT_MONO_FLOAT32 : AL_FORMAT_STEREO_FLOAT32;
@@ -129,7 +129,7 @@ bool SoundCache::LoadSound( Sound& sound )
     alBufferData( sound.Buffer.Id, format,
         data.samples.data(), data.samples.size() * sizeof(float), data.sampleRate );
 
-	// See https://openal-soft.org/openal-extensions/SOFT_loop_points.txt
+    // See https://openal-soft.org/openal-extensions/SOFT_loop_points.txt
     const auto cuePoints = TryLoadCuePoints( absolutePath, data.samples.size(), data.channelCount );
 
     if( cuePoints )
@@ -148,7 +148,7 @@ bool SoundCache::LoadSound( Sound& sound )
 
     sound.IsLooping = cuePoints.has_value();
     sound.Format = format;
-	// Cache the samples for future use.
+    // Cache the samples for future use.
     sound.Samples = std::move( data.samples );
 
     return true;
@@ -221,12 +221,12 @@ std::optional<std::tuple<ALint, ALint>> SoundCache::TryLoadCuePoints(
 
     auto chunkReader = fileReader.GetChunkReader();
 
-	// Find the fmt chunk so we can get the original bit depth.
+    // Find the fmt chunk so we can get the original bit depth.
     const auto fmtChunk = chunkReader.FindChunk( "fmt " );
 
     if( !fmtChunk )
     {
-		// Should never happen since the file was already loaded before.
+        // Should never happen since the file was already loaded before.
         m_Logger->error( "Wave file \"{}\" missing fmt chunk", fileName );
         return {};
     }
@@ -249,8 +249,8 @@ std::optional<std::tuple<ALint, ALint>> SoundCache::TryLoadCuePoints(
 
     chunkReader = fileReader.GetChunkReader();
 
-	// Search for a cue chunk.
-	// See https://www.recordingblogs.com/wiki/cue-chunk-of-a-wave-file for more information.
+    // Search for a cue chunk.
+    // See https://www.recordingblogs.com/wiki/cue-chunk-of-a-wave-file for more information.
     const auto cueChunk = chunkReader.FindChunk( "cue " );
 
     if( !cueChunk )
@@ -261,7 +261,7 @@ std::optional<std::tuple<ALint, ALint>> SoundCache::TryLoadCuePoints(
 
     const int numberOfCuePoints = *reinterpret_cast<const int*>( cueChunk->Data );
 
-	// Note: this check does not exist in Quake and GoldSource.
+    // Note: this check does not exist in Quake and GoldSource.
     if( numberOfCuePoints <= 0 )
     {
         return {};
@@ -272,16 +272,16 @@ std::optional<std::tuple<ALint, ALint>> SoundCache::TryLoadCuePoints(
         return rawSampleCount / width;
     };
 
-	// There is at least one cue point in this file. Use the first one to denote the loop start point.
+    // There is at least one cue point in this file. Use the first one to denote the loop start point.
     const int cuePositionInBytes = *reinterpret_cast<const int*>( cueChunk->Data + 4 + 20 );
 
-	// Convert loop start from bytes to 32 bit float samples.
+    // Convert loop start from bytes to 32 bit float samples.
     std::tuple<ALint, ALint> loopPoints = {convertRawSampleCount( cuePositionInBytes ), sampleCount / channelCount};
 
     m_Logger->trace( "Loaded loop start point {} from file \"{}\"", std::get<0>( loopPoints ), fileName );
 
-	// See if there's a list chunk containing an associated data list following the cue chunk.
-	// See https://www.recordingblogs.com/wiki/associated-data-list-chunk-of-a-wave-file for more information.
+    // See if there's a list chunk containing an associated data list following the cue chunk.
+    // See https://www.recordingblogs.com/wiki/associated-data-list-chunk-of-a-wave-file for more information.
     const auto listChunk = chunkReader.FindChunk( "LIST" );
 
     if( !listChunk )
@@ -296,7 +296,7 @@ std::optional<std::tuple<ALint, ALint>> SoundCache::TryLoadCuePoints(
 
     RiffChunkReader adtlChunkReader{listChunk->Data + 4, listChunk->Size};
 
-	// Note: Quake and GoldSource assume this chunk exists and is present as the first sub chunk.
+    // Note: Quake and GoldSource assume this chunk exists and is present as the first sub chunk.
     auto ltxtChunk = adtlChunkReader.FindChunk( "ltxt" );
 
     if( !ltxtChunk )

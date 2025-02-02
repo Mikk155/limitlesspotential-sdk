@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -21,7 +21,7 @@
 
 CHalfLifeRules::CHalfLifeRules()
 {
-	// Define this as a dummy command to silence console errors.
+    // Define this as a dummy command to silence console errors.
     m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", []( auto, const auto& ) {} );
 }
 
@@ -33,7 +33,7 @@ bool CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapo
 {
     if( !pPlayer->m_pActiveWeapon )
     {
-		// player doesn't have an active item!
+        // player doesn't have an active item!
         return true;
     }
 
@@ -42,7 +42,7 @@ bool CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapo
         return false;
     }
 
-	// Never switch
+    // Never switch
     if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never )
     {
         return false;
@@ -53,7 +53,7 @@ bool CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapo
 
 bool CHalfLifeRules::GetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch )
 {
-	// If this is an exhaustible weapon and it's out of ammo, always try to switch even in singleplayer.
+    // If this is an exhaustible weapon and it's out of ammo, always try to switch even in singleplayer.
     if( alwaysSearch || ( ( pCurrentWeapon->iFlags() & ITEM_FLAG_EXHAUSTIBLE ) != 0 &&
                             pCurrentWeapon->PrimaryAmmoIndex() != -1 &&
                             pPlayer->GetAmmoCountByIndex( pCurrentWeapon->PrimaryAmmoIndex() ) == 0 ) )
@@ -130,6 +130,6 @@ int CHalfLifeRules::DeadPlayerAmmo( CBasePlayer* pPlayer )
 
 int CHalfLifeRules::PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget )
 {
-	// why would a single player in half life need this?
+    // why would a single player in half life need this?
     return GR_NOTTEAMMATE;
 }

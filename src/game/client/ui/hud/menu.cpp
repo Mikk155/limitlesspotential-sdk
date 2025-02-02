@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -118,7 +118,7 @@ static inline const char* ParseEscapeToken( const char* token )
 
 bool CHudMenu::Draw( float flTime )
 {
-	// check for if menu is set to disappear
+    // check for if menu is set to disappear
     if( m_flShutoffTime > 0 )
     {
         if( m_flShutoffTime <= gHUD.m_flTime )
@@ -129,20 +129,20 @@ bool CHudMenu::Draw( float flTime )
         }
     }
 
-	// don't draw the menu if the scoreboard is being shown
+    // don't draw the menu if the scoreboard is being shown
     if( gHUD.m_Scoreboard.m_iShowscoresHeld )
     {
         return true;
     }
 
-	/*
-	if ( gViewPort && gViewPort->IsScoreBoardVisible() )
-		return true;
-		*/
+    /*
+    if ( gViewPort && gViewPort->IsScoreBoardVisible() )
+        return true;
+        */
 
-	// draw the menu, along the left-hand side of the screen
+    // draw the menu, along the left-hand side of the screen
 
-	// count the number of newlines
+    // count the number of newlines
     int nlc = 0;
     int i;
     for( i = 0; i < MAX_MENU_STRING && g_szMenuString[i] != '\0'; i++ )
@@ -151,7 +151,7 @@ bool CHudMenu::Draw( float flTime )
             nlc++;
     }
 
-	// center it
+    // center it
     int y = ( ScreenHeight / 2 ) - ( ( nlc / 2 ) * 12 ) - 40; // make sure it is above the say text
 
     menu_color = {255, 255, 255};
@@ -187,7 +187,7 @@ bool CHudMenu::Draw( float flTime )
 
             if( menu_ralign )
             {
-				// IMPORTANT: Right-to-left rendered text does not parse escape tokens!
+                // IMPORTANT: Right-to-left rendered text does not parse escape tokens!
                 menu_x = gHUD.DrawHudStringReverse( menu_x, y, 0, menubuf, menu_color );
             }
             else
@@ -203,14 +203,14 @@ bool CHudMenu::Draw( float flTime )
 // selects an item from the menu
 void CHudMenu::SelectMenuItem( int menu_item )
 {
-	// if menu_item is in a valid slot,  send a menuselect command to the server
+    // if menu_item is in a valid slot,  send a menuselect command to the server
     if( ( menu_item > 0 ) && ( m_bitsValidSlots & ( 1 << ( menu_item - 1 ) ) ) != 0 )
     {
         char szbuf[32];
         sprintf( szbuf, "menuselect %d\n", menu_item );
         EngineClientCmd( szbuf );
 
-		// remove the menu
+        // remove the menu
         m_fMenuDisplayed = false;
         m_iFlags &= ~HUD_ACTIVE;
     }
@@ -219,10 +219,10 @@ void CHudMenu::SelectMenuItem( int menu_item )
 
 // Message handler for ShowMenu message
 // takes four values:
-//		short: a bitfield of keys that are valid input
-//		char : the duration, in seconds, the menu should stay up. -1 means is stays until something is chosen.
-//		byte : a boolean, true if there is more string yet to be received before displaying the menu, false if it's the last string
-//		string: menu string to display
+//        short: a bitfield of keys that are valid input
+//        char : the duration, in seconds, the menu should stay up. -1 means is stays until something is chosen.
+//        byte : a boolean, true if there is more string yet to be received before displaying the menu, false if it's the last string
+//        string: menu string to display
 // if this message is never received, then scores will simply be the combined totals of the players.
 void CHudMenu::MsgFunc_ShowMenu( const char* pszName, BufferReader& reader )
 {
@@ -251,8 +251,8 @@ void CHudMenu::MsgFunc_ShowMenu( const char* pszName, BufferReader& reader )
         { // we have the whole string, so we can localise it now
             strcpy( g_szMenuString, gHUD.m_TextMessage.BufferedLocaliseTextString( g_szPrelocalisedMenuString ) );
 
-			// Swap in characters
-			// TODO: bounds check
+            // Swap in characters
+            // TODO: bounds check
             const auto temp = KB_ConvertString( g_szMenuString );
             strcpy( g_szMenuString, temp.c_str() );
         }

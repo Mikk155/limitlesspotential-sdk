@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -38,21 +38,21 @@ extern TEMPENTITY* pFlare; // Vit_amiN
 
 void CHud::MsgFunc_ResetHUD( const char* pszName, BufferReader& reader )
 {
-	// clear all hud data
+    // clear all hud data
     for( auto hudElement : m_HudList )
     {
         hudElement->Reset();
     }
 
-	// Reset weapon bits.
+    // Reset weapon bits.
     m_iWeaponBits = 0ULL;
 
     m_HudFlags = 0U;
 
-	// reset sensitivity
+    // reset sensitivity
     m_flMouseSensitivity = 0;
 
-	// reset concussion effect
+    // reset concussion effect
     m_iConcussionEffect = 0;
 }
 
@@ -65,17 +65,17 @@ void CHud::MsgFunc_ViewMode( const char* pszName, BufferReader& reader )
 
 void CHud::MsgFunc_InitHUD( const char* pszName, BufferReader& reader )
 {
-	// prepare all hud data
+    // prepare all hud data
     for( auto hudElement : m_HudList )
     {
         hudElement->InitHUDData();
     }
 
-	// TODO: needs to be called on every map change, not just when starting a new game
+    // TODO: needs to be called on every map change, not just when starting a new game
     if( g_pParticleMan )
         g_pParticleMan->ResetParticles();
 
-	// Probably not a good place to put this.
+    // Probably not a good place to put this.
     pBeam = pBeam2 = nullptr;
     pFlare = nullptr; // Vit_amiN: clear egon's beam flare
 }
@@ -116,7 +116,7 @@ void CHud::MsgFunc_Damage( const char* pszName, BufferReader& reader )
     if( count < 10 )
         count = 10;
 
-	// TODO: kick viewangles,  show damage visually
+    // TODO: kick viewangles,  show damage visually
 }
 
 void CHud::MsgFunc_Concuss( const char* pszName, BufferReader& reader )
@@ -141,7 +141,7 @@ void CHud::MsgFunc_Weapons( const char* pszName, BufferReader& reader )
 void CHud::MsgFunc_Fog( const char* pszName, BufferReader& reader )
 {
     g_FogSkybox = 0;
-	// TODO: CZeror zeroes out g_iFogColor[3] (out of bounds write)
+    // TODO: CZeror zeroes out g_iFogColor[3] (out of bounds write)
     g_FogColor = vec3_origin;
     g_FogDensity = 0;
     g_FogStartDistance = 1000;

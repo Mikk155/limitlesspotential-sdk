@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -45,7 +45,7 @@ public:
 
         if( RespawnTime != ITEM_NEVER_RESPAWN_DELAY && g_Skill.GetValue( "weapon_instant_respawn", 0 ) != 0 )
         {
-			// make sure it's only certain weapons
+            // make sure it's only certain weapons
             if( ( weapon->iFlags() & ITEM_FLAG_LIMITINWORLD ) == 0 )
             {
                 RespawnTime = 0; // weapon respawns almost instantly
@@ -59,7 +59,7 @@ public:
         RespawnTime = g_Skill.GetValue( "pickupitem_respawn_time", ITEM_NEVER_RESPAWN_DELAY );
     }
 
-	// Don't respawn unknown items.
+    // Don't respawn unknown items.
     float RespawnTime = ITEM_NEVER_RESPAWN_DELAY;
 };
 
@@ -82,7 +82,7 @@ public:
             if( NUMBER_OF_ENTITIES() < ( gpGlobals->maxEntities - ENTITY_INTOLERANCE ) )
                 return;
 
-			// we're past the entity tolerance level, so delay the respawn
+            // we're past the entity tolerance level, so delay the respawn
             DelayRespawn = true;
         }
     }
@@ -112,7 +112,7 @@ public:
         {
             if( ( weapon->iFlags() & ITEM_FLAG_LIMITINWORLD ) == 0 )
             {
-				// check if the player already has this weapon
+                // check if the player already has this weapon
                 if( Player->HasPlayerWeapon( weapon ) )
                 {
                     CanHaveItem = false;
@@ -121,7 +121,7 @@ public:
             }
         }
 
-		// only living players can have items
+        // only living players can have items
         if( Player->pev->deadflag != DEAD_NO )
         {
             CanHaveItem = false;
@@ -132,8 +132,8 @@ public:
         {
             if( !GameRules->CanHaveAmmo( Player, weapon->pszAmmo1() ) )
             {
-				// we can't carry anymore ammo for this gun. We can only
-				// have the gun if we aren't already carrying one of this type
+                // we can't carry anymore ammo for this gun. We can only
+                // have the gun if we aren't already carrying one of this type
                 if( Player->HasPlayerWeapon( weapon ) )
                 {
                     CanHaveItem = false;
@@ -143,7 +143,7 @@ public:
         }
         else
         {
-			// weapon doesn't use ammo, don't take another if you already have it.
+            // weapon doesn't use ammo, don't take another if you already have it.
             if( Player->HasPlayerWeapon( weapon ) )
             {
                 CanHaveItem = false;
@@ -151,7 +151,7 @@ public:
             }
         }
 
-		// note: will fall through to here if GetItemInfo doesn't fill the struct!
+        // note: will fall through to here if GetItemInfo doesn't fill the struct!
     }
 
     void Visit( CItem* pickupItem ) override {}
@@ -165,12 +165,12 @@ CGameRules::CGameRules()
 {
     m_SpectateCommand = g_ClientCommands.CreateScoped( "spectate", [this]( CBasePlayer* player, const auto& args )
         {
-			// clients wants to become a spectator
+            // clients wants to become a spectator
             BecomeSpectator( player, args ); } );
 
     m_SpecModeCommand = g_ClientCommands.CreateScoped( "specmode", [this]( CBasePlayer* player, const auto& args )
         {
-			// new spectator mode
+            // new spectator mode
             if( player->IsObserver() )
                 player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) ); } );
 }
@@ -185,8 +185,8 @@ float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
     switch ( FallDamageMode( g_Skill.GetValue( "falldamagemode" ) ) )
     {
     case FallDamageMode::Progressive:
-		// subtract off the speed at which a player is allowed to fall without being hurt,
-		// so damage will be based on speed beyond that, not the entire fall
+        // subtract off the speed at which a player is allowed to fall without being hurt,
+        // so damage will be based on speed beyond that, not the entire fall
         pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
         return pPlayer->m_flFallVelocity * DAMAGE_FOR_FALL_SPEED;
     default:
@@ -197,10 +197,10 @@ float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
 
 void CGameRules::SetupPlayerInventory( CBasePlayer* player )
 {
-	// Originally game_player_equip entities were triggered in PlayerSpawn to set up the player's inventory.
-	// This is now handled by naming them game_playerspawn (see CBasePlayer::UpdateClientData).
-	// Handling it there avoids edge cases where this function is called during ClientPutInServer.
-	// It is not possible to send messages to clients during that function so ammo change messages are ignored.
+    // Originally game_player_equip entities were triggered in PlayerSpawn to set up the player's inventory.
+    // This is now handled by naming them game_playerspawn (see CBasePlayer::UpdateClientData).
+    // Handling it there avoids edge cases where this function is called during ClientPutInServer.
+    // It is not possible to send messages to clients during that function so ammo change messages are ignored.
 
     if( !g_PersistentInventory.TryApplyToPlayer( player ) )
     {
@@ -212,7 +212,7 @@ CBasePlayerWeapon* CGameRules::FindNextBestWeapon( CBasePlayer* pPlayer, CBasePl
 {
     if( pCurrentWeapon != nullptr && !pCurrentWeapon->CanHolster() )
     {
-		// can't put this gun away right now, so can't switch.
+        // can't put this gun away right now, so can't switch.
         return nullptr;
     }
 
@@ -226,7 +226,7 @@ CBasePlayerWeapon* CGameRules::FindNextBestWeapon( CBasePlayer* pPlayer, CBasePl
     {
         for( auto pCheck = pPlayer->m_rgpPlayerWeapons[i]; pCheck; pCheck = pCheck->m_pNext )
         {
-			// don't reselect the weapon we're trying to get rid of
+            // don't reselect the weapon we're trying to get rid of
             if( pCheck == pCurrentWeapon )
             {
                 continue;
@@ -234,7 +234,7 @@ CBasePlayerWeapon* CGameRules::FindNextBestWeapon( CBasePlayer* pPlayer, CBasePl
 
             if( pCheck->iWeight() > -1 && pCheck->iWeight() == currentWeight )
             {
-				// this weapon is from the same category.
+                // this weapon is from the same category.
                 if( pCheck->CanDeploy() )
                 {
                     if( pPlayer->SwitchWeapon( pCheck ) )
@@ -245,13 +245,13 @@ CBasePlayerWeapon* CGameRules::FindNextBestWeapon( CBasePlayer* pPlayer, CBasePl
             }
             else if( pCheck->iWeight() > iBestWeight )
             {
-				// Logger->debug("Considering {}", STRING(pCheck->pev->classname));
-				//  we keep updating the 'best' weapon just in case we can't find a weapon of the same weight
-				//  that the player was using. This will end up leaving the player with his heaviest-weighted
-				//  weapon.
+                // Logger->debug("Considering {}", STRING(pCheck->pev->classname));
+                //  we keep updating the 'best' weapon just in case we can't find a weapon of the same weight
+                //  that the player was using. This will end up leaving the player with his heaviest-weighted
+                //  weapon.
                 if( pCheck->CanDeploy() )
                 {
-					// if this weapon is useable, flag it as the best
+                    // if this weapon is useable, flag it as the best
                     iBestWeight = pCheck->iWeight();
                     pBest = pCheck;
                 }
@@ -259,11 +259,11 @@ CBasePlayerWeapon* CGameRules::FindNextBestWeapon( CBasePlayer* pPlayer, CBasePl
         }
     }
 
-	// if we make it here, we've checked all the weapons and found no useable
-	// weapon in the same catagory as the current weapon.
+    // if we make it here, we've checked all the weapons and found no useable
+    // weapon in the same catagory as the current weapon.
 
-	// if pBest is nullptr, we didn't find ANYTHING. Shouldn't be possible- should always
-	// at least get the crowbar, but ya never know.
+    // if pBest is nullptr, we didn't find ANYTHING. Shouldn't be possible- should always
+    // at least get the crowbar, but ya never know.
 
     return pBest;
 }
@@ -329,7 +329,7 @@ float CGameRules::ItemTryRespawn( CBaseItem* item )
     {
         const float delay = GetRespawnDelay( item );
 
-		// This function should only be called if the item has returned a valid delay from ItemRespawnTime.
+        // This function should only be called if the item has returned a valid delay from ItemRespawnTime.
         assert( delay >= 0 );
 
         return delay;
@@ -346,7 +346,7 @@ bool CGameRules::CanHaveAmmo( CBasePlayer* pPlayer, const char* pszAmmoName )
         {
             if( pPlayer->GetAmmoCountByIndex( type->Id ) < type->MaximumCapacity )
             {
-				// player has room for more of this type of ammo
+                // player has room for more of this type of ammo
                 return true;
             }
         }
@@ -404,15 +404,15 @@ bool CGameRules::FAllowMonsters()
 
 void CGameRules::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )
 {
-	// Default implementation: applies to all game modes, even singleplayer.
+    // Default implementation: applies to all game modes, even singleplayer.
 
-	// always allow proxies to become a spectator
+    // always allow proxies to become a spectator
     if( ( player->pev->flags & FL_PROXY ) != 0 || allow_spectators.value != 0 )
     {
         CBaseEntity* pSpawnSpot = GetPlayerSpawnSpot( player );
         player->StartObserver( player->pev->origin, pSpawnSpot->pev->angles );
 
-		// notify other clients of player switching to spectator mode
+        // notify other clients of player switching to spectator mode
         UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n",
                                                  ( !FStringNull( player->pev->netname ) && STRING( player->pev->netname )[0] != 0 ) ? STRING( player->pev->netname ) : "unconnected" ) );
     }
@@ -455,7 +455,7 @@ CGameRules* InstallGameRules( std::string_view gameModeName )
         }
 
         CGameRules::Logger->trace( "Creating singleplayer gamerules" );
-		// generic half-life
+        // generic half-life
         return CreateGameRules<CHalfLifeRules>();
     }
 
@@ -483,7 +483,7 @@ CGameRules* InstallGameRules( std::string_view gameModeName )
 
 const char* GameModeIndexToString( int index )
 {
-	// Autodetect game mode.
+    // Autodetect game mode.
     if( index == 0 )
     {
         return "";

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -13,8 +13,8 @@
  *
  ****/
 /*
- *	@file
- *	Functions used by the engine to access the server dll.
+ *    @file
+ *    Functions used by the engine to access the server dll.
  */
 
 #include "cbase.h"
@@ -29,7 +29,7 @@
 
 void DummySpectatorFunction( edict_t* )
 {
-	// Nothing
+    // Nothing
 }
 
 static DLL_FUNCTIONS gFunctionTable =
@@ -125,7 +125,7 @@ int DLLEXPORT GetEntityAPI2( DLL_FUNCTIONS* pFunctionTable, int* interfaceVersio
 {
     if( !pFunctionTable || *interfaceVersion != INTERFACE_VERSION )
     {
-		// Tell engine what version we had, so it can figure out who is out of date.
+        // Tell engine what version we had, so it can figure out who is out of date.
         *interfaceVersion = INTERFACE_VERSION;
         return 0;
     }
@@ -222,9 +222,9 @@ static constexpr TITLECOMMENT gTitleComments[66] =
         {"ba_outro", "#BA_OUTRO"}};
 
 /**
- *	@brief Called by the engine to get the level name shown in the save and load game dialogs.
- *	@param buffer Filled in by this function.
- *		Contains either a localizable token loaded from @c resource/valve_%language%.txt or a plain text title.
+ *    @brief Called by the engine to get the level name shown in the save and load game dialogs.
+ *    @param buffer Filled in by this function.
+ *        Contains either a localizable token loaded from @c resource/valve_%language%.txt or a plain text title.
  */
 void DLLEXPORT SV_SaveGameComment( char* buffer, int bufferSize )
 {
@@ -232,12 +232,12 @@ void DLLEXPORT SV_SaveGameComment( char* buffer, int bufferSize )
 
     const char* titleName = nullptr;
 
-	// See if the current map is in the hardcoded list of titles
+    // See if the current map is in the hardcoded list of titles
     if( mapName )
     {
         for( const auto& comment : gTitleComments )
         {
-			// See if the bsp name starts with this prefix
+            // See if the bsp name starts with this prefix
             if( !strnicmp( mapName, comment.BSPName, strlen( comment.BSPName ) ) )
             {
                 if( comment.TitleName )
@@ -251,8 +251,8 @@ void DLLEXPORT SV_SaveGameComment( char* buffer, int bufferSize )
 
     if( !titleName )
     {
-		// Slightly different behavior here compared to the engine
-		// Instead of using maps/mapname.bsp we just use an empty string
+        // Slightly different behavior here compared to the engine
+        // Instead of using maps/mapname.bsp we just use an empty string
         if( mapName )
         {
             titleName = mapName;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -70,7 +70,7 @@ public:
 
     int ObjectCaps() override { return 0; }
 
-	// Don't gib ever
+    // Don't gib ever
     void GibMonster() override {}
 
     void SetObjectCollisionBox() override
@@ -354,7 +354,7 @@ void COFPitWormUp::Spawn()
 
     pev->sequence = 0;
 
-	// Force interpolation on.
+    // Force interpolation on.
     m_EFlags |= EFLAG_SLERP;
 
     ResetSequenceInfo();
@@ -660,7 +660,7 @@ void COFPitWormUp::HitTouch( CBaseEntity* pOther )
 
         pOther->pev->punchangle.z = 15;
 
-		// TODO: maybe determine direction of velocity to apply?
+        // TODO: maybe determine direction of velocity to apply?
         pOther->pev->velocity = pOther->pev->velocity + Vector{0, 0, 200};
 
         pOther->pev->flags &= ~FL_ONGROUND;
@@ -890,9 +890,9 @@ void COFPitWormUp::StrafeBeam()
         pHit->TraceAttack( this, GetSkillFloat( "pitworm_dmg_beam"sv ), m_vecBeam, &tr, DMG_ENERGYBEAM );
         pHit->TakeDamage( this, this, GetSkillFloat( "pitworm_dmg_beam"sv ), DMG_ENERGYBEAM );
 
-		// TODO: missing an ApplyMultiDamage call here
-		// Should probably replace the TakeDamage call
-		// ApplyMultiDamage( pev, pev );
+        // TODO: missing an ApplyMultiDamage call here
+        // Should probably replace the TakeDamage call
+        // ApplyMultiDamage( pev, pev );
     }
     else if( tr.flFraction != 1.0 )
     {
@@ -1407,8 +1407,8 @@ void COFPitWormSteamTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller,
 }
 
 /**
- *	@brief Part of the unfinished monster_pitworm entity
- *	Used for navigation and sequence playback
+ *    @brief Part of the unfinished monster_pitworm entity
+ *    Used for navigation and sequence playback
  */
 class COFInfoPW : public CPointEntity
 {
@@ -1684,7 +1684,7 @@ void COFPitWormGibShooter::ShootThink()
 int gSpikeSprite, gSpikeDebrisSprite;
 
 /**
- *	@brief Unfinished, never used Pitworm NPC
+ *    @brief Unfinished, never used Pitworm NPC
  */
 class COFPitWorm : public CBaseMonster
 {
@@ -1910,7 +1910,7 @@ void COFPitWorm::OnCreate()
 
 bool COFPitWorm::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Don't take any acid damage -- BigMomma's mortar is acid
+    // Don't take any acid damage -- BigMomma's mortar is acid
     if( ( bitsDamageType & DMG_ACID ) != 0 )
         flDamage = 0;
 
@@ -1950,7 +1950,7 @@ void COFPitWorm::Precache()
 
 void COFPitWorm::StartMonster()
 {
-	// update capabilities
+    // update capabilities
     if( LookupActivity( ACT_RANGE_ATTACK1 ) != ACTIVITY_NOT_AVAILABLE )
     {
         m_afCapability |= bits_CAP_RANGE_ATTACK1;
@@ -1968,12 +1968,12 @@ void COFPitWorm::StartMonster()
         m_afCapability |= bits_CAP_MELEE_ATTACK2;
     }
 
-	// Raise monster off the floor one unit, then drop to floor
+    // Raise monster off the floor one unit, then drop to floor
     if( pev->movetype != MOVETYPE_FLY && !FBitSet( pev->spawnflags, SF_MONSTER_FALL_TO_GROUND ) )
     {
         pev->origin.z += 1;
         DROP_TO_FLOOR( edict() );
-		// Try to move the monster to make sure it's not stuck in a brush.
+        // Try to move the monster to make sure it's not stuck in a brush.
         if( !WALK_MOVE( edict(), 0, 0, WALKMOVE_NORMAL ) )
         {
             Logger->error( "Monster {} stuck in wall--level design error", STRING( pev->classname ) );
@@ -1987,10 +1987,10 @@ void COFPitWorm::StartMonster()
 
     if( !FStringNull( pev->target ) ) // this monster has a target
     {
-		// Find the monster's initial target entity, stash it
+        // Find the monster's initial target entity, stash it
         m_pGoalEnt = UTIL_FindEntityByTargetname( nullptr, STRING( pev->target ) );
 
-		// TODO: this was probably unintended.
+        // TODO: this was probably unintended.
         if( !m_pGoalEnt )
         {
             m_pGoalEnt = World;
@@ -2002,21 +2002,21 @@ void COFPitWorm::StartMonster()
         }
         else
         {
-			// Monster will start turning towards his destination
+            // Monster will start turning towards his destination
             MakeIdealYaw( m_pGoalEnt->pev->origin );
 
-			// JAY: How important is this error message?  Big Momma doesn't obey this rule, so I took it out.
+            // JAY: How important is this error message?  Big Momma doesn't obey this rule, so I took it out.
 #if 0
-			// At this point, we expect only a path_corner as initial goal
+            // At this point, we expect only a path_corner as initial goal
             if( !m_pGoalEnt->ClassnameIs( "path_corner" ) )
             {
                 Logger->warning( "ReadyMonster--monster's initial goal '{}' is not a path_corner", STRING( pev->target ) );
             }
 #endif
 
-			// set the monster up to walk a path corner path.
-			// !!!BUGBUG - this is a minor bit of a hack.
-			// JAYJAY
+            // set the monster up to walk a path corner path.
+            // !!!BUGBUG - this is a minor bit of a hack.
+            // JAYJAY
             m_movementGoal = MOVEGOAL_PATHCORNER;
             m_movementActivity = m_slowMode;
 
@@ -2025,7 +2025,7 @@ void COFPitWorm::StartMonster()
                 AILogger->debug( "Can't Create Route!" );
             }
             SetState( MONSTERSTATE_IDLE );
-			// ChangeSchedule(GetScheduleOfType(SCHED_IDLE_WALK));
+            // ChangeSchedule(GetScheduleOfType(SCHED_IDLE_WALK));
         }
     }
 
@@ -2034,11 +2034,11 @@ void COFPitWorm::StartMonster()
 
     pev->view_ofs = vecEyePos - pev->origin;
 
-	// SetState ( m_IdealMonsterState );
-	// SetActivity ( m_IdealActivity );
+    // SetState ( m_IdealMonsterState );
+    // SetActivity ( m_IdealActivity );
 
-	// Delay drop to floor to make sure each door in the level has had its chance to spawn
-	// Spread think times so that they don't all happen at the same time (Carmack)
+    // Delay drop to floor to make sure each door in the level has had its chance to spawn
+    // Spread think times so that they don't all happen at the same time (Carmack)
     SetThink( &CBaseMonster::CallMonsterThink );
     pev->nextthink += RANDOM_FLOAT( 0.1, 0.4 ); // spread think times.
 }
@@ -2070,7 +2070,7 @@ void COFPitWorm::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecD
 {
     if( ptr->iHitgroup != 1 )
     {
-		// didn't hit the sack?
+        // didn't hit the sack?
 
         if( pev->dmgtime != gpGlobals->time || ( RANDOM_LONG( 0, 10 ) < 1 ) )
         {
@@ -2120,11 +2120,11 @@ void COFPitWorm::Move( float flInterval )
     Vector vecDir;
     CBaseEntity* pTargetEnt;
 
-	// Don't move if no valid route
+    // Don't move if no valid route
     if( FRouteClear() )
     {
-		// If we still have a movement goal, then this is probably a route truncated by SimplifyRoute()
-		// so refresh it.
+        // If we still have a movement goal, then this is probably a route truncated by SimplifyRoute()
+        // so refresh it.
         if( m_movementGoal == MOVEGOAL_NONE || !FRefreshRoute() )
         {
             AILogger->debug( "Tried to move with no route!" );
@@ -2136,9 +2136,9 @@ void COFPitWorm::Move( float flInterval )
     if( m_flMoveWaitFinished > gpGlobals->time )
         return;
 
-		// Debug, test movement code
+        // Debug, test movement code
 #if 0
-//	if ( CVAR_GET_FLOAT("stopmove" ) != 0 )
+//    if ( CVAR_GET_FLOAT("stopmove" ) != 0 )
     {
         if( m_movementGoal == MOVEGOAL_ENEMY )
             RouteSimplify( m_hEnemy );
@@ -2149,14 +2149,14 @@ void COFPitWorm::Move( float flInterval )
     }
 #else
 // Debug, draw the route
-//	DrawRoute( pev, m_Route, m_iRouteIndex, 0, 200, 0 );
+//    DrawRoute( pev, m_Route, m_iRouteIndex, 0, 200, 0 );
 #endif
 
-	// if the monster is moving directly towards an entity (enemy for instance), we'll set this pointer
-	// to that entity for the CheckLocalMove and Triangulate functions.
+    // if the monster is moving directly towards an entity (enemy for instance), we'll set this pointer
+    // to that entity for the CheckLocalMove and Triangulate functions.
     pTargetEnt = nullptr;
 
-	// local move to waypoint.
+    // local move to waypoint.
     vecDir = ( m_Route[m_iRouteIndex].vecLocation - pev->origin ).Normalize();
     flWaypointDist = ( m_Route[m_iRouteIndex].vecLocation - pev->origin ).Length2D();
 
@@ -2166,7 +2166,7 @@ void COFPitWorm::Move( float flInterval )
         ChangeYaw( pev->yaw_speed );
     }
 
-	// if the waypoint is closer than CheckDist, CheckDist is the dist to waypoint
+    // if the waypoint is closer than CheckDist, CheckDist is the dist to waypoint
     if( flWaypointDist < DIST_TO_CHECK )
     {
         flCheckDist = flWaypointDist;
@@ -2178,7 +2178,7 @@ void COFPitWorm::Move( float flInterval )
 
     if( ( m_Route[m_iRouteIndex].iType & ( ~bits_MF_NOT_TO_MASK ) ) == bits_MF_TO_ENEMY )
     {
-		// only on a PURE move to enemy ( i.e., ONLY MF_TO_ENEMY set, not MF_TO_ENEMY and DETOUR )
+        // only on a PURE move to enemy ( i.e., ONLY MF_TO_ENEMY set, not MF_TO_ENEMY and DETOUR )
         pTargetEnt = m_hEnemy;
     }
     else if( ( m_Route[m_iRouteIndex].iType & ~bits_MF_NOT_TO_MASK ) == bits_MF_TO_TARGETENT )
@@ -2186,17 +2186,17 @@ void COFPitWorm::Move( float flInterval )
         pTargetEnt = m_hTargetEnt;
     }
 
-	// !!!BUGBUG - CheckDist should be derived from ground speed.
-	// If this fails, it should be because of some dynamic entity blocking this guy.
-	// We've already checked this path, so we should wait and time out if the entity doesn't move
+    // !!!BUGBUG - CheckDist should be derived from ground speed.
+    // If this fails, it should be because of some dynamic entity blocking this guy.
+    // We've already checked this path, so we should wait and time out if the entity doesn't move
     flDist = 0;
     if( CheckLocalMove( pev->origin, pev->origin + vecDir * flCheckDist, pTargetEnt, &flDist ) != LOCALMOVE_VALID )
     {
         CBaseEntity* pBlocker;
 
-		// Can't move, stop
+        // Can't move, stop
         Stop();
-		// Blocking entity is in global trace_ent
+        // Blocking entity is in global trace_ent
         pBlocker = CBaseEntity::Instance( gpGlobals->trace_ent );
         if( pBlocker )
         {
@@ -2215,38 +2215,38 @@ void COFPitWorm::Move( float flInterval )
 
         if( pBlocker && m_moveWaitTime > 0 && pBlocker->IsMoving() && !pBlocker->IsPlayer() && ( gpGlobals->time - m_flMoveWaitFinished ) > 3.0 )
         {
-			// Can we still move toward our target?
+            // Can we still move toward our target?
             if( flDist < m_flGroundSpeed )
             {
-				// No, Wait for a second
+                // No, Wait for a second
                 m_flMoveWaitFinished = gpGlobals->time + m_moveWaitTime;
                 return;
             }
-			// Ok, still enough room to take a step
+            // Ok, still enough room to take a step
 
             m_IdealActivity = m_movementActivity = m_slowMode;
         }
     }
 
-	// close enough to the target, now advance to the next target. This is done before actually reaching
-	// the target so that we get a nice natural turn while moving.
+    // close enough to the target, now advance to the next target. This is done before actually reaching
+    // the target so that we get a nice natural turn while moving.
     if( ShouldAdvanceRoute( flWaypointDist ) ) ///!!!BUGBUG- magic number
     {
         AdvanceRoute( flWaypointDist );
     }
 
-	// Might be waiting for a door
+    // Might be waiting for a door
     if( m_flMoveWaitFinished > gpGlobals->time )
     {
         Stop();
         return;
     }
 
-	// UNDONE: this is a hack to quit moving farther than it has looked ahead.
+    // UNDONE: this is a hack to quit moving farther than it has looked ahead.
     if( flCheckDist < m_flGroundSpeed * flInterval )
     {
         flInterval = flCheckDist / m_flGroundSpeed;
-		// AILogger->debug("{:.02f}", flInterval);
+        // AILogger->debug("{:.02f}", flInterval);
     }
     MoveExecute( pTargetEnt, vecDir, flInterval );
 
@@ -2285,7 +2285,7 @@ void COFPitWorm::ShootBeam()
         m_pBeam = CBeam::BeamCreate( "sprites/laserbeam.spr", 80 );
         if( m_pBeam )
         {
-			// EHANDLE::operator CBaseEntity* (&this->baseclass_0.m_hEnemy);
+            // EHANDLE::operator CBaseEntity* (&this->baseclass_0.m_hEnemy);
             m_pBeam->PointEntInit( tr.vecEndPos, entindex() );
 
             m_pBeam->SetEndAttachment( 1 );

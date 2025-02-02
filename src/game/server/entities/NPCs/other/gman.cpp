@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -16,7 +16,7 @@
 #include "cbase.h"
 
 /**
- *	@brief misunderstood servant of the people
+ *    @brief misunderstood servant of the people
  */
 class CGMan : public CBaseMonster
 {
@@ -130,7 +130,7 @@ void CGMan::RunTask( const Task_t* pTask )
     switch ( pTask->iTask )
     {
     case TASK_WAIT:
-		// look at who I'm talking to
+        // look at who I'm talking to
         if( m_flTalkTime > gpGlobals->time && m_hTalkTarget != nullptr )
         {
             float yaw = VecToYaw( m_hTalkTarget->pev->origin - pev->origin ) - pev->angles.y;
@@ -140,10 +140,10 @@ void CGMan::RunTask( const Task_t* pTask )
             if( yaw < -180 )
                 yaw += 360;
 
-			// turn towards vector
+            // turn towards vector
             SetBoneController( 0, yaw );
         }
-		// look at player, but only if playing a "safe" idle animation
+        // look at player, but only if playing a "safe" idle animation
         else if( m_hPlayer != nullptr && pev->sequence == 0 )
         {
             float yaw = VecToYaw( m_hPlayer->pev->origin - pev->origin ) - pev->angles.y;
@@ -153,7 +153,7 @@ void CGMan::RunTask( const Task_t* pTask )
             if( yaw < -180 )
                 yaw += 360;
 
-			// turn towards vector
+            // turn towards vector
             SetBoneController( 0, yaw );
         }
         else
@@ -171,7 +171,7 @@ void CGMan::RunTask( const Task_t* pTask )
 
 bool CGMan::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Override all damage
+    // Override all damage
     pev->health = pev->max_health / 2; // always trigger the 50% damage aitrigger
 
     if( flDamage > 0 )

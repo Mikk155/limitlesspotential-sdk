@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -21,13 +21,13 @@
 
 void PersistentInventorySystem::NewMapStarted()
 {
-	// Make sure we forget the previous map's inventories if this level change was not initiated by the map itself.
+    // Make sure we forget the previous map's inventories if this level change was not initiated by the map itself.
     const bool wasInitialized = m_InitializedInventories;
     m_InitializedInventories = false;
 
     if( !wasInitialized || !g_pGameRules->IsCoOp() || m_ExpectedSpawnCount != g_Server.GetSpawnCount() )
     {
-		// Persistent inventory is only used by co-op.
+        // Persistent inventory is only used by co-op.
         std::fill( m_Inventories.begin(), m_Inventories.end(), PersistentPlayerInventory{} );
         return;
     }
@@ -42,7 +42,7 @@ void PersistentInventorySystem::InitializeFromPlayers()
 
     m_InitializedInventories = true;
 
-	// Catch the case where a map fails to load and then gets loaded manually so we don't restore inventories.
+    // Catch the case where a map fails to load and then gets loaded manually so we don't restore inventories.
     m_ExpectedSpawnCount = g_Server.GetSpawnCount() + 1;
 
     std::fill( m_Inventories.begin(), m_Inventories.end(), PersistentPlayerInventory{} );
@@ -72,7 +72,7 @@ bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
 
     const float gracePeriod = g_Skill.GetValue( "coop_persistent_inventory_grace_period", 0 );
 
-	// Grace period ended, can't restore.
+    // Grace period ended, can't restore.
     if( gracePeriod != -1 && gpGlobals->time >= ( player->m_ConnectTime + std::max( 0.f, gracePeriod ) ) )
     {
         return false;
@@ -94,7 +94,7 @@ bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
 
 std::string PersistentInventorySystem::GetPlayerId( CBasePlayer* player )
 {
-	// This gets the Steam Id even if sv_lan is 1.
-	// Format is signed 64 bit integer in string form.
+    // This gets the Steam Id even if sv_lan is 1.
+    // Format is signed 64 bit integer in string form.
     return g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( player->edict() ), "*sid" );
 }

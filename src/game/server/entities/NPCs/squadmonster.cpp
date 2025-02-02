@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -22,7 +22,7 @@ BEGIN_DATAMAP( CSquadMonster )
     DEFINE_FIELD( m_hSquadLeader, FIELD_EHANDLE ),
     DEFINE_ARRAY( m_hSquadMember, FIELD_EHANDLE, MAX_SQUAD_MEMBERS - 1 ),
 
-	// DEFINE_FIELD(m_afSquadSlots, FIELD_INTEGER), // these need to be reset after transitions!
+    // DEFINE_FIELD(m_afSquadSlots, FIELD_INTEGER), // these need to be reset after transitions!
     DEFINE_FIELD( m_fEnemyEluded, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_flLastEnemySightTime, FIELD_TIME ),
 
@@ -42,9 +42,9 @@ bool CSquadMonster::OccupySlot( int iDesiredSlots )
 
     if( SquadEnemySplit() )
     {
-		// if the squad members aren't all fighting the same enemy, slots are disabled
-		// so that a squad member doesn't get stranded unable to engage his enemy because
-		// all of the attack slots are taken by squad members fighting other enemies.
+        // if the squad members aren't all fighting the same enemy, slots are disabled
+        // so that a squad member doesn't get stranded unable to engage his enemy because
+        // all of the attack slots are taken by squad members fighting other enemies.
         m_iMySlot = bits_SLOT_SQUAD_SPLIT;
         return true;
     }
@@ -53,7 +53,7 @@ bool CSquadMonster::OccupySlot( int iDesiredSlots )
 
     if( ( iDesiredSlots ^ pSquadLeader->m_afSquadSlots ) == 0 )
     {
-		// none of the desired slots are available.
+        // none of the desired slots are available.
         return false;
     }
 
@@ -66,10 +66,10 @@ bool CSquadMonster::OccupySlot( int iDesiredSlots )
         {
             if( ( iSquadSlots & iMask ) == 0 ) // Is it already taken?
             {
-				// No, use this bit
+                // No, use this bit
                 pSquadLeader->m_afSquadSlots |= iMask;
                 m_iMySlot = iMask;
-				//				AILogger->debug("Took slot {} - {}", i, m_hSquadLeader->m_afSquadSlots);
+                //                AILogger->debug("Took slot {} - {}", i, m_hSquadLeader->m_afSquadSlots);
                 return true;
             }
         }
@@ -82,7 +82,7 @@ void CSquadMonster::VacateSlot()
 {
     if( m_iMySlot != bits_NO_SLOT && InSquad() )
     {
-		//		AILogger->debug("Vacated Slot {} - {}", m_iMySlot, m_hSquadLeader->m_afSquadSlots);
+        //        AILogger->debug("Vacated Slot {} - {}", m_iMySlot, m_hSquadLeader->m_afSquadSlots);
         MySquadLeader()->m_afSquadSlots &= ~m_iMySlot;
         m_iMySlot = bits_NO_SLOT;
     }
@@ -113,7 +113,7 @@ void CSquadMonster::SquadRemove( CSquadMonster* pRemove )
     ASSERT( this->IsLeader() );
     ASSERT( pRemove->m_hSquadLeader == this );
 
-	// If I'm the leader, get rid of my squad
+    // If I'm the leader, get rid of my squad
     if( pRemove == MySquadLeader() )
     {
         for( int i = 0; i < MAX_SQUAD_MEMBERS - 1; i++ )
@@ -161,7 +161,7 @@ bool CSquadMonster::SquadAdd( CSquadMonster* pAdd )
         }
     }
     return false;
-	// should complain here
+    // should complain here
 }
 
 void CSquadMonster::SquadPasteEnemyInfo()
@@ -195,15 +195,15 @@ void CSquadMonster::SquadMakeEnemy( CBaseEntity* pEnemy )
         CSquadMonster* pMember = pSquadLeader->MySquadMember( i );
         if( pMember )
         {
-			// reset members who aren't activly engaged in fighting
+            // reset members who aren't activly engaged in fighting
             if( pMember->m_hEnemy != pEnemy && !pMember->HasConditions( bits_COND_SEE_ENEMY ) )
             {
                 if( pMember->m_hEnemy != nullptr )
                 {
-					// remember their current enemy
+                    // remember their current enemy
                     pMember->PushEnemy( pMember->m_hEnemy, pMember->m_vecEnemyLKP );
                 }
-				// give them a new enemy
+                // give them a new enemy
                 pMember->m_hEnemy = pEnemy;
                 pMember->m_vecEnemyLKP = pEnemy->pev->origin;
                 pMember->SetConditions( bits_COND_NEW_ENEMY );
@@ -234,14 +234,14 @@ int CSquadMonster::SquadRecruit( int searchRadius, int maxMembers )
     const auto iMyClass = Classify(); // cache this monster's class
 
 
-	// Don't recruit if I'm already in a group
+    // Don't recruit if I'm already in a group
     if( InSquad() )
         return 0;
 
     if( maxMembers < 2 )
         return 0;
 
-	// I am my own leader
+    // I am my own leader
     m_hSquadLeader = this;
     squadCount = 1;
 
@@ -249,7 +249,7 @@ int CSquadMonster::SquadRecruit( int searchRadius, int maxMembers )
 
     if( !FStringNull( pev->netname ) )
     {
-		// I have a netname, so unconditionally recruit everyone else with that name.
+        // I have a netname, so unconditionally recruit everyone else with that name.
         pEntity = UTIL_FindEntityByString( pEntity, "netname", STRING( pev->netname ) );
         while( pEntity )
         {
@@ -259,7 +259,7 @@ int CSquadMonster::SquadRecruit( int searchRadius, int maxMembers )
             {
                 if( !pRecruit->InSquad() && pRecruit->Classify() == iMyClass && pRecruit != this )
                 {
-					// minimum protection here against user error.in worldcraft.
+                    // minimum protection here against user error.in worldcraft.
                     if( !SquadAdd( pRecruit ) )
                         break;
                     squadCount++;
@@ -277,7 +277,7 @@ int CSquadMonster::SquadRecruit( int searchRadius, int maxMembers )
 
             if( pRecruit && pRecruit != this && pRecruit->IsAlive() && !pRecruit->m_pCine )
             {
-				// Can we recruit this guy?
+                // Can we recruit this guy?
                 if( !pRecruit->InSquad() && pRecruit->Classify() == iMyClass &&
                     CanRecruit( pRecruit ) &&
                     FStringNull( pRecruit->pev->netname ) )
@@ -296,7 +296,7 @@ int CSquadMonster::SquadRecruit( int searchRadius, int maxMembers )
         }
     }
 
-	// no single member squads
+    // no single member squads
     if( squadCount == 1 )
     {
         m_hSquadLeader = nullptr;
@@ -311,17 +311,17 @@ bool CSquadMonster::CheckEnemy( CBaseEntity* pEnemy )
 
     iUpdatedLKP = CBaseMonster::CheckEnemy( m_hEnemy );
 
-	// communicate with squad members about the enemy IF this individual has the same enemy as the squad leader.
+    // communicate with squad members about the enemy IF this individual has the same enemy as the squad leader.
     if( InSquad() && m_hEnemy == MySquadLeader()->m_hEnemy )
     {
         if( iUpdatedLKP )
         {
-			// have new enemy information, so paste to the squad.
+            // have new enemy information, so paste to the squad.
             SquadPasteEnemyInfo();
         }
         else
         {
-			// enemy unseen, copy from the squad knowledge.
+            // enemy unseen, copy from the squad knowledge.
             SquadCopyEnemyInfo();
         }
     }
@@ -337,14 +337,14 @@ void CSquadMonster::StartMonster()
     {
         if( !FStringNull( pev->netname ) )
         {
-			// if I have a groupname, I can only recruit if I'm flagged as leader
+            // if I have a groupname, I can only recruit if I'm flagged as leader
             if( ( pev->spawnflags & SF_SQUADMONSTER_LEADER ) == 0 )
             {
                 return;
             }
         }
 
-		// try to form squads now.
+        // try to form squads now.
         int iSquadSize = SquadRecruit( 1024, 4 );
 
         if( 0 != iSquadSize )
@@ -375,7 +375,7 @@ bool CSquadMonster::NoFriendlyFire()
     Vector vecRightSide;
     Vector v_left;
 
-	//!!!BUGBUG - to fix this, the planes must be aligned to where the monster will be firing its gun, not the direction it is facing!!!
+    //!!!BUGBUG - to fix this, the planes must be aligned to where the monster will be firing its gun, not the direction it is facing!!!
 
     if( m_hEnemy != nullptr )
     {
@@ -383,11 +383,11 @@ bool CSquadMonster::NoFriendlyFire()
     }
     else
     {
-		// if there's no enemy, pretend there's a friendly in the way, so the grunt won't shoot.
+        // if there's no enemy, pretend there's a friendly in the way, so the grunt won't shoot.
         return false;
     }
 
-	// UTIL_MakeVectors ( pev->angles );
+    // UTIL_MakeVectors ( pev->angles );
 
     vecLeftSide = pev->origin - ( gpGlobals->v_right * ( pev->size.x * 1.5 ) );
     vecRightSide = pev->origin + ( gpGlobals->v_right * ( pev->size.x * 1.5 ) );
@@ -397,11 +397,11 @@ bool CSquadMonster::NoFriendlyFire()
     rightPlane.InitializePlane( v_left, vecRightSide );
     backPlane.InitializePlane( gpGlobals->v_forward, pev->origin );
 
-	/*
-		AILogger->debug("LeftPlane: {} : {}", leftPlane.m_vecNormal, leftPlane.m_flDist);
-		AILogger->debug("RightPlane: {} : {}", rightPlane.m_vecNormal, rightPlane.m_flDist);
-		AILogger->debug("BackPlane: {} : {}", backPlane.m_vecNormal, backPlane.m_flDist);
-	*/
+    /*
+        AILogger->debug("LeftPlane: {} : {}", leftPlane.m_vecNormal, leftPlane.m_flDist);
+        AILogger->debug("RightPlane: {} : {}", rightPlane.m_vecNormal, rightPlane.m_flDist);
+        AILogger->debug("BackPlane: {} : {}", backPlane.m_vecNormal, backPlane.m_flDist);
+    */
 
     CSquadMonster* pSquadLeader = MySquadLeader();
     for( int i = 0; i < MAX_SQUAD_MEMBERS; i++ )
@@ -414,7 +414,7 @@ bool CSquadMonster::NoFriendlyFire()
                 leftPlane.PointInFront( pMember->pev->origin ) &&
                 rightPlane.PointInFront( pMember->pev->origin ) )
             {
-				// this guy is in the check volume! Don't shoot!
+                // this guy is in the check volume! Don't shoot!
                 return false;
             }
         }
@@ -429,7 +429,7 @@ MONSTERSTATE CSquadMonster::GetIdealState()
 
     iConditions = IScheduleFlags();
 
-	// If no schedule conditions, the new ideal state is probably the reason we're in here.
+    // If no schedule conditions, the new ideal state is probably the reason we're in here.
     switch ( m_MonsterState )
     {
     case MONSTERSTATE_IDLE:
@@ -453,7 +453,7 @@ bool CSquadMonster::FValidateCover( const Vector& vecCoverLocation )
 
     if( SquadMemberInRange( vecCoverLocation, 128 ) )
     {
-		// another squad member is too close to this piece of cover.
+        // another squad member is too close to this piece of cover.
         return false;
     }
 

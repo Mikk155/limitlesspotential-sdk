@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -26,8 +26,8 @@
 #endif
 
 /**
- *	@brief Prefix used for cvars registered by this system that can be set on the command line.
- *	@details Typical use on the command line is :cvar_name_with_or_without_library_prefix value
+ *    @brief Prefix used for cvars registered by this system that can be set on the command line.
+ *    @details Typical use on the command line is :cvar_name_with_or_without_library_prefix value
  */
 constexpr char CommandLineCVarPrefix = ':';
 
@@ -53,7 +53,7 @@ bool ConCommandSystem::Initialize()
 
 void ConCommandSystem::PostInitialize()
 {
-	// Nothing.
+    // Nothing.
 }
 
 void ConCommandSystem::Shutdown()
@@ -98,7 +98,7 @@ cvar_t* ConCommandSystem::CreateCVar( std::string_view name, const char* default
     {
         m_Logger->warn( "ConCommandSystem::CreateCVar: CVar \"{}\" already registered", completeName );
 
-		// Can't guarantee that the cvar is the same so return null
+        // Can't guarantee that the cvar is the same so return null
         return nullptr;
     }
 
@@ -108,7 +108,7 @@ cvar_t* ConCommandSystem::CreateCVar( std::string_view name, const char* default
     strncpy( data.Name.get(), completeName.c_str(), completeName.size() + 1 );
     data.Name[completeName.size()] = '\0';
 
-	// The client creates cvars in the engine, the server has to create them itself
+    // The client creates cvars in the engine, the server has to create them itself
 #ifdef CLIENT_DLL
     data.CVar = gEngfuncs.pfnRegisterVariable( data.Name.get(), defaultValue, flags );
 #else
@@ -128,10 +128,10 @@ cvar_t* ConCommandSystem::CreateCVar( std::string_view name, const char* default
 
     auto& cvar = m_Cvars.back();
 
-	// Check if an initial value was passed on the command line.
-	// Two cases to consider: is the complete name being used or is the non-prefixed name being used?
-	// Prefer complete name to allow for more granular control.
-	// This is required because the server is loaded after stuffcmds has run on a listen server, so the cvars aren't set.
+    // Check if an initial value was passed on the command line.
+    // Two cases to consider: is the complete name being used or is the non-prefixed name being used?
+    // Prefer complete name to allow for more granular control.
+    // This is required because the server is loaded after stuffcmds has run on a listen server, so the cvars aren't set.
     auto value = TryGetCVarCommandLineValue( cvar.Name.get() );
 
     if( !value )
@@ -205,7 +205,7 @@ void ConCommandSystem::RegisterChangeCallback( cvar_t* cvar, std::function<void(
         return;
     }
 
-	// Multiple callbacks can listen for changes to the same cvar, so don't block that here.
+    // Multiple callbacks can listen for changes to the same cvar, so don't block that here.
 
     ChangeCallbackData data{
         .State = {.Cvar = cvar, .OldString = cvar->string, .OldValue = cvar->value},
@@ -229,7 +229,7 @@ void ConCommandSystem::CommandCallback()
     }
     else
     {
-		// Should never happen
+        // Should never happen
         m_Logger->error( "ConCommandSystem::CommandCallback: Couldn't find command \"{}\"", args.Argument( 0 ) );
     }
 }
@@ -245,9 +245,9 @@ const char* ConCommandSystem::TryGetCVarCommandLineValue( std::string_view name 
         return nullptr;
     }
 
-	// Check for common mistakes, like not specifying a value (if it's the last argument or followed by another parameter or engine cvar set).
-	// Note that this can happen if a cvar contains a map name that happens to start with these characters.
-	// Filenames shouldn't include these characters anyway because it confuses command line parsing code.
+    // Check for common mistakes, like not specifying a value (if it's the last argument or followed by another parameter or engine cvar set).
+    // Note that this can happen if a cvar contains a map name that happens to start with these characters.
+    // Filenames shouldn't include these characters anyway because it confuses command line parsing code.
     if( !next || next[0] == '-' || next[0] == '+' )
     {
         m_Logger->error( "CVar specified on the command line with no value" );

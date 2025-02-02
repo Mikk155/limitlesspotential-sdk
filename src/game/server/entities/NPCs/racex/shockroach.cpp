@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -71,15 +71,15 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-	/**
-	 *	@brief this is the shock roach's touch function when it is in the air
-	 */
+    /**
+     *    @brief this is the shock roach's touch function when it is in the air
+     */
     void LeapTouch( CBaseEntity* pOther );
 
-	/**
-	 *	@brief returns the real center of the shock roach.
-	 *	The bounding box is much larger than the actual creature so this is needed for targeting
-	 */
+    /**
+     *    @brief returns the real center of the shock roach.
+     *    The bounding box is much larger than the actual creature so this is needed for targeting
+     */
     Vector Center() override;
 
     Vector BodyTarget( const Vector& posSrc ) override;
@@ -211,21 +211,21 @@ void COFShockRoach::HandleAnimEvent( MonsterEvent_t* pEvent )
             if( gravity <= 1 )
                 gravity = 1;
 
-			// How fast does the headcrab need to travel to reach that height given gravity?
+            // How fast does the headcrab need to travel to reach that height given gravity?
             float height = ( m_hEnemy->pev->origin.z + m_hEnemy->pev->view_ofs.z - pev->origin.z );
             if( height < 16 )
                 height = 16;
             float speed = sqrt( 2 * gravity * height );
             float time = speed / gravity;
 
-			// Scale the sideways velocity to get there at the right time
+            // Scale the sideways velocity to get there at the right time
             vecJumpDir = ( m_hEnemy->pev->origin + m_hEnemy->pev->view_ofs - pev->origin );
             vecJumpDir = vecJumpDir * ( 1.0 / time );
 
-			// Speed to offset gravity at the desired height
+            // Speed to offset gravity at the desired height
             vecJumpDir.z = speed;
 
-			// Don't jump too far/fast
+            // Don't jump too far/fast
             float distance = vecJumpDir.Length();
 
             if( distance > 650 )
@@ -235,14 +235,14 @@ void COFShockRoach::HandleAnimEvent( MonsterEvent_t* pEvent )
         }
         else
         {
-			// jump hop, don't care where
+            // jump hop, don't care where
             vecJumpDir = Vector( gpGlobals->v_forward.x, gpGlobals->v_forward.y, gpGlobals->v_up.z ) * 350;
         }
 
-		// Not used for Shock Roach
-		// int iSound = RANDOM_LONG(0,2);
-		// if ( iSound != 0 )
-		//	EmitSoundDyn(CHAN_VOICE, pAttackSounds[iSound], GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
+        // Not used for Shock Roach
+        // int iSound = RANDOM_LONG(0,2);
+        // if ( iSound != 0 )
+        //    EmitSoundDyn(CHAN_VOICE, pAttackSounds[iSound], GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 
         pev->velocity = vecJumpDir;
         m_flNextAttack = gpGlobals->time + 2;
@@ -325,7 +325,7 @@ void COFShockRoach::LeapTouch( CBaseEntity* pOther )
         return;
     }
 
-	// Give the player a shock rifle if they don't have one
+    // Give the player a shock rifle if they don't have one
     if( auto player = ToBasePlayer( pOther ); player )
     {
         if( !player->HasNamedPlayerWeapon( "weapon_shockrifle" ) )
@@ -337,7 +337,7 @@ void COFShockRoach::LeapTouch( CBaseEntity* pOther )
         }
     }
 
-	// Don't hit if back on ground
+    // Don't hit if back on ground
     if( !FBitSet( pev->flags, FL_ONGROUND ) )
     {
         EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pBiteSounds ), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch() );
@@ -350,7 +350,7 @@ void COFShockRoach::LeapTouch( CBaseEntity* pOther )
 
 void COFShockRoach::PrescheduleThink()
 {
-	// make the crab coo a little bit in combat state
+    // make the crab coo a little bit in combat state
     if( m_MonsterState == MONSTERSTATE_COMBAT && RANDOM_FLOAT( 0, 5 ) < 0.1 )
     {
         IdleSound();
@@ -389,7 +389,7 @@ bool COFShockRoach::CheckRangeAttack1( float flDot, float flDist )
 bool COFShockRoach::CheckRangeAttack2( float flDot, float flDist )
 {
     return false;
-	// BUGBUG: Why is this code here?  There is no ACT_RANGE_ATTACK2 animation.  I've disabled it for now.
+    // BUGBUG: Why is this code here?  There is no ACT_RANGE_ATTACK2 animation.  I've disabled it for now.
 #if 0
     if( FBitSet( pev->flags, FL_ONGROUND ) && flDist > 64 && flDist <= 256 && flDot >= 0.5 )
     {
@@ -401,15 +401,15 @@ bool COFShockRoach::CheckRangeAttack2( float flDot, float flDist )
 
 bool COFShockRoach::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Don't take any acid damage -- BigMomma's mortar is acid
+    // Don't take any acid damage -- BigMomma's mortar is acid
     if( ( bitsDamageType & DMG_ACID ) != 0 )
         flDamage = 0;
 
-	// Don't take damage while spawning
+    // Don't take damage while spawning
     if( gpGlobals->time - m_flBirthTime < 2 )
         flDamage = 0;
 
-	// Never gib the roach
+    // Never gib the roach
     return CBaseMonster::TakeDamage( inflictor, attacker, flDamage, ( bitsDamageType & ~DMG_ALWAYSGIB ) | DMG_NEVERGIB );
 }
 

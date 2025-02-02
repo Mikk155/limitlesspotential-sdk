@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	Default behaviors.
+ *    @file
+ *    Default behaviors.
  */
 
 #include "cbase.h"
@@ -115,7 +115,7 @@ Task_t tlAmbush[] =
 };
 
 /**
- *	@brief monster stands in place and waits for a new enemy, or chance to attack an existing enemy.
+ *    @brief monster stands in place and waits for a new enemy, or chance to attack an existing enemy.
  */
 Schedule_t slAmbush[] =
     {
@@ -147,9 +147,9 @@ Task_t tlActiveIdle[] =
 };
 
 /**
- *	@brief !!!BUGBUG - if this schedule doesn't complete on its own, the monster's HintNode will not be cleared,
- *	and the rest of the monster's group will avoid that node because they think the group member
- *	that was previously interrupted is still using that node to active idle.
+ *    @brief !!!BUGBUG - if this schedule doesn't complete on its own, the monster's HintNode will not be cleared,
+ *    and the rest of the monster's group will avoid that node because they think the group member
+ *    that was previously interrupted is still using that node to active idle.
  */
 Schedule_t slActiveIdle[] =
     {
@@ -212,7 +212,7 @@ Task_t tlAlertSmallFlinch[] =
 };
 
 /**
- *	@brief shot, but didn't see attacker, flinch then face
+ *    @brief shot, but didn't see attacker, flinch then face
  */
 Schedule_t slAlertSmallFlinch[] =
     {
@@ -273,7 +273,7 @@ Task_t tlInvestigateSound[] =
 };
 
 /**
- *	@brief sends a monster to the location of the sound that was just heard, to check things out.
+ *    @brief sends a monster to the location of the sound that was just heard, to check things out.
  */
 Schedule_t slInvestigateSound[] =
     {
@@ -335,8 +335,8 @@ Task_t tlStandoff[] =
 };
 
 /**
- *	@brief Used in combat when a monster is hiding in cover or the enemy has moved out of sight.
- *	Should we look around in this schedule?
+ *    @brief Used in combat when a monster is hiding in cover or the enemy has moved out of sight.
+ *    Should we look around in this schedule?
  */
 Schedule_t slStandoff[] =
     {
@@ -541,7 +541,7 @@ Task_t tlChaseEnemyFailed[] =
         {TASK_RUN_PATH, (float)0},
         {TASK_WAIT_FOR_MOVEMENT, (float)0},
         {TASK_REMEMBER, (float)bits_MEMORY_INCOVER},
-		//	{ TASK_TURN_LEFT,				(float)179					},
+        //    { TASK_TURN_LEFT,                (float)179                    },
         {TASK_FACE_ENEMY, (float)0},
         {TASK_WAIT, (float)1},
 };
@@ -569,7 +569,7 @@ Task_t tlSmallFlinch[] =
 };
 
 /**
- *	@brief played when minor damage is taken.
+ *    @brief played when minor damage is taken.
  */
 Schedule_t slSmallFlinch[] =
     {
@@ -621,8 +621,8 @@ Task_t tlBarnacleVictimGrab[] =
 };
 
 /**
- *	@brief barnacle tongue just hit the monster, so play a hit animation,
- *	then play a cycling pull animation as the creature is hoisting the monster.
+ *    @brief barnacle tongue just hit the monster, so play a hit animation,
+ *    then play a cycling pull animation as the creature is hoisting the monster.
  */
 Schedule_t slBarnacleVictimGrab[] =
     {
@@ -641,8 +641,8 @@ Task_t tlBarnacleVictimChomp[] =
 };
 
 /**
- *	@brief barnacle has pulled the prey to its mouth.
- *	Victim should play the BARNACLE_CHOMP animation once, then loop the BARNACLE_CHEW animation indefinitely
+ *    @brief barnacle has pulled the prey to its mouth.
+ *    Victim should play the BARNACLE_CHOMP animation once, then loop the BARNACLE_CHEW animation indefinitely
  */
 Schedule_t slBarnacleVictimChomp[] =
     {
@@ -659,7 +659,7 @@ Task_t tlError[] =
 };
 
 /**
- *	@brief Universal error schedule.
+ *    @brief Universal error schedule.
  */
 Schedule_t slError[] =
     {
@@ -753,7 +753,7 @@ Task_t tlCower[] =
 };
 
 /**
- *	@brief this is what is usually done when attempts to escape danger fail.
+ *    @brief this is what is usually done when attempts to escape danger fail.
  */
 Schedule_t slCower[] =
     {
@@ -775,7 +775,7 @@ Task_t tlTakeCoverFromOrigin[] =
 };
 
 /**
- *	@brief move away from where you're currently standing.
+ *    @brief move away from where you're currently standing.
  */
 Schedule_t slTakeCoverFromOrigin[] =
     {
@@ -797,7 +797,7 @@ Task_t tlTakeCoverFromBestSound[] =
 };
 
 /**
- *	@brief hide from the loudest sound source
+ *    @brief hide from the loudest sound source
  */
 Schedule_t slTakeCoverFromBestSound[] =
     {
@@ -816,13 +816,13 @@ Task_t tlTakeCoverFromEnemy[] =
         {TASK_RUN_PATH, (float)0},
         {TASK_WAIT_FOR_MOVEMENT, (float)0},
         {TASK_REMEMBER, (float)bits_MEMORY_INCOVER},
-		//	{ TASK_TURN_LEFT,				(float)179					},
+        //    { TASK_TURN_LEFT,                (float)179                    },
         {TASK_FACE_ENEMY, (float)0},
         {TASK_WAIT, (float)1},
 };
 
 /**
- *	@brief Take cover from enemy! Tries lateral cover before node cover!
+ *    @brief Take cover from enemy! Tries lateral cover before node cover!
  */
 Schedule_t slTakeCoverFromEnemy[] =
     {
@@ -943,10 +943,10 @@ const Schedule_t* CBaseMonster::ScheduleFromName( const char* pName ) const
 
 const Schedule_t* CBaseMonster::GetScheduleOfType( int Type )
 {
-	//	AILogger->debug("Sched Type:{}", Type);
+    //    AILogger->debug("Sched Type:{}", Type);
     switch ( Type )
     {
-		// This is the schedule for scripted sequences AND scripted AI
+        // This is the schedule for scripted sequences AND scripted AI
     case SCHED_AISCRIPT:
     {
         ASSERT( m_pCine != nullptr );
@@ -956,8 +956,8 @@ const Schedule_t* CBaseMonster::GetScheduleOfType( int Type )
             CineCleanup();
             return GetScheduleOfType( SCHED_IDLE_STAND );
         }
-		//			else
-		//				AILogger->debug("Starting script {} for {}", STRING(m_pCine->m_iszPlay), STRING(pev->classname));
+        //            else
+        //                AILogger->debug("Starting script {} for {}", STRING(m_pCine->m_iszPlay), STRING(pev->classname));
 
         switch ( m_pCine->m_fMoveTo )
         {

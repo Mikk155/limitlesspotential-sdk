@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -37,26 +37,26 @@ const char* JSONTypeToString( json::value_t type );
 
 struct JSONLoadParameters final
 {
-	/**
-	 *	@brief If not empty, use the validator for this schema to validate the JSON before parsing it.
-	 */
+    /**
+     *    @brief If not empty, use the validator for this schema to validate the JSON before parsing it.
+     */
     const std::string_view SchemaName;
 
-	/**
-	 * @brief If provided, use this validator. If this is not null then JSONLoadParameters::SchemaName must be empty.
-	 */
+    /**
+     * @brief If provided, use this validator. If this is not null then JSONLoadParameters::SchemaName must be empty.
+     */
     const json_validator* Validator = nullptr;
 
-	/**
-	 *	@brief If not null, only files in this search path.
-	 */
+    /**
+     *    @brief If not null, only files in this search path.
+     */
     const char* PathID = nullptr;
 };
 
 class JSONSystem final : public IGameSystem
 {
 private:
-	// Schemas are created on-demand to reduce memory usage
+    // Schemas are created on-demand to reduce memory usage
     struct SchemaData
     {
         std::string Name;
@@ -76,56 +76,56 @@ public:
     void PostInitialize() override;
     void Shutdown() override;
 
-	/**
-	 *	@brief Registers a schema with a function to get the schema.
-	 */
+    /**
+     *    @brief Registers a schema with a function to get the schema.
+     */
     void RegisterSchema( std::string&& name, std::function<std::string()>&& getSchemaFunction );
 
-	/**
-	 *	@copydoc RegisterSchema(std::string&&, std::function<std::string()>&&)
-	 */
+    /**
+     *    @copydoc RegisterSchema(std::string&&, std::function<std::string()>&&)
+     */
     void RegisterSchema( std::string_view name, std::function<std::string()>&& getSchemaFunction )
     {
         RegisterSchema( std::string{name}, std::move( getSchemaFunction ) );
     }
 
-	/**
-	 *	@brief Gets the validator for the given schema.
-	 *	@return If no schema by that name exists or the validator has not been created yet, returns null.
-	 */
+    /**
+     *    @brief Gets the validator for the given schema.
+     *    @return If no schema by that name exists or the validator has not been created yet, returns null.
+     */
     const json_validator* GetValidator( std::string_view schemaName ) const;
 
-	/**
-	 *	@brief Gets or creates the validator for the given schema.
-	 *	If the schema exists and the validator has not been created yet, creates the validator.
-	 *	@return If no schema by that name exists or the schema is invalid, returns null.
-	 */
+    /**
+     *    @brief Gets or creates the validator for the given schema.
+     *    If the schema exists and the validator has not been created yet, creates the validator.
+     *    @return If no schema by that name exists or the schema is invalid, returns null.
+     */
     const json_validator* GetOrCreateValidator( std::string_view schemaName );
 
-	/**
-	 *	@brief Loads a file using the engine's filesystem and parses it as JSON.
-	 */
+    /**
+     *    @brief Loads a file using the engine's filesystem and parses it as JSON.
+     */
     std::optional<json> LoadJSONFile( const char* fileName, const JSONLoadParameters& parameters = {} );
 
-	/**
-	 *	@brief Helper function to parse JSON.
-	 *	Pass in a callable object that will parse JSON into a movable or copyable object.
-	 *	If any JSON exceptions are thrown they will be logged.
-	 *	@return An optional value that contains the result object if no errors occurred, empty otherwise
-	 */
+    /**
+     *    @brief Helper function to parse JSON.
+     *    Pass in a callable object that will parse JSON into a movable or copyable object.
+     *    If any JSON exceptions are thrown they will be logged.
+     *    @return An optional value that contains the result object if no errors occurred, empty otherwise
+     */
     template <typename Callable>
     auto ParseJSON( Callable callable, json& input ) -> std::optional<decltype( callable( input ) )>;
 
-	/**
-	 *	@brief Helper function to parse JSON Schemas.
-	 */
+    /**
+     *    @brief Helper function to parse JSON Schemas.
+     */
     std::optional<json> ParseJSONSchema( std::string_view schema );
 
-	/**
-	 *	@brief Loads a JSON file and parses it into an object.
-	 *	@see LoadJSONFile(const char*, const JSONLoadParameters& parameters)
-	 *	@see ParseJSON(Callable, const json&)
-	 */
+    /**
+     *    @brief Loads a JSON file and parses it into an object.
+     *    @see LoadJSONFile(const char*, const JSONLoadParameters& parameters)
+     *    @see ParseJSON(Callable, const json&)
+     */
     template <typename Callable>
     auto ParseJSONFile( const char* fileName, const JSONLoadParameters& parameters, Callable callable )
         -> std::optional<decltype( callable( *( json* )nullptr ) )>;
@@ -151,7 +151,7 @@ inline auto JSONSystem::ParseJSON( Callable callable, json& input ) -> std::opti
 {
     if( !m_Logger )
     {
-		// Can't parse JSON when we're not initialized
+        // Can't parse JSON when we're not initialized
         return {};
     }
 
@@ -170,7 +170,7 @@ inline std::optional<json> JSONSystem::ParseJSONSchema( std::string_view schema 
 {
     if( !m_Logger )
     {
-		// Can't parse JSON when we're not initialized
+        // Can't parse JSON when we're not initialized
         return {};
     }
 

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -31,8 +31,8 @@ CRpgRocket::~CRpgRocket()
 {
     if( m_pLauncher )
     {
-		// TODO: this probably needs to be put in UpdateOnRemove
-		//  my launcher is still around, tell it I'm dead.
+        // TODO: this probably needs to be put in UpdateOnRemove
+        //  my launcher is still around, tell it I'm dead.
         m_pLauncher->m_cActiveRockets--;
     }
 }
@@ -55,7 +55,7 @@ CRpgRocket* CRpgRocket::CreateRpgRocket( Vector vecOrigin, Vector vecAngles, CBa
 void CRpgRocket::Spawn()
 {
     Precache();
-	// motor
+    // motor
     pev->movetype = MOVETYPE_BOUNCE;
     pev->solid = SOLID_BBOX;
 
@@ -93,15 +93,15 @@ void CRpgRocket::Precache()
 
 void CRpgRocket::IgniteThink()
 {
-	// pev->movetype = MOVETYPE_TOSS;
+    // pev->movetype = MOVETYPE_TOSS;
 
     pev->movetype = MOVETYPE_FLY;
     pev->effects |= EF_LIGHT;
 
-	// make rocket sound
+    // make rocket sound
     EmitSound( CHAN_VOICE, "weapons/rocket1.wav", 1, 0.5 );
 
-	// rocket trail
+    // rocket trail
     MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
 
     WRITE_BYTE( TE_BEAMFOLLOW );
@@ -118,7 +118,7 @@ void CRpgRocket::IgniteThink()
 
     m_flIgniteTime = gpGlobals->time;
 
-	// set to follow laser spot
+    // set to follow laser spot
     SetThink( &CRpgRocket::FollowThink );
     pev->nextthink = gpGlobals->time + 0.1;
 }
@@ -136,11 +136,11 @@ void CRpgRocket::FollowThink()
     vecTarget = gpGlobals->v_forward;
     flMax = 4096;
 
-	// Examine all entities within a reasonable radius
+    // Examine all entities within a reasonable radius
     while( ( pOther = UTIL_FindEntityByClassname( pOther, "laser_spot" ) ) != nullptr )
     {
         UTIL_TraceLine( pev->origin, pOther->pev->origin, dont_ignore_monsters, edict(), &tr );
-		// WeaponsLogger->debug("{}", tr.flFraction);
+        // WeaponsLogger->debug("{}", tr.flFraction);
         if( tr.flFraction >= 0.90 )
         {
             vecDir = pOther->pev->origin - pev->origin;
@@ -157,14 +157,14 @@ void CRpgRocket::FollowThink()
 
     pev->angles = UTIL_VecToAngles( vecTarget );
 
-	// this acceleration and turning math is totally wrong, but it seems to respond well so don't change it.
+    // this acceleration and turning math is totally wrong, but it seems to respond well so don't change it.
     float flSpeed = pev->velocity.Length();
     if( gpGlobals->time - m_flIgniteTime < 1.0 )
     {
         pev->velocity = pev->velocity * 0.2 + vecTarget * ( flSpeed * 0.8 + 400 );
         if( pev->waterlevel == WaterLevel::Head )
         {
-			// go slow underwater
+            // go slow underwater
             if( pev->velocity.Length() > 300 )
             {
                 pev->velocity = pev->velocity.Normalize() * 300;
@@ -192,7 +192,7 @@ void CRpgRocket::FollowThink()
             Detonate();
         }
     }
-	// WeaponsLogger->debug("{:.0f}", flSpeed);
+    // WeaponsLogger->debug("{:.0f}", flSpeed);
 
     pev->nextthink = gpGlobals->time + 0.1;
 }

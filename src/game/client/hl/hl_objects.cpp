@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -37,10 +37,10 @@ void UpdateBeams()
     cl_entity_t* pthisplayer = gEngfuncs.GetLocalPlayer();
     int idx = pthisplayer->index;
 
-	// Get our exact viewangles from engine
+    // Get our exact viewangles from engine
     gEngfuncs.GetViewAngles( angles );
 
-	// Determine our last predicted origin
+    // Determine our last predicted origin
     const Vector origin = HUD_GetLastOrg();
 
     AngleVectors( angles, forward, right, up );
@@ -51,10 +51,10 @@ void UpdateBeams()
 
     gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );
 
-	// Store off the old count
+    // Store off the old count
     gEngfuncs.pEventAPI->EV_PushPMStates();
 
-	// Now add in all of the players.
+    // Now add in all of the players.
     gEngfuncs.pEventAPI->EV_SetSolidPlayers( idx - 1 );
 
     gEngfuncs.pEventAPI->EV_SetTraceHull( 2 );
@@ -87,7 +87,7 @@ void UpdateBeams()
             {
                 physent_t* pEntity = gEngfuncs.pEventAPI->EV_GetPhysent( tr.ent );
 
-				// Not the world, let's assume that we hit something organic ( dog, cat, uncle joe, etc )
+                // Not the world, let's assume that we hit something organic ( dog, cat, uncle joe, etc )
                 if( pEntity && !( pEntity->solid == SOLID_BSP || pEntity->movetype == MOVETYPE_PUSHSTEP ) )
                 {
                     pFlare->flags &= ~FTENT_NOMODEL;

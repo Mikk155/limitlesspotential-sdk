@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -13,8 +13,8 @@
  *
  ****/
 /**
- *	@file
- *	spawn and think functions for editor-placed lights
+ *    @file
+ *    spawn and think functions for editor-placed lights
  */
 
 #include "cbase.h"
@@ -72,7 +72,7 @@ void CLight::Spawn()
 
     if( m_iStyle >= 32 )
     {
-		//		CHANGE_METHOD(edict(), em_use, light_use);
+        //        CHANGE_METHOD(edict(), em_use, light_use);
         if( FBitSet( pev->spawnflags, SF_LIGHT_START_OFF ) )
             LIGHT_STYLE( m_iStyle, "a" );
         else if( !FStringNull( m_iszPattern ) )
@@ -106,7 +106,7 @@ void CLight::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useTyp
 }
 
 /**
- *	@brief shut up spawn functions for new spotlights
+ *    @brief shut up spawn functions for new spotlights
  */
 LINK_ENTITY_TO_CLASS( light_spot, CLight );
 
@@ -137,7 +137,7 @@ bool CEnvLight::KeyValue( KeyValueData* pkvd )
             b = b * ( v / 255.0 );
         }
 
-		// simulate qrad direct, ambient,and gamma adjustments, as well as engine scaling
+        // simulate qrad direct, ambient,and gamma adjustments, as well as engine scaling
         r = pow( r / 114.0, 0.6 ) * 264;
         g = pow( g / 114.0, 0.6 ) * 264;
         b = pow( b / 114.0, 0.6 ) * 264;

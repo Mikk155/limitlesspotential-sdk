@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -129,8 +129,8 @@ int AmmoTypeSystem::Register( std::string_view name, int maximumCapacity, std::s
         return index;
     }
 
-	// You can raise the limit, but then you'll have to figure out
-	// how to send all of the ammo values to the client for prediction.
+    // You can raise the limit, but then you'll have to figure out
+    // how to send all of the ammo values to the client for prediction.
     if( m_AmmoTypes.size() >= m_AmmoTypes.kMaxSize )
     {
         assert( !"Too many ammo types" );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -154,7 +154,7 @@ void COFGeneWormCloud::RunGeneWormCloud( float frames )
 
     if( pev->frame > m_maxFrame && m_maxFrame > 0 )
     {
-		// TODO: the original code looks like it may be ignoring the modulo, verify this
+        // TODO: the original code looks like it may be ignoring the modulo, verify this
         pev->frame = fmod( pev->frame, m_maxFrame );
     }
 }
@@ -323,7 +323,7 @@ void COFGeneWormSpawn::GeneWormSpawnThink()
 
 void COFGeneWormSpawn::GeneWormSpawnTouch( CBaseEntity* pOther )
 {
-	// Nothing
+    // Nothing
 }
 
 void COFGeneWormSpawn::RunGeneWormSpawn( float frames )
@@ -504,7 +504,7 @@ void COFGeneWormSpawn::CreateWarpBeams( int side )
         }
     }
 
-	// Couldn't find anything close enough
+    // Couldn't find anything close enough
     if( flDist == 1.0 )
         return;
 
@@ -547,7 +547,7 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-	// Don't gib ever
+    // Don't gib ever
     void GibMonster() override {}
 
     void SetObjectCollisionBox() override
@@ -1000,7 +1000,7 @@ void COFGeneWorm::HuntThink()
 
     if( m_orificeGlow )
     {
-		// Keep the glow in place relative to the orifice
+        // Keep the glow in place relative to the orifice
         Vector vecOrigin, vecAngles;
         GetAttachment( 1, vecOrigin, vecAngles );
         m_orificeGlow->SetOrigin( vecOrigin );
@@ -1025,7 +1025,7 @@ void COFGeneWorm::HuntThink()
     }
     else
     {
-		// Look forward
+        // Look forward
         SetBoneController( 0, 0 );
     }
 
@@ -1040,8 +1040,8 @@ void COFGeneWorm::HuntThink()
 
             if( m_hEnemy )
             {
-				// This all looks like sprite code, but the cloud class doesn't inherit from it
-				// Could be it originally cast to sprite to use the helper methods
+                // This all looks like sprite code, but the cloud class doesn't inherit from it
+                // Could be it originally cast to sprite to use the helper methods
                 m_pCloud->pev->rendermode = kRenderGlow;
                 m_pCloud->pev->rendercolor.x = 255;
                 m_pCloud->pev->rendercolor.y = 255;
@@ -1099,7 +1099,7 @@ void COFGeneWorm::DyingThink()
 
         pev->frame = 0;
 
-		// Note: bugged in vanilla, variable is not initialized and causes the ending sequence to break
+        // Note: bugged in vanilla, variable is not initialized and causes the ending sequence to break
         int iDir = 0;
 
         pev->sequence = FindTransition( pev->sequence, LookupSequence( "death" ), &iDir );
@@ -1139,7 +1139,7 @@ void COFGeneWorm::DyingThink()
     {
         if( g_pGameRules->IsMultiplayer() )
         {
-			// Fire this so level designers can respond to this at the right time.
+            // Fire this so level designers can respond to this at the right time.
             FireTargets( "GeneWormTeleport", this, this, USE_ON, 1 );
         }
         else
@@ -1148,8 +1148,8 @@ void COFGeneWorm::DyingThink()
 
             if( pPlayer )
             {
-				// Teleport the player to the end script
-				// TODO: this really shouldn't be hardcoded
+                // Teleport the player to the end script
+                // TODO: this really shouldn't be hardcoded
                 for( auto pTeleport : UTIL_FindEntitiesByTargetname( "GeneWormTeleport" ) )
                 {
                     pTeleport->Touch( pPlayer );
@@ -1195,7 +1195,7 @@ void COFGeneWorm::HitTouch( CBaseEntity* pOther )
     {
         m_flHitTime = gpGlobals->time + 0.5;
 
-		// Apply damage to to the toucher based on what was hit
+        // Apply damage to to the toucher based on what was hit
         switch ( tr.iHitgroup )
         {
         case 1:
@@ -1215,7 +1215,7 @@ void COFGeneWorm::HitTouch( CBaseEntity* pOther )
 
         pOther->pev->punchangle.z = 15;
 
-		// TODO: maybe determine direction of velocity to apply?
+        // TODO: maybe determine direction of velocity to apply?
         pOther->pev->velocity = pOther->pev->velocity + Vector{0, 0, 200};
 
         pOther->pev->flags &= ~FL_ONGROUND;
@@ -1349,7 +1349,7 @@ bool COFGeneWorm::ClawAttack()
 
                 if( gpGlobals->time > m_flNextRangeTime )
                 {
-					// TODO: never used?
+                    // TODO: never used?
                     Vector vecMouthPos, vecMouthAngle;
                     GetAttachment( 0, vecMouthPos, vecMouthAngle );
 
@@ -1402,7 +1402,7 @@ bool COFGeneWorm::ClawAttack()
 
 bool COFGeneWorm::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Never actually die
+    // Never actually die
     if( flDamage >= pev->health )
     {
         pev->health = 1;
@@ -1610,7 +1610,7 @@ void FireHurtTargets( const char* targetName, CBaseEntity* pActivator, CBaseEnti
 
     for( auto target : UTIL_FindEntitiesByTargetname( targetName ) )
     {
-		// Fire only those targets that were toggled by the last hurt event
+        // Fire only those targets that were toggled by the last hurt event
         if( target && !( useType == USE_OFF && target->pev->solid == SOLID_NOT ) && !( useType == USE_ON && target->pev->solid == SOLID_TRIGGER ) && ( target->pev->flags & FL_KILLME ) == 0 ) // Don't use dying ents
         {
             CBaseMonster::AILogger->debug( "Found: {}, firing ({})", STRING( target->pev->classname ), targetName );
@@ -1693,6 +1693,6 @@ void COFGeneWorm::TrackHead()
 
 void COFGeneWorm::SpewCloud()
 {
-	// Not much to do here, probably never finished
+    // Not much to do here, probably never finished
     UTIL_MakeVectors( pev->angles );
 }

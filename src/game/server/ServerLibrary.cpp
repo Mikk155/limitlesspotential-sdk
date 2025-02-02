@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -84,7 +84,7 @@ bool ServerLibrary::Initialize()
 {
     m_MapState = std::make_unique<MapState>();
 
-	// Make sure both use the same info on the server.
+    // Make sure both use the same info on the server.
     g_ProjectInfo.SetServerInfo( *g_ProjectInfo.GetLocalInfo() );
 
     if( !GameLibrary::Initialize() )
@@ -124,7 +124,7 @@ bool ServerLibrary::Initialize()
     g_ConCommands.CreateCommand( "load_all_maps", [this]( const auto& args )
         { LoadAllMaps( args ); } );
 
-	// Escape hatch in case the command is executed in error.
+    // Escape hatch in case the command is executed in error.
     g_ConCommands.CreateCommand( "stop_loading_all_maps", [this]( const auto& )
         { m_MapsToLoad.clear(); } );
 
@@ -183,7 +183,7 @@ static void ForceCvarToValue( cvar_t* cvar, float value )
 {
     if( cvar->value != value )
     {
-		// So server operators know what's going on since these cvars aren't normally logged.
+        // So server operators know what's going on since these cvars aren't normally logged.
         g_GameLogger->warn( "Forcing server cvar \"{}\" to \"{}\" to ensure network data file is transferred",
             cvar->name, value );
         g_engfuncs.pfnCvar_DirectSet( cvar, std::to_string( value ).c_str() );
@@ -194,15 +194,15 @@ void ServerLibrary::RunFrame()
 {
     GameLibrary::RunFrame();
 
-	// Force the download cvars to enabled so we can download network data.
+    // Force the download cvars to enabled so we can download network data.
     ForceCvarToValue( m_AllowDownload, 1 );
     ForceCvarToValue( m_SendResources, 1 );
     ForceCvarToValue( m_AllowDLFile, 1 );
 
     g_Bots.RunFrame();
 
-	// If we're loading all maps then change maps after 3 seconds (time starts at 1)
-	// to give the game time to generate files.
+    // If we're loading all maps then change maps after 3 seconds (time starts at 1)
+    // to give the game time to generate files.
     if( !m_MapsToLoad.empty() && gpGlobals->time > 4 )
     {
         LoadNextMap();
@@ -216,10 +216,10 @@ void ServerLibrary::ShutdownServer( spdlog::format_string_t<Args...> fmt, Args&&
 {
     g_GameLogger->critical( fmt, std::forward<Args>( args )... );
     SERVER_COMMAND( "shutdownserver\n" );
-	// Don't do this; if done at certain points during the map spawn phase
-	// this will cause a fatal error because the engine tries to write to
-	// an uninitialized network message buffer.
-	// SERVER_EXECUTE();
+    // Don't do this; if done at certain points during the map spawn phase
+    // this will cause a fatal error because the engine tries to write to
+    // an uninitialized network message buffer.
+    // SERVER_EXECUTE();
 }
 
 void ServerLibrary::NewMapStarted( bool loadGame )
@@ -230,42 +230,42 @@ void ServerLibrary::NewMapStarted( bool loadGame )
 
     m_HasFinishedLoading = false;
 
-	// Need to check if we're getting multiple map start commands in the same frame.
+    // Need to check if we're getting multiple map start commands in the same frame.
     m_IsStartingNewMap = true;
     ++m_InNewMapStartedCount;
 
-	// Execute any commands still queued up so cvars have the correct value.
+    // Execute any commands still queued up so cvars have the correct value.
     SERVER_EXECUTE();
-	// These extra executions are needed to overcome the engine's inserting of wait commands that
-	// delay server settings configured in the Create Server dialog from being set.
-	// We need those settings to configure our gamerules so we're brute forcing the additional executions.
+    // These extra executions are needed to overcome the engine's inserting of wait commands that
+    // delay server settings configured in the Create Server dialog from being set.
+    // We need those settings to configure our gamerules so we're brute forcing the additional executions.
     SERVER_EXECUTE();
     SERVER_EXECUTE();
 
     m_IsStartingNewMap = false;
     --m_InNewMapStartedCount;
 
-	// If multiple map change commands are executed in the same frame then this will break the server's internal state.
+    // If multiple map change commands are executed in the same frame then this will break the server's internal state.
 
-	// Note that this will not happen the first time you load multiple maps after launching the client.
-	// Console commands are processed differently when the server dll is loaded so
-	// it will load the maps in reverse order.
+    // Note that this will not happen the first time you load multiple maps after launching the client.
+    // Console commands are processed differently when the server dll is loaded so
+    // it will load the maps in reverse order.
 
-	// This is because when the server dll is about to load it first executes remaining console commands.
-	// If there are more map commands those will also try to load the server dll,
-	// executing remaining commands in the process,
-	// followed by the remaining map commands executing in reverse order.
-	// Thus the second command is executed first, then control returns to the first map load command
-	// which then continues loading.
+    // This is because when the server dll is about to load it first executes remaining console commands.
+    // If there are more map commands those will also try to load the server dll,
+    // executing remaining commands in the process,
+    // followed by the remaining map commands executing in reverse order.
+    // Thus the second command is executed first, then control returns to the first map load command
+    // which then continues loading.
     if( m_InNewMapStartedCount > 0 )
     {
-		// Reset so we clear to a good state.
+        // Reset so we clear to a good state.
         m_IsStartingNewMap = true;
         m_InNewMapStartedCount = 0;
 
-		// This engine function triggers a Host_Error when the first character has
-		// a value <= to the whitespace character ' '.
-		// It prints the entire string, so we can use this as a poor man's Host_Error.
+        // This engine function triggers a Host_Error when the first character has
+        // a value <= to the whitespace character ' '.
+        // It prints the entire string, so we can use this as a poor man's Host_Error.
         g_engfuncs.pfnForceUnmodified( force_exactfile, nullptr, nullptr,
             " \nERROR: Cannot execute multiple map load commands at the same time\n" );
         return;
@@ -273,7 +273,7 @@ void ServerLibrary::NewMapStarted( bool loadGame )
 
     g_GameLogger->trace( "Starting new map" );
 
-	// Log some useful game info.
+    // Log some useful game info.
     g_GameLogger->info( "Maximum number of edicts: {}", gpGlobals->maxEntities );
 
     g_LastPlayerJoinTime = 0;
@@ -285,19 +285,19 @@ void ServerLibrary::NewMapStarted( bool loadGame )
 
     ClearStringPool();
 
-	// Initialize map state to its default state
+    // Initialize map state to its default state
     *m_MapState = MapState{};
 
     g_ReplacementMaps.Clear();
 
-	// Add BSP models to precache list.
+    // Add BSP models to precache list.
     const auto completeMapName = fmt::format( "maps/{}.bsp", STRING( gpGlobals->mapname ) );
 
     if( auto bspData = BspLoader::Load( completeMapName.c_str() ); bspData )
     {
         g_ModelPrecache->AddUnchecked( STRING( ALLOC_STRING( completeMapName.c_str() ) ) );
 
-		// Submodel 0 is the world so skip it.
+        // Submodel 0 is the world so skip it.
         for( std::size_t subModel = 1; subModel < bspData->SubModelCount; ++subModel )
         {
             g_ModelPrecache->AddUnchecked( STRING( ALLOC_STRING( fmt::format( "*{}", subModel ).c_str() ) ) );
@@ -308,15 +308,15 @@ void ServerLibrary::NewMapStarted( bool loadGame )
         ShutdownServer( "Shutting down server due to error loading BSP data" );
     }
 
-	// Load the config files, which will initialize the map state as needed
+    // Load the config files, which will initialize the map state as needed
     LoadServerConfigFiles();
 
     g_PersistentInventory.NewMapStarted();
 
     sentences::g_Sentences.NewMapStarted();
 
-	// Reset sky name to its default value. If the map specifies its own sky
-	// it will be set in CWorld::KeyValue or restored by the engine on save game load.
+    // Reset sky name to its default value. If the map specifies its own sky
+    // it will be set in CWorld::KeyValue or restored by the engine on save game load.
     CVAR_SET_STRING( "sv_skyname", DefaultSkyName );
 }
 
@@ -335,7 +335,7 @@ void ServerLibrary::PostMapActivate()
     {
         for( auto list : {g_ModelPrecache.get(), g_SoundPrecache.get(), g_GenericPrecache.get()} )
         {
-			// Don't count the invalid string.
+            // Don't count the invalid string.
             g_PrecacheLogger->debug( "[{}] {} precached total", list->GetType(), list->GetCount() - 1 );
         }
     }
@@ -343,7 +343,7 @@ void ServerLibrary::PostMapActivate()
 
 void ServerLibrary::OnUpdateClientData()
 {
-	// The first update occurs after the engine has unpaused itself.
+    // The first update occurs after the engine has unpaused itself.
     if( !m_HasFinishedLoading )
     {
         m_HasFinishedLoading = true;
@@ -352,26 +352,26 @@ void ServerLibrary::OnUpdateClientData()
 
 void ServerLibrary::PlayerActivating( CBasePlayer* player )
 {
-	// In singleplayer ClientPutInServer is only called when starting a new map with the map command,
-	// so we need to initialize this here so entities can send their own updates at the right time.
+    // In singleplayer ClientPutInServer is only called when starting a new map with the map command,
+    // so we need to initialize this here so entities can send their own updates at the right time.
     if( g_LastPlayerJoinTime == 0 )
     {
         g_LastPlayerJoinTime = gpGlobals->time;
     }
 
-	// Override the hud color.
+    // Override the hud color.
     if( m_MapState->m_HudColor )
     {
         player->SetHudColor( *m_MapState->m_HudColor );
     }
 
-	// Override the crosshair color.
+    // Override the crosshair color.
     if( m_MapState->m_CrosshairColor )
     {
         player->SetCrosshairColor( *m_MapState->m_CrosshairColor );
     }
 
-	// Override the light type.
+    // Override the light type.
     if( m_MapState->m_LightType )
     {
         player->SetSuitLightType( *m_MapState->m_LightType );
@@ -383,7 +383,7 @@ void ServerLibrary::PlayerActivating( CBasePlayer* player )
 void ServerLibrary::AddGameSystems()
 {
     GameLibrary::AddGameSystems();
-	// Depends on Angelscript
+    // Depends on Angelscript
     g_GameSystems.Add( &g_ConditionEvaluator );
     g_GameSystems.Add( &g_GameConfigSystem );
     g_GameSystems.Add( &sound::g_ServerSound );
@@ -419,7 +419,7 @@ void ServerLibrary::CreateConfigDefinitions()
         {
             std::vector<std::unique_ptr<const GameConfigSection<ServerConfigContext>>> sections;
 
-			// Server configs only get common and command sections. All other configuration is handled elsewhere.
+            // Server configs only get common and command sections. All other configuration is handled elsewhere.
             sections.push_back( std::make_unique<EchoSection<ServerConfigContext>>() );
             sections.push_back( std::make_unique<CommandsSection<ServerConfigContext>>() );
 
@@ -450,7 +450,7 @@ void ServerLibrary::CreateConfigDefinitions()
 
 void ServerLibrary::DefineSkillVariables()
 {
-	// Gamemode variables
+    // Gamemode variables
     g_Skill.DefineVariable( "coop_persistent_inventory_grace_period", 60, {.Minimum = -1} );
     g_Skill.DefineVariable( "allow_monsters", 1, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
     g_Skill.DefineVariable( "falldamagemode", 0,
@@ -458,7 +458,7 @@ void ServerLibrary::DefineSkillVariables()
             .Maximum = int( FallDamageMode::Progressive ),
             .Type = SkillVarType::Integer} );
 
-	// Item variables
+    // Item variables
     g_Skill.DefineVariable( "healthcharger_recharge_time", -1,
         {.Minimum = ChargerRechargeDelayNever, .Type = SkillVarType::Integer} );
     g_Skill.DefineVariable( "hevcharger_recharge_time", -1,
@@ -475,7 +475,7 @@ void ServerLibrary::DefineSkillVariables()
     g_Skill.DefineVariable( "allow_npc_item_dropping", 1, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
     g_Skill.DefineVariable( "allow_player_weapon_dropping", 0, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
 
-	// Weapon variables
+    // Weapon variables
     g_Skill.DefineVariable( "infinite_ammo", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = SkillVarType::Integer} );
     g_Skill.DefineVariable( "bottomless_magazines", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = SkillVarType::Integer} );
 
@@ -501,7 +501,7 @@ void ServerLibrary::LoadServerConfigFiles()
 
     std::string mapConfigFileName;
 
-	// Use the map-specific cfg if it exists.
+    // Use the map-specific cfg if it exists.
     if( auto mapCfgFileName = fmt::format( "cfg/maps/{}.json", STRING( gpGlobals->mapname ) );
         g_pFileSystem->FileExists( mapCfgFileName.c_str() ) )
     {
@@ -523,7 +523,7 @@ void ServerLibrary::LoadServerConfigFiles()
         gameModeConfig = mapConfig->GetGameModeConfiguration();
     }
 
-	// The Create Server dialog only accepts lists with numeric values so we need to remap it to the game mode name.
+    // The Create Server dialog only accepts lists with numeric values so we need to remap it to the game mode name.
     if( mp_createserver_gamemode.string[0] != '\0' )
     {
         g_engfuncs.pfnCvar_DirectSet( &mp_gamemode, GameModeIndexToString( int( mp_createserver_gamemode.value ) ) );
@@ -560,7 +560,7 @@ void ServerLibrary::LoadServerConfigFiles()
 
     ServerConfigContext context{.State = *m_MapState};
 
-	// Initialize file lists to their defaults.
+    // Initialize file lists to their defaults.
     context.SentencesFiles.push_back( "sound/sentences.json" );
     context.MaterialsFiles.push_back( "sound/materials.json" );
     context.SkillFiles.push_back( "cfg/skill.json" );
@@ -596,7 +596,7 @@ void ServerLibrary::LoadServerConfigFiles()
     g_MaterialSystem.LoadMaterials( context.MaterialsFiles );
     g_Skill.LoadSkillConfigFiles( context.SkillFiles );
 
-	// Override skill vars with cvars if they are enabled only.
+    // Override skill vars with cvars if they are enabled only.
     if( sv_infinite_ammo.value != 0 )
     {
         g_Skill.SetValue( "infinite_ammo", sv_infinite_ammo.value );
@@ -620,7 +620,7 @@ void ServerLibrary::LoadServerConfigFiles()
 
     g_EntityTemplates.LoadTemplates( context.EntityTemplates );
 
-	// Register the weapons so we can then set the replacement filenames.
+    // Register the weapons so we can then set the replacement filenames.
     Weapon_RegisterWeaponData();
 
     g_HudReplacements.HudReplacementFileName = std::move( context.HudReplacementFile );
@@ -642,7 +642,7 @@ void ServerLibrary::SendFogMessage( CBasePlayer* player )
     {
         CBaseEntity::Logger->debug( "Map has fog!" );
 
-		// TODO: Can probably send color as bytes instead.
+        // TODO: Can probably send color as bytes instead.
         WRITE_SHORT( fog->pev->rendercolor.x );
         WRITE_SHORT( fog->pev->rendercolor.y );
         WRITE_SHORT( fog->pev->rendercolor.z );
@@ -676,74 +676,74 @@ void ServerLibrary::LoadAllMaps( const CommandArgs& args )
 
     FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
 
-	const char* fileName = g_pFileSystem->FindFirst("maps/*.bsp", &handle);
+    const char* fileName = g_pFileSystem->FindFirst("maps/*.bsp", &handle);
 
-	if (fileName != nullptr)
-	{
-		do
-		{
-			std::string mapName = fileName;
-			mapName.resize(mapName.size() - 4);
+    if (fileName != nullptr)
+    {
+        do
+        {
+            std::string mapName = fileName;
+            mapName.resize(mapName.size() - 4);
 
-			if (std::find_if(m_MapsToLoad.begin(), m_MapsToLoad.end(), [=](const auto& candidate)
-					{ return 0 == stricmp(candidate.c_str(), mapName.c_str()); }) == m_MapsToLoad.end())
-			{
-				m_MapsToLoad.push_back(std::move(mapName));
-			}
-		} while ((fileName = g_pFileSystem->FindNext(handle)) != nullptr);
+            if (std::find_if(m_MapsToLoad.begin(), m_MapsToLoad.end(), [=](const auto& candidate)
+                    { return 0 == stricmp(candidate.c_str(), mapName.c_str()); }) == m_MapsToLoad.end())
+            {
+                m_MapsToLoad.push_back(std::move(mapName));
+            }
+        } while ((fileName = g_pFileSystem->FindNext(handle)) != nullptr);
 
-		g_pFileSystem->FindClose(handle);
+        g_pFileSystem->FindClose(handle);
 
-		// Sort in reverse order so the first map in alphabetic order is loaded first.
-		std::sort(m_MapsToLoad.begin(), m_MapsToLoad.end(), [](const auto& lhs, const auto& rhs)
-			{ return rhs < lhs; });
-	}
+        // Sort in reverse order so the first map in alphabetic order is loaded first.
+        std::sort(m_MapsToLoad.begin(), m_MapsToLoad.end(), [](const auto& lhs, const auto& rhs)
+            { return rhs < lhs; });
+    }
 
-	if (!m_MapsToLoad.empty())
-	{
-		if (args.Count() == 2)
-		{
-			const char* firstMapToLoad = args.Argument(1);
+    if (!m_MapsToLoad.empty())
+    {
+        if (args.Count() == 2)
+        {
+            const char* firstMapToLoad = args.Argument(1);
 
-			// Clear out all maps that would have been loaded before this one.
-			if (auto it = std::find(m_MapsToLoad.begin(), m_MapsToLoad.end(), firstMapToLoad);
-				it != m_MapsToLoad.end())
-			{
-				const std::size_t numberOfMapsToSkip = m_MapsToLoad.size() - (it - m_MapsToLoad.begin());
+            // Clear out all maps that would have been loaded before this one.
+            if (auto it = std::find(m_MapsToLoad.begin(), m_MapsToLoad.end(), firstMapToLoad);
+                it != m_MapsToLoad.end())
+            {
+                const std::size_t numberOfMapsToSkip = m_MapsToLoad.size() - (it - m_MapsToLoad.begin());
 
-				m_MapsToLoad.erase(it + 1, m_MapsToLoad.end());
+                m_MapsToLoad.erase(it + 1, m_MapsToLoad.end());
 
-				Con_Printf("Skipping %u maps to start with \"%s\"\n", numberOfMapsToSkip, m_MapsToLoad.back().c_str());
-			}
-			else
-			{
-				Con_Printf("Unknown map \"%s\", starting from beginning\n", firstMapToLoad);
-			}
-		}
+                Con_Printf("Skipping %u maps to start with \"%s\"\n", numberOfMapsToSkip, m_MapsToLoad.back().c_str());
+            }
+            else
+            {
+                Con_Printf("Unknown map \"%s\", starting from beginning\n", firstMapToLoad);
+            }
+        }
 
-		Con_Printf("Loading %u maps one at a time to generate files\n", m_MapsToLoad.size());
+        Con_Printf("Loading %u maps one at a time to generate files\n", m_MapsToLoad.size());
 
-		// Load the first map right now.
-		LoadNextMap();
-	}
-	else
-	{
-		Con_Printf("No maps to load\n");
-	}
+        // Load the first map right now.
+        LoadNextMap();
+    }
+    else
+    {
+        Con_Printf("No maps to load\n");
+    }
 }
 
 void ServerLibrary::LoadNextMap()
 {
-	const std::string mapName = std::move(m_MapsToLoad.back());
-	m_MapsToLoad.pop_back();
+    const std::string mapName = std::move(m_MapsToLoad.back());
+    m_MapsToLoad.pop_back();
 
-	Con_Printf("Loading map \"%s\" automatically (%u left)\n", mapName.c_str(), m_MapsToLoad.size() + 1);
+    Con_Printf("Loading map \"%s\" automatically (%u left)\n", mapName.c_str(), m_MapsToLoad.size() + 1);
 
-	if (m_MapsToLoad.empty())
-	{
-		Con_Printf("Loading last map\n");
-		m_MapsToLoad.shrink_to_fit();
-	}
+    if (m_MapsToLoad.empty())
+    {
+        Con_Printf("Loading last map\n");
+        m_MapsToLoad.shrink_to_fit();
+    }
 
-	SERVER_COMMAND(fmt::format("map \"{}\"\n", mapName).c_str());
+    SERVER_COMMAND(fmt::format("map \"{}\"\n", mapName).c_str());
 }

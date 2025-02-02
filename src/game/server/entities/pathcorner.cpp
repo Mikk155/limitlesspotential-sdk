@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -80,7 +80,7 @@ void CPathTrack::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
 {
     bool on;
 
-	// Use toggles between two paths
+    // Use toggles between two paths
     if( m_paltpath )
     {
         on = !FBitSet( pev->spawnflags, SF_PATH_ALTERNATE );
@@ -124,7 +124,7 @@ void CPathTrack::Link()
             Logger->debug( "Dead end link {}", STRING( pev->target ) );
     }
 
-	// Find "alternate" path
+    // Find "alternate" path
     if( !FStringNull( m_altName ) )
     {
         auto target = UTIL_FindEntityByTargetname( nullptr, STRING( m_altName ) );
@@ -147,7 +147,7 @@ void CPathTrack::Spawn()
 
     m_pnext = nullptr;
     m_pprevious = nullptr;
-	// DEBUGGING CODE
+    // DEBUGGING CODE
 #if PATH_SPARKLE_DEBUG
     SetThink( Sparkle );
     pev->nextthink = gpGlobals->time + 0.5;
@@ -199,7 +199,7 @@ CPathTrack* CPathTrack::GetPrevious()
 
 void CPathTrack::SetPrevious( CPathTrack* pprev )
 {
-	// Only set previous if this isn't my alternate path
+    // Only set previous if this isn't my alternate path
     if( pprev && !FStrEq( STRING( pprev->pev->targetname ), STRING( m_altName ) ) )
         m_pprevious = pprev;
 }
@@ -301,7 +301,7 @@ CPathTrack* CPathTrack::Nearest( Vector origin )
     pnearest = this;
     ppath = GetNext();
 
-	// Hey, I could use the old 2 racing pointers solution to this, but I'm lazy :)
+    // Hey, I could use the old 2 racing pointers solution to this, but I'm lazy :)
     deadCount = 0;
     while( ppath && ppath != this )
     {

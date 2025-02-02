@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -13,7 +13,7 @@
  *
  ****/
 // Robin, 4-22-98: Moved set_suicide_frame() here from player.cpp to allow us to
-//				   have one without a hardcoded player.mdl in tf_client.cpp
+//                   have one without a hardcoded player.mdl in tf_client.cpp
 
 /*
 
@@ -45,20 +45,20 @@
 unsigned int g_ulFrameCount;
 
 /**
- *	@brief called when a player connects to a server
+ *    @brief called when a player connects to a server
  */
 qboolean ClientConnect( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] )
 {
     return static_cast<qboolean>( g_pGameRules->ClientConnected( pEntity, pszName, pszAddress, szRejectReason ) );
 
-	// a client connecting during an intermission can cause problems
-	//	if (intermission_running)
-	//		ExitIntermission ();
+    // a client connecting during an intermission can cause problems
+    //    if (intermission_running)
+    //        ExitIntermission ();
 }
 
 
 /**
- *	@brief called when a player disconnects from a server
+ *    @brief called when a player disconnects from a server
  */
 void ClientDisconnect( edict_t* pEntity )
 {
@@ -77,14 +77,14 @@ void ClientDisconnect( edict_t* pEntity )
     CSound* pSound;
     pSound = CSoundEnt::SoundPointerForIndex( CSoundEnt::ClientSoundIndex( pEntity ) );
     {
-		// since this client isn't around to think anymore, reset their sound.
+        // since this client isn't around to think anymore, reset their sound.
         if( pSound )
         {
             pSound->Reset();
         }
     }
 
-	// since the edict doesn't get deleted, fix it so it doesn't interfere.
+    // since the edict doesn't get deleted, fix it so it doesn't interfere.
     pEntity->v.takedamage = DAMAGE_NO; // don't attract autoaim
     pEntity->v.solid = SOLID_NOT;       // nonsolid
 
@@ -108,7 +108,7 @@ void ClientDisconnect( edict_t* pEntity )
 
 
 /**
- *	@brief called by ClientKill and DeadThink
+ *    @brief called by ClientKill and DeadThink
  */
 void respawn( CBasePlayer* player, bool fCopyCorpse )
 {
@@ -116,11 +116,11 @@ void respawn( CBasePlayer* player, bool fCopyCorpse )
     {
         if( fCopyCorpse )
         {
-			// make a copy of the dead body for appearances sake
+            // make a copy of the dead body for appearances sake
             CopyToBodyQue( player );
         }
 
-		// respawn player
+        // respawn player
         player->Spawn();
     }
     else
@@ -130,7 +130,7 @@ void respawn( CBasePlayer* player, bool fCopyCorpse )
 }
 
 /**
- *	@brief Player entered the suicide command
+ *    @brief Player entered the suicide command
  */
 void ClientKill( edict_t* pEntity )
 {
@@ -138,7 +138,7 @@ void ClientKill( edict_t* pEntity )
 
     assert( pl );
 
-	// Only check for teams in CTF gamemode
+    // Only check for teams in CTF gamemode
     if( ( pl->pev->flags & FL_SPECTATOR ) != 0 || ( g_pGameRules->IsCTF() && pl->m_iTeamNum == CTFTeam::None ) )
     {
         return;
@@ -149,33 +149,33 @@ void ClientKill( edict_t* pEntity )
 
     pl->m_fNextSuicideTime = gpGlobals->time + 1; // don't let them suicide for 5 seconds after suiciding
 
-	// have the player kill themself
+    // have the player kill themself
     pl->pev->health = 0;
     pl->Killed( pl, GIB_NEVER );
 
-	//	pev->frags -= 2;		// extra penalty
-	//	respawn( pev );
+    //    pev->frags -= 2;        // extra penalty
+    //    respawn( pev );
 }
 
 /**
- *	@brief called each time a player is spawned
+ *    @brief called each time a player is spawned
  */
 void ClientPutInServer( edict_t* pEntity )
 {
     auto pPlayer = g_EntityDictionary->Create<CBasePlayer>( "player", &pEntity->v );
     pPlayer->SetCustomDecalFrames( -1 ); // Assume none;
 
-	// Allocate a CBasePlayer for pev, and call spawn
+    // Allocate a CBasePlayer for pev, and call spawn
     pPlayer->Spawn();
 
-	// Reset interpolation during first frame
+    // Reset interpolation during first frame
     pPlayer->pev->effects |= EF_NOINTERP;
 
-	// Player can be made spectator on spawn, so don't do this
-	/*
-	pPlayer->pev->iuser1 = 0;	// disable any spec modes
-	pPlayer->pev->iuser2 = 0;
-	*/
+    // Player can be made spectator on spawn, so don't do this
+    /*
+    pPlayer->pev->iuser1 = 0;    // disable any spec modes
+    pPlayer->pev->iuser2 = 0;
+    */
 
     pPlayer->m_Connected = true;
     pPlayer->m_ConnectTime = gpGlobals->time;
@@ -195,19 +195,19 @@ typedef wchar_t uchar32;
 #endif
 
 /**
- *	@brief determine if a uchar32 represents a valid Unicode code point
+ *    @brief determine if a uchar32 represents a valid Unicode code point
  */
 bool Q_IsValidUChar32( uchar32 uVal )
 {
-	// Values > 0x10FFFF are explicitly invalid; ditto for UTF-16 surrogate halves,
-	// values ending in FFFE or FFFF, or values in the 0x00FDD0-0x00FDEF reserved range
+    // Values > 0x10FFFF are explicitly invalid; ditto for UTF-16 surrogate halves,
+    // values ending in FFFE or FFFF, or values in the 0x00FDD0-0x00FDEF reserved range
     return ( uVal < 0x110000u ) && ( ( uVal - 0x00D800u ) > 0x7FFu ) && ( ( uVal & 0xFFFFu ) < 0xFFFEu ) && ( ( uVal - 0x00FDD0u ) > 0x1Fu );
 }
 
 /*
- *	@brief Decode one character from a UTF-8 encoded string.
- *	@details Treats 6-byte CESU-8 sequences as a single character,
- *	as if they were a correctly-encoded 4-byte UTF-8 sequence.
+ *    @brief Decode one character from a UTF-8 encoded string.
+ *    @details Treats 6-byte CESU-8 sequences as a single character,
+ *    as if they were a correctly-encoded 4-byte UTF-8 sequence.
  */
 int Q_UTF8ToUChar32( const char* pUTF8_, uchar32& uValueOut, bool& bErrorOut )
 {
@@ -217,11 +217,11 @@ int Q_UTF8ToUChar32( const char* pUTF8_, uchar32& uValueOut, bool& bErrorOut )
     uint32 uValue = pUTF8[0];
     uint32 uMinValue = 0;
 
-	// 0....... single byte
+    // 0....... single byte
     if( uValue < 0x80 )
         goto decodeFinishedNoCheck;
 
-	// Expecting at least a two-byte sequence with 0xC0 <= first <= 0xF7 (110...... and 11110...)
+    // Expecting at least a two-byte sequence with 0xC0 <= first <= 0xF7 (110...... and 11110...)
     if( ( uValue - 0xC0u ) > 0x37u || ( pUTF8[1] & 0xC0 ) != 0x80 )
         goto decodeError;
 
@@ -229,11 +229,11 @@ int Q_UTF8ToUChar32( const char* pUTF8_, uchar32& uValueOut, bool& bErrorOut )
     nBytes = 2;
     uMinValue = 0x80;
 
-	// 110..... two-byte lead byte
+    // 110..... two-byte lead byte
     if( 0 == ( uValue & ( 0x20 << 6 ) ) )
         goto decodeFinished;
 
-	// Expecting at least a three-byte sequence
+    // Expecting at least a three-byte sequence
     if( ( pUTF8[2] & 0xC0 ) != 0x80 )
         goto decodeError;
 
@@ -241,11 +241,11 @@ int Q_UTF8ToUChar32( const char* pUTF8_, uchar32& uValueOut, bool& bErrorOut )
     nBytes = 3;
     uMinValue = 0x800;
 
-	// 1110.... three-byte lead byte
+    // 1110.... three-byte lead byte
     if( 0 == ( uValue & ( 0x10 << 12 ) ) )
         goto decodeFinishedMaybeCESU8;
 
-	// Expecting a four-byte sequence, longest permissible in UTF-8
+    // Expecting a four-byte sequence, longest permissible in UTF-8
     if( ( pUTF8[3] & 0xC0 ) != 0x80 )
         goto decodeError;
 
@@ -253,7 +253,7 @@ int Q_UTF8ToUChar32( const char* pUTF8_, uchar32& uValueOut, bool& bErrorOut )
     nBytes = 4;
     uMinValue = 0x10000;
 
-	// 11110... four-byte lead byte. fall through to finished.
+    // 11110... four-byte lead byte. fall through to finished.
 
 decodeFinished:
     if( uValue >= uMinValue && Q_IsValidUChar32( uValue ) )
@@ -269,8 +269,8 @@ decodeError:
     return nBytes;
 
 decodeFinishedMaybeCESU8:
-	// Do we have a full UTF-16 surrogate pair that's been UTF-8 encoded afterwards?
-	// That is, do we have 0xD800-0xDBFF followed by 0xDC00-0xDFFF? If so, decode it all.
+    // Do we have a full UTF-16 surrogate pair that's been UTF-8 encoded afterwards?
+    // That is, do we have 0xD800-0xDBFF followed by 0xDC00-0xDFFF? If so, decode it all.
     if( ( uValue - 0xD800u ) < 0x400u && pUTF8[3] == 0xED && ( uint8 )( pUTF8[4] - 0xB0 ) < 0x10 && ( pUTF8[5] & 0xC0 ) == 0x80 )
     {
         uValue = 0x10000 + ( ( uValue - 0xD800u ) << 10 ) + ( ( uint8 )( pUTF8[4] - 0xB0 ) << 6 ) + pUTF8[5] - 0x80;
@@ -281,7 +281,7 @@ decodeFinishedMaybeCESU8:
 }
 
 /**
- *	@brief Returns true if UTF-8 string contains invalid sequences.
+ *    @brief Returns true if UTF-8 string contains invalid sequences.
  */
 bool Q_UnicodeValidate( const char* pUTF8 )
 {
@@ -289,8 +289,8 @@ bool Q_UnicodeValidate( const char* pUTF8 )
     while( '\0' != *pUTF8 )
     {
         uchar32 uVal;
-		// Our UTF-8 decoder silently fixes up 6-byte CESU-8 (improperly re-encoded UTF-16) sequences.
-		// However, these are technically not valid UTF-8. So if we eat 6 bytes at once, it's an error.
+        // Our UTF-8 decoder silently fixes up 6-byte CESU-8 (improperly re-encoded UTF-16) sequences.
+        // However, these are technically not valid UTF-8. So if we eat 6 bytes at once, it's an error.
         int nCharSize = Q_UTF8ToUChar32( pUTF8, uVal, bError );
         if( bError || nCharSize == 6 )
             return false;
@@ -300,13 +300,13 @@ bool Q_UnicodeValidate( const char* pUTF8 )
 }
 
 /**
- *	@brief Handles incoming @c say and @c say_team commands and sends them to other players.
- *	<pre>
- *	String comes in as
- *	say blah blah blah
- *	or as
- *	blah blah blah
- *	</pre>
+ *    @brief Handles incoming @c say and @c say_team commands and sends them to other players.
+ *    <pre>
+ *    String comes in as
+ *    say blah blah blah
+ *    or as
+ *    blah blah blah
+ *    </pre>
  */
 void Host_Say( CBasePlayer* player, bool teamonly )
 {
@@ -318,12 +318,12 @@ void Host_Say( CBasePlayer* player, bool teamonly )
     const char* cpSayTeam = "say_team";
     const char* pcmd = CMD_ARGV( 0 );
 
-	// We can get a raw string now, without the "say " prepended
+    // We can get a raw string now, without the "say " prepended
     if( CMD_ARGC() == 0 )
         return;
 
-	// Only limit chat in multiplayer.
-	// Not yet.
+    // Only limit chat in multiplayer.
+    // Not yet.
     if( g_pGameRules->IsMultiplayer() && player->m_flNextChatTime > gpGlobals->time )
         return;
 
@@ -335,7 +335,7 @@ void Host_Say( CBasePlayer* player, bool teamonly )
         }
         else
         {
-			// say with a blank message, nothing to do
+            // say with a blank message, nothing to do
             return;
         }
     }
@@ -347,26 +347,26 @@ void Host_Say( CBasePlayer* player, bool teamonly )
         }
         else
         {
-			// Just a one word command, use the first word...sigh
+            // Just a one word command, use the first word...sigh
             sprintf( szTemp, "%s", pcmd );
         }
         p = szTemp;
     }
 
-	// remove quotes if present
+    // remove quotes if present
     if( *p == '"' )
     {
         p++;
         p[strlen( p ) - 1] = 0;
     }
 
-	// make sure the text has content
+    // make sure the text has content
 
     if( !p || '\0' == p[0] || !Q_UnicodeValidate( p ) )
         return; // no character found, so say nothing
 
-	// turn on color set 2  (color on,  no sound)
-	// turn on color set 2  (color on,  no sound)
+    // turn on color set 2  (color on,  no sound)
+    // turn on color set 2  (color on,  no sound)
     if( player->IsObserver() && ( teamonly ) )
         sprintf( text, "%c(SPEC) %s: ", 2, STRING( player->pev->netname ) );
     else if( teamonly )
@@ -382,13 +382,13 @@ void Host_Say( CBasePlayer* player, bool teamonly )
     strcat( text, "\n" );
 
 
-	// TODO: clamp cvar value so it can't be negative
+    // TODO: clamp cvar value so it can't be negative
     player->m_flNextChatTime = gpGlobals->time + spamdelay.value;
 
-	// loop through all players
-	// Start with the first player.
-	// This may return the world in single player if the client types something between levels or during spawn
-	// so check it, or it will infinite loop
+    // loop through all players
+    // Start with the first player.
+    // This may return the world in single player if the client types something between levels or during spawn
+    // so check it, or it will infinite loop
 
     for( auto client : UTIL_FindPlayers() )
     {
@@ -401,14 +401,14 @@ void Host_Say( CBasePlayer* player, bool teamonly )
         if( !( client->IsNetClient() ) ) // Not a client ? (should never be true)
             continue;
 
-		// can the receiver hear the sender? or has he muted him?
+        // can the receiver hear the sender? or has he muted him?
         if( g_VoiceGameMgr.PlayerHasBlockedPlayer( client, player ) )
             continue;
 
         if( !player->IsObserver() && teamonly && g_pGameRules->PlayerRelationship( client, player ) != GR_TEAMMATE )
             continue;
 
-		// Spectators can only talk to other specs
+        // Spectators can only talk to other specs
         if( player->IsObserver() && teamonly )
             if( !client->IsObserver() )
                 continue;
@@ -419,13 +419,13 @@ void Host_Say( CBasePlayer* player, bool teamonly )
         MESSAGE_END();
     }
 
-	// print to the sending client
+    // print to the sending client
     MESSAGE_BEGIN( MSG_ONE, gmsgSayText, nullptr, player );
     WRITE_BYTE( player->entindex() );
     WRITE_STRING( text );
     MESSAGE_END();
 
-	// echo to server console
+    // echo to server console
     g_engfuncs.pfnServerPrint( text );
 
     const char* temp;
@@ -447,9 +447,9 @@ struct PageSearchResult
 };
 
 /**
- *	@brief Searches for entities using a page based search.
- *	@param desiredPage Which page to display, or 0 to display all.
- *	@param filter Callback to filter entities.
+ *    @brief Searches for entities using a page based search.
+ *    @param desiredPage Which page to display, or 0 to display all.
+ *    @param filter Callback to filter entities.
  */
 template <typename Function>
 PageSearchResult PageBasedEntitySearch( CBasePlayer* player, int desiredPage, Function&& filter )
@@ -551,7 +551,7 @@ static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className,
         kvd.szValue = args.Argument( i + 1 );
         kvd.fHandled = 0;
 
-		// Skip the classname the same way the engine does.
+        // Skip the classname the same way the engine does.
         if( FStrEq( kvd.szValue, className ) )
         {
             continue;
@@ -588,7 +588,7 @@ void SV_CreateClientCommands()
 
     g_ClientCommands.Create( "drop", []( CBasePlayer* player, const auto& args )
         {
-			// player is dropping an item.
+            // player is dropping an item.
             player->DropPlayerWeapon( args.Argument( 1 ) ); } );
 
     g_ClientCommands.Create( "fov", []( CBasePlayer* player, const auto& args )
@@ -672,11 +672,11 @@ void SV_CreateClientCommands()
 
     g_ClientCommands.Create( "closemenus", []( CBasePlayer* player, const auto& args )
         {
-			/* just ignore it*/ });
+            /* just ignore it*/ });
 
     g_ClientCommands.Create( "follownext", []( CBasePlayer* player, const auto& args )
         {
-			// follow next player
+            // follow next player
             if( player->IsObserver() )
                 player->Observer_FindNextPlayer( atoi( args.Argument( 1 ) ) != 0 ); } );
 
@@ -761,7 +761,7 @@ void SV_CreateClientCommands()
 
     g_ClientCommands.Create( "ent_fire", []( CBasePlayer* player, const CommandArgs& args )
         {
-			// TODO - Add "delay" like Source?
+            // TODO - Add "delay" like Source?
             if( args.Count() > 1 )
             {
                 USE_TYPE useType = USE_TOGGLE;
@@ -986,7 +986,7 @@ void SV_CreateClientCommands()
                 return;
             }
 
-			// Move NPC up based on its bounding box.
+            // Move NPC up based on its bounding box.
             if( entity->pev->mins.z < 0 )
             {
                 entity->pev->origin.z -= entity->pev->mins.z;
@@ -994,7 +994,7 @@ void SV_CreateClientCommands()
 
             if( ( entity->pev->flags & FL_FLY ) == 0 && entity->pev->movetype != MOVETYPE_FLY )
             {
-				// See if the NPC is stuck in something.
+                // See if the NPC is stuck in something.
                 if( DROP_TO_FLOOR( entity->edict() ) == 0 )
                 {
                     UTIL_ConsolePrint( player, "NPC fell out of level\n" );
@@ -1016,12 +1016,12 @@ bool UTIL_CheatsAllowed( CBasePlayer* player, std::string_view name )
 }
 
 /**
- *	@brief called each time a player uses a @c "cmd" command
- *	@details Use CMD_ARGV, CMD_ARGV, and CMD_ARGC to get pointers the character string command.
+ *    @brief called each time a player uses a @c "cmd" command
+ *    @details Use CMD_ARGV, CMD_ARGV, and CMD_ARGC to get pointers the character string command.
  */
 void ExecuteClientCommand( edict_t* pEntity )
 {
-	// Is the client spawned yet?
+    // Is the client spawned yet?
     if( !pEntity->pvPrivateData )
         return;
 
@@ -1037,34 +1037,34 @@ void ExecuteClientCommand( edict_t* pEntity )
     }
     else
     {
-		// tell the user they entered an unknown command
+        // tell the user they entered an unknown command
         char command[128];
 
-		// check the length of the command (prevents crash)
-		// max total length is 192 ...and we're adding a string below ("Unknown command: %s\n")
+        // check the length of the command (prevents crash)
+        // max total length is 192 ...and we're adding a string below ("Unknown command: %s\n")
         strncpy( command, pcmd, 127 );
         command[127] = '\0';
 
-		// tell the user they entered an unknown command
+        // tell the user they entered an unknown command
         ClientPrint( player, HUD_PRINTCONSOLE, UTIL_VarArgs( "Unknown command: %s\n", command ) );
     }
 }
 
 
 /**
-*	@brief called after the player changes userinfo.
-*	gives dll a chance to modify it before it gets sent into the rest of the engine.
+*    @brief called after the player changes userinfo.
+*    gives dll a chance to modify it before it gets sent into the rest of the engine.
 ========================
 */
 void ClientUserInfoChanged( edict_t* pEntity, char* infobuffer )
 {
-	// Is the client spawned yet?
+    // Is the client spawned yet?
     if( !pEntity->pvPrivateData )
         return;
 
     auto player = ToBasePlayer( pEntity );
 
-	// msg everyone if someone changes their name,  and it isn't the first time (changing no name to current name)
+    // msg everyone if someone changes their name,  and it isn't the first time (changing no name to current name)
     if( !FStringNull( pEntity->v.netname ) && STRING( pEntity->v.netname )[0] != 0 && !FStrEq( STRING( pEntity->v.netname ), g_engfuncs.pfnInfoKeyValue( infobuffer, "name" ) ) )
     {
         char sName[256];
@@ -1072,15 +1072,15 @@ void ClientUserInfoChanged( edict_t* pEntity, char* infobuffer )
         strncpy( sName, pName, sizeof( sName ) - 1 );
         sName[sizeof( sName ) - 1] = '\0';
 
-		// First parse the name and remove any %'s
+        // First parse the name and remove any %'s
         for( char* pApersand = sName; pApersand != nullptr && *pApersand != 0; pApersand++ )
         {
-			// Replace it with a space
+            // Replace it with a space
             if( *pApersand == '%' )
                 *pApersand = ' ';
         }
 
-		// Set the name
+        // Set the name
         g_engfuncs.pfnSetClientKeyValue( player->entindex(), infobuffer, "name", sName );
 
         if( g_pGameRules->IsMultiplayer() )
@@ -1101,8 +1101,8 @@ void ClientUserInfoChanged( edict_t* pEntity, char* infobuffer )
 
 void ServerDeactivate()
 {
-	// It's possible that the engine will call this function more times than is necessary
-	//  Therefore, only run it one time for each call to ServerActivate
+    // It's possible that the engine will call this function more times than is necessary
+    //  Therefore, only run it one time for each call to ServerActivate
     if( !g_serveractive )
     {
         return;
@@ -1110,8 +1110,8 @@ void ServerDeactivate()
 
     g_serveractive = false;
 
-	// Peform any shutdown operations here...
-	//
+    // Peform any shutdown operations here...
+    //
 }
 
 void ServerActivate( edict_t* pEdictList, int edictCount, int clientMax )
@@ -1119,23 +1119,23 @@ void ServerActivate( edict_t* pEdictList, int edictCount, int clientMax )
     int i;
     CBaseEntity* pClass;
 
-	// Every call to ServerActivate should be matched by a call to ServerDeactivate
+    // Every call to ServerActivate should be matched by a call to ServerDeactivate
     g_serveractive = true;
 
     g_Server.PreMapActivate();
 
-	// Clients have not been initialized yet
+    // Clients have not been initialized yet
     for( i = 0; i < edictCount; i++ )
     {
         if( 0 != pEdictList[i].free )
             continue;
 
-		// Clients aren't necessarily initialized until ClientPutInServer()
+        // Clients aren't necessarily initialized until ClientPutInServer()
         if( ( i > 0 && i <= clientMax ) || !pEdictList[i].pvPrivateData )
             continue;
 
         pClass = CBaseEntity::Instance( &pEdictList[i] );
-		// Activate this entity if it's got a class & isn't dormant
+        // Activate this entity if it's got a class & isn't dormant
         if( pClass && ( pClass->pev->flags & FL_DORMANT ) == 0 )
         {
             pClass->Activate();
@@ -1151,7 +1151,7 @@ void ServerActivate( edict_t* pEdictList, int edictCount, int clientMax )
 
 
 /**
- *	@brief Called every frame before physics are run
+ *    @brief Called every frame before physics are run
  */
 void PlayerPreThink( edict_t* pEntity )
 {
@@ -1162,7 +1162,7 @@ void PlayerPreThink( edict_t* pEntity )
 }
 
 /**
- *	@brief Called every frame after physics are run
+ *    @brief Called every frame after physics are run
  */
 void PlayerPostThink( edict_t* pEntity )
 {
@@ -1178,7 +1178,7 @@ void ParmsNewLevel()
 
 void ParmsChangeLevel()
 {
-	// retrieve the pointer to the save data
+    // retrieve the pointer to the save data
     SAVERESTOREDATA* pSaveData = ( SAVERESTOREDATA* )gpGlobals->pSaveData;
 
     if( pSaveData )
@@ -1205,10 +1205,10 @@ void ClientPrecache()
 {
     g_GameLogger->trace( "Precaching player assets" );
 
-	// setup precaches always needed
+    // setup precaches always needed
     UTIL_PrecacheSound( "player/sprayer.wav" ); // spray paint sound for PreAlpha
 
-	// UTIL_PrecacheSound("player/pl_jumpland2.wav");		// UNDONE: play 2x step sound
+    // UTIL_PrecacheSound("player/pl_jumpland2.wav");        // UNDONE: play 2x step sound
 
     UTIL_PrecacheSound( "player/pl_fallpain2.wav" );
     UTIL_PrecacheSound( "player/pl_fallpain3.wav" );
@@ -1292,10 +1292,10 @@ void ClientPrecache()
     UTIL_PrecacheSound( SOUND_NIGHTVISION_ON );
     UTIL_PrecacheSound( SOUND_NIGHTVISION_OFF );
 
-	// player gib sounds
+    // player gib sounds
     UTIL_PrecacheSound( "common/bodysplat.wav" );
 
-	// player pain sounds
+    // player pain sounds
     UTIL_PrecacheSound( "player/pl_pain2.wav" );
     UTIL_PrecacheSound( "player/pl_pain4.wav" );
     UTIL_PrecacheSound( "player/pl_pain5.wav" );
@@ -1304,7 +1304,7 @@ void ClientPrecache()
 
     UTIL_PrecacheModel( "models/player.mdl" );
 
-	// hud sounds
+    // hud sounds
 
     UTIL_PrecacheSound( "common/wpn_hudoff.wav" );
     UTIL_PrecacheSound( "common/wpn_hudon.wav" );
@@ -1313,7 +1313,7 @@ void ClientPrecache()
     UTIL_PrecacheSound( "common/wpn_denyselect.wav" );
 
 
-	// geiger sounds
+    // geiger sounds
 
     UTIL_PrecacheSound( "player/geiger6.wav" );
     UTIL_PrecacheSound( "player/geiger5.wav" );
@@ -1324,7 +1324,7 @@ void ClientPrecache()
 
     UTIL_PrecacheSound( "ctf/pow_big_jump.wav" );
 
-	// for cheat_givemagazine
+    // for cheat_givemagazine
     UTIL_PrecacheSound( DefaultItemPickupSound );
 
     if( giPrecacheGrunt )
@@ -1332,7 +1332,7 @@ void ClientPrecache()
 }
 
 /**
- *	@brief Returns the descriptive name of this .dll. E.g., <tt>Half-Life</tt>, or <tt>Team Fortress 2</tt>
+ *    @brief Returns the descriptive name of this .dll. E.g., <tt>Half-Life</tt>, or <tt>Team Fortress 2</tt>
  */
 const char* GetGameDescription()
 {
@@ -1343,16 +1343,16 @@ const char* GetGameDescription()
 }
 
 /**
- *	@brief Engine is going to shut down, allows setting a breakpoint in game .dll to catch that occasion
+ *    @brief Engine is going to shut down, allows setting a breakpoint in game .dll to catch that occasion
  */
 void Sys_Error( const char* error_string )
 {
-	// Default case, do nothing.  MOD AUTHORS:  Add code ( e.g., _asm { int 3 }; here to cause a breakpoint for debugging your game .dlls
+    // Default case, do nothing.  MOD AUTHORS:  Add code ( e.g., _asm { int 3 }; here to cause a breakpoint for debugging your game .dlls
 }
 
 /**
- *	@brief A new player customization has been registered on the server
- *	@details UNDONE: This only sets the # of frames of the spray can logo animation right now.
+ *    @brief A new player customization has been registered on the server
+ *    @details UNDONE: This only sets the # of frames of the spray can logo animation right now.
  */
 void PlayerCustomization( edict_t* pEntity, customization_t* pCust )
 {
@@ -1378,7 +1378,7 @@ void PlayerCustomization( edict_t* pEntity, customization_t* pCust )
     case t_sound:
     case t_skin:
     case t_model:
-		// Ignore for now.
+        // Ignore for now.
         break;
     default:
         CBaseEntity::Logger->debug( "PlayerCustomization:  Unknown customization type!" );
@@ -1391,24 +1391,24 @@ void PlayerCustomization( edict_t* pEntity, customization_t* pCust )
 //
 
 /**
- *	@brief A client can have a separate "view entity" indicating that his/her view should depend on the origin of that
- *	view entity.
- *	If that's the case, then pViewEntity will be non-nullptr and will be used.
- *	Otherwise, the current entity's origin is used.
- *	Either is offset by the view_ofs to get the eye position.
+ *    @brief A client can have a separate "view entity" indicating that his/her view should depend on the origin of that
+ *    view entity.
+ *    If that's the case, then pViewEntity will be non-nullptr and will be used.
+ *    Otherwise, the current entity's origin is used.
+ *    Either is offset by the view_ofs to get the eye position.
  *
- *	From the eye position, we set up the PAS and PVS to use for filtering network messages to the client.
- *	At this point, we could override the actual PAS or PVS values, or use a different origin.
+ *    From the eye position, we set up the PAS and PVS to use for filtering network messages to the client.
+ *    At this point, we could override the actual PAS or PVS values, or use a different origin.
  *
- *	NOTE: Do not cache the values of pas and pvs, as they depend on reusable memory in the engine,
- *	they are only good for this one frame
+ *    NOTE: Do not cache the values of pas and pvs, as they depend on reusable memory in the engine,
+ *    they are only good for this one frame
  */
 void SetupVisibility( edict_t* pViewEntity, edict_t* pClient, unsigned char** pvs, unsigned char** pas )
 {
     Vector org;
     edict_t* pView = pClient;
 
-	// Find the client's PVS
+    // Find the client's PVS
     if( pViewEntity )
     {
         pView = pViewEntity;
@@ -1434,26 +1434,26 @@ void SetupVisibility( edict_t* pViewEntity, edict_t* pClient, unsigned char** pv
 #include "entity_state.h"
 
 /**
- *	@brief Return 1 if the entity state has been filled in for the ent and the entity will be propagated to the client,
- *	0 otherwise
- *	@param state the server maintained copy of the state info that is transmitted to the client
- *		a MOD could alter values copied into state to send the "host" a different look for a particular entity update, etc.
- *	@param e index of the entity that is being added to the update, if 1 is returned
- *	@param ent the entity that is being added to the update, if 1 is returned
- *	@param host is the player's edict of the player whom we are sending the update to
- *	@param hostflags 1 if the host has <tt>cl_lw</tt> enabled, 0 otherwise
- *	@param player 1 if the ent/e is a player and 0 otherwise
- *	@param pSet either the PAS or PVS that we previous set up.
- *		We can use it to ask the engine to filter the entity against the PAS or PVS.
- *		we could also use the pas/ pvs that we set in SetupVisibility, if we wanted to.
- *		Caching the value is valid in that case, but still only for the current frame
+ *    @brief Return 1 if the entity state has been filled in for the ent and the entity will be propagated to the client,
+ *    0 otherwise
+ *    @param state the server maintained copy of the state info that is transmitted to the client
+ *        a MOD could alter values copied into state to send the "host" a different look for a particular entity update, etc.
+ *    @param e index of the entity that is being added to the update, if 1 is returned
+ *    @param ent the entity that is being added to the update, if 1 is returned
+ *    @param host is the player's edict of the player whom we are sending the update to
+ *    @param hostflags 1 if the host has <tt>cl_lw</tt> enabled, 0 otherwise
+ *    @param player 1 if the ent/e is a player and 0 otherwise
+ *    @param pSet either the PAS or PVS that we previous set up.
+ *        We can use it to ask the engine to filter the entity against the PAS or PVS.
+ *        we could also use the pas/ pvs that we set in SetupVisibility, if we wanted to.
+ *        Caching the value is valid in that case, but still only for the current frame
  */
 int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, int hostflags, int player, unsigned char* pSet )
 {
-	// Entities with an index greater than this will corrupt the client's heap because
-	// the index is sent with only 11 bits of precision (2^11 == 2048).
-	// So we don't send them, just like having too many entities would result
-	// in the entity not being sent.
+    // Entities with an index greater than this will corrupt the client's heap because
+    // the index is sent with only 11 bits of precision (2^11 == 2048).
+    // So we don't send them, just like having too many entities would result
+    // in the entity not being sent.
     if( e >= MAX_EDICTS )
     {
         return 0;
@@ -1463,23 +1463,23 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
 
     auto entity = reinterpret_cast<CBaseEntity*>( GET_PRIVATE( ent ) );
 
-	// don't send if flagged for NODRAW and it's not the host getting the message
+    // don't send if flagged for NODRAW and it's not the host getting the message
     if( ( ent->v.effects & EF_NODRAW ) != 0 &&
         ( ent != host ) )
         return 0;
 
-	// Ignore ents without valid / visible models
+    // Ignore ents without valid / visible models
     if( 0 == ent->v.modelindex || !STRING( ent->v.model ) )
         return 0;
 
-	// Don't send spectators to other players
+    // Don't send spectators to other players
     if( ( ent->v.flags & FL_SPECTATOR ) != 0 && ( ent != host ) )
     {
         return 0;
     }
 
-	// Ignore if not the host and not touching a PVS/PAS leaf
-	// If pSet is nullptr, then the test will always succeed and the entity will be added to the update
+    // Ignore if not the host and not touching a PVS/PAS leaf
+    // If pSet is nullptr, then the test will always succeed and the entity will be added to the update
     if( ent != host )
     {
         if( !ENGINE_CHECK_VISIBILITY( ( const edict_t* )ent, pSet ) )
@@ -1489,7 +1489,7 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
     }
 
 
-	// Don't send entity to local client if the client says it's predicting the entity itself.
+    // Don't send entity to local client if the client says it's predicting the entity itself.
     if( ( ent->v.flags & FL_SKIPLOCALHOST ) != 0 )
     {
         if( ( hostflags & 1 ) != 0 && ( ent->v.owner == host ) )
@@ -1500,7 +1500,7 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
     {
         UTIL_SetGroupTrace( host->v.groupinfo, GROUP_OP_AND );
 
-		// Should always be set, of course
+        // Should always be set, of course
         if( 0 != ent->v.groupinfo )
         {
             if( g_groupop == GROUP_OP_AND )
@@ -1520,22 +1520,22 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
 
     memset( state, 0, sizeof( *state ) );
 
-	// Assign index so we can track this entity from frame to frame and
-	//  delta from it.
+    // Assign index so we can track this entity from frame to frame and
+    //  delta from it.
     state->number = e;
     state->entityType = ENTITY_NORMAL;
 
-	// Flag custom entities.
+    // Flag custom entities.
     if( ( ent->v.flags & FL_CUSTOMENTITY ) != 0 )
     {
         state->entityType = ENTITY_BEAM;
     }
 
-	//
-	// Copy state data
-	//
+    //
+    // Copy state data
+    //
 
-	// Round animtime to nearest millisecond
+    // Round animtime to nearest millisecond
     state->animtime = (int)( 1000.0 * ent->v.animtime ) / 1000.0;
 
     memcpy( state->origin, ent->v.origin, 3 * sizeof(float) );
@@ -1556,24 +1556,24 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
     state->skin = ent->v.skin;
     state->effects = ent->v.effects;
 
-	// Remove the night vision illumination effect so other players don't see it
+    // Remove the night vision illumination effect so other players don't see it
     if( 0 != player && host != ent )
     {
         state->effects &= ~EF_BRIGHTLIGHT;
     }
 
-	// This non-player entity is being moved by the game .dll and not the physics simulation system
-	//  make sure that we interpolate it's position on the client if it moves
-	/*
-	if (0 == player &&
-		0 != ent->v.animtime &&
-		ent->v.velocity[0] == 0 &&
-		ent->v.velocity[1] == 0 &&
-		ent->v.velocity[2] == 0)
-	{
-		state->eflags |= EFLAG_SLERP;
-	}
-	*/
+    // This non-player entity is being moved by the game .dll and not the physics simulation system
+    //  make sure that we interpolate it's position on the client if it moves
+    /*
+    if (0 == player &&
+        0 != ent->v.animtime &&
+        ent->v.velocity[0] == 0 &&
+        ent->v.velocity[1] == 0 &&
+        ent->v.velocity[2] == 0)
+    {
+        state->eflags |= EFLAG_SLERP;
+    }
+    */
 
     if( ( ent->v.flags & FL_FLY ) != 0 )
     {
@@ -1623,21 +1623,21 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
     {
         int owner = ENTINDEX( ent->v.owner );
 
-		// Only care if owned by a player
+        // Only care if owned by a player
         if( owner >= 1 && owner <= gpGlobals->maxClients )
         {
             state->owner = owner;
         }
     }
 
-	// HACK:  Somewhat...
-	// Class is overridden for non-players to signify a breakable glass object ( sort of a class? )
+    // HACK:  Somewhat...
+    // Class is overridden for non-players to signify a breakable glass object ( sort of a class? )
     if( 0 == player )
     {
         state->playerclass = ent->v.playerclass;
     }
 
-	// Special stuff for players only
+    // Special stuff for players only
     if( 0 != player )
     {
         memcpy( state->basevelocity, ent->v.basevelocity, 3 * sizeof(float) );
@@ -1648,8 +1648,8 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
         state->friction = ent->v.friction;
 
         state->gravity = ent->v.gravity;
-		//		state->team			= ent->v.team;
-		//
+        //        state->team            = ent->v.team;
+        //
         state->usehull = ( ent->v.flags & FL_DUCKING ) != 0 ? 1 : 0;
         state->health = ent->v.health;
     }
@@ -1658,8 +1658,8 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
 }
 
 /**
- *	@brief Creates baselines used for network encoding,
- *	especially for player data since players are not spawned until connect time.
+ *    @brief Creates baselines used for network encoding,
+ *    especially for player data since players are not spawned until connect time.
  */
 void CreateBaseline( int player, int eindex, entity_state_t* baseline, edict_t* entity, int playermodelindex, Vector* player_mins, Vector* player_maxs )
 {
@@ -1668,7 +1668,7 @@ void CreateBaseline( int player, int eindex, entity_state_t* baseline, edict_t* 
     baseline->frame = entity->v.frame;
     baseline->skin = (short)entity->v.skin;
 
-	// render information
+    // render information
     baseline->rendermode = ( byte )entity->v.rendermode;
     baseline->renderamt = ( byte )entity->v.renderamt;
     baseline->rendercolor.r = ( byte )entity->v.rendercolor.x;
@@ -1741,8 +1741,8 @@ void Entity_FieldInit( delta_t* pFields )
 }
 
 /**
- *	@brief Callback for sending entity_state_t info over network.
- *	FIXME: Move to script
+ *    @brief Callback for sending entity_state_t info over network.
+ *    FIXME: Move to script
  */
 void Entity_Encode( delta_t* pFields, const unsigned char* from, const unsigned char* to )
 {
@@ -1758,7 +1758,7 @@ void Entity_Encode( delta_t* pFields, const unsigned char* from, const unsigned 
     f = ( entity_state_t* )from;
     t = ( entity_state_t* )to;
 
-	// Never send origin to local player, it's sent with more resolution in clientdata_t structure
+    // Never send origin to local player, it's sent with more resolution in clientdata_t structure
     const bool localplayer = ( t->number - 1 ) == ENGINE_CURRENT_PLAYER();
     if( localplayer )
     {
@@ -1808,7 +1808,7 @@ void Player_FieldInit( delta_t* pFields )
 }
 
 /**
- *	@brief Callback for sending entity_state_t for players info over network.
+ *    @brief Callback for sending entity_state_t for players info over network.
  */
 void Player_Encode( delta_t* pFields, const unsigned char* from, const unsigned char* to )
 {
@@ -1824,7 +1824,7 @@ void Player_Encode( delta_t* pFields, const unsigned char* from, const unsigned 
     f = ( entity_state_t* )from;
     t = ( entity_state_t* )to;
 
-	// Never send origin to local player, it's sent with more resolution in clientdata_t structure
+    // Never send origin to local player, it's sent with more resolution in clientdata_t structure
     const bool localplayer = ( t->number - 1 ) == ENGINE_CURRENT_PLAYER();
     if( localplayer )
     {
@@ -1885,8 +1885,8 @@ void Custom_Entity_FieldInit( delta_t* pFields )
 }
 
 /**
- *	@brief Callback for sending entity_state_t info ( for custom entities ) over network.
- *	FIXME: Move to script
+ *    @brief Callback for sending entity_state_t info ( for custom entities ) over network.
+ *    FIXME: Move to script
  */
 void Custom_Encode( delta_t* pFields, const unsigned char* from, const unsigned char* to )
 {
@@ -1925,8 +1925,8 @@ void Custom_Encode( delta_t* pFields, const unsigned char* from, const unsigned 
         DELTA_UNSETBYINDEX( pFields, custom_entity_field_alias[CUSTOMFIELD_SEQUENCE].field );
     }
 
-	// animtime is compared by rounding first
-	// see if we really shouldn't actually send it
+    // animtime is compared by rounding first
+    // see if we really shouldn't actually send it
     if( (int)f->animtime == (int)t->animtime )
     {
         DELTA_UNSETBYINDEX( pFields, custom_entity_field_alias[CUSTOMFIELD_ANIMTIME].field );
@@ -1934,8 +1934,8 @@ void Custom_Encode( delta_t* pFields, const unsigned char* from, const unsigned 
 }
 
 /**
- *	@brief Allows game .dll to override network encoding of certain types of entities and tweak values, etc.
- *	@details See the mod's @c delta.lst configuration file for relevant encoding settings.
+ *    @brief Allows game .dll to override network encoding of certain types of entities and tweak values, etc.
+ *    @details See the mod's @c delta.lst configuration file for relevant encoding settings.
  */
 void RegisterEncoders()
 {
@@ -1958,19 +1958,19 @@ int GetWeaponData( edict_t* player, weapon_data_t* info )
 
     pl->m_LastWeaponDataUpdateTime = gpGlobals->time;
 
-	// go through all of the weapons and make a list of the ones to pack
+    // go through all of the weapons and make a list of the ones to pack
     for( i = 0; i < MAX_WEAPON_SLOTS; i++ )
     {
         if( pl->m_rgpPlayerWeapons[i] )
         {
-			// there's a weapon here. Should I pack it?
+            // there's a weapon here. Should I pack it?
             CBasePlayerWeapon* gun = pl->m_rgpPlayerWeapons[i];
 
             while( gun )
             {
                 if( gun->UseDecrement() )
                 {
-					// Get The ID.
+                    // Get The ID.
                     WeaponInfo weaponInfo;
                     gun->GetWeaponInfo( weaponInfo );
 
@@ -1990,7 +1990,7 @@ int GetWeaponData( edict_t* player, weapon_data_t* info )
 
                         gun->GetWeaponData( *item );
 
-						// item->m_flPumpTime = std::max(gun->m_flPumpTime, -0.001f);
+                        // item->m_flPumpTime = std::max(gun->m_flPumpTime, -0.001f);
                     }
                 }
                 gun = gun->m_pNext;
@@ -2002,8 +2002,8 @@ int GetWeaponData( edict_t* player, weapon_data_t* info )
 }
 
 /**
- *	@brief Data sent to current client only
- *	@param cd zeroed out by engine before call.
+ *    @brief Data sent to current client only
+ *    @param cd zeroed out by engine before call.
  */
 void UpdateClientData( const edict_t* ent, int sendweapons, clientdata_t* cd )
 {
@@ -2022,7 +2022,7 @@ void UpdateClientData( const edict_t* ent, int sendweapons, clientdata_t* cd )
     CBaseEntity* viewEntity = pl;
     CBasePlayer* plOrg = pl;
 
-	// if user is spectating different player in First person, override some vars
+    // if user is spectating different player in First person, override some vars
     if( pl && pl->pev->iuser1 == OBS_IN_EYE )
     {
         if( pl->m_hObserverTarget )
@@ -2040,7 +2040,7 @@ void UpdateClientData( const edict_t* ent, int sendweapons, clientdata_t* cd )
     cd->waterlevel = viewEntity->pev->waterlevel;
     cd->watertype = viewEntity->pev->watertype;
 
-	// Vectors
+    // Vectors
     cd->origin = viewEntity->pev->origin;
     cd->velocity = viewEntity->pev->velocity;
     cd->view_ofs = viewEntity->pev->view_ofs;
@@ -2059,8 +2059,8 @@ void UpdateClientData( const edict_t* ent, int sendweapons, clientdata_t* cd )
 
     cd->pushmsec = viewEntity->pev->pushmsec;
 
-	// Spectator mode
-	// don't use spec vars from chased player
+    // Spectator mode
+    // don't use spec vars from chased player
     cd->iuser1 = plOrg->pev->iuser1;
     cd->iuser2 = plOrg->pev->iuser2;
 
@@ -2118,8 +2118,8 @@ void UpdateClientData( const edict_t* ent, int sendweapons, clientdata_t* cd )
 }
 
 /**
- *	@brief We're about to run this usercmd for the specified player. We can set up groupinfo and masking here, etc.
- *	This is the time to examine the usercmd for anything extra. This call happens even if think does not.
+ *    @brief We're about to run this usercmd for the specified player. We can set up groupinfo and masking here, etc.
+ *    This is the time to examine the usercmd for anything extra. This call happens even if think does not.
  */
 void CmdStart( const edict_t* player, const usercmd_t* cmd, unsigned int random_seed )
 {
@@ -2137,7 +2137,7 @@ void CmdStart( const edict_t* player, const usercmd_t* cmd, unsigned int random_
 }
 
 /**
- *	@brief Each cmdstart is exactly matched with a cmd end, clean up any group trace flags, etc. here
+ *    @brief Each cmdstart is exactly matched with a cmd end, clean up any group trace flags, etc. here
  */
 void CmdEnd( const edict_t* player )
 {
@@ -2152,30 +2152,30 @@ void CmdEnd( const edict_t* player )
 }
 
 /**
- *	@brief Return 1 if the packet is valid.
- *	@param net_from Address of the sender.
- *	@param args Argument string.
- *	@param response_buffer Buffer to write a response message to.
- *	@param[in,out] response_buffer_size Initially holds the maximum size of @p response_buffer.
- *		Set to size of response message or 0 if sending no response.
+ *    @brief Return 1 if the packet is valid.
+ *    @param net_from Address of the sender.
+ *    @param args Argument string.
+ *    @param response_buffer Buffer to write a response message to.
+ *    @param[in,out] response_buffer_size Initially holds the maximum size of @p response_buffer.
+ *        Set to size of response message or 0 if sending no response.
  */
 int ConnectionlessPacket( const netadr_t* net_from, const char* args, char* response_buffer, int* response_buffer_size )
 {
-	// Parse stuff from args
-	// int max_buffer_size = *response_buffer_size;
+    // Parse stuff from args
+    // int max_buffer_size = *response_buffer_size;
 
-	// Zero it out since we aren't going to respond.
-	// If we wanted to response, we'd write data into response_buffer
+    // Zero it out since we aren't going to respond.
+    // If we wanted to response, we'd write data into response_buffer
     *response_buffer_size = 0;
 
-	// Since we don't listen for anything here, just respond that it's a bogus message
-	// If we didn't reject the message, we'd return 1 for success instead.
+    // Since we don't listen for anything here, just respond that it's a bogus message
+    // If we didn't reject the message, we'd return 1 for success instead.
     return 0;
 }
 
 /**
- *	@brief Engine calls this to enumerate player collision hulls, for prediction.
- *	@return 0 if the hullnumber doesn't exist, 1 otherwise.
+ *    @brief Engine calls this to enumerate player collision hulls, for prediction.
+ *    @return 0 if the hullnumber doesn't exist, 1 otherwise.
  */
 int GetHullBounds( int hullnumber, float* mins, float* maxs )
 {
@@ -2183,46 +2183,46 @@ int GetHullBounds( int hullnumber, float* mins, float* maxs )
 }
 
 /**
- *	@brief Create pseudo-baselines for items that aren't placed in the map at spawn time, but which are likely
- *	to be created during play ( e.g., grenades, ammo packs, projectiles, corpses, etc. )
+ *    @brief Create pseudo-baselines for items that aren't placed in the map at spawn time, but which are likely
+ *    to be created during play ( e.g., grenades, ammo packs, projectiles, corpses, etc. )
  */
 void CreateInstancedBaselines()
 {
-	// int iret = 0;
-	// entity_state_t state;
+    // int iret = 0;
+    // entity_state_t state;
 
-	// memset(&state, 0, sizeof(state));
+    // memset(&state, 0, sizeof(state));
 
-	// Create any additional baselines here for things like grendates, etc.
-	// iret = ENGINE_INSTANCE_BASELINE( pc->pev->classname, &state );
+    // Create any additional baselines here for things like grendates, etc.
+    // iret = ENGINE_INSTANCE_BASELINE( pc->pev->classname, &state );
 
-	// Destroy objects.
-	// UTIL_Remove( pc );
+    // Destroy objects.
+    // UTIL_Remove( pc );
 }
 
 /**
- *	@brief One of the ENGINE_FORCE_UNMODIFIED files failed the consistency check for the specified player
- *	@return 0 to allow the client to continue, 1 to force immediate disconnection
- *		( with an optional disconnect message of up to 256 characters )
+ *    @brief One of the ENGINE_FORCE_UNMODIFIED files failed the consistency check for the specified player
+ *    @return 0 to allow the client to continue, 1 to force immediate disconnection
+ *        ( with an optional disconnect message of up to 256 characters )
  */
 int InconsistentFile( const edict_t* player, const char* filename, char* disconnect_message )
 {
-	// Server doesn't care?
+    // Server doesn't care?
     if( CVAR_GET_FLOAT( "mp_consistency" ) != 1 )
         return 0;
 
-	// Default behavior is to kick the player
+    // Default behavior is to kick the player
     sprintf( disconnect_message, "Server is enforcing file consistency for %s\n", filename );
 
-	// Kick now with specified disconnect message.
+    // Kick now with specified disconnect message.
     return 1;
 }
 
 /**
- *	@brief The game .dll should return 1 if lag compensation should be allowed ( must also set the sv_unlag cvar ).
- *	@details Most games right now should return 0,
- *	until client-side weapon prediction code is written and tested for them
- *	( note you can predict weapons, but not do lag compensation, too, if you want ).
+ *    @brief The game .dll should return 1 if lag compensation should be allowed ( must also set the sv_unlag cvar ).
+ *    @details Most games right now should return 0,
+ *    until client-side weapon prediction code is written and tested for them
+ *    ( note you can predict weapons, but not do lag compensation, too, if you want ).
  */
 int AllowLagCompensation()
 {

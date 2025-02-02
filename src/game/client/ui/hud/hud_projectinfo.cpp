@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,8 +24,8 @@ bool CHudProjectInfo::Init()
 
     m_IsAlphaBuild = g_ProjectInfo.IsAlphaBuild( *g_ProjectInfo.GetLocalInfo() );
 
-	// Turn this on by default if this is a (pre-)alpha build.
-	// Users will easily know they're running a (pre-)alpha build and screenshots and videos will include important information.
+    // Turn this on by default if this is a (pre-)alpha build.
+    // Users will easily know they're running a (pre-)alpha build and screenshots and videos will include important information.
     m_ShowProjectInfo = CVAR_CREATE( "cl_projectinfo_show", m_IsAlphaBuild ? "1" : "0", 0 );
 
     return true;
@@ -45,7 +45,7 @@ bool CHudProjectInfo::Draw( float flTime )
         int lineWidth, lineHeight;
         GetConsoleStringSize( "", &lineWidth, &lineHeight );
 
-		// Shrink line height a bit.
+        // Shrink line height a bit.
         lineHeight = static_cast<int>( lineHeight * 0.9f );
 
         int yPos = static_cast<int>( ScreenHeight * 0.05 );
@@ -82,7 +82,7 @@ bool CHudProjectInfo::Draw( float flTime )
         const auto clientInfo = g_ProjectInfo.GetLocalInfo();
         const auto serverInfo = g_ProjectInfo.GetServerInfo();
 
-		// The server's build type isn't important enough to send over.
+        // The server's build type isn't important enough to send over.
         buffer.clear();
         fmt::format_to( std::back_inserter( buffer ), "Build type: {}", UNIFIED_SDK_CONFIG );
         lineDrawer( buffer.c_str() );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -355,7 +355,7 @@ void CStripWeapons::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 }
 
 /**
- *	@brief Sets the player's health and/or armor to a mapper-specified value
+ *    @brief Sets the player's health and/or armor to a mapper-specified value
  */
 class CPlayerSetHealth : public CPointEntity
 {
@@ -428,7 +428,7 @@ bool CPlayerSetHealth::KeyValue( KeyValueData* pkvd )
     }
     else if( FStrEq( pkvd->szKeyName, "health_to_set" ) )
     {
-		// Clamp to 1 so players don't end up in an invalid state
+        // Clamp to 1 so players don't end up in an invalid state
         m_Health = std::max( atoi( pkvd->szValue ), 1 );
         return true;
     }
@@ -447,13 +447,13 @@ void CPlayerSetHealth::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     {
         if( ( m_Flags & FlagSetHealth ) != 0 )
         {
-			// Clamp it to the current max health
+            // Clamp it to the current max health
             player->pev->health = std::min( static_cast<int>( std::floor( player->pev->max_health ) ), m_Health );
         }
 
         if( ( m_Flags & FlagSetArmor ) != 0 )
         {
-			// Clamp it now, in case future changes allow for custom armor maximum
+            // Clamp it now, in case future changes allow for custom armor maximum
             player->pev->armorvalue = std::min( MAX_NORMAL_BATTERY, m_Armor );
         }
     };

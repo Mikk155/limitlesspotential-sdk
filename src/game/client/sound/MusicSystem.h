@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -39,12 +39,12 @@ namespace sound
 class MusicSystem final : public IMusicSystem
 {
 private:
-	// This is tuned to work pretty well with the original Quake soundtrack, but needs testing to make sure it's good for any input.
+    // This is tuned to work pretty well with the original Quake soundtrack, but needs testing to make sure it's good for any input.
     static constexpr std::size_t BufferSize = 1024 * 4;
 
-	// Wrapper around FILE* that implements copy behavior as move behavior.
-	// This is needed because std::function is copyable, and std::unique_ptr captured by lambda disables the lambda's copy constructor.
-	// C++23 has std::move_only_function which solves this problem, but it's not available yet.
+    // Wrapper around FILE* that implements copy behavior as move behavior.
+    // This is needed because std::function is copyable, and std::unique_ptr captured by lambda disables the lambda's copy constructor.
+    // C++23 has std::move_only_function which solves this problem, but it's not available yet.
     struct FileWrapper
     {
         mutable FILE* File = nullptr;
@@ -143,10 +143,10 @@ public:
     void Unblock();
 
 private:
-	/**
-	 *	@brief If the current thread is not the worker thread, queues the given function and arguments for execution on the worker thread.
-	 *	@return @c true if the function was queued, false otherwise.
-	 */
+    /**
+     *    @brief If the current thread is not the worker thread, queues the given function and arguments for execution on the worker thread.
+     *    @return @c true if the function was queued, false otherwise.
+     */
     template <typename Func, typename... Args>
     bool RunOnWorkerThread( Func func, Args&&... args );
 

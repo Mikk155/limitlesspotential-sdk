@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -78,7 +78,7 @@ void CWeaponBox::RemoveWeapons()
 {
     CBasePlayerWeapon* weapon;
 
-	// destroy the weapons
+    // destroy the weapons
     for( int i = 0; i < MAX_WEAPON_SLOTS; ++i )
     {
         weapon = m_rgpPlayerWeapons[i];
@@ -96,7 +96,7 @@ void CWeaponBox::Kill()
 {
     RemoveWeapons();
 
-	// remove the box
+    // remove the box
     UTIL_Remove( this );
 }
 
@@ -111,47 +111,47 @@ void CWeaponBox::Touch( CBaseEntity* pOther )
 
     if( !player )
     {
-		// only players may touch a weaponbox.
+        // only players may touch a weaponbox.
         return;
     }
 
     if( !player->IsAlive() )
     {
-		// no dead guys.
+        // no dead guys.
         return;
     }
 
     int i;
 
-	// dole out ammo
+    // dole out ammo
     for( i = 0; i < MAX_AMMO_TYPES; i++ )
     {
         if( !FStringNull( m_rgiszAmmo[i] ) )
         {
-			// there's some ammo of this type.
+            // there's some ammo of this type.
             player->GiveAmmo( m_rgAmmo[i], STRING( m_rgiszAmmo[i] ) );
 
-			// Logger->trace("Gave {} rounds of {}", m_rgAmmo[i], STRING(m_rgiszAmmo[i]));
+            // Logger->trace("Gave {} rounds of {}", m_rgAmmo[i], STRING(m_rgiszAmmo[i]));
 
-			// now empty the ammo from the weaponbox since we just gave it to the player
+            // now empty the ammo from the weaponbox since we just gave it to the player
             m_rgiszAmmo[i] = string_t::Null;
             m_rgAmmo[i] = 0;
         }
     }
 
-	// go through my weapons and try to give the usable ones to the player.
-	// it's important the the player be given ammo first, so the weapons code doesn't refuse
-	// to deploy a better weapon that the player may pick up because he has no ammo for it.
+    // go through my weapons and try to give the usable ones to the player.
+    // it's important the the player be given ammo first, so the weapons code doesn't refuse
+    // to deploy a better weapon that the player may pick up because he has no ammo for it.
     for( i = 0; i < MAX_WEAPON_SLOTS; i++ )
     {
         if( m_rgpPlayerWeapons[i] )
         {
             CBasePlayerWeapon* weapon;
 
-			// have at least one weapon in this slot
+            // have at least one weapon in this slot
             while( m_rgpPlayerWeapons[i] )
             {
-				// Logger->debug("trying to give {}", STRING(m_rgpPlayerWeapons[i]->pev->classname));
+                // Logger->debug("trying to give {}", STRING(m_rgpPlayerWeapons[i]->pev->classname));
 
                 weapon = m_rgpPlayerWeapons[i];
                 m_rgpPlayerWeapons[i] = m_rgpPlayerWeapons[i]->m_pNext; // unlink this weapon from the box
@@ -171,7 +171,7 @@ void CWeaponBox::Touch( CBaseEntity* pOther )
 
 bool CWeaponBox::PackWeapon( CBasePlayerWeapon* weapon )
 {
-	// is one of these weapons already packed in this box?
+    // is one of these weapons already packed in this box?
     if( HasWeapon( weapon ) )
     {
         return false; // box can only hold one of each weapon type
@@ -181,7 +181,7 @@ bool CWeaponBox::PackWeapon( CBasePlayerWeapon* weapon )
     {
         if( !weapon->m_pPlayer->RemovePlayerWeapon( weapon ) )
         {
-			// failed to unhook the weapon from the player!
+            // failed to unhook the weapon from the player!
             return false;
         }
     }
@@ -190,13 +190,13 @@ bool CWeaponBox::PackWeapon( CBasePlayerWeapon* weapon )
 
     if( m_rgpPlayerWeapons[iWeaponSlot] )
     {
-		// there's already one weapon in this slot, so link this into the slot's column
+        // there's already one weapon in this slot, so link this into the slot's column
         weapon->m_pNext = m_rgpPlayerWeapons[iWeaponSlot];
         m_rgpPlayerWeapons[iWeaponSlot] = weapon;
     }
     else
     {
-		// first weapon we have for this slot
+        // first weapon we have for this slot
         m_rgpPlayerWeapons[iWeaponSlot] = weapon;
         weapon->m_pNext = nullptr;
     }
@@ -212,7 +212,7 @@ bool CWeaponBox::PackWeapon( CBasePlayerWeapon* weapon )
     weapon->SetTouch( nullptr );
     weapon->m_pPlayer = nullptr;
 
-	// Logger->debug("packed {}", STRING(pWeapon->pev->classname));
+    // Logger->debug("packed {}", STRING(pWeapon->pev->classname));
 
     return true;
 }
@@ -221,7 +221,7 @@ bool CWeaponBox::PackAmmo( string_t iszName, int iCount )
 {
     if( FStringNull( iszName ) )
     {
-		// error here
+        // error here
         Logger->error( "NULL String in PackAmmo!" );
         return false;
     }
@@ -237,7 +237,7 @@ bool CWeaponBox::PackAmmo( string_t iszName, int iCount )
 
         if( iCount > 0 )
         {
-			// Logger->debug("Packed {} rounds of {}", iCount, STRING(iszName));
+            // Logger->debug("Packed {} rounds of {}", iCount, STRING(iszName));
             GiveAmmo( iCount, type );
             return true;
         }
@@ -331,7 +331,7 @@ bool CWeaponBox::IsEmpty()
     {
         if( !FStringNull( m_rgiszAmmo[i] ) )
         {
-			// still have a bit of this type of ammo
+            // still have a bit of this type of ammo
             return false;
         }
     }

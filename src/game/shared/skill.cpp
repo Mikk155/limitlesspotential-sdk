@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -74,7 +74,7 @@ static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> Tr
 
     if( skillLevelString.empty() )
     {
-		// Only a name, no skill level.
+        // Only a name, no skill level.
         return {{baseName, {}}};
     }
 
@@ -84,7 +84,7 @@ static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> Tr
     {
         if( result.ec != std::errc::result_out_of_range )
         {
-			// In case something else goes wrong.
+            // In case something else goes wrong.
             logger.error( "Invalid skill variable name \"{}\": {}", key, std::make_error_code( result.ec ).message() );
         }
 
@@ -141,10 +141,10 @@ bool SkillSystem::Initialize()
                     variable.NetworkIndex != NotNetworkedIndex ? " (Networked)"  : "" );
             };
 
-			//TODO: maybe replace this with proper wildcard searching at some point.
+            //TODO: maybe replace this with proper wildcard searching at some point.
             if( searchTerm == "*" )
             {
-				//List all keys.
+                //List all keys.
                 for( const auto& variable : m_SkillVariables )
                 {
                     printer( variable );
@@ -152,7 +152,7 @@ bool SkillSystem::Initialize()
             }
             else
             {
-				//List all keys that are a full or partial match.
+                //List all keys that are a full or partial match.
                 for( const auto& variable : m_SkillVariables )
                 {
                     if( variable.Name.find( searchTerm ) != std::string::npos )
@@ -223,7 +223,7 @@ void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
             varData.emplace( "Name", variable->Name );
             varData.emplace( "Value", variable->CurrentValue );
 
-			// So SendAllNetworkedSkillVars only sends variables that have changed compared to the configured value.
+            // So SendAllNetworkedSkillVars only sends variables that have changed compared to the configured value.
             variable->NetworkedValue = variable->CurrentValue;
 
             block.Data.push_back( std::move( varData ) );
@@ -252,14 +252,14 @@ void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 
 void SkillSystem::LoadSkillConfigFiles( std::span<const std::string> fileNames )
 {
-	// Refresh skill level setting first.
+    // Refresh skill level setting first.
     int iSkill = (int)CVAR_GET_FLOAT( "skill" );
 
     iSkill = std::clamp( iSkill, static_cast<int>( SkillLevel::Easy ), static_cast<int>( SkillLevel::Hard ) );
 
     SetSkillLevel( static_cast<SkillLevel>( iSkill ) );
 
-	// Erase all previous data.
+    // Erase all previous data.
     for( auto it = m_SkillVariables.begin(); it != m_SkillVariables.end(); )
     {
         if( ( it->Flags & VarFlag_IsExplicitlyDefined ) != 0 )
@@ -401,7 +401,7 @@ void SkillSystem::SetValue( std::string_view name, float value )
 #ifndef CLIENT_DLL
 void SkillSystem::SendAllNetworkedSkillVars( CBasePlayer* player )
 {
-	// Send skill vars in bursts.
+    // Send skill vars in bursts.
     const int maxMessageSize = int( MaxUserMessageLength ) / SingleMessageSize;
 
     int totalMessageSize = 0;
@@ -415,7 +415,7 @@ void SkillSystem::SendAllNetworkedSkillVars( CBasePlayer* player )
             continue;
         }
 
-		// Player already has these from networked data.
+        // Player already has these from networked data.
         if( variable.CurrentValue == variable.NetworkedValue )
         {
             continue;
@@ -442,7 +442,7 @@ float SkillSystem::ClampValue( float value, const SkillVarConstraints& constrain
 {
     if( constraints.Type == SkillVarType::Integer )
     {
-		// Round value to integer.
+        // Round value to integer.
         value = int( value );
     }
 
@@ -472,11 +472,11 @@ bool SkillSystem::ParseConfiguration( const json& input )
 
         if( !value.is_number() )
         {
-			// Already validated by schema.
+            // Already validated by schema.
             continue;
         }
 
-		// Get the skill variable base name and skill level.
+        // Get the skill variable base name and skill level.
         const auto maybeVariableName = TryParseSkillVariableName( item.key(), *m_Logger );
 
         if( !maybeVariableName.has_value() )
@@ -521,7 +521,7 @@ void SkillSystem::MsgFunc_SkillVars( BufferReader& reader )
             {
                 if( variable.NetworkIndex == networkIndex )
                 {
-					// Don't need to log since the server logs the change. The client only follows its lead.
+                    // Don't need to log since the server logs the change. The client only follows its lead.
                     variable.CurrentValue = value;
                     return;
                 }

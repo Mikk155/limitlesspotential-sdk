@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -68,7 +68,7 @@ bool CHudFlashlight::VidInit()
     };
 
     m_Flashlight = setup( "flash_empty", "flash_full", "flash_beam" );
-	// NVG doesn't have a beam.
+    // NVG doesn't have a beam.
     m_Nightvision = setup( "nvg_empty", "nvg_full", nullptr );
 
     m_nvSprite = SPR_Load( "sprites/of_nv_b.spr" );
@@ -91,7 +91,7 @@ void CHudFlashlight::MsgFunc_Flashlight( const char* pszName, BufferReader& read
     m_iBat = x;
     m_flBat = ( (float)x ) / 100.0;
 
-	// Always update this, so that changing to flashlight type disables NVG effects
+    // Always update this, so that changing to flashlight type disables NVG effects
     gHUD.SetNightVisionState( m_SuitLightType == SuitLightType::Nightvision && m_fOn );
 }
 
@@ -117,7 +117,7 @@ bool CHudFlashlight::Draw( float flTime )
     y = ( data->m_prc1->bottom - data->m_prc2->top ) / 2;
     x = ScreenWidth - data->m_iWidth - data->m_iWidth / 2;
 
-	// Draw the flashlight casing
+    // Draw the flashlight casing
     SPR_Set( data->m_hSprite1, color );
     SPR_DrawAdditive( 0, x, y, data->m_prc1 );
 
@@ -137,7 +137,7 @@ bool CHudFlashlight::Draw( float flTime )
         }
     }
 
-	// draw the flashlight energy level
+    // draw the flashlight energy level
     x = ScreenWidth - data->m_iWidth - data->m_iWidth / 2;
     int iOffset = data->m_iWidth * ( 1.0 - m_flBat );
     if( iOffset < data->m_iWidth )

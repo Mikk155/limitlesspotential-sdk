@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -21,7 +21,7 @@
 #include "config/sections/BaseFileNamesListSection.h"
 
 /**
- *	@brief Allows a configuration file to specify one or more sentences files.
+ *    @brief Allows a configuration file to specify one or more sentences files.
  */
 class SentencesSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
@@ -40,7 +40,7 @@ protected:
 };
 
 /**
- *	@brief Allows a configuration file to specify one or more materials files.
+ *    @brief Allows a configuration file to specify one or more materials files.
  */
 class MaterialsSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
@@ -59,7 +59,7 @@ protected:
 };
 
 /**
- *	@brief Allows a configuration file to specify one or more skill files.
+ *    @brief Allows a configuration file to specify one or more skill files.
  */
 class SkillSection final : public BaseFileNamesListSection<ServerConfigContext>
 {

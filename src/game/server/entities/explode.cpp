@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,15 +14,15 @@
  ****/
 
 /**
- *	@file
- *	Explosion-related code
+ *    @file
+ *    Explosion-related code
  */
 
 #include "cbase.h"
 #include "explode.h"
 
 /**
- *	@brief Spark Shower
+ *    @brief Spark Shower
  */
 class CShower : public CBaseEntity
 {
@@ -41,7 +41,7 @@ void CShower::OnCreate()
 {
     CBaseEntity::OnCreate();
 
-	// Need a model, just use the grenade, we don't draw it anyway
+    // Need a model, just use the grenade, we don't draw it anyway
     pev->model = MAKE_STRING( "models/grenade.mdl" );
 }
 
@@ -137,22 +137,22 @@ void CEnvExplosion::Spawn()
     pev->effects = EF_NODRAW;
 
     pev->movetype = MOVETYPE_NONE;
-	/*
-	if ( m_iMagnitude > 250 )
-	{
-		m_iMagnitude = 250;
-	}
-	*/
+    /*
+    if ( m_iMagnitude > 250 )
+    {
+        m_iMagnitude = 250;
+    }
+    */
 
     float flSpriteScale;
     flSpriteScale = ( m_iMagnitude - 50 ) * 0.6;
 
-	/*
-	if ( flSpriteScale > 50 )
-	{
-		flSpriteScale = 50;
-	}
-	*/
+    /*
+    if ( flSpriteScale > 50 )
+    {
+        flSpriteScale = 50;
+    }
+    */
     if( flSpriteScale < 10 )
     {
         flSpriteScale = 10;
@@ -174,7 +174,7 @@ void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 
     UTIL_TraceLine( vecSpot, vecSpot + Vector( 0, 0, -40 ), ignore_monsters, edict(), &tr );
 
-	// Pull out of the wall a bit
+    // Pull out of the wall a bit
     if( tr.flFraction != 1.0 )
     {
         pev->origin = tr.vecEndPos + ( tr.vecPlaneNormal * ( m_iMagnitude - 24 ) * 0.6 );
@@ -184,7 +184,7 @@ void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
         pev->origin = pev->origin;
     }
 
-	// draw decal
+    // draw decal
     if( ( pev->spawnflags & SF_ENVEXPLOSION_NODECAL ) == 0 )
     {
         if( RANDOM_FLOAT( 0, 1 ) < 0.5 )
@@ -197,13 +197,13 @@ void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
         }
     }
 
-	// draw fireball
+    // draw fireball
     UTIL_ExplosionEffect( pev->origin, g_sModelIndexFireball,
         ( pev->spawnflags & SF_ENVEXPLOSION_NOFIREBALL ) == 0 ? static_cast<byte>( m_spriteScale ) : 0,
         15, TE_EXPLFLAG_NONE,
         MSG_PAS, pev->origin );
 
-	// do damage
+    // do damage
     if( ( pev->spawnflags & SF_ENVEXPLOSION_NODAMAGE ) == 0 )
     {
         RadiusDamage( this, this, m_iMagnitude, DMG_BLAST );
@@ -212,7 +212,7 @@ void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     SetThink( &CEnvExplosion::Smoke );
     pev->nextthink = gpGlobals->time + 0.3;
 
-	// draw sparks
+    // draw sparks
     if( ( pev->spawnflags & SF_ENVEXPLOSION_NOSPARKS ) == 0 )
     {
         int sparkCount = RANDOM_LONG( 0, 3 );

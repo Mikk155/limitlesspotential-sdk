@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -25,7 +25,7 @@
 #define ISLAVE_MAX_BEAMS 8
 
 /**
- *	@brief Alien slave monster
+ *    @brief Alien slave monster
  */
 class CISlave : public CSquadMonster
 {
@@ -62,29 +62,29 @@ public:
 
     void UpdateOnRemove() override;
 
-	/**
-	 *	@brief remove all beams
-	 */
+    /**
+     *    @brief remove all beams
+     */
     void ClearBeams();
 
-	/**
-	 *	@brief small beam from arm to nearby geometry
-	 */
+    /**
+     *    @brief small beam from arm to nearby geometry
+     */
     void ArmBeam( int side );
 
-	/**
-	 *	@brief regenerate dead colleagues
-	 */
+    /**
+     *    @brief regenerate dead colleagues
+     */
     void WackBeam( int side, CBaseEntity* pEntity );
 
-	/**
-	 *	@brief heavy damage directly forward
-	 */
+    /**
+     *    @brief heavy damage directly forward
+     */
     void ZapBeam( int side );
 
-	/**
-	 *	@brief brighten all beams
-	 */
+    /**
+     *    @brief brighten all beams
+     */
     void BeamGlow();
 
     int m_iBravery;
@@ -163,9 +163,9 @@ Relationship CISlave::IRelationship( CBaseEntity* pTarget )
 
 void CISlave::CallForHelp( const char* szClassname, float flDist, EHANDLE hEnemy, Vector& vecLocation )
 {
-	// AILogger->debug("help");
+    // AILogger->debug("help");
 
-	// skip ones not on my netname
+    // skip ones not on my netname
     if( FStringNull( pev->netname ) )
         return;
 
@@ -280,12 +280,12 @@ void CISlave::SetYawSpeed()
 
 void CISlave::HandleAnimEvent( MonsterEvent_t* pEvent )
 {
-	// AILogger->debug("event {} : {}", pEvent->event, pev->frame);
+    // AILogger->debug("event {} : {}", pEvent->event, pev->frame);
     switch ( pEvent->event )
     {
     case ISLAVE_AE_CLAW:
     {
-		// SOUND HERE!
+        // SOUND HERE!
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "islave_dmg_claw"sv ), DMG_SLASH );
         if( pHurt )
         {
@@ -294,12 +294,12 @@ void CISlave::HandleAnimEvent( MonsterEvent_t* pEvent )
                 pHurt->pev->punchangle.z = -18;
                 pHurt->pev->punchangle.x = 5;
             }
-			// Play a random attack hit sound
+            // Play a random attack hit sound
             EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pAttackHitSounds ), 1.0, ATTN_NORM, 0, m_voicePitch );
         }
         else
         {
-			// Play a random attack miss sound
+            // Play a random attack miss sound
             EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pAttackMissSounds ), 1.0, ATTN_NORM, 0, m_voicePitch );
         }
     }
@@ -326,7 +326,7 @@ void CISlave::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case ISLAVE_AE_ZAP_POWERUP:
     {
-		// speed up attack when on hard
+        // speed up attack when on hard
         if( g_Skill.GetSkillLevel() == SkillLevel::Hard )
             pev->framerate = 1.5;
 
@@ -394,7 +394,7 @@ void CISlave::HandleAnimEvent( MonsterEvent_t* pEvent )
         ZapBeam( 1 );
 
         EmitSoundDyn( CHAN_WEAPON, "hassault/hw_shoot1.wav", 1, ATTN_NORM, 0, RANDOM_LONG( 130, 160 ) );
-		// StopSound(CHAN_WEAPON, "debris/zap4.wav");
+        // StopSound(CHAN_WEAPON, "debris/zap4.wav");
         ApplyMultiDamage( this, this );
 
         m_flNextAttack = gpGlobals->time + RANDOM_FLOAT( 0.5, 4.0 );
@@ -427,44 +427,44 @@ bool CISlave::CheckRangeAttack2( float flDot, float flDist )
 {
     return false;
 
-	/*
-	if (m_flNextAttack > gpGlobals->time)
-	{
-		return false;
-	}
+    /*
+    if (m_flNextAttack > gpGlobals->time)
+    {
+        return false;
+    }
 
-	m_hDead = nullptr;
-	m_iBravery = 0;
+    m_hDead = nullptr;
+    m_iBravery = 0;
 
-	CBaseEntity* pEntity = nullptr;
-	while ((pEntity = UTIL_FindEntityByClassname(pEntity, "monster_alien_slave")) != nullptr)
-	{
-		TraceResult tr;
+    CBaseEntity* pEntity = nullptr;
+    while ((pEntity = UTIL_FindEntityByClassname(pEntity, "monster_alien_slave")) != nullptr)
+    {
+        TraceResult tr;
 
-		UTIL_TraceLine(EyePosition(), pEntity->EyePosition(), ignore_monsters, edict(), &tr);
-		if (tr.flFraction == 1.0 || tr.pHit == pEntity->edict())
-		{
-			if (pEntity->pev->deadflag == DEAD_DEAD)
-			{
-				float d = (pev->origin - pEntity->pev->origin).Length();
-				if (d < flDist)
-				{
-					m_hDead = pEntity;
-					flDist = d;
-				}
-				m_iBravery--;
-			}
-			else
-			{
-				m_iBravery++;
-			}
-		}
-	}
-	if (m_hDead != nullptr)
-		return true;
-	else
-		return false;
-	*/
+        UTIL_TraceLine(EyePosition(), pEntity->EyePosition(), ignore_monsters, edict(), &tr);
+        if (tr.flFraction == 1.0 || tr.pHit == pEntity->edict())
+        {
+            if (pEntity->pev->deadflag == DEAD_DEAD)
+            {
+                float d = (pev->origin - pEntity->pev->origin).Length();
+                if (d < flDist)
+                {
+                    m_hDead = pEntity;
+                    flDist = d;
+                }
+                m_iBravery--;
+            }
+            else
+            {
+                m_iBravery++;
+            }
+        }
+    }
+    if (m_hDead != nullptr)
+        return true;
+    else
+        return false;
+    */
 }
 
 void CISlave::StartTask( const Task_t* pTask )
@@ -517,11 +517,11 @@ void CISlave::Precache()
 
 bool CISlave::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// don't slash one of your own
+    // don't slash one of your own
     if( ( bitsDamageType & DMG_SLASH ) != 0 && attacker && IRelationship( Instance( attacker ) ) < Relationship::Dislike )
         return false;
 
-	// get provoked when injured
+    // get provoked when injured
     m_afMemory |= bits_MEMORY_PROVOKED;
     return CSquadMonster::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
 }
@@ -561,13 +561,13 @@ const Schedule_t* CISlave::GetSchedule()
 {
     ClearBeams();
 
-	/*
-		if (pev->spawnflags)
-		{
-			pev->spawnflags = 0;
-			return GetScheduleOfType( SCHED_RELOAD );
-		}
-	*/
+    /*
+        if (pev->spawnflags)
+        {
+            pev->spawnflags = 0;
+            return GetScheduleOfType( SCHED_RELOAD );
+        }
+    */
 
     if( HasConditions( bits_COND_HEAR_SOUND ) )
     {
@@ -585,10 +585,10 @@ const Schedule_t* CISlave::GetSchedule()
     switch ( m_MonsterState )
     {
     case MONSTERSTATE_COMBAT:
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
@@ -603,7 +603,7 @@ const Schedule_t* CISlave::GetSchedule()
                 }
                 if( HasConditions( bits_COND_SEE_ENEMY ) && HasConditions( bits_COND_ENEMY_FACING_ME ) )
                 {
-					// AILogger->debug("exposed");
+                    // AILogger->debug("exposed");
                     return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
                 }
             }
@@ -654,7 +654,7 @@ void CISlave::ArmBeam( int side )
         }
     }
 
-	// Couldn't find anything close enough
+    // Couldn't find anything close enough
     if( flDist == 1.0 )
         return;
 
@@ -666,7 +666,7 @@ void CISlave::ArmBeam( int side )
 
     m_pBeam[m_iBeams]->PointEntInit( tr.vecEndPos, entindex() );
     m_pBeam[m_iBeams]->SetEndAttachment( side < 0 ? 2 : 1 );
-	// m_pBeam[m_iBeams]->SetColor( 180, 255, 96 );
+    // m_pBeam[m_iBeams]->SetColor( 180, 255, 96 );
     m_pBeam[m_iBeams]->SetColor( 96, 128, 16 );
     m_pBeam[m_iBeams]->SetBrightness( 64 );
     m_pBeam[m_iBeams]->SetNoise( 80 );
@@ -768,11 +768,11 @@ void CISlave::ClearBeams()
 }
 
 /**
- *	@brief DEAD ALIEN SLAVE PROP
- *	@details Designer selects a pose in worldcraft, 0 through num_poses-1
- *	this value is added to what is selected as the 'first dead pose' among the monster's normal animations.
- *	All dead poses must appear sequentially in the model file.
- *	Be sure and set the m_iFirstPose properly!
+ *    @brief DEAD ALIEN SLAVE PROP
+ *    @details Designer selects a pose in worldcraft, 0 through num_poses-1
+ *    this value is added to what is selected as the 'first dead pose' among the monster's normal animations.
+ *    All dead poses must appear sequentially in the model file.
+ *    Be sure and set the m_iFirstPose properly!
  */
 class CDeadISlave : public CBaseMonster
 {
@@ -807,7 +807,7 @@ void CDeadISlave::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8; // GetSkillFloat("islave_health"sv);
     pev->model = MAKE_STRING( "models/islave.mdl" );
 

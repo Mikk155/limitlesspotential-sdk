@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -32,12 +32,12 @@ namespace sound
 {
 MusicSystem::~MusicSystem()
 {
-	// Stop worker thread and wait until it finishes.
+    // Stop worker thread and wait until it finishes.
     m_Quit = true;
 
     m_Thread.join();
 
-	// Since we switch to this context on-demand we can't rely on the default destructor to clean up.
+    // Since we switch to this context on-demand we can't rely on the default destructor to clean up.
     if( const ContextSwitcher switcher{m_Context.get(), *m_Logger}; switcher )
     {
         m_Source.Delete();
@@ -73,7 +73,7 @@ bool MusicSystem::Create( std::shared_ptr<spdlog::logger> logger )
         return false;
     }
 
-	// TODO: see if any context attributes can be used to reduce memory usage for this context.
+    // TODO: see if any context attributes can be used to reduce memory usage for this context.
     m_Context.reset( alcCreateContext( m_Device.get(), nullptr ) );
 
     if( !m_Context )
@@ -104,7 +104,7 @@ bool MusicSystem::Create( std::shared_ptr<spdlog::logger> logger )
 
     m_Loader = std::make_unique<nqr::NyquistIO>();
 
-	// Start the worker thread.
+    // Start the worker thread.
     m_Thread = std::thread{&MusicSystem::Run, this};
 
     g_ConCommands.CreateCommand( 
@@ -184,20 +184,20 @@ void MusicSystem::StartPlaying( bool looping, FileWrapper file )
     }
     catch ( const std::exception& )
     {
-		// Can happen if the file was deleted or otherwise rendered inaccessible since queueing this.
-		// Can't log the error since we're on the worker thread.
+        // Can happen if the file was deleted or otherwise rendered inaccessible since queueing this.
+        // Can't log the error since we're on the worker thread.
         return;
     }
 
-	// No longer need the file.
+    // No longer need the file.
     file.reset();
 
-	// Clear error state.
+    // Clear error state.
     alGetError();
 
     m_Info.Format = m_Info.Data->channelCount == 1 ? AL_FORMAT_MONO_FLOAT32 : AL_FORMAT_STEREO_FLOAT32;
 
-	// Allocate enough buffers to hold around a second's worth of data.
+    // Allocate enough buffers to hold around a second's worth of data.
     const std::size_t bytesInASecond = m_Info.Data->sampleRate * m_Info.Data->channelCount * sizeof(short);
 
     const auto numberOfBuffers = static_cast<std::size_t>( std::ceil( static_cast<float>( bytesInASecond ) / BufferSize ) );
@@ -209,7 +209,7 @@ void MusicSystem::StartPlaying( bool looping, FileWrapper file )
         m_Buffers.push_back( OpenALBuffer::Create() );
     }
 
-	// Fill all buffers with data.
+    // Fill all buffers with data.
     std::byte dataBuffer[BufferSize];
 
     ALsizei buffersFilled = 0;
@@ -226,7 +226,7 @@ void MusicSystem::StartPlaying( bool looping, FileWrapper file )
         ++buffersFilled;
     }
 
-	// Attach all buffers and play.
+    // Attach all buffers and play.
     static_assert( sizeof( ALuint ) == sizeof( OpenALBuffer ), "Must create an array to hold buffer ids" );
     alSourceQueueBuffers( m_Source.Id, buffersFilled, reinterpret_cast<const ALuint*>( m_Buffers.data() ) );
 
@@ -237,7 +237,7 @@ void MusicSystem::StartPlaying( bool looping, FileWrapper file )
 
     if( const auto error = alGetError(); error != AL_NO_ERROR )
     {
-		// Can't log an error since we're on a separate thread.
+        // Can't log an error since we're on a separate thread.
         Stop();
         return;
     }
@@ -261,7 +261,7 @@ void MusicSystem::Stop()
 
     alSourceStop( m_Source.Id );
 
-	// Unqueue all buffers as well to free them up.
+    // Unqueue all buffers as well to free them up.
     alSourcei( m_Source.Id, AL_BUFFER, NullBuffer );
 
     m_Paused = false;
@@ -327,7 +327,7 @@ void MusicSystem::Unblock()
 
     m_Blocked = false;
 
-	// Unblock to user-set volume immediately.
+    // Unblock to user-set volume immediately.
     UpdateVolume( true );
 }
 
@@ -339,7 +339,7 @@ bool MusicSystem::RunOnWorkerThread( Func func, Args&&... args )
         return false;
     }
 
-	// Queue up for execution on the worker thread.
+    // Queue up for execution on the worker thread.
     const std::lock_guard guard{m_JobMutex};
 
     m_Jobs.emplace_back( [=, this]()
@@ -364,16 +364,16 @@ std::size_t MusicSystem::Read( std::byte* dest, std::size_t bufferSize )
 
 void MusicSystem::Run()
 {
-	// Use our context on our own thread only.
+    // Use our context on our own thread only.
     if( ALC_FALSE == alcSetThreadContext( m_Context.get() ) )
     {
-		// Fatal error, can't log it since we're on a separate thread.
+        // Fatal error, can't log it since we're on a separate thread.
         return;
     }
 
     while( !m_Quit )
     {
-		// Run pending jobs, if any.
+        // Run pending jobs, if any.
         if( const std::unique_lock guard{m_JobMutex, std::try_to_lock}; guard )
         {
             m_Jobs.swap( m_JobsToExecute );
@@ -388,7 +388,7 @@ void MusicSystem::Run()
 
         Update();
 
-		// Let other threads do work.
+        // Let other threads do work.
         std::this_thread::sleep_for( std::chrono::milliseconds{1} );
     }
 
@@ -402,10 +402,10 @@ void MusicSystem::Update()
 
     if( m_Playing )
     {
-		// Clear error state.
+        // Clear error state.
         alGetError();
 
-		// Fill processed buffers with new data if needed.
+        // Fill processed buffers with new data if needed.
         ALint processed = 0;
         alGetSourcei( m_Source.Id, AL_BUFFERS_PROCESSED, &processed );
 
@@ -449,8 +449,8 @@ void MusicSystem::Update()
 
                 if( state != AL_PLAYING )
                 {
-					// If we're really slow to load samples then playback might have ended already.
-					// Restart it so we at least play it chunk by chunk.
+                    // If we're really slow to load samples then playback might have ended already.
+                    // Restart it so we at least play it chunk by chunk.
                     alSourcePlay( m_Source.Id );
                 }
             }
@@ -474,7 +474,7 @@ void MusicSystem::UpdateVolume( bool force )
 
     bool needsVolumeUpdate = force;
 
-	// NOTE: cvar values can potentially change while being read.
+    // NOTE: cvar values can potentially change while being read.
 
     if( const auto fadeTime = m_FadeStartTime.load(); fadeTime != std::chrono::system_clock::time_point{} )
     {
@@ -482,8 +482,8 @@ void MusicSystem::UpdateVolume( bool force )
 
         if( now >= fadeTime )
         {
-			// Finished fading out.
-			// Volume doesn't need updating now.
+            // Finished fading out.
+            // Volume doesn't need updating now.
             Stop();
             return;
         }

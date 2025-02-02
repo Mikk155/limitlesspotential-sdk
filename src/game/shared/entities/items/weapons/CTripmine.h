@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -43,7 +43,7 @@ public:
     bool GetWeaponInfo( WeaponInfo& info ) override;
     void SetObjectCollisionBox() override
     {
-		//!!!BUGBUG - fix the model!
+        //!!!BUGBUG - fix the model!
         pev->absmin = pev->origin + Vector( -16, -16, -5 );
         pev->absmax = pev->origin + Vector( 16, 16, 28 );
     }

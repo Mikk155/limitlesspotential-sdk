@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -31,7 +31,7 @@ private:
     string_t m_CVarName;
     string_t m_CVarValue;
 
-	// Not saved, used to speed up repeated calls and log diagnostics.
+    // Not saved, used to speed up repeated calls and log diagnostics.
     cvar_t* m_CVar{};
 };
 
@@ -70,7 +70,7 @@ void CLogicSetCVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 
     Logger->trace( "{}:{}:{}: Attempting to set cvar", GetClassname(), entindex(), GetTargetname() );
 
-	// Commands should be evaluated on execution in case we've saved and restored and the whitelist has changed.
+    // Commands should be evaluated on execution in case we've saved and restored and the whitelist has changed.
     if( !g_CommandWhitelist.contains( cvarName ) )
     {
         Logger->error( 
@@ -211,7 +211,7 @@ bool CLogicSetSkill::KeyValue( KeyValueData* pkvd )
 
 void CLogicSetSkill::Spawn()
 {
-	// Check to make sure the skill level was specified at all.
+    // Check to make sure the skill level was specified at all.
     m_SkillLevel = ValidateSkillLevel( this, m_SkillLevel );
 }
 
@@ -224,7 +224,7 @@ void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 
     CVAR_SET_FLOAT( "skill", m_SkillLevel );
 
-	// Cached variables will be unaffected.
+    // Cached variables will be unaffected.
     g_Skill.SetSkillLevel( SkillLevel( m_SkillLevel ) );
 
     SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
@@ -349,8 +349,8 @@ bool CLogicRandom::KeyValue( KeyValueData* pkvd )
 
         int index = strtol( indexString, &end, 10 );
 
-		// Must be a number and end after the number, e.g. "target1"
-		// index is 1 based [1, MaxRandomTargets]
+        // Must be a number and end after the number, e.g. "target1"
+        // index is 1 based [1, MaxRandomTargets]
         if( end != indexString && *end == '\0' )
         {
             --index;

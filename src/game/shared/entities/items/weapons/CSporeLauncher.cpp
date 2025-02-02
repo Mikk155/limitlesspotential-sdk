@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -110,7 +110,7 @@ void CSporeLauncher::WeaponIdle()
             }
             else
             {
-				// reload debounce has timed out
+                // reload debounce has timed out
                 SendWeaponAnim( SPLAUNCHER_AIM );
 
                 m_ReloadState = ReloadState::NOT_RELOADING;
@@ -256,11 +256,11 @@ void CSporeLauncher::Reload()
     if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 || GetMagazine1() == maxClip )
         return;
 
-	// don't reload until recoil is done
+    // don't reload until recoil is done
     if( m_flNextPrimaryAttack > UTIL_WeaponTimeBase() )
         return;
 
-	// check to see if we're ready to reload
+    // check to see if we're ready to reload
     if( m_ReloadState == ReloadState::NOT_RELOADING )
     {
         SendWeaponAnim( SPLAUNCHER_RELOAD_REACH );
@@ -275,7 +275,7 @@ void CSporeLauncher::Reload()
     {
         if( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
             return;
-		// was waiting for gun to move to side
+        // was waiting for gun to move to side
         m_ReloadState = ReloadState::RELOAD_ONE;
 
         m_pPlayer->EmitSound( CHAN_ITEM, "weapons/splauncher_reload.wav", 0.7, ATTN_NORM );
@@ -287,7 +287,7 @@ void CSporeLauncher::Reload()
     }
     else
     {
-		// Add them to the clip
+        // Add them to the clip
         AdjustMagazine1( 1 );
         m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -1 );
         m_ReloadState = ReloadState::DO_RELOAD_EFFECTS;
@@ -319,7 +319,7 @@ void CSporeLauncher::GetWeaponData( weapon_data_t& data )
 {
     BaseClass::GetWeaponData( data );
 
-	// m_ReloadState is called m_fInSpecialReload in Op4.
+    // m_ReloadState is called m_fInSpecialReload in Op4.
     data.m_fInSpecialReload = static_cast<int>( m_ReloadState );
 }
 
@@ -365,7 +365,7 @@ public:
 
     void Precache() override
     {
-		// Don't precache default pickup sound.
+        // Don't precache default pickup sound.
         CBaseItem::Precache();
         PrecacheSound( "weapons/spore_ammo.wav" );
     }
@@ -425,7 +425,7 @@ public:
         auto vecLaunchDir = pev->angles;
 
         vecLaunchDir.x -= 90;
-		// Rotate it so spores that aren't rotated in Hammer point in the right direction.
+        // Rotate it so spores that aren't rotated in Hammer point in the right direction.
         vecLaunchDir.y += 180;
 
         vecLaunchDir.x += RANDOM_FLOAT( -20, 20 );

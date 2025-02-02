@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -69,60 +69,60 @@ std::vector<CampaignInfo> CampaignSelectSystem::LoadCampaigns()
 
     FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
 
-	if (auto fileName = g_pFileSystem->FindFirst("campaigns/*.json", &handle); fileName)
-	{
-		do
-		{
-			if (std::find_if(campaigns.begin(), campaigns.end(), [=](const auto& candidate)
-					{ return candidate.FileName == fileName; }) != campaigns.end())
-			{
-				// The same file will be returned for every search path that includes the same directory so
-				// we have to ignore them.
-				continue;
-			}
+    if (auto fileName = g_pFileSystem->FindFirst("campaigns/*.json", &handle); fileName)
+    {
+        do
+        {
+            if (std::find_if(campaigns.begin(), campaigns.end(), [=](const auto& candidate)
+                    { return candidate.FileName == fileName; }) != campaigns.end())
+            {
+                // The same file will be returned for every search path that includes the same directory so
+                // we have to ignore them.
+                continue;
+            }
 
-			auto campaign = g_JSON.ParseJSONFile(fmt::format("campaigns/{}", fileName).c_str(),
-				{.SchemaName = CampaignSchemaName}, [=, this](const auto& input)
-				{ return ParseCampaign(fileName, input); });
+            auto campaign = g_JSON.ParseJSONFile(fmt::format("campaigns/{}", fileName).c_str(),
+                {.SchemaName = CampaignSchemaName}, [=, this](const auto& input)
+                { return ParseCampaign(fileName, input); });
 
-			if (campaign)
-			{
-				if (campaign->Label.empty())
-				{
-					m_Logger->error("Ignoring campaign file \"{}\": no label provided");
-					continue;
-				}
+            if (campaign)
+            {
+                if (campaign->Label.empty())
+                {
+                    m_Logger->error("Ignoring campaign file \"{}\": no label provided");
+                    continue;
+                }
 
-				if (campaign->CampaignMap.empty() && campaign->TrainingMap.empty())
-				{
-					m_Logger->error("Ignoring campaign file \"{}\": no maps provided", fileName);
-					continue;
-				}
+                if (campaign->CampaignMap.empty() && campaign->TrainingMap.empty())
+                {
+                    m_Logger->error("Ignoring campaign file \"{}\": no maps provided", fileName);
+                    continue;
+                }
 
-				m_Logger->debug("Adding campaign \"{}\" from \"{}\"", campaign->Label, fileName);
-				campaigns.push_back(std::move(*campaign));
-			}
+                m_Logger->debug("Adding campaign \"{}\" from \"{}\"", campaign->Label, fileName);
+                campaigns.push_back(std::move(*campaign));
+            }
 
-		} while ((fileName = g_pFileSystem->FindNext(handle)) != nullptr);
+        } while ((fileName = g_pFileSystem->FindNext(handle)) != nullptr);
 
-		g_pFileSystem->FindClose(handle);
-	}
+        g_pFileSystem->FindClose(handle);
+    }
 
-	std::sort(campaigns.begin(), campaigns.end(), [](const auto& lhs, const auto& rhs)
-		{ return lhs.FileName < rhs.FileName; });
+    std::sort(campaigns.begin(), campaigns.end(), [](const auto& lhs, const auto& rhs)
+        { return lhs.FileName < rhs.FileName; });
 
-	return campaigns;
+    return campaigns;
 }
 
 CampaignInfo CampaignSelectSystem::ParseCampaign(std::string&& fileName, const json& input)
 {
-	CampaignInfo info;
+    CampaignInfo info;
 
-	info.FileName = std::move(fileName);
-	info.Label = Trim(input.value("Label", ""));
-	info.Description = input.value("Description", "No description provided.");
-	info.CampaignMap = Trim(input.value("CampaignMap", ""));
-	info.TrainingMap = Trim(input.value("TrainingMap", ""));
+    info.FileName = std::move(fileName);
+    info.Label = Trim(input.value("Label", ""));
+    info.Description = input.value("Description", "No description provided.");
+    info.CampaignMap = Trim(input.value("CampaignMap", ""));
+    info.TrainingMap = Trim(input.value("TrainingMap", ""));
 
-	return info;
+    return info;
 }

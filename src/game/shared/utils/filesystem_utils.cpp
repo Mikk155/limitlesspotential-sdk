@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -66,7 +66,7 @@ static bool FileSystem_InitializeGameDirectory()
 
     if( charactersWritten == BufferSize )
     {
-		// Path was truncated. Game is installed in the wrong location (Steam shouldn't allow this).
+        // Path was truncated. Game is installed in the wrong location (Steam shouldn't allow this).
         return false;
     }
 #else
@@ -77,15 +77,15 @@ static bool FileSystem_InitializeGameDirectory()
 
     if( charactersWritten < 0 || charactersWritten == BufferSize )
     {
-		// Path was truncated. Game is installed in the wrong location (Steam shouldn't allow this).
+        // Path was truncated. Game is installed in the wrong location (Steam shouldn't allow this).
         return false;
     }
 #endif
 
-	// Resize buffer to actual size.
+    // Resize buffer to actual size.
     gameDirectory.resize( std::strlen( gameDirectory.c_str() ) );
 
-	// Truncate to directory name.
+    // Truncate to directory name.
     const std::size_t directoryEnd = gameDirectory.find_last_of( DefaultPathSeparatorChar );
 
     if( directoryEnd == std::string::npos )
@@ -116,11 +116,11 @@ bool FileSystem_LoadFileSystem()
 {
     if( nullptr != g_pFileSystem )
     {
-		// Already loaded.
+        // Already loaded.
         return true;
     }
 
-	// Determine which filesystem to use.
+    // Determine which filesystem to use.
 #if defined( _WIN32 )
     const char* szFsModule = "filesystem_stdio.dll";
 #elif defined( OSX )
@@ -131,8 +131,8 @@ bool FileSystem_LoadFileSystem()
 #error
 #endif
 
-	// Get filesystem interface.
-	// The library is located next to the game exe, so there is no need to resolve the path first.
+    // Get filesystem interface.
+    // The library is located next to the game exe, so there is no need to resolve the path first.
     g_pFileSystemModule = Sys_LoadModule( szFsModule );
 
     assert( nullptr != g_pFileSystemModule );
@@ -286,7 +286,7 @@ std::vector<std::byte> FileSystem_LoadFileIntoBuffer( const char* fileName, File
 
         if( format == FileContentFormat::Text )
         {
-			// Null terminate it in case it's actually text.
+            // Null terminate it in case it's actually text.
             buffer[size] = std::byte{'\0'};
         }
 

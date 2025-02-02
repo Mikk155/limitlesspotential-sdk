@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -108,7 +108,7 @@ void CPitdroneSpike::Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVeloc
 
 void CPitdroneSpike::SpikeTouch( CBaseEntity* pOther )
 {
-	// splat sound
+    // splat sound
     int iPitch = RANDOM_FLOAT( 120, 140 );
 
     if( 0 == pOther->pev->takedamage )
@@ -123,8 +123,8 @@ void CPitdroneSpike::SpikeTouch( CBaseEntity* pOther )
 
     SetTouch( nullptr );
 
-	// Stick it in the world for a bit
-	// TODO: maybe stick it on any entity that reports FL_WORLDBRUSH too?
+    // Stick it in the world for a bit
+    // TODO: maybe stick it on any entity that reports FL_WORLDBRUSH too?
     if( 0 == strcmp( "worldspawn", STRING( pOther->pev->classname ) ) )
     {
         const auto vecDir = pev->velocity.Normalize();
@@ -147,7 +147,7 @@ void CPitdroneSpike::SpikeTouch( CBaseEntity* pOther )
     }
     else
     {
-		// Hit something else, remove
+        // Hit something else, remove
         SetThink( &CBaseEntity::SUB_Remove );
         pev->nextthink = gpGlobals->time + 0.1;
     }
@@ -197,7 +197,7 @@ enum PitdroneWeapon
 }
 
 /**
- *	@brief medium sized, fires sharp teeth like spikes and swipes with sharp appendages
+ *    @brief medium sized, fires sharp teeth like spikes and swipes with sharp appendages
  */
 class CPitdrone : public CBaseMonster
 {
@@ -223,9 +223,9 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-	/**
-	 *	@brief overridden for bullsquid because there are things that need to be checked every think.
-	 */
+    /**
+     *    @brief overridden for bullsquid because there are things that need to be checked every think.
+     */
     void RunAI() override;
 
     bool FValidateHintType( short sHint ) override;
@@ -267,7 +267,7 @@ int CPitdrone::IgnoreConditions()
 
     if( gpGlobals->time - m_flLastHurtTime <= 20 )
     {
-		// haven't been hurt in 20 seconds, so let the drone care about stink.
+        // haven't been hurt in 20 seconds, so let the drone care about stink.
         iIgnore = bits_COND_SMELL | bits_COND_SMELL_FOOD;
     }
 
@@ -276,7 +276,7 @@ int CPitdrone::IgnoreConditions()
 
 Relationship CPitdrone::IRelationship( CBaseEntity* pTarget )
 {
-	// Always mark pit drones as allies
+    // Always mark pit drones as allies
     if( pTarget->ClassnameIs( "monster_pitdrone" ) )
     {
         return Relationship::Ally;
@@ -289,7 +289,7 @@ bool CPitdrone::CheckRangeAttack1( float flDot, float flDist )
 {
     if( m_iInitialAmmo == -1 || GetBodygroup( PitdroneBodygroup::Weapons ) == PitdroneWeapon::Empty || ( IsMoving() && flDist >= 512 ) )
     {
-		// squid will far too far behind if he stops running to spit at this distance from the enemy.
+        // squid will far too far behind if he stops running to spit at this distance from the enemy.
         return false;
     }
 
@@ -299,19 +299,19 @@ bool CPitdrone::CheckRangeAttack1( float flDot, float flDist )
         {
             if( fabs( pev->origin.z - m_hEnemy->pev->origin.z ) > 256 )
             {
-				// don't try to spit at someone up really high or down really low.
+                // don't try to spit at someone up really high or down really low.
                 return false;
             }
         }
 
         if( IsMoving() )
         {
-			// don't spit again for a long time, resume chasing enemy.
+            // don't spit again for a long time, resume chasing enemy.
             m_flNextSpikeTime = gpGlobals->time + 5;
         }
         else
         {
-			// not moving, so spit again pretty soon.
+            // not moving, so spit again pretty soon.
             m_flNextSpikeTime = gpGlobals->time + 0.5;
         }
 
@@ -452,8 +452,8 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
 
             UTIL_MakeVectors( pev->angles );
 
-			// !!!HACKHACK - the spot at which the spit originates (in front of the mouth) was measured in 3ds and hardcoded here.
-			// we should be able to read the position of bones at runtime for this info.
+            // !!!HACKHACK - the spot at which the spit originates (in front of the mouth) was measured in 3ds and hardcoded here.
+            // we should be able to read the position of bones at runtime for this info.
             vecSpitOffset = ( gpGlobals->v_forward * 15 + gpGlobals->v_up * 36 );
             vecSpitOffset = ( pev->origin + vecSpitOffset );
             vecSpitDir = ( ( m_hEnemy->pev->origin + m_hEnemy->pev->view_ofs ) - vecSpitOffset ).Normalize();
@@ -462,7 +462,7 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
             vecSpitDir.y += RANDOM_FLOAT( -0.05, 0.05 );
             vecSpitDir.z += RANDOM_FLOAT( -0.05, 0 );
 
-			// spew the spittle temporary ents.
+            // spew the spittle temporary ents.
             MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpitOffset );
             WRITE_BYTE( TE_SPRITE_SPRAY );
             WRITE_COORD( vecSpitOffset.x ); // pos
@@ -498,13 +498,13 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case PITDRONE_AE_BITE:
     {
-		// SOUND HERE!
+        // SOUND HERE!
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "pitdrone_dmg_bite"sv ), DMG_SLASH );
 
         if( pHurt )
         {
-			// pHurt->pev->punchangle.z = -15;
-			// pHurt->pev->punchangle.x = -45;
+            // pHurt->pev->punchangle.z = -15;
+            // pHurt->pev->punchangle.x = -45;
             pHurt->pev->velocity = pHurt->pev->velocity - gpGlobals->v_forward * 100;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_up * 100;
         }
@@ -528,14 +528,14 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
     {
         float flGravity = g_psv_gravity->value;
 
-		// throw the squid up into the air on this frame.
+        // throw the squid up into the air on this frame.
         if( FBitSet( pev->flags, FL_ONGROUND ) )
         {
             pev->flags -= FL_ONGROUND;
         }
 
-		// jump into air for 0.8 (24/30) seconds
-		//			pev->velocity.z += (0.875 * flGravity) * 0.5;
+        // jump into air for 0.8 (24/30) seconds
+        //            pev->velocity.z += (0.875 * flGravity) * 0.5;
         pev->velocity.z += ( 0.625 * flGravity ) * 0.5;
     }
     break;
@@ -544,13 +544,13 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
     {
         int iPitch;
 
-		// squid throws its prey IF the prey is a client.
+        // squid throws its prey IF the prey is a client.
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, 0, 0 );
 
 
         if( pHurt )
         {
-			// croonchy bite sound
+            // croonchy bite sound
             iPitch = RANDOM_FLOAT( 90, 110 );
             switch ( RANDOM_LONG( 0, 1 ) )
             {
@@ -563,11 +563,11 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
             }
 
 
-			// pHurt->pev->punchangle.x = RANDOM_LONG(0,34) - 5;
-			// pHurt->pev->punchangle.z = RANDOM_LONG(0,49) - 25;
-			// pHurt->pev->punchangle.y = RANDOM_LONG(0,89) - 45;
+            // pHurt->pev->punchangle.x = RANDOM_LONG(0,34) - 5;
+            // pHurt->pev->punchangle.z = RANDOM_LONG(0,49) - 25;
+            // pHurt->pev->punchangle.y = RANDOM_LONG(0,89) - 45;
 
-			// screeshake transforms the viewmodel as well as the viewangle. No problems with seeing the ends of the viewmodels.
+            // screeshake transforms the viewmodel as well as the viewangle. No problems with seeing the ends of the viewmodels.
             UTIL_ScreenShake( pHurt->pev->origin, 25.0, 1.5, 0.7, 2 );
 
             if( pHurt->IsPlayer() )
@@ -627,7 +627,7 @@ void CPitdrone::Spawn()
     }
     else
     {
-		// TODO: constrain value to valid range
+        // TODO: constrain value to valid range
         SetBodygroup( PitdroneBodygroup::Weapons, ( PitdroneWeapon::One + 1 ) - m_iInitialAmmo );
     }
 
@@ -683,12 +683,12 @@ void CPitdrone::Precache()
 
 void CPitdrone::RunAI()
 {
-	// first, do base class stuff
+    // first, do base class stuff
     CBaseMonster::RunAI();
 
     if( m_hEnemy != nullptr && m_Activity == ACT_RUN )
     {
-		// chasing enemy. Sprint for last bit
+        // chasing enemy. Sprint for last bit
         if( ( pev->origin - m_hEnemy->pev->origin ).Length2D() < SQUID_SPRINT_DIST )
         {
             pev->framerate = 1.25;
@@ -788,8 +788,8 @@ Schedule_t slPitdroneEat[] =
                 bits_COND_HEAVY_DAMAGE |
                 bits_COND_NEW_ENEMY,
 
-			// even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-			// here or the monster won't detect these sounds at ALL while running this schedule.
+            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+            // here or the monster won't detect these sounds at ALL while running this schedule.
             bits_SOUND_MEAT |
                 bits_SOUND_CARCASS,
             "SquidEat"}};
@@ -823,8 +823,8 @@ Schedule_t slPitdroneSniffAndEat[] =
                 bits_COND_HEAVY_DAMAGE |
                 bits_COND_NEW_ENEMY,
 
-			// even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-			// here or the monster won't detect these sounds at ALL while running this schedule.
+            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+            // here or the monster won't detect these sounds at ALL while running this schedule.
             bits_SOUND_MEAT |
                 bits_SOUND_CARCASS,
             "SquidSniffAndEat"}};
@@ -854,8 +854,8 @@ Schedule_t slPitdroneWallow[] =
                 bits_COND_HEAVY_DAMAGE |
                 bits_COND_NEW_ENEMY,
 
-			// even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-			// here or the monster won't detect these sounds at ALL while running this schedule.
+            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+            // here or the monster won't detect these sounds at ALL while running this schedule.
             bits_SOUND_GARBAGE,
 
             "SquidWallow"}};
@@ -937,19 +937,19 @@ const Schedule_t* CPitdrone::GetSchedule()
                 {
                     m_flNextEatTime = gpGlobals->time + 90;
 
-					// scent is behind or occluded
+                    // scent is behind or occluded
                     return GetScheduleOfType( SCHED_PITDRONE_SNIFF_AND_EAT );
                 }
 
                 m_flNextEatTime = gpGlobals->time + 90;
 
-				// food is right out in the open. Just go get it.
+                // food is right out in the open. Just go get it.
                 return GetScheduleOfType( SCHED_PITDRONE_EAT );
             }
 
             if( HasConditions( bits_COND_SMELL ) )
             {
-				// there's something stinky.
+                // there's something stinky.
                 CSound* pSound;
 
                 pSound = PBestScent();
@@ -965,10 +965,10 @@ const Schedule_t* CPitdrone::GetSchedule()
     }
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
@@ -1107,19 +1107,19 @@ void CPitdrone::CheckAmmo()
 
 void CPitdrone::GibMonster()
 {
-	/*
-	EmitSound(CHAN_WEAPON, "common/bodysplat.wav", 1, ATTN_NORM);
+    /*
+    EmitSound(CHAN_WEAPON, "common/bodysplat.wav", 1, ATTN_NORM);
 
-	if (CVAR_GET_FLOAT("violence_agibs") != 0) // Should never get here, but someone might call it directly
-	{
-		// Note: the original doesn't check for German censorship
-		CGib::SpawnRandomGibs(this, 6, PitDroneGibs); // Throw alien gibs
-	}
-	*/
+    if (CVAR_GET_FLOAT("violence_agibs") != 0) // Should never get here, but someone might call it directly
+    {
+        // Note: the original doesn't check for German censorship
+        CGib::SpawnRandomGibs(this, 6, PitDroneGibs); // Throw alien gibs
+    }
+    */
 
     CGib::SpawnClientGibs( this, GibType::Pitdrone, 6, true, false );
 
-	// don't remove players!
+    // don't remove players!
     SetThink( &CBaseMonster::SUB_Remove );
     pev->nextthink = gpGlobals->time;
 }

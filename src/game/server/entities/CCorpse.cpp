@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -25,7 +25,7 @@ void InitBodyQue()
     g_pBodyQueueHead = g_EntityDictionary->Create( className );
     auto body = g_pBodyQueueHead;
 
-	// Reserve 3 more slots for dead bodies
+    // Reserve 3 more slots for dead bodies
     for( int i = 0; i < 3; i++ )
     {
         body->SetOwner( g_EntityDictionary->Create( className ) );
@@ -55,9 +55,9 @@ void CopyToBodyQue( CBaseEntity* entity )
     body->pev->renderamt = entity->entindex();
 
     body->pev->effects = entity->pev->effects | EF_NOINTERP;
-	// body->pev->goalstarttime = entity->pev->goalstarttime;
-	// body->pev->goalframe	= entity->pev->goalframe;
-	// body->pev->goalendtime = entity->pev->goalendtime;
+    // body->pev->goalstarttime = entity->pev->goalstarttime;
+    // body->pev->goalframe    = entity->pev->goalframe;
+    // body->pev->goalendtime = entity->pev->goalendtime;
 
     body->pev->sequence = entity->pev->sequence;
     body->pev->animtime = entity->pev->animtime;

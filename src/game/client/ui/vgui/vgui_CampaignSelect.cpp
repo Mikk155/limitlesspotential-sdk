@@ -101,24 +101,24 @@ public:
 
     void paintBackground() override
     {
-		// Don't draw background.
+        // Don't draw background.
     }
 };
 
 CCampaignSelectPanel::CCampaignSelectPanel( int iTrans, int x, int y, int wide, int tall )
     : CTransparentPanel( iTrans, x, y, wide, tall )
 {
-	// Get the scheme used for the Titles
+    // Get the scheme used for the Titles
     CSchemeManager* pSchemes = gViewPort->GetSchemeManager();
 
-	// schemes
+    // schemes
     SchemeHandle_t hTitleScheme = pSchemes->getSchemeHandle( "Title Font" );
     SchemeHandle_t hClassWindowText = pSchemes->getSchemeHandle( "Briefing Text" );
 
-	// color schemes
+    // color schemes
     int r, g, b, a;
 
-	// Create the title
+    // Create the title
     Label* pLabel = new Label( "", CAMPAIGNSELECT_TITLE_X, CAMPAIGNSELECT_TITLE_Y );
     pLabel->setParent( this );
     pLabel->setFont( pSchemes->getFont( hTitleScheme ) );
@@ -216,17 +216,17 @@ CCampaignSelectPanel::CCampaignSelectPanel( int iTrans, int x, int y, int wide, 
 
     yOffset = difficultyYOffset;
 
-	// Create the Scroll panel
+    // Create the Scroll panel
     m_pScrollPanel = new CTFScrollPanel( CAMPAIGNSELECT_WINDOW_X, CAMPAIGNSELECT_WINDOW_Y + yOffset,
         CAMPAIGNSELECT_WINDOW_SIZE_X, CAMPAIGNSELECT_WINDOW_SIZE_Y );
     m_pScrollPanel->setParent( this );
-	// force the scrollbars on, so after the validate clientClip will be smaller
+    // force the scrollbars on, so after the validate clientClip will be smaller
     m_pScrollPanel->setScrollBarAutoVisible( false, false );
     m_pScrollPanel->setScrollBarVisible( true, true );
     m_pScrollPanel->setBorder( new LineBorder( Color( 0, 112, 0, 0 ) ) );
     m_pScrollPanel->validate();
 
-	// turn scrollpanel back into auto show scrollbar mode and validate
+    // turn scrollpanel back into auto show scrollbar mode and validate
     m_pScrollPanel->setScrollBarAutoVisible( false, true );
     m_pScrollPanel->setScrollBarVisible( false, false );
     m_pScrollPanel->validate();
@@ -343,7 +343,7 @@ void CCampaignSelectPanel::StartCurrentCampaign()
         return;
     }
 
-	// Matches the commands used in the New Game dialog.
+    // Matches the commands used in the New Game dialog.
     const auto commands = fmt::format( "disconnect;maxplayers 1;deathmatch 0;skill {};map {};", difficulty, mapName );
     gEngfuncs.pfnClientCmd( commands.c_str() );
 }

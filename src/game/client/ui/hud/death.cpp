@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -60,8 +60,8 @@ Vector* GetClientColor( int clientIndex )
     case 0:
         return &g_ColorYellow;
 
-		// Opposing Force doesn't send the teamnumber in ScoreInfo, so a -1 is read by the client.
-		// Make sure this uses the correct color.
+        // Opposing Force doesn't send the teamnumber in ScoreInfo, so a -1 is read by the client.
+        // Make sure this uses the correct color.
     case -1:
         return nullptr;
 
@@ -106,7 +106,7 @@ bool CHudDeathNotice::Draw( float flTime )
 
         if( rgDeathNoticeList[i].flDisplayTime < flTime )
         { // display time has expired
-			// remove the current item from the list
+            // remove the current item from the list
             memmove( &rgDeathNoticeList[i], &rgDeathNoticeList[i + 1], sizeof( DeathNoticeItem ) * ( MAX_DEATHNOTICES - i ) );
             i--; // continue on the next item;  stop the counter getting incremented
             continue;
@@ -114,10 +114,10 @@ bool CHudDeathNotice::Draw( float flTime )
 
         rgDeathNoticeList[i].flDisplayTime = std::min( rgDeathNoticeList[i].flDisplayTime, gHUD.m_flTime + DEATHNOTICE_DISPLAY_TIME );
 
-		// Only draw if the viewport will let me
+        // Only draw if the viewport will let me
         if( gViewPort && gViewPort->AllowedToPrintText() )
         {
-			// Draw the death notice
+            // Draw the death notice
             y = DEATHNOTICE_TOP + 2 + ( 20 * i ); //!!!
 
             int id = ( rgDeathNoticeList[i].iId == -1 ) ? m_HUD_d_skull : rgDeathNoticeList[i].iId;
@@ -127,22 +127,22 @@ bool CHudDeathNotice::Draw( float flTime )
             {
                 x -= ( 5 + ConsoleStringLen( rgDeathNoticeList[i].szKiller ) );
 
-				// Draw killers name
+                // Draw killers name
                 if( rgDeathNoticeList[i].KillerColor )
                     gEngfuncs.pfnDrawSetTextColor( rgDeathNoticeList[i].KillerColor->x, rgDeathNoticeList[i].KillerColor->y, rgDeathNoticeList[i].KillerColor->z );
                 x = 5 + DrawConsoleString( x, y, rgDeathNoticeList[i].szKiller );
             }
 
-			// If it's a teamkill, display it in sickly green
+            // If it's a teamkill, display it in sickly green
             const auto color = rgDeathNoticeList[i].iTeamKill ? RGB24{10, 240, 10} : RGB24{255, 80, 0};
 
-			// Draw death weapon
+            // Draw death weapon
             SPR_Set( gHUD.GetSprite( id ), color );
             SPR_DrawAdditive( 0, x, y, &gHUD.GetSpriteRect( id ) );
 
             x += ( gHUD.GetSpriteRect( id ).right - gHUD.GetSpriteRect( id ).left );
 
-			// Draw victims name (if it was a player that was killed)
+            // Draw victims name (if it was a player that was killed)
             if( !rgDeathNoticeList[i].iNonPlayerKill )
             {
                 if( rgDeathNoticeList[i].VictimColor )
@@ -185,7 +185,7 @@ void CHudDeathNotice::MsgFunc_DeathMsg( const char* pszName, BufferReader& reade
     if( gViewPort )
         gViewPort->GetAllPlayersInfo();
 
-	// Get the Killer's name
+    // Get the Killer's name
     const char* killer_name = g_PlayerInfoList[killer].name;
     if( !killer_name )
     {
@@ -199,9 +199,9 @@ void CHudDeathNotice::MsgFunc_DeathMsg( const char* pszName, BufferReader& reade
         rgDeathNoticeList[i].szKiller[MAX_PLAYER_NAME_LENGTH - 1] = 0;
     }
 
-	// Get the Victim's name
+    // Get the Victim's name
     const char* victim_name = nullptr;
-	// If victim is -1, the killer killed a specific, non-player object (like a sentrygun)
+    // If victim is -1, the killer killed a specific, non-player object (like a sentrygun)
     if( ( (char)victim ) != -1 )
         victim_name = g_PlayerInfoList[victim].name;
     if( !victim_name )
@@ -216,12 +216,12 @@ void CHudDeathNotice::MsgFunc_DeathMsg( const char* pszName, BufferReader& reade
         rgDeathNoticeList[i].szVictim[MAX_PLAYER_NAME_LENGTH - 1] = 0;
     }
 
-	// Is it a non-player object kill?
+    // Is it a non-player object kill?
     if( ( (char)victim ) == -1 )
     {
         rgDeathNoticeList[i].iNonPlayerKill = true;
 
-		// Store the object's name in the Victim slot (skip the d_ bit)
+        // Store the object's name in the Victim slot (skip the d_ bit)
         strncpy( rgDeathNoticeList[i].szVictim, killedwith.c_str() + 2, sizeof( rgDeathNoticeList[i].szVictim ) - 1 );
         rgDeathNoticeList[i].szVictim[sizeof( rgDeathNoticeList[i].szVictim ) - 1] = '\0';
     }
@@ -234,7 +234,7 @@ void CHudDeathNotice::MsgFunc_DeathMsg( const char* pszName, BufferReader& reade
             rgDeathNoticeList[i].iTeamKill = true;
     }
 
-	// Find the sprite in the list
+    // Find the sprite in the list
     int spr = gHUD.GetSpriteIndex( killedwith.c_str() );
 
     rgDeathNoticeList[i].iId = spr;
@@ -251,7 +251,7 @@ void CHudDeathNotice::MsgFunc_DeathMsg( const char* pszName, BufferReader& reade
     }
     else
     {
-		// record the death notice in the console
+        // record the death notice in the console
         if( rgDeathNoticeList[i].iSuicide )
         {
             ConsolePrint( rgDeathNoticeList[i].szVictim );
@@ -282,7 +282,7 @@ void CHudDeathNotice::MsgFunc_DeathMsg( const char* pszName, BufferReader& reade
         {
             ConsolePrint( " with " );
 
-			// replace the code names with the 'real' names
+            // replace the code names with the 'real' names
             if( 0 == strcmp( killedwith.c_str() + 2, "egon" ) )
                 killedwith = "d_gluon gun";
             if( 0 == strcmp( killedwith.c_str() + 2, "gauss" ) )

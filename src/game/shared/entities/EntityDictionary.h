@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -28,10 +28,10 @@
 #include "items/CBaseItem.h"
 
 /**
- *	@file
+ *    @file
  *
- *	Entity dictionary that allows classname-based lookup and type-safe construction.
- *	Entities should be registered only using the @see LINK_ENTITY_TO_CLASS macro.
+ *    Entity dictionary that allows classname-based lookup and type-safe construction.
+ *    Entities should be registered only using the @see LINK_ENTITY_TO_CLASS macro.
  */
 
 template <typename TEntity>
@@ -41,7 +41,7 @@ template <typename TEntity>
 void RegisterEntityDescriptor( EntityDescriptor<TEntity>* descriptor );
 
 /**
- *	@brief Contains all of the information needed to identify and create entities.
+ *    @brief Contains all of the information needed to identify and create entities.
  */
 class BaseEntityDescriptor
 {
@@ -130,13 +130,13 @@ protected:
 
         auto entity = descriptor->Create();
 
-		// allocate entity if necessary
+        // allocate entity if necessary
         if( pev == nullptr )
         {
             pev = &CREATE_ENTITY()->v;
         }
 
-		// Replicate the pfnPvAllocEntPrivateData engine function's behavior.
+        // Replicate the pfnPvAllocEntPrivateData engine function's behavior.
         pev->pContainingEntity->pvPrivateData = entity;
 
         entity->pev = pev;
@@ -152,7 +152,7 @@ protected:
 };
 
 /**
- *	@brief Dictionary of entity classes deriving from @p TBaseEntity.
+ *    @brief Dictionary of entity classes deriving from @p TBaseEntity.
  */
 template <std::derived_from<CBaseEntity> TBaseEntity>
 class EntityDictionary final : public BaseEntityDictionary
@@ -180,9 +180,9 @@ public:
         return Cast<TConcrete>( BaseEntityDictionary::Create( className ) );
     }
 
-	/**
-	 *	@brief Destroys the CBaseEntity object. Does not free the associated edict.
-	 */
+    /**
+     *    @brief Destroys the CBaseEntity object. Does not free the associated edict.
+     */
     void Destroy( CBaseEntity* entity )
     {
         if( !entity )
@@ -207,7 +207,7 @@ public:
 
     void Add( const BaseEntityDescriptor* )
     {
-		// Overload to ignore addition if it doesn't derive from base type.
+        // Overload to ignore addition if it doesn't derive from base type.
     }
 
 private:
@@ -215,7 +215,7 @@ private:
     static TConcrete* Cast( TBaseEntity* entity )
     {
 #if DEBUG
-		// In debug builds you'll be warned if the type doesn't match what's been created.
+        // In debug builds you'll be warned if the type doesn't match what's been created.
         auto concrete = dynamic_cast<TConcrete*>( entity );
 
         assert( concrete );
@@ -232,7 +232,7 @@ struct EntityDictionaryLocator final
 {
     static EntityDictionary<TBaseEntity>* Get()
     {
-		// Force construction to occur on first use.
+        // Force construction to occur on first use.
         static EntityDictionary<TBaseEntity> dictionary;
         return &dictionary;
     }
@@ -248,8 +248,8 @@ namespace detail
 template <typename TEntity, typename... Dictionaries>
 void RegisterEntityDescriptorToDictionaries( EntityDescriptor<TEntity>* descriptor, Dictionaries... dictionaries )
 {
-	// Attempt to add descriptor to each dictionary.
-	// This uses fold expressions coupled with operator, to chain the calls.
+    // Attempt to add descriptor to each dictionary.
+    // This uses fold expressions coupled with operator, to chain the calls.
     ( dictionaries->Add( descriptor ), ... );
 }
 }
@@ -269,9 +269,9 @@ void RegisterEntityDescriptor( EntityDescriptor<TEntity>* descriptor )
     }
 #endif
 
-	// This is where each dictionary is initially constructed and built to add all entity classes.
-	// Ideally some form of reflection would be used to build these dictionaries after the initial dictionary has been created,
-	// but since we don't have reflection available and existing libraries require loads of refactoring this will have to do for now.
+    // This is where each dictionary is initially constructed and built to add all entity classes.
+    // Ideally some form of reflection would be used to build these dictionaries after the initial dictionary has been created,
+    // but since we don't have reflection available and existing libraries require loads of refactoring this will have to do for now.
     detail::RegisterEntityDescriptorToDictionaries( descriptor,
         EntityDictionaryLocator<CBaseEntity>::Get(),
         EntityDictionaryLocator<CBaseItem>::Get(),

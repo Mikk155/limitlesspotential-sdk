@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -28,8 +28,8 @@ BEGIN_DATAMAP( CTalkMonster )
     DEFINE_FIELD( m_nSpeak, FIELD_INTEGER ),
 
     DEFINE_FIELD( m_voicePitch, FIELD_INTEGER ),
-	// Recalc'ed in Precache()
-	//	DEFINE_FIELD( CTalkMonster, m_szGrp, FIELD_??? ),
+    // Recalc'ed in Precache()
+    //    DEFINE_FIELD( CTalkMonster, m_szGrp, FIELD_??? ),
     DEFINE_FIELD( m_useTime, FIELD_TIME ),
     DEFINE_FIELD( m_iszUse, FIELD_STRING ),
     DEFINE_FIELD( m_iszUnUse, FIELD_STRING ),
@@ -248,8 +248,8 @@ Schedule_t slTlkIdleWatchClient[] =
                 bits_COND_PROVOKED,
 
             bits_SOUND_COMBAT | // sound flags - change these, and you'll break the talking code.
-								// bits_SOUND_PLAYER		|
-								// bits_SOUND_WORLD		|
+                                // bits_SOUND_PLAYER        |
+                                // bits_SOUND_WORLD        |
 
                 bits_SOUND_DANGER |
                 bits_SOUND_MEAT | // scents
@@ -269,8 +269,8 @@ Schedule_t slTlkIdleWatchClient[] =
                 bits_COND_PROVOKED,
 
             bits_SOUND_COMBAT | // sound flags - change these, and you'll break the talking code.
-								// bits_SOUND_PLAYER		|
-								// bits_SOUND_WORLD		|
+                                // bits_SOUND_PLAYER        |
+                                // bits_SOUND_WORLD        |
 
                 bits_SOUND_DANGER |
                 bits_SOUND_MEAT | // scents
@@ -317,7 +317,7 @@ void CTalkMonster::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// get voice pitch
+    // get voice pitch
     m_voicePitch = 100;
 }
 
@@ -326,26 +326,26 @@ void CTalkMonster::StartTask( const Task_t* pTask )
     switch ( pTask->iTask )
     {
     case TASK_TLK_SPEAK:
-		// ask question or make statement
+        // ask question or make statement
         FIdleSpeak();
         TaskComplete();
         break;
 
     case TASK_TLK_RESPOND:
-		// respond to question
+        // respond to question
         IdleRespond();
         TaskComplete();
         break;
 
     case TASK_TLK_HELLO:
-		// greet player
+        // greet player
         FIdleHello();
         TaskComplete();
         break;
 
 
     case TASK_TLK_STARE:
-		// let the player know I know he's staring at me.
+        // let the player know I know he's staring at me.
         FIdleStare();
         TaskComplete();
         break;
@@ -353,7 +353,7 @@ void CTalkMonster::StartTask( const Task_t* pTask )
     case TASK_FACE_PLAYER:
     case TASK_TLK_LOOK_AT_CLIENT:
     case TASK_TLK_CLIENT_STARE:
-		// track head to the client for a while.
+        // track head to the client for a while.
         m_flWaitFinished = gpGlobals->time + pTask->flData;
         break;
 
@@ -384,13 +384,13 @@ void CTalkMonster::StartTask( const Task_t* pTask )
         break;
 
     case TASK_TLK_HEADRESET:
-		// reset head position after looking at something
+        // reset head position after looking at something
         m_hTalkTarget = nullptr;
         TaskComplete();
         break;
 
     case TASK_TLK_STOPSHOOTING:
-		// tell player to stop shooting
+        // tell player to stop shooting
         PlaySentence( m_szGrp[TLK_NOSHOOT], RANDOM_FLOAT( 2.8, 3.2 ), VOL_NORM, ATTN_NORM );
         TaskComplete();
         break;
@@ -419,13 +419,13 @@ void CTalkMonster::StartTask( const Task_t* pTask )
         }
         else if( FindCover( pev->origin, pev->view_ofs, 0, CoverRadius() ) )
         {
-			// then try for plain ole cover
+            // then try for plain ole cover
             m_flMoveWaitFinished = gpGlobals->time + 2;
             TaskComplete();
         }
         else
         {
-			// nowhere to go?
+            // nowhere to go?
             TaskFail();
         }
     }
@@ -448,10 +448,10 @@ void CTalkMonster::RunTask( const Task_t* pTask )
     case TASK_TLK_CLIENT_STARE:
     case TASK_TLK_LOOK_AT_CLIENT:
     {
-		// Get edict for one player
+        // Get edict for one player
         CBaseEntity* pPlayer = UTIL_FindNearestPlayer( EyePosition() );
 
-		// track head to the client for a while.
+        // track head to the client for a while.
         if( pPlayer &&
             m_MonsterState == MONSTERSTATE_IDLE &&
             !IsMoving() &&
@@ -461,24 +461,24 @@ void CTalkMonster::RunTask( const Task_t* pTask )
         }
         else
         {
-			// started moving or talking
+            // started moving or talking
             TaskFail();
             return;
         }
 
         if( pTask->iTask == TASK_TLK_CLIENT_STARE )
         {
-			// fail out if the player looks away or moves away.
+            // fail out if the player looks away or moves away.
             if( ( pPlayer->pev->origin - pev->origin ).Length2D() > TLK_STARE_DIST )
             {
-				// player moved away.
+                // player moved away.
                 TaskFail();
             }
 
             UTIL_MakeVectors( pPlayer->pev->angles );
             if( UTIL_DotPoints( pPlayer->pev->origin, pev->origin, gpGlobals->v_forward ) < m_flFieldOfView )
             {
-				// player looked away
+                // player looked away
                 TaskFail();
             }
         }
@@ -492,7 +492,7 @@ void CTalkMonster::RunTask( const Task_t* pTask )
 
     case TASK_FACE_PLAYER:
     {
-		// Get edict for one player
+        // Get edict for one player
         CBaseEntity* pPlayer = UTIL_FindNearestPlayer( EyePosition() );
 
         if( pPlayer )
@@ -515,7 +515,7 @@ void CTalkMonster::RunTask( const Task_t* pTask )
     case TASK_TLK_EYECONTACT:
         if( !IsMoving() && IsTalking() && m_hTalkTarget != nullptr )
         {
-			// AILogger->debug( "waiting {}", m_flStopTalkTime - gpGlobals->time);
+            // AILogger->debug( "waiting {}", m_flStopTalkTime - gpGlobals->time);
             IdleHeadTurn( m_hTalkTarget->pev->origin );
         }
         else
@@ -530,7 +530,7 @@ void CTalkMonster::RunTask( const Task_t* pTask )
 
         distance = ( m_vecLastPosition - pev->origin ).Length2D();
 
-		// Walk path until far enough away
+        // Walk path until far enough away
         if( distance > pTask->flData || MovementIsComplete() )
         {
             TaskComplete();
@@ -541,13 +541,13 @@ void CTalkMonster::RunTask( const Task_t* pTask )
     case TASK_WAIT_FOR_MOVEMENT:
         if( IsTalking() && m_hTalkTarget != nullptr )
         {
-			// AILogger->debug("walking, talking");
+            // AILogger->debug("walking, talking");
             IdleHeadTurn( m_hTalkTarget->pev->origin );
         }
         else
         {
             IdleHeadTurn( pev->origin );
-			// override so that during walk, a scientist may talk and greet player
+            // override so that during walk, a scientist may talk and greet player
             FIdleHello();
             if( RANDOM_LONG( 0, m_nSpeak * 20 ) == 0 )
             {
@@ -575,7 +575,7 @@ void CTalkMonster::RunTask( const Task_t* pTask )
 
 void CTalkMonster::Killed( CBaseEntity* attacker, int iGib )
 {
-	// If a client killed me (unless I was already Barnacle'd), make everyone else mad/afraid of him
+    // If a client killed me (unless I was already Barnacle'd), make everyone else mad/afraid of him
     if( ( attacker->pev->flags & FL_CLIENT ) != 0 && m_MonsterState != MONSTERSTATE_PRONE )
     {
         AlertFriends();
@@ -583,19 +583,19 @@ void CTalkMonster::Killed( CBaseEntity* attacker, int iGib )
     }
 
     m_hTargetEnt = nullptr;
-	// Don't finish that sentence
+    // Don't finish that sentence
     StopTalking();
     CBaseMonster::Killed( attacker, iGib );
 }
 
 void CTalkMonster::AlertFriends()
 {
-	// for each friend in this bsp...
+    // for each friend in this bsp...
     EnumFriends( []( CBaseEntity* pFriend )
         {
             if( CBaseMonster* pMonster = pFriend->MyMonsterPointer(); pMonster->IsAlive() )
             {
-				// don't provoke a friend that's playing a death animation. They're a goner
+                // don't provoke a friend that's playing a death animation. They're a goner
                 pMonster->m_afMemory |= bits_MEMORY_PROVOKED;
             } },
         true );
@@ -603,7 +603,7 @@ void CTalkMonster::AlertFriends()
 
 void CTalkMonster::ShutUpFriends()
 {
-	// for each friend in this bsp...
+    // for each friend in this bsp...
     EnumFriends( []( CBaseEntity* pFriend )
         {
             if( CBaseMonster* pMonster = pFriend->MyMonsterPointer(); pMonster->IsAlive() )
@@ -615,7 +615,7 @@ void CTalkMonster::ShutUpFriends()
 
 float CTalkMonster::TargetDistance()
 {
-	// If we lose the player, or he dies, return a really large distance
+    // If we lose the player, or he dies, return a really large distance
     if( m_hTargetEnt == nullptr || !m_hTargetEnt->IsAlive() )
         return 1e6;
 
@@ -633,7 +633,7 @@ void CTalkMonster::HandleAnimEvent( MonsterEvent_t* pEvent )
     case SCRIPT_EVENT_SENTENCE: // Play a named sentence group
         ShutUpFriends();
         PlaySentence( pEvent->options, RANDOM_FLOAT( 2.8, 3.4 ), VOL_NORM, ATTN_IDLE );
-		// AILogger->debug("script event speak");
+        // AILogger->debug("script event speak");
         break;
 
     default:
@@ -644,8 +644,8 @@ void CTalkMonster::HandleAnimEvent( MonsterEvent_t* pEvent )
 
 void CTalkMonster::TalkInit()
 {
-	// every new talking monster must reset this global, otherwise
-	// when a level is loaded, nobody will talk (time is reset to 0)
+    // every new talking monster must reset this global, otherwise
+    // when a level is loaded, nobody will talk (time is reset to 0)
 
     CTalkMonster::g_talkWaitTime = 0;
 }
@@ -658,23 +658,23 @@ CBaseEntity* CTalkMonster::FindNearestFriend( bool fPlayer )
 
     const Vector vecStart{pev->origin.x, pev->origin.y, pev->absmax.z};
 
-	// for each type of friend...
+    // for each type of friend...
     auto friendHandler = [&, this]( CBaseEntity* pFriend )
     {
         if( pFriend == this || !pFriend->IsAlive() )
-			// don't talk to self or dead people
+            // don't talk to self or dead people
             return;
 
         CBaseMonster* pMonster = pFriend->MyMonsterPointer();
 
-		// If not a monster for some reason, or in a script, or prone
+        // If not a monster for some reason, or in a script, or prone
         if( !pMonster || ( pMonster->pev->flags & FL_MONSTER ) == 0 || pMonster->m_MonsterState == MONSTERSTATE_SCRIPT || pMonster->m_MonsterState == MONSTERSTATE_PRONE )
             return;
 
         Vector vecCheck = pFriend->pev->origin;
         vecCheck.z = pFriend->pev->absmax.z;
 
-		// if closer than previous friend, and in range, see if he's visible
+        // if closer than previous friend, and in range, see if he's visible
 
         if( range > ( vecStart - vecCheck ).Length() )
         {
@@ -682,7 +682,7 @@ CBaseEntity* CTalkMonster::FindNearestFriend( bool fPlayer )
 
             if( tr.flFraction == 1.0 )
             {
-				// visible and in range, this is the new nearest scientist
+                // visible and in range, this is the new nearest scientist
                 if( ( vecStart - vecCheck ).Length() < TALKRANGE_MIN )
                 {
                     pNearest = pFriend;
@@ -714,22 +714,22 @@ int CTalkMonster::GetVoicePitch()
 
 void CTalkMonster::Touch( CBaseEntity* pOther )
 {
-	// Did the player touch me?
+    // Did the player touch me?
     if( pOther->IsPlayer() )
     {
-		// Ignore if pissed at player
+        // Ignore if pissed at player
         if( IRelationship( pOther ) != Relationship::Ally )
             return;
 
-		// Stay put during speech
+        // Stay put during speech
         if( IsTalking() )
             return;
 
-		// Heuristic for determining if the player is pushing me away
+        // Heuristic for determining if the player is pushing me away
         float speed = fabs( pOther->pev->velocity.x ) + fabs( pOther->pev->velocity.y );
         if( speed > 50 )
         {
-			// From https://github.com/FreeSlave/halflife-updated/wiki/Fix-potential-incorrect-facing-in-scripted-sequence
+            // From https://github.com/FreeSlave/halflife-updated/wiki/Fix-potential-incorrect-facing-in-scripted-sequence
             if( m_pSchedule != NULL && ( m_pSchedule->iInterruptMask & bits_COND_CLIENT_PUSH ) != 0 )
             {
                 SetConditions( bits_COND_CLIENT_PUSH );
@@ -741,25 +741,25 @@ void CTalkMonster::Touch( CBaseEntity* pOther )
 
 void CTalkMonster::IdleRespond()
 {
-	// play response
+    // play response
     PlaySentence( m_szGrp[TLK_ANSWER], RANDOM_FLOAT( 2.8, 3.2 ), VOL_NORM, ATTN_IDLE );
 }
 
 bool CTalkMonster::FOkToSpeak()
 {
-	// if in the grip of a barnacle, don't speak
+    // if in the grip of a barnacle, don't speak
     if( m_MonsterState == MONSTERSTATE_PRONE || m_IdealMonsterState == MONSTERSTATE_PRONE )
     {
         return false;
     }
 
-	// if not alive, certainly don't speak
+    // if not alive, certainly don't speak
     if( pev->deadflag != DEAD_NO )
     {
         return false;
     }
 
-	// if someone else is talking, don't speak
+    // if someone else is talking, don't speak
     if( gpGlobals->time <= CTalkMonster::g_talkWaitTime )
         return false;
 
@@ -769,11 +769,11 @@ bool CTalkMonster::FOkToSpeak()
     if( m_MonsterState == MONSTERSTATE_PRONE )
         return false;
 
-	// if player is not in pvs, don't speak
+    // if player is not in pvs, don't speak
     if( !IsAlive() || !UTIL_FindClientInPVS( this ) )
         return false;
 
-	// don't talk if you're in combat
+    // don't talk if you're in combat
     if( m_hEnemy != nullptr && FVisible( m_hEnemy ) )
         return false;
 
@@ -803,10 +803,10 @@ bool CTalkMonster::FIdleHello()
     if( !FOkToSpeak() )
         return false;
 
-	// if this is first time scientist has seen player, greet him
+    // if this is first time scientist has seen player, greet him
     if( !FBitSet( m_bitsSaid, bit_saidHelloPlayer ) )
     {
-		// get a player
+        // get a player
         CBaseEntity* pPlayer = FindNearestFriend( true );
 
         if( pPlayer )
@@ -831,7 +831,7 @@ bool CTalkMonster::FIdleHello()
 
 void CTalkMonster::IdleHeadTurn( Vector& vecFriend )
 {
-	// turn head in desired direction only if ent has a turnable head
+    // turn head in desired direction only if ent has a turnable head
     if( ( m_afCapability & bits_CAP_TURN_HEAD ) != 0 )
     {
         float yaw = VecToYaw( vecFriend - pev->origin ) - pev->angles.y;
@@ -841,14 +841,14 @@ void CTalkMonster::IdleHeadTurn( Vector& vecFriend )
         if( yaw < -180 )
             yaw += 360;
 
-		// turn towards vector
+        // turn towards vector
         SetBoneController( 0, yaw );
     }
 }
 
 bool CTalkMonster::FIdleSpeak()
 {
-	// try to start a conversation, or make statement
+    // try to start a conversation, or make statement
     int pitch;
     const char* szIdleGroup;
     const char* szQuestionGroup;
@@ -857,25 +857,25 @@ bool CTalkMonster::FIdleSpeak()
     if( !FOkToSpeak() )
         return false;
 
-	// set idle groups based on pre/post disaster
+    // set idle groups based on pre/post disaster
     if( FBitSet( pev->spawnflags, SF_MONSTER_PREDISASTER ) )
     {
         szIdleGroup = m_szGrp[TLK_PIDLE];
         szQuestionGroup = m_szGrp[TLK_PQUESTION];
-		// set global min delay for next conversation
+        // set global min delay for next conversation
         duration = RANDOM_FLOAT( 4.8, 5.2 );
     }
     else
     {
         szIdleGroup = m_szGrp[TLK_IDLE];
         szQuestionGroup = m_szGrp[TLK_QUESTION];
-		// set global min delay for next conversation
+        // set global min delay for next conversation
         duration = RANDOM_FLOAT( 2.8, 3.2 );
     }
 
     pitch = GetVoicePitch();
 
-	// player using this entity is alive and wounded?
+    // player using this entity is alive and wounded?
     CBaseEntity* pTarget = m_hTargetEnt;
 
     if( pTarget != nullptr )
@@ -888,7 +888,7 @@ bool CTalkMonster::FIdleSpeak()
                 if( !FBitSet( m_bitsSaid, bit_saidDamageHeavy ) &&
                     ( m_hTargetEnt->pev->health <= m_hTargetEnt->pev->max_health / 8 ) )
                 {
-					// EmitSoundDyn(CHAN_VOICE, m_szGrp[TLK_PLHURT3], 1.0, ATTN_IDLE, 0, pitch);
+                    // EmitSoundDyn(CHAN_VOICE, m_szGrp[TLK_PLHURT3], 1.0, ATTN_IDLE, 0, pitch);
                     PlaySentence( m_szGrp[TLK_PLHURT3], duration, VOL_NORM, ATTN_IDLE );
                     SetBits( m_bitsSaid, bit_saidDamageHeavy );
                     return true;
@@ -896,7 +896,7 @@ bool CTalkMonster::FIdleSpeak()
                 else if( !FBitSet( m_bitsSaid, bit_saidDamageMedium ) &&
                          ( m_hTargetEnt->pev->health <= m_hTargetEnt->pev->max_health / 4 ) )
                 {
-					// EmitSoundDyn(CHAN_VOICE, m_szGrp[TLK_PLHURT2], 1.0, ATTN_IDLE, 0, pitch);
+                    // EmitSoundDyn(CHAN_VOICE, m_szGrp[TLK_PLHURT2], 1.0, ATTN_IDLE, 0, pitch);
                     PlaySentence( m_szGrp[TLK_PLHURT2], duration, VOL_NORM, ATTN_IDLE );
                     SetBits( m_bitsSaid, bit_saidDamageMedium );
                     return true;
@@ -904,7 +904,7 @@ bool CTalkMonster::FIdleSpeak()
                 else if( !FBitSet( m_bitsSaid, bit_saidDamageLight ) &&
                          ( m_hTargetEnt->pev->health <= m_hTargetEnt->pev->max_health / 2 ) )
                 {
-					// EmitSoundDyn(CHAN_VOICE, m_szGrp[TLK_PLHURT1], 1.0, ATTN_IDLE, 0, pitch);
+                    // EmitSoundDyn(CHAN_VOICE, m_szGrp[TLK_PLHURT1], 1.0, ATTN_IDLE, 0, pitch);
                     PlaySentence( m_szGrp[TLK_PLHURT1], duration, VOL_NORM, ATTN_IDLE );
                     SetBits( m_bitsSaid, bit_saidDamageLight );
                     return true;
@@ -912,21 +912,21 @@ bool CTalkMonster::FIdleSpeak()
             }
             else
             {
-				//!!!KELLY - here's a cool spot to have the talkmonster talk about the dead player if we want.
-				// "Oh dear, Gordon Freeman is dead!" -Scientist
-				// "Damn, I can't do this without you." -Barney
+                //!!!KELLY - here's a cool spot to have the talkmonster talk about the dead player if we want.
+                // "Oh dear, Gordon Freeman is dead!" -Scientist
+                // "Damn, I can't do this without you." -Barney
             }
         }
     }
 
-	// if there is a friend nearby to speak to, play sentence, set friend's response time, return
+    // if there is a friend nearby to speak to, play sentence, set friend's response time, return
     if( CBaseEntity* pFriend = FindNearestFriend( false );
         pFriend && pFriend->MyTalkMonsterPointer() && !( pFriend->IsMoving() ) && ( RANDOM_LONG( 0, 99 ) < 75 ) )
     {
         PlaySentence( szQuestionGroup, duration, VOL_NORM, ATTN_IDLE );
-		// sentences::g_Sentences.PlayRndSz(this, szQuestionGroup, 1.0, ATTN_IDLE, 0, pitch);
+        // sentences::g_Sentences.PlayRndSz(this, szQuestionGroup, 1.0, ATTN_IDLE, 0, pitch);
 
-		// force friend to answer
+        // force friend to answer
         CTalkMonster* pTalkMonster = ( CTalkMonster* )pFriend;
         m_hTalkTarget = pFriend;
         pTalkMonster->SetAnswerQuestion( this ); // UNDONE: This is EVIL!!!
@@ -936,10 +936,10 @@ bool CTalkMonster::FIdleSpeak()
         return true;
     }
 
-	// otherwise, play an idle statement, try to face client when making a statement.
+    // otherwise, play an idle statement, try to face client when making a statement.
     if( RANDOM_LONG( 0, 1 ) )
     {
-		// sentences::g_Sentences.PlayRndSz(this, szIdleGroup, 1.0, ATTN_IDLE, 0, pitch);
+        // sentences::g_Sentences.PlayRndSz(this, szIdleGroup, 1.0, ATTN_IDLE, 0, pitch);
         CBaseEntity* pFriend = FindNearestFriend( true );
 
         if( pFriend )
@@ -951,7 +951,7 @@ bool CTalkMonster::FIdleSpeak()
         }
     }
 
-	// didn't speak
+    // didn't speak
     Talk( 0 );
     CTalkMonster::g_talkWaitTime = 0;
     return false;
@@ -979,7 +979,7 @@ void CTalkMonster::PlaySentenceCore( const char* pszSentence, float duration, fl
     else
         sentences::g_Sentences.PlayRndSz( this, pszSentence, volume, attenuation, 0, GetVoicePitch() );
 
-	// If you say anything, don't greet the player - you may have already spoken to them
+    // If you say anything, don't greet the player - you may have already spoken to them
     SetBits( m_bitsSaid, bit_saidHelloPlayer );
 }
 
@@ -987,7 +987,7 @@ void CTalkMonster::Talk( float flDuration )
 {
     if( flDuration <= 0 )
     {
-		// no duration :(
+        // no duration :(
         m_flStopTalkTime = gpGlobals->time + 3;
     }
     else
@@ -1007,14 +1007,14 @@ bool CTalkMonster::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, fl
 {
     if( IsAlive() )
     {
-		// if player damaged this entity, have other friends talk about it
+        // if player damaged this entity, have other friends talk about it
         if( attacker && m_MonsterState != MONSTERSTATE_PRONE && FBitSet( attacker->pev->flags, FL_CLIENT ) )
         {
             CBaseEntity* pFriend = FindNearestFriend( false );
 
             if( pFriend && pFriend->IsAlive() && pFriend->pev->deadflag == DEAD_NO )
             {
-				// only if not dead or dying!
+                // only if not dead or dying!
                 if( CTalkMonster* pTalkMonster = pFriend->MyTalkMonsterPointer(); pTalkMonster )
                 {
                     pTalkMonster->ChangeSchedule( slIdleStopShooting );
@@ -1039,44 +1039,44 @@ const Schedule_t* CTalkMonster::GetScheduleOfType( int Type )
         return slMoveAwayFail;
 
     case SCHED_TARGET_FACE:
-		// speak during 'use'
+        // speak during 'use'
         if( RANDOM_LONG( 0, 99 ) < 2 )
-			// AILogger->debug("target chase speak");
+            // AILogger->debug("target chase speak");
             return slIdleSpeakWait;
         else
             return slIdleStand;
 
     case SCHED_IDLE_STAND:
     {
-		// if never seen player, try to greet him
+        // if never seen player, try to greet him
         if( !FBitSet( m_bitsSaid, bit_saidHelloPlayer ) )
         {
             return slIdleHello;
         }
 
-		// sustained light wounds?
+        // sustained light wounds?
         if( !FBitSet( m_bitsSaid, bit_saidWoundLight ) && ( pev->health <= ( pev->max_health * 0.75 ) ) )
         {
-			// sentences::g_Sentences.PlayRndSz(this, m_szGrp[TLK_WOUND], 1.0, ATTN_IDLE, 0, GetVoicePitch());
-			// CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
+            // sentences::g_Sentences.PlayRndSz(this, m_szGrp[TLK_WOUND], 1.0, ATTN_IDLE, 0, GetVoicePitch());
+            // CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
             PlaySentence( m_szGrp[TLK_WOUND], RANDOM_FLOAT( 2.8, 3.2 ), VOL_NORM, ATTN_IDLE );
             SetBits( m_bitsSaid, bit_saidWoundLight );
             return slIdleStand;
         }
-		// sustained heavy wounds?
+        // sustained heavy wounds?
         else if( !FBitSet( m_bitsSaid, bit_saidWoundHeavy ) && ( pev->health <= ( pev->max_health * 0.5 ) ) )
         {
-			// sentences::g_Sentences.PlayRndSz(this, m_szGrp[TLK_MORTAL], 1.0, ATTN_IDLE, 0, GetVoicePitch());
-			// CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
+            // sentences::g_Sentences.PlayRndSz(this, m_szGrp[TLK_MORTAL], 1.0, ATTN_IDLE, 0, GetVoicePitch());
+            // CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
             PlaySentence( m_szGrp[TLK_MORTAL], RANDOM_FLOAT( 2.8, 3.2 ), VOL_NORM, ATTN_IDLE );
             SetBits( m_bitsSaid, bit_saidWoundHeavy );
             return slIdleStand;
         }
 
-		// talk about world
+        // talk about world
         if( FOkToSpeak() && RANDOM_LONG( 0, m_nSpeak * 2 ) == 0 )
         {
-			// AILogger->debug("standing idle speak");
+            // AILogger->debug("standing idle speak");
             return slIdleSpeak;
         }
 
@@ -1086,12 +1086,12 @@ const Schedule_t* CTalkMonster::GetScheduleOfType( int Type )
 
             if( pPlayer )
             {
-				// watch the client.
+                // watch the client.
                 UTIL_MakeVectors( pPlayer->pev->angles );
                 if( ( pPlayer->pev->origin - pev->origin ).Length2D() < TLK_STARE_DIST &&
                     UTIL_DotPoints( pPlayer->pev->origin, pev->origin, gpGlobals->v_forward ) >= m_flFieldOfView )
                 {
-					// go into the special STARE schedule if the player is close, and looking at me too.
+                    // go into the special STARE schedule if the player is close, and looking at me too.
                     return &slTlkIdleWatchClient[1];
                 }
 
@@ -1101,17 +1101,17 @@ const Schedule_t* CTalkMonster::GetScheduleOfType( int Type )
         else
         {
             if( IsTalking() )
-				// look at who we're talking to
+                // look at who we're talking to
                 return slTlkIdleEyecontact;
             else
-				// regular standing idle
+                // regular standing idle
                 return slIdleStand;
         }
 
 
-		// NOTE - caller must first CTalkMonster::GetScheduleOfType,
-		// then check result and decide what to return ie: if sci gets back
-		// slIdleStand, return slIdleSciStand
+        // NOTE - caller must first CTalkMonster::GetScheduleOfType,
+        // then check result and decide what to return ie: if sci gets back
+        // slIdleStand, return slIdleSciStand
     }
     break;
     }
@@ -1131,7 +1131,7 @@ bool CTalkMonster::IsTalking()
 
 void CTalkMonster::PrescheduleThink()
 {
-	// If there's a player around, watch him.
+    // If there's a player around, watch him.
     if( !HasConditions( bits_COND_SEE_CLIENT ) )
     {
         SetConditions( bits_COND_CLIENT_UNSEEN );
@@ -1152,13 +1152,13 @@ void CTalkMonster::TrySmellTalk()
     if( !FOkToSpeak() )
         return;
 
-	// clear smell bits periodically
+    // clear smell bits periodically
     if( gpGlobals->time > m_flLastSaidSmelled )
     {
-		//		AILogger->debug("Clear smell bits");
+        //        AILogger->debug("Clear smell bits");
         ClearBits( m_bitsSaid, bit_saidSmelled );
     }
-	// smelled something?
+    // smelled something?
     if( !FBitSet( m_bitsSaid, bit_saidSmelled ) && HasConditions( bits_COND_SMELL ) )
     {
         PlaySentence( m_szGrp[TLK_SMELL], RANDOM_FLOAT( 2.8, 3.2 ), VOL_NORM, ATTN_IDLE );
@@ -1226,5 +1226,5 @@ bool CTalkMonster::KeyValue( KeyValueData* pkvd )
 
 void CTalkMonster::Precache()
 {
-	// Nothing.
+    // Nothing.
 }

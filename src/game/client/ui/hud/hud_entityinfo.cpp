@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -30,7 +30,7 @@ bool CHudEntityInfo::Init()
 
 bool CHudEntityInfo::VidInit()
 {
-	// New map, reset info.
+    // New map, reset info.
     m_EntityInfo = {};
     m_DrawEndTime = 0;
     return true;
@@ -52,20 +52,20 @@ bool CHudEntityInfo::Draw( float flTime )
 
     const int lineHeight = 20;
 
-	// Start drawing under the crosshair.
+    // Start drawing under the crosshair.
     const int labelXPos = static_cast<int>( ScreenWidth * 0.45 );
     const int startingYPos = static_cast<int>( ScreenHeight * 0.55 );
 
     const auto healthString = UTIL_ToString( m_EntityInfo.Health );
 
-	// label, text pairs
+    // label, text pairs
     const std::tuple<const char*, const char*> infos[] =
         {
-			// Include spaces in the label text.
+            // Include spaces in the label text.
             {"Classname: ", m_EntityInfo.Classname.c_str()},
             {"Health: ", healthString.c_str()}};
 
-	// Draw labels first, calculate maximum width needed.
+    // Draw labels first, calculate maximum width needed.
     int maximumWidth = -1;
 
     int yPos = startingYPos;
@@ -76,7 +76,7 @@ bool CHudEntityInfo::Draw( float flTime )
         yPos += lineHeight;
     }
 
-	// Draw text starting at maximum width.
+    // Draw text starting at maximum width.
     yPos = startingYPos;
 
     for( const auto& info : infos )
@@ -94,7 +94,7 @@ void CHudEntityInfo::MsgFunc_EntityInfo( const char* pszName, BufferReader& read
 
     m_EntityInfo.Classname = reader.ReadString();
 
-	// Nothing to draw, skip rest of message.
+    // Nothing to draw, skip rest of message.
     if( m_EntityInfo.Classname.empty() )
     {
         return;

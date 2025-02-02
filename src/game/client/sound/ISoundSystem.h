@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -25,7 +25,7 @@ struct IGameSoundSystem;
 struct IMusicSystem;
 
 /**
- *	@brief Provides access to high-level sound system interfaces.
+ *    @brief Provides access to high-level sound system interfaces.
  */
 struct ISoundSystem
 {
@@ -51,7 +51,7 @@ inline std::unique_ptr<ISoundSystem> g_SoundSystem;
 inline cvar_t* g_cl_snd_room_off = nullptr;
 
 /**
- *	@brief Creates an instance of the sound system using an available implementation.
+ *    @brief Creates an instance of the sound system using an available implementation.
  */
 void CreateSoundSystem();
 }

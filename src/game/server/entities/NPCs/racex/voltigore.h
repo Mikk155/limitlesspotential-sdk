@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -44,7 +44,7 @@ enum
 constexpr int VOLTIGORE_BEAM_COUNT = 8;
 
 /**
- *	@brief Tank like alien
+ *    @brief Tank like alien
  */
 class COFVoltigore : public CSquadMonster
 {
@@ -70,15 +70,15 @@ public:
     const Schedule_t* GetSchedule() override;
     const Schedule_t* GetScheduleOfType( int Type ) override;
 
-	/**
-	 *	@brief this is overridden for alien grunts because they can use their smart weapons against unseen enemies.
-	 *	Base class doesn't attack anyone it can't see.
-	 */
+    /**
+     *    @brief this is overridden for alien grunts because they can use their smart weapons against unseen enemies.
+     *    Base class doesn't attack anyone it can't see.
+     */
     bool FCanCheckAttacks() override;
 
-	/**
-	 *	@brief alien grunts zap the crap out of any enemy that gets too close.
-	 */
+    /**
+     *    @brief alien grunts zap the crap out of any enemy that gets too close.
+     */
     bool CheckMeleeAttack1( float flDot, float flDist ) override;
 
     bool CheckRangeAttack1( float flDot, float flDist ) override;
@@ -89,19 +89,19 @@ public:
     virtual void AttackSound() {}
     void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
 
-	/**
-	 *	@brief overridden because Human Grunts are Voltigore's nemesis.
-	 */
+    /**
+     *    @brief overridden because Human Grunts are Voltigore's nemesis.
+     */
     Relationship IRelationship( CBaseEntity* pTarget ) override;
 
-	/**
-	 *	@brief won't speak again for 10-20 seconds.
-	 */
+    /**
+     *    @brief won't speak again for 10-20 seconds.
+     */
     void StopTalking();
 
-	/**
-	 *	@brief Should this voltigore be talking?
-	 */
+    /**
+     *    @brief Should this voltigore be talking?
+     */
     bool ShouldSpeak();
 
     void ClearBeams();
@@ -155,7 +155,7 @@ public:
 
     float m_flNextPainTime;
 
-	// three hacky fields for speech stuff. These don't really need to be saved.
+    // three hacky fields for speech stuff. These don't really need to be saved.
     float m_flNextSpeakTime;
     float m_flNextWordTime;
     int m_iLastWord;
@@ -172,8 +172,8 @@ protected:
 
     virtual float GetMeleeDistance() const { return VOLTIGORE_MELEE_DIST; }
 
-	/**
-	 *	@brief Spawns the Voltigore
-	 */
+    /**
+     *    @brief Spawns the Voltigore
+     */
     void SpawnCore( const Vector& mins, const Vector& maxs );
 };

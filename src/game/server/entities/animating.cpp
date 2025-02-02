@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -107,10 +107,10 @@ void CBaseAnimating::DispatchAnimEvents( float flInterval )
         return;
     }
 
-	// FIXME: I have to do this or some events get missed, and this is probably causing the problem below
+    // FIXME: I have to do this or some events get missed, and this is probably causing the problem below
     flInterval = 0.1;
 
-	// FIX: this still sometimes hits events twice
+    // FIX: this still sometimes hits events twice
     float flStart = pev->frame + ( m_flLastEventCheck - pev->animtime ) * m_flFrameRate * pev->framerate;
     float flEnd = pev->frame + flInterval * m_flFrameRate * pev->framerate;
     m_flLastEventCheck = pev->animtime + flInterval;
@@ -216,11 +216,11 @@ void CBaseAnimating::SetSequenceBox()
 {
     Vector mins, maxs;
 
-	// Get sequence bbox
+    // Get sequence bbox
     if( ExtractBbox( pev->sequence, mins, maxs ) )
     {
-		// expand box for rotation
-		// find min / max for rotations
+        // expand box for rotation
+        // find min / max for rotations
         float yaw = pev->angles.y * ( PI / 180.0 );
 
         Vector xvector, yvector;
@@ -247,7 +247,7 @@ void CBaseAnimating::SetSequenceBox()
                 {
                     base.z = bounds[k].z;
 
-					// transform the point
+                    // transform the point
                     transformed.x = xvector.x * base.x + yvector.x * base.y;
                     transformed.y = xvector.y * base.x + yvector.y * base.y;
                     transformed.z = base.z;

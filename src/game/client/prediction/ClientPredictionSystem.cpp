@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -90,11 +90,11 @@ void ClientPredictionSystem::InitializeEntities()
     {
         m_Initialized = true;
 
-		// Set up weapons, player needed to run weapons code client-side.
-		// Event code depends on this stuff, so always initialize it.
-		// This has to be done here because event precache requires the server's event list to be present on the client.
+        // Set up weapons, player needed to run weapons code client-side.
+        // Event code depends on this stuff, so always initialize it.
+        // This has to be done here because event precache requires the server's event list to be present on the client.
 
-		// Allocate a slot for the local player
+        // Allocate a slot for the local player
         m_Player = CreatePlayer();
 
         for( const auto& className : g_WeaponDictionary->GetClassNames() )
@@ -103,7 +103,7 @@ void ClientPredictionSystem::InitializeEntities()
         }
     }
 
-	// Since we get weapon info every level change we need to re-link the info objects.
+    // Since we get weapon info every level change we need to re-link the info objects.
     if( !m_WeaponInfoLinked )
     {
         m_WeaponInfoLinked = true;
@@ -130,26 +130,26 @@ CBasePlayerWeapon* ClientPredictionSystem::GetLocalWeapon( int id )
 
 void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_t* to, usercmd_t* cmd, double time, unsigned int random_seed )
 {
-	// Get current clock
-	// Use actual time instead of prediction frame time because that time value breaks anything that uses absolute time values.
+    // Get current clock
+    // Use actual time instead of prediction frame time because that time value breaks anything that uses absolute time values.
     gpGlobals->time = gEngfuncs.GetClientTime(); // time;
 
-	// Lets weapons code use frametime to decrement timers and stuff.
+    // Lets weapons code use frametime to decrement timers and stuff.
     gpGlobals->frametime = cmd->msec / 1000.0f;
 
-	// Fill in data based on selected weapon
-	// FIXME, make this a method in each weapon?  where you pass in an entity_state_t *?
+    // Fill in data based on selected weapon
+    // FIXME, make this a method in each weapon?  where you pass in an entity_state_t *?
     auto pWeapon = GetLocalWeapon( from->client.m_iId );
 
     auto localPlayer = GetPlayer();
 
-	// Store pointer to our destination entity_state_t so we can get our origin, etc. from it
-	//  for setting up events on the client
+    // Store pointer to our destination entity_state_t so we can get our origin, etc. from it
+    //  for setting up events on the client
     g_finalstate = to;
 
-	// If we are running events/etc. go ahead and see if we
-	//  managed to die between last frame and this one
-	// If so, run the appropriate player killed or spawn function
+    // If we are running events/etc. go ahead and see if we
+    //  managed to die between last frame and this one
+    // If so, run the appropriate player killed or spawn function
     if( g_runfuncs )
     {
         static int lasthealth = 0;
@@ -166,7 +166,7 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
         lasthealth = to->client.health;
     }
 
-	// We are not predicting the current weapon, just bow out here.
+    // We are not predicting the current weapon, just bow out here.
     if( !pWeapon )
         return;
 
@@ -182,7 +182,7 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
 
         pCurrent->m_fInReload = 0 != pfrom->m_fInReload;
         pCurrent->m_fInSpecialReload = pfrom->m_fInSpecialReload;
-		//		pCurrent->m_flPumpTime			= pfrom->m_flPumpTime;
+        //        pCurrent->m_flPumpTime            = pfrom->m_flPumpTime;
         pCurrent->m_iClip = pfrom->m_iClip;
         pCurrent->m_flNextPrimaryAttack = pfrom->m_flNextPrimaryAttack;
         pCurrent->m_flNextSecondaryAttack = pfrom->m_flNextSecondaryAttack;
@@ -197,22 +197,22 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
         pCurrent->SetWeaponData( *pfrom );
     }
 
-	// For random weapon events, use this seed to seed random # generator
+    // For random weapon events, use this seed to seed random # generator
     localPlayer->random_seed = random_seed;
 
-	// Get old buttons from previous state.
+    // Get old buttons from previous state.
     localPlayer->m_afButtonLast = from->playerstate.oldbuttons;
 
-	// Which buttsons chave changed
+    // Which buttsons chave changed
     const int buttonsChanged = ( localPlayer->m_afButtonLast ^ cmd->buttons ); // These buttons have changed this frame
 
-	// Debounced button codes for pressed/released
-	// The changed ones still down are "pressed"
+    // Debounced button codes for pressed/released
+    // The changed ones still down are "pressed"
     localPlayer->m_afButtonPressed = buttonsChanged & cmd->buttons;
-	// The ones not down are "released"
+    // The ones not down are "released"
     localPlayer->m_afButtonReleased = buttonsChanged & ( ~cmd->buttons );
 
-	// Set player variables that weapons code might check/alter
+    // Set player variables that weapons code might check/alter
     localPlayer->pev->button = cmd->buttons;
 
     localPlayer->pev->velocity = from->client.velocity;
@@ -229,7 +229,7 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
     localPlayer->m_flAmmoStartCharge = from->client.fuser3;
     localPlayer->m_iItems = static_cast<CTFItem::CTFItem>( from->client.iuser4 );
 
-	// Stores all our ammo info, so the client side weapons can use them.
+    // Stores all our ammo info, so the client side weapons can use them.
     localPlayer->SetAmmoCount( "9mm", (int)from->client.vuser1[0] );
     localPlayer->SetAmmoCount( "357", (int)from->client.vuser1[1] );
     localPlayer->SetAmmoCount( "ARgrenades", (int)from->client.vuser1[2] );
@@ -242,14 +242,14 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
     localPlayer->SetAmmoCount( "762", (int)from->client.vuser2.z );
 
 
-	// Point to current weapon object
+    // Point to current weapon object
     if( WEAPON_NONE != from->client.m_iId )
     {
         localPlayer->m_pActiveWeapon = GetLocalWeapon( from->client.m_iId );
     }
 
-	// Don't go firing anything if we have died or are spectating
-	// Or if we don't have a weapon model deployed
+    // Don't go firing anything if we have died or are spectating
+    // Or if we don't have a weapon model deployed
     if( ( localPlayer->pev->deadflag != ( DEAD_DISCARDBODY + 1 ) ) &&
         !CL_IsDead() && !FStringNull( localPlayer->pev->viewmodel ) && 0 == g_iUser1 )
     {
@@ -259,38 +259,38 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
         }
     }
 
-	// Assume that we are not going to switch weapons
+    // Assume that we are not going to switch weapons
     to->client.m_iId = from->client.m_iId;
 
-	// Now see if we issued a changeweapon command ( and we're not dead )
+    // Now see if we issued a changeweapon command ( and we're not dead )
     if( 0 != cmd->weaponselect && ( localPlayer->pev->deadflag != ( DEAD_DISCARDBODY + 1 ) ) )
     {
-		// Switched to a different weapon?
+        // Switched to a different weapon?
         if( from->weapondata[cmd->weaponselect].m_iId == cmd->weaponselect )
         {
             CBasePlayerWeapon* pNew = GetLocalWeapon( cmd->weaponselect );
             if( pNew && ( pNew != pWeapon ) )
             {
-				// Put away old weapon
+                // Put away old weapon
                 if( localPlayer->m_pActiveWeapon )
                     localPlayer->m_pActiveWeapon->Holster();
 
                 localPlayer->m_pLastWeapon = localPlayer->m_pActiveWeapon;
                 localPlayer->m_pActiveWeapon = pNew;
 
-				// Deploy new weapon
+                // Deploy new weapon
                 if( localPlayer->m_pActiveWeapon )
                 {
                     localPlayer->m_pActiveWeapon->Deploy();
                 }
 
-				// Update weapon id so we can predict things correctly.
+                // Update weapon id so we can predict things correctly.
                 to->client.m_iId = cmd->weaponselect;
             }
         }
     }
 
-	// Copy in results of prediction code
+    // Copy in results of prediction code
     to->client.viewmodel = static_cast<int>( localPlayer->pev->viewmodel.m_Value );
     to->client.fov = localPlayer->m_iFOV;
     to->client.weaponanim = localPlayer->pev->weaponanim;
@@ -300,7 +300,7 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
     to->client.maxspeed = localPlayer->pev->maxspeed;
     to->client.iuser4 = localPlayer->m_iItems;
 
-	// HL Weapons
+    // HL Weapons
     to->client.vuser1[0] = localPlayer->GetAmmoCount( "9mm" );
     to->client.vuser1[1] = localPlayer->GetAmmoCount( "357" );
     to->client.vuser1[2] = localPlayer->GetAmmoCount( "ARgrenades" );
@@ -313,17 +313,17 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
     to->client.vuser2.y = localPlayer->GetAmmoCount( "spores" );
     to->client.vuser2.z = localPlayer->GetAmmoCount( "762" );
 
-	// Make sure that weapon animation matches what the game .dll is telling us
-	//  over the wire ( fixes some animation glitches )
+    // Make sure that weapon animation matches what the game .dll is telling us
+    //  over the wire ( fixes some animation glitches )
     if( g_runfuncs && ( HUD_GetWeaponAnim() != to->client.weaponanim ) )
     {
-		// Make sure the 357 has the right body
+        // Make sure the 357 has the right body
         if( pWeapon->ClassnameIs( "weapon_357" ) )
         {
             pWeapon->pev->body = g_Skill.GetValue( "revolver_laser_sight" ) != 0 ? 1 : 0;
         }
 
-		// Force a fixed anim down to viewmodel
+        // Force a fixed anim down to viewmodel
         HUD_SendWeaponAnim( to->client.weaponanim, pWeapon->pev->body, true );
     }
 
@@ -341,14 +341,14 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
 
         pto->m_fInReload = static_cast<int>( pCurrent->m_fInReload );
         pto->m_fInSpecialReload = pCurrent->m_fInSpecialReload;
-		//		pto->m_flPumpTime				= pCurrent->m_flPumpTime;
+        //        pto->m_flPumpTime                = pCurrent->m_flPumpTime;
         pto->m_iClip = pCurrent->m_iClip;
         pto->m_flNextPrimaryAttack = pCurrent->m_flNextPrimaryAttack;
         pto->m_flNextSecondaryAttack = pCurrent->m_flNextSecondaryAttack;
         pto->m_flTimeWeaponIdle = pCurrent->m_flTimeWeaponIdle;
         pto->fuser1 = pCurrent->pev->fuser1;
 
-		// Decrement weapon counters, server does this at same time ( during post think, after doing everything else )
+        // Decrement weapon counters, server does this at same time ( during post think, after doing everything else )
         pto->m_flNextReload -= cmd->msec / 1000.0;
         pto->m_fNextAimBonus -= cmd->msec / 1000.0;
         pto->m_flNextPrimaryAttack -= cmd->msec / 1000.0;
@@ -365,12 +365,12 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
 
         pCurrent->GetWeaponData( *pto );
 
-		/*		if ( pto->m_flPumpTime != -9999 )
-				{
-					pto->m_flPumpTime -= cmd->msec / 1000.0;
-					if ( pto->m_flPumpTime < -0.001 )
-						pto->m_flPumpTime = -0.001;
-				}*/
+        /*        if ( pto->m_flPumpTime != -9999 )
+                {
+                    pto->m_flPumpTime -= cmd->msec / 1000.0;
+                    if ( pto->m_flPumpTime < -0.001 )
+                        pto->m_flPumpTime = -0.001;
+                }*/
 
         if( pto->m_fNextAimBonus < -1.0 )
         {
@@ -403,7 +403,7 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
         }
     }
 
-	// m_flNextAttack is now part of the weapons, but is part of the player instead
+    // m_flNextAttack is now part of the weapons, but is part of the player instead
     to->client.m_flNextAttack -= cmd->msec / 1000.0;
     if( to->client.m_flNextAttack < -0.001 )
     {
@@ -422,10 +422,10 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
         to->client.fuser3 = -0.001;
     }
 
-	// Store off the last position from the predicted state.
+    // Store off the last position from the predicted state.
     HUD_SetLastOrg();
 
-	// Wipe it so we can't use it after this frame
+    // Wipe it so we can't use it after this frame
     g_finalstate = nullptr;
 }
 
@@ -452,7 +452,7 @@ void ClientPredictionSystem::PrepWeapon( std::string_view className, CBasePlayer
 
     entity->GetWeaponInfo( info );
 
-	// If this assert hits then you have more than one weapon with the same id.
+    // If this assert hits then you have more than one weapon with the same id.
     assert( !m_Weapons[info.Id] );
 
     m_Weapons[info.Id] = entity;

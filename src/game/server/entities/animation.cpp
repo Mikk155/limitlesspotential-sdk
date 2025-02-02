@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -162,12 +162,12 @@ void SequencePrecache( CBaseEntity* self, void* pmodel, const char* pSequenceNam
 
         for( int i = 0; i < pseqdesc->numevents; i++ )
         {
-			// Don't send client-side events to the server AI
+            // Don't send client-side events to the server AI
             if( pevent[i].event >= EVENT_CLIENT )
                 continue;
 
-			// UNDONE: Add a callback to check to see if a sound is precached yet and don't allocate a copy
-			// of it's name if it is.
+            // UNDONE: Add a callback to check to see if a sound is precached yet and don't allocate a copy
+            // of it's name if it is.
             if( IsSoundEvent( pevent[i].event ) )
             {
                 if( 0 == strlen( pevent[i].options ) )
@@ -258,7 +258,7 @@ int GetAnimationEvent( void* pmodel, entvars_t* pev, MonsterEvent_t* pMonsterEve
 
     for( ; index < pseqdesc->numevents; index++ )
     {
-		// Don't send client-side events to the server AI
+        // Don't send client-side events to the server AI
         if( pevent[index].event >= EVENT_CLIENT )
             continue;
 
@@ -284,7 +284,7 @@ float SetController( void* pmodel, entvars_t* pev, int iController, float flValu
 
     mstudiobonecontroller_t* pbonecontroller = ( mstudiobonecontroller_t* )( ( byte* )pstudiohdr + pstudiohdr->bonecontrollerindex );
 
-	// find first controller that matches the index
+    // find first controller that matches the index
     for( i = 0; i < pstudiohdr->numbonecontrollers; i++, pbonecontroller++ )
     {
         if( pbonecontroller->index == iController )
@@ -293,15 +293,15 @@ float SetController( void* pmodel, entvars_t* pev, int iController, float flValu
     if( i >= pstudiohdr->numbonecontrollers )
         return flValue;
 
-	// wrap 0..360 if it's a rotational controller
+    // wrap 0..360 if it's a rotational controller
 
     if( ( pbonecontroller->type & ( STUDIO_XR | STUDIO_YR | STUDIO_ZR ) ) != 0 )
     {
-		// ugly hack, invert value if end < start
+        // ugly hack, invert value if end < start
         if( pbonecontroller->end < pbonecontroller->start )
             flValue = -flValue;
 
-		// does the controller not wrap?
+        // does the controller not wrap?
         if( pbonecontroller->start + 359.0 >= pbonecontroller->end )
         {
             if( flValue > ( ( pbonecontroller->start + pbonecontroller->end ) / 2.0 ) + 180 )
@@ -346,11 +346,11 @@ float SetBlending( void* pmodel, entvars_t* pev, int iBlender, float flValue )
 
     if( ( pseqdesc->blendtype[iBlender] & ( STUDIO_XR | STUDIO_YR | STUDIO_ZR ) ) != 0 )
     {
-		// ugly hack, invert value if end < start
+        // ugly hack, invert value if end < start
         if( pseqdesc->blendend[iBlender] < pseqdesc->blendstart[iBlender] )
             flValue = -flValue;
 
-		// does the controller not wrap?
+        // does the controller not wrap?
         if( pseqdesc->blendstart[iBlender] + 359.0 >= pseqdesc->blendend[iBlender] )
         {
             if( flValue > ( ( pseqdesc->blendstart[iBlender] + pseqdesc->blendend[iBlender] ) / 2.0 ) + 180 )
@@ -383,7 +383,7 @@ int FindTransition( void* pmodel, int iEndingAnim, int iGoalAnim, int* piDir )
     mstudioseqdesc_t* pseqdesc;
     pseqdesc = ( mstudioseqdesc_t* )( ( byte* )pstudiohdr + pstudiohdr->seqindex );
 
-	// bail if we're going to or from a node 0
+    // bail if we're going to or from a node 0
     if( pseqdesc[iEndingAnim].entrynode == 0 || pseqdesc[iGoalAnim].entrynode == 0 )
     {
         return iGoalAnim;
@@ -391,7 +391,7 @@ int FindTransition( void* pmodel, int iEndingAnim, int iGoalAnim, int* piDir )
 
     int iEndNode;
 
-	// CBaseEntity::Logger->error("from {} to {}", pEndNode->iEndNode, pGoalNode->iStartNode);
+    // CBaseEntity::Logger->error("from {} to {}", pEndNode->iEndNode, pGoalNode->iStartNode);
 
     if( *piDir > 0 )
     {
@@ -417,7 +417,7 @@ int FindTransition( void* pmodel, int iEndingAnim, int iGoalAnim, int* piDir )
 
     int i;
 
-	// look for someone going
+    // look for someone going
     for( i = 0; i < pstudiohdr->numseq; i++ )
     {
         if( pseqdesc[i].entrynode == iEndNode && pseqdesc[i].exitnode == iInternNode )

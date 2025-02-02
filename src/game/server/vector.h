@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -22,11 +22,11 @@
 class Vector2D
 {
 public:
-	constexpr Vector2D() = default;
-	constexpr Vector2D(const Vector2D&) = default;
-	constexpr Vector2D& operator=(const Vector2D&) = default;
+    constexpr Vector2D() = default;
+    constexpr Vector2D(const Vector2D&) = default;
+    constexpr Vector2D& operator=(const Vector2D&) = default;
 
-	constexpr Vector2D(float X, float Y)
+    constexpr Vector2D(float X, float Y)
         : x( X ),
           y( Y )
     {
@@ -72,19 +72,19 @@ public:
 class Vector // same data-layout as engine's vec3_t,
 {             //        which is a vec_t[3]
 public:
-	// Construction/destruction
-	constexpr Vector() = default;
-	constexpr Vector(const Vector&) = default;
-	constexpr Vector& operator=(const Vector&) = default;
+    // Construction/destruction
+    constexpr Vector() = default;
+    constexpr Vector(const Vector&) = default;
+    constexpr Vector& operator=(const Vector&) = default;
 
-	constexpr Vector(float X, float Y, float Z)
+    constexpr Vector(float X, float Y, float Z)
         : x( X ),
           y( Y ),
           z( Z )
     {
     }
 
-	// Operators
+    // Operators
     [[nodiscard]] constexpr Vector operator-() const { return Vector( -x, -y, -z ); }
     [[nodiscard]] constexpr bool operator==( const Vector& v ) const { return x == v.x && y == v.y && z == v.z; }
     [[nodiscard]] constexpr bool operator!=( const Vector& v ) const { return !( *this == v ); }
@@ -93,8 +93,8 @@ public:
     [[nodiscard]] constexpr Vector operator*( float fl ) const { return Vector( x * fl, y * fl, z * fl ); }
     [[nodiscard]] constexpr Vector operator/( float fl ) const { return Vector( x / fl, y / fl, z / fl ); }
 
-	// Methods
-	constexpr void CopyToArray(float* rgfl) const { rgfl[0] = x, rgfl[1] = y, rgfl[2] = z; }
+    // Methods
+    constexpr void CopyToArray(float* rgfl) const { rgfl[0] = x, rgfl[1] = y, rgfl[2] = z; }
 
     [[nodiscard]] constexpr float LengthSquared() const { return x * x + y * y + z * z; }
     [[nodiscard]] float Length() const { return static_cast<float>( sqrt( LengthSquared() ) ); }
@@ -117,7 +117,7 @@ public:
 
     [[nodiscard]] float Length2D() const { return static_cast<float>( sqrt( x * x + y * y ) ); }
 
-	// Members
+    // Members
     vec_t x = 0, y = 0, z = 0;
 };
 

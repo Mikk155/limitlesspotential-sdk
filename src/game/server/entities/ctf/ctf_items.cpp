@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -37,7 +37,7 @@ bool CItemCTF::KeyValue( KeyValueData* pkvd )
         return true;
     }
 
-	// TODO: should invoke base class KeyValue here
+    // TODO: should invoke base class KeyValue here
     return false;
 }
 
@@ -90,7 +90,7 @@ void CItemCTF::Spawn()
     m_iLastTouched = 0;
     m_flPickupTime = 0;
 
-	// TODO: already done above
+    // TODO: already done above
     SetTouch( &CItemCTF::ItemTouch );
 
     m_flNextTouchTime = 0;
@@ -136,7 +136,7 @@ void CItemCTF::DropThink()
 
             while( ( spawn = ( CItemSpawnCTF* )UTIL_FindEntityByClassname( spawn, "info_ctfspawn_powerup" ) ) != nullptr )
             {
-				// Assume occupied until proven otherwise.
+                // Assume occupied until proven otherwise.
                 bool nOccupied = true;
 
                 if( iScoreDiff == 0 ||
@@ -241,7 +241,7 @@ void CItemCTF::ItemTouch( CBaseEntity* pOther )
 {
     auto player = ToBasePlayer( pOther );
 
-	// TODO: really shouldn't be using the index here tbh
+    // TODO: really shouldn't be using the index here tbh
     if( !player || !player->IsAlive() || ( m_iLastTouched == player->entindex() && m_flNextTouchTime > gpGlobals->time ) )
     {
         return;
@@ -740,7 +740,7 @@ bool CItemRegenerationCTF::MyTouch( CBasePlayer* pPlayer )
 
                 EmitSound( CHAN_VOICE, "items/ammopickup1.wav", VOL_NORM, ATTN_NORM );
 
-				// TODO: check player's max health.
+                // TODO: check player's max health.
                 if( pPlayer->pev->health < 100.0 )
                 {
                     pPlayer->GiveHealth( GetSkillFloat( "healthkit"sv ), DMG_GENERIC );

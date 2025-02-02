@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -37,13 +37,13 @@ Change weapon model animation
 */
 void HUD_SendWeaponAnim( int iAnim, int body, bool force )
 {
-	// Don't actually change it.
+    // Don't actually change it.
     if( !g_runfuncs && !force )
         return;
 
     g_currentanim = iAnim;
 
-	// Tell animation system new info
+    // Tell animation system new info
     gEngfuncs.pfnWeaponAnim( iAnim, body );
 }
 
@@ -85,7 +85,7 @@ void HUD_PlaybackEvent( int flags, const edict_t* pInvoker, unsigned short event
     if( !g_runfuncs || !g_finalstate )
         return;
 
-	// Weapon prediction events are assumed to occur at the player's origin
+    // Weapon prediction events are assumed to occur at the player's origin
     org = g_finalstate->playerstate.origin;
     ang = v_client_aimangles;
     gEngfuncs.pfnPlaybackEvent( flags, pInvoker, eventindex, delay, org, ang, fparam1, fparam2, iparam1, iparam2, bparam1, bparam2 );

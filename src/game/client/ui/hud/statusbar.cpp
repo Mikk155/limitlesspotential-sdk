@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -42,7 +42,7 @@ bool CHudStatusBar::Init()
 
 bool CHudStatusBar::VidInit()
 {
-	// Load sprites here
+    // Load sprites here
 
     return true;
 }
@@ -58,19 +58,19 @@ void CHudStatusBar::Reset()
 
     m_iStatusValues[0] = 1; // 0 is the special index, which always returns true
 
-	// reset our colors for the status bar lines (yellow is default)
+    // reset our colors for the status bar lines (yellow is default)
     for( i = 0; i < MAX_STATUSBAR_LINES; i++ )
         m_pflNameColors[i] = &g_ColorYellow;
 }
 
 void CHudStatusBar::ParseStatusString( int line_num )
 {
-	// localise string first
+    // localise string first
     char szBuffer[MAX_STATUSTEXT_LENGTH];
     memset( szBuffer, 0, sizeof szBuffer );
     gHUD.m_TextMessage.LocaliseTextString( m_szStatusText[line_num], szBuffer, MAX_STATUSTEXT_LENGTH );
 
-	// parse m_szStatusText & m_iStatusValues into m_szStatusBar
+    // parse m_szStatusText & m_iStatusValues into m_szStatusBar
     memset( m_szStatusBar[line_num], 0, MAX_STATUSTEXT_LENGTH );
     char* src = szBuffer;
     char* dst = m_szStatusBar[line_num];
@@ -86,7 +86,7 @@ void CHudStatusBar::ParseStatusString( int line_num )
             break;
 
         int index = atoi( src );
-		// should we draw this line?
+        // should we draw this line?
         if( ( index >= 0 && index < MAX_STATUSBAR_VALUES ) && ( m_iStatusValues[index] != 0 ) )
         { // parse this line and append result to the status bar
             while( *src >= '0' && *src <= '9' )
@@ -95,7 +95,7 @@ void CHudStatusBar::ParseStatusString( int line_num )
             if( *src == '\n' || *src == 0 )
                 continue; // no more left in this text line
 
-			// copy the text, char by char, until we hit a % or a \n
+            // copy the text, char by char, until we hit a % or a \n
             while( *src != '\n' && *src != 0 )
             {
                 if( *src != '%' )
@@ -105,10 +105,10 @@ void CHudStatusBar::ParseStatusString( int line_num )
                 }
                 else
                 {
-					// get the descriptor
+                    // get the descriptor
                     char valtype = *( ++src ); // move over %
 
-					// if it's a %, draw a % sign
+                    // if it's a %, draw a % sign
                     if( valtype == '%' )
                     {
                         *dst = valtype;
@@ -116,7 +116,7 @@ void CHudStatusBar::ParseStatusString( int line_num )
                         continue;
                     }
 
-					// move over descriptor, then get and move over the index
+                    // move over descriptor, then get and move over the index
                     index = atoi( ++src );
                     while( *src >= '0' && *src <= '9' )
                         src++;
@@ -125,7 +125,7 @@ void CHudStatusBar::ParseStatusString( int line_num )
                     {
                         int indexval = m_iStatusValues[index];
 
-						// get the string to substitute in place of the %XX
+                        // get the string to substitute in place of the %XX
                         char szRepString[MAX_PLAYER_NAME_LENGTH];
                         switch ( valtype )
                         {
@@ -157,7 +157,7 @@ void CHudStatusBar::ParseStatusString( int line_num )
         }
         else
         {
-			// skip to next line of text
+            // skip to next line of text
             while( *src != 0 && *src != '\n' )
                 src++;
         }
@@ -178,7 +178,7 @@ bool CHudStatusBar::Draw( float fTime )
 
     int Y_START = ScreenHeight - 52;
 
-	// Draw the status bar lines
+    // Draw the status bar lines
     for( int i = 0; i < MAX_STATUSBAR_LINES; i++ )
     {
         int TextHeight, TextWidth;
@@ -187,7 +187,7 @@ bool CHudStatusBar::Draw( float fTime )
         int x = 8;
         int y = Y_START - ( 4 + TextHeight * i ); // draw along bottom of screen
 
-		// let user set status ID bar centering
+        // let user set status ID bar centering
         if( ( i == STATUSBAR_ID_LINE ) && 0 != CVAR_GET_FLOAT( "hud_centerid" ) )
         {
             x = std::max( 0, std::max( 2, ( ScreenWidth - TextWidth ) ) / 2 );
@@ -205,8 +205,8 @@ bool CHudStatusBar::Draw( float fTime )
 
 // Message handler for StatusText message
 // accepts two values:
-//		byte: line number of status bar text
-//		string: status bar text
+//        byte: line number of status bar text
+//        string: status bar text
 // this string describes how the status bar should be drawn
 // a semi-regular expression:
 // ( slotnum ([a..z] [%pX] [%iX])*)*
@@ -231,8 +231,8 @@ void CHudStatusBar::MsgFunc_StatusText( const char* pszName, BufferReader& reade
 
 // Message handler for StatusText message
 // accepts two values:
-//		byte: index into the status value array
-//		short: value to store
+//        byte: index into the status value array
+//        short: value to store
 void CHudStatusBar::MsgFunc_StatusValue( const char* pszName, BufferReader& reader )
 {
     int index = reader.ReadByte();

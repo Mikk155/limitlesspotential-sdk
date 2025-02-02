@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -59,7 +59,7 @@ void COFGonomeGuts::Spawn()
     pev->rendermode = kRenderTransAlpha;
     pev->renderamt = 255;
 
-	// TODO: probably shouldn't be assinging to x every time
+    // TODO: probably shouldn't be assinging to x every time
     if( g_Language == LANGUAGE_GERMAN )
     {
         SetModel( "sprites/bigspit.spr" );
@@ -85,7 +85,7 @@ void COFGonomeGuts::Spawn()
 
 void COFGonomeGuts::Touch( CBaseEntity* pOther )
 {
-	// splat sound
+    // splat sound
     const auto iPitch = RANDOM_FLOAT( 90, 110 );
 
     EmitSoundDyn( CHAN_VOICE, "bullchicken/bc_acid1.wav", 1, ATTN_NORM, 0, iPitch );
@@ -103,7 +103,7 @@ void COFGonomeGuts::Touch( CBaseEntity* pOther )
     if( 0 == pOther->pev->takedamage )
     {
         TraceResult tr;
-		// make a splat on the wall
+        // make a splat on the wall
         UTIL_TraceLine( pev->origin, pev->origin + pev->velocity * 10, dont_ignore_monsters, edict(), &tr );
         UTIL_BloodDecalTrace( &tr, BLOOD_COLOR_RED );
         UTIL_BloodDrips( tr.vecEndPos, tr.vecPlaneNormal, BLOOD_COLOR_RED, 35 );
@@ -216,7 +216,7 @@ public:
 
     float m_flNextThrowTime = 0;
 
-	// TODO: needs to be EHANDLE, save/restored or a save during a windup will cause problems
+    // TODO: needs to be EHANDLE, save/restored or a save during a windup will cause problems
     COFGonomeGuts* m_pGonomeGuts = nullptr;
     EntityHandle<CBasePlayer> m_PlayerLocked;
 
@@ -224,7 +224,7 @@ protected:
     float GetOneSlashDamage() override { return GetSkillFloat( "gonome_dmg_one_slash"sv ); }
     float GetBothSlashDamage() override { return 0; } // Not used, so just return 0
 
-	// Take 15% damage from bullets
+    // Take 15% damage from bullets
     virtual float GetBulletDamageFraction() const override { return 0.15f; }
 };
 
@@ -290,7 +290,7 @@ void COFGonome::IdleSound()
 {
     int pitch = 100 + RANDOM_LONG( -5, 5 );
 
-	// Play a random idle sound
+    // Play a random idle sound
     EmitSoundDyn( CHAN_VOICE, RANDOM_SOUND_ARRAY( pIdleSounds ), 1.0, ATTN_NORM, 0, pitch );
 }
 
@@ -308,7 +308,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case ZOMBIE_AE_ATTACK_GUTS_GRAB:
     {
-		// Only if we still have an enemy at this point
+        // Only if we still have an enemy at this point
         if( m_hEnemy )
         {
             Vector vecGutsPos, vecGutsAngles;
@@ -319,7 +319,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
                 m_pGonomeGuts = COFGonomeGuts::GonomeGutsCreate( vecGutsPos );
             }
 
-			// Attach to hand for throwing
+            // Attach to hand for throwing
             m_pGonomeGuts->pev->skin = entindex();
             m_pGonomeGuts->pev->body = 1;
             m_pGonomeGuts->pev->aiment = edict();
@@ -339,7 +339,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case ZOMBIE_AE_ATTACK_GUTS_THROW:
     {
-		// Note: this check wasn't in the original. If an enemy dies during gut throw windup, this can be null and crash
+        // Note: this check wasn't in the original. If an enemy dies during gut throw windup, this can be null and crash
         if( m_hEnemy )
         {
             Vector vecGutsPos, vecGutsAngles;
@@ -361,7 +361,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
 
             UTIL_BloodDrips( vecGutsPos, direction, BLOOD_COLOR_RED, 35 );
 
-			// Detach from owner
+            // Detach from owner
             m_pGonomeGuts->pev->skin = 0;
             m_pGonomeGuts->pev->body = 0;
             m_pGonomeGuts->pev->aiment = nullptr;
@@ -384,7 +384,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
     {
         if( m_hEnemy == nullptr || ( pev->origin - m_hEnemy->pev->origin ).Length() < 48 )
         {
-			// Unfreeze previous player if they were locked.
+            // Unfreeze previous player if they were locked.
             CBasePlayer* prevPlayer = m_PlayerLocked;
             m_PlayerLocked = nullptr;
 
@@ -402,8 +402,8 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
             }
         }
 
-		// do stuff for this event.
-		// AILogger->debug("Slash left!");
+        // do stuff for this event.
+        // AILogger->debug("Slash left!");
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "gonome_dmg_one_bite"sv ), DMG_SLASH );
         if( pHurt )
         {
@@ -430,8 +430,8 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         m_PlayerLocked = nullptr;
 
-		// do stuff for this event.
-		// AILogger->debug("Slash left!");
+        // do stuff for this event.
+        // AILogger->debug("Slash left!");
         CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "gonome_dmg_one_bite"sv ), DMG_SLASH );
         if( pHurt )
         {
@@ -464,7 +464,7 @@ void COFGonome::Spawn()
 
 void COFGonome::Precache()
 {
-	// Don't call CZombie::Spawn here!
+    // Don't call CZombie::Spawn here!
     PrecacheModel( STRING( pev->model ) );
     PrecacheModel( "sprites/bigspit.spr" );
 
@@ -684,7 +684,7 @@ void COFGonome::SetActivity( Activity NewActivity )
         break;
     }
 
-	// Set to the desired anim, or default anim if the desired is not present
+    // Set to the desired anim, or default anim if the desired is not present
     if( iSequence > ACTIVITY_NOT_AVAILABLE )
     {
         if( pev->sequence != iSequence || !m_fSequenceLoops )
@@ -698,7 +698,7 @@ void COFGonome::SetActivity( Activity NewActivity )
     }
     else
     {
-		// Not available try to get default anim
+        // Not available try to get default anim
         AILogger->debug( "{} has no sequence for act:{}", STRING( pev->classname ), NewActivity );
         pev->sequence = 0; // Set to the reset anim (if it's there)
     }
@@ -727,7 +727,7 @@ void CDeadGonome::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8;
     pev->model = MAKE_STRING( "models/gonome.mdl" );
 

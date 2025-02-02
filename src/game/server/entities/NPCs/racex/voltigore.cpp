@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -37,9 +37,9 @@ public:
 
     void SetAttachment( CBaseAnimating* pAttachEnt, int iAttachIdx );
 
-	/**
-	 *	@brief small beam from arm to nearby geometry
-	 */
+    /**
+     *    @brief small beam from arm to nearby geometry
+     */
     void ArmBeam( int side );
 
     void AttachThink();
@@ -191,7 +191,7 @@ void COFChargedBolt::ArmBeam( int side )
         }
     }
 
-	// Couldn't find anything close enough
+    // Couldn't find anything close enough
     if( flDist == 1.0 )
         return;
 
@@ -267,7 +267,7 @@ void COFChargedBolt::ChargedBoltTouch( CBaseEntity* pOther )
 
     auto pevOwner = GetOwner();
 
-	// Null out the owner to avoid issues with radius damage
+    // Null out the owner to avoid issues with radius damage
     pev->owner = nullptr;
 
     ClearMultiDamage();
@@ -322,8 +322,8 @@ int COFVoltigore::ISoundMask()
 
 void COFVoltigore::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	// Ignore shock damage since we have a shock based attack
-	// TODO: use a filter based on attacker to identify self harm
+    // Ignore shock damage since we have a shock based attack
+    // TODO: use a filter based on attacker to identify self harm
     if( ( bitsDamageType & DMG_SHOCK ) == 0 )
     {
         SpawnBlood( ptr->vecEndPos, BloodColor(), flDamage ); // a little surface blood.
@@ -341,7 +341,7 @@ bool COFVoltigore::ShouldSpeak()
 {
     if( m_flNextSpeakTime > gpGlobals->time )
     {
-		// my time to talk is still in the future.
+        // my time to talk is still in the future.
         return false;
     }
 
@@ -349,10 +349,10 @@ bool COFVoltigore::ShouldSpeak()
     {
         if( m_MonsterState != MONSTERSTATE_COMBAT )
         {
-			// if gagged, don't talk outside of combat.
-			// if not going to talk because of this, put the talk time
-			// into the future a bit, so we don't talk immediately after
-			// going into combat
+            // if gagged, don't talk outside of combat.
+            // if not going to talk because of this, put the talk time
+            // into the future a bit, so we don't talk immediately after
+            // going into combat
             m_flNextSpeakTime = gpGlobals->time + 3;
             return false;
         }
@@ -424,7 +424,7 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
 
             bolt->LaunchChargedBolt( direction, this, 1000, 10 );
 
-			// We no longer have to manage the bolt now
+            // We no longer have to manage the bolt now
             m_pChargedBolt = nullptr;
 
             ClearBeams();
@@ -441,10 +441,10 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
             pHurt->pev->punchangle.y = -25;
             pHurt->pev->punchangle.x = 8;
 
-			// OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
+            // OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
             if( pHurt->IsPlayer() )
             {
-				// this is a player. Knock him around.
+                // this is a player. Knock him around.
                 pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * 250;
             }
 
@@ -456,7 +456,7 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
         }
         else
         {
-			// Play a random attack miss sound
+            // Play a random attack miss sound
             EmitSoundDyn( CHAN_WEAPON, pAttackMissSounds[RANDOM_LONG( 0, std::size( pAttackMissSounds ) - 1 )], 1.0, ATTN_NORM, 0, 100 + RANDOM_LONG( -5, 5 ) );
         }
     }
@@ -471,10 +471,10 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
             pHurt->pev->punchangle.y = 25;
             pHurt->pev->punchangle.x = 8;
 
-			// OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
+            // OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
             if( pHurt->IsPlayer() )
             {
-				// this is a player. Knock him around.
+                // this is a player. Knock him around.
                 pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * -250;
             }
 
@@ -486,7 +486,7 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
         }
         else
         {
-			// Play a random attack miss sound
+            // Play a random attack miss sound
             EmitSoundDyn( CHAN_WEAPON, pAttackMissSounds[RANDOM_LONG( 0, std::size( pAttackMissSounds ) - 1 )], 1.0, ATTN_NORM, 0, 100 + RANDOM_LONG( -5, 5 ) );
         }
     }
@@ -612,8 +612,8 @@ Task_t tlVoltigoreStandoff[] =
 };
 
 /**
- *	@brief Used in combat when a monster is hiding in cover or the enemy has moved out of sight.
- *	Should we look around in this schedule?
+ *    @brief Used in combat when a monster is hiding in cover or the enemy has moved out of sight.
+ *    Should we look around in this schedule?
  */
 Schedule_t slVoltigoreStandoff[] =
     {
@@ -757,9 +757,9 @@ bool COFVoltigore::CheckMeleeAttack1( float flDot, float flDist )
 
 bool COFVoltigore::CheckRangeAttack1( float flDot, float flDist )
 {
-	//!!!LATER - we may want to load balance this.Several
-	// tracelines are done, so we may not want to do this every
-	// server frame. Definitely not while firing.
+    //!!!LATER - we may want to load balance this.Several
+    // tracelines are done, so we may not want to do this every
+    // server frame. Definitely not while firing.
     if( IsMoving() && flDist >= 512 )
     {
         return false;
@@ -770,11 +770,11 @@ bool COFVoltigore::CheckRangeAttack1( float flDot, float flDist )
         TraceResult tr;
         Vector vecArmPos, vecArmDir;
 
-		// verify that a shot fired from the gun will hit the enemy before the world.
-		// !!!LATER - we may wish to do something different for projectile weapons as opposed to instant-hit
+        // verify that a shot fired from the gun will hit the enemy before the world.
+        // !!!LATER - we may wish to do something different for projectile weapons as opposed to instant-hit
         UTIL_MakeVectors( pev->angles );
         GetAttachment( 0, vecArmPos, vecArmDir );
-		//		UTIL_TraceLine( vecArmPos, vecArmPos + gpGlobals->v_forward * 256, ignore_monsters, edict(), &tr);
+        //        UTIL_TraceLine( vecArmPos, vecArmPos + gpGlobals->v_forward * 256, ignore_monsters, edict(), &tr);
         UTIL_TraceLine( vecArmPos, m_hEnemy->BodyTarget( vecArmPos ), dont_ignore_monsters, edict(), &tr );
 
         if( tr.flFraction == 1.0 || tr.pHit == m_hEnemy->edict() )
@@ -880,7 +880,7 @@ void COFVoltigore::RunTask( const Task_t* pTask )
 
                 pev->framerate = 0;
 
-				// Flatten the bounding box so players can step on it
+                // Flatten the bounding box so players can step on it
                 if( BBoxFlat() )
                 {
                     const auto maxs = Vector( pev->maxs.x, pev->maxs.y, pev->mins.z + 1 );
@@ -920,7 +920,7 @@ const Schedule_t* COFVoltigore::GetSchedule()
         ASSERT( pSound != nullptr );
         if( pSound && ( pSound->m_iType & bits_SOUND_DANGER ) != 0 )
         {
-			// dangerous sound nearby!
+            // dangerous sound nearby!
             return GetScheduleOfType( SCHED_TAKE_COVER_FROM_BEST_SOUND );
         }
     }
@@ -929,10 +929,10 @@ const Schedule_t* COFVoltigore::GetSchedule()
     {
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
@@ -941,7 +941,7 @@ const Schedule_t* COFVoltigore::GetSchedule()
             return GetScheduleOfType( SCHED_WAKE_ANGRY );
         }
 
-		// zap player!
+        // zap player!
         if( HasConditions( bits_COND_CAN_MELEE_ATTACK1 ) )
         {
             AttackSound(); // this is a total hack. Should be parto f the schedule
@@ -953,7 +953,7 @@ const Schedule_t* COFVoltigore::GetSchedule()
             return GetScheduleOfType( SCHED_SMALL_FLINCH );
         }
 
-		// can attack
+        // can attack
         if( HasConditions( bits_COND_CAN_RANGE_ATTACK1 ) )
         {
             return GetScheduleOfType( SCHED_RANGE_ATTACK1 );
@@ -982,13 +982,13 @@ const Schedule_t* COFVoltigore::GetScheduleOfType( int Type )
     case SCHED_RANGE_ATTACK1:
         if( HasConditions( bits_COND_SEE_ENEMY ) )
         {
-			// normal attack
+            // normal attack
             return &slVoltigoreRangeAttack1[0];
         }
         else
         {
-			// attack an unseen enemy
-			// return &slVoltigoreHiddenRangeAttack[ 0 ];
+            // attack an unseen enemy
+            // return &slVoltigoreHiddenRangeAttack[ 0 ];
             return &slVoltigoreCombatFail[0];
         }
         break;
@@ -1009,14 +1009,14 @@ const Schedule_t* COFVoltigore::GetScheduleOfType( int Type )
         break;
 
     case SCHED_FAIL:
-		// no fail schedule specified, so pick a good generic one.
+        // no fail schedule specified, so pick a good generic one.
         {
             if( m_hEnemy != nullptr )
             {
-				// I have an enemy
-				// !!!LATER - what if this enemy is really far away and i'm chasing him?
-				// this schedule will make me stop, face his last known position for 2
-				// seconds, and then try to move again
+                // I have an enemy
+                // !!!LATER - what if this enemy is really far away and i'm chasing him?
+                // this schedule will make me stop, face his last known position for 2
+                // seconds, and then try to move again
                 return &slVoltigoreCombatFail[0];
             }
 
@@ -1079,7 +1079,7 @@ void COFVoltigore::DeathGibThink()
 
             float closest = 1;
 
-			// Do 3 ray traces and use the closest one to make a beam
+            // Do 3 ray traces and use the closest one to make a beam
             for( auto ray = 0; ray < 3; ++ray )
             {
                 TraceResult tr1;
@@ -1092,7 +1092,7 @@ void COFVoltigore::DeathGibThink()
                 }
             }
 
-			// No nearby objects found
+            // No nearby objects found
             if( closest == 1 )
             {
                 return;
@@ -1141,20 +1141,20 @@ void COFVoltigore::GibMonster()
     pev->rendercolor.z = 0;
     pev->framerate = 0;
 
-	// don't remove players!
+    // don't remove players!
     SetThink( &CBaseMonster::SUB_Remove );
     pev->nextthink = gpGlobals->time + 0.15;
 
-	/*
-	EmitSound(CHAN_WEAPON, "common/bodysplat.wav", 1, ATTN_NORM);
+    /*
+    EmitSound(CHAN_WEAPON, "common/bodysplat.wav", 1, ATTN_NORM);
 
-	// Note: the original didn't have the violence check
-	if (CVAR_GET_FLOAT("violence_agibs") != 0) // Should never get here, but someone might call it directly
-	{
-		// Gib spawning has been rewritten so the logic for limiting gib submodels is generalized
-		CGib::SpawnRandomGibs(this, 12, VoltigoreGibs); // Throw alien gibs
-	}
-	*/
+    // Note: the original didn't have the violence check
+    if (CVAR_GET_FLOAT("violence_agibs") != 0) // Should never get here, but someone might call it directly
+    {
+        // Gib spawning has been rewritten so the logic for limiting gib submodels is generalized
+        CGib::SpawnRandomGibs(this, 12, VoltigoreGibs); // Throw alien gibs
+    }
+    */
 
     CGib::SpawnClientGibs( this, GibType::Voltigore, 12, true, false );
 }

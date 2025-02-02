@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -19,7 +19,7 @@
 #define SF_INFOBM_WAIT 0x0002
 
 /**
- *	@brief AI Nodes for Big Momma
+ *    @brief AI Nodes for Big Momma
  */
 class CInfoBM : public CPointEntity
 {
@@ -30,13 +30,13 @@ public:
     void Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
-	// name in pev->targetname
-	// next in pev->target
-	// radius in pev->scale
-	// health in pev->health
-	// Reach target in pev->message
-	// Reach delay in pev->speed
-	// Reach sequence in pev->netname
+    // name in pev->targetname
+    // next in pev->target
+    // radius in pev->scale
+    // health in pev->health
+    // Reach target in pev->message
+    // Reach delay in pev->speed
+    // Reach sequence in pev->netname
 
     string_t m_preSequence;
 };
@@ -83,7 +83,7 @@ bool CInfoBM::KeyValue( KeyValueData* pkvd )
 }
 
 /**
- *	@brief Mortar shot entity
+ *    @brief Mortar shot entity
  */
 class CBMortar : public CBaseEntity
 {
@@ -107,24 +107,24 @@ BEGIN_DATAMAP( CBMortar )
     DEFINE_FUNCTION( Animate ),
 END_DATAMAP();
 
-#define BIG_AE_STEP1 1		// Footstep left
-#define BIG_AE_STEP2 2		// Footstep right
-#define BIG_AE_STEP3 3		// Footstep back left
-#define BIG_AE_STEP4 4		// Footstep back right
-#define BIG_AE_SACK 5		// Sack slosh
+#define BIG_AE_STEP1 1        // Footstep left
+#define BIG_AE_STEP2 2        // Footstep right
+#define BIG_AE_STEP3 3        // Footstep back left
+#define BIG_AE_STEP4 4        // Footstep back right
+#define BIG_AE_SACK 5        // Sack slosh
 #define BIG_AE_DEATHSOUND 6 // Death sound
 
-#define BIG_AE_MELEE_ATTACKBR 8	 // Leg attack
-#define BIG_AE_MELEE_ATTACKBL 9	 // Leg attack
-#define BIG_AE_MELEE_ATTACK1 10	 // Leg attack
+#define BIG_AE_MELEE_ATTACKBR 8     // Leg attack
+#define BIG_AE_MELEE_ATTACKBL 9     // Leg attack
+#define BIG_AE_MELEE_ATTACK1 10     // Leg attack
 #define BIG_AE_MORTAR_ATTACK1 11 // Launch a mortar
-#define BIG_AE_LAY_CRAB 12		 // Lay a headcrab
-#define BIG_AE_JUMP_FORWARD 13	 // Jump up and forward
-#define BIG_AE_SCREAM 14		 // alert sound
-#define BIG_AE_PAIN_SOUND 15	 // pain sound
-#define BIG_AE_ATTACK_SOUND 16	 // attack sound
-#define BIG_AE_BIRTH_SOUND 17	 // birth sound
-#define BIG_AE_EARLY_TARGET 50	 // Fire target early
+#define BIG_AE_LAY_CRAB 12         // Lay a headcrab
+#define BIG_AE_JUMP_FORWARD 13     // Jump up and forward
+#define BIG_AE_SCREAM 14         // alert sound
+#define BIG_AE_PAIN_SOUND 15     // pain sound
+#define BIG_AE_ATTACK_SOUND 16     // attack sound
+#define BIG_AE_BIRTH_SOUND 17     // birth sound
+#define BIG_AE_EARLY_TARGET 50     // Fire target early
 
 // User defined conditions
 #define bits_COND_NODE_SEQUENCE (bits_COND_SPECIAL1) // pev->netname contains the name of a sequence to play
@@ -227,7 +227,7 @@ public:
         return pev->angles.y;
     }
 
-	// Restart the crab count on each new level
+    // Restart the crab count on each new level
     void OverrideReset() override
     {
         m_crabCount = 0;
@@ -239,7 +239,7 @@ public:
     {
         if( m_crabTime < gpGlobals->time && m_crabCount < BIG_MAXCHILDREN )
         {
-			// Don't spawn crabs inside each other
+            // Don't spawn crabs inside each other
             Vector mins = pev->origin - Vector( 32, 32, 0 );
             Vector maxs = pev->origin + Vector( 32, 32, 0 );
 
@@ -517,7 +517,7 @@ void CBigMomma::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDi
 {
     if( ptr->iHitgroup != 1 )
     {
-		// didn't hit the sack?
+        // didn't hit the sack?
 
         if( pev->dmgtime != gpGlobals->time || ( RANDOM_LONG( 0, 10 ) < 1 ) )
         {
@@ -539,7 +539,7 @@ void CBigMomma::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDi
 
 bool CBigMomma::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Don't take any acid damage -- BigMomma's mortar is acid
+    // Don't take any acid damage -- BigMomma's mortar is acid
     if( ( bitsDamageType & DMG_ACID ) != 0 )
         flDamage = 0;
 
@@ -566,7 +566,7 @@ void CBigMomma::LayHeadcrab()
 
     pChild->pev->spawnflags |= SF_MONSTER_FALL_TO_GROUND;
 
-	// Is this the second crab in a pair?
+    // Is this the second crab in a pair?
     if( HasMemory( bits_MEMORY_CHILDPAIR ) )
     {
         m_crabTime = gpGlobals->time + RANDOM_FLOAT( 5, 10 );
@@ -592,7 +592,7 @@ void CBigMomma::DeathNotice( CBaseEntity* child )
         m_crabCount--;
     if( IsAlive() )
     {
-		// Make the "my baby's dead" noise!
+        // Make the "my baby's dead" noise!
         EMIT_SOUND_ARRAY_DYN( CHAN_WEAPON, pChildDieSounds );
     }
 }
@@ -643,7 +643,7 @@ void CBigMomma::Precache()
 
     UTIL_PrecacheOther( BIG_CHILDCLASS );
 
-	// TEMP: Squid
+    // TEMP: Squid
     PrecacheModel( "sprites/mommaspit.spr" );                   // spit projectile.
     gSpitSprite = PrecacheModel( "sprites/mommaspout.spr" ); // client side spittle.
     gSpitDebrisSprite = PrecacheModel( "sprites/mommablob.spr" );
@@ -934,7 +934,7 @@ void CBigMomma::StartTask( const Task_t* pTask )
         break;
 
     case TASK_MELEE_ATTACK1:
-		// Play an attack sound here
+        // Play an attack sound here
         EmitSound( CHAN_VOICE, RANDOM_SOUND_ARRAY( pAttackSounds ), 1.0, ATTN_NORM );
         CBaseMonster::StartTask( pTask );
         break;
@@ -958,8 +958,8 @@ void CBigMomma::RunTask( const Task_t* pTask )
         else
         {
             distance = ( m_vecMoveGoal - pev->origin ).Length2D();
-			// Set the appropriate activity based on an overlapping range
-			// overlap the range to prevent oscillation
+            // Set the appropriate activity based on an overlapping range
+            // overlap the range to prevent oscillation
             if( ( distance < GetNodeRange() ) || MovementIsComplete() )
             {
                 AILogger->debug( "BM: Reached node!" );
@@ -1003,7 +1003,7 @@ Vector VecCheckSplatToss( CBaseEntity* entity, const Vector& vecSpot1, Vector ve
     Vector vecGrenadeVel;
     float flGravity = g_psv_gravity->value;
 
-	// calculate the midpoint and apex of the 'triangle'
+    // calculate the midpoint and apex of the 'triangle'
     vecMidPoint = vecSpot1 + ( vecSpot2 - vecSpot1 ) * 0.5;
     UTIL_TraceLine( vecMidPoint, vecMidPoint + Vector( 0, 0, maxHeight ), ignore_monsters, entity->edict(), &tr );
     vecApex = tr.vecEndPos;
@@ -1011,25 +1011,25 @@ Vector VecCheckSplatToss( CBaseEntity* entity, const Vector& vecSpot1, Vector ve
     UTIL_TraceLine( vecSpot1, vecApex, dont_ignore_monsters, entity->edict(), &tr );
     if( tr.flFraction != 1.0 )
     {
-		// fail!
+        // fail!
         return g_vecZero;
     }
 
-	// Don't worry about actually hitting the target, this won't hurt us!
+    // Don't worry about actually hitting the target, this won't hurt us!
 
-	// How high should the grenade travel (subtract 15 so the grenade doesn't hit the ceiling)?
+    // How high should the grenade travel (subtract 15 so the grenade doesn't hit the ceiling)?
     float height = ( vecApex.z - vecSpot1.z ) - 15;
-	// How fast does the grenade need to travel to reach that height given gravity?
+    // How fast does the grenade need to travel to reach that height given gravity?
     float speed = sqrt( 2 * flGravity * height );
 
-	// How much time does it take to get there?
+    // How much time does it take to get there?
     float time = speed / flGravity;
     vecGrenadeVel = ( vecSpot2 - vecSpot1 );
     vecGrenadeVel.z = 0;
 
-	// Travel half the distance to the target in that time (apex is at the midpoint)
+    // Travel half the distance to the target in that time (apex is at the midpoint)
     vecGrenadeVel = vecGrenadeVel * ( 0.5 / time );
-	// Speed to offset gravity at the desired height
+    // Speed to offset gravity at the desired height
     vecGrenadeVel.z = speed;
 
     return vecGrenadeVel;
@@ -1109,7 +1109,7 @@ void CBMortar::Touch( CBaseEntity* pOther )
     TraceResult tr;
     int iPitch;
 
-	// splat sound
+    // splat sound
     iPitch = RANDOM_FLOAT( 90, 110 );
 
     EmitSoundDyn( CHAN_VOICE, "bullchicken/bc_acid1.wav", 1, ATTN_NORM, 0, iPitch );
@@ -1127,7 +1127,7 @@ void CBMortar::Touch( CBaseEntity* pOther )
     if( pOther->IsBSPModel() )
     {
 
-		// make a splat on the wall
+        // make a splat on the wall
         UTIL_TraceLine( pev->origin, pev->origin + pev->velocity * 10, dont_ignore_monsters, edict(), &tr );
         UTIL_DecalTrace( &tr, DECAL_MOMMASPLAT );
     }
@@ -1136,7 +1136,7 @@ void CBMortar::Touch( CBaseEntity* pOther )
         tr.vecEndPos = pev->origin;
         tr.vecPlaneNormal = -1 * pev->velocity.Normalize();
     }
-	// make some flecks
+    // make some flecks
     MortarSpray( tr.vecEndPos, tr.vecPlaneNormal, gSpitSprite, 24 );
 
     auto owner = GetOwner();

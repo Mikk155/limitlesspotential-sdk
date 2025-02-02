@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -40,7 +40,7 @@ bool CHudMessage::Init()
 
     Reset();
 
-	// Always run so custom messages can draw.
+    // Always run so custom messages can draw.
     m_iFlags |= HUD_ACTIVE;
 
     return true;
@@ -131,7 +131,7 @@ int CHudMessage::YPosition( float y, int height )
         yPos = ( ScreenHeight - height ) * 0.5;
     else
     {
-		// Alight bottom?
+        // Alight bottom?
         if( y < 0 )
             yPos = ( 1.0 + y ) * ScreenHeight - height; // Alight bottom
         else                                          // align top
@@ -160,7 +160,7 @@ void CHudMessage::MessageScanNextChar()
 
     switch ( m_parms.pMessage->effect )
     {
-		// Fade-in / Fade-out
+        // Fade-in / Fade-out
     case 0:
     case 1:
         blend = m_parms.fadeBlend;
@@ -214,7 +214,7 @@ void CHudMessage::MessageScanStart()
 {
     switch ( m_parms.pMessage->effect )
     {
-		// Fade-in / out with flicker
+        // Fade-in / out with flicker
     case 1:
     case 0:
         m_parms.fadeTime = m_parms.pMessage->fadein + m_parms.pMessage->holdtime;
@@ -258,7 +258,7 @@ void CHudMessage::MessageDrawScan( client_textmessage_t* pMessage, float time )
     eastl::fixed_string<char, MAX_HUDMSG_TEXT_LENGTH> line;
 
     pText = pMessage->pMessage;
-	// Count lines
+    // Count lines
     m_parms.lines = 1;
     m_parms.time = time;
     m_parms.pMessage = pMessage;
@@ -332,7 +332,7 @@ bool CHudMessage::Draw( float fTime )
         float localTime = gHUD.m_flTime - m_gameTitleTime;
         float brightness;
 
-		// Maybe timer isn't set yet
+        // Maybe timer isn't set yet
         if( m_gameTitleTime > gHUD.m_flTime )
             m_gameTitleTime = gHUD.m_flTime;
 
@@ -358,10 +358,10 @@ bool CHudMessage::Draw( float fTime )
             SPR_DrawAdditive( 0, x + halfWidth, y, &gHUD.GetSpriteRect( m_TitleToDisplay->Right ) );
         }
     }
-	// Fixup level transitions
+    // Fixup level transitions
     for( i = 0; i < maxHUDMessages; i++ )
     {
-		// Assume m_parms.time contains last time
+        // Assume m_parms.time contains last time
         if( m_pMessages[i] )
         {
             pMessage = m_pMessages[i];
@@ -376,7 +376,7 @@ bool CHudMessage::Draw( float fTime )
         {
             pMessage = m_pMessages[i];
 
-			// This is when the message is over
+            // This is when the message is over
             switch ( pMessage->effect )
             {
             default:
@@ -385,7 +385,7 @@ bool CHudMessage::Draw( float fTime )
                 endTime = m_startTime[i] + pMessage->fadein + pMessage->fadeout + pMessage->holdtime;
                 break;
 
-				// Fade in is per character in scanning messages
+                // Fade in is per character in scanning messages
             case 2:
                 endTime = m_startTime[i] + ( pMessage->fadein * strlen( pMessage->pMessage ) ) + pMessage->fadeout + pMessage->holdtime;
                 break;
@@ -395,15 +395,15 @@ bool CHudMessage::Draw( float fTime )
             {
                 float messageTime = fTime - m_startTime[i];
 
-				// Draw the message
-				// effect 0 is fade in/fade out
-				// effect 1 is flickery credits
-				// effect 2 is write out (training room)
+                // Draw the message
+                // effect 0 is fade in/fade out
+                // effect 1 is flickery credits
+                // effect 2 is write out (training room)
                 MessageDrawScan( pMessage, messageTime );
             }
             else
             {
-				// The message is over
+                // The message is over
                 m_pMessages[i] = nullptr;
             }
         }
@@ -432,7 +432,7 @@ bool CHudMessage::Draw( float fTime )
         MessageDrawScan( &customMessage, 0 );
     }
 
-	// Remember the time -- to fix up level transitions
+    // Remember the time -- to fix up level transitions
     m_parms.time = gHUD.m_flTime;
 
     return true;
@@ -443,13 +443,13 @@ void CHudMessage::MessageAdd( const char* pName, float time )
 {
     client_textmessage_t* tempMessage;
 
-	// Trim off a leading # if it's there
+    // Trim off a leading # if it's there
     if( pName[0] == '#' )
         tempMessage = TextMessageGet( pName + 1 );
     else
         tempMessage = TextMessageGet( pName );
 
-	// If we couldnt find it in the titles.txt, just create it
+    // If we couldnt find it in the titles.txt, just create it
     if( !tempMessage )
     {
         g_pCustomMessage.effect = 2;
@@ -473,9 +473,9 @@ void CHudMessage::MessageAdd( const char* pName, float time )
 
     for( int i = 0; i < maxHUDMessages; i++ )
     {
-		// If this is a net message (game_text or plugin) then the same object is overwritten,
-		// so clear out the original message to reuse it.
-		// This fixes certain effects not resetting correctly.
+        // If this is a net message (game_text or plugin) then the same object is overwritten,
+        // so clear out the original message to reuse it.
+        // This fixes certain effects not resetting correctly.
         if( tempMessage == m_pMessages[i] &&
             strncmp( tempMessage->pName, NetMessagePrefix.data(), NetMessagePrefix.size() ) == 0 )
         {
@@ -488,13 +488,13 @@ void CHudMessage::MessageAdd( const char* pName, float time )
             {
                 if( m_pMessages[j] )
                 {
-					// is this message already in the list
+                    // is this message already in the list
                     if( 0 == strcmp( tempMessage->pMessage, m_pMessages[j]->pMessage ) )
                     {
                         return;
                     }
 
-					// get rid of any other messages in same location (only one displays at a time)
+                    // get rid of any other messages in same location (only one displays at a time)
                     if( fabs( tempMessage->y - m_pMessages[j]->y ) < 0.0001 )
                     {
                         if( fabs( tempMessage->x - m_pMessages[j]->x ) < 0.0001 )
@@ -518,15 +518,15 @@ void CHudMessage::MsgFunc_HudText( const char* pszName, BufferReader& reader )
     char* pString = reader.ReadString();
 
     MessageAdd( pString, gHUD.m_flTime );
-	// Remember the time -- to fix up level transitions
+    // Remember the time -- to fix up level transitions
     m_parms.time = gHUD.m_flTime;
 }
 
 
 void CHudMessage::MsgFunc_GameTitle( const char* pszName, BufferReader& reader )
 {
-	// Pick the right title.
-	// This is a temporary hack. The UI needs to be rewritten so this supports the official games and uses the HL1 title for everything else.
+    // Pick the right title.
+    // This is a temporary hack. The UI needs to be rewritten so this supports the official games and uses the HL1 title for everything else.
     const std::string gameName = reader.ReadString();
 
     std::string titleName = gameName;
@@ -539,7 +539,7 @@ void CHudMessage::MsgFunc_GameTitle( const char* pszName, BufferReader& reader )
 
     if( !m_pGameTitle )
     {
-		// Fallback.
+        // Fallback.
         m_pGameTitle = TextMessageGet( "VALVE_GAMETITLE" );
     }
 

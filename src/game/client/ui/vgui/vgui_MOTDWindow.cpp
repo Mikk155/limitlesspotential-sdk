@@ -65,17 +65,17 @@ CMenuPanel* CMessageWindowPanel_Create( const char* szMOTD, const char* szTitle,
 CMessageWindowPanel::CMessageWindowPanel( const char* szMOTD, const char* szTitle, bool iShadeFullscreen, bool iRemoveMe, int x, int y, int wide, int tall )
     : CMenuPanel( iShadeFullscreen ? 100 : 255, iRemoveMe, x, y, wide, tall )
 {
-	// Get the scheme used for the Titles
+    // Get the scheme used for the Titles
     CSchemeManager* pSchemes = gViewPort->GetSchemeManager();
 
-	// schemes
+    // schemes
     SchemeHandle_t hTitleScheme = pSchemes->getSchemeHandle( "Title Font" );
     SchemeHandle_t hMOTDText = pSchemes->getSchemeHandle( "Briefing Text" );
 
-	// color schemes
+    // color schemes
     int r, g, b, a;
 
-	// Create the window
+    // Create the window
     m_pBackgroundPanel = new CTransparentPanel( iShadeFullscreen ? 255 : 100, MOTD_WINDOW_X, MOTD_WINDOW_Y, MOTD_WINDOW_SIZE_X, MOTD_WINDOW_SIZE_Y );
     m_pBackgroundPanel->setParent( this );
     m_pBackgroundPanel->setBorder( new LineBorder( Color( 0, 112, 0, 0 ) ) );
@@ -85,7 +85,7 @@ CMessageWindowPanel::CMessageWindowPanel( const char* szMOTD, const char* szTitl
     m_pBackgroundPanel->getPos( iXPos, iYPos );
     m_pBackgroundPanel->getSize( iXSize, iYSize );
 
-	// Create the title
+    // Create the title
     Label* pLabel = new Label( "", iXPos + MOTD_TITLE_X, iYPos + MOTD_TITLE_Y );
     pLabel->setParent( this );
     pLabel->setFont( pSchemes->getFont( hTitleScheme ) );
@@ -99,20 +99,20 @@ CMessageWindowPanel::CMessageWindowPanel( const char* szMOTD, const char* szTitl
     pLabel->setContentAlignment( vgui::Label::a_west );
     pLabel->setText( "%s", szTitle );
 
-	// Create the Scroll panel
+    // Create the Scroll panel
     ScrollPanel* pScrollPanel = new CTFScrollPanel( iXPos + XRES( 16 ), iYPos + MOTD_TITLE_Y * 2 + YRES( 16 ), iXSize - XRES( 32 ), iYSize - ( YRES( 48 ) + BUTTON_SIZE_Y * 2 ) );
     pScrollPanel->setParent( this );
 
-	// force the scrollbars on so clientClip will take them in account after the validate
+    // force the scrollbars on so clientClip will take them in account after the validate
     pScrollPanel->setScrollBarAutoVisible( false, false );
     pScrollPanel->setScrollBarVisible( true, true );
     pScrollPanel->validate();
 
-	// Create the text panel
+    // Create the text panel
     TextPanel* pText = new TextPanel( "", 0, 0, 64, 64 );
     pText->setParent( pScrollPanel->getClient() );
 
-	// get the font and colors from the scheme
+    // get the font and colors from the scheme
     pText->setFont( pSchemes->getFont( hMOTDText ) );
     pSchemes->getFgColor( hMOTDText, r, g, b, a );
     pText->setFgColor( r, g, b, a );
@@ -120,20 +120,20 @@ CMessageWindowPanel::CMessageWindowPanel( const char* szMOTD, const char* szTitl
     pText->setBgColor( r, g, b, a );
     pText->setText( szMOTD );
 
-	// Get the total size of the MOTD text and resize the text panel
+    // Get the total size of the MOTD text and resize the text panel
     int iScrollSizeX, iScrollSizeY;
 
-	// First, set the size so that the client's wdith is correct at least because the
-	//  width is critical for getting the "wrapped" size right.
-	// You'll see a horizontal scroll bar if there is a single word that won't wrap in the
-	//  specified width.
+    // First, set the size so that the client's wdith is correct at least because the
+    //  width is critical for getting the "wrapped" size right.
+    // You'll see a horizontal scroll bar if there is a single word that won't wrap in the
+    //  specified width.
     pText->getTextImage()->setSize( pScrollPanel->getClientClip()->getWide(), pScrollPanel->getClientClip()->getTall() );
     pText->getTextImage()->getTextSizeWrapped( iScrollSizeX, iScrollSizeY );
 
-	// Now resize the textpanel to fit the scrolled size
+    // Now resize the textpanel to fit the scrolled size
     pText->setSize( iScrollSizeX, iScrollSizeY );
 
-	// turn the scrollbars back into automode
+    // turn the scrollbars back into automode
     pScrollPanel->setScrollBarAutoVisible( true, true );
     pScrollPanel->setScrollBarVisible( false, false );
 

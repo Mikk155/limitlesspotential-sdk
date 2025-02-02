@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,7 +24,7 @@
 BEGIN_DATAMAP( CBasePlayerWeapon )
     DEFINE_FIELD( m_pPlayer, FIELD_CLASSPTR ),
     DEFINE_FIELD( m_pNext, FIELD_CLASSPTR ),
-	// DEFINE_FIELD(m_fKnown, FIELD_INTEGER),Reset to zero on load
+    // DEFINE_FIELD(m_fKnown, FIELD_INTEGER),Reset to zero on load
     DEFINE_FIELD( m_iId, FIELD_INTEGER ),
 // DEFINE_FIELDm_iIdPrimary, FIELD_INTEGER),
 // DEFINE_FIELDm_iIdSecondary, FIELD_INTEGER),
@@ -42,8 +42,8 @@ BEGIN_DATAMAP( CBasePlayerWeapon )
     DEFINE_FIELD( m_iClip, FIELD_INTEGER ),
     DEFINE_FIELD( m_iDefaultAmmo, FIELD_INTEGER ),
     DEFINE_FIELD( m_iDefaultPrimaryAmmo, FIELD_INTEGER ),
-	//	DEFINE_FIELD(m_iClientClip, FIELD_INTEGER)	 , reset to zero on load so hud gets updated correctly
-	//  DEFINE_FIELD(m_iClientWeaponState, FIELD_INTEGER), reset to zero on load so hud gets updated correctly
+    //    DEFINE_FIELD(m_iClientClip, FIELD_INTEGER)     , reset to zero on load so hud gets updated correctly
+    //  DEFINE_FIELD(m_iClientWeaponState, FIELD_INTEGER), reset to zero on load so hud gets updated correctly
     DEFINE_FIELD( m_WorldModel, FIELD_STRING ),
     DEFINE_FIELD( m_ViewModel, FIELD_STRING ),
     DEFINE_FIELD( m_PlayerModel, FIELD_STRING ),
@@ -125,7 +125,7 @@ void CBasePlayerWeapon::LinkWeaponInfo()
         m_WeaponInfo = &g_WeaponData.DummyInfo;
     }
 
-	// (re)initialize ammo type indices.
+    // (re)initialize ammo type indices.
     if( !m_WeaponInfo->AttackModeInfo[0].AmmoType.empty() )
     {
         m_iPrimaryAmmoType = g_AmmoTypes.IndexOf( m_WeaponInfo->AttackModeInfo[0].AmmoType.c_str() );
@@ -172,7 +172,7 @@ bool CBasePlayerWeapon::CanDeploy()
 
     if( !pszAmmo1() )
     {
-		// this weapon doesn't use ammo, can always deploy.
+        // this weapon doesn't use ammo, can always deploy.
         return true;
     }
 
@@ -246,7 +246,7 @@ bool CBasePlayerWeapon::DefaultReload( int iClipSize, int iAnim, float fDelay )
 
     m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + fDelay;
 
-	//!!UNDONE -- reload sound goes here !!!
+    //!!UNDONE -- reload sound goes here !!!
     SendWeaponAnim( iAnim );
 
     m_fInReload = true;
@@ -278,7 +278,7 @@ bool CBasePlayerWeapon::IsUseable()
         return true;
     }
 
-	// Weapon doesn't use ammo.
+    // Weapon doesn't use ammo.
     if( m_iPrimaryAmmoType == -1 )
     {
         return true;
@@ -297,7 +297,7 @@ bool CBasePlayerWeapon::IsUseable()
         }
     }
 
-	// clip is empty (or nonexistant) and the player has no more ammo of this type.
+    // clip is empty (or nonexistant) and the player has no more ammo of this type.
     return false;
 }
 
@@ -322,7 +322,7 @@ void CBasePlayerWeapon::FinishReload( bool force )
     int maxClip = iMaxClip();
 
 #ifndef CLIENT_DLL
-	// Reset max clip and max ammo to default values
+    // Reset max clip and max ammo to default values
     if( ( m_pPlayer->m_iItems & CTFItem::Backpack ) == 0 )
     {
         if( m_iClip > iMaxClip() )
@@ -342,10 +342,10 @@ void CBasePlayerWeapon::FinishReload( bool force )
 
     if( force || ( m_fInReload && m_pPlayer->m_flNextAttack <= UTIL_WeaponTimeBase() ) )
     {
-		// complete the reload.
+        // complete the reload.
         int j = std::min( maxClip - m_iClip, m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) );
 
-		// Add them to the clip
+        // Add them to the clip
         m_iClip += j;
         m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -j );
 
@@ -383,19 +383,19 @@ void CBasePlayerWeapon::ItemPostFrame()
     }
     else if( ( m_pPlayer->pev->button & IN_RELOAD ) != 0 && iMaxClip() != WEAPON_NOCLIP && !m_fInReload )
     {
-		// reload when reload is pressed, or if no buttons are down and weapon is empty.
+        // reload when reload is pressed, or if no buttons are down and weapon is empty.
         Reload();
     }
     else if( ( m_pPlayer->pev->button & ( IN_ATTACK | IN_ATTACK2 ) ) == 0 )
     {
-		// no fire buttons down
+        // no fire buttons down
 
         m_fFireOnEmpty = false;
 
         if( !IsUseable() && m_flNextPrimaryAttack < ( UseDecrement() ? 0.0 : gpGlobals->time ) )
         {
 #ifndef CLIENT_DLL
-			// weapon isn't useable, switch.
+            // weapon isn't useable, switch.
             if( ( iFlags() & ITEM_FLAG_NOAUTOSWITCHEMPTY ) == 0 && g_pGameRules->GetNextBestWeapon( m_pPlayer, this ) )
             {
                 m_flNextPrimaryAttack = ( UseDecrement() ? 0.0 : gpGlobals->time ) + 0.3;
@@ -405,7 +405,7 @@ void CBasePlayerWeapon::ItemPostFrame()
         }
         else
         {
-			// weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
+            // weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
             if( m_iClip == 0 && ( iFlags() & ITEM_FLAG_NOAUTORELOAD ) == 0 && m_flNextPrimaryAttack < ( UseDecrement() ? 0.0 : gpGlobals->time ) )
             {
                 Reload();
@@ -417,7 +417,7 @@ void CBasePlayerWeapon::ItemPostFrame()
         return;
     }
 
-	// catch all
+    // catch all
     if( ShouldWeaponIdle() )
     {
         WeaponIdle();
@@ -465,7 +465,7 @@ void CBasePlayerWeapon::AdjustMagazine1( int count )
 
     if( count < 0 )
     {
-		// Subtract from reserve ammo first.
+        // Subtract from reserve ammo first.
         if( g_Skill.GetValue( "bottomless_magazines" ) != 0 )
         {
             const int amountAdjusted = m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, count );

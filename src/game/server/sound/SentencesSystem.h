@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -54,58 +54,58 @@ public:
 
     const char* GetSentenceNameByIndex( int index ) const;
 
-	/**
-	 *	@brief convert sentence (sample) name to !sentencenum.
-	 *	@return Sentence index, or -1 if the sentence could not be found.
-	 */
+    /**
+     *    @brief convert sentence (sample) name to !sentencenum.
+     *    @return Sentence index, or -1 if the sentence could not be found.
+     */
     int LookupSentence( CBaseEntity* entity, const char* sample, SentenceIndexName* sentencenum ) const;
 
-	/**
-	 *	@brief given sentence group name, play random sentence for given entity.
-	 *	@return ipick - which sentence was picked to play from the group.
-	 *		Ipick is only needed if you plan on stopping the sound before playback is done (@see Stop).
-	 */
+    /**
+     *    @brief given sentence group name, play random sentence for given entity.
+     *    @return ipick - which sentence was picked to play from the group.
+     *        Ipick is only needed if you plan on stopping the sound before playback is done (@see Stop).
+     */
     int PlayRndSz( CBaseEntity* entity, const char* szrootname, float volume, float attenuation, int flags, int pitch );
 
-	/**
-	 *	@brief play sentences in sequential order from sentence group. Reset after last sentence.
-	 */
+    /**
+     *    @brief play sentences in sequential order from sentence group. Reset after last sentence.
+     */
     int PlaySequentialSz( CBaseEntity* entity, const char* szrootname, float volume, float attenuation, int flags, int pitch, int ipick, bool freset );
 
-	/**
-	 *	@brief for this entity, for the given sentence within the sentence group, stop the sentence.
-	 */
+    /**
+     *    @brief for this entity, for the given sentence within the sentence group, stop the sentence.
+     */
     void Stop( CBaseEntity* entity, int isentenceg, int ipick );
 
 private:
-	/**
-	 *	@brief randomize list of sentence name indices
-	 */
+    /**
+     *    @brief randomize list of sentence name indices
+     */
     static void InitLRU( eastl::fixed_vector<unsigned char, CSENTENCE_LRU_MAX>& lru );
 
-	/**
-	 *	@brief Given sentence group rootname (name without number suffix), get sentence group index (isentenceg).
-	 *	@return -1 if no such name.
-	 */
+    /**
+     *    @brief Given sentence group rootname (name without number suffix), get sentence group index (isentenceg).
+     *    @return -1 if no such name.
+     */
     int GetGroupIndex( CBaseEntity* entity, const char* szrootname ) const;
 
-	/**
-	 *	@brief pick a random sentence from rootname0 to rootnameX.
-	 *		picks from the rgsentenceg[isentenceg] least recently used, modifies lru array.
-	 *	@details lru must be seeded with 0-n randomized sentence numbers, with the rest of the lru filled with -1.
-	 *		The first integer in the lru is actually the size of the list.
-	 *	@param[out] found the sentence name.
-	 *	@return ipick, the ordinal of the picked sentence within the group.
-	 */
+    /**
+     *    @brief pick a random sentence from rootname0 to rootnameX.
+     *        picks from the rgsentenceg[isentenceg] least recently used, modifies lru array.
+     *    @details lru must be seeded with 0-n randomized sentence numbers, with the rest of the lru filled with -1.
+     *        The first integer in the lru is actually the size of the list.
+     *    @param[out] found the sentence name.
+     *    @return ipick, the ordinal of the picked sentence within the group.
+     */
     int Pick( int isentenceg, SentenceIndexName& found );
 
-	/**
-	 *	@brief ignore lru. pick next sentence from sentence group.
-	 *		Go in order until we hit the last sentence, then repeat list if freset is true.
-	 *		If freset is false, then repeat last sentence.
-	 *	@param ipick requested sentence ordinal
-	 *	@return Next value for @p ipick, or -1 if there was an error.
-	 */
+    /**
+     *    @brief ignore lru. pick next sentence from sentence group.
+     *        Go in order until we hit the last sentence, then repeat list if freset is true.
+     *        If freset is false, then repeat last sentence.
+     *    @param ipick requested sentence ordinal
+     *    @return Next value for @p ipick, or -1 if there was an error.
+     */
     int PickSequential( int isentenceg, SentenceIndexName& found, int ipick, bool freset ) const;
 
     const char* CheckForSentenceReplacement( CBaseEntity* entity, const char* sentenceName ) const;

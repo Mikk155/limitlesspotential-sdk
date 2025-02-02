@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -28,7 +28,7 @@ struct RiffChunk
 };
 
 /**
- *	@brief Scans for RIFF chunks in the given data.
+ *    @brief Scans for RIFF chunks in the given data.
  */
 class RiffChunkReader final
 {
@@ -36,7 +36,7 @@ public:
     RiffChunkReader() = default;
     RiffChunkReader( const std::byte* data, std::size_t size );
 
-	constexpr operator bool() const { return m_Data != nullptr; }
+    constexpr operator bool() const { return m_Data != nullptr; }
 
     std::optional<RiffChunk> Next();
 
@@ -49,15 +49,15 @@ private:
 };
 
 /**
- *	@brief Determines whether the given data is a RIFF header and allows scanning for RIFF chunks.
- *	@details See https://www.recordingblogs.com/wiki/wave-file-format for more information.
+ *    @brief Determines whether the given data is a RIFF header and allows scanning for RIFF chunks.
+ *    @details See https://www.recordingblogs.com/wiki/wave-file-format for more information.
  */
 class RiffFileReader final
 {
 public:
     RiffFileReader( const std::byte* potentialRiffData, std::size_t sizeInBytes );
 
-	constexpr operator bool() const { return m_ChunkReader; }
+    constexpr operator bool() const { return m_ChunkReader; }
 
     RiffChunkReader GetChunkReader() const { return m_ChunkReader; }
 
@@ -74,7 +74,7 @@ inline RiffChunkReader::RiffChunkReader( const std::byte* data, std::size_t size
 
 inline RiffFileReader::RiffFileReader( const std::byte* potentialRiffData, std::size_t sizeInBytes )
 {
-	// A valid RIFF header must be at least 12 bytes large.
+    // A valid RIFF header must be at least 12 bytes large.
     if( !potentialRiffData || sizeInBytes <= 12 )
     {
         return;
@@ -87,7 +87,7 @@ inline RiffFileReader::RiffFileReader( const std::byte* potentialRiffData, std::
 
     const int remainingSizeInBytes = *reinterpret_cast<const int*>( potentialRiffData + 4 );
 
-	// Don't bother if it only has the type id.
+    // Don't bother if it only has the type id.
     if( remainingSizeInBytes <= 4 )
     {
         return;
@@ -98,7 +98,7 @@ inline RiffFileReader::RiffFileReader( const std::byte* potentialRiffData, std::
         return;
     }
 
-	// Store the size of the data section.
+    // Store the size of the data section.
     m_ChunkReader = {potentialRiffData + 12, static_cast<std::size_t>( remainingSizeInBytes - 4 )};
 }
 
@@ -106,7 +106,7 @@ inline std::optional<RiffChunk> RiffChunkReader::Next()
 {
     const auto end = m_Data + m_Size;
 
-	// No valid chunks left.
+    // No valid chunks left.
     if( ( end - m_ReadPosition ) < 8 )
     {
         return {};
@@ -122,7 +122,7 @@ inline std::optional<RiffChunk> RiffChunkReader::Next()
 
     const RiffChunk chunk{{chunkId, 4}, static_cast<std::size_t>( size ), m_ReadPosition + 8};
 
-	// Align to 2 byte boundary.
+    // Align to 2 byte boundary.
     m_ReadPosition += ( size + 8 + 1 ) & ~1;
 
     return chunk;

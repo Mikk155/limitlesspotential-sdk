@@ -45,7 +45,7 @@ public:
 
     void ActionSignal( int cmd );
 
-	// InputSignal overrides.
+    // InputSignal overrides.
 public:
     void Initialize();
     void Update();
@@ -57,9 +57,9 @@ public:
     void ShowMenu( bool isVisible );
 
     DropDownButton* m_OptionButton;
-	//	CommandButton     *	m_HideButton;
-	// ColorButton	  *	m_PrevPlayerButton;
-	// ColorButton	  *	m_NextPlayerButton;
+    //    CommandButton     *    m_HideButton;
+    // ColorButton      *    m_PrevPlayerButton;
+    // ColorButton      *    m_NextPlayerButton;
     CImageButton* m_PrevPlayerButton;
     CImageButton* m_NextPlayerButton;
     DropDownButton* m_CamButton;

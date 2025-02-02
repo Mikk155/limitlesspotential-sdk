@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -123,8 +123,8 @@ public:
 
     void TriggerTouch( CBaseEntity* pOther );
 
-	// These functions are here to show the way beams are encoded as entities.
-	// Encoding beams as entities simplifies their management in the client/server architecture
+    // These functions are here to show the way beams are encoded as entities.
+    // Encoding beams as entities simplifies their management in the client/server architecture
     inline void SetType( int type ) { pev->rendermode = ( pev->rendermode & 0xF0 ) | ( type & 0x0F ); }
     inline void SetFlags( int flags ) { pev->rendermode = ( pev->rendermode & 0x0F ) | ( flags & 0xF0 ); }
     inline void SetStartPos( const Vector& pos ) { pev->origin = pos; }
@@ -153,7 +153,7 @@ public:
     inline int GetStartEntity() { return pev->sequence & 0xFFF; }
     inline int GetEndEntity() { return pev->skin & 0xFFF; }
 
-	// These don't take attachments into account
+    // These don't take attachments into account
     const Vector& GetStartPos();
     const Vector& GetEndPos();
 
@@ -162,19 +162,19 @@ public:
     inline int GetTexture() { return pev->modelindex; }
     inline int GetWidth() { return pev->scale; }
     inline int GetNoise() { return pev->body; }
-	// inline void GetColor( int r, int g, int b ) { pev->rendercolor.x = r; pev->rendercolor.y = g; pev->rendercolor.z = b; }
+    // inline void GetColor( int r, int g, int b ) { pev->rendercolor.x = r; pev->rendercolor.y = g; pev->rendercolor.z = b; }
     inline int GetBrightness() { return pev->renderamt; }
     inline int GetFrame() { return pev->frame; }
     inline int GetScrollRate() { return pev->animtime; }
 
-	// Call after you change start/end positions
+    // Call after you change start/end positions
     void RelinkBeam();
-	//	void		SetObjectCollisionBox();
+    //    void        SetObjectCollisionBox();
 
     void DoSparks( const Vector& start, const Vector& end );
     CBaseEntity* RandomTargetname( const char* szName );
     void BeamDamage( TraceResult* ptr );
-	// Init after BeamCreate()
+    // Init after BeamCreate()
     void BeamInit( const char* pSpriteName, int width );
     void PointsInit( const Vector& start, const Vector& end );
     void PointEntInit( const Vector& start, int endIndex );

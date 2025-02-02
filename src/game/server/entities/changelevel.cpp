@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	Entities relating to level changes and save games.
+ *    @file
+ *    Entities relating to level changes and save games.
  */
 
 #include "cbase.h"
@@ -28,8 +28,8 @@
 LINK_ENTITY_TO_CLASS( info_landmark, CPointEntity );
 
 /**
- *	@brief Define space that travels across a level transition
- *	@details Derive from point entity so this doesn't move across levels
+ *    @brief Define space that travels across a level transition
+ *    @details Derive from point entity so this doesn't move across levels
  */
 class CTriggerVolume : public CPointEntity
 {
@@ -49,7 +49,7 @@ void CTriggerVolume::Spawn()
 }
 
 /**
- *	@brief Fires a target after level transition and then dies
+ *    @brief Fires a target after level transition and then dies
  */
 class CFireAndDie : public CBaseDelay
 {
@@ -64,12 +64,12 @@ LINK_ENTITY_TO_CLASS( fireanddie, CFireAndDie );
 
 void CFireAndDie::Spawn()
 {
-	// Don't call Precache() - it should be called on restore
+    // Don't call Precache() - it should be called on restore
 }
 
 void CFireAndDie::Precache()
 {
-	// This gets called on restore
+    // This gets called on restore
     pev->nextthink = gpGlobals->time + m_flDelay;
 }
 
@@ -156,19 +156,19 @@ void CChangeLevel::Spawn()
     InitTrigger();
     if( ( pev->spawnflags & SF_CHANGELEVEL_USEONLY ) == 0 )
         SetTouch( &CChangeLevel::TouchChangeLevel );
-	//	Logger->debug("TRANSITION: {} ({})", m_szMapName, m_szLandmarkName);
+    //    Logger->debug("TRANSITION: {} ({})", m_szMapName, m_szLandmarkName);
 }
 
 CBaseEntity* CChangeLevel::FindLandmark( const char* pLandmarkName )
 {
     for( auto landmark : UTIL_FindEntitiesByTargetname( pLandmarkName ) )
     {
-		// Found the landmark
+        // Found the landmark
         if( landmark->ClassnameIs( "info_landmark" ) )
             return landmark;
     }
 
-	// Only an error if a name was specified.
+    // Only an error if a name was specified.
     if( !FStrEq( pLandmarkName, "" ) )
     {
         Logger->error( "Can't find landmark {}", pLandmarkName );
@@ -187,7 +187,7 @@ static void QueueChangelevel( const char* mapName, const char* landmarkName, boo
 {
     static int lastSpawnCount = 0;
 
-	// Only queue a single level change at a time.
+    // Only queue a single level change at a time.
     if( g_Server.GetSpawnCount() == lastSpawnCount )
     {
         return;
@@ -195,7 +195,7 @@ static void QueueChangelevel( const char* mapName, const char* landmarkName, boo
 
     lastSpawnCount = g_Server.GetSpawnCount();
 
-	// Persistent level changes only work in singleplayer.
+    // Persistent level changes only work in singleplayer.
     if( usePersistentLevelChange && !g_pGameRules->IsMultiplayer() )
     {
         SERVER_COMMAND( fmt::format( "changelevel2 {} {}\n", mapName, landmarkName ).c_str() );
@@ -210,13 +210,13 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
 {
     ASSERT( !FStrEq( m_szMapName, "" ) );
 
-	// Some people are firing these multiple times in a frame, disable
+    // Some people are firing these multiple times in a frame, disable
     if( gpGlobals->time == pev->dmgtime )
         return;
 
     pev->dmgtime = gpGlobals->time;
 
-	// This only works as intended in singleplayer.
+    // This only works as intended in singleplayer.
     if( !g_pGameRules->IsMultiplayer() )
     {
         CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
@@ -226,17 +226,17 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
             return;
         }
 
-		// Create an entity to fire the changetarget
+        // Create an entity to fire the changetarget
         if( !FStringNull( m_changeTarget ) )
         {
             CFireAndDie* pFireAndDie = g_EntityDictionary->Create<CFireAndDie>( "fireanddie" );
             if( pFireAndDie )
             {
-				// Set target and delay
+                // Set target and delay
                 pFireAndDie->pev->target = m_changeTarget;
                 pFireAndDie->m_flDelay = m_changeTargetDelay;
                 pFireAndDie->pev->origin = pPlayer->pev->origin;
-				// Call spawn
+                // Call spawn
                 DispatchSpawn( pFireAndDie->edict() );
             }
         }
@@ -245,12 +245,12 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
     m_hActivator = pActivator;
     SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
 
-	// Init landmark to empty string
+    // Init landmark to empty string
     const char* landmarkNameInNextMap = "";
 
     if( !g_pGameRules->IsMultiplayer() )
     {
-		// look for a landmark entity
+        // look for a landmark entity
         auto landmark = FindLandmark( m_szLandmarkName );
         if( !FNullEnt( landmark ) )
         {
@@ -259,7 +259,7 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
         }
     }
 
-	// Logger->debug("Level touches {} levels", ChangeList(levels, std::size(levels)));
+    // Logger->debug("Level touches {} levels", ChangeList(levels, std::size(levels)));
 
     Logger->debug( "CHANGE LEVEL: {} {}", m_szMapName, landmarkNameInNextMap );
 
@@ -278,7 +278,7 @@ void CChangeLevel::TouchChangeLevel( CBaseEntity* pOther )
     if( !player )
         return;
 
-	// This only happens if we're spawning/loading into a map and touching a level change right away.
+    // This only happens if we're spawning/loading into a map and touching a level change right away.
     if( !g_Server.HasFinishedLoading() )
     {
         m_Enabled = false;
@@ -290,9 +290,9 @@ void CChangeLevel::TouchChangeLevel( CBaseEntity* pOther )
         {
             m_LastTooCloseMessageTime = gpGlobals->time + TooCloseMessageInterval;
 
-			// Every time the player tries to use a level change that they were touching on load
-			// we tell them why it's disabled.
-			// This needs to be broken up into lines because centerprint only allows up to 39 characters to be drawn per line.
+            // Every time the player tries to use a level change that they were touching on load
+            // we tell them why it's disabled.
+            // This needs to be broken up into lines because centerprint only allows up to 39 characters to be drawn per line.
             const auto message = fmt::format( 
                 "The level change to\n\n\"{}\"\n\nnear {} is too close\n\nto the player when they enter the map",
                 m_szMapName, Center() );
@@ -332,7 +332,7 @@ bool CChangeLevel::InTransitionVolume( CBaseEntity* pEntity, char* pVolumeName )
     if( ( pEntity->ObjectCaps() & FCAP_FORCE_TRANSITION ) != 0 )
         return true;
 
-	// If you're following another entity, follow it through the transition (weapons follow the player)
+    // If you're following another entity, follow it through the transition (weapons follow the player)
     if( pEntity->pev->movetype == MOVETYPE_FOLLOW )
     {
         if( pEntity->pev->aiment != nullptr )
@@ -364,14 +364,14 @@ int CChangeLevel::ChangeList( LEVELLIST* pLevelList, int maxList )
 {
     int count = 0;
 
-	// Find all of the possible level changes on this BSP
+    // Find all of the possible level changes on this BSP
     for( auto changelevel : UTIL_FindEntitiesByClassname<CChangeLevel>( "trigger_changelevel" ) )
     {
-		// Find the corresponding landmark
+        // Find the corresponding landmark
         auto landmark = FindLandmark( changelevel->m_szLandmarkName );
         if( landmark )
         {
-			// Build a list of unique transitions
+            // Build a list of unique transitions
             if( AddTransitionToList( pLevelList, count, changelevel->m_szMapName, changelevel->m_szLandmarkName, landmark ) )
             {
                 count++;
@@ -383,7 +383,7 @@ int CChangeLevel::ChangeList( LEVELLIST* pLevelList, int maxList )
 
     if( count > 0 )
     {
-		// Token table is null at this point, so don't use CSaveRestoreBuffer::IsValidSaveRestoreData here.
+        // Token table is null at this point, so don't use CSaveRestoreBuffer::IsValidSaveRestoreData here.
         if( auto pSaveData = reinterpret_cast<SAVERESTOREDATA*>( gpGlobals->pSaveData );
             nullptr != pSaveData && pSaveData->pTable )
         {
@@ -395,22 +395,22 @@ int CChangeLevel::ChangeList( LEVELLIST* pLevelList, int maxList )
                 CBaseEntity* pEntList[MAX_ENTITY];
                 int entityFlags[MAX_ENTITY];
 
-				// Follow the linked list of entities in the PVS of the transition landmark
+                // Follow the linked list of entities in the PVS of the transition landmark
                 edict_t* pent = UTIL_EntitiesInPVS( pLevelList[i].pentLandmark );
 
-				// Build a list of valid entities in this linked list (we're going to use pent->v.chain again)
+                // Build a list of valid entities in this linked list (we're going to use pent->v.chain again)
                 while( !FNullEnt( pent ) )
                 {
                     CBaseEntity* pEntity = CBaseEntity::Instance( pent );
                     if( pEntity )
                     {
-						// Logger->debug("Trying {}", STRING(pEntity->pev->classname));
+                        // Logger->debug("Trying {}", STRING(pEntity->pev->classname));
                         int caps = pEntity->ObjectCaps();
                         if( ( caps & FCAP_DONT_SAVE ) == 0 )
                         {
                             int flags = 0;
 
-							// If this entity can be moved or is global, mark it
+                            // If this entity can be moved or is global, mark it
                             if( ( caps & FCAP_ACROSS_TRANSITION ) != 0 )
                                 flags |= FENTTABLE_MOVEABLE;
                             if( !FStringNull( pEntity->pev->globalname ) && !pEntity->IsDormant() )
@@ -423,27 +423,27 @@ int CChangeLevel::ChangeList( LEVELLIST* pLevelList, int maxList )
                                 if( entityCount > MAX_ENTITY )
                                     Logger->error( "Too many entities across a transition!" );
                             }
-							// else
-							//	Logger->debug("Failed {}", STRING(pEntity->pev->classname));
+                            // else
+                            //    Logger->debug("Failed {}", STRING(pEntity->pev->classname));
                         }
-						// else
-						//	Logger->debug("DON'T SAVE {}", STRING(pEntity->pev->classname));
+                        // else
+                        //    Logger->debug("DON'T SAVE {}", STRING(pEntity->pev->classname));
                     }
                     pent = pent->v.chain;
                 }
 
                 for( j = 0; j < entityCount; j++ )
                 {
-					// Check to make sure the entity isn't screened out by a trigger_transition
+                    // Check to make sure the entity isn't screened out by a trigger_transition
                     if( 0 != entityFlags[j] && InTransitionVolume( pEntList[j], pLevelList[i].landmarkName ) )
                     {
-						// Mark entity table with 1<<i
+                        // Mark entity table with 1<<i
                         int index = saveHelper.EntityIndex( pEntList[j] );
-						// Flag it with the level number
+                        // Flag it with the level number
                         saveHelper.EntityFlagsSet( index, entityFlags[j] | ( 1 << i ) );
                     }
-					// else
-					//	Logger->debug("Screened out {}", STRING(pEntList[j]->pev->classname));
+                    // else
+                    //    Logger->debug("Screened out {}", STRING(pEntList[j]->pev->classname));
                 }
             }
         }
@@ -485,7 +485,7 @@ void CTriggerSave::SaveTouch( CBaseEntity* pOther )
     if( !UTIL_IsMasterTriggered( m_sMaster, pOther ) )
         return;
 
-	// Only save on clients
+    // Only save on clients
     if( !pOther->IsPlayer() )
         return;
 
@@ -517,7 +517,7 @@ LINK_ENTITY_TO_CLASS( trigger_endsection, CTriggerEndSection );
 
 void CTriggerEndSection::EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	// Only save on clients
+    // Only save on clients
     if( pActivator && !pActivator->IsNetClient() )
         return;
 
@@ -541,14 +541,14 @@ void CTriggerEndSection::Spawn()
     InitTrigger();
 
     SetUse( &CTriggerEndSection::EndSectionUse );
-	// If it is a "use only" trigger, then don't set the touch function.
+    // If it is a "use only" trigger, then don't set the touch function.
     if( ( pev->spawnflags & SF_ENDSECTION_USEONLY ) == 0 )
         SetTouch( &CTriggerEndSection::EndSectionTouch );
 }
 
 void CTriggerEndSection::EndSectionTouch( CBaseEntity* pOther )
 {
-	// Only save on clients
+    // Only save on clients
     if( !pOther->IsNetClient() )
         return;
 
@@ -565,8 +565,8 @@ bool CTriggerEndSection::KeyValue( KeyValueData* pkvd )
 {
     if( FStrEq( pkvd->szKeyName, "section" ) )
     {
-		//		m_iszSectionName = ALLOC_STRING( pkvd->szValue );
-		// Store this in message so we don't have to write save/restore for this ent
+        //        m_iszSectionName = ALLOC_STRING( pkvd->szValue );
+        // Store this in message so we don't have to write save/restore for this ent
         pev->message = ALLOC_STRING( pkvd->szValue );
         return true;
     }

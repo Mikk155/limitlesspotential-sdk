@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -60,7 +60,7 @@ void CHgun::AddToPlayer( CBasePlayer* pPlayer )
 #ifndef CLIENT_DLL
     if( g_pGameRules->IsMultiplayer() )
     {
-		// in multiplayer, all hivehands come full.
+        // in multiplayer, all hivehands come full.
         m_iDefaultAmmo = HORNET_MAX_CARRY;
     }
 #endif
@@ -92,7 +92,7 @@ void CHgun::Holster()
     m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
     SendWeaponAnim( HGUN_DOWN );
 
-	//!!!HACKHACK - can't select hornetgun if it's empty! no way to get ammo for it, either.
+    //!!!HACKHACK - can't select hornetgun if it's empty! no way to get ammo for it, either.
     if( 0 == m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) )
     {
         m_pPlayer->SetAmmoCountByIndex( m_iPrimaryAmmoType, 1 );
@@ -144,7 +144,7 @@ void CHgun::PrimaryAttack()
     PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usHornetFire, 0.0, g_vecZero, g_vecZero, 0.0, 0.0, 0, 0, 0, 0 );
 
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
@@ -166,7 +166,7 @@ void CHgun::SecondaryAttack()
         return;
     }
 
-	// Wouldn't be a bad idea to completely predict these, since they fly so fast...
+    // Wouldn't be a bad idea to completely predict these, since they fly so fast...
 #ifndef CLIENT_DLL
     CBaseEntity* pHornet;
     Vector vecSrc;
@@ -241,7 +241,7 @@ void CHgun::SecondaryAttack()
     m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
     m_pPlayer->m_iWeaponFlash = DIM_GUN_FLASH;
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
     m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.1;

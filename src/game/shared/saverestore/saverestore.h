@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -45,7 +45,7 @@ public:
 
     const SAVERESTOREDATA& GetData() const { return m_data; }
 
-	// Data is only valid if it's a valid pointer and if it has a token list
+    // Data is only valid if it's a valid pointer and if it has a token list
     [[nodiscard]] static bool IsValidSaveRestoreData( SAVERESTOREDATA* data );
 
     const DataMap* GetCurrentCompleteDataMap() const { return m_CurrentCompleteDataMap; }

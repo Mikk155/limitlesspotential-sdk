@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -96,7 +96,7 @@ void CBaseItem::SetupItem( const Vector& mins, const Vector& maxs )
 
     SetTouch( &CBaseItem::ItemTouch );
 
-	// Floating items immediately materialize
+    // Floating items immediately materialize
     if( m_FallMode == ItemFallMode::Float )
     {
         SetThink( &CBaseItem::Materialize );
@@ -108,7 +108,7 @@ void CBaseItem::SetupItem( const Vector& mins, const Vector& maxs )
 
     pev->nextthink = gpGlobals->time + 0.1;
 
-	// All items are animated by default
+    // All items are animated by default
     pev->framerate = 1;
 }
 
@@ -141,19 +141,19 @@ void CBaseItem::Spawn()
 void CBaseItem::FallThink()
 {
 #ifndef CLIENT_DLL
-	// Float mode never uses this method
+    // Float mode never uses this method
     ASSERT( m_FallMode != ItemFallMode::Float );
 
     if( ( pev->flags & FL_ONGROUND ) != 0 )
     {
-		// clatter if we have an owner (i.e., dropped by someone)
-		// don't clatter if the item is waiting to respawn (if it's waiting, it is invisible!)
+        // clatter if we have an owner (i.e., dropped by someone)
+        // don't clatter if the item is waiting to respawn (if it's waiting, it is invisible!)
         if( !FNullEnt( GetOwner() ) )
         {
             EmitSoundDyn( CHAN_VOICE, "items/weapondrop1.wav", VOL_NORM, ATTN_NORM, 0, 95 + RANDOM_LONG( 0, 29 ) );
         }
 
-		// lie flat
+        // lie flat
         pev->angles.x = 0;
         pev->angles.z = 0;
 
@@ -169,7 +169,7 @@ void CBaseItem::FallThink()
 void CBaseItem::ItemTouch( CBaseEntity* pOther )
 {
 #ifndef CLIENT_DLL
-	// if it's not a player, ignore
+    // if it's not a player, ignore
     if( auto player = ToBasePlayer( pOther ); player )
     {
         AddToPlayer( player );
@@ -185,13 +185,13 @@ ItemAddResult CBaseItem::AddToPlayer( CBasePlayer* player )
         return ItemAddResult::NotAdded;
     }
 
-	// ok, a player is touching this item, but can he have it?
+    // ok, a player is touching this item, but can he have it?
     if( !g_pGameRules->CanHaveItem( player, this ) )
     {
         return ItemAddResult::NotAdded;
     }
 
-	// Try to add it.
+    // Try to add it.
     const ItemAddResult result = Apply( player );
 
     if( result == ItemAddResult::NotAdded )
@@ -199,7 +199,7 @@ ItemAddResult CBaseItem::AddToPlayer( CBasePlayer* player )
         return result;
     }
 
-	// player grabbed the item.
+    // player grabbed the item.
     g_pGameRules->PlayerGotItem( player, this );
 
     if( g_pGameRules->ItemShouldRespawn( this ) )
@@ -208,22 +208,22 @@ ItemAddResult CBaseItem::AddToPlayer( CBasePlayer* player )
     }
     else
     {
-		// Consumables get removed. Inventory items reconfigure themselves.
+        // Consumables get removed. Inventory items reconfigure themselves.
         if( GetType() == ItemType::Consumable )
         {
             SetTouch( nullptr );
-			// Make invisible immediately.
+            // Make invisible immediately.
             pev->effects |= EF_NODRAW;
             UTIL_Remove( this );
         }
     }
 
-	// Do this after doing the above so the respawned item exists and state changes have occurred.
+    // Do this after doing the above so the respawned item exists and state changes have occurred.
     SUB_UseTargets( player, USE_TOGGLE, 0 );
 
     if( !FStringNull( m_TriggerOnDespawn ) )
     {
-		// Fire with USE_OFF so targets can be controlled more easily.
+        // Fire with USE_OFF so targets can be controlled more easily.
         FireTargets( STRING( m_TriggerOnDespawn ), player, this, USE_OFF, 0 );
     }
 
@@ -247,8 +247,8 @@ CBaseItem* CBaseItem::Respawn()
 #ifndef CLIENT_DLL
     if( auto newItem = GetItemToRespawn( g_pGameRules->ItemRespawnSpot( this ) ); newItem )
     {
-		// not a typo! We want to know when the item the player just picked up should respawn! This new entity we created is the replacement,
-		// but when it should respawn is based on conditions belonging to the item that was taken.
+        // not a typo! We want to know when the item the player just picked up should respawn! This new entity we created is the replacement,
+        // but when it should respawn is based on conditions belonging to the item that was taken.
         const float respawnTime = g_pGameRules->ItemRespawnTime( this );
 
         if( respawnTime > gpGlobals->time && !m_StayVisibleDuringRespawn )
@@ -277,7 +277,7 @@ void CBaseItem::Materialize()
 #ifndef CLIENT_DLL
     if( m_IsRespawning )
     {
-		// changing from invisible state to visible.
+        // changing from invisible state to visible.
         EmitSoundDyn( CHAN_WEAPON, "items/suitchargeok1.wav", VOL_NORM, ATTN_NORM, 0, 150 );
 
         pev->effects &= ~EF_NODRAW;
@@ -315,7 +315,7 @@ void CBaseItem::AttemptToMaterialize()
             Materialize();
             break;
 
-			// Fall first, then materialize (plays clatter sound)
+            // Fall first, then materialize (plays clatter sound)
         case ItemFallMode::Fall:
             pev->flags &= ~FL_ONGROUND;
             SetThink( &CBaseItem::FallThink );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -75,7 +75,7 @@ bool CPython::Deploy()
 {
     if( UseLaserSight() )
     {
-		// enable laser sight geometry.
+        // enable laser sight geometry.
         pev->body = 1;
     }
     else
@@ -121,7 +121,7 @@ void CPython::SecondaryAttack()
 
 void CPython::PrimaryAttack()
 {
-	// don't fire underwater
+    // don't fire underwater
     if( m_pPlayer->pev->waterlevel == WaterLevel::Head )
     {
         PlayEmptySound();
@@ -147,7 +147,7 @@ void CPython::PrimaryAttack()
 
     m_pPlayer->pev->effects = m_pPlayer->pev->effects | EF_MUZZLEFLASH;
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 
@@ -169,7 +169,7 @@ void CPython::PrimaryAttack()
     PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usFirePython, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0 );
 
     if( 0 == GetMagazine1() && m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 
     m_flNextPrimaryAttack = 0.75;
@@ -228,7 +228,7 @@ void CPython::ItemPostFrame()
 {
     const int currentBody = UseLaserSight() ? 1 : 0;
 
-	// Check if we need to reset the laser sight.
+    // Check if we need to reset the laser sight.
     if( currentBody != pev->body )
     {
         pev->body = currentBody;

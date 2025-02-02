@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	The Halflife Cycler Monsters
+ *    @file
+ *    The Halflife Cycler Monsters
  */
 
 #include "cbase.h"
@@ -28,21 +28,21 @@ class CCycler : public CBaseMonster
 public:
     int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE ); }
 
-	/**
-	 *	@brief changes sequences when shot
-	 */
+    /**
+     *    @brief changes sequences when shot
+     */
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
     void OnCreate() override;
     void Spawn() override;
     void Think() override;
-	// void Pain( float flDamage );
+    // void Pain( float flDamage );
 
-	/**
-	 *	@brief starts a rotation trend
-	 */
+    /**
+     *    @brief starts a rotation trend
+     */
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
-	// Don't treat as a live target
+    // Don't treat as a live target
     bool IsAlive() override { return false; }
     bool IsMonster() override { return false; }
 
@@ -121,8 +121,8 @@ void CCycler::Think()
 
     if( m_fSequenceFinished && !m_fSequenceLoops )
     {
-		// ResetSequenceInfo();
-		// hack to avoid reloading model every frame
+        // ResetSequenceInfo();
+        // hack to avoid reloading model every frame
         pev->animtime = gpGlobals->time;
         pev->framerate = 1.0;
         m_fSequenceFinished = false;
@@ -245,7 +245,7 @@ void CCyclerSprite::Animate( float frames )
 }
 
 /**
- *	@brief Flaming Wreakage
+ *    @brief Flaming Wreakage
  */
 class CWreckage : public CBaseMonster
 {
@@ -283,7 +283,7 @@ void CWreckage::Spawn()
         PrecacheModel( STRING( pev->model ) );
         SetModel( STRING( pev->model ) );
     }
-	// pev->scale = 5.0;
+    // pev->scale = 5.0;
 
     m_flStartTime = gpGlobals->time;
 }

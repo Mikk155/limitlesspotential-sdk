@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -45,7 +45,7 @@ public:
 
     void OnEndNetworkDataProcessing() override
     {
-		// If we didn't receive any data we should use a dummy replacement map to avoid crashes.
+        // If we didn't receive any data we should use a dummy replacement map to avoid crashes.
         if( !m_SoundReplacement )
         {
             m_SoundReplacement = std::make_unique<ReplacementMap>( Replacements{}, false );
@@ -64,7 +64,7 @@ public:
     }
 
 private:
-	// Make sure this is valid in case any calls come in before we load the data.
+    // Make sure this is valid in case any calls come in before we load the data.
     std::unique_ptr<ReplacementMap> m_SoundReplacement = std::make_unique<ReplacementMap>( Replacements{}, false );
 };
 

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -18,7 +18,7 @@
 #include "cbase.h"
 
 // special deathmatch shotgun spreads
-constexpr Vector VECTOR_CONE_DM_SHOTGUN{0.08716f, 0.04362f, 0.00f};		  // 10 degrees by 5 degrees
+constexpr Vector VECTOR_CONE_DM_SHOTGUN{0.08716f, 0.04362f, 0.00f};          // 10 degrees by 5 degrees
 constexpr Vector VECTOR_CONE_DM_DOUBLESHOTGUN{0.17365f, 0.04362f, 0.00f}; // 20 degrees by 5 degrees
 
 enum shotgun_e

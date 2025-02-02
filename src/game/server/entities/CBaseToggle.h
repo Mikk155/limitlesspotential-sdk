@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,7 +24,7 @@ class CBaseToggle;
 using MoveDonePtr = TBASEPTR<CBaseToggle>;
 
 /**
- *	@brief generic Toggle entity.
+ *    @brief generic Toggle entity.
  */
 class CBaseToggle : public CBaseAnimating
 {
@@ -51,26 +51,26 @@ public:
 
     float GetDelay() override { return m_flWait; }
 
-	// common member functions
-	/**
-	 *	@brief calculate pev->velocity and pev->nextthink to reach vecDest from pev->origin traveling at flSpeed
-	 */
+    // common member functions
+    /**
+     *    @brief calculate pev->velocity and pev->nextthink to reach vecDest from pev->origin traveling at flSpeed
+     */
     void LinearMove( Vector vecDest, float flSpeed );
 
-	/**
-	 *	@brief After moving, set origin to exact final destination, call "move done" function
-	 */
+    /**
+     *    @brief After moving, set origin to exact final destination, call "move done" function
+     */
     void LinearMoveDone();
 
-	/**
-	 *	@brief calculate pev->velocity and pev->nextthink to reach vecDest from pev->origin traveling at flSpeed
-	 *	Just like LinearMove, but rotational.
-	 */
+    /**
+     *    @brief calculate pev->velocity and pev->nextthink to reach vecDest from pev->origin traveling at flSpeed
+     *    Just like LinearMove, but rotational.
+     */
     void AngularMove( Vector vecDestAngle, float flSpeed );
 
-	/**
-	 *	@brief After rotating, set angle to exact final angle, call "move done" function
-	 */
+    /**
+     *    @brief After rotating, set angle to exact final angle, call "move done" function
+     */
     void AngularMoveDone();
 
     static float AxisValue( int flags, const Vector& angles );

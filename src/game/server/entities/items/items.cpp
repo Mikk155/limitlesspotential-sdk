@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -252,8 +252,8 @@ protected:
 
                 if( playHEVSound )
                 {
-					// Suit reports new power level
-					// For some reason this wasn't working in release build -- round it.
+                    // Suit reports new power level
+                    // For some reason this wasn't working in release build -- round it.
                     int pct = (int)( (float)( player->pev->armorvalue * 100.0 ) * ( 1.0 / MAX_NORMAL_BATTERY ) + 0.5 );
                     pct = ( pct / 5 );
                     if( pct > 0 )
@@ -262,7 +262,7 @@ protected:
                     char szcharge[64];
                     sprintf( szcharge, "!HEV_%1dP", pct );
 
-					// EMIT_SOUND_SUIT(this, szcharge);
+                    // EMIT_SOUND_SUIT(this, szcharge);
                     player->SetSuitUpdate( szcharge, SUIT_NEXT_IN_30SEC );
                 }
             }

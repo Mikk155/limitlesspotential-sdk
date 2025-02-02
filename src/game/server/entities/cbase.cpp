@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -30,15 +30,15 @@ int DispatchSpawn( edict_t* pent )
 
     if( pEntity )
     {
-		// Initialize these or entities who don't link to the world won't have anything in here
+        // Initialize these or entities who don't link to the world won't have anything in here
         pEntity->pev->absmin = pEntity->pev->origin - Vector( 1, 1, 1 );
         pEntity->pev->absmax = pEntity->pev->origin + Vector( 1, 1, 1 );
 
         pEntity->Spawn();
 
-		// Try to get the pointer again, in case the spawn function deleted the entity.
-		// UNDONE: Spawn() should really return a code to ask that the entity be deleted, but
-		// that would touch too much code for me to do that right now.
+        // Try to get the pointer again, in case the spawn function deleted the entity.
+        // UNDONE: Spawn() should really return a code to ask that the entity be deleted, but
+        // that would touch too much code for me to do that right now.
         pEntity = (CBaseEntity*)GET_PRIVATE( pent );
 
         if( pEntity )
@@ -50,24 +50,24 @@ int DispatchSpawn( edict_t* pent )
         }
 
 
-		// Handle global stuff here
+        // Handle global stuff here
         if( pEntity && !FStringNull( pEntity->pev->globalname ) )
         {
             const globalentity_t* pGlobal = gGlobalState.EntityFromTable( pEntity->pev->globalname );
             if( pGlobal )
             {
-				// Already dead? delete
+                // Already dead? delete
                 if( pGlobal->state == GLOBAL_DEAD )
                     return -1;
                 else if( !FStrEq( STRING( gpGlobals->mapname ), pGlobal->levelName ) )
                     pEntity->MakeDormant(); // Hasn't been moved to this level yet, wait but stay alive
-											// In this level & not dead, continue on as normal
+                                            // In this level & not dead, continue on as normal
             }
             else
             {
-				// Spawned entities default to 'On'
+                // Spawned entities default to 'On'
                 gGlobalState.EntityAdd( pEntity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
-				// CBaseEntity::Logger->trace("Added global entity {} ({})", STRING(pEntity->pev->classname), STRING(pEntity->pev->globalname));
+                // CBaseEntity::Logger->trace("Added global entity {} ({})", STRING(pEntity->pev->classname), STRING(pEntity->pev->globalname));
             }
         }
     }
@@ -124,12 +124,12 @@ void DispatchKeyValue( edict_t* pentKeyvalue, KeyValueData* pkvd )
 
     if( g_Server.CheckForNewMapStart( false ) )
     {
-		// HACK: If we get here that means we're loading a new map and we're setting worldspawn's classname.
-		// We've wiped out com_token by calling SERVER_EXECUTE() which stores the classname so we need to reset it.
+        // HACK: If we get here that means we're loading a new map and we're setting worldspawn's classname.
+        // We've wiped out com_token by calling SERVER_EXECUTE() which stores the classname so we need to reset it.
         pkvd->szValue = "worldspawn";
     }
 
-	// Don't allow classname changes once the classname has been set.
+    // Don't allow classname changes once the classname has been set.
     if( !FStringNull( pentKeyvalue->v.classname ) && FStrEq( pkvd->szKeyName, "classname" ) )
     {
         CBaseEntity::Logger->debug( "{}: Duplicate classname \"{}\" ignored",
@@ -139,12 +139,12 @@ void DispatchKeyValue( edict_t* pentKeyvalue, KeyValueData* pkvd )
 
     EntvarsKeyvalue( &pentKeyvalue->v, pkvd );
 
-	// If the key was an entity variable, or there's no class set yet, don't look for the object, it may
-	// not exist yet.
+    // If the key was an entity variable, or there's no class set yet, don't look for the object, it may
+    // not exist yet.
     if( 0 != pkvd->fHandled || pkvd->szClassName == nullptr )
         return;
 
-	// Get the actualy entity object
+    // Get the actualy entity object
     CBaseEntity* pEntity = (CBaseEntity*)GET_PRIVATE( pentKeyvalue );
 
     if( !pEntity )
@@ -218,7 +218,7 @@ void DispatchSave( edict_t* pent, SAVERESTOREDATA* pSaveData )
         if( ( pEntity->ObjectCaps() & FCAP_DONT_SAVE ) != 0 )
             return;
 
-		// These don't use ltime & nextthink as times really, but we'll fudge around it.
+        // These don't use ltime & nextthink as times really, but we'll fudge around it.
         if( pEntity->pev->movetype == MOVETYPE_PUSH )
         {
             float delta = pEntity->pev->nextthink - pEntity->pev->ltime;
@@ -244,14 +244,14 @@ void OnFreeEntPrivateData( edict_t* pEdict )
 
         g_EntityDictionary->Destroy( entity );
 
-		// Zero this out so the engine doesn't try to free it again.
+        // Zero this out so the engine doesn't try to free it again.
         pEdict->pvPrivateData = nullptr;
     }
 }
 
 /**
- *	@brief Find the matching global entity.
- *	Spit out an error if the designer made entities of different classes with the same global name
+ *    @brief Find the matching global entity.
+ *    Spit out an error if the designer made entities of different classes with the same global name
  */
 CBaseEntity* FindGlobalEntity( string_t classname, string_t globalname )
 {
@@ -287,39 +287,39 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
             tmpRestore.PrecacheMode( false );
             tmpRestore.ReadFields( &tmpVars, *entvars_t::GetLocalDataMap(), *entvars_t::GetLocalDataMap() );
 
-			// HACKHACK - reset the save pointers, we're going to restore for real this time
+            // HACKHACK - reset the save pointers, we're going to restore for real this time
             pSaveData->size = pSaveData->pTable[pSaveData->currentIndex].location;
             pSaveData->pCurrentData = pSaveData->pBaseData + pSaveData->size;
-			// -------------------
+            // -------------------
 
 
             const globalentity_t* pGlobal = gGlobalState.EntityFromTable( tmpVars.globalname );
 
-			// Don't overlay any instance of the global that isn't the latest
-			// pSaveData->szCurrentMapName is the level this entity is coming from
-			// pGlobla->levelName is the last level the global entity was active in.
-			// If they aren't the same, then this global update is out of date.
+            // Don't overlay any instance of the global that isn't the latest
+            // pSaveData->szCurrentMapName is the level this entity is coming from
+            // pGlobla->levelName is the last level the global entity was active in.
+            // If they aren't the same, then this global update is out of date.
             if( !FStrEq( pSaveData->szCurrentMapName, pGlobal->levelName ) )
                 return 0;
 
-			// Compute the new global offset
+            // Compute the new global offset
             oldOffset = pSaveData->vecLandmarkOffset;
             CBaseEntity* pNewEntity = FindGlobalEntity( tmpVars.classname, tmpVars.globalname );
             if( pNewEntity )
             {
-				// CBaseEntity::Logger->debug("Overlay {} with {}", STRING(pNewEntity->pev->classname), STRING(tmpVars.classname));
-				//  Tell the restore code we're overlaying a global entity from another level
+                // CBaseEntity::Logger->debug("Overlay {} with {}", STRING(pNewEntity->pev->classname), STRING(tmpVars.classname));
+                //  Tell the restore code we're overlaying a global entity from another level
                 restoreHelper.SetGlobalMode( true ); // Don't overwrite global fields
                 pSaveData->vecLandmarkOffset = ( pSaveData->vecLandmarkOffset - pNewEntity->pev->mins ) + tmpVars.mins;
                 pEntity = pNewEntity; // we're going to restore this data OVER the old entity
                 pent = pEntity->edict();
-				// Update the global table to say that the global definition of this entity should come from this level
+                // Update the global table to say that the global definition of this entity should come from this level
                 gGlobalState.EntityUpdate( pEntity->pev->globalname, gpGlobals->mapname );
             }
             else
             {
-				// This entity will be freed automatically by the engine.  If we don't do a restore on a matching entity (below)
-				// or call EntityUpdate() to move it to this level, we haven't changed global state at all.
+                // This entity will be freed automatically by the engine.  If we don't do a restore on a matching entity (below)
+                // or call EntityUpdate() to move it to this level, we haven't changed global state at all.
                 return 0;
             }
         }
@@ -336,7 +336,7 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
             pEntity->Precache();
         }
 
-		// Again, could be deleted, get the pointer again.
+        // Again, could be deleted, get the pointer again.
         pEntity = (CBaseEntity*)GET_PRIVATE( pent );
 
 #if 0
@@ -346,10 +346,10 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
         }
 #endif
 
-		// Is this an overriding global entity (coming over the transition), or one restoring in a level
+        // Is this an overriding global entity (coming over the transition), or one restoring in a level
         if( 0 != globalEntity )
         {
-			// CBaseEntity::Logger->debug("After: {} {}", pEntity->pev->origin, STRING(pEntity->pev->model));
+            // CBaseEntity::Logger->debug("After: {} {}", pEntity->pev->origin, STRING(pEntity->pev->model));
             pSaveData->vecLandmarkOffset = oldOffset;
             if( pEntity )
             {
@@ -362,20 +362,20 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
             const globalentity_t* pGlobal = gGlobalState.EntityFromTable( pEntity->pev->globalname );
             if( pGlobal )
             {
-				// Already dead? delete
+                // Already dead? delete
                 if( pGlobal->state == GLOBAL_DEAD )
                     return -1;
                 else if( !FStrEq( STRING( gpGlobals->mapname ), pGlobal->levelName ) )
                 {
                     pEntity->MakeDormant(); // Hasn't been moved to this level yet, wait but stay alive
                 }
-				// In this level & not dead, continue on as normal
+                // In this level & not dead, continue on as normal
             }
             else
             {
                 CBaseEntity::Logger->error( "Global Entity {} ({}) not in table!!!\n",
                     STRING( pEntity->pev->globalname ), STRING( pEntity->pev->classname ) );
-				// Spawned entities default to 'On'
+                // Spawned entities default to 'On'
                 gGlobalState.EntityAdd( pEntity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
             }
         }
@@ -397,8 +397,8 @@ void DispatchObjectCollsionBox( edict_t* pent )
 // The engine uses the old type description data, so we need to translate it to the game's version.
 static FIELDTYPE RemapEngineFieldType( ENGINEFIELDTYPE fieldType )
 {
-	// The engine only uses these data types.
-	// Some custom engine may use others, but those engines are not supported.
+    // The engine only uses these data types.
+    // Some custom engine may use others, but those engines are not supported.
     switch ( fieldType )
     {
     case ENGINEFIELDTYPE::FIELD_FLOAT: return FIELD_FLOAT;
@@ -415,8 +415,8 @@ static FIELDTYPE RemapEngineFieldType( ENGINEFIELDTYPE fieldType )
 
 static const IDataFieldSerializer* RemapEngineFieldTypeToSerializer( ENGINEFIELDTYPE fieldType )
 {
-	// The engine only uses these data types.
-	// Some custom engine may use others, but those engines are not supported.
+    // The engine only uses these data types.
+    // Some custom engine may use others, but those engines are not supported.
     switch ( fieldType )
     {
     case ENGINEFIELDTYPE::FIELD_FLOAT: return &FieldTypeToSerializerMapper<FIELD_FLOAT>::Serializer;
@@ -494,14 +494,14 @@ void SaveReadFields( SAVERESTOREDATA* pSaveData, const char* pname, void* pBaseD
         return;
     }
 
-	// Will happen here if we're loading a saved game
-	// ETABLE is the first chunk of data read after the engine has set up some global variables that we need
+    // Will happen here if we're loading a saved game
+    // ETABLE is the first chunk of data read after the engine has set up some global variables that we need
     if( 0 == strcmp( pname, "ETABLE" ) )
     {
         g_Server.CheckForNewMapStart( true );
     }
 
-	// Always check if the player is stuck when loading a save game.
+    // Always check if the player is stuck when loading a save game.
     g_CheckForPlayerStuck = true;
 
     auto dataMap = GetOrCreateDataMap( pname, pFields, fieldCount );
@@ -514,7 +514,7 @@ static void CheckForBackwardsBounds( CBaseEntity* entity )
 {
     if( UTIL_FixBoundsVectors( entity->m_CustomHullMin, entity->m_CustomHullMax ) )
     {
-		// Can't log the targetname because it may not have been set yet.
+        // Can't log the targetname because it may not have been set yet.
         CBaseEntity::Logger->warn( "Backwards mins/maxs fixed in custom hull (entity index {})", entity->entindex() );
     }
 }
@@ -530,7 +530,7 @@ static void LoadReplacementMap( const ReplacementMap*& destination, string_t fil
 
     auto result = g_ReplacementMaps.Load( fileNameString, options );
 
-	// Only overwrite destination if we successfully loaded something.
+    // Only overwrite destination if we successfully loaded something.
     if( result )
     {
         destination = result;
@@ -549,8 +549,8 @@ static void LoadSentenceReplacementMap( const ReplacementMap*& destination, stri
 
 bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
 {
-	// Replacement maps can be changed at runtime using trigger_changekeyvalue.
-	// Note that this may cause host_error or sys_error if files aren't precached.
+    // Replacement maps can be changed at runtime using trigger_changekeyvalue.
+    // Note that this may cause host_error or sys_error if files aren't precached.
     if( FStrEq( pkvd->szKeyName, "modellist" ) )
     {
         m_ModelReplacementFileName = ALLOC_STRING( pkvd->szValue );
@@ -659,7 +659,7 @@ bool CBaseEntity::GiveHealth( float flHealth, int bitsDamageType )
     if( 0 == pev->takedamage )
         return false;
 
-	// heal
+    // heal
     if( pev->health >= pev->max_health )
         return false;
 
@@ -678,26 +678,26 @@ bool CBaseEntity::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
     if( 0 == pev->takedamage )
         return false;
 
-	// UNDONE: some entity types may be immune or resistant to some bitsDamageType
+    // UNDONE: some entity types may be immune or resistant to some bitsDamageType
 
-	// if Attacker == Inflictor, the attack was a melee or other instant-hit attack.
-	// (that is, no actual entity projectile was involved in the attack so use the shooter's origin).
+    // if Attacker == Inflictor, the attack was a melee or other instant-hit attack.
+    // (that is, no actual entity projectile was involved in the attack so use the shooter's origin).
     if( attacker == inflictor )
     {
         vecTemp = inflictor->pev->origin - ( VecBModelOrigin( this ) );
     }
     else
-	// an actual missile was involved.
+    // an actual missile was involved.
     {
         vecTemp = inflictor->pev->origin - ( VecBModelOrigin( this ) );
     }
 
-	// this global is still used for glass and other non-monster killables, along with decals.
+    // this global is still used for glass and other non-monster killables, along with decals.
     g_vecAttackDir = vecTemp.Normalize();
 
-	// save damage based on the target's armor level
+    // save damage based on the target's armor level
 
-	// figure momentum add (don't let hurt brushes or other triggers move player)
+    // figure momentum add (don't let hurt brushes or other triggers move player)
     if( ( !FNullEnt( inflictor ) ) && ( pev->movetype == MOVETYPE_WALK || pev->movetype == MOVETYPE_STEP ) && ( attacker->pev->solid != SOLID_TRIGGER ) )
     {
         Vector vecDir = pev->origin - ( inflictor->pev->absmin + inflictor->pev->absmax ) * 0.5;
@@ -710,7 +710,7 @@ bool CBaseEntity::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
         pev->velocity = pev->velocity + vecDir * flForce;
     }
 
-	// do the damage
+    // do the damage
     pev->health -= flDamage;
     if( pev->health <= 0 )
     {
@@ -792,15 +792,15 @@ void CBaseEntity::MakeDormant()
 {
     SetBits( pev->flags, FL_DORMANT );
 
-	// Don't touch
+    // Don't touch
     pev->solid = SOLID_NOT;
-	// Don't move
+    // Don't move
     pev->movetype = MOVETYPE_NONE;
-	// Don't draw
+    // Don't draw
     SetBits( pev->effects, EF_NODRAW );
-	// Don't think
+    // Don't think
     pev->nextthink = 0;
-	// Relink
+    // Relink
     SetOrigin( pev->origin );
 }
 

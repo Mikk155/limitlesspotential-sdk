@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -24,7 +24,7 @@
 constexpr float BabyVoltigoreMeleeDist = 64;
 
 /**
- *	@brief Tank like alien
+ *    @brief Tank like alien
  */
 class COFBabyVoltigore : public COFVoltigore
 {
@@ -44,22 +44,22 @@ public:
 
     void GibMonster() override
     {
-		// Don't use adult gibbing logic.
+        // Don't use adult gibbing logic.
         CSquadMonster::GibMonster();
     }
 
-	/**
-	 *	@brief expects a length to trace, amount of damage to do, and damage type.
-	 *	Returns a pointer to the damaged entity in case the monster wishes to do other stuff to the victim (punchangle, etc)
-	 *	Used for many contact-range melee attacks. Bites, claws, etc.
-	 */
+    /**
+     *    @brief expects a length to trace, amount of damage to do, and damage type.
+     *    Returns a pointer to the damaged entity in case the monster wishes to do other stuff to the victim (punchangle, etc)
+     *    Used for many contact-range melee attacks. Bites, claws, etc.
+     */
     CBaseEntity* CheckTraceHullAttack( float flDist, int iDamage, int iDmgType );
 
 protected:
-	// So babies can't fire off attacks if they happen to have an activity for it
+    // So babies can't fire off attacks if they happen to have an activity for it
     bool CanUseRangeAttacks() const override { return false; }
 
-	// Babies don't blow up
+    // Babies don't blow up
     bool BlowsUpOnDeath() const override { return false; }
 
     float GetMeleeDistance() const override { return BabyVoltigoreMeleeDist; }
@@ -110,7 +110,7 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
     case BABYVOLTIGORE_AE_RIGHT_FOOT:
         switch ( RANDOM_LONG( 0, 2 ) )
         {
-			// left foot
+            // left foot
         case 0:
             EmitSoundDyn( CHAN_BODY, "voltigore/voltigore_footstep1.wav", 1, ATTN_IDLE, 0, 130 );
             break;
@@ -132,10 +132,10 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
             pHurt->pev->punchangle.y = -25;
             pHurt->pev->punchangle.x = 8;
 
-			// OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
+            // OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
             if( pHurt->IsPlayer() )
             {
-				// this is a player. Knock him around.
+                // this is a player. Knock him around.
                 pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * 250;
             }
 
@@ -147,7 +147,7 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
         }
         else
         {
-			// Play a random attack miss sound
+            // Play a random attack miss sound
             EmitSoundDyn( CHAN_WEAPON, pAttackMissSounds[RANDOM_LONG( 0, std::size( pAttackMissSounds ) - 1 )], 1.0, ATTN_IDLE, 0, 130 );
         }
     }
@@ -162,10 +162,10 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
             pHurt->pev->punchangle.y = 25;
             pHurt->pev->punchangle.x = 8;
 
-			// OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
+            // OK to use gpGlobals without calling MakeVectors, cause CheckTraceHullAttack called it above.
             if( pHurt->IsPlayer() )
             {
-				// this is a player. Knock him around.
+                // this is a player. Knock him around.
                 pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * -250;
             }
 
@@ -177,7 +177,7 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
         }
         else
         {
-			// Play a random attack miss sound
+            // Play a random attack miss sound
             EmitSoundDyn( CHAN_WEAPON, pAttackMissSounds[RANDOM_LONG( 0, std::size( pAttackMissSounds ) - 1 )], 1.0, ATTN_IDLE, 0, 130 );
         }
     }
@@ -186,7 +186,7 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
     case BABYVOLTIGORE_AE_RUN:
         switch ( RANDOM_LONG( 0, 1 ) )
         {
-			// left foot
+            // left foot
         case 0:
             EmitSoundDyn( CHAN_VOICE, "voltigore/voltigore_run_grunt1.wav", 1, ATTN_NORM, 0, 180 );
             break;
@@ -217,7 +217,7 @@ CBaseEntity* COFBabyVoltigore::CheckTraceHullAttack( float flDist, int iDamage, 
         UTIL_MakeAimVectors( pev->angles );
 
     Vector vecStart = pev->origin;
-	// Don't rescale the Z size for us since we're just a baby
+    // Don't rescale the Z size for us since we're just a baby
     vecStart.z += pev->size.z;
     Vector vecEnd = vecStart + ( gpGlobals->v_forward * flDist );
 

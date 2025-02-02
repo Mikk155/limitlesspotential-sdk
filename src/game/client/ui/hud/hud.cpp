@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -119,7 +119,7 @@ void CHud::Init()
     cl_rollspeed = CVAR_CREATE( "cl_rollspeed", "200", FCVAR_ARCHIVE );
     cl_bobtilt = CVAR_CREATE( "cl_bobtilt", "0", FCVAR_ARCHIVE );
 
-	// Clear any old HUD list
+    // Clear any old HUD list
     m_HudList.clear();
 
     m_Ammo.Init();
@@ -172,17 +172,17 @@ void CHud::UpdateScreenInfo()
 
 void CHud::VidInit()
 {
-	// Show paused text by default.
+    // Show paused text by default.
     gEngfuncs.Cvar_SetValue( "showpause", 1 );
 
-	// ----------
-	// Load Sprites
-	// ---------
+    // ----------
+    // Load Sprites
+    // ---------
 
     m_hsprLogo = 0;
     m_hsprCursor = 0;
 
-	// we need to load the hud.json, and all sprites within
+    // we need to load the hud.json, and all sprites within
     m_Sprites.clear();
 
     if( g_pFileSystem->FileExists( g_HudReplacements.HudReplacementFileName.c_str() ) )
@@ -195,8 +195,8 @@ void CHud::VidInit()
         m_Sprites = g_HudSpriteConfig.Load( "sprites/hud.json" );
     }
 
-	// we have already have loaded the sprite reference from hud.json, but
-	// we need to make sure all the sprites have been loaded (we've gone through a transition, or loaded a save game)
+    // we have already have loaded the sprite reference from hud.json, but
+    // we need to make sure all the sprites have been loaded (we've gone through a transition, or loaded a save game)
     for( auto& hudSprite : m_Sprites )
     {
         hudSprite.Handle = SPR_Load( fmt::format( "sprites/{}.spr", hudSprite.SpriteName.c_str() ).c_str() );
@@ -204,7 +204,7 @@ void CHud::VidInit()
 
     m_HUD_number_0 = GetSpriteIndex( "number_0" );
 
-	// TODO: make sure these actually exist
+    // TODO: make sure these actually exist
     for( int i = 0; i < 10; ++i )
     {
         m_HudNumbers[i] = GetSpriteIndex( fmt::format( "number_{}", i ).c_str() );
@@ -220,7 +220,7 @@ void CHud::VidInit()
         m_iFontHeight = 0;
     }
 
-	// Reset to default on new map load
+    // Reset to default on new map load
     m_HudColor = RGB_HUD_COLOR;
     m_HudItemColor = RGB_HUD_COLOR;
     m_CrosshairColor = RGB_CROSSHAIR_COLOR;
@@ -237,7 +237,7 @@ void CHud::MsgFunc_HudColor( const char* pszName, BufferReader& reader )
     m_HudColor.Green = reader.ReadByte();
     m_HudColor.Blue = reader.ReadByte();
 
-	// Sync item color up if we're not in NVG mode
+    // Sync item color up if we're not in NVG mode
     if( !m_NightVisionState )
     {
         m_HudItemColor = m_HudColor;
@@ -253,7 +253,7 @@ void CHud::MsgFunc_CrosshairColor( const char* pszName, BufferReader& reader )
 
 void CHud::MsgFunc_Logo( const char* pszName, BufferReader& reader )
 {
-	// update Train data
+    // update Train data
     m_ShowLogo = reader.ReadByte() != 0;
 }
 
@@ -271,7 +271,7 @@ void COM_FileBase( const char* in, char* out )
 
     len = strlen( in );
 
-	// scan backward for '.'
+    // scan backward for '.'
     end = len - 1;
     while( 0 != end && in[end] != '.' && in[end] != '/' && in[end] != '\\' )
         end--;
@@ -282,7 +282,7 @@ void COM_FileBase( const char* in, char* out )
         end--; // Found ',', copy to left of '.'
 
 
-	// Scan backward for '/'
+    // Scan backward for '/'
     start = len - 1;
     while( start >= 0 && in[start] != '/' && in[start] != '\\' )
         start--;
@@ -292,12 +292,12 @@ void COM_FileBase( const char* in, char* out )
     else
         start++;
 
-	// Length of new sting
+    // Length of new sting
     len = end - start + 1;
 
-	// Copy partial string
+    // Copy partial string
     strncpy( out, &in[start], len );
-	// Terminate it
+    // Terminate it
     out[len] = 0;
 }
 
@@ -333,11 +333,11 @@ float HUD_GetFOV()
 {
     if( 0 != gEngfuncs.pDemoAPI->IsRecording() )
     {
-		// Write it
+        // Write it
         int i = 0;
         unsigned char buf[100];
 
-		// Active
+        // Active
         *(float*)&buf[i] = g_lastFOV;
         i += sizeof(float);
 
@@ -356,12 +356,12 @@ void CHud::MsgFunc_SetFOV( const char* pszName, BufferReader& reader )
     int newfov = reader.ReadByte();
     int def_fov = CVAR_GET_FLOAT( "default_fov" );
 
-	// Weapon prediction already takes care of changing the fog. ( g_lastFOV ).
-	// But it doesn't restore correctly so this still needs to be used
-	/*
-	if ( cl_lw && cl_lw->value )
-		return 1;
-		*/
+    // Weapon prediction already takes care of changing the fog. ( g_lastFOV ).
+    // But it doesn't restore correctly so this still needs to be used
+    /*
+    if ( cl_lw && cl_lw->value )
+        return 1;
+        */
 
     g_lastFOV = newfov;
 
@@ -374,17 +374,17 @@ void CHud::MsgFunc_SetFOV( const char* pszName, BufferReader& reader )
         m_iFOV = newfov;
     }
 
-	// the clients fov is actually set in the client data update section of the hud
+    // the clients fov is actually set in the client data update section of the hud
 
-	// Set a new sensitivity
+    // Set a new sensitivity
     if( m_iFOV == def_fov )
     {
-		// reset to saved sensitivity
+        // reset to saved sensitivity
         m_flMouseSensitivity = 0;
     }
     else
     {
-		// set a new sensitivity that is proportional to the change from the FOV default
+        // set a new sensitivity that is proportional to the change from the FOV default
         m_flMouseSensitivity = sensitivity->value * ( (float)newfov / (float)def_fov ) * CVAR_GET_FLOAT( "zoom_sensitivity_ratio" );
     }
 }
@@ -392,7 +392,7 @@ void CHud::MsgFunc_SetFOV( const char* pszName, BufferReader& reader )
 
 void CHud::AddHudElem( CHudBase* phudelem )
 {
-	// phudelem->Think();
+    // phudelem->Think();
 
     if( !phudelem )
         return;

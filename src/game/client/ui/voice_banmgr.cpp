@@ -43,7 +43,7 @@ bool CVoiceBanMgr::Init()
 {
     Term();
 
-	// Load in the squelch file.
+    // Load in the squelch file.
     if( FSFile fp{g_pBanMgrFilename, "rb", "GAMECONFIG"}; fp )
     {
         int version;
@@ -72,7 +72,7 @@ bool CVoiceBanMgr::Init()
 
 void CVoiceBanMgr::Term()
 {
-	// Free all the player structures.
+    // Free all the player structures.
     for( int i = 0; i < 256; i++ )
     {
         BannedPlayer* pListHead = &m_PlayerHash[i];
@@ -90,7 +90,7 @@ void CVoiceBanMgr::Term()
 
 void CVoiceBanMgr::SaveState()
 {
-	// Save the file out.
+    // Save the file out.
     if( FSFile fp{g_pBanMgrFilename, "wb", "GAMECONFIG"}; fp )
     {
         const int version = BANMGR_FILEVERSION;
@@ -118,7 +118,7 @@ void CVoiceBanMgr::SetPlayerBan( char const playerID[16], bool bSquelch )
 {
     if( bSquelch )
     {
-		// Is this guy already squelched?
+        // Is this guy already squelched?
         if( GetPlayerBan( playerID ) )
             return;
 
@@ -151,7 +151,7 @@ void CVoiceBanMgr::ForEachBannedPlayer( void ( *callback )( char id[16] ) )
 
 void CVoiceBanMgr::Clear()
 {
-	// Tie off the hash table entries.
+    // Tie off the hash table entries.
     for( int i = 0; i < 256; i++ )
         m_PlayerHash[i].m_pNext = m_PlayerHash[i].m_pPrev = &m_PlayerHash[i];
 }

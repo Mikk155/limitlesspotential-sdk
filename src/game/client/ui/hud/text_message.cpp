@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -48,14 +48,14 @@ char* CHudTextMessage::LocaliseTextString( const char* msg, char* dst_buffer, in
 
     char* dst = dst_buffer;
 
-	// Subtract one so we have space for the null terminator no matter what.
+    // Subtract one so we have space for the null terminator no matter what.
     std::size_t remainingBufferSize = buffer_size - 1;
 
     for( const char* src = msg; *src != '\0' && remainingBufferSize > 0; )
     {
         if( *src == '#' )
         {
-			// cut msg name out of string
+            // cut msg name out of string
             static char word_buf[255];
             const char* word_start = src;
 
@@ -82,11 +82,11 @@ char* CHudTextMessage::LocaliseTextString( const char* msg, char* dst_buffer, in
                 src += nameLength;
             }
 
-			// lookup msg name in titles.txt
+            // lookup msg name in titles.txt
             client_textmessage_t* clmsg = TextMessageGet( word_buf );
             if( clmsg && clmsg->pMessage )
             {
-				// copy string into message over the msg name
+                // copy string into message over the msg name
                 const std::size_t count = std::min( remainingBufferSize, std::strlen( clmsg->pMessage ) );
 
                 std::strncpy( dst, clmsg->pMessage, count );
@@ -125,10 +125,10 @@ const char* CHudTextMessage::LookupString( const char* msg, int* msg_dest )
     if( !msg )
         return "";
 
-	// '#' character indicates this is a reference to a string in titles.txt, and not the string itself
+    // '#' character indicates this is a reference to a string in titles.txt, and not the string itself
     if( msg[0] == '#' )
     {
-		// this is a message name, so look up the real message
+        // this is a message name, so look up the real message
         client_textmessage_t* clmsg = TextMessageGet( msg + 1 );
 
         if( !clmsg || !( clmsg->pMessage ) )
@@ -136,8 +136,8 @@ const char* CHudTextMessage::LookupString( const char* msg, int* msg_dest )
 
         if( msg_dest )
         {
-			// check to see if titles.txt info overrides msg destination
-			// if clmsg->effect is less than 0, then clmsg->effect holds -1 * message_destination
+            // check to see if titles.txt info overrides msg destination
+            // if clmsg->effect is less than 0, then clmsg->effect holds -1 * message_destination
             if( clmsg->effect < 0 ) //
                 *msg_dest = -clmsg->effect;
         }
@@ -188,7 +188,7 @@ void CHudTextMessage::MsgFunc_TextMsg( const char* pszName, BufferReader& reader
     const char* msg_text = LookupString( reader.ReadString(), &msg_dest );
     msg_text = safe_strcpy( szBuf[0], msg_text, MSG_BUF_SIZE );
 
-	// keep reading strings and using C format strings for subsituting the strings into the localised text string
+    // keep reading strings and using C format strings for subsituting the strings into the localised text string
     const char* tempsstr1 = LookupString( reader.ReadString() );
     char* sstr1 = safe_strcpy( szBuf[1], tempsstr1, MSG_BUF_SIZE );
     StripEndNewlineFromString( sstr1 ); // these strings are meant for subsitution into the main strings, so cull the automatic end newlines

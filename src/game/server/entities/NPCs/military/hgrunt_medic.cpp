@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -22,7 +22,7 @@
 #include "blackmesa/scientist.h"
 
 #define MEDIC_DEAGLE_CLIP_SIZE 9 //!< how many bullets in a clip?
-#define MEDIC_GLOCK_CLIP_SIZE 9	 //!< how many bullets in a clip?
+#define MEDIC_GLOCK_CLIP_SIZE 9     //!< how many bullets in a clip?
 
 namespace MedicAllyBodygroup
 {
@@ -164,7 +164,7 @@ void COFMedicAlly::OnCreate()
     pev->health = GetSkillFloat( "medic_ally_health"sv );
     pev->model = MAKE_STRING( "models/hgrunt_medic.mdl" );
 
-	// get voice pitch
+    // get voice pitch
     m_voicePitch = 105;
 }
 
@@ -193,7 +193,7 @@ void COFMedicAlly::DropWeapon( bool applyVelocity )
 
 void COFMedicAlly::Shoot()
 {
-	// Limit fire rate
+    // Limit fire rate
     if( m_hEnemy == nullptr || gpGlobals->time - m_flLastShot <= 0.11 )
     {
         return;
@@ -569,15 +569,15 @@ std::tuple<int, Activity> COFMedicAlly::GetSequenceForActivity( Activity NewActi
     switch ( NewActivity )
     {
     case ACT_RANGE_ATTACK1:
-		// grunt is either shooting standing or shooting crouched
+        // grunt is either shooting standing or shooting crouched
         if( m_fStanding )
         {
-			// get aimable sequence
+            // get aimable sequence
             iSequence = LookupSequence( "standing_mp5" );
         }
         else
         {
-			// get crouching shoot
+            // get crouching shoot
             iSequence = LookupSequence( "crouching_mp5" );
         }
         break;
@@ -622,13 +622,13 @@ const Schedule_t* COFMedicAlly::GetScheduleOfType( int Type )
 
 int COFMedicAlly::ObjectCaps()
 {
-	// Allow healing the player by continuously using
+    // Allow healing the player by continuously using
     return FCAP_ACROSS_TRANSITION | FCAP_CONTINUOUS_USE;
 }
 
 void COFMedicAlly::Killed( CBaseEntity* attacker, int iGib )
 {
-	// Clear medic handle from patient
+    // Clear medic handle from patient
     if( m_hTargetEnt != nullptr )
     {
         auto pSquadMonster = m_hTargetEnt->MySquadTalkMonsterPointer();
@@ -642,7 +642,7 @@ void COFMedicAlly::Killed( CBaseEntity* attacker, int iGib )
 
 void COFMedicAlly::MonsterThink()
 {
-	// Check if we need to start following the player again after healing them
+    // Check if we need to start following the player again after healing them
     if( m_PlayerToFollow && !m_fFollowChecked && gpGlobals->time - m_flFollowCheckTime > 0.5 )
     {
         auto player = m_PlayerToFollow.Get();
@@ -723,7 +723,7 @@ void COFMedicAlly::HealerActivate( CBaseMonster* pTarget )
         if( pMonster )
             pMonster->m_hWaitMedic = nullptr;
 
-		// TODO: could just change the type of pTarget since this is the only type passed in
+        // TODO: could just change the type of pTarget since this is the only type passed in
         auto pSquadTarget = static_cast<COFSquadTalkMonster*>( pTarget );
 
         pSquadTarget->m_hWaitMedic = this;
@@ -850,7 +850,7 @@ void COFMedicAlly::HealerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE
         return;
     }
 
-	// Only try to follow players.
+    // Only try to follow players.
     if( auto player = ToBasePlayer( pActivator ); player )
     {
         m_PlayerToFollow = player;
@@ -859,7 +859,7 @@ void COFMedicAlly::HealerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE
 }
 
 /**
- *	@brief when triggered, spawns a monster_human_medic_ally repelling down a line.
+ *    @brief when triggered, spawns a monster_human_medic_ally repelling down a line.
  */
 class COFMedicAllyRepel : public CBaseHGruntAllyRepel
 {

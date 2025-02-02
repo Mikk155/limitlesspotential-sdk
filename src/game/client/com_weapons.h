@@ -27,7 +27,7 @@ Vector HUD_GetLastOrg();
 void HUD_SetLastOrg();
 
 /**
- *	@brief Set up functions needed to run weapons code client-side.
+ *    @brief Set up functions needed to run weapons code client-side.
  */
 void HUD_SetupServerEngineInterface();
 

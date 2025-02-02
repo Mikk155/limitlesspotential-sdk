@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -87,7 +87,7 @@ static void EV_TFC_GibCallback( TEMPENTITY* ent, float frametime, float currentt
 {
     switch ( GibState( ent->entity.curstate.playerclass ) )
     {
-		// WaitTillLand
+        // WaitTillLand
     default:
         if( ent->entity.baseline.origin.Length() == 0 )
         {
@@ -187,7 +187,7 @@ static TEMPENTITY* EV_TFC_CreateGib( const char* modelName, int body, byte blood
     {
         const float scale = [&]()
         {
-			// Equivalent of server-side health multiplier.
+            // Equivalent of server-side health multiplier.
             switch ( multiplier )
             {
             case GibVelocityMultiplier::Fraction: return 0.7f;
@@ -200,7 +200,7 @@ static TEMPENTITY* EV_TFC_CreateGib( const char* modelName, int body, byte blood
 
         Vector& velocity = ent->entity.curstate.velocity;
 
-		// make the gib fly away from the attack vector
+        // make the gib fly away from the attack vector
         velocity = attackdir * -1;
 
         for( int i = 0; i < 3; ++i )
@@ -273,7 +273,7 @@ static void MsgFunc_ClientGibs( const char* name, BufferReader& reader )
         numGibs = std::clamp( int( g_cl_gibcount->value ), 0, MAX_TEMPENTS );
     }
 
-	// Track the number of uses of a particular submodel so we can avoid spawning too many of the same submodel
+    // Track the number of uses of a particular submodel so we can avoid spawning too many of the same submodel
     eastl::fixed_vector<int, 64> limitTracking;
 
     if( gibData->Limits )
@@ -293,7 +293,7 @@ static void MsgFunc_ClientGibs( const char* name, BufferReader& reader )
             {
                 ++currentBody;
 
-				// We've hit the limit, stop spawning gibs.
+                // We've hit the limit, stop spawning gibs.
                 if( currentBody >= gibData->SubModelCount )
                 {
                     break;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -183,15 +183,15 @@ struct DataFunctionDescription
 using DataMember = std::variant<DataFieldDescription, DataFunctionDescription>;
 
 /**
- *	@brief Stores a list of type descriptions and a reference to a base class data map.
+ *    @brief Stores a list of type descriptions and a reference to a base class data map.
  */
 struct DataMap final
 {
     const char* ClassName{};
 
-	/**
-	 *	@brief If the type has a base class with a data map, this is that data map.
-	 */
+    /**
+     *    @brief If the type has a base class with a data map, this is that data map.
+     */
     const DataMap* BaseMap{};
 
     std::span<const DataMember> Members;
@@ -211,24 +211,24 @@ public:                                      \
     DECLARE_DATAMAP_COMMON()
 
 /**
- *	@brief Declares a data map for a class with no base that has no virtual methods.
- *	Requires the @c DECLARE_CLASS_NOBASE macro to be used to define @c ThisClass.
+ *    @brief Declares a data map for a class with no base that has no virtual methods.
+ *    Requires the @c DECLARE_CLASS_NOBASE macro to be used to define @c ThisClass.
  */
 #define DECLARE_SIMPLE_DATAMAP() \
     DECLARE_DATAMAP_COMMON();    \
     const DataMap* GetDataMap() const
 
 /**
- *	@brief Declares a data map for a class with no base that has virtual methods.
- *	Requires the @c DECLARE_CLASS_NOBASE macro to be used to define @c ThisClass.
+ *    @brief Declares a data map for a class with no base that has virtual methods.
+ *    Requires the @c DECLARE_CLASS_NOBASE macro to be used to define @c ThisClass.
  */
 #define DECLARE_DATAMAP_NOBASE()       \
     _DECLARE_VIRTUAL_DATAMAP_COMMON(); \
     virtual const DataMap* GetDataMap() const
 
 /**
- *	@brief Declares a data map for a class that inherits from a class that has virtual methods.
- *	Requires the @c DECLARE_CLASS macro to be used to define @c ThisClass and @c BaseClass.
+ *    @brief Declares a data map for a class that inherits from a class that has virtual methods.
+ *    Requires the @c DECLARE_CLASS macro to be used to define @c ThisClass and @c BaseClass.
  */
 #define DECLARE_DATAMAP()              \
     _DECLARE_VIRTUAL_DATAMAP_COMMON(); \
@@ -256,7 +256,7 @@ public:                                      \
         {
 
 /**
- *	@brief Begins a datamap definition for a class with no base class.
+ *    @brief Begins a datamap definition for a class with no base class.
  */
 #define BEGIN_DATAMAP_NOBASE(thisClass)    \
     const DataMap* thisClass::GetBaseMap() \
@@ -267,7 +267,7 @@ public:                                      \
     _BEGIN_DATAMAP_COMMON( thisClass )
 
 /**
- *	@brief Begins a datamap definition for a class with a base class.
+ *    @brief Begins a datamap definition for a class with a base class.
  */
 #define BEGIN_DATAMAP(thisClass)                        \
     const DataMap* thisClass::GetBaseMap()              \
@@ -278,8 +278,8 @@ public:                                      \
     _BEGIN_DATAMAP_COMMON( thisClass )
 
 /**
- *	@brief Ends the datamap definition. Append a semicolon to the end.
- *	@details Empty description because zero-length arrays are not allowed.
+ *    @brief Ends the datamap definition. Append a semicolon to the end.
+ *    @details Empty description because zero-length arrays are not allowed.
  */
 #define END_DATAMAP()                                          \
     {                                                          \
@@ -317,7 +317,7 @@ public:                                      \
 template <typename TFunctionPointer>
 BASEPTR DataMap_ConvertFunctionPointer( TFunctionPointer pointer )
 {
-	// If these aren't the same size then the cast will produce an invalid pointer.
+    // If these aren't the same size then the cast will produce an invalid pointer.
     static_assert( sizeof( BASEPTR ) == sizeof( TFunctionPointer ) );
 
     return *reinterpret_cast<BASEPTR*>( &pointer );

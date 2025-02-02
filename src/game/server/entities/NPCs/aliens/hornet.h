@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,7 +24,7 @@
 extern int iHornetPuff;
 
 /**
- *	@brief this is the projectile that the Alien Grunt fires.
+ *    @brief this is the projectile that the Alien Grunt fires.
  */
 class CHornet : public CBaseMonster
 {
@@ -38,26 +38,26 @@ public:
 
     bool IsBioWeapon() const override { return true; }
 
-	/**
-	 *	@brief hornets will never get mad at each other, no matter who the owner is.
-	 */
+    /**
+     *    @brief hornets will never get mad at each other, no matter who the owner is.
+     */
     Relationship IRelationship( CBaseEntity* pTarget ) override;
 
     void IgniteTrail();
 
-	/**
-	 *	@brief starts a hornet out tracking its target
-	 */
+    /**
+     *    @brief starts a hornet out tracking its target
+     */
     void StartTrack();
 
-	/**
-	 *	@brief starts a hornet out just flying straight.
-	 */
+    /**
+     *    @brief starts a hornet out just flying straight.
+     */
     void StartDart();
 
-	/**
-	 *	@brief Hornet is flying, gently tracking target
-	 */
+    /**
+     *    @brief Hornet is flying, gently tracking target
+     */
     void TrackTarget();
     void TrackTouch( CBaseEntity* pOther );
     void DartTouch( CBaseEntity* pOther );

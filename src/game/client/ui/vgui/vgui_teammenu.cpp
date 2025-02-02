@@ -50,19 +50,19 @@
 CTeamMenuPanel::CTeamMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int wide, int tall )
     : CMenuPanel( iTrans, iRemoveMe, x, y, wide, tall )
 {
-	// Get the scheme used for the Titles
+    // Get the scheme used for the Titles
     CSchemeManager* pSchemes = gViewPort->GetSchemeManager();
 
-	// schemes
+    // schemes
     SchemeHandle_t hTitleScheme = pSchemes->getSchemeHandle( "Title Font" );
     SchemeHandle_t hTeamWindowText = pSchemes->getSchemeHandle( "Briefing Text" );
     SchemeHandle_t hTeamInfoText = pSchemes->getSchemeHandle( "Team Info Text" );
 
-	// get the Font used for the Titles
+    // get the Font used for the Titles
     Font* pTitleFont = pSchemes->getFont( hTitleScheme );
     int r, g, b, a;
 
-	// Create the title
+    // Create the title
     Label* pLabel = new Label( "", TEAMMENU_TITLE_X, TEAMMENU_TITLE_Y );
     pLabel->setParent( this );
     pLabel->setFont( pTitleFont );
@@ -73,12 +73,12 @@ CTeamMenuPanel::CTeamMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int wi
     pLabel->setContentAlignment( vgui::Label::a_west );
     pLabel->setText( "%s", gHUD.m_TextMessage.BufferedLocaliseTextString( "#CTFTitle_SelectYourTeam" ) );
 
-	// Create the Info Window
+    // Create the Info Window
     m_pTeamWindow = new CTransparentPanel( 255, TEAMMENU_WINDOW_X, TEAMMENU_WINDOW_Y, TEAMMENU_WINDOW_SIZE_X, TEAMMENU_WINDOW_SIZE_Y );
     m_pTeamWindow->setParent( this );
     m_pTeamWindow->setBorder( new LineBorder( Color( 0, 112, 0, 0 ) ) );
 
-	// Create the Map Name Label
+    // Create the Map Name Label
     m_pMapTitle = new Label( "", TEAMMENU_WINDOW_TITLE_X, TEAMMENU_WINDOW_TITLE_Y );
     m_pMapTitle->setFont( pTitleFont );
     m_pMapTitle->setParent( m_pTeamWindow );
@@ -88,12 +88,12 @@ CTeamMenuPanel::CTeamMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int wi
     m_pMapTitle->setBgColor( r, g, b, a );
     m_pMapTitle->setContentAlignment( vgui::Label::a_west );
 
-	// Create the Scroll panel
+    // Create the Scroll panel
     m_pScrollPanel = new CTFScrollPanel( TEAMMENU_WINDOW_TEXT_X, TEAMMENU_WINDOW_TEXT_Y, TEAMMENU_WINDOW_SIZE_X - ( TEAMMENU_WINDOW_TEXT_X * 2 ), TEAMMENU_WINDOW_TEXT_SIZE_Y );
     m_pScrollPanel->setParent( m_pTeamWindow );
     m_pScrollPanel->setScrollBarVisible( false, false );
 
-	// Create the Map Briefing panel
+    // Create the Map Briefing panel
     m_pBriefing = new TextPanel( "", 0, 0, TEAMMENU_WINDOW_SIZE_X - TEAMMENU_WINDOW_TEXT_X, TEAMMENU_WINDOW_TEXT_SIZE_Y );
     m_pBriefing->setParent( m_pScrollPanel->getClient() );
     m_pBriefing->setFont( pSchemes->getFont( hTeamWindowText ) );
@@ -104,20 +104,20 @@ CTeamMenuPanel::CTeamMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int wi
 
     m_pBriefing->setText( "Map Description not available." );
 
-	// Team Menu buttons
+    // Team Menu buttons
     for( int i = 1; i <= 3; i++ )
     {
         char sz[256];
 
         int iYPos = TEAMMENU_TOPLEFT_BUTTON_Y + ( ( TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y ) * i );
 
-		// Team button
+        // Team button
         m_pButtons[i] = new CommandButton( "", TEAMMENU_TOPLEFT_BUTTON_X, iYPos, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y, true );
         m_pButtons[i]->setParent( this );
         m_pButtons[i]->setContentAlignment( vgui::Label::a_west );
         m_pButtons[i]->setVisible( false );
 
-		// AutoAssign button uses special case
+        // AutoAssign button uses special case
         if( i == 3 )
         {
             m_pButtons[i]->setBoundKey( '3' );
@@ -125,12 +125,12 @@ CTeamMenuPanel::CTeamMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int wi
             m_pButtons[i]->setVisible( true );
         }
 
-		// Create the Signals
+        // Create the Signals
         sprintf( sz, "jointeam %d", i );
         m_pButtons[i]->addActionSignal( new CMenuHandler_StringCommandWatch( sz, true ) );
         m_pButtons[i]->addInputSignal( new CHandler_MenuButtonOver( this, i ) );
 
-		// Create the Team Info panel
+        // Create the Team Info panel
         m_pTeamInfoPanel[i] = new TextPanel( "", TEAMMENU_WINDOW_INFO_X, TEAMMENU_WINDOW_INFO_Y, TEAMMENU_WINDOW_SIZE_X - TEAMMENU_WINDOW_INFO_X, TEAMMENU_WINDOW_SIZE_X - TEAMMENU_WINDOW_INFO_Y );
         m_pTeamInfoPanel[i]->setParent( m_pTeamWindow );
         m_pTeamInfoPanel[i]->setFont( pSchemes->getFont( hTeamInfoText ) );
@@ -141,13 +141,13 @@ CTeamMenuPanel::CTeamMenuPanel( int iTrans, bool iRemoveMe, int x, int y, int wi
         m_pTeamInfoPanel[i]->setBgColor( 0, 0, 0, 255 );
     }
 
-	// Create the Cancel button
+    // Create the Cancel button
     m_pCancelButton = new CommandButton( CHudTextMessage::BufferedLocaliseTextString( "#CTFMenu_Cancel" ), TEAMMENU_TOPLEFT_BUTTON_X, 0, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y );
     m_pCancelButton->setParent( this );
     m_pCancelButton->addActionSignal( new CMenuHandler_TextWindow( HIDE_TEXTWINDOW ) );
     m_pCancelButton->addActionSignal( new CMenuHandler_StringCommand( "cancelmenu", true ) );
 
-	// Create the Spectate button
+    // Create the Spectate button
     m_pSpectateButton = new SpectateButton( CHudTextMessage::BufferedLocaliseTextString( "#CTFMenu_Spectate" ), TEAMMENU_TOPLEFT_BUTTON_X, 0, TEAMMENU_BUTTON_SIZE_X, TEAMMENU_BUTTON_SIZE_Y, true );
     m_pSpectateButton->setParent( this );
     m_pSpectateButton->addActionSignal( new CMenuHandler_StringCommand( "spectate", true ) );
@@ -189,7 +189,7 @@ void CTeamMenuPanel::Update()
 {
     int iYPos = TEAMMENU_TOPLEFT_BUTTON_Y;
 
-	// Set the team buttons
+    // Set the team buttons
     for( int i = 1; i <= 2; i++ )
     {
         if( m_pButtons[i] )
@@ -198,7 +198,7 @@ void CTeamMenuPanel::Update()
             {
                 m_pButtons[i]->setText( gViewPort->GetTeamName( i ) );
 
-				// bound key replacement
+                // bound key replacement
                 char sz[32];
                 sprintf( sz, "%d", i );
                 m_pButtons[i]->setBoundKey( sz[0] );
@@ -207,64 +207,64 @@ void CTeamMenuPanel::Update()
                 m_pButtons[i]->setPos( TEAMMENU_TOPLEFT_BUTTON_X, iYPos );
                 iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
 
-				// Start with the first option up
+                // Start with the first option up
                 if( 0 == m_iCurrentInfo )
                     SetActiveInfo( i );
 
-				/*
-				char szPlayerList[ (MAX_PLAYER_NAME_LENGTH + 3) * 31 ];  // name + ", "
-				strcpy(szPlayerList, "\n");
-				// Update the Team Info
-				// Now count the number of teammembers of this class
-				int iTotal = 0;
-				for (int j = 1; j < MAX_PLAYERS_HUD; j++)
-				{
-					if ( g_PlayerInfoList[j].name == nullptr )
-						continue; // empty player slot, skip
-					if ( g_PlayerInfoList[j].thisplayer )
-						continue; // skip this player
-					if ( g_PlayerExtraInfo[j].teamnumber != i )
-						continue; // skip over players in other teams
+                /*
+                char szPlayerList[ (MAX_PLAYER_NAME_LENGTH + 3) * 31 ];  // name + ", "
+                strcpy(szPlayerList, "\n");
+                // Update the Team Info
+                // Now count the number of teammembers of this class
+                int iTotal = 0;
+                for (int j = 1; j < MAX_PLAYERS_HUD; j++)
+                {
+                    if ( g_PlayerInfoList[j].name == nullptr )
+                        continue; // empty player slot, skip
+                    if ( g_PlayerInfoList[j].thisplayer )
+                        continue; // skip this player
+                    if ( g_PlayerExtraInfo[j].teamnumber != i )
+                        continue; // skip over players in other teams
 
-					iTotal++;
-					if (iTotal > 1)
-						strncat( szPlayerList, ", ", sizeof(szPlayerList) - strlen(szPlayerList) );
-					strncat( szPlayerList, g_PlayerInfoList[j].name, sizeof(szPlayerList) - strlen(szPlayerList) );
-					szPlayerList[ sizeof(szPlayerList) - 1 ] = '\0';
-				}
+                    iTotal++;
+                    if (iTotal > 1)
+                        strncat( szPlayerList, ", ", sizeof(szPlayerList) - strlen(szPlayerList) );
+                    strncat( szPlayerList, g_PlayerInfoList[j].name, sizeof(szPlayerList) - strlen(szPlayerList) );
+                    szPlayerList[ sizeof(szPlayerList) - 1 ] = '\0';
+                }
 
-				if (iTotal > 0)
-				{
-					// Set the text of the info Panel
-					char szText[ ((MAX_PLAYER_NAME_LENGTH + 3) * 31) + 256 ];
-					if (iTotal == 1)
-						sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
-					else
-						sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
-					strncat( szText, szPlayerList, sizeof(szText) - strlen(szText) );
-					szText[ sizeof(szText) - 1 ] = '\0';
+                if (iTotal > 0)
+                {
+                    // Set the text of the info Panel
+                    char szText[ ((MAX_PLAYER_NAME_LENGTH + 3) * 31) + 256 ];
+                    if (iTotal == 1)
+                        sprintf(szText, "%s: %d Player (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+                    else
+                        sprintf(szText, "%s: %d Players (%d points)", gViewPort->GetTeamName(i), iTotal, g_TeamInfo[i].frags );
+                    strncat( szText, szPlayerList, sizeof(szText) - strlen(szText) );
+                    szText[ sizeof(szText) - 1 ] = '\0';
 
-					m_pTeamInfoPanel[i]->setText( szText );
-				}
-				else
-				{
-					m_pTeamInfoPanel[i]->setText( "" );
-				}
-				*/
+                    m_pTeamInfoPanel[i]->setText( szText );
+                }
+                else
+                {
+                    m_pTeamInfoPanel[i]->setText( "" );
+                }
+                */
             }
             else
             {
-				// Hide the button (may be visible from previous maps)
+                // Hide the button (may be visible from previous maps)
                 m_pButtons[i]->setVisible( false );
             }
         }
     }
 
-	// Move the AutoAssign button into place
+    // Move the AutoAssign button into place
     m_pButtons[3]->setPos( TEAMMENU_TOPLEFT_BUTTON_X, iYPos );
     iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
 
-	// Spectate button
+    // Spectate button
     if( m_pSpectateButton->IsNotValid() )
     {
         m_pSpectateButton->setVisible( false );
@@ -276,7 +276,7 @@ void CTeamMenuPanel::Update()
         iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
     }
 
-	// If the player is already in a team, make the cancel button visible
+    // If the player is already in a team, make the cancel button visible
     if( 0 != gViewPort->m_iCTFTeamNumber )
     {
         m_pCancelButton->setPos( TEAMMENU_TOPLEFT_BUTTON_X, iYPos );
@@ -288,7 +288,7 @@ void CTeamMenuPanel::Update()
         m_pCancelButton->setVisible( false );
     }
 
-	// Set the Map Title
+    // Set the Map Title
     if( !m_bUpdatedMapName )
     {
         const char* level = gEngfuncs.pfnGetLevelName();
@@ -298,7 +298,7 @@ void CTeamMenuPanel::Update()
             char szTitle[256];
             char* ch;
 
-			// Update the level name
+            // Update the level name
             strcpy( sz, level );
             ch = strchr( sz, '/' );
             if( !ch )
@@ -309,7 +309,7 @@ void CTeamMenuPanel::Update()
             m_pMapTitle->setText( "%s", szTitle );
             *ch = '.';
 
-			// Update the map briefing
+            // Update the map briefing
             strcpy( sz, level );
             ch = strchr( sz, '.' );
             *ch = '\0';
@@ -319,7 +319,7 @@ void CTeamMenuPanel::Update()
             {
                 m_pBriefing->setText( reinterpret_cast<const char*>( fileContents.data() ) );
 
-				// Get the total size of the Briefing text and resize the text panel
+                // Get the total size of the Briefing text and resize the text panel
                 int iXSize, iYSize;
                 m_pBriefing->getTextImage()->getTextSize( iXSize, iYSize );
                 m_pBriefing->setSize( iXSize, iYSize );
@@ -336,27 +336,27 @@ void CTeamMenuPanel::Update()
 // Key inputs
 bool CTeamMenuPanel::SlotInput( int iSlot )
 {
-	// Check for AutoAssign
+    // Check for AutoAssign
     if( iSlot == 3 )
     {
         m_pButtons[3]->fireActionSignal();
         return true;
     }
 
-	// Spectate
+    // Spectate
     if( iSlot == 4 )
     {
         m_pSpectateButton->fireActionSignal();
         return true;
     }
 
-	// Otherwise, see if a particular team is selectable
+    // Otherwise, see if a particular team is selectable
     if( ( iSlot < 1 ) || ( iSlot > gViewPort->GetNumberOfTeams() ) )
         return false;
     if( !m_pButtons[iSlot] )
         return false;
 
-	// Is the button pushable?
+    // Is the button pushable?
     if( m_pButtons[iSlot]->isVisible() )
     {
         m_pButtons[iSlot]->fireActionSignal();
@@ -376,7 +376,7 @@ void CTeamMenuPanel::Open()
 
 void CTeamMenuPanel::paintBackground()
 {
-	// make sure we get the map briefing up
+    // make sure we get the map briefing up
     if( !m_bUpdatedMapName )
         Update();
 
@@ -393,7 +393,7 @@ void CTeamMenuPanel::paintBackground()
 // Mouse is over a team button, bring up the class info
 void CTeamMenuPanel::SetActiveInfo( int iInput )
 {
-	// Remove all the Info panels and bring up the specified one
+    // Remove all the Info panels and bring up the specified one
     m_pSpectateButton->setArmed( false );
     for( int i = 1; i <= 3; i++ )
     {
@@ -401,7 +401,7 @@ void CTeamMenuPanel::SetActiveInfo( int iInput )
         m_pTeamInfoPanel[i]->setVisible( false );
     }
 
-	// 4 is Spectate
+    // 4 is Spectate
     if( iInput == 4 )
     {
         m_pSpectateButton->setArmed( true );

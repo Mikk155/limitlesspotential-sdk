@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -46,7 +46,7 @@ bool CHudDebugInfo::VidInit()
 {
     m_GameMode = gEngfuncs.ServerInfo_ValueForKey( "gm" );
 
-	// If the game mode string is empty then we've loaded a save game or moved through a level transition.
+    // If the game mode string is empty then we've loaded a save game or moved through a level transition.
     if( m_GameMode.empty() )
     {
         m_GameMode = "singleplayer";
@@ -64,7 +64,7 @@ bool CHudDebugInfo::Draw( float flTime )
         int lineWidth, lineHeight;
         GetConsoleStringSize( "", &lineWidth, &lineHeight );
 
-		// Shrink line height a bit.
+        // Shrink line height a bit.
         lineHeight = static_cast<int>( lineHeight * 0.9f );
 
         int yPos = static_cast<int>( ScreenHeight * 0.5f );
@@ -115,9 +115,9 @@ bool CHudDebugInfo::Draw( float flTime )
             lineDrawer( buffer.c_str() );
 
             lineDrawer( "Player Angles:", {0, 128, 255} );
-			// Angles are modified in the view code so we need to use the original angles.
-			// Pitch is inverted for players so it needs to be inverted again.
-			// Roll is always 0 so don't show it.
+            // Angles are modified in the view code so we need to use the original angles.
+            // Pitch is inverted for players so it needs to be inverted again.
+            // Roll is always 0 so don't show it.
 
             buffer.clear();
             fmt::format_to( std::back_inserter( buffer ), "  Pitch: {:+07.2f}", -v_client_aimangles.x );

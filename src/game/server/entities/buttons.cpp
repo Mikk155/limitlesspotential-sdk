@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	button-related code
+ *    @file
+ *    button-related code
  */
 
 #include "cbase.h"
@@ -23,7 +23,7 @@
 
 #define SF_BUTTON_DONTMOVE 1
 #define SF_ROTBUTTON_NOTSOLID 1
-#define SF_BUTTON_TOGGLE 32		  // button stays pushed until reactivated
+#define SF_BUTTON_TOGGLE 32          // button stays pushed until reactivated
 #define SF_BUTTON_SPARK_IF_OFF 64 // button sparks in OFF state
 #define SF_BUTTON_TOUCH_ONLY 256  // button only fires as a result of USE key.
 
@@ -148,7 +148,7 @@ bool CMultiSource::KeyValue( KeyValueData* pkvd )
 
 void CMultiSource::Spawn()
 {
-	// set up think for later registration
+    // set up think for later registration
 
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -161,23 +161,23 @@ void CMultiSource::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 {
     int i = 0;
 
-	// Find the entity in our list
+    // Find the entity in our list
     while( i < m_iTotal )
         if( m_rgEntities[i++] == pCaller )
             break;
 
-	// if we didn't find it, report error and leave
+    // if we didn't find it, report error and leave
     if( i > m_iTotal )
     {
         IOLogger->debug( "MultiSrc:Used by non member {}.", STRING( pCaller->pev->classname ) );
         return;
     }
 
-	// CONSIDER: a Use input to the multisource always toggles.  Could check useType for ON/OFF/TOGGLE
+    // CONSIDER: a Use input to the multisource always toggles.  Could check useType for ON/OFF/TOGGLE
 
     m_rgTriggered[i - 1] ^= 1;
 
-	//
+    //
     if( IsTriggered( pActivator ) )
     {
         IOLogger->trace( "Multisource {} enabled ({} inputs)", STRING( pev->targetname ), m_iTotal );
@@ -190,10 +190,10 @@ void CMultiSource::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 
 bool CMultiSource::IsTriggered(CBaseEntity*)
 {
-	// Is everything triggered?
+    // Is everything triggered?
     int i = 0;
 
-	// Still initializing?
+    // Still initializing?
     if( ( pev->spawnflags & SF_MULTI_INIT ) != 0 )
         return false;
 
@@ -220,7 +220,7 @@ void CMultiSource::Register()
 
     SetThink( nullptr );
 
-	// search for all entities which target this multisource (pev->targetname)
+    // search for all entities which target this multisource (pev->targetname)
     for( auto target : UTIL_FindEntitiesByTarget( STRING( pev->targetname ) ) )
     {
         if( m_iTotal >= MS_MAX_TARGETS )
@@ -257,7 +257,7 @@ BEGIN_DATAMAP( CBaseButton )
     DEFINE_FIELD( m_UnlockedSound, FIELD_SOUNDNAME ),
     DEFINE_FIELD( m_UnlockedSentence, FIELD_STRING ),
     DEFINE_FIELD( m_strChangeTarget, FIELD_STRING ),
-	//	DEFINE_FIELD(m_ls, FIELD_???),   // This is restored in Precache()
+    //    DEFINE_FIELD(m_ls, FIELD_???),   // This is restored in Precache()
     DEFINE_FUNCTION( ButtonTouch ),
     DEFINE_FUNCTION( ButtonSpark ),
     DEFINE_FUNCTION( TriggerAndWait ),
@@ -278,7 +278,7 @@ void CBaseButton::Precache()
         PrecacheSound( "buttons/spark6.wav" );
     }
 
-	// get door button sounds, for doors which require buttons to open
+    // get door button sounds, for doors which require buttons to open
 
     if( !FStringNull( m_LockedSound ) )
     {
@@ -292,7 +292,7 @@ void CBaseButton::Precache()
         m_ls.sUnlockedSound = m_UnlockedSound;
     }
 
-	// get sentence group names, for doors which are directly 'touched' to open
+    // get sentence group names, for doors which are directly 'touched' to open
     m_ls.sLockedSentence = m_LockedSentence;
     m_ls.sUnlockedSentence = m_UnlockedSentence;
 }
@@ -339,7 +339,7 @@ bool CBaseButton::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
 
     if( code == BUTTON_NOTHING )
         return false;
-	// Temporarily disable the touch function, until movement is finished.
+    // Temporarily disable the touch function, until movement is finished.
     SetTouch( nullptr );
 
     m_hActivator = CBaseEntity::Instance( attacker );
@@ -350,7 +350,7 @@ bool CBaseButton::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
     {
         EmitSound( CHAN_VOICE, STRING( m_sounds ), 1, ATTN_NORM );
 
-		// Toggle buttons fire when they get back to their "home" position
+        // Toggle buttons fire when they get back to their "home" position
         if( ( pev->spawnflags & SF_BUTTON_TOGGLE ) == 0 )
             SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
         ButtonReturn();
@@ -365,10 +365,10 @@ LINK_ENTITY_TO_CLASS( func_button, CBaseButton );
 
 void CBaseButton::Spawn()
 {
-	//----------------------------------------------------
-	// determine sounds for buttons
-	// a sound of 0 should not make a sound
-	//----------------------------------------------------
+    //----------------------------------------------------
+    // determine sounds for buttons
+    // a sound of 0 should not make a sound
+    //----------------------------------------------------
     if( FStrEq( "", STRING( m_sounds ) ) )
     {
         m_sounds = ALLOC_STRING( "common/null.wav" );
@@ -405,18 +405,18 @@ void CBaseButton::Spawn()
 
     m_toggle_state = TS_AT_BOTTOM;
     m_vecPosition1 = pev->origin;
-	// Subtract 2 from size because the engine expands bboxes by 1 in all directions making the size too big
+    // Subtract 2 from size because the engine expands bboxes by 1 in all directions making the size too big
     m_vecPosition2 = m_vecPosition1 + ( pev->movedir * ( fabs( pev->movedir.x * ( pev->size.x - 2 ) ) + fabs( pev->movedir.y * ( pev->size.y - 2 ) ) + fabs( pev->movedir.z * ( pev->size.z - 2 ) ) - m_flLip ) );
 
 
-	// Is this a non-moving button?
+    // Is this a non-moving button?
     if( ( ( m_vecPosition2 - m_vecPosition1 ).Length() < 1 ) || ( pev->spawnflags & SF_BUTTON_DONTMOVE ) != 0 )
         m_vecPosition2 = m_vecPosition1;
 
     m_fStayPushed = ( m_flWait == -1 ? true : false );
     m_fRotating = false;
 
-	// if the button is flagged for USE button activation only, take away it's touch function and add a use function
+    // if the button is flagged for USE button activation only, take away it's touch function and add a use function
 
     if( FBitSet( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) ) // touchable button
     {
@@ -468,8 +468,8 @@ void CBaseButton::ButtonSpark()
 
 void CBaseButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	// Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
-	// UNDONE: Should this use ButtonResponseToTouch() too?
+    // Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
+    // UNDONE: Should this use ButtonResponseToTouch() too?
     if( m_toggle_state == TS_GOING_UP || m_toggle_state == TS_GOING_DOWN )
         return;
 
@@ -488,7 +488,7 @@ void CBaseButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 
 CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch()
 {
-	// Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
+    // Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
     if( m_toggle_state == TS_GOING_UP ||
         m_toggle_state == TS_GOING_DOWN ||
         ( m_toggle_state == TS_AT_TOP && !m_fStayPushed && !FBitSet( pev->spawnflags, SF_BUTTON_TOGGLE ) ) )
@@ -509,7 +509,7 @@ CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch()
 
 void CBaseButton::ButtonTouch( CBaseEntity* pOther )
 {
-	// Ignore touches by anything but players
+    // Ignore touches by anything but players
     if( !pOther->IsPlayer() )
         return;
 
@@ -522,12 +522,12 @@ void CBaseButton::ButtonTouch( CBaseEntity* pOther )
 
     if( !UTIL_IsMasterTriggered( m_sMaster, pOther ) )
     {
-		// play button locked sound
+        // play button locked sound
         PlayLockSounds( this, &m_ls, true, true );
         return;
     }
 
-	// Temporarily disable the touch function, until movement is finished.
+    // Temporarily disable the touch function, until movement is finished.
     SetTouch( nullptr );
 
     if( code == BUTTON_RETURN )
@@ -546,13 +546,13 @@ void CBaseButton::ButtonActivate()
 
     if( !UTIL_IsMasterTriggered( m_sMaster, m_hActivator ) )
     {
-		// button is locked, play locked sound
+        // button is locked, play locked sound
         PlayLockSounds( this, &m_ls, true, true );
         return;
     }
     else
     {
-		// button is unlocked, play unlocked sound
+        // button is unlocked, play unlocked sound
         PlayLockSounds( this, &m_ls, false, true );
     }
 
@@ -575,13 +575,13 @@ void CBaseButton::TriggerAndWait()
 
     m_toggle_state = TS_AT_TOP;
 
-	// If button automatically comes back out, start it moving out.
-	// Else re-instate touch method
+    // If button automatically comes back out, start it moving out.
+    // Else re-instate touch method
     if( m_fStayPushed || FBitSet( pev->spawnflags, SF_BUTTON_TOGGLE ) )
     {
         if( !FBitSet( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) ) // this button only works if USED, not touched!
         {
-			// ALL buttons are now use only
+            // ALL buttons are now use only
             SetTouch( nullptr );
         }
         else
@@ -620,7 +620,7 @@ void CBaseButton::ButtonBackHome()
 
     if( FBitSet( pev->spawnflags, SF_BUTTON_TOGGLE ) )
     {
-		// EmitSound(CHAN_VOICE, STRING(m_sounds), 1, ATTN_NORM);
+        // EmitSound(CHAN_VOICE, STRING(m_sounds), 1, ATTN_NORM);
 
         SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
     }
@@ -637,17 +637,17 @@ void CBaseButton::ButtonBackHome()
         }
     }
 
-	// Re-instate touch method, movement cycle is complete.
+    // Re-instate touch method, movement cycle is complete.
     if( !FBitSet( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) ) // this button only works if USED, not touched!
     {
-		// All buttons are now use only
+        // All buttons are now use only
         SetTouch( nullptr );
     }
     else
         SetTouch( &CBaseButton::ButtonTouch );
 
-	// reset think for a sparking button
-	// func_rot_button's X Axis spawnflag overlaps with this one so don't use it here.
+    // reset think for a sparking button
+    // func_rot_button's X Axis spawnflag overlaps with this one so don't use it here.
     if( !ClassnameIs( "func_rot_button" ) && FBitSet( pev->spawnflags, SF_BUTTON_SPARK_IF_OFF ) )
     {
         SetThink( &CBaseButton::ButtonSpark );
@@ -656,7 +656,7 @@ void CBaseButton::ButtonBackHome()
 }
 
 /**
- *	@brief Rotating button (aka "lever")
+ *    @brief Rotating button (aka "lever")
  */
 class CRotButton : public CBaseButton
 {
@@ -668,10 +668,10 @@ LINK_ENTITY_TO_CLASS( func_rot_button, CRotButton );
 
 void CRotButton::Spawn()
 {
-	//----------------------------------------------------
-	// determine sounds for buttons
-	// a sound of 0 should not make a sound
-	//----------------------------------------------------
+    //----------------------------------------------------
+    // determine sounds for buttons
+    // a sound of 0 should not make a sound
+    //----------------------------------------------------
     if( FStrEq( "", STRING( m_sounds ) ) )
     {
         m_sounds = ALLOC_STRING( "common/null.wav" );
@@ -679,10 +679,10 @@ void CRotButton::Spawn()
 
     PrecacheSound( STRING( m_sounds ) );
 
-	// set the axis of rotation
+    // set the axis of rotation
     CBaseToggle::AxisDir( this );
 
-	// check for clockwise rotation
+    // check for clockwise rotation
     if( FBitSet( pev->spawnflags, SF_DOOR_ROTATE_BACKWARDS ) )
         pev->movedir = pev->movedir * -1;
 
@@ -714,7 +714,7 @@ void CRotButton::Spawn()
     m_fStayPushed = ( m_flWait == -1 ? true : false );
     m_fRotating = true;
 
-	// if the button is flagged for USE button activation only, take away it's touch function and add a use function
+    // if the button is flagged for USE button activation only, take away it's touch function and add a use function
     if( !FBitSet( pev->spawnflags, SF_BUTTON_TOUCH_ONLY ) )
     {
         SetTouch( nullptr );
@@ -723,14 +723,14 @@ void CRotButton::Spawn()
     else // touchable button
         SetTouch( &CRotButton::ButtonTouch );
 
-	// SetTouch( ButtonTouch );
+    // SetTouch( ButtonTouch );
 }
 
 
 /**
- *	@brief Make this button behave like a door (HACKHACK)
- *	This will disable use and make the button solid
- *	rotating buttons were made SOLID_NOT by default since their were some collision problems with them...
+ *    @brief Make this button behave like a door (HACKHACK)
+ *    This will disable use and make the button solid
+ *    rotating buttons were made SOLID_NOT by default since their were some collision problems with them...
  */
 #define SF_MOMENTARY_DOOR 0x0001
 
@@ -849,7 +849,7 @@ void CMomentaryRotButton::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, US
 
     UpdateAllButtons( pev->ideal_yaw, true );
 
-	// Calculate destination angle and use it to predict value, this prevents sending target in wrong direction on retriggering
+    // Calculate destination angle and use it to predict value, this prevents sending target in wrong direction on retriggering
     Vector dest = pev->angles + pev->avelocity * ( pev->nextthink - pev->ltime );
     float value1 = CBaseToggle::AxisDelta( pev->spawnflags, dest, m_start ) / m_flMoveDistance;
     UpdateTarget( value1 );
@@ -857,7 +857,7 @@ void CMomentaryRotButton::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, US
 
 void CMomentaryRotButton::UpdateAllButtons( float value, bool start )
 {
-	// Update all rot buttons attached to the same target
+    // Update all rot buttons attached to the same target
     for( auto target : UTIL_FindEntitiesByTarget( STRING( pev->target ) ) )
     {
         if( target->ClassnameIs( "momentary_rot_button" ) )
@@ -899,7 +899,7 @@ void CMomentaryRotButton::UpdateSelf( float value )
     if( fplaysound )
         PlaySound();
 
-	// HACKHACK -- If we're going slow, we'll get multiple player packets per frame, bump nexthink on each one to avoid stalling
+    // HACKHACK -- If we're going slow, we'll get multiple player packets per frame, bump nexthink on each one to avoid stalling
     if( pev->nextthink < pev->ltime )
         pev->nextthink = pev->ltime + 0.1;
     else

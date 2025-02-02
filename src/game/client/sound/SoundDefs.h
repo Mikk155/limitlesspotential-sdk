@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -26,85 +26,85 @@
 #include "sound/sentence_utils.h"
 
 /**
- *	@brief The directory in the mod directory where sounds are stored.
+ *    @brief The directory in the mod directory where sounds are stored.
  */
 inline const Filename SoundDirectoryName{"sound"};
 
 /**
- *	@brief Only try to load wave files to search for cue points if they have this extension.
+ *    @brief Only try to load wave files to search for cue points if they have this extension.
  */
 constexpr char CuePointExtension[]{".wav"};
 
 /**
- *	@brief The file extension for sentence words.
+ *    @brief The file extension for sentence words.
  */
 constexpr char SentenceWordExtension[]{".wav"};
 
 /**
- *	@brief Maximum audible distance for a sound.
+ *    @brief Maximum audible distance for a sound.
  */
 constexpr vec_t NominalClippingDistance = 1000.0;
 
 /**
- *	@brief Hard limit in the original engine, soft limit here. The vector will grow to accomodate more.
- *	Original limit was @c 32
+ *    @brief Hard limit in the original engine, soft limit here. The vector will grow to accomodate more.
+ *    Original limit was @c 32
  */
 constexpr std::size_t MaxWordsPerSentence = 8;
 
 /**
- *	@brief The range, in seconds, to sample for mouths.
+ *    @brief The range, in seconds, to sample for mouths.
  */
 constexpr float MouthSampleRange = 0.1f;
 
 /**
- *	@brief Number of samples to sample before setting the mouthopen value.
+ *    @brief Number of samples to sample before setting the mouthopen value.
  */
 constexpr int MouthSamplesRequired = 10;
 
 /**
- *	@brief Number of chunks to divide a sound in before applying time compression.
+ *    @brief Number of chunks to divide a sound in before applying time compression.
  */
 constexpr std::size_t TimeCompressChunkCount = 8;
 
 /**
- *	@brief The low pass high frequency gain to use when not underwater.
+ *    @brief The low pass high frequency gain to use when not underwater.
  */
 constexpr float NormalLowPassHFGain = 0.38f;
 
 /**
- *	@brief The low pass high frequency gain to use when underwater.
+ *    @brief The low pass high frequency gain to use when underwater.
  */
 constexpr float UnderwaterLowPassHFGain = 1.f;
 
 namespace sound
 {
 /**
- *	@brief Strongly typed sound index, for disambiguating overloads between <tt>const char*</tt> and <tt>int</tt>.
+ *    @brief Strongly typed sound index, for disambiguating overloads between <tt>const char*</tt> and <tt>int</tt>.
  */
 struct SoundIndex final
 {
     static constexpr int InvalidIndex = 0;
 
-	constexpr SoundIndex() noexcept = default;
+    constexpr SoundIndex() noexcept = default;
 
     explicit constexpr SoundIndex( int index ) noexcept
         : Index( index )
     {
     }
 
-	constexpr bool IsValid() const
+    constexpr bool IsValid() const
     {
         return Index != InvalidIndex;
     }
 
-	constexpr auto operator<=>(const SoundIndex&) const = default;
+    constexpr auto operator<=>(const SoundIndex&) const = default;
 
     int Index = InvalidIndex;
 };
 
 /**
- *	@brief A single sound.
- *	@details Sounds should always be referred to using a @see SoundIndex.
+ *    @brief A single sound.
+ *    @details Sounds should always be referred to using a @see SoundIndex.
  */
 struct Sound
 {
@@ -138,13 +138,13 @@ struct Sentence
 // Sentence playback needs to keep track of the current word.
 struct SentenceChannel
 {
-	// Index into m_Sentences.
+    // Index into m_Sentences.
     std::size_t Sentence{0};
     std::size_t CurrentWord{0};
 
     OpenALBuffer TimeCompressBuffer;
 
-	constexpr auto operator<=>(const SentenceChannel&) const = default;
+    constexpr auto operator<=>(const SentenceChannel&) const = default;
 };
 
 using SoundData = std::variant<SoundIndex, SentenceChannel>;

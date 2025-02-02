@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -13,8 +13,8 @@
  *
  ****/
 /**
- *	@file
- *	functions governing the selection/use of weapons for players
+ *    @file
+ *    functions governing the selection/use of weapons for players
  */
 
 #include "cbase.h"
@@ -70,14 +70,14 @@ int DamageDecal( CBaseEntity* pEntity, int bitsDamageType )
 
 void DecalGunshot( TraceResult* pTrace, int iBulletType )
 {
-	// Is the entity valid
+    // Is the entity valid
     if( !UTIL_IsValidEntity( pTrace->pHit ) )
         return;
 
     if( VARS( pTrace->pHit )->solid == SOLID_BSP || VARS( pTrace->pHit )->movetype == MOVETYPE_PUSHSTEP )
     {
         CBaseEntity* pEntity = nullptr;
-		// Decal the wall with a gunshot
+        // Decal the wall with a gunshot
         if( !FNullEnt( pTrace->pHit ) )
             pEntity = CBaseEntity::Instance( pTrace->pHit );
 
@@ -90,15 +90,15 @@ void DecalGunshot( TraceResult* pTrace, int iBulletType )
         case BULLET_PLAYER_BUCKSHOT:
         case BULLET_PLAYER_357:
         default:
-			// smoke and decal
+            // smoke and decal
             UTIL_GunshotDecalTrace( pTrace, DamageDecal( pEntity, DMG_BULLET ) );
             break;
         case BULLET_MONSTER_12MM:
-			// smoke and decal
+            // smoke and decal
             UTIL_GunshotDecalTrace( pTrace, DamageDecal( pEntity, DMG_BULLET ) );
             break;
         case BULLET_PLAYER_CROWBAR:
-			// wall decal
+            // wall decal
             UTIL_DecalTrace( pTrace, DamageDecal( pEntity, DMG_CLUB ) );
             break;
         }
@@ -107,7 +107,7 @@ void DecalGunshot( TraceResult* pTrace, int iBulletType )
 
 void EjectBrass( const Vector& vecOrigin, const Vector& vecVelocity, float rotation, int model, int soundtype )
 {
-	// FIX: when the player shoots, their gun isn't in the same position as it is on the model other players see.
+    // FIX: when the player shoots, their gun isn't in the same position as it is on the model other players see.
 
     MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecOrigin );
     WRITE_BYTE( TE_MODEL );
@@ -204,16 +204,16 @@ void W_Precache()
 {
     g_GameLogger->trace( "Precaching weapon assets" );
 
-	// custom items...
+    // custom items...
 
-	// common world objects
-	// TODO: precache all items instead of just weapons.
+    // common world objects
+    // TODO: precache all items instead of just weapons.
     UTIL_PrecacheOther( "item_suit" );
     UTIL_PrecacheOther( "item_battery" );
     UTIL_PrecacheOther( "item_antidote" );
     UTIL_PrecacheOther( "item_longjump" );
 
-	// Precache weapons in a well-defined order so the precache list is always the same.
+    // Precache weapons in a well-defined order so the precache list is always the same.
     const auto classNames = g_WeaponDictionary->GetClassNames();
 
     std::vector<std::string_view> sortedClassNames{classNames.begin(), classNames.end()};
@@ -257,7 +257,7 @@ void W_Precache()
     g_sModelIndexLaserDot = UTIL_PrecacheModel( "sprites/laserdot.spr" );
 
 
-	// used by explosions
+    // used by explosions
     UTIL_PrecacheModel( "models/grenade.mdl" );
     UTIL_PrecacheModel( "sprites/explode1.spr" );
 
@@ -279,7 +279,7 @@ void CBasePlayerWeapon::PostRestore()
 {
     BaseClass::PostRestore();
 
-	// If we're part of the player's inventory and we're the active item, reset weapon strings.
+    // If we're part of the player's inventory and we're the active item, reset weapon strings.
     if( m_pPlayer && m_pPlayer->m_pActiveWeapon == this )
     {
         SetWeaponModels( STRING( m_ViewModel ), STRING( m_PlayerModel ) );
@@ -305,9 +305,9 @@ void CBasePlayerWeapon::SetObjectCollisionBox()
 
 CBasePlayerWeapon* CBasePlayerWeapon::GetItemToRespawn( const Vector& respawnPoint )
 {
-	// make a copy of this weapon that is invisible and inaccessible to players (no touch function).
-	// The item spawn/respawn code will decide when to make the weapon visible and touchable.
-	// Don't pass the current owner since the new weapon isn't owned by that entity
+    // make a copy of this weapon that is invisible and inaccessible to players (no touch function).
+    // The item spawn/respawn code will decide when to make the weapon visible and touchable.
+    // Don't pass the current owner since the new weapon isn't owned by that entity
     auto newWeapon = static_cast<CBasePlayerWeapon*>( CBaseEntity::Create( GetClassname(), respawnPoint, pev->angles, nullptr, false ) );
 
     if( !newWeapon )
@@ -316,7 +316,7 @@ CBasePlayerWeapon* CBasePlayerWeapon::GetItemToRespawn( const Vector& respawnPoi
         return nullptr;
     }
 
-	// Copy over item settings
+    // Copy over item settings
     newWeapon->pev->targetname = pev->targetname;
     newWeapon->pev->target = pev->target;
     newWeapon->m_flDelay = m_flDelay;
@@ -349,10 +349,10 @@ CBasePlayerWeapon* CBasePlayerWeapon::GetItemToRespawn( const Vector& respawnPoi
 
     DispatchSpawn( newWeapon->edict() );
 
-	// Don't allow this weapon to be targeted from now on.
+    // Don't allow this weapon to be targeted from now on.
     pev->targetname = string_t::Null;
 
-	// This weapon has been picked up, so from now own it should play pickup sounds (when dropped and picked up again).
+    // This weapon has been picked up, so from now own it should play pickup sounds (when dropped and picked up again).
     m_PlayPickupSound = false;
 
     return newWeapon;
@@ -371,7 +371,7 @@ ItemAddResult CBasePlayerWeapon::Apply( CBasePlayer* player )
             player->EmitSound( CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM );
         }
 
-		// Clear out think functions so they don't try to run item spawn/respawn logic.
+        // Clear out think functions so they don't try to run item spawn/respawn logic.
         SetThink( nullptr );
     }
 
@@ -382,7 +382,7 @@ void CBasePlayerWeapon::DestroyItem()
 {
     if( m_pPlayer )
     {
-		// if attached to a player, remove.
+        // if attached to a player, remove.
         m_pPlayer->RemovePlayerWeapon( this );
     }
 
@@ -418,22 +418,22 @@ bool CBasePlayerWeapon::AddDuplicate( CBasePlayerWeapon* original )
     }
     else
     {
-		// a dead player dropped this.
+        // a dead player dropped this.
         return ExtractClipAmmo( original );
     }
 }
 
 void CBasePlayerWeapon::AddToPlayer( CBasePlayer* pPlayer )
 {
-	/*
-	if ((iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 && m_iDefaultAmmo == 0 && GetMagazine1() <= 0)
-	{
-		//This is an exhaustible weapon that has no ammo left. Don't add it, queue it up for destruction instead.
-		SetThink(&CSatchel::DestroyItem);
-		pev->nextthink = gpGlobals->time + 0.1;
-		return false;
-	}
-	*/
+    /*
+    if ((iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 && m_iDefaultAmmo == 0 && GetMagazine1() <= 0)
+    {
+        //This is an exhaustible weapon that has no ammo left. Don't add it, queue it up for destruction instead.
+        SetThink(&CSatchel::DestroyItem);
+        pev->nextthink = gpGlobals->time + 0.1;
+        return false;
+    }
+    */
 
     m_pPlayer = pPlayer;
 
@@ -452,13 +452,13 @@ bool CBasePlayerWeapon::UpdateClientData( CBasePlayer* pPlayer )
             state = WeaponState::Active;
     }
 
-	// Forcing send of all data!
+    // Forcing send of all data!
     if( !pPlayer->m_fWeapon )
     {
         bSend = true;
     }
 
-	// This is the current or last weapon, so the state will need to be updated
+    // This is the current or last weapon, so the state will need to be updated
     if( this == pPlayer->m_pActiveWeapon ||
         this == pPlayer->m_pClientActiveWeapon )
     {
@@ -468,7 +468,7 @@ bool CBasePlayerWeapon::UpdateClientData( CBasePlayer* pPlayer )
         }
     }
 
-	// If the ammo, state, or fov has changed, update the weapon
+    // If the ammo, state, or fov has changed, update the weapon
     if( m_iClip != m_iClientClip ||
         state != m_ClientWeaponState ||
         pPlayer->m_iFOV != pPlayer->m_iClientFOV )
@@ -506,7 +506,7 @@ bool CBasePlayerWeapon::AddPrimaryAmmo( CBasePlayerWeapon* origin, int iCount, c
         return false;
     }
 
-	// Don't double for single shot weapons (e.g. RPG)
+    // Don't double for single shot weapons (e.g. RPG)
     if( ( m_pPlayer->m_iItems & CTFItem::Backpack ) != 0 && iMaxClip > 1 )
     {
         iMaxClip *= 2;
@@ -523,14 +523,14 @@ bool CBasePlayerWeapon::AddPrimaryAmmo( CBasePlayerWeapon* origin, int iCount, c
     {
         if( iCount == RefillAllAmmoAmount )
         {
-			// Full magazine + spare.
+            // Full magazine + spare.
             iCount = type->MaximumCapacity + iMaxClip;
         }
 
         m_iClip = std::min( iCount, iMaxClip );
         iIdAmmo = m_pPlayer->GiveAmmo( iCount - m_iClip, szName );
 
-		// Make sure we count this as ammo taken.
+        // Make sure we count this as ammo taken.
         if( iCount > 0 && iIdAmmo == -1 )
         {
             iIdAmmo = type->Id;
@@ -541,14 +541,14 @@ bool CBasePlayerWeapon::AddPrimaryAmmo( CBasePlayerWeapon* origin, int iCount, c
         iIdAmmo = m_pPlayer->GiveAmmo( iCount, szName );
     }
 
-	// m_pPlayer->SetAmmoCountByIndex(m_iPrimaryAmmoType, iMaxCarry); // hack for testing
+    // m_pPlayer->SetAmmoCountByIndex(m_iPrimaryAmmoType, iMaxCarry); // hack for testing
 
     if( iIdAmmo > 0 )
     {
         if( this != origin )
         {
-			// play the "got ammo" sound only if we gave some ammo to a player that already had this gun.
-			// if the player is just getting this gun for the first time, DefaultTouch will play the "picked up gun" sound for us.
+            // play the "got ammo" sound only if we gave some ammo to a player that already had this gun.
+            // if the player is just getting this gun for the first time, DefaultTouch will play the "picked up gun" sound for us.
             EmitSound( CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM );
         }
     }
@@ -560,7 +560,7 @@ bool CBasePlayerWeapon::AddSecondaryAmmo( int iCount, const char* szName )
 {
     const int iIdAmmo = m_pPlayer->GiveAmmo( iCount, szName );
 
-	// m_pPlayer->SetAmmoCountByIndex(m_iSecondaryAmmoType, iMax); // hack for testing
+    // m_pPlayer->SetAmmoCountByIndex(m_iSecondaryAmmoType, iMax); // hack for testing
 
     if( iIdAmmo > 0 )
     {
@@ -571,7 +571,7 @@ bool CBasePlayerWeapon::AddSecondaryAmmo( int iCount, const char* szName )
 
 void CBasePlayerWeapon::SetWeaponModels( const char* viewModel, const char* weaponModel )
 {
-	// These are stored off to restore the models on save game load, so they must not use the replaced name.
+    // These are stored off to restore the models on save game load, so they must not use the replaced name.
     m_ViewModel = MAKE_STRING( viewModel );
     m_PlayerModel = MAKE_STRING( weaponModel );
 
@@ -585,11 +585,11 @@ bool CBasePlayerWeapon::ExtractAmmo( CBasePlayerWeapon* weapon )
 
     if( pszAmmo1() != nullptr )
     {
-		// blindly call with m_iDefaultAmmo. It's either going to be a value or zero. If it is zero,
-		// we only get the ammo in the weapon's clip, which is what we want.
+        // blindly call with m_iDefaultAmmo. It's either going to be a value or zero. If it is zero,
+        // we only get the ammo in the weapon's clip, which is what we want.
         extractedAmmo = weapon->AddPrimaryAmmo( this, m_iDefaultAmmo, pszAmmo1(), iMaxClip() );
 
-		// Only wipe default ammo if the weapon actually took it.
+        // Only wipe default ammo if the weapon actually took it.
         if( extractedAmmo )
         {
             m_iDefaultAmmo = 0;
@@ -617,9 +617,9 @@ bool CBasePlayerWeapon::ExtractClipAmmo( CBasePlayerWeapon* weapon )
         iAmmo = m_iClip;
     }
 
-	// This should check against -1 to be correct,
-	// but that changes original HL behavior which causes players to always pick up dropped weapons,
-	// even if they have full ammo.
+    // This should check against -1 to be correct,
+    // but that changes original HL behavior which causes players to always pick up dropped weapons,
+    // even if they have full ammo.
     return weapon->m_pPlayer->GiveAmmo( iAmmo, pszAmmo1() ) != 0;
 }
 
@@ -633,18 +633,18 @@ void CBasePlayerWeapon::DoRetireWeapon()
 {
     if( !m_pPlayer || m_pPlayer->m_pActiveWeapon != this )
     {
-		// Already retired?
+        // Already retired?
         return;
     }
 
-	// first, no viewmodel at all.
+    // first, no viewmodel at all.
     m_pPlayer->pev->viewmodel = string_t::Null;
     m_pPlayer->pev->weaponmodel = string_t::Null;
-	// m_pPlayer->pev->viewmodelindex = 0;
+    // m_pPlayer->pev->viewmodelindex = 0;
 
     g_pGameRules->GetNextBestWeapon( m_pPlayer, this );
 
-	// If we're still equipped and we couldn't switch to another weapon, dequip this one
+    // If we're still equipped and we couldn't switch to another weapon, dequip this one
     if( CanHolster() && m_pPlayer->m_pActiveWeapon == this )
     {
         m_pPlayer->SwitchWeapon( nullptr );
@@ -655,27 +655,27 @@ float CBasePlayerWeapon::GetNextAttackDelay( float delay )
 {
     if( m_flLastFireTime == 0 || m_flNextPrimaryAttack <= -1.1 )
     {
-		// At this point, we are assuming that the client has stopped firing
-		// and we are going to reset our book keeping variables.
+        // At this point, we are assuming that the client has stopped firing
+        // and we are going to reset our book keeping variables.
         m_flLastFireTime = gpGlobals->time;
         m_flPrevPrimaryAttack = delay;
     }
-	// calculate the time between this shot and the previous
+    // calculate the time between this shot and the previous
     float flTimeBetweenFires = gpGlobals->time - m_flLastFireTime;
     float flCreep = 0.0f;
     if( flTimeBetweenFires > 0 )
         flCreep = flTimeBetweenFires - m_flPrevPrimaryAttack; // postive or negative
 
-	// save the last fire time
+    // save the last fire time
     m_flLastFireTime = gpGlobals->time;
 
     float flNextAttack = UTIL_WeaponTimeBase() + delay - flCreep;
-	// we need to remember what the m_flNextPrimaryAttack time is set to for each shot,
-	// store it as m_flPrevPrimaryAttack.
+    // we need to remember what the m_flNextPrimaryAttack time is set to for each shot,
+    // store it as m_flPrevPrimaryAttack.
     m_flPrevPrimaryAttack = flNextAttack - UTIL_WeaponTimeBase();
-	// 	char szMsg[256];
-	// 	snprintf( szMsg, sizeof(szMsg), "next attack time: %0.4f\n", gpGlobals->time + flNextAttack );
-	// 	OutputDebugString( szMsg );
+    //     char szMsg[256];
+    //     snprintf( szMsg, sizeof(szMsg), "next attack time: %0.4f\n", gpGlobals->time + flNextAttack );
+    //     OutputDebugString( szMsg );
     return flNextAttack;
 }
 
@@ -684,12 +684,12 @@ void CBasePlayerWeapon::PrintState()
     Logger->debug( "primary:  {}", m_flNextPrimaryAttack );
     Logger->debug( "idle   :  {}", m_flTimeWeaponIdle );
 
-	// Logger->debug("nextrl :  {}", m_flNextReload);
-	// Logger->debug("nextpum:  {}", m_flPumpTime);
+    // Logger->debug("nextrl :  {}", m_flNextReload);
+    // Logger->debug("nextpum:  {}", m_flPumpTime);
 
-	// Logger->debug("m_frt  :  {}", m_fReloadTime);
+    // Logger->debug("m_frt  :  {}", m_fReloadTime);
     Logger->debug( "m_finre:  {}", static_cast<int>( m_fInReload ) );
-	// Logger->debug("m_finsr:  {}", m_fInSpecialReload);
+    // Logger->debug("m_finsr:  {}", m_fInSpecialReload);
 
     Logger->debug( "m_iclip:  {}", m_iClip );
 }
@@ -708,7 +708,7 @@ void CBasePlayerAmmo::Spawn()
 {
     CBaseItem::Spawn();
 
-	// Make sure these are set.
+    // Make sure these are set.
     assert( m_AmmoAmount >= RefillAllAmmoAmount );
     assert( !FStrEq( STRING( m_AmmoName ), "" ) );
 }
@@ -737,7 +737,7 @@ bool CBasePlayerAmmo::GiveAmmo( CBasePlayer* player, int amount, const char* amm
         }
     }
 
-	// Act like giving 0 ammo always succeeds. For fake ammo pickups.
+    // Act like giving 0 ammo always succeeds. For fake ammo pickups.
     if( amount == 0 || player->GiveAmmo( amount, ammoName ) != -1 )
     {
         PlayPickupSound( pickupSoundName );

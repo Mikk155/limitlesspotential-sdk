@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -54,7 +54,7 @@ private:
     DAMAGE_IMAGE m_dmg[NUM_DMG_TYPES];
     int m_bitsDamage;
 
-	// Armor HUD
+    // Armor HUD
     HSPRITE m_ArmorSprite1;
     HSPRITE m_ArmorSprite2;
     const Rect* m_ArmorSprite1Rect;
@@ -63,9 +63,9 @@ private:
     int m_iBatMax;
     float m_ArmorFade;
 
-	/**
-	 *	@brief Returns X coordinate for armor HUD.
-	 */
+    /**
+     *    @brief Returns X coordinate for armor HUD.
+     */
     int DrawHealth();
     void DrawArmor( int startX );
     bool DrawPain( float fTime );

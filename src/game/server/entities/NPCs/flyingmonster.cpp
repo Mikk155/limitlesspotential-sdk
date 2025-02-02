@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -20,10 +20,10 @@
 
 int CFlyingMonster::CheckLocalMove( const Vector& vecStart, const Vector& vecEnd, CBaseEntity* pTarget, float* pflDist )
 {
-	// UNDONE: need to check more than the endpoint
+    // UNDONE: need to check more than the endpoint
     if( FBitSet( pev->flags, FL_SWIM ) && ( UTIL_PointContents( vecEnd ) != CONTENTS_WATER ) )
     {
-		// AILogger->debug("can't swim out of water");
+        // AILogger->debug("can't swim out of water");
         return LOCALMOVE_INVALID;
     }
 
@@ -31,14 +31,14 @@ int CFlyingMonster::CheckLocalMove( const Vector& vecStart, const Vector& vecEnd
 
     UTIL_TraceHull( vecStart + Vector( 0, 0, 32 ), vecEnd + Vector( 0, 0, 32 ), dont_ignore_monsters, large_hull, edict(), &tr );
 
-	// AILogger->debug("{:.0f} : {:.0f}", vecStart, vecEnd);
+    // AILogger->debug("{:.0f} : {:.0f}", vecStart, vecEnd);
 
     if( pflDist )
     {
         *pflDist = ( ( tr.vecEndPos - Vector( 0, 0, 32 ) ) - vecStart ).Length(); // get the distance.
     }
 
-	// AILogger->debug("check {} {} {}", tr.fStartSolid, tr.fAllSolid, tr.flFraction);
+    // AILogger->debug("check {} {} {}", tr.fStartSolid, tr.fAllSolid, tr.flFraction);
     if( 0 != tr.fStartSolid || tr.flFraction < 1.0 )
     {
         if( pTarget && pTarget->edict() == gpGlobals->trace_ent )
@@ -146,7 +146,7 @@ void CFlyingMonster::Move( float flInterval )
 
 bool CFlyingMonster::ShouldAdvanceRoute( float flWaypointDist )
 {
-	// Get true 3D distance to the goal so we actually reach the correct height
+    // Get true 3D distance to the goal so we actually reach the correct height
     if( ( m_Route[m_iRouteIndex].iType & bits_MF_IS_GOAL ) != 0 )
         flWaypointDist = ( m_Route[m_iRouteIndex].vecLocation - pev->origin ).Length();
 
@@ -220,18 +220,18 @@ bool CFlyingMonster::ProbeZ( const Vector& position, const Vector& probe, float*
     int conPosition = UTIL_PointContents( position );
     if( ( ( ( pev->flags ) & FL_SWIM ) == FL_SWIM ) ^ ( conPosition == CONTENTS_WATER ) )
     {
-		//    SWIMING & !WATER
-		// or FLYING  & WATER
-		//
+        //    SWIMING & !WATER
+        // or FLYING  & WATER
+        //
         *pFraction = 0.0;
         return true; // We hit a water boundary because we are where we don't belong.
     }
     int conProbe = UTIL_PointContents( probe );
     if( conProbe == conPosition )
     {
-		// The probe is either entirely inside the water (for fish) or entirely
-		// outside the water (for birds).
-		//
+        // The probe is either entirely inside the water (for fish) or entirely
+        // outside the water (for birds).
+        //
         *pFraction = 1.0;
         return false;
     }

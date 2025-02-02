@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -80,7 +80,7 @@ public:
             "zombie/claw_miss2.wav",
         };
 
-	// No range attacks
+    // No range attacks
     bool CheckRangeAttack1( float flDot, float flDist ) override { return false; }
     bool CheckRangeAttack2( float flDot, float flDist ) override { return false; }
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
@@ -91,6 +91,6 @@ protected:
 
     void ZombieSlashAttack( float damage, const Vector& punchAngle, const Vector& velocity, bool playAttackSound = true );
 
-	// Take 30% damage from bullets by default
+    // Take 30% damage from bullets by default
     virtual float GetBulletDamageFraction() const { return 0.3f; }
 };

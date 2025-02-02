@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -16,17 +16,17 @@
 #include "cbase.h"
 
 // Monstermaker spawnflags
-#define SF_MONSTERMAKER_START_ON 1	  //!< start active ( if has targetname )
-#define SF_MONSTERMAKER_CYCLIC 4	  //!< drop one monster every time fired.
+#define SF_MONSTERMAKER_START_ON 1      //!< start active ( if has targetname )
+#define SF_MONSTERMAKER_CYCLIC 4      //!< drop one monster every time fired.
 #define SF_MONSTERMAKER_MONSTERCLIP 8 //!< Children are blocked by monsterclip
 
 /**
- *	@brief Amount of @c monstermaker child keys that can be passed on to children on creation.
+ *    @brief Amount of @c monstermaker child keys that can be passed on to children on creation.
  */
 constexpr int MaxMonsterMakerChildKeys = 64;
 
 /**
- *	@brief this entity creates monsters during the game.
+ *    @brief this entity creates monsters during the game.
  */
 class CMonsterMaker : public CBaseMonster
 {
@@ -39,29 +39,29 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool IsMonster() override { return false; }
 
-	/**
-	 *	@brief activates/deactivates the monster maker
-	 */
+    /**
+     *    @brief activates/deactivates the monster maker
+     */
     void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
-	/**
-	 *	@brief drops one monster from the monstermaker each time we call this.
-	 */
+    /**
+     *    @brief drops one monster from the monstermaker each time we call this.
+     */
     void CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
-	/**
-	 *	@brief creates a new monster every so often
-	 */
+    /**
+     *    @brief creates a new monster every so often
+     */
     void MakerThink();
 
-	/**
-	 *	@brief monster maker children use this to tell the monster maker that they have died.
-	 */
+    /**
+     *    @brief monster maker children use this to tell the monster maker that they have died.
+     */
     void DeathNotice( CBaseEntity* child ) override;
 
-	/**
-	 *	@brief this is the code that drops the monster
-	 */
+    /**
+     *    @brief this is the code that drops the monster
+     */
     void MakeMonster();
 
     string_t m_iszMonsterClassname; // classname of the monster(s) that will be created.
@@ -118,7 +118,7 @@ bool CMonsterMaker::KeyValue( KeyValueData* pkvd )
         m_iszMonsterClassname = ALLOC_STRING( pkvd->szValue );
         return true;
     }
-	// Pass this key on to children.
+    // Pass this key on to children.
     else if( pkvd->szKeyName[0] == '#' )
     {
         if( m_ChildKeyCount < MaxMonsterMakerChildKeys )
@@ -202,7 +202,7 @@ void CMonsterMaker::MakeMonster()
 
     if( 0 == m_flGround )
     {
-		// set altitude. Now that I'm activated, any breakables, etc should be out from under me.
+        // set altitude. Now that I'm activated, any breakables, etc should be out from under me.
         TraceResult tr;
 
         UTIL_TraceLine( pev->origin, pev->origin - Vector( 0, 0, 2048 ), ignore_monsters, edict(), &tr );
@@ -218,7 +218,7 @@ void CMonsterMaker::MakeMonster()
     int count = UTIL_EntitiesInBox( pList, 2, mins, maxs, FL_CLIENT | FL_MONSTER );
     if( 0 != count )
     {
-		// don't build a stack of monsters!
+        // don't build a stack of monsters!
         return;
     }
 
@@ -234,11 +234,11 @@ void CMonsterMaker::MakeMonster()
     entity->pev->angles = pev->angles;
     SetBits( entity->pev->spawnflags, SF_MONSTER_FALL_TO_GROUND );
 
-	// Children hit monsterclip brushes
+    // Children hit monsterclip brushes
     if( ( pev->spawnflags & SF_MONSTERMAKER_MONSTERCLIP ) != 0 )
         SetBits( entity->pev->spawnflags, SF_MONSTER_HITMONSTERCLIP );
 
-	// Pass any keyvalues specified by the designer.
+    // Pass any keyvalues specified by the designer.
     UTIL_InitializeKeyValues( entity, m_ChildKeys, m_ChildValues, m_ChildKeyCount );
 
     DispatchSpawn( entity->edict() );
@@ -246,7 +246,7 @@ void CMonsterMaker::MakeMonster()
 
     if( !FStringNull( pev->netname ) )
     {
-		// if I have a netname (overloaded), give the child monster that name as a targetname
+        // if I have a netname (overloaded), give the child monster that name as a targetname
         entity->pev->targetname = pev->netname;
     }
 
@@ -258,17 +258,17 @@ void CMonsterMaker::MakeMonster()
 
         if( m_cNumMonsters == 0 )
         {
-			// Disable this forever.  Don't kill it because it still gets death notices
+            // Disable this forever.  Don't kill it because it still gets death notices
             SetThink( nullptr );
             SetUse( nullptr );
         }
     }
 
-	// If I have a target, fire!
-	// Do this after the monster has spawned and this monstermaker has finished so we can access the target entity.
+    // If I have a target, fire!
+    // Do this after the monster has spawned and this monstermaker has finished so we can access the target entity.
     if( !FStringNull( pev->target ) )
     {
-		// delay already overloaded for this entity, so can't call SUB_UseTargets()
+        // delay already overloaded for this entity, so can't call SUB_UseTargets()
         FireTargets( STRING( pev->target ), this, this, USE_TOGGLE, 0 );
     }
 }
@@ -306,7 +306,7 @@ void CMonsterMaker::MakerThink()
 
 void CMonsterMaker::DeathNotice( CBaseEntity* child )
 {
-	// ok, we've gotten the deathnotice from our child, now clear out its owner if we don't want it to fade.
+    // ok, we've gotten the deathnotice from our child, now clear out its owner if we don't want it to fade.
     --m_cLiveChildren;
 
     if( !m_fFadeChildren )

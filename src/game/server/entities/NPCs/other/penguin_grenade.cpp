@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -102,32 +102,32 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
 {
     TraceResult tr = UTIL_GetGlobalTrace();
 
-	// don't hit the guy that launched this grenade
+    // don't hit the guy that launched this grenade
     if( pev->owner && pOther->edict() == pev->owner )
         return;
 
-	// at least until we've bounced once
+    // at least until we've bounced once
     pev->owner = nullptr;
 
     pev->angles.x = 0;
     pev->angles.z = 0;
 
-	// avoid bouncing too much
+    // avoid bouncing too much
     if( m_flNextHit > gpGlobals->time )
         return;
 
-	// higher pitch as squeeker gets closer to detonation time
+    // higher pitch as squeeker gets closer to detonation time
     const float flpitch = 155.0 - 60.0 * ( ( m_flDie - gpGlobals->time ) / PENGUIN_DETONATE_DELAY );
 
     if( 0 != pOther->pev->takedamage && m_flNextAttack < gpGlobals->time )
     {
-		// attack!
+        // attack!
 
         bool hurtTarget = true;
 
         if( g_pGameRules->IsMultiplayer() )
         {
-			// TODO: set to null earlier on, so this can never be valid
+            // TODO: set to null earlier on, so this can never be valid
             auto owner = ToBasePlayer( pev->owner );
 
             hurtTarget = true;
@@ -145,13 +145,13 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
             }
         }
 
-		// make sure it's me who has touched them
+        // make sure it's me who has touched them
         if( tr.pHit == pOther->edict() )
         {
-			// and it's not another squeakgrenade
+            // and it's not another squeakgrenade
             if( tr.pHit->v.modelindex != pev->modelindex )
             {
-				// AILogger->debug("hit enemy");
+                // AILogger->debug("hit enemy");
                 ClearMultiDamage();
                 pOther->TraceAttack( this, GetSkillFloat( "snark_dmg_bite"sv ), gpGlobals->v_forward, &tr, DMG_SLASH );
                 if( m_hOwner != nullptr )
@@ -159,7 +159,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
                 else
                     ApplyMultiDamage( this, this );
 
-				// add more explosion damage
+                // add more explosion damage
                 if( hurtTarget )
                     pev->dmg += GetSkillFloat( "plr_hand_grenade"sv );
                 else
@@ -170,16 +170,16 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
                     pev->dmg = 500.0;
                 }
 
-				// m_flDie += 2.0; // add more life
+                // m_flDie += 2.0; // add more life
 
-				// make bite sound
+                // make bite sound
                 EmitSoundDyn( CHAN_WEAPON, "squeek/sqk_deploy1.wav", 1.0, ATTN_NORM, 0, (int)flpitch );
                 m_flNextAttack = gpGlobals->time + 0.5;
             }
         }
         else
         {
-			// AILogger->debug("been hit");
+            // AILogger->debug("been hit");
         }
     }
 
@@ -188,17 +188,17 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
 
     if( g_pGameRules->IsMultiplayer() )
     {
-		// in multiplayer, we limit how often snarks can make their bounce sounds to prevent overflows.
+        // in multiplayer, we limit how often snarks can make their bounce sounds to prevent overflows.
         if( gpGlobals->time < m_flNextBounceSoundTime )
         {
-			// too soon!
+            // too soon!
             return;
         }
     }
 
     if( ( pev->flags & FL_ONGROUND ) == 0 )
     {
-		// play bounce sound
+        // play bounce sound
         float flRndSound = RANDOM_FLOAT( 0, 1 );
 
         if( flRndSound <= 0.33 )
@@ -211,7 +211,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
     }
     else
     {
-		// skittering sound
+        // skittering sound
         CSoundEnt::InsertSound( bits_SOUND_COMBAT, pev->origin, 100, 0.1 );
     }
 
@@ -221,7 +221,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
 void CPenguinGrenade::Spawn()
 {
     Precache();
-	// motor
+    // motor
     pev->movetype = MOVETYPE_BOUNCE;
     pev->solid = SOLID_BBOX;
 
@@ -250,7 +250,7 @@ void CPenguinGrenade::Spawn()
 
     m_flNextBounceSoundTime = gpGlobals->time; // reset each time a snark is spawned.
 
-	// TODO: shouldn't use index
+    // TODO: shouldn't use index
     pev->sequence = MONSTERPENGUIN_RUN;
     ResetSequenceInfo();
 }
@@ -282,14 +282,14 @@ void CPenguinGrenade::Killed( CBaseEntity* attacker, int iGib )
 
     UTIL_BloodDrips( pev->origin, g_vecZero, BloodColor(), 80 );
 
-	// reset owner so death message happens
+    // reset owner so death message happens
     if( m_hOwner != nullptr )
         pev->owner = m_hOwner->edict();
 }
 
 void CPenguinGrenade::HuntThink()
 {
-	// AILogger->debug("think");
+    // AILogger->debug("think");
 
     if( !IsInWorld() )
     {
@@ -301,7 +301,7 @@ void CPenguinGrenade::HuntThink()
     StudioFrameAdvance();
     pev->nextthink = gpGlobals->time + 0.1;
 
-	// explode when ready
+    // explode when ready
     if( gpGlobals->time >= m_flDie )
     {
         g_vecAttackDir = pev->velocity.Normalize();
@@ -310,7 +310,7 @@ void CPenguinGrenade::HuntThink()
         return;
     }
 
-	// float
+    // float
     if( pev->waterlevel != WaterLevel::Dry )
     {
         if( pev->movetype == MOVETYPE_BOUNCE )
@@ -325,7 +325,7 @@ void CPenguinGrenade::HuntThink()
         pev->movetype = MOVETYPE_BOUNCE;
     }
 
-	// return if not time to hunt
+    // return if not time to hunt
     if( m_flNextHunt > gpGlobals->time )
         return;
 
@@ -340,19 +340,19 @@ void CPenguinGrenade::HuntThink()
 
     if( m_hEnemy == nullptr || !m_hEnemy->IsAlive() )
     {
-		// find target, bounce a bit towards it.
+        // find target, bounce a bit towards it.
         Look( 512 );
         m_hEnemy = BestVisibleEnemy();
     }
 
-	// squeek if it's about time blow up
+    // squeek if it's about time blow up
     if( ( m_flDie - gpGlobals->time <= 0.5 ) && ( m_flDie - gpGlobals->time >= 0.3 ) )
     {
         EmitSoundDyn( CHAN_VOICE, "squeek/sqk_die1.wav", 1, ATTN_NORM, 0, 100 + RANDOM_LONG( 0, 0x3F ) );
         CSoundEnt::InsertSound( bits_SOUND_COMBAT, pev->origin, 256, 0.25 );
     }
 
-	// higher pitch as squeeker gets closer to detonation time
+    // higher pitch as squeeker gets closer to detonation time
     float flpitch = 155.0 - 60.0 * ( ( m_flDie - gpGlobals->time ) / PENGUIN_DETONATE_DELAY );
     if( flpitch < 80 )
         flpitch = 80;
@@ -371,9 +371,9 @@ void CPenguinGrenade::HuntThink()
         if( flAdj > 1.2 )
             flAdj = 1.2;
 
-		// AILogger->debug("think : enemy");
+        // AILogger->debug("think : enemy");
 
-		// AILogger->debug("{:.0f} {:.2f}", flVel, m_vecTarget);
+        // AILogger->debug("{:.0f} {:.2f}", flVel, m_vecTarget);
 
         pev->velocity = pev->velocity * flAdj + m_vecTarget * 300;
     }
@@ -402,17 +402,17 @@ void CPenguinGrenade::HuntThink()
     pev->angles.z = 0;
     pev->angles.x = 0;
 
-	// Update classification
+    // Update classification
     if( !HasCustomClassification() )
     {
-		// TODO: maybe use a different classification that has the expected relationships for these classes.
+        // TODO: maybe use a different classification that has the expected relationships for these classes.
         const char* classification = "alien_bioweapon";
 
         if( m_hEnemy != nullptr )
         {
             if( g_EntityClassifications.ClassNameIs( m_hEnemy->Classify(), {"player", "human_passive", "human_military"} ) )
             {
-				// barney's get mad, grunts get mad at it
+                // barney's get mad, grunts get mad at it
                 classification = "alien_military";
             }
         }

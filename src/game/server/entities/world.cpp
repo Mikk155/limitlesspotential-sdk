@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -13,8 +13,8 @@
  *
  ****/
 /**
- *	@file
- *	precaches and defs for entities and other data that must always be available.
+ *    @file
+ *    precaches and defs for entities and other data that must always be available.
  */
 
 #include "cbase.h"
@@ -28,7 +28,7 @@
 #include "ctf/ctf_items.h"
 
 /**
- *	@details This must match the list in util.h
+ *    @details This must match the list in util.h
  */
 DLL_DECALLIST gDecals[] = {
     {"{shot1", 0},         // DECAL_GUNSHOT1
@@ -117,12 +117,12 @@ void CDecal::Spawn()
     if( FStringNull( pev->targetname ) )
     {
         SetThink( &CDecal::StaticDecal );
-		// if there's no targetname, the decal will spray itself on as soon as the world is done spawning.
+        // if there's no targetname, the decal will spray itself on as soon as the world is done spawning.
         pev->nextthink = gpGlobals->time;
     }
     else
     {
-		// if there IS a targetname, the decal sprays itself on when it is triggered.
+        // if there IS a targetname, the decal sprays itself on when it is triggered.
         SetThink( nullptr );
         SetUse( &CDecal::TriggerDecal );
     }
@@ -130,8 +130,8 @@ void CDecal::Spawn()
 
 void CDecal::TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	// this is set up as a USE function for infodecals that have targetnames, so that the
-	// decal doesn't get applied until it is fired. (usually by a scripted sequence)
+    // this is set up as a USE function for infodecals that have targetnames, so that the
+    // decal doesn't get applied until it is fired. (usually by a scripted sequence)
     TraceResult trace;
 
     UTIL_TraceLine( pev->origin - Vector( 5, 5, 5 ), pev->origin + Vector( 5, 5, 5 ), ignore_monsters, edict(), &trace );
@@ -202,7 +202,7 @@ CWorld::CWorld()
 
     World = this;
 
-	// Clear previous map's title if it wasn't cleared already.
+    // Clear previous map's title if it wasn't cleared already.
     g_DisplayTitleName.clear();
 }
 
@@ -234,7 +234,7 @@ void CWorld::Spawn()
 
 void CWorld::Precache()
 {
-	// Flag this entity for removal if it's not the actual world entity.
+    // Flag this entity for removal if it's not the actual world entity.
     if( World != this )
     {
         UTIL_Remove( this );
@@ -255,14 +255,14 @@ void CWorld::Precache()
 
     CVAR_SET_STRING( "room_type", "0" ); // clear DSP
 
-	//!!!UNDONE why is there so much Spawn code in the Precache function? I'll just keep it here
+    //!!!UNDONE why is there so much Spawn code in the Precache function? I'll just keep it here
 
-	// Set gamemode now that we have the world edict.
+    // Set gamemode now that we have the world edict.
     auto serverBuffer = g_engfuncs.pfnGetInfoKeyBuffer( this->edict() );
 
     g_engfuncs.pfnSetKeyValue( serverBuffer, "gm", g_pGameRules->GetGameModeName() );
 
-	///!!!LATER - do we want a sound ent in deathmatch? (sjb)
+    ///!!!LATER - do we want a sound ent in deathmatch? (sjb)
     pSoundEnt = g_EntityDictionary->Create<CSoundEnt>( "soundent" );
 
     if( pSoundEnt )
@@ -276,16 +276,16 @@ void CWorld::Precache()
 
     InitBodyQue();
 
-	// the area based ambient sounds MUST be the first precache_sounds
+    // the area based ambient sounds MUST be the first precache_sounds
 
-	// player precaches
+    // player precaches
     W_Precache(); // get weapon precaches
 
     ClientPrecache();
 
     g_GameLogger->trace( "Precaching common assets" );
 
-	// sounds used from C physics code
+    // sounds used from C physics code
     PrecacheSound( "common/null.wav" ); // clears sound channels
 
     PrecacheSound( "items/suitchargeok1.wav" ); //!!! temporary sound for respawning weapons.
@@ -310,54 +310,54 @@ void CWorld::Precache()
     PrecacheSound( "weapons/ric3.wav" );
     PrecacheSound( "weapons/ric4.wav" );
     PrecacheSound( "weapons/ric5.wav" );
-	//
-	// Setup light animation tables. 'a' is total darkness, 'z' is maxbright.
-	//
+    //
+    // Setup light animation tables. 'a' is total darkness, 'z' is maxbright.
+    //
 
-	// 0 normal
+    // 0 normal
     LIGHT_STYLE( 0, "m" );
 
-	// 1 FLICKER (first variety)
+    // 1 FLICKER (first variety)
     LIGHT_STYLE( 1, "mmnmmommommnonmmonqnmmo" );
 
-	// 2 SLOW STRONG PULSE
+    // 2 SLOW STRONG PULSE
     LIGHT_STYLE( 2, "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba" );
 
-	// 3 CANDLE (first variety)
+    // 3 CANDLE (first variety)
     LIGHT_STYLE( 3, "mmmmmaaaaammmmmaaaaaabcdefgabcdefg" );
 
-	// 4 FAST STROBE
+    // 4 FAST STROBE
     LIGHT_STYLE( 4, "mamamamamama" );
 
-	// 5 GENTLE PULSE 1
+    // 5 GENTLE PULSE 1
     LIGHT_STYLE( 5, "jklmnopqrstuvwxyzyxwvutsrqponmlkj" );
 
-	// 6 FLICKER (second variety)
+    // 6 FLICKER (second variety)
     LIGHT_STYLE( 6, "nmonqnmomnmomomno" );
 
-	// 7 CANDLE (second variety)
+    // 7 CANDLE (second variety)
     LIGHT_STYLE( 7, "mmmaaaabcdefgmmmmaaaammmaamm" );
 
-	// 8 CANDLE (third variety)
+    // 8 CANDLE (third variety)
     LIGHT_STYLE( 8, "mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa" );
 
-	// 9 SLOW STROBE (fourth variety)
+    // 9 SLOW STROBE (fourth variety)
     LIGHT_STYLE( 9, "aaaaaaaazzzzzzzz" );
 
-	// 10 FLUORESCENT FLICKER
+    // 10 FLUORESCENT FLICKER
     LIGHT_STYLE( 10, "mmamammmmammamamaaamammma" );
 
-	// 11 SLOW PULSE NOT FADE TO BLACK
+    // 11 SLOW PULSE NOT FADE TO BLACK
     LIGHT_STYLE( 11, "abcdefghijklmnopqrrqponmlkjihgfedcba" );
 
-	// 12 UNDERWATER LIGHT MUTATION
-	// this light only distorts the lightmap - no contribution
-	// is made to the brightness of affected surfaces
+    // 12 UNDERWATER LIGHT MUTATION
+    // this light only distorts the lightmap - no contribution
+    // is made to the brightness of affected surfaces
     LIGHT_STYLE( 12, "mmnnmmnnnmmnn" );
 
-	// styles 32-62 are assigned by the light program for switchable lights
+    // styles 32-62 are assigned by the light program for switchable lights
 
-	// 63 testing
+    // 63 testing
     LIGHT_STYLE( 63, "a" );
 
     if( !m_HasCustomHullMax ) {
@@ -372,10 +372,10 @@ void CWorld::Precache()
 
     g_GameLogger->trace( "Setting up node graph" );
 
-	// init the WorldGraph.
+    // init the WorldGraph.
     WorldGraph.InitGraph();
 
-	// make sure the .NOD file is newer than the .BSP file.
+    // make sure the .NOD file is newer than the .BSP file.
     if( !WorldGraph.CheckNODFile( STRING( gpGlobals->mapname ) ) )
     { // NOD file is not present, or is older than the BSP file.
         WorldGraph.AllocNodes();
@@ -431,17 +431,17 @@ void CWorld::Precache()
 
 bool CWorld::KeyValue( KeyValueData* pkvd )
 {
-	// ignore the "wad" field.
+    // ignore the "wad" field.
     if( FStrEq( pkvd->szKeyName, "skyname" ) )
     {
-		// Sent over net now.
-		// Reset to default in ServerLibrary::NewMapStarted.
+        // Sent over net now.
+        // Reset to default in ServerLibrary::NewMapStarted.
         CVAR_SET_STRING( "sv_skyname", pkvd->szValue );
         return true;
     }
     else if( FStrEq( pkvd->szKeyName, "WaveHeight" ) )
     {
-		// Sent over net now.
+        // Sent over net now.
         pev->scale = atof( pkvd->szValue ) * ( 1.0 / 8.0 );
         return true;
     }
@@ -457,8 +457,8 @@ bool CWorld::KeyValue( KeyValueData* pkvd )
     }
     else if( FStrEq( pkvd->szKeyName, "startdark" ) )
     {
-		// UNDONE: This is a gross hack!!! The CVAR is NOT sent over the client/sever link
-		// but it will work for single player
+        // UNDONE: This is a gross hack!!! The CVAR is NOT sent over the client/sever link
+        // but it will work for single player
         int flag = atoi( pkvd->szValue );
         if( 0 != flag )
             pev->spawnflags |= SF_WORLD_DARK;
@@ -466,14 +466,14 @@ bool CWorld::KeyValue( KeyValueData* pkvd )
     }
     else if( FStrEq( pkvd->szKeyName, "newunit" ) )
     {
-		// Single player only.  Clear save directory if set
+        // Single player only.  Clear save directory if set
         if( 0 != atoi( pkvd->szValue ) )
             CVAR_SET_FLOAT( "sv_newunit", 1 );
         return true;
     }
     else if( FStrEq( pkvd->szKeyName, "gametitle" ) )
     {
-		// No need to save, only displayed on startup. Bugged in vanilla, loading a save game shows it again.
+        // No need to save, only displayed on startup. Bugged in vanilla, loading a save game shows it again.
         g_DisplayTitleName = pkvd->szValue;
         return true;
     }

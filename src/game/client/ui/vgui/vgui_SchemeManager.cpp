@@ -44,10 +44,10 @@ public:
         FONT_FILENAME_LENGTH = 64,
     };
 
-	// name
+    // name
     char schemeName[SCHEME_NAME_LENGTH];
 
-	// font
+    // font
     char fontName[FONT_NAME_LENGTH];
 
     int fontSize;
@@ -56,7 +56,7 @@ public:
     vgui::Font* font;
     bool ownFontPointer; // true if the font is ours to delete
 
-	// scheme
+    // scheme
     byte fgColor[4];
     byte bgColor[4];
     byte armedFgColor[4];
@@ -65,7 +65,7 @@ public:
     byte mousedownBgColor[4];
     byte borderColor[4];
 
-	// construction/destruction
+    // construction/destruction
     CScheme();
     ~CScheme();
 };
@@ -82,7 +82,7 @@ CSchemeManager::CScheme::CScheme()
 
 CSchemeManager::CScheme::~CScheme()
 {
-	// only delete our font pointer if we own it
+    // only delete our font pointer if we own it
     if( ownFontPointer )
     {
         delete font;
@@ -91,7 +91,7 @@ CSchemeManager::CScheme::~CScheme()
 
 //-----------------------------------------------------------------------------
 // Purpose: resolution information
-//			!! needs to be shared out
+//            !! needs to be shared out
 //-----------------------------------------------------------------------------
 static constexpr int g_ResArray[] =
     {
@@ -107,7 +107,7 @@ static constexpr int g_ResArray[] =
 
 static std::vector<std::byte> LoadFileByResolution( const char* filePrefix, int xRes, const char* filePostfix )
 {
-	// find our resolution in the res array
+    // find our resolution in the res array
     int resNum = std::size( g_ResArray ) - 1;
     while( g_ResArray[resNum] > xRes )
     {
@@ -119,10 +119,10 @@ static std::vector<std::byte> LoadFileByResolution( const char* filePrefix, int 
         }
     }
 
-	// try open the file
+    // try open the file
     for( ; resNum >= 0; --resNum )
     {
-		// try load
+        // try load
         char fname[256];
         sprintf( fname, "%s%d%s", filePrefix, g_ResArray[resNum], filePostfix );
         auto fileContents = FileSystem_LoadFileIntoBuffer( fname, FileContentFormat::Text );
@@ -146,7 +146,7 @@ static void ParseRGBAFromString( byte colorArray[4], const char* colorVector )
     }
     else
     {
-		// Pure white for easier debugging
+        // Pure white for easier debugging
         colorArray[0] = 255;
         colorArray[1] = 255;
         colorArray[2] = 255;
@@ -156,17 +156,17 @@ static void ParseRGBAFromString( byte colorArray[4], const char* colorVector )
 
 //-----------------------------------------------------------------------------
 // Purpose: initializes the scheme manager
-//			loading the scheme files for the current resolution
+//            loading the scheme files for the current resolution
 // Input  : xRes -
-//			yRes - dimensions of output window
+//            yRes - dimensions of output window
 //-----------------------------------------------------------------------------
 CSchemeManager::CSchemeManager( int xRes, int yRes )
 {
-	// basic setup
+    // basic setup
     m_pSchemeList = nullptr;
     m_iNumSchemes = 0;
 
-	// find the closest matching scheme file to our resolution
+    // find the closest matching scheme file to our resolution
     char token[1024];
     const auto fileContents = LoadFileByResolution( "", xRes, "_textscheme.txt" );
     m_xRes = xRes;
@@ -176,13 +176,13 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 
     char fontFilename[512];
 
-	//
-	// Read the scheme descriptions from the text file, into a temporary array
-	// format is simply:
-	// <paramName name> = <paramValue>
-	//
-	// a <paramName name> of "SchemeName" signals a new scheme is being described
-	//
+    //
+    // Read the scheme descriptions from the text file, into a temporary array
+    // format is simply:
+    // <paramName name> = <paramValue>
+    //
+    // a <paramName name> of "SchemeName" signals a new scheme is being described
+    //
 
     const static int numTmpSchemes = 64;
     static CScheme tmpSchemes[numTmpSchemes];
@@ -197,20 +197,20 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
     }
 
     {
-		// record what has been entered so we can create defaults from the different values
+        // record what has been entered so we can create defaults from the different values
         bool hasFgColor = false, hasBgColor = false, hasArmedFgColor = false, hasArmedBgColor = false, hasMouseDownFgColor = false, hasMouseDownBgColor = false;
 
         pFile = gEngfuncs.COM_ParseFile( pFile, token );
         while( strlen( token ) > 0 && ( currentScheme < numTmpSchemes ) )
         {
-			// get the paramName name
+            // get the paramName name
             static const int tokenSize = 64;
             char paramName[tokenSize], paramValue[tokenSize];
 
             strncpy( paramName, token, tokenSize );
             paramName[tokenSize - 1] = 0; // ensure null termination
 
-			// get the '=' character
+            // get the '=' character
             pFile = gEngfuncs.COM_ParseFile( pFile, token );
             if( stricmp( token, "=" ) )
             {
@@ -225,18 +225,18 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
                 break;
             }
 
-			// get paramValue
+            // get paramValue
             pFile = gEngfuncs.COM_ParseFile( pFile, token );
             strncpy( paramValue, token, tokenSize );
             paramValue[tokenSize - 1] = 0; // ensure null termination
 
-			// is this a new scheme?
+            // is this a new scheme?
             if( !stricmp( paramName, "SchemeName" ) )
             {
-				// setup the defaults for the current scheme
+                // setup the defaults for the current scheme
                 if( pScheme )
                 {
-					// foreground color defaults (normal -> armed -> mouse down)
+                    // foreground color defaults (normal -> armed -> mouse down)
                     if( !hasFgColor )
                     {
                         pScheme->fgColor[0] = pScheme->fgColor[1] = pScheme->fgColor[2] = pScheme->fgColor[3] = 255;
@@ -250,7 +250,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
                         memcpy( pScheme->mousedownFgColor, pScheme->armedFgColor, sizeof( pScheme->mousedownFgColor ) );
                     }
 
-					// background color (normal -> armed -> mouse down)
+                    // background color (normal -> armed -> mouse down)
                     if( !hasBgColor )
                     {
                         pScheme->bgColor[0] = pScheme->bgColor[1] = pScheme->bgColor[2] = pScheme->bgColor[3] = 0;
@@ -264,7 +264,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
                         memcpy( pScheme->mousedownBgColor, pScheme->armedBgColor, sizeof( pScheme->mousedownBgColor ) );
                     }
 
-					// font size
+                    // font size
                     if( 0 == pScheme->fontSize )
                     {
                         pScheme->fontSize = 17;
@@ -275,7 +275,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
                     }
                 }
 
-				// create the new scheme
+                // create the new scheme
                 currentScheme++;
                 pScheme = &tmpSchemes[currentScheme];
                 hasFgColor = hasBgColor = hasArmedFgColor = hasArmedBgColor = hasMouseDownFgColor = hasMouseDownBgColor = false;
@@ -290,7 +290,7 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
                 break;
             }
 
-			// pull the data out into the scheme
+            // pull the data out into the scheme
             if( !stricmp( paramName, "FontName" ) )
             {
                 strncpy( pScheme->fontName, paramValue, CScheme::FONT_NAME_LENGTH );
@@ -340,14 +340,14 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
                 hasMouseDownBgColor = true;
             }
 
-			// get the new token last, so we now if the loop needs to be continued or not
+            // get the new token last, so we now if the loop needs to be continued or not
             pFile = gEngfuncs.COM_ParseFile( pFile, token );
         }
     }
 
 buildDefaultFont:
 
-	// make sure we have at least 1 valid font
+    // make sure we have at least 1 valid font
     if( currentScheme < 0 )
     {
         currentScheme = 0;
@@ -359,32 +359,32 @@ buildDefaultFont:
         tmpSchemes[0].mousedownFgColor[0] = tmpSchemes[0].mousedownFgColor[1] = tmpSchemes[0].mousedownFgColor[2] = tmpSchemes[0].mousedownFgColor[3] = 255;
     }
 
-	// we have the full list of schemes in the tmpSchemes array
-	// now allocate the correct sized list
+    // we have the full list of schemes in the tmpSchemes array
+    // now allocate the correct sized list
     m_iNumSchemes = currentScheme + 1; // 0-based index
     m_pSchemeList = new CScheme[m_iNumSchemes];
 
-	// copy in the data
+    // copy in the data
     memcpy( m_pSchemeList, tmpSchemes, sizeof( CScheme ) * m_iNumSchemes );
 
-	// create the fonts
+    // create the fonts
     for( int i = 0; i < m_iNumSchemes; i++ )
     {
         m_pSchemeList[i].font = nullptr;
 
-		// see if the current font values exist in a previously loaded font
+        // see if the current font values exist in a previously loaded font
         for( int j = 0; j < i; j++ )
         {
-			// check if the font name, size, and weight are the same
+            // check if the font name, size, and weight are the same
             if( !stricmp( m_pSchemeList[i].fontName, m_pSchemeList[j].fontName ) && m_pSchemeList[i].fontSize == m_pSchemeList[j].fontSize && m_pSchemeList[i].fontWeight == m_pSchemeList[j].fontWeight )
             {
-				// copy the pointer, but mark i as not owning it
+                // copy the pointer, but mark i as not owning it
                 m_pSchemeList[i].font = m_pSchemeList[j].font;
                 m_pSchemeList[i].ownFontPointer = false;
             }
         }
 
-		// if we haven't found the font already, load it ourselves
+        // if we haven't found the font already, load it ourselves
         if( !m_pSchemeList[i].font )
         {
             int fontFileLength = -1;
@@ -429,7 +429,7 @@ buildDefaultFont:
             m_pSchemeList[i].ownFontPointer = true;
         }
 
-		// fix up alpha values; VGUI uses 1-A (A=0 being solid, A=255 transparent)
+        // fix up alpha values; VGUI uses 1-A (A=0 being solid, A=255 transparent)
         m_pSchemeList[i].fgColor[3] = 255 - m_pSchemeList[i].fgColor[3];
         m_pSchemeList[i].bgColor[3] = 255 - m_pSchemeList[i].bgColor[3];
         m_pSchemeList[i].armedFgColor[3] = 255 - m_pSchemeList[i].armedFgColor[3];
@@ -455,7 +455,7 @@ CSchemeManager::~CSchemeManager()
 //-----------------------------------------------------------------------------
 SchemeHandle_t CSchemeManager::getSchemeHandle( const char* schemeName )
 {
-	// iterate through the list
+    // iterate through the list
     for( int i = 0; i < m_iNumSchemes; i++ )
     {
         if( !stricmp( schemeName, m_pSchemeList[i].schemeName ) )

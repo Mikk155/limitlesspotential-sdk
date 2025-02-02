@@ -20,16 +20,16 @@ enum ClientCommandFlag
 {
     None = 0,
 
-	/**
-	 *	@brief Only allow this command to execute if cheats are enabled.
-	 */
+    /**
+     *    @brief Only allow this command to execute if cheats are enabled.
+     */
     Cheat = 1 << 0,
 };
 }
 
 /**
- *	@brief Encapsulates a client command.
- *	Created using ClientCommandRegistry::Create or ClientCommandRegistry::CreateScoped.
+ *    @brief Encapsulates a client command.
+ *    Created using ClientCommandRegistry::Create or ClientCommandRegistry::CreateScoped.
  */
 class ClientCommand final
 {
@@ -47,7 +47,7 @@ public:
 };
 
 /**
- *	@brief Automatically removes the client command on destruction.
+ *    @brief Automatically removes the client command on destruction.
  */
 class ScopedClientCommand final
 {
@@ -84,7 +84,7 @@ struct CClientCommandCreateArguments
 };
 
 /**
- *	@brief Manages the set of client commands.
+ *    @brief Manages the set of client commands.
  */
 class ClientCommandRegistry final
 {
@@ -98,9 +98,9 @@ public:
     const ClientCommand* Create( 
         std::string_view name, std::function<void( CBasePlayer*, const CommandArgs& )>&& function, const CClientCommandCreateArguments arguments = {} );
 
-	/**
-	 *	@brief Creates a client command that is automatically removed from the registry when the scoped command is destroyed.
-	 */
+    /**
+     *    @brief Creates a client command that is automatically removed from the registry when the scoped command is destroyed.
+     */
     ScopedClientCommand CreateScoped( 
         std::string_view name, std::function<void( CBasePlayer*, const CommandArgs& )>&& function, const CClientCommandCreateArguments arguments = {} )
     {

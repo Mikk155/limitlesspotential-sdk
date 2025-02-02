@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -20,13 +20,13 @@
 Class Hierachy
 
 CBaseEntity
-	CBaseDelay
-		CBaseToggle
-			CBaseItem
-			CBaseMonster
-				CBaseCycler
-				CBasePlayer
-				CBaseGroup
+    CBaseDelay
+        CBaseToggle
+            CBaseItem
+            CBaseMonster
+                CBaseCycler
+                CBasePlayer
+                CBaseGroup
 */
 
 // Include common headers here.
@@ -69,8 +69,8 @@ CBaseEntity
 // C functions for external declarations that call the appropriate C++ methods
 
 /**
- *	@brief HACKHACK -- this is a hack to keep the node graph entity from "touching" things (like triggers)
- *	while it builds the graph
+ *    @brief HACKHACK -- this is a hack to keep the node graph entity from "touching" things (like triggers)
+ *    while it builds the graph
  */
 inline bool gTouchDisabled = false;
 

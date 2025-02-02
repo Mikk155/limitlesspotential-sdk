@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -23,7 +23,7 @@
 #include "utils/ConCommandSystem.h"
 
 /**
- *	@brief Handles core game actions
+ *    @brief Handles core game actions
  */
 class GameLibrary
 {
@@ -38,20 +38,20 @@ public:
     GameLibrary( GameLibrary&& ) = delete;
     GameLibrary& operator=( GameLibrary&& ) = delete;
 
-	/**
-	 *	@details Derived classes must call the base implementation first.
-	 */
+    /**
+     *    @details Derived classes must call the base implementation first.
+     */
     virtual bool Initialize();
 
-	/**
-	 *	@details Derived classes must call the base implementation first.
-	 *	Called even if @see Initialize returned false.
-	 */
+    /**
+     *    @details Derived classes must call the base implementation first.
+     *    Called even if @see Initialize returned false.
+     */
     virtual void Shutdown();
 
-	/**
-	 *	@brief Called every frame.
-	 */
+    /**
+     *    @brief Called every frame.
+     */
     virtual void RunFrame();
 
 protected:
@@ -64,6 +64,6 @@ private:
 };
 
 /**
- *	@brief Logger for general game events.
+ *    @brief Logger for general game events.
  */
 inline std::shared_ptr<spdlog::logger> g_GameLogger;

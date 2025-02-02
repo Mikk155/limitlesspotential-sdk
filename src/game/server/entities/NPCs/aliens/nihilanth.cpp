@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -22,7 +22,7 @@
 class CNihilanth;
 
 /**
- *	@brief Bouncy ball attack
+ *    @brief Bouncy ball attack
  */
 class CNihilanthHVR : public CBaseMonster
 {
@@ -54,7 +54,7 @@ public:
 
     CBaseEntity* RandomClassname( const char* szName );
 
-	// void SphereUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+    // void SphereUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
     void MovetoTarget( Vector vecTarget );
     virtual void Crawl();
@@ -82,11 +82,11 @@ BEGIN_DATAMAP( CNihilanthHVR )
     DEFINE_FUNCTION( RemoveTouch ),
     DEFINE_FUNCTION( BounceTouch ),
     DEFINE_FUNCTION( ZapTouch ),
-	// DEFINE_FUNCTION(SphereUse),
+    // DEFINE_FUNCTION(SphereUse),
 END_DATAMAP();
 
 /**
- *	@brief final Boss monster
+ *    @brief final Boss monster
  */
 class CNihilanth : public CBaseMonster
 {
@@ -146,7 +146,7 @@ public:
     static const char* pPainSounds[];      // vocalization: play sometimes when hit and has much less health and no more chargers
     static const char* pDeathSounds[];      // vocalization: play as he dies
 
-	// x_teleattack1.wav	the looping sound of the teleport attack ball.
+    // x_teleattack1.wav    the looping sound of the teleport attack ball.
 
     float m_flForce;
 
@@ -292,12 +292,12 @@ void CNihilanth::OnCreate()
 void CNihilanth::Spawn()
 {
     Precache();
-	// motor
+    // motor
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
     SetModel( STRING( pev->model ) );
-	// SetSize(Vector( -300, -300, 0), Vector(300, 300, 512));
+    // SetSize(Vector( -300, -300, 0), Vector(300, 300, 512));
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );
     SetOrigin( pev->origin );
 
@@ -334,13 +334,13 @@ void CNihilanth::Spawn()
     if( m_szDeadTouch[0] == '\0' )
         strcpy( m_szDeadTouch, "n_ending" );
 
-	// near death
-	/*
-	m_iTeleport = 10;
-	m_iLevel = 10;
-	m_irritation = 2;
-	pev->health = 100;
-	*/
+    // near death
+    /*
+    m_iTeleport = 10;
+    m_iLevel = 10;
+    m_irritation = 2;
+    pev->health = 100;
+    */
 }
 
 void CNihilanth::Precache()
@@ -571,7 +571,7 @@ void CNihilanth::DyingThink()
 
 void CNihilanth::CrashTouch( CBaseEntity* pOther )
 {
-	// only crash if we hit something solid
+    // only crash if we hit something solid
     if( pOther->pev->solid == SOLID_BSP )
     {
         SetTouch( nullptr );
@@ -581,7 +581,7 @@ void CNihilanth::CrashTouch( CBaseEntity* pOther )
 
 void CNihilanth::GibMonster()
 {
-	// EmitSoundDyn(CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);
+    // EmitSoundDyn(CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);
 }
 
 void CNihilanth::FloatSequence()
@@ -627,7 +627,7 @@ void CNihilanth::ShootBalls()
 
                 GetAttachment( 2, vecHand, vecAngle );
                 vecSrc = vecHand + pev->velocity * ( m_flShootTime - gpGlobals->time );
-				// vecDir = (m_posTarget - vecSrc).Normalize( );
+                // vecDir = (m_posTarget - vecSrc).Normalize( );
                 vecDir = ( m_posTarget - pev->origin ).Normalize();
                 vecSrc = vecSrc + vecDir * ( gpGlobals->time - m_flShootTime );
                 pEntity = ( CNihilanthHVR* )Create( "nihilanth_energy_ball", vecSrc, pev->angles, this );
@@ -636,7 +636,7 @@ void CNihilanth::ShootBalls()
 
                 GetAttachment( 3, vecHand, vecAngle );
                 vecSrc = vecHand + pev->velocity * ( m_flShootTime - gpGlobals->time );
-				// vecDir = (m_posTarget - vecSrc).Normalize( );
+                // vecDir = (m_posTarget - vecSrc).Normalize( );
                 vecDir = ( m_posTarget - pev->origin ).Normalize();
                 vecSrc = vecSrc + vecDir * ( gpGlobals->time - m_flShootTime );
                 pEntity = ( CNihilanthHVR* )Create( "nihilanth_energy_ball", vecSrc, pev->angles, this );
@@ -777,7 +777,7 @@ void CNihilanth::NextActivity()
 
     if( m_hRecharger != nullptr )
     {
-		// at we at power up yet?
+        // at we at power up yet?
         if( flDist < 128.0 )
         {
             int iseq = LookupSequence( "recharge" );
@@ -868,7 +868,7 @@ void CNihilanth::HuntThink()
 
     ShootBalls();
 
-	// if dead, force cancelation of current animation
+    // if dead, force cancelation of current animation
     if( pev->health <= 0 )
     {
         SetThink( &CNihilanth::DyingThink );
@@ -876,25 +876,25 @@ void CNihilanth::HuntThink()
         return;
     }
 
-	// AILogger->debug("health {:.0f}", pev->health);
+    // AILogger->debug("health {:.0f}", pev->health);
 
-	// if damaged, try to abosorb some spheres
+    // if damaged, try to abosorb some spheres
     if( pev->health < pev->max_health && AbsorbSphere() )
     {
         pev->health += pev->max_health / N_SPHERES;
     }
 
-	// get new sequence
+    // get new sequence
     if( m_fSequenceFinished )
     {
-		// if (!m_fSequenceLoops)
+        // if (!m_fSequenceLoops)
         pev->frame = 0;
         NextActivity();
         ResetSequenceInfo();
         pev->framerate = 2.0 - 1.0 * ( pev->health / pev->max_health );
     }
 
-	// look for current enemy
+    // look for current enemy
     if( m_hEnemy != nullptr && m_hRecharger == nullptr )
     {
         if( FVisible( m_hEnemy ) )
@@ -913,11 +913,11 @@ void CNihilanth::HuntThink()
         }
     }
 
-	// don't go too high
+    // don't go too high
     if( m_posDesired.z > m_flMaxZ )
         m_posDesired.z = m_flMaxZ;
 
-	// don't go too low
+    // don't go too low
     if( m_posDesired.z < m_flMinZ )
         m_posDesired.z = m_flMinZ;
 
@@ -926,10 +926,10 @@ void CNihilanth::HuntThink()
 
 void CNihilanth::Flight()
 {
-	// estimate where I'll be facing in one seconds
+    // estimate where I'll be facing in one seconds
     UTIL_MakeAimVectors( pev->angles + m_avelocity );
-	// Vector vecEst1 = pev->origin + m_velocity + gpGlobals->v_up * m_flForce - Vector( 0, 0, 384 );
-	// float flSide = DotProduct( m_posDesired - vecEst1, gpGlobals->v_right );
+    // Vector vecEst1 = pev->origin + m_velocity + gpGlobals->v_up * m_flForce - Vector( 0, 0, 384 );
+    // float flSide = DotProduct( m_posDesired - vecEst1, gpGlobals->v_right );
 
     float flSide = DotProduct( m_vecDesired, gpGlobals->v_right );
 
@@ -949,24 +949,24 @@ void CNihilanth::Flight()
     }
     m_avelocity.y *= 0.98;
 
-	// estimate where I'll be in two seconds
+    // estimate where I'll be in two seconds
     Vector vecEst = pev->origin + m_velocity * 2.0 + gpGlobals->v_up * m_flForce * 20;
 
-	// add immediate force
+    // add immediate force
     UTIL_MakeAimVectors( pev->angles );
     m_velocity.x += gpGlobals->v_up.x * m_flForce;
     m_velocity.y += gpGlobals->v_up.y * m_flForce;
     m_velocity.z += gpGlobals->v_up.z * m_flForce;
 
-	// sideways drag
+    // sideways drag
     m_velocity.x = m_velocity.x * ( 1.0 - fabs( gpGlobals->v_right.x ) * 0.05 );
     m_velocity.y = m_velocity.y * ( 1.0 - fabs( gpGlobals->v_right.y ) * 0.05 );
     m_velocity.z = m_velocity.z * ( 1.0 - fabs( gpGlobals->v_right.z ) * 0.05 );
 
-	// general drag
+    // general drag
     m_velocity = m_velocity * 0.995;
 
-	// apply power to stay correct height
+    // apply power to stay correct height
     if( m_flForce < 100 && vecEst.z < m_posDesired.z )
     {
         m_flForce += 10;
@@ -980,7 +980,7 @@ void CNihilanth::Flight()
     SetOrigin( pev->origin + m_velocity * 0.1 );
     pev->angles = pev->angles + m_avelocity * 0.1;
 
-	// AILogger->debug("{:5.0f} {:5.0f} : {:4.0f} : {:3.0f} : {:2.0f}", m_posDesired.z, pev->origin.z, m_velocity.z, m_avelocity.y, m_flForce);
+    // AILogger->debug("{:5.0f} {:5.0f} : {:4.0f} : {:3.0f} : {:2.0f}", m_posDesired.z, pev->origin.z, m_velocity.z, m_avelocity.y, m_flForce);
 }
 
 bool CNihilanth::AbsorbSphere()
@@ -1188,13 +1188,13 @@ void CNihilanth::HandleAnimEvent( MonsterEvent_t* pEvent )
         }
         break;
     case 7:
-		/*
-		Vector vecSrc, vecAngles;
-		GetAttachment( 0, vecSrc, vecAngles );
-		CNihilanthHVR *pEntity = (CNihilanthHVR *)Create("nihilanth_energy_ball", vecSrc, pev->angles, this);
-		pEntity->pev->velocity = Vector ( RANDOM_FLOAT( -0.7, 0.7 ), RANDOM_FLOAT( -0.7, 0.7 ), 1.0 ) * 600.0;
-		pEntity->GreenBallInit( );
-		*/
+        /*
+        Vector vecSrc, vecAngles;
+        GetAttachment( 0, vecSrc, vecAngles );
+        CNihilanthHVR *pEntity = (CNihilanthHVR *)Create("nihilanth_energy_ball", vecSrc, pev->angles, this);
+        pEntity->pev->velocity = Vector ( RANDOM_FLOAT( -0.7, 0.7 ), RANDOM_FLOAT( -0.7, 0.7 ), 1.0 ) * 600.0;
+        pEntity->GreenBallInit( );
+        */
         break;
     }
 }
@@ -1205,9 +1205,9 @@ void CNihilanth::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     {
     case USE_OFF:
     {
-		// In multiplayer/coop level designers should script a setup that
-		// accounts for all players being dead or the server being empty.
-		// Player teleportation should not be a critical step in ending the map or game.
+        // In multiplayer/coop level designers should script a setup that
+        // accounts for all players being dead or the server being empty.
+        // Player teleportation should not be a critical step in ending the map or game.
         if( !g_pGameRules->IsMultiplayer() )
         {
             CBaseEntity* pTouch = UTIL_FindEntityByTargetname( nullptr, m_szDeadTouch );
@@ -1218,7 +1218,7 @@ void CNihilanth::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
                 {
                     pTouch->Touch( m_hEnemy );
                 }
-				// if the player is using "notarget", the ending sequence won't fire unless we catch it here
+                // if the player is using "notarget", the ending sequence won't fire unless we catch it here
                 else
                 {
                     CBaseEntity* pEntity = UTIL_GetLocalPlayer();
@@ -1277,7 +1277,7 @@ void CNihilanth::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecD
         UTIL_BloodStream( ptr->vecEndPos, vecBlood, BloodColor(), flDamage + ( 100 - 100 * ( pev->health / pev->max_health ) ) );
     }
 
-	// SpawnBlood(ptr->vecEndPos, BloodColor(), flDamage * 5.0);// a little surface blood.
+    // SpawnBlood(ptr->vecEndPos, BloodColor(), flDamage * 5.0);// a little surface blood.
     AddMultiDamage( attacker, this, flDamage, bitsDamageType );
 }
 
@@ -1324,9 +1324,9 @@ void CNihilanthHVR::CircleInit( CBaseEntity* pTarget )
     pev->movetype = MOVETYPE_NOCLIP;
     pev->solid = SOLID_NOT;
 
-	// SetModel("sprites/flare6.spr");
-	// pev->scale = 3.0;
-	// SetModel("sprites/xspark4.spr");
+    // SetModel("sprites/flare6.spr");
+    // pev->scale = 3.0;
+    // SetModel("sprites/xspark4.spr");
     SetModel( "sprites/muzzleflash3.spr" );
     pev->rendercolor.x = 255;
     pev->rendercolor.y = 224;
@@ -1376,47 +1376,47 @@ void CNihilanthHVR::HoverThink()
 
     if( RANDOM_LONG( 0, 99 ) < 5 )
     {
-		/*
-				CBaseEntity *pOther = RandomClassname( STRING(pev->classname) );
+        /*
+                CBaseEntity *pOther = RandomClassname( STRING(pev->classname) );
 
-				if (pOther && pOther != this)
-				{
-					MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
-						WRITE_BYTE( TE_BEAMENTS );
-						WRITE_SHORT( this->entindex() );
-						WRITE_SHORT( pOther->entindex() );
-						WRITE_SHORT( g_sModelIndexLaser );
-						WRITE_BYTE( 0 ); // framestart
-						WRITE_BYTE( 0 ); // framerate
-						WRITE_BYTE( 10 ); // life
-						WRITE_BYTE( 80 );  // width
-						WRITE_BYTE( 80 );   // noise
-						WRITE_BYTE( 255 );   // r, g, b
-						WRITE_BYTE( 128 );   // r, g, b
-						WRITE_BYTE( 64 );   // r, g, b
-						WRITE_BYTE( 255 );	// brightness
-						WRITE_BYTE( 30 );		// speed
-					MESSAGE_END();
-				}
-		*/
-		/*
-				MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
-					WRITE_BYTE( TE_BEAMENTS );
-					WRITE_SHORT( this->entindex() );
-					WRITE_SHORT( m_hTargetEnt->entindex() + 0x1000 );
-					WRITE_SHORT( g_sModelIndexLaser );
-					WRITE_BYTE( 0 ); // framestart
-					WRITE_BYTE( 0 ); // framerate
-					WRITE_BYTE( 10 ); // life
-					WRITE_BYTE( 80 );  // width
-					WRITE_BYTE( 80 );   // noise
-					WRITE_BYTE( 255 );   // r, g, b
-					WRITE_BYTE( 128 );   // r, g, b
-					WRITE_BYTE( 64 );   // r, g, b
-					WRITE_BYTE( 255 );	// brightness
-					WRITE_BYTE( 30 );		// speed
-				MESSAGE_END();
-		*/
+                if (pOther && pOther != this)
+                {
+                    MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
+                        WRITE_BYTE( TE_BEAMENTS );
+                        WRITE_SHORT( this->entindex() );
+                        WRITE_SHORT( pOther->entindex() );
+                        WRITE_SHORT( g_sModelIndexLaser );
+                        WRITE_BYTE( 0 ); // framestart
+                        WRITE_BYTE( 0 ); // framerate
+                        WRITE_BYTE( 10 ); // life
+                        WRITE_BYTE( 80 );  // width
+                        WRITE_BYTE( 80 );   // noise
+                        WRITE_BYTE( 255 );   // r, g, b
+                        WRITE_BYTE( 128 );   // r, g, b
+                        WRITE_BYTE( 64 );   // r, g, b
+                        WRITE_BYTE( 255 );    // brightness
+                        WRITE_BYTE( 30 );        // speed
+                    MESSAGE_END();
+                }
+        */
+        /*
+                MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
+                    WRITE_BYTE( TE_BEAMENTS );
+                    WRITE_SHORT( this->entindex() );
+                    WRITE_SHORT( m_hTargetEnt->entindex() + 0x1000 );
+                    WRITE_SHORT( g_sModelIndexLaser );
+                    WRITE_BYTE( 0 ); // framestart
+                    WRITE_BYTE( 0 ); // framerate
+                    WRITE_BYTE( 10 ); // life
+                    WRITE_BYTE( 80 );  // width
+                    WRITE_BYTE( 80 );   // noise
+                    WRITE_BYTE( 255 );   // r, g, b
+                    WRITE_BYTE( 128 );   // r, g, b
+                    WRITE_BYTE( 64 );   // r, g, b
+                    WRITE_BYTE( 255 );    // brightness
+                    WRITE_BYTE( 30 );        // speed
+                MESSAGE_END();
+        */
     }
 
     pev->frame = ( (int)pev->frame + 1 ) % m_nFrames;
@@ -1448,7 +1448,7 @@ void CNihilanthHVR::ZapThink()
 {
     pev->nextthink = gpGlobals->time + 0.05;
 
-	// check world boundaries
+    // check world boundaries
     if( m_hEnemy == nullptr || pev->origin.x < -4096 || pev->origin.x > 4096 || pev->origin.y < -4096 || pev->origin.y > 4096 || pev->origin.z < -4096 || pev->origin.z > 4096 )
     {
         SetTouch( nullptr );
@@ -1462,7 +1462,7 @@ void CNihilanthHVR::ZapThink()
     }
 
 
-	// MovetoTarget( m_hEnemy->Center( ) );
+    // MovetoTarget( m_hEnemy->Center( ) );
 
     if( ( m_hEnemy->Center() - pev->origin ).Length() < 256 )
     {
@@ -1521,7 +1521,7 @@ void CNihilanthHVR::ZapThink()
     WRITE_COORD( 128 ); // decay
     MESSAGE_END();
 
-	// Crawl( );
+    // Crawl( );
 }
 
 void CNihilanthHVR::ZapTouch( CBaseEntity* pOther )
@@ -1531,12 +1531,12 @@ void CNihilanthHVR::ZapTouch( CBaseEntity* pOther )
     RadiusDamage( this, this, 50, DMG_SHOCK );
     pev->velocity = pev->velocity * 0;
 
-	/*
-	for (int i = 0; i < 10; i++)
-	{
-		Crawl( );
-	}
-	*/
+    /*
+    for (int i = 0; i < 10; i++)
+    {
+        Crawl( );
+    }
+    */
 
     SetTouch( nullptr );
     UTIL_Remove( this );
@@ -1586,7 +1586,7 @@ void CNihilanthHVR::TeleportThink()
 {
     pev->nextthink = gpGlobals->time + 0.1;
 
-	// check world boundaries
+    // check world boundaries
     if( m_hEnemy == nullptr || !m_hEnemy->IsAlive() || pev->origin.x < -4096 || pev->origin.x > 4096 || pev->origin.y < -4096 || pev->origin.y > 4096 || pev->origin.z < -4096 || pev->origin.z > 4096 )
     {
         StopSound( CHAN_WEAPON, "x/x_teleattack1.wav" );
@@ -1726,12 +1726,12 @@ bool CNihilanthHVR::CircleTarget( Vector vecTarget )
 
     if( d1 < 0 && d2 <= d1 )
     {
-		// AILogger->debug("too close");
+        // AILogger->debug("too close");
         m_vecIdeal = m_vecIdeal - ( vecDest - vecSrc ).Normalize() * 50;
     }
     else if( d1 > 0 && d2 >= d1 )
     {
-		// AILogger->debug("too far");
+        // AILogger->debug("too far");
         m_vecIdeal = m_vecIdeal + ( vecDest - vecSrc ).Normalize() * 50;
     }
     pev->avelocity.z = d1 * 20;
@@ -1743,11 +1743,11 @@ bool CNihilanthHVR::CircleTarget( Vector vecTarget )
 
     m_vecIdeal = m_vecIdeal + Vector( RANDOM_FLOAT( -2, 2 ), RANDOM_FLOAT( -2, 2 ), RANDOM_FLOAT( -2, 2 ) );
     m_vecIdeal = Vector( m_vecIdeal.x, m_vecIdeal.y, 0 ).Normalize() * 200
-				 /* + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 32 */
+                 /* + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 32 */
                  + Vector( 0, 0, m_vecIdeal.z );
-	// m_vecIdeal = m_vecIdeal + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 2;
+    // m_vecIdeal = m_vecIdeal + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 2;
 
-	// move up/down
+    // move up/down
     d1 = vecTarget.z - pev->origin.z;
     if( d1 > 0 && m_vecIdeal.z < 200 )
         m_vecIdeal.z += 20;
@@ -1756,7 +1756,7 @@ bool CNihilanthHVR::CircleTarget( Vector vecTarget )
 
     pev->velocity = m_vecIdeal;
 
-	// AILogger->debug("{:.0f}", m_vecIdeal);
+    // AILogger->debug("{:.0f}", m_vecIdeal);
     return fClose;
 }
 
@@ -1767,7 +1767,7 @@ void CNihilanthHVR::MovetoTarget( Vector vecTarget )
         m_vecIdeal = pev->velocity;
     }
 
-	// accelerate
+    // accelerate
     float flSpeed = m_vecIdeal.Length();
     if( flSpeed > 300 )
     {

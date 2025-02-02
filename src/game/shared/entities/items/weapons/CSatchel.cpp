@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -40,7 +40,7 @@ bool CSatchel::AddDuplicate( CBasePlayerWeapon* original )
 
         if( pSatchel->m_chargeReady != 0 )
         {
-			// player has some satchels deployed. Refuse to add more.
+            // player has some satchels deployed. Refuse to add more.
             return false;
         }
     }
@@ -84,13 +84,13 @@ bool CSatchel::IsUseable()
 {
     if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) > 0 )
     {
-		// player is carrying some satchels
+        // player is carrying some satchels
         return true;
     }
 
     if( m_chargeReady != 0 )
     {
-		// player isn't carrying any satchels, but has some out
+        // player isn't carrying any satchels, but has some out
         return true;
     }
 
@@ -101,13 +101,13 @@ bool CSatchel::CanDeploy()
 {
     if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) > 0 )
     {
-		// player is carrying some satchels
+        // player is carrying some satchels
         return true;
     }
 
     if( m_chargeReady != 0 )
     {
-		// player isn't carrying any satchels, but has some out
+        // player isn't carrying any satchels, but has some out
         return true;
     }
 
@@ -117,7 +117,7 @@ bool CSatchel::CanDeploy()
 bool CSatchel::Deploy()
 {
     m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
-	// m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );
+    // m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );
 
     bool result;
 
@@ -191,7 +191,7 @@ void CSatchel::PrimaryAttack()
     }
 
     case 2:
-		// we're reloading, don't allow fire
+        // we're reloading, don't allow fire
         {
         }
         break;
@@ -225,7 +225,7 @@ void CSatchel::Throw()
 
         SendWeaponAnim( SATCHEL_RADIO_DRAW );
 
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
         m_chargeReady = 1;
@@ -246,12 +246,12 @@ void CSatchel::WeaponIdle()
     {
     case 0:
         SendWeaponAnim( SATCHEL_FIDGET1 );
-		// use tripmine animations
+        // use tripmine animations
         strcpy( m_pPlayer->m_szAnimExtention, "trip" );
         break;
     case 1:
         SendWeaponAnim( SATCHEL_RADIO_FIDGET1 );
-		// use hivehand animations
+        // use hivehand animations
         strcpy( m_pPlayer->m_szAnimExtention, "hive" );
         break;
     case 2:
@@ -270,7 +270,7 @@ void CSatchel::WeaponIdle()
 
         SendWeaponAnim( SATCHEL_DRAW );
 
-		// use tripmine animations
+        // use tripmine animations
         strcpy( m_pPlayer->m_szAnimExtention, "trip" );
 
         m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );

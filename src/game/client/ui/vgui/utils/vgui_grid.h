@@ -60,10 +60,10 @@ public:
 
     void SetRowUnderline( int row, bool enabled, int offset, int r, int g, int b, int a ); // sets underline color for a particular row
 
-	// returns the true if found, false otherwise
+    // returns the true if found, false otherwise
     bool getCellAtPoint( int worldX, int worldY, int& row, int& col );
 
-	// Panel overrides.
+    // Panel overrides.
 public:
     virtual void paint();
     virtual void paintBackground();

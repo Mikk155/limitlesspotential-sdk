@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -320,7 +320,7 @@ void CXenTree::Spawn()
     Vector triggerPosition;
     AngleVectors( pev->angles, &triggerPosition, nullptr, nullptr );
     triggerPosition = pev->origin + ( triggerPosition * 64 );
-	// Create the trigger
+    // Create the trigger
     m_pTrigger = CXenTreeTrigger::TriggerCreate( this, triggerPosition );
     m_pTrigger->SetSize( Vector( -24, -24, 0 ), Vector( 24, 24, 128 ) );
 }
@@ -435,9 +435,9 @@ void CXenTree::UpdateOnRemove()
     CActAnimating::UpdateOnRemove();
 }
 
-// UNDONE:	These need to smoke somehow when they take damage
-//			Touch behavior?
-//			Cause damage in smoke area
+// UNDONE:    These need to smoke somehow when they take damage
+//            Touch behavior?
+//            Cause damage in smoke area
 
 class CXenSpore : public CActAnimating
 {
@@ -451,7 +451,7 @@ public:
         Attack();
         return false;
     }
-	//	void		HandleAnimEvent( MonsterEvent_t *pEvent );
+    //    void        HandleAnimEvent( MonsterEvent_t *pEvent );
     void Attack() {}
 
     static const char* pModelNames[];
@@ -475,7 +475,7 @@ class CXenSporeLarge : public CXenSpore
 };
 
 /**
- *	@brief Fake collision box for big spores
+ *    @brief Fake collision box for big spores
  */
 class CXenHull : public CPointEntity
 {
@@ -502,7 +502,7 @@ CXenHull* CXenHull::CreateHull( CBaseEntity* source, const Vector& mins, const V
     pHull->SetSize( mins, maxs );
     pHull->pev->renderamt = 0;
     pHull->pev->rendermode = kRenderTransTexture;
-	//	pHull->pev->effects = EF_NODRAW;
+    //    pHull->pev->effects = EF_NODRAW;
 
     return pHull;
 }
@@ -545,7 +545,7 @@ void CXenSporeLarge::Spawn()
 
     AngleVectors( pev->angles, &forward, &right, nullptr );
 
-	// Rotate the leg hulls into position
+    // Rotate the leg hulls into position
     for( std::size_t i = 0; i < std::size( m_hullSizes ); i++ )
         CXenHull::CreateHull( this, Vector( -12, -12, 0 ), Vector( 12, 12, 120 ), ( m_hullSizes[i].x * forward ) + ( m_hullSizes[i].y * right ) );
 }
@@ -566,7 +566,7 @@ void CXenSpore::Spawn()
     pev->solid = SOLID_BBOX;
     pev->takedamage = DAMAGE_YES;
 
-	//	SetActivity( ACT_IDLE );
+    //    SetActivity( ACT_IDLE );
     pev->sequence = 0;
     pev->frame = RANDOM_FLOAT( 0, 255 );
     pev->framerate = RANDOM_FLOAT( 0.7, 1.4 );
@@ -585,7 +585,7 @@ void CXenSpore::Precache()
 {
     if( FStringNull( pev->model ) )
     {
-		// TODO: bound check
+        // TODO: bound check
         PrecacheModel( pModelNames[pev->skin] );
     }
     else

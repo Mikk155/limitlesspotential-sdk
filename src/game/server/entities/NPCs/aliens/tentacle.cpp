@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -23,12 +23,12 @@
 constexpr int TENTACLE_NUM_HEIGHTS = 4;
 
 /**
- *	@brief Amount of units to subtract from a height value to get its equivalent level.
+ *    @brief Amount of units to subtract from a height value to get its equivalent level.
  */
 constexpr float TENTACLE_HEIGHT_LEVEL_OFFSET = 40;
 
 /**
- *	@brief silo of death tentacle monster
+ *    @brief silo of death tentacle monster
  */
 class CTentacle : public CBaseMonster
 {
@@ -45,7 +45,7 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-	// Don't allow the tentacle to go across transitions!!!
+    // Don't allow the tentacle to go across transitions!!!
     int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     void SetObjectCollisionBox() override
@@ -70,7 +70,7 @@ public:
     void Killed( CBaseEntity* attacker, int iGib ) override;
 
     MONSTERSTATE GetIdealState() override { return MONSTERSTATE_IDLE; }
-	// TODO: should override base, but has different signature
+    // TODO: should override base, but has different signature
     bool CanPlaySequence( bool fDisregardState ) { return true; }
 
     int Level( float dz );
@@ -251,7 +251,7 @@ void CTentacle::Spawn()
 {
     Precache();
 
-	// Sort the list to ensure it's in the correct order, since it is expected that each value is larger than the last.
+    // Sort the list to ensure it's in the correct order, since it is expected that each value is larger than the last.
     std::sort( std::begin( m_Heights ), std::end( m_Heights ) );
 
     pev->solid = SOLID_BBOX;
@@ -260,7 +260,7 @@ void CTentacle::Spawn()
     pev->max_health = pev->health;
     pev->sequence = 0;
 
-	// Always interpolate tentacles since they don't actually move.
+    // Always interpolate tentacles since they don't actually move.
     m_EFlags |= EFLAG_SLERP;
 
     SetModel( STRING( pev->model ) );
@@ -294,7 +294,7 @@ void CTentacle::Spawn()
 
     m_MonsterState = MONSTERSTATE_IDLE;
 
-	// SetThink( Test );
+    // SetThink( Test );
     SetOrigin( pev->origin );
 }
 
@@ -329,7 +329,7 @@ void CTentacle::Precache()
 
 CTentacle::CTentacle()
 {
-	// TODO: use in-class initializer
+    // TODO: use in-class initializer
     m_flMaxYaw = 65;
     m_iTapSound = 0;
 }
@@ -475,10 +475,10 @@ void CTentacle::Test()
 
 void CTentacle::Cycle()
 {
-	// AILogger->debug("{} {:.2f} {} {}", STRING( pev->targetname ), pev->origin.z, m_MonsterState, m_IdealMonsterState);
+    // AILogger->debug("{} {:.2f} {} {}", STRING( pev->targetname ), pev->origin.z, m_MonsterState, m_IdealMonsterState);
     pev->nextthink = gpGlobals->time + 0.1;
 
-	// AILogger->debug("{} {} {} {} {} {}", STRING(pev->targetname), pev->sequence, m_iGoalAnim, m_iDir, pev->framerate, pev->health);
+    // AILogger->debug("{} {} {} {} {} {}", STRING(pev->targetname), pev->sequence, m_iGoalAnim, m_iDir, pev->framerate, pev->health);
 
     if( m_MonsterState == MONSTERSTATE_SCRIPT || m_IdealMonsterState == MONSTERSTATE_SCRIPT )
     {
@@ -501,7 +501,7 @@ void CTentacle::Cycle()
 
     Listen();
 
-	// Listen will set this if there's something in my sound list
+    // Listen will set this if there's something in my sound list
     if( HasConditions( bits_COND_HEAR_SOUND ) )
         pSound = PBestSound();
     else
@@ -530,10 +530,10 @@ void CTentacle::Cycle()
         if( m_flSoundYaw > 180 )
             m_flSoundYaw -= 360;
 
-		// AILogger->debug("sound {} {:.0f}", m_iSoundLevel, m_flSoundYaw);
+        // AILogger->debug("sound {} {:.0f}", m_iSoundLevel, m_flSoundYaw);
         if( m_flSoundTime < gpGlobals->time )
         {
-			// play "I hear new something" sound
+            // play "I hear new something" sound
             const char* sound;
 
             switch ( RANDOM_LONG( 0, 1 ) )
@@ -546,12 +546,12 @@ void CTentacle::Cycle()
                 break;
             }
 
-			// EmitAmbientSound(pev->origin + Vector( 0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
+            // EmitAmbientSound(pev->origin + Vector( 0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
         }
         m_flSoundTime = gpGlobals->time + RANDOM_FLOAT( 5.0, 10.0 );
     }
 
-	// clip ideal_yaw
+    // clip ideal_yaw
     float dy = m_flSoundYaw;
     switch ( pev->sequence )
     {
@@ -578,7 +578,7 @@ void CTentacle::Cycle()
 
     if( m_fSequenceFinished )
     {
-		// AILogger->debug("{} done {} {}", STRING(pev->targetname), pev->sequence, m_iGoalAnim);
+        // AILogger->debug("{} done {} {}", STRING(pev->targetname), pev->sequence, m_iGoalAnim);
         if( pev->health <= 1 )
         {
             m_iGoalAnim = TENTACLE_ANIM_Pit_Idle;
@@ -591,23 +591,23 @@ void CTentacle::Cycle()
         {
             if( m_flSoundYaw >= -( m_flMaxYaw + 30 ) && m_flSoundYaw <= ( m_flMaxYaw + 30 ) )
             {
-				// strike
+                // strike
                 m_iGoalAnim = LookupActivity( ACT_T_STRIKE + m_iSoundLevel );
             }
             else if( m_flSoundYaw >= -m_flMaxYaw * 2 && m_flSoundYaw <= m_flMaxYaw * 2 )
             {
-				// tap
+                // tap
                 m_iGoalAnim = LookupActivity( ACT_T_TAP + m_iSoundLevel );
             }
             else
             {
-				// go into rear idle
+                // go into rear idle
                 m_iGoalAnim = LookupActivity( ACT_T_REARIDLE + m_iSoundLevel );
             }
         }
         else if( pev->sequence == TENTACLE_ANIM_Pit_Idle )
         {
-			// stay in pit until hear noise
+            // stay in pit until hear noise
             m_iGoalAnim = TENTACLE_ANIM_Pit_Idle;
         }
         else if( pev->sequence == m_iGoalAnim )
@@ -616,12 +616,12 @@ void CTentacle::Cycle()
             {
                 if( RANDOM_LONG( 0, 9 ) < m_flSoundTime - gpGlobals->time )
                 {
-					// continue stike
+                    // continue stike
                     m_iGoalAnim = LookupActivity( ACT_T_STRIKE + m_iSoundLevel );
                 }
                 else
                 {
-					// tap
+                    // tap
                     m_iGoalAnim = LookupActivity( ACT_T_TAP + m_iSoundLevel );
                 }
             }
@@ -633,7 +633,7 @@ void CTentacle::Cycle()
             {
                 if( m_flNextSong < gpGlobals->time )
                 {
-					// play "I hear new something" sound
+                    // play "I hear new something" sound
                     const char* sound;
 
                     switch ( RANDOM_LONG( 0, 1 ) )
@@ -653,17 +653,17 @@ void CTentacle::Cycle()
 
                 if( RANDOM_LONG( 0, 15 ) == 0 )
                 {
-					// idle on new level
+                    // idle on new level
                     m_iGoalAnim = LookupActivity( ACT_T_IDLE + RANDOM_LONG( 0, 3 ) );
                 }
                 else if( RANDOM_LONG( 0, 3 ) == 0 )
                 {
-					// tap
+                    // tap
                     m_iGoalAnim = LookupActivity( ACT_T_TAP + MyLevel() );
                 }
                 else
                 {
-					// idle
+                    // idle
                     m_iGoalAnim = LookupActivity( ACT_T_IDLE + MyLevel() );
                 }
             }
@@ -707,7 +707,7 @@ void CTentacle::Cycle()
             vecSrc = pev->origin + Vector( 0, 0, MyHeight() + 8 );
             UTIL_TraceLine( vecSrc, vecSrc + gpGlobals->v_forward * 512, ignore_monsters, edict(), &tr2 );
 
-			// AILogger->debug("{} {}", tr1.flFraction * 512, tr2.flFraction * 512);
+            // AILogger->debug("{} {}", tr1.flFraction * 512, tr2.flFraction * 512);
 
             m_flTapRadius = SetBlending( 0, RANDOM_FLOAT( tr1.flFraction * 512, tr2.flFraction * 512 ) );
         }
@@ -717,24 +717,24 @@ void CTentacle::Cycle()
             break;
         }
         pev->view_ofs.z = MyHeight();
-		// AILogger->debug("seq {}", pev->sequence);
+        // AILogger->debug("seq {}", pev->sequence);
     }
 
     if( m_flPrevSoundTime + 2.0 > gpGlobals->time )
     {
-		// 1.5 normal speed if hears sounds
+        // 1.5 normal speed if hears sounds
         pev->framerate = m_iDir * 1.5 + m_flFramerateAdj;
     }
     else if( m_flPrevSoundTime + 5.0 > gpGlobals->time )
     {
-		// slowdown to normal
+        // slowdown to normal
         pev->framerate = m_iDir + m_iDir * ( 5 - ( gpGlobals->time - m_flPrevSoundTime ) ) / 2 + m_flFramerateAdj;
     }
 }
 
 void CTentacle::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	// AILogger->debug("{} triggered {}", STRING(pev->targetname), useType);
+    // AILogger->debug("{} triggered {}", STRING(pev->targetname), useType);
     switch ( useType )
     {
     case USE_OFF:
@@ -745,7 +745,7 @@ void CTentacle::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     case USE_ON:
         if( pActivator )
         {
-			// AILogger->debug("insert sound");
+            // AILogger->debug("insert sound");
             CSoundEnt::InsertSound( bits_SOUND_WORLD, pActivator->pev->origin, 1024, 1.0 );
         }
         break;
@@ -788,9 +788,9 @@ void CTentacle::DieThink()
             }
         }
 
-		// const int previousSequence = pev->sequence;
+        // const int previousSequence = pev->sequence;
         pev->sequence = FindTransition( pev->sequence, m_iGoalAnim, &m_iDir );
-		// AILogger->debug("{} : {} => {}", previousSequence, m_iGoalAnim, pev->sequence);
+        // AILogger->debug("{} : {} => {}", previousSequence, m_iGoalAnim, pev->sequence);
 
         if( m_iDir > 0 )
         {
@@ -843,9 +843,9 @@ void CTentacle::HandleAnimEvent( MonsterEvent_t* pEvent )
         Vector vecSrc, vecAngles;
         GetAttachment( 0, vecSrc, vecAngles );
 
-		// Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (3.14192653 / 180.0) ), sin( pev->angles.y * (PI / 180.0) ), 0.0 );
+        // Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (3.14192653 / 180.0) ), sin( pev->angles.y * (PI / 180.0) ), 0.0 );
 
-		// vecSrc.z += MyHeight( );
+        // vecSrc.z += MyHeight( );
 
         switch ( m_iTapSound )
         {
@@ -867,7 +867,7 @@ void CTentacle::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case 3: // start killing swing
         m_iHitDmg = 200;
-		// EmitAmbientSound(pev->origin + Vector( 0, 0, MyHeight()), "tentacle/te_swing1.wav", 1.0, ATTN_NORM, 0, 100);
+        // EmitAmbientSound(pev->origin + Vector( 0, 0, MyHeight()), "tentacle/te_swing1.wav", 1.0, ATTN_NORM, 0, 100);
         break;
 
     case 4: // end killing swing
@@ -875,7 +875,7 @@ void CTentacle::HandleAnimEvent( MonsterEvent_t* pEvent )
         break;
 
     case 5: // just "whoosh" sound
-		// EmitAmbientSound(pev->origin + Vector( 0, 0, MyHeight()), "tentacle/te_swing2.wav", 1.0, ATTN_NORM, 0, 100);
+        // EmitAmbientSound(pev->origin + Vector( 0, 0, MyHeight()), "tentacle/te_swing2.wav", 1.0, ATTN_NORM, 0, 100);
         break;
 
     case 2: // tap scrape
@@ -963,7 +963,7 @@ void CTentacle::Start()
     {
         EmitSound( CHAN_BODY, "ambience/flies.wav", 1, ATTN_NORM );
         g_fFlySound = true;
-		//		pev->nextthink = gpGlobals-> time + 0.1;
+        //        pev->nextthink = gpGlobals-> time + 0.1;
     }
     else if( !g_fSquirmSound )
     {
@@ -984,19 +984,19 @@ void CTentacle::HitTouch( CBaseEntity* pOther )
     if( m_flHitTime > gpGlobals->time )
         return;
 
-	// only look at the ones where the player hit me
+    // only look at the ones where the player hit me
     if( tr.pHit == nullptr || tr.pHit->v.modelindex != pev->modelindex )
         return;
 
     if( tr.iHitgroup >= 3 )
     {
         pOther->TakeDamage( this, this, m_iHitDmg, DMG_CRUSH );
-		// AILogger->debug("wack {:3d} : ", m_iHitDmg);
+        // AILogger->debug("wack {:3d} : ", m_iHitDmg);
     }
     else if( tr.iHitgroup != 0 )
     {
         pOther->TakeDamage( this, this, 20, DMG_CRUSH );
-		// AILogger->debug("tap  {:3d} : ", 20);
+        // AILogger->debug("tap  {:3d} : ", 20);
     }
     else
     {
@@ -1005,7 +1005,7 @@ void CTentacle::HitTouch( CBaseEntity* pOther )
 
     m_flHitTime = gpGlobals->time + 0.5;
 
-	// AILogger->debug("{} : {:.0f} : {} : {}", STRING(tr.pHit->v.classname), pev->angles.y, STRING(pOther->pev->classname), tr.iHitgroup);
+    // AILogger->debug("{} : {:.0f} : {} : {}", STRING(tr.pHit->v.classname), pev->angles.y, STRING(pOther->pev->classname), tr.iHitgroup);
 }
 
 bool CTentacle::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
@@ -1059,7 +1059,7 @@ void CTentacleMaw::Spawn()
     pev->sequence = 0;
 
     pev->angles.x = 90;
-	// ResetSequenceInfo( );
+    // ResetSequenceInfo( );
 }
 
 void CTentacleMaw::Precache()

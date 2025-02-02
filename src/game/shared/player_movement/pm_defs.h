@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -23,9 +23,9 @@
 
 #define PM_NORMAL 0x00000000
 #define PM_STUDIO_IGNORE 0x00000001 // Skip studio models
-#define PM_STUDIO_BOX 0x00000002	// Use boxes for non-complex studio models (even in traceline)
-#define PM_GLASS_IGNORE 0x00000004	// Ignore entities with non-normal rendermode
-#define PM_WORLD_ONLY 0x00000008	// Only trace against the world
+#define PM_STUDIO_BOX 0x00000002    // Use boxes for non-complex studio models (even in traceline)
+#define PM_GLASS_IGNORE 0x00000004    // Ignore entities with non-normal rendermode
+#define PM_WORLD_ONLY 0x00000008    // Only trace against the world
 
 // Values for flags parameter of PM_TraceLine
 #define PM_TRACELINE_PHYSENTSONLY 0
@@ -59,7 +59,7 @@ struct physent_t
     int skin;        // BSP Contents for such things like fun_door water brushes.
     int rendermode; // So we can ignore glass
 
-	// Complex collision detection.
+    // Complex collision detection.
     float frame;
     int sequence;
     byte controller[4];
@@ -71,7 +71,7 @@ struct physent_t
     int team;
     int classnumber;
 
-	// For mods
+    // For mods
     int iuser1;
     int iuser2;
     int iuser3;
@@ -97,7 +97,7 @@ struct playermove_t
     float frametime;      // Duration of this frame
 
     Vector forward, right, up; // Vectors for angles
-	// player state
+    // player state
     Vector origin;         // Movement origin.
     Vector angles;         // Movement view angles.
     Vector oldangles;     // Angles before movement view angles were looked at.
@@ -105,12 +105,12 @@ struct playermove_t
     Vector movedir;         // For waterjumping, a forced forward velocity so we can fly over lip of ledge.
     Vector basevelocity; // Velocity of the conveyor we are standing, e.g.
 
-	// For ducking/dead
+    // For ducking/dead
     Vector view_ofs;  // Our eye position.
     float flDuckTime; // Time we started duck
     qboolean bInDuck; // In process of ducking or ducked already?
 
-	// For walking/falling
+    // For walking/falling
     int flTimeStepSound; // Next time we can play a step sound
     int iStepLeft;
 
@@ -145,7 +145,7 @@ struct playermove_t
     float maxspeed;
     float clientmaxspeed; // Player specific maxspeed
 
-	// For mods
+    // For mods
     int iuser1;
     int iuser2;
     int iuser3;
@@ -158,23 +158,23 @@ struct playermove_t
     Vector vuser2;
     Vector vuser3;
     Vector vuser4;
-	// world state
-	// Number of entities to clip against.
+    // world state
+    // Number of entities to clip against.
     int numphysent;
     physent_t physents[MAX_PHYSENTS];
-	// Number of momvement entities (ladders)
+    // Number of momvement entities (ladders)
     int nummoveent;
-	// just a list of ladders
+    // just a list of ladders
     physent_t moveents[MAX_MOVEENTS];
 
-	// All things being rendered, for tracing against things you don't actually collide with
+    // All things being rendered, for tracing against things you don't actually collide with
     int numvisent;
     physent_t visents[MAX_PHYSENTS];
 
-	// input to run through physics.
+    // input to run through physics.
     usercmd_t cmd;
 
-	// Trace results for objects we collided with.
+    // Trace results for objects we collided with.
     int numtouch;
     pmtrace_t touchindex[MAX_PHYSENTS];
 
@@ -184,7 +184,7 @@ struct playermove_t
     Vector player_mins[4];
     Vector player_maxs[4];
 
-	// Common functions
+    // Common functions
     const char* ( *PM_Info_ValueForKey )( const char* s, const char* key );
     void ( *PM_Particle )( float* origin, int color, float life, int zpos, int zvel );
     int ( *PM_TestPlayerPosition )( float* pos, pmtrace_t* ptrace );
@@ -193,7 +193,7 @@ struct playermove_t
     void ( *Con_Printf )( const char* fmt, ... );
     double ( *Sys_FloatTime )();
     void ( *PM_StuckTouch )( int hitent, pmtrace_t* ptraceresult );
-	int (*PM_PointContents)(float* p, int* truecontents /*filled in if this is non-null*/);
+    int (*PM_PointContents)(float* p, int* truecontents /*filled in if this is non-null*/);
     int ( *PM_TruePointContents )( float* p );
     int ( *PM_HullPointContents )( hull_t* hull, int num, float* p );
     pmtrace_t ( *PM_PlayerTrace )( float* start, float* end, int traceFlags, int ignore_pe );
@@ -209,8 +209,8 @@ struct playermove_t
     void ( *COM_FreeFile )( void* buffer );
     char* ( *memfgets )( byte* pMemFile, int fileSize, int* pFilePos, char* pBuffer, int bufferSize );
 
-	// Functions
-	// Run functions for this frame?
+    // Functions
+    // Run functions for this frame?
     qboolean runfuncs;
     void ( *PM_PlaySound )( int channel, const char* sample, float volume, float attenuation, int fFlags, int pitch );
     const char* ( *PM_TraceTexture )( int ground, float* vstart, float* vend );

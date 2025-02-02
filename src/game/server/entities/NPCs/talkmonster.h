@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -82,8 +82,8 @@ enum
 };
 
 /**
- *	@brief Talking monster base class
- *	Used for scientists and barneys
+ *    @brief Talking monster base class
+ *    Used for scientists and barneys
  */
 class CTalkMonster : public CBaseMonster
 {
@@ -92,19 +92,19 @@ class CTalkMonster : public CBaseMonster
     DECLARE_CUSTOM_SCHEDULES();
 
 public:
-	/**
-	 *	@brief monsters derived from ctalkmonster should call this in precache()
-	 */
+    /**
+     *    @brief monsters derived from ctalkmonster should call this in precache()
+     */
     virtual void TalkInit();
 
-	/**
-	 *	@brief Scan for nearest, visible friend. If fPlayer is true, look for nearest player
-	 */
+    /**
+     *    @brief Scan for nearest, visible friend. If fPlayer is true, look for nearest player
+     */
     CBaseEntity* FindNearestFriend( bool fPlayer );
     float TargetDistance();
     void StopTalking() { SentenceStop(); }
 
-	// Base Monster functions
+    // Base Monster functions
     void OnCreate() override;
 
     void Precache() override;
@@ -122,7 +122,7 @@ public:
 
     CTalkMonster* MyTalkMonsterPointer() override { return this; }
 
-	// AI functions
+    // AI functions
     const Schedule_t* GetScheduleOfType( int Type ) override;
     void StartTask( const Task_t* pTask ) override;
     void RunTask( const Task_t* pTask ) override;
@@ -130,56 +130,56 @@ public:
     void PrescheduleThink() override;
 
 
-	// Conversations / communication
+    // Conversations / communication
     int GetVoicePitch();
 
-	/**
-	 *	@brief Respond to a previous question
-	 */
+    /**
+     *    @brief Respond to a previous question
+     */
     void IdleRespond();
 
-	/**
-	 *	@brief ask question of nearby friend, or make statement
-	 */
+    /**
+     *    @brief ask question of nearby friend, or make statement
+     */
     bool FIdleSpeak();
 
     bool FIdleStare();
 
-	/**
-	 *	@brief Try to greet player first time he's seen
-	 */
+    /**
+     *    @brief Try to greet player first time he's seen
+     */
     bool FIdleHello();
 
-	/**
-	 *	@brief turn head towards supplied origin
-	 */
+    /**
+     *    @brief turn head towards supplied origin
+     */
     void IdleHeadTurn( Vector& vecFriend );
     bool FOkToSpeak();
 
-	/**
-	 *	@brief try to smell something
-	 */
+    /**
+     *    @brief try to smell something
+     */
     void TrySmellTalk();
     void AlertFriends();
     void ShutUpFriends();
 
-	/**
-	 *	@brief am I saying a sentence right now?
-	 */
+    /**
+     *    @brief am I saying a sentence right now?
+     */
     bool IsTalking();
 
-	/**
-	 *	@brief set a timer that tells us when the monster is done talking.
-	 */
+    /**
+     *    @brief set a timer that tells us when the monster is done talking.
+     */
     void Talk( float flDuration );
 
-	// For following
+    // For following
     void StopFollowing( bool clearSchedule ) override;
     void StartFollowing( CBaseEntity* pLeader ) override;
 
-	/**
-	 *	@brief Prepare this talking monster to answer question
-	 */
+    /**
+     *    @brief Prepare this talking monster to answer question
+     */
     virtual void SetAnswerQuestion( CTalkMonster* pSpeaker );
 
     static float g_talkWaitTime;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -68,11 +68,11 @@ bool CHudHealth::Init()
 
 void CHudHealth::Reset()
 {
-	// make sure the pain compass is cleared when the player respawns
+    // make sure the pain compass is cleared when the player respawns
     m_fAttackFront = m_fAttackRear = m_fAttackRight = m_fAttackLeft = 0;
 
 
-	// force all the flashing damage icons to expire
+    // force all the flashing damage icons to expire
     m_bitsDamage = 0;
     for( int i = 0; i < NUM_DMG_TYPES; i++ )
     {
@@ -111,12 +111,12 @@ bool CHudHealth::VidInit()
 
 void CHudHealth::MsgFunc_Health( const char* pszName, BufferReader& reader )
 {
-	// TODO: update local health data
+    // TODO: update local health data
     int x = reader.ReadShort();
 
     m_iFlags |= HUD_ACTIVE;
 
-	// Only update the fade if we've changed health
+    // Only update the fade if we've changed health
     if( x != m_iHealth )
     {
         m_HealthFade = FADE_TIME;
@@ -150,7 +150,7 @@ void CHudHealth::MsgFunc_Damage( const char* pszName, BufferReader& reader )
 
     UpdateTiles( gHUD.m_flTime, bitsDamage );
 
-	// Actually took damage?
+    // Actually took damage?
     if( damageTaken > 0 || armor > 0 )
         CalcDamageDirection( vecFrom );
 }
@@ -191,7 +191,7 @@ bool CHudHealth::Draw( float flTime )
     if( ( gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH ) != 0 || 0 != gEngfuncs.IsSpectateOnly() )
         return true;
 
-	// Only draw health and armor if we have the suit.
+    // Only draw health and armor if we have the suit.
     if( gHUD.HasSuit() )
     {
         const int armorStartX = DrawHealth();
@@ -265,7 +265,7 @@ int CHudHealth::DrawHealth()
 {
     int a = MIN_ALPHA;
 
-	// Has health changed? Flash the health #
+    // Has health changed? Flash the health #
     if( 0 != m_HealthFade )
     {
         m_HealthFade -= ( gHUD.m_flTimeDelta * 20 );
@@ -274,12 +274,12 @@ int CHudHealth::DrawHealth()
             m_HealthFade = 0;
         }
 
-		// Fade the health number back to dim
+        // Fade the health number back to dim
 
         a += ( m_HealthFade / FADE_TIME ) * 128;
     }
 
-	// If health is getting low, make it bright red
+    // If health is getting low, make it bright red
     if( m_iHealth <= 15 )
         a = 255;
 
@@ -296,12 +296,12 @@ int CHudHealth::DrawHealth()
 
     x = CrossWidth + HealthWidth / 2;
 
-	// Reserve space for 3 digits by default, but allow it to expand
+    // Reserve space for 3 digits by default, but allow it to expand
     x += gHUD.GetHudNumberWidth( m_iHealth, 3, DHN_DRAWZERO );
 
     gHUD.DrawHudNumberReverse( x, y, m_iHealth, DHN_DRAWZERO, painColor );
 
-	// x = gHUD.DrawHudNumber(x, y, DHN_3DIGITS | DHN_DRAWZERO, m_iHealth, painColor);
+    // x = gHUD.DrawHudNumber(x, y, DHN_3DIGITS | DHN_DRAWZERO, m_iHealth, painColor);
 
     x += HealthWidth / 2;
 
@@ -316,7 +316,7 @@ void CHudHealth::DrawArmor( int startX )
 {
     int a = MIN_ALPHA;
 
-	// Has health changed? Flash the health #
+    // Has health changed? Flash the health #
     if( 0 != m_ArmorFade )
     {
         if( m_ArmorFade > FADE_TIME )
@@ -328,7 +328,7 @@ void CHudHealth::DrawArmor( int startX )
             m_ArmorFade = 0;
         }
 
-		// Fade the health number back to dim
+        // Fade the health number back to dim
 
         a += ( m_ArmorFade / FADE_TIME ) * 128;
     }
@@ -343,10 +343,10 @@ void CHudHealth::DrawArmor( int startX )
     SPR_Set( m_ArmorSprite1, color );
     SPR_DrawAdditive( 0, x, y - iOffset, m_ArmorSprite1Rect );
 
-	// Note: this assumes empty and full have the same size.
+    // Note: this assumes empty and full have the same size.
     Rect rc = *m_ArmorSprite2Rect;
 
-	// battery can go from 0 to 100 so * 0.01 goes from 0 to 1
+    // battery can go from 0 to 100 so * 0.01 goes from 0 to 1
     rc.top += ( rc.bottom - rc.top ) * ( 100 - std::min( 100, m_iBat ) ) * 0.01f;
 
     if( rc.bottom > rc.top )
@@ -366,13 +366,13 @@ bool CHudHealth::DrawPain( float flTime )
 
     int x, y, shade;
 
-	// TODO:  get the shift value of the health
+    // TODO:  get the shift value of the health
     const int a = 255; // max brightness until then
 
     float fFade = gHUD.m_flTimeDelta * 2;
 
-	// TODO: can probably rework this into an array and a for loop
-	//  SPR_Draw top
+    // TODO: can probably rework this into an array and a for loop
+    //  SPR_Draw top
     if( m_fAttackFront > 0.4 )
     {
         shade = a * std::max( m_fAttackFront, 0.5f );
@@ -442,7 +442,7 @@ bool CHudHealth::DrawDamage( float flTime )
 
     const auto color = gHUD.m_HudColor.Scale( a );
 
-	// Draw all the items
+    // Draw all the items
     for( int i = 0; i < NUM_DMG_TYPES; i++ )
     {
         if( ( m_bitsDamage & g_DamageTypes[i].TypeFlags ) != 0 )
@@ -454,7 +454,7 @@ bool CHudHealth::DrawDamage( float flTime )
     }
 
 
-	// check for bits that should be expired
+    // check for bits that should be expired
     for( int i = 0; i < NUM_DMG_TYPES; i++ )
     {
         DAMAGE_IMAGE* pdmg = &m_dmg[i];
@@ -471,7 +471,7 @@ bool CHudHealth::DrawDamage( float flTime )
                 int y = pdmg->y;
                 pdmg->x = pdmg->y = 0;
 
-				// move everyone above down
+                // move everyone above down
                 for( int j = 0; j < NUM_DMG_TYPES; j++ )
                 {
                     pdmg = &m_dmg[j];
@@ -491,14 +491,14 @@ void CHudHealth::UpdateTiles( float flTime, long bitsDamage )
 {
     DAMAGE_IMAGE* pdmg;
 
-	// Which types are new?
+    // Which types are new?
     long bitsOn = ~m_bitsDamage & bitsDamage;
 
     for( int i = 0; i < NUM_DMG_TYPES; i++ )
     {
         pdmg = &m_dmg[i];
 
-		// Is this one already on?
+        // Is this one already on?
         if( ( m_bitsDamage & g_DamageTypes[i].TypeFlags ) != 0 )
         {
             pdmg->fExpire = flTime + DMG_IMAGE_LIFE; // extend the duration
@@ -506,15 +506,15 @@ void CHudHealth::UpdateTiles( float flTime, long bitsDamage )
                 pdmg->fBaseline = flTime;
         }
 
-		// Are we just turning it on?
+        // Are we just turning it on?
         if( ( bitsOn & g_DamageTypes[i].TypeFlags ) != 0 )
         {
-			// put this one at the bottom
+            // put this one at the bottom
             pdmg->x = giDmgWidth / 8;
             pdmg->y = ScreenHeight - giDmgHeight * 2;
             pdmg->fExpire = flTime + DMG_IMAGE_LIFE;
 
-			// move everyone else up
+            // move everyone else up
             for( int j = 0; j < NUM_DMG_TYPES; j++ )
             {
                 if( j == i )
@@ -528,6 +528,6 @@ void CHudHealth::UpdateTiles( float flTime, long bitsDamage )
         }
     }
 
-	// damage bits are only turned on here;  they are turned off when the draw time has expired (in DrawDamage())
+    // damage bits are only turned on here;  they are turned off when the draw time has expired (in DrawDamage())
     m_bitsDamage |= bitsDamage;
 }

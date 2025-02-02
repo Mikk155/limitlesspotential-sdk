@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -70,7 +70,7 @@ void MaterialSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 {
     if( block.Mode == NetworkDataMode::Serialize )
     {
-		// This configuration structure must be identical to the one loaded from files!
+        // This configuration structure must be identical to the one loaded from files!
         block.Data = json::object();
 
         for( const auto& material : m_Materials )
@@ -122,7 +122,7 @@ void MaterialSystem::LoadMaterials( std::span<const std::string> fileNames )
 
 const char* MaterialSystem::StripTexturePrefix( const char* name )
 {
-	// strip leading '-0' or '+0~' or '{' or '!'
+    // strip leading '-0' or '+0~' or '{' or '!'
     if( *name == '-' || *name == '+' )
     {
         name += 2;

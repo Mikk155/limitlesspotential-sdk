@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -23,8 +23,8 @@
 #include "utils/ReplacementMaps.h"
 
 /**
- *	@brief Contains per-map state
- *	@details This class should default construct into a valid state and should be move constructible and assignable
+ *    @brief Contains per-map state
+ *    @details This class should default construct into a valid state and should be move constructible and assignable
  */
 class MapState final
 {
@@ -42,7 +42,7 @@ public:
     std::optional<RGB24> m_CrosshairColor;
     std::optional<SuitLightType> m_LightType;
 
-	// Initialized during config load.
+    // Initialized during config load.
     std::unique_ptr<const ReplacementMap> m_GlobalModelReplacement;
     std::unique_ptr<const ReplacementMap> m_GlobalSentenceReplacement;
     std::unique_ptr<const ReplacementMap> m_GlobalSoundReplacement;

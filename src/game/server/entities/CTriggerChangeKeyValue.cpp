@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -18,8 +18,8 @@
 const int MAX_CHANGE_KEYVALUES = 16;
 
 /**
- *	@brief Changes up to ::MAX_CHANGE_KEYVALUES key values in entities with the targetname specified in this entity's target keyvalue
- *	Can also change the target entity's target by specifying a changetarget value
+ *    @brief Changes up to ::MAX_CHANGE_KEYVALUES key values in entities with the targetname specified in this entity's target keyvalue
+ *    Can also change the target entity's target by specifying a changetarget value
  */
 class CTriggerChangeKeyValue : public CBaseDelay
 {
@@ -52,7 +52,7 @@ END_DATAMAP();
 
 bool CTriggerChangeKeyValue::KeyValue( KeyValueData* pkvd )
 {
-	// Make sure base class keys are handled properly
+    // Make sure base class keys are handled properly
     if( FStrEq( "origin", pkvd->szKeyName ) || FStrEq( "target", pkvd->szKeyName ) || FStrEq( "targetname", pkvd->szKeyName ) || FStrEq( "classname", pkvd->szKeyName ) )
     {
         return CBaseDelay::KeyValue( pkvd );
@@ -82,7 +82,7 @@ bool CTriggerChangeKeyValue::KeyValue( KeyValueData* pkvd )
 
 void CTriggerChangeKeyValue::Spawn()
 {
-	// Nothing
+    // Nothing
 }
 
 void CTriggerChangeKeyValue::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

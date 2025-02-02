@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -30,7 +30,7 @@ bool CHud::UpdateClientData( client_data_t* cdata, float time )
     memcpy( m_vecAngles, cdata->viewangles, sizeof( Vector ) );
 
     m_iKeyBits = CL_ButtonBits( false );
-	// Weapon bits are now used for passing hud flags. MsgFunc_Weapons passes the weapon bits.
+    // Weapon bits are now used for passing hud flags. MsgFunc_Weapons passes the weapon bits.
     m_HudFlags = cdata->iWeaponBits;
 
     in_fov = cdata->fov;
@@ -43,6 +43,6 @@ bool CHud::UpdateClientData( client_data_t* cdata, float time )
 
     CL_ResetButtonBits( m_iKeyBits );
 
-	// return 1 if in anything in the client_data struct has been changed, 0 otherwise
+    // return 1 if in anything in the client_data struct has been changed, 0 otherwise
     return true;
 }

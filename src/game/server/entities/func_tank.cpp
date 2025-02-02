@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -32,10 +32,10 @@ enum TANKBULLET
     TANK_BULLET_12MM = 3,
 };
 
-//			Custom damage
-//			env_laser (duration is 0.5 rate of fire)
-//			rockets
-//			explosion?
+//            Custom damage
+//            env_laser (duration is 0.5 rate of fire)
+//            rockets
+//            explosion?
 
 class CFuncTank : public CBaseEntity
 {
@@ -51,9 +51,9 @@ public:
     void PostRestore() override;
     void TrackTarget();
 
-	/**
-	 *	@brief Fire targets and spawn sprites
-	 */
+    /**
+     *    @brief Fire targets and spawn sprites
+     */
     virtual void Fire( const Vector& barrelEnd, const Vector& forward, CBaseEntity* attacker );
     virtual Vector UpdateTargetPosition( CBaseEntity* pTarget )
     {
@@ -63,7 +63,7 @@ public:
     void StartRotSound();
     void StopRotSound();
 
-	// Bmodels don't go across transitions
+    // Bmodels don't go across transitions
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     inline bool IsActive() { return ( pev->spawnflags & SF_TANK_ACTIVE ) != 0; }
@@ -82,7 +82,7 @@ public:
     inline bool CanFire() { return ( gpGlobals->time - m_lastSightTime ) <= m_persist; }
     bool InRange( float range );
 
-	// Acquire a target.
+    // Acquire a target.
     CBaseEntity* FindTarget( CBaseEntity* pvsPlayer );
 
     void TankTrace( const Vector& vecStart, const Vector& vecForward, const Vector& vecSpread, TraceResult& tr );
@@ -94,18 +94,18 @@ public:
         return pev->origin + ( forward * m_barrelPos.x ) + ( right * m_barrelPos.y ) + ( up * m_barrelPos.z );
     }
 
-	/**
-	 *	@brief If barrel is offset, add in additional rotation
-	 */
+    /**
+     *    @brief If barrel is offset, add in additional rotation
+     */
     void AdjustAnglesForBarrel( Vector& angles, float distance );
 
     bool OnControls( CBaseEntity* controller ) override;
     bool StartControl( CBasePlayer* pController );
     void StopControl();
 
-	/**
-	 *	@brief Called each frame by the player's ItemPostFrame
-	 */
+    /**
+     *    @brief Called each frame by the player's ItemPostFrame
+     */
     void ControllerPostFrame();
 
     void UpdateOnRemove() override;
@@ -148,8 +148,8 @@ protected:
 
     EHANDLE m_hEnemy;
 
-	// 0 - player only
-	// 1 - all targets allied to player
+    // 0 - player only
+    // 1 - all targets allied to player
     int m_iEnemyType;
 
     bool m_EnableTargetLaser = false;
@@ -223,7 +223,7 @@ void CFuncTank::Spawn()
 
     if( m_fireRate <= 0 )
         m_fireRate = 1;
-	// TODO: needs to be >=
+    // TODO: needs to be >=
     if( static_cast<std::size_t>( m_spread ) > MAX_FIRING_SPREADS )
         m_spread = 0;
 
@@ -390,7 +390,7 @@ bool CFuncTank::StartControl( CBasePlayer* pController )
     if( m_pController != nullptr )
         return false;
 
-	// Team only or disabled?
+    // Team only or disabled?
     if( !FStringNull( m_sMaster ) )
     {
         if( !UTIL_IsMasterTriggered( m_sMaster, pController ) )
@@ -479,7 +479,7 @@ void CFuncTank::ControllerPostFrame()
 
         Fire( BarrelPosition(), vecForward, m_pController );
 
-		// HACKHACK -- make some noise (that the AI can hear)
+        // HACKHACK -- make some noise (that the AI can hear)
         if( m_pController && m_pController->IsPlayer() )
             m_pController->m_iWeaponVolume = LOUD_GUN_VOLUME;
 
@@ -679,10 +679,10 @@ void CFuncTank::TrackTarget()
 
     const Vector barrelEnd = BarrelPosition();
 
-	// Get a position to aim for
+    // Get a position to aim for
     if( m_pController )
     {
-		// Tanks attempt to mirror the player's angles
+        // Tanks attempt to mirror the player's angles
         angles = m_pController->pev->v_angle;
         angles[0] = 0 - angles[0];
         pev->nextthink = pev->ltime + 0.05;
@@ -701,10 +701,10 @@ void CFuncTank::TrackTarget()
             return;
         }
 
-		// Keep tracking the same target unless the target is in cover and a better one is around.
+        // Keep tracking the same target unless the target is in cover and a better one is around.
         pTarget = m_hEnemy;
 
-		// Forget targets that enable notarget.
+        // Forget targets that enable notarget.
         if( pTarget && FBitSet( pTarget->pev->flags, FL_NOTARGET ) )
         {
             pTarget = nullptr;
@@ -726,13 +726,13 @@ void CFuncTank::TrackTarget()
         {
             pTarget = FindTarget( pPlayer );
 
-			// Keep shooting at our last target.
+            // Keep shooting at our last target.
             if( !pTarget )
             {
                 pTarget = m_hEnemy;
             }
 
-			// Nothing to shoot at.
+            // Nothing to shoot at.
             if( !pTarget )
             {
                 return;
@@ -741,7 +741,7 @@ void CFuncTank::TrackTarget()
             m_hEnemy = pTarget;
         }
 
-		// Calculate angle needed to aim at target
+        // Calculate angle needed to aim at target
         targetPosition = pTarget->pev->origin + pTarget->pev->view_ofs;
         float range = ( targetPosition - barrelEnd ).Length();
 
@@ -751,7 +751,7 @@ void CFuncTank::TrackTarget()
         UTIL_TraceLine( barrelEnd, targetPosition, dont_ignore_monsters, edict(), &tr );
 
         lineOfSight = false;
-		// No line of sight, don't track
+        // No line of sight, don't track
         if( tr.flFraction == 1.0 || tr.pHit == pTarget->edict() )
         {
             lineOfSight = true;
@@ -763,24 +763,24 @@ void CFuncTank::TrackTarget()
             }
         }
 
-		// Track sight origin
+        // Track sight origin
 
-		// !!! I'm not sure what i changed
+        // !!! I'm not sure what i changed
         direction = m_sightOrigin - pev->origin;
-		//		direction = m_sightOrigin - barrelEnd;
+        //        direction = m_sightOrigin - barrelEnd;
         angles = UTIL_VecToAngles( direction );
 
-		// Calculate the additional rotation to point the end of the barrel at the target (not the gun's center)
+        // Calculate the additional rotation to point the end of the barrel at the target (not the gun's center)
         AdjustAnglesForBarrel( angles, direction.Length() );
     }
 
     angles.x = -angles.x;
 
-	// Force the angles to be relative to the center position
+    // Force the angles to be relative to the center position
     angles.y = m_yawCenter + UTIL_AngleDistance( angles.y, m_yawCenter );
     angles.x = m_pitchCenter + UTIL_AngleDistance( angles.x, m_pitchCenter );
 
-	// Limit against range in y
+    // Limit against range in y
     if( angles.y > m_yawCenter + m_yawRange )
     {
         angles.y = m_yawCenter + m_yawRange;
@@ -795,7 +795,7 @@ void CFuncTank::TrackTarget()
     if( updateTime )
         m_lastSightTime = gpGlobals->time;
 
-	// Move toward target at rate or less
+    // Move toward target at rate or less
     float distY = UTIL_AngleDistance( angles.y, pev->angles.y );
     pev->avelocity.y = distY * 10;
     if( pev->avelocity.y > m_yawRate )
@@ -803,13 +803,13 @@ void CFuncTank::TrackTarget()
     else if( pev->avelocity.y < -m_yawRate )
         pev->avelocity.y = -m_yawRate;
 
-	// Limit against range in x
+    // Limit against range in x
     if( angles.x > m_pitchCenter + m_pitchRange )
         angles.x = m_pitchCenter + m_pitchRange;
     else if( angles.x < m_pitchCenter - m_pitchRange )
         angles.x = m_pitchCenter - m_pitchRange;
 
-	// Move toward target at rate or less
+    // Move toward target at rate or less
     float distX = UTIL_AngleDistance( angles.x, pev->angles.x );
     pev->avelocity.x = distX * 10;
 
@@ -894,7 +894,7 @@ void CFuncTank::Fire( const Vector& barrelEnd, const Vector& forward, CBaseEntit
             pSprite->SetTransparency( kRenderTransAdd, 255, 255, 255, 255, kRenderFxNoDissipation );
             pSprite->SetScale( m_spriteScale );
 
-			// Hack Hack, make it stick around for at least 100 ms.
+            // Hack Hack, make it stick around for at least 100 ms.
             pSprite->pev->nextthink += 0.1;
         }
         SUB_UseTargets( this, USE_TOGGLE, 0 );
@@ -904,7 +904,7 @@ void CFuncTank::Fire( const Vector& barrelEnd, const Vector& forward, CBaseEntit
 
 void CFuncTank::TankTrace( const Vector& vecStart, const Vector& vecForward, const Vector& vecSpread, TraceResult& tr )
 {
-	// get circular gaussian spread
+    // get circular gaussian spread
     float x, y, z;
     do
     {
@@ -950,7 +950,7 @@ void CFuncTankGun::Fire( const Vector& barrelEnd, const Vector& forward, CBaseEn
 
     if( m_fireLast != 0 )
     {
-		// FireBullets needs gpGlobals->v_up, etc.
+        // FireBullets needs gpGlobals->v_up, etc.
         UTIL_MakeAimVectors( pev->angles );
 
         int bulletCount = ( gpGlobals->time - m_fireLast ) * m_fireRate;
@@ -1064,7 +1064,7 @@ void CFuncTankLaser::Fire( const Vector& barrelEnd, const Vector& forward, CBase
 
     if( m_fireLast != 0 && GetLaser() )
     {
-		// TankTrace needs gpGlobals->v_up, etc.
+        // TankTrace needs gpGlobals->v_up, etc.
         UTIL_MakeAimVectors( pev->angles );
 
         int bulletCount = ( gpGlobals->time - m_fireLast ) * m_fireRate;
@@ -1150,12 +1150,12 @@ void CFuncTankMortar::Fire( const Vector& barrelEnd, const Vector& forward, CBas
     if( m_fireLast != 0 )
     {
         int bulletCount = ( gpGlobals->time - m_fireLast ) * m_fireRate;
-		// Only create 1 explosion
+        // Only create 1 explosion
         if( bulletCount > 0 )
         {
             TraceResult tr;
 
-			// TankTrace needs gpGlobals->v_up, etc.
+            // TankTrace needs gpGlobals->v_up, etc.
             UTIL_MakeAimVectors( pev->angles );
 
             TankTrace( barrelEnd, forward, gTankSpread[m_spread], tr );

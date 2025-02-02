@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -81,7 +81,7 @@ static bool SV_InitServer()
 // This gets called one time when the game is initialied
 void GameDLLInit()
 {
-	// Register cvars here:
+    // Register cvars here:
 
     g_psv_gravity = CVAR_GET_POINTER( "sv_gravity" );
     g_psv_aim = CVAR_GET_POINTER( "sv_aim" );
@@ -91,7 +91,7 @@ void GameDLLInit()
     if( !SV_InitServer() )
     {
         g_engfuncs.pfnServerPrint( "Error initializing server\n" );
-		// Shut the game down as soon as possible.
+        // Shut the game down as soon as possible.
         SERVER_COMMAND( "quit\n" );
         return;
     }
@@ -117,7 +117,7 @@ void GameDLLInit()
 
     CVAR_REGISTER( &sv_allowbunnyhopping );
 
-	// BEGIN REGISTER CVARS FOR OPPOSING FORCE
+    // BEGIN REGISTER CVARS FOR OPPOSING FORCE
 
     CVAR_REGISTER( &ctfplay );
     CVAR_REGISTER( &ctf_autoteam );
@@ -129,16 +129,16 @@ void GameDLLInit()
     CVAR_REGISTER( &sv_entityinfo_enabled );
     CVAR_REGISTER( &sv_entityinfo_eager );
 
-	// END REGISTER CVARS FOR OPPOSING FORCE
+    // END REGISTER CVARS FOR OPPOSING FORCE
 
-	// Default to on in debug builds to match original behavior.
+    // Default to on in debug builds to match original behavior.
 #ifdef DEBUG
     sv_schedule_debug.string = "1";
 #endif
 
     CVAR_REGISTER( &sv_schedule_debug );
 
-	// Link user messages immediately so there are no race conditions.
+    // Link user messages immediately so there are no race conditions.
     LinkUserMessages();
 }
 

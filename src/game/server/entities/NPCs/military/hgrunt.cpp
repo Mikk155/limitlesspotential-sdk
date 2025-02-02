@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -27,15 +27,15 @@ LINK_ENTITY_TO_CLASS( monster_human_grunt, CHGrunt );
 BEGIN_DATAMAP( CHGrunt )
     DEFINE_FIELD( m_flNextGrenadeCheck, FIELD_TIME ),
     DEFINE_FIELD( m_flNextPainTime, FIELD_TIME ),
-	//	DEFINE_FIELD(m_flLastEnemySightTime, FIELD_TIME), // don't save, go to zero
+    //    DEFINE_FIELD(m_flLastEnemySightTime, FIELD_TIME), // don't save, go to zero
     DEFINE_FIELD( m_vecTossVelocity, FIELD_VECTOR ),
     DEFINE_FIELD( m_fThrowGrenade, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_fStanding, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_fFirstEncounter, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_cClipSize, FIELD_INTEGER ),
     DEFINE_FIELD( m_voicePitch, FIELD_INTEGER ),
-	//  DEFINE_FIELD(m_iBrassShell, FIELD_INTEGER),
-	//  DEFINE_FIELD(m_iShotgunShell, FIELD_INTEGER),
+    //  DEFINE_FIELD(m_iBrassShell, FIELD_INTEGER),
+    //  DEFINE_FIELD(m_iShotgunShell, FIELD_INTEGER),
     DEFINE_FIELD( m_iSentence, FIELD_INTEGER ),
 END_DATAMAP();
 
@@ -69,7 +69,7 @@ void CHGrunt::SpeakSentence()
 {
     if( m_iSentence == HGRUNT_SENT_NONE )
     {
-		// no sentence cued up.
+        // no sentence cued up.
         return;
     }
 
@@ -138,7 +138,7 @@ int CHGrunt::ISoundMask()
 
 bool CHGrunt::FOkToSpeak()
 {
-	// if someone else is talking, don't speak
+    // if someone else is talking, don't speak
     if( gpGlobals->time <= CTalkMonster::g_talkWaitTime )
         return false;
 
@@ -146,14 +146,14 @@ bool CHGrunt::FOkToSpeak()
     {
         if( m_MonsterState != MONSTERSTATE_COMBAT )
         {
-			// no talking outside of combat if gagged.
+            // no talking outside of combat if gagged.
             return false;
         }
     }
 
-	// if player is not in pvs, don't speak
-	//	if (!UTIL_FindClientInPVS(this))
-	//		return false;
+    // if player is not in pvs, don't speak
+    //    if (!UTIL_FindClientInPVS(this))
+    //        return false;
 
     return true;
 }
@@ -170,14 +170,14 @@ void CHGrunt::PrescheduleThink()
     {
         if( HasConditions( bits_COND_SEE_ENEMY ) )
         {
-			// update the squad's last enemy sighting time.
+            // update the squad's last enemy sighting time.
             MySquadLeader()->m_flLastEnemySightTime = gpGlobals->time;
         }
         else
         {
             if( gpGlobals->time - MySquadLeader()->m_flLastEnemySightTime > 5 )
             {
-				// been a while since we've seen the enemy
+                // been a while since we've seen the enemy
                 MySquadLeader()->m_fEnemyEluded = true;
             }
         }
@@ -225,13 +225,13 @@ bool CHGrunt::CheckRangeAttack1( float flDot, float flDist )
 
         if( !m_hEnemy->IsPlayer() && flDist <= 64 )
         {
-			// kick nonclients, but don't shoot at them.
+            // kick nonclients, but don't shoot at them.
             return false;
         }
 
         Vector vecSrc = GetGunPosition();
 
-		// verify that a bullet fired from the gun will hit the enemy before the world.
+        // verify that a bullet fired from the gun will hit the enemy before the world.
         UTIL_TraceLine( vecSrc, m_hEnemy->BodyTarget( vecSrc ), ignore_monsters, ignore_glass, edict(), &tr );
 
         if( tr.flFraction == 1.0 )
@@ -250,14 +250,14 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
         return false;
     }
 
-	// if the grunt isn't moving, it's ok to check.
+    // if the grunt isn't moving, it's ok to check.
     if( m_flGroundSpeed != 0 )
     {
         m_fThrowGrenade = false;
         return m_fThrowGrenade;
     }
 
-	// assume things haven't changed too much since last time
+    // assume things haven't changed too much since last time
     if( gpGlobals->time < m_flNextGrenadeCheck )
     {
         return m_fThrowGrenade;
@@ -265,9 +265,9 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
 
     if( !FBitSet( m_hEnemy->pev->flags, FL_ONGROUND ) && m_hEnemy->pev->waterlevel == WaterLevel::Dry && m_vecEnemyLKP.z > pev->absmax.z )
     {
-		//!!!BUGBUG - we should make this check movetype and make sure it isn't FLY? Players who jump a lot are unlikely to
-		// be grenaded.
-		// don't throw grenades at anything that isn't on the ground!
+        //!!!BUGBUG - we should make this check movetype and make sure it isn't FLY? Players who jump a lot are unlikely to
+        // be grenaded.
+        // don't throw grenades at anything that isn't on the ground!
         m_fThrowGrenade = false;
         return m_fThrowGrenade;
     }
@@ -276,37 +276,37 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
 
     if( FBitSet( pev->weapons, HGRUNT_HANDGRENADE ) )
     {
-		// find feet
+        // find feet
         if( RANDOM_LONG( 0, 1 ) )
         {
-			// magically know where they are
+            // magically know where they are
             vecTarget = Vector( m_hEnemy->pev->origin.x, m_hEnemy->pev->origin.y, m_hEnemy->pev->absmin.z );
         }
         else
         {
-			// toss it to where you last saw them
+            // toss it to where you last saw them
             vecTarget = m_vecEnemyLKP;
         }
-		// vecTarget = m_vecEnemyLKP + (m_hEnemy->BodyTarget( pev->origin ) - m_hEnemy->pev->origin);
-		// estimate position
-		// vecTarget = vecTarget + m_hEnemy->pev->velocity * 2;
+        // vecTarget = m_vecEnemyLKP + (m_hEnemy->BodyTarget( pev->origin ) - m_hEnemy->pev->origin);
+        // estimate position
+        // vecTarget = vecTarget + m_hEnemy->pev->velocity * 2;
     }
     else
     {
-		// find target
-		// vecTarget = m_hEnemy->BodyTarget( pev->origin );
+        // find target
+        // vecTarget = m_hEnemy->BodyTarget( pev->origin );
         vecTarget = m_vecEnemyLKP + ( m_hEnemy->BodyTarget( pev->origin ) - m_hEnemy->pev->origin );
-		// estimate position
+        // estimate position
         if( HasConditions( bits_COND_SEE_ENEMY ) )
             vecTarget = vecTarget + ( ( vecTarget - pev->origin ).Length() / grenadeSpeed ) * m_hEnemy->pev->velocity;
     }
 
-	// are any of my squad members near the intended grenade impact area?
+    // are any of my squad members near the intended grenade impact area?
     if( InSquad() )
     {
         if( SquadMemberInRange( vecTarget, 256 ) )
         {
-			// crap, I might blow my own guy up. Don't throw a grenade and don't check again for a while.
+            // crap, I might blow my own guy up. Don't throw a grenade and don't check again for a while.
             m_flNextGrenadeCheck = gpGlobals->time + 1; // one full second.
             m_fThrowGrenade = false;
         }
@@ -314,7 +314,7 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
 
     if( ( vecTarget - pev->origin ).Length2D() <= 256 )
     {
-		// crap, I don't want to blow myself up
+        // crap, I don't want to blow myself up
         m_flNextGrenadeCheck = gpGlobals->time + 1; // one full second.
         m_fThrowGrenade = false;
         return m_fThrowGrenade;
@@ -329,16 +329,16 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
         {
             m_vecTossVelocity = vecToss;
 
-			// throw a hand grenade
+            // throw a hand grenade
             m_fThrowGrenade = true;
-			// don't check again for a while.
+            // don't check again for a while.
             m_flNextGrenadeCheck = gpGlobals->time; // 1/3 second.
         }
         else
         {
-			// don't throw
+            // don't throw
             m_fThrowGrenade = false;
-			// don't check again for a while.
+            // don't check again for a while.
             m_flNextGrenadeCheck = gpGlobals->time + 1; // one full second.
         }
     }
@@ -350,16 +350,16 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
         {
             m_vecTossVelocity = vecToss;
 
-			// throw a hand grenade
+            // throw a hand grenade
             m_fThrowGrenade = true;
-			// don't check again for a while.
+            // don't check again for a while.
             m_flNextGrenadeCheck = gpGlobals->time + 0.3; // 1/3 second.
         }
         else
         {
-			// don't throw
+            // don't throw
             m_fThrowGrenade = false;
-			// don't check again for a while.
+            // don't check again for a while.
             m_flNextGrenadeCheck = gpGlobals->time + 1; // one full second.
         }
     }
@@ -376,13 +376,13 @@ bool CHGrunt::CheckRangeAttack2( float flDot, float flDist )
 
 void CHGrunt::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-	// check for helmet shot
+    // check for helmet shot
     if( ptr->iHitgroup == 11 )
     {
-		// make sure we're wearing one
+        // make sure we're wearing one
         if( GetBodygroup( HGruntBodyGroup::Head ) == HGruntHead::Grunt && ( bitsDamageType & ( DMG_BULLET | DMG_SLASH | DMG_BLAST | DMG_CLUB ) ) != 0 )
         {
-			// absorb damage
+            // absorb damage
             flDamage -= 20;
             if( flDamage <= 0 )
             {
@@ -390,7 +390,7 @@ void CHGrunt::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir,
                 flDamage = 0.01;
             }
         }
-		// it's head shot anyways
+        // it's head shot anyways
         ptr->iHitgroup = HITGROUP_HEAD;
     }
     CSquadMonster::TraceAttack( attacker, flDamage, vecDir, ptr, bitsDamageType );
@@ -454,7 +454,7 @@ void CHGrunt::IdleSound()
     {
         if( 0 == question )
         {
-			// ask question or make statement
+            // ask question or make statement
             switch ( RANDOM_LONG( 0, 2 ) )
             {
             case 0: // check in
@@ -551,7 +551,7 @@ void CHGrunt::Shoot( bool firstShotInBurst )
         }
         else
         {
-			// Check this so shotgunners don't shoot bursts if the animation happens to have the events
+            // Check this so shotgunners don't shoot bursts if the animation happens to have the events
             if( firstShotInBurst )
             {
                 Vector vecShootOrigin = GetGunPosition();
@@ -577,7 +577,7 @@ void CHGrunt::Shoot( bool firstShotInBurst )
     {
         if( FBitSet( pev->weapons, HGRUNT_9MMAR ) )
         {
-			// the first round of the three round burst plays the sound and puts a sound in the world sound list.
+            // the first round of the three round burst plays the sound and puts a sound in the world sound list.
             if( RANDOM_LONG( 0, 1 ) )
             {
                 EmitSound( CHAN_WEAPON, "hgrunt/gr_mgun1.wav", 1, ATTN_NORM );
@@ -609,10 +609,10 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
 
             GetAttachment( 0, vecGunPos, vecGunAngles );
 
-			// switch to body group with no gun.
+            // switch to body group with no gun.
             SetBodygroup( HGruntBodyGroup::Weapons, HGruntWeapon::Blank );
 
-			// now spawn a gun.
+            // now spawn a gun.
             if( FBitSet( pev->weapons, HGRUNT_SHOTGUN ) )
             {
                 DropItem( "weapon_shotgun", vecGunPos, vecGunAngles );
@@ -638,12 +638,12 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
     case HGRUNT_AE_GREN_TOSS:
     {
         UTIL_MakeVectors( pev->angles );
-		// CGrenade::ShootTimed(this, pev->origin + gpGlobals->v_forward * 34 + Vector (0, 0, 32), m_vecTossVelocity, 3.5);
+        // CGrenade::ShootTimed(this, pev->origin + gpGlobals->v_forward * 34 + Vector (0, 0, 32), m_vecTossVelocity, 3.5);
         CGrenade::ShootTimed( this, GetGunPosition(), m_vecTossVelocity, 3.5 );
 
         m_fThrowGrenade = false;
         m_flNextGrenadeCheck = gpGlobals->time + 6; // wait six seconds before even looking again to see if a grenade can be thrown.
-													// !!!LATER - when in a group, only try to throw grenade if ordered.
+                                                    // !!!LATER - when in a group, only try to throw grenade if ordered.
     }
     break;
 
@@ -678,7 +678,7 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         if( pHurt )
         {
-			// SOUND HERE!
+            // SOUND HERE!
             UTIL_MakeVectors( pev->angles );
             pHurt->pev->punchangle.x = 15;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_forward * 100 + gpGlobals->v_up * 50;
@@ -729,10 +729,10 @@ void CHGrunt::Spawn()
 
     if( pev->weapons == 0 )
     {
-		// initialize to original values
+        // initialize to original values
         pev->weapons = HGRUNT_9MMAR | HGRUNT_HANDGRENADE;
-		// pev->weapons = HGRUNT_SHOTGUN;
-		// pev->weapons = HGRUNT_9MMAR | HGRUNT_GRENADELAUNCHER;
+        // pev->weapons = HGRUNT_SHOTGUN;
+        // pev->weapons = HGRUNT_9MMAR | HGRUNT_GRENADELAUNCHER;
     }
 
     if( FBitSet( pev->weapons, HGRUNT_SHOTGUN ) )
@@ -792,7 +792,7 @@ void CHGrunt::Precache()
 
     PrecacheSound( "zombie/claw_miss2.wav" ); // because we use the basemonster SWIPE animation event
 
-	// get voice pitch
+    // get voice pitch
     if( RANDOM_LONG( 0, 1 ) )
         m_voicePitch = 109 + RANDOM_LONG( 0, 7 );
     else
@@ -823,7 +823,7 @@ void CHGrunt::StartTask( const Task_t* pTask )
 
     case TASK_WALK_PATH:
     case TASK_RUN_PATH:
-		// grunt no longer assumes he is covered if he moves
+        // grunt no longer assumes he is covered if he moves
         Forget( bits_MEMORY_INCOVER );
         CSquadMonster::StartTask( pTask );
         break;
@@ -856,7 +856,7 @@ void CHGrunt::RunTask( const Task_t* pTask )
     {
     case TASK_GRUNT_FACE_TOSS_DIR:
     {
-		// project a point along the toss vector and turn to face that point.
+        // project a point along the toss vector and turn to face that point.
         MakeIdealYaw( pev->origin + m_vecTossVelocity * 64 );
         ChangeYaw( pev->yaw_speed );
 
@@ -881,7 +881,7 @@ void CHGrunt::PainSound()
 #if 0
         if( RANDOM_LONG( 0, 99 ) < 5 )
         {
-			// pain sentences are rare
+            // pain sentences are rare
             if( FOkToSpeak() )
             {
                 sentences::g_Sentences.PlayRndSz( this, "HG_PAIN", HGRUNT_SENTENCE_VOLUME, ATTN_NORM, 0, PITCH_NORM );
@@ -1001,7 +1001,7 @@ Task_t tlGruntEstablishLineOfFire[] =
 };
 
 /**
- *	@brief move to a position that allows the grunt to attack.
+ *    @brief move to a position that allows the grunt to attack.
  */
 Schedule_t slGruntEstablishLineOfFire[] =
     {
@@ -1027,7 +1027,7 @@ Task_t tlGruntFoundEnemy[] =
 };
 
 /**
- *	@brief grunt established sight with an enemy that was hiding from the squad.
+ *    @brief grunt established sight with an enemy that was hiding from the squad.
  */
 Schedule_t slGruntFoundEnemy[] =
     {
@@ -1083,7 +1083,7 @@ Task_t tlGruntSignalSuppress[] =
 };
 
 /**
- *	@brief don't stop shooting until the clip is empty or grunt gets hurt.
+ *    @brief don't stop shooting until the clip is empty or grunt gets hurt.
  */
 Schedule_t slGruntSignalSuppress[] =
     {
@@ -1143,8 +1143,8 @@ Task_t tlGruntWaitInCover[] =
 };
 
 /**
- *	@brief we don't allow danger or the ability to attack to break a grunt's run to cover schedule,
- *	but when a grunt is in cover, we do want them to attack if they can.
+ *    @brief we don't allow danger or the ability to attack to break a grunt's run to cover schedule,
+ *    but when a grunt is in cover, we do want them to attack if they can.
  */
 Schedule_t slGruntWaitInCover[] =
     {
@@ -1200,7 +1200,7 @@ Task_t tlGruntGrenadeCover1[] =
 };
 
 /**
- *	@brief drop grenade then run to cover.
+ *    @brief drop grenade then run to cover.
  */
 Schedule_t slGruntGrenadeCover[] =
     {
@@ -1219,7 +1219,7 @@ Task_t tlGruntTossGrenadeCover1[] =
 };
 
 /**
- *	@brief drop grenade then run to cover.
+ *    @brief drop grenade then run to cover.
  */
 Schedule_t slGruntTossGrenadeCover[] =
     {
@@ -1242,7 +1242,7 @@ Task_t tlGruntTakeCoverFromBestSound[] =
 };
 
 /**
- *	@brief hide from the loudest sound source (to run from grenade)
+ *    @brief hide from the loudest sound source (to run from grenade)
  */
 Schedule_t slGruntTakeCoverFromBestSound[] =
     {
@@ -1284,7 +1284,7 @@ Task_t tlGruntSweep[] =
 };
 
 /**
- *	@brief Do a turning sweep of the area
+ *    @brief Do a turning sweep of the area
  */
 Schedule_t slGruntSweep[] =
     {
@@ -1323,8 +1323,8 @@ Task_t tlGruntRangeAttack1A[] =
 };
 
 /**
- *	@brief Overridden because base class stops attacking when the enemy is occluded.
- *	grunt's grenade toss requires the enemy be occluded.
+ *    @brief Overridden because base class stops attacking when the enemy is occluded.
+ *    grunt's grenade toss requires the enemy be occluded.
  */
 Schedule_t slGruntRangeAttack1A[] =
     {
@@ -1360,8 +1360,8 @@ Task_t tlGruntRangeAttack1B[] =
 };
 
 /**
- *	@brief Overridden because base class stops attacking when the enemy is occluded.
- *	grunt's grenade toss requires the enemy be occluded.
+ *    @brief Overridden because base class stops attacking when the enemy is occluded.
+ *    grunt's grenade toss requires the enemy be occluded.
  */
 Schedule_t slGruntRangeAttack1B[] =
     {
@@ -1388,8 +1388,8 @@ Task_t tlGruntRangeAttack2[] =
 };
 
 /**
- *	@brief Overridden because base class stops attacking when the enemy is occluded.
- *	grunt's grenade toss requires the enemy be occluded.
+ *    @brief Overridden because base class stops attacking when the enemy is occluded.
+ *    grunt's grenade toss requires the enemy be occluded.
  */
 Schedule_t slGruntRangeAttack2[] =
     {
@@ -1496,17 +1496,17 @@ std::tuple<int, Activity> CHGrunt::GetSequenceForActivity( Activity NewActivity 
     switch ( NewActivity )
     {
     case ACT_RANGE_ATTACK1:
-		// grunt is either shooting standing or shooting crouched
+        // grunt is either shooting standing or shooting crouched
         if( FBitSet( pev->weapons, HGRUNT_9MMAR ) )
         {
             if( m_fStanding )
             {
-				// get aimable sequence
+                // get aimable sequence
                 iSequence = LookupSequence( "standing_mp5" );
             }
             else
             {
-				// get crouching shoot
+                // get crouching shoot
                 iSequence = LookupSequence( "crouching_mp5" );
             }
         }
@@ -1514,34 +1514,34 @@ std::tuple<int, Activity> CHGrunt::GetSequenceForActivity( Activity NewActivity 
         {
             if( m_fStanding )
             {
-				// get aimable sequence
+                // get aimable sequence
                 iSequence = LookupSequence( "standing_shotgun" );
             }
             else
             {
-				// get crouching shoot
+                // get crouching shoot
                 iSequence = LookupSequence( "crouching_shotgun" );
             }
         }
         break;
     case ACT_RANGE_ATTACK2:
-		// grunt is going to a secondary long range attack. This may be a thrown
-		// grenade or fired grenade, we must determine which and pick proper sequence
+        // grunt is going to a secondary long range attack. This may be a thrown
+        // grenade or fired grenade, we must determine which and pick proper sequence
         if( ( pev->weapons & HGRUNT_HANDGRENADE ) != 0 )
         {
-			// get toss anim
+            // get toss anim
             iSequence = LookupSequence( "throwgrenade" );
         }
         else
         {
-			// get launch anim
+            // get launch anim
             iSequence = LookupSequence( "launchgrenade" );
         }
         break;
     case ACT_RUN:
         if( pev->health <= HGRUNT_LIMP_HEALTH )
         {
-			// limp!
+            // limp!
             iSequence = LookupActivity( ACT_RUN_HURT );
         }
         else
@@ -1552,7 +1552,7 @@ std::tuple<int, Activity> CHGrunt::GetSequenceForActivity( Activity NewActivity 
     case ACT_WALK:
         if( pev->health <= HGRUNT_LIMP_HEALTH )
         {
-			// limp!
+            // limp!
             iSequence = LookupActivity( ACT_WALK_HURT );
         }
         else
@@ -1581,7 +1581,7 @@ void CHGrunt::SetActivity( Activity NewActivity )
 
     m_Activity = activity; // Go ahead and set this so it doesn't keep trying when the anim is not present
 
-	// Set to the desired anim, or default anim if the desired is not present
+    // Set to the desired anim, or default anim if the desired is not present
     if( iSequence > ACTIVITY_NOT_AVAILABLE )
     {
         if( pev->sequence != iSequence || !m_fSequenceLoops )
@@ -1595,7 +1595,7 @@ void CHGrunt::SetActivity( Activity NewActivity )
     }
     else
     {
-		// Not available try to get default anim
+        // Not available try to get default anim
         AILogger->debug( "{} has no sequence for act:{}", STRING( pev->classname ), activity );
         pev->sequence = 0; // Set to the reset anim (if it's there)
     }
@@ -1604,21 +1604,21 @@ void CHGrunt::SetActivity( Activity NewActivity )
 const Schedule_t* CHGrunt::GetSchedule()
 {
 
-	// clear old sentence
+    // clear old sentence
     m_iSentence = HGRUNT_SENT_NONE;
 
-	// flying? If PRONE, barnacle has me. IF not, it's assumed I am rapelling.
+    // flying? If PRONE, barnacle has me. IF not, it's assumed I am rapelling.
     if( pev->movetype == MOVETYPE_FLY && m_MonsterState != MONSTERSTATE_PRONE )
     {
         if( ( pev->flags & FL_ONGROUND ) != 0 )
         {
-			// just landed
+            // just landed
             pev->movetype = MOVETYPE_STEP;
             return GetScheduleOfType( SCHED_GRUNT_REPEL_LAND );
         }
         else
         {
-			// repel down a rope,
+            // repel down a rope,
             if( m_MonsterState == MONSTERSTATE_COMBAT )
                 return GetScheduleOfType( SCHED_GRUNT_REPEL_ATTACK );
             else
@@ -1626,7 +1626,7 @@ const Schedule_t* CHGrunt::GetSchedule()
         }
     }
 
-	// grunts place HIGH priority on running away from danger sounds.
+    // grunts place HIGH priority on running away from danger sounds.
     if( HasConditions( bits_COND_HEAR_SOUND ) )
     {
         CSound* pSound;
@@ -1637,13 +1637,13 @@ const Schedule_t* CHGrunt::GetSchedule()
         {
             if( ( pSound->m_iType & bits_SOUND_DANGER ) != 0 )
             {
-				// dangerous sound nearby!
+                // dangerous sound nearby!
 
-				//!!!KELLY - currently, this is the grunt's signal that a grenade has landed nearby,
-				// and the grunt should find cover from the blast
-				// good place for "SHIT!" or some other colorful verbal indicator of dismay.
-				// It's not safe to play a verbal order here "Scatter", etc cause
-				// this may only affect a single individual in a squad.
+                //!!!KELLY - currently, this is the grunt's signal that a grenade has landed nearby,
+                // and the grunt should find cover from the blast
+                // good place for "SHIT!" or some other colorful verbal indicator of dismay.
+                // It's not safe to play a verbal order here "Scatter", etc cause
+                // this may only affect a single individual in a squad.
 
                 if( FOkToSpeak() )
                 {
@@ -1652,26 +1652,26 @@ const Schedule_t* CHGrunt::GetSchedule()
                 }
                 return GetScheduleOfType( SCHED_TAKE_COVER_FROM_BEST_SOUND );
             }
-			/*
-			if (!HasConditions( bits_COND_SEE_ENEMY ) && ( pSound->m_iType & (bits_SOUND_PLAYER | bits_SOUND_COMBAT) ))
-			{
-				MakeIdealYaw( pSound->m_vecOrigin );
-			}
-			*/
+            /*
+            if (!HasConditions( bits_COND_SEE_ENEMY ) && ( pSound->m_iType & (bits_SOUND_PLAYER | bits_SOUND_COMBAT) ))
+            {
+                MakeIdealYaw( pSound->m_vecOrigin );
+            }
+            */
         }
     }
     switch ( m_MonsterState )
     {
     case MONSTERSTATE_COMBAT:
     {
-		// dead enemy
+        // dead enemy
         if( HasConditions( bits_COND_ENEMY_DEAD ) )
         {
-			// call base class, all code to handle dead enemies is centralized there.
+            // call base class, all code to handle dead enemies is centralized there.
             return CBaseMonster::GetSchedule();
         }
 
-		// new enemy
+        // new enemy
         if( HasConditions( bits_COND_NEW_ENEMY ) )
         {
             if( InSquad() )
@@ -1684,26 +1684,26 @@ const Schedule_t* CHGrunt::GetSchedule()
                 }
                 else
                 {
-					//!!!KELLY - the leader of a squad of grunts has just seen the player or a
-					// monster and has made it the squad's enemy. You
-					// can check pev->flags for FL_CLIENT to determine whether this is the player
-					// or a monster. He's going to immediately start
-					// firing, though. If you'd like, we can make an alternate "first sight"
-					// schedule where the leader plays a handsign anim
-					// that gives us enough time to hear a short sentence or spoken command
-					// before he starts pluggin away.
+                    //!!!KELLY - the leader of a squad of grunts has just seen the player or a
+                    // monster and has made it the squad's enemy. You
+                    // can check pev->flags for FL_CLIENT to determine whether this is the player
+                    // or a monster. He's going to immediately start
+                    // firing, though. If you'd like, we can make an alternate "first sight"
+                    // schedule where the leader plays a handsign anim
+                    // that gives us enough time to hear a short sentence or spoken command
+                    // before he starts pluggin away.
                     if( FOkToSpeak() ) // && RANDOM_LONG(0,1))
                     {
                         if( m_hEnemy )
                         {
                             if( m_hEnemy->IsPlayer() )
                             {
-								// player
+                                // player
                                 sentences::g_Sentences.PlayRndSz( this, "HG_ALERT", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch );
                             }
                             else if( auto monster = m_hEnemy->MyMonsterPointer(); monster && monster->HasAlienGibs() )
                             {
-								// monster
+                                // monster
                                 sentences::g_Sentences.PlayRndSz( this, "HG_MONST", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch );
                             }
                         }
@@ -1722,33 +1722,33 @@ const Schedule_t* CHGrunt::GetSchedule()
                 }
             }
         }
-		// no ammo
+        // no ammo
         else if( HasConditions( bits_COND_NO_AMMO_LOADED ) )
         {
-			//!!!KELLY - this individual just realized he's out of bullet ammo.
-			// He's going to try to find cover to run to and reload, but rarely, if
-			// none is available, he'll drop and reload in the open here.
+            //!!!KELLY - this individual just realized he's out of bullet ammo.
+            // He's going to try to find cover to run to and reload, but rarely, if
+            // none is available, he'll drop and reload in the open here.
             return GetScheduleOfType( SCHED_GRUNT_COVER_AND_RELOAD );
         }
 
-		// damaged just a little
+        // damaged just a little
         else if( HasConditions( bits_COND_LIGHT_DAMAGE ) )
         {
-			// if hurt:
-			// 90% chance of taking cover
-			// 10% chance of flinch.
+            // if hurt:
+            // 90% chance of taking cover
+            // 10% chance of flinch.
             int iPercent = RANDOM_LONG( 0, 99 );
 
             if( iPercent <= 90 && m_hEnemy != nullptr )
             {
-				// only try to take cover if we actually have an enemy!
+                // only try to take cover if we actually have an enemy!
 
-				//!!!KELLY - this grunt was hit and is going to run to cover.
+                //!!!KELLY - this grunt was hit and is going to run to cover.
                 if( FOkToSpeak() ) // && RANDOM_LONG(0,1))
                 {
-					// sentences::g_Sentences.PlayRndSz(this, "HG_COVER", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
+                    // sentences::g_Sentences.PlayRndSz(this, "HG_COVER", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
                     m_iSentence = HGRUNT_SENT_COVER;
-					// JustSpoke();
+                    // JustSpoke();
                 }
                 return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
             }
@@ -1757,26 +1757,26 @@ const Schedule_t* CHGrunt::GetSchedule()
                 return GetScheduleOfType( SCHED_SMALL_FLINCH );
             }
         }
-		// can kick
+        // can kick
         else if( HasConditions( bits_COND_CAN_MELEE_ATTACK1 ) )
         {
             return GetScheduleOfType( SCHED_MELEE_ATTACK1 );
         }
-		// can grenade launch
+        // can grenade launch
 
         else if( FBitSet( pev->weapons, HGRUNT_GRENADELAUNCHER ) && HasConditions( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
         {
-			// shoot a grenade if you can
+            // shoot a grenade if you can
             return GetScheduleOfType( SCHED_RANGE_ATTACK2 );
         }
-		// can shoot
+        // can shoot
         else if( HasConditions( bits_COND_CAN_RANGE_ATTACK1 ) )
         {
             if( InSquad() )
             {
-				// if the enemy has eluded the squad and a squad member has just located the enemy
-				// and the enemy does not see the squad member, issue a call to the squad to waste a
-				// little time and give the player a chance to turn.
+                // if the enemy has eluded the squad and a squad member has just located the enemy
+                // and the enemy does not see the squad member, issue a call to the squad to waste a
+                // little time and give the player a chance to turn.
                 if( MySquadLeader()->m_fEnemyEluded && !HasConditions( bits_COND_ENEMY_FACING_ME ) )
                 {
                     MySquadLeader()->m_fEnemyEluded = false;
@@ -1786,26 +1786,26 @@ const Schedule_t* CHGrunt::GetSchedule()
 
             if( OccupySlot( bits_SLOTS_HGRUNT_ENGAGE ) )
             {
-				// try to take an available ENGAGE slot
+                // try to take an available ENGAGE slot
                 return GetScheduleOfType( SCHED_RANGE_ATTACK1 );
             }
             else if( HasConditions( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
             {
-				// throw a grenade if can and no engage slots are available
+                // throw a grenade if can and no engage slots are available
                 return GetScheduleOfType( SCHED_RANGE_ATTACK2 );
             }
             else
             {
-				// hide!
+                // hide!
                 return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
             }
         }
-		// can't see enemy
+        // can't see enemy
         else if( HasConditions( bits_COND_ENEMY_OCCLUDED ) )
         {
             if( HasConditions( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
             {
-				//!!!KELLY - this grunt is about to throw or fire a grenade at the player. Great place for "fire in the hole"  "frag out" etc
+                //!!!KELLY - this grunt is about to throw or fire a grenade at the player. Great place for "fire in the hole"  "frag out" etc
                 if( FOkToSpeak() )
                 {
                     sentences::g_Sentences.PlayRndSz( this, "HG_THROW", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch );
@@ -1815,22 +1815,22 @@ const Schedule_t* CHGrunt::GetSchedule()
             }
             else if( OccupySlot( bits_SLOTS_HGRUNT_ENGAGE ) )
             {
-				//!!!KELLY - grunt cannot see the enemy and has just decided to
-				// charge the enemy's position.
+                //!!!KELLY - grunt cannot see the enemy and has just decided to
+                // charge the enemy's position.
                 if( FOkToSpeak() ) // && RANDOM_LONG(0,1))
                 {
-					// sentences::g_Sentences.PlayRndSz(this, "HG_CHARGE", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
+                    // sentences::g_Sentences.PlayRndSz(this, "HG_CHARGE", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
                     m_iSentence = HGRUNT_SENT_CHARGE;
-					// JustSpoke();
+                    // JustSpoke();
                 }
 
                 return GetScheduleOfType( SCHED_GRUNT_ESTABLISH_LINE_OF_FIRE );
             }
             else
             {
-				//!!!KELLY - grunt is going to stay put for a couple seconds to see if
-				// the enemy wanders back out into the open, or approaches the
-				// grunt's covered position. Good place for a taunt, I guess?
+                //!!!KELLY - grunt is going to stay put for a couple seconds to see if
+                // the enemy wanders back out into the open, or approaches the
+                // grunt's covered position. Good place for a taunt, I guess?
                 if( FOkToSpeak() && RANDOM_LONG( 0, 1 ) )
                 {
                     sentences::g_Sentences.PlayRndSz( this, "HG_TAUNT", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch );
@@ -1847,7 +1847,7 @@ const Schedule_t* CHGrunt::GetSchedule()
     }
     }
 
-	// no special cases here, call the base class
+    // no special cases here, call the base class
     return CSquadMonster::GetSchedule();
 }
 
@@ -1901,7 +1901,7 @@ const Schedule_t* CHGrunt::GetScheduleOfType( int Type )
     break;
     case SCHED_GRUNT_ELOF_FAIL:
     {
-		// human grunt is unable to move to a position that allows him to attack the enemy.
+        // human grunt is unable to move to a position that allows him to attack the enemy.
         return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
     }
     break;
@@ -1912,7 +1912,7 @@ const Schedule_t* CHGrunt::GetScheduleOfType( int Type )
     break;
     case SCHED_RANGE_ATTACK1:
     {
-		// randomly stand or crouch
+        // randomly stand or crouch
         if( RANDOM_LONG( 0, 9 ) == 0 )
             m_fStanding = RANDOM_LONG( 0, 1 );
 
@@ -1973,7 +1973,7 @@ const Schedule_t* CHGrunt::GetScheduleOfType( int Type )
     {
         if( m_hEnemy != nullptr )
         {
-			// grunt has an enemy, so pick a different default fail schedule most likely to help recover.
+            // grunt has an enemy, so pick a different default fail schedule most likely to help recover.
             return &slGruntCombatFail[0];
         }
 
@@ -2031,17 +2031,17 @@ void CHGruntRepel::CreateMonster( const char* classname )
 {
     TraceResult tr;
     UTIL_TraceLine( pev->origin, pev->origin + Vector( 0, 0, -4096.0 ), dont_ignore_monsters, edict(), &tr );
-	/*
-	if ( tr.pHit && Instance( tr.pHit )->pev->solid != SOLID_BSP)
-		return nullptr;
-	*/
+    /*
+    if ( tr.pHit && Instance( tr.pHit )->pev->solid != SOLID_BSP)
+        return nullptr;
+    */
 
     CBaseEntity* pEntity = Create( classname, pev->origin, pev->angles );
     CBaseMonster* pGrunt = pEntity->MyMonsterPointer();
     pGrunt->pev->movetype = MOVETYPE_FLY;
     pGrunt->pev->velocity = Vector( 0, 0, RANDOM_FLOAT( -196, -128 ) );
     pGrunt->SetActivity( ACT_GLIDE );
-	// UNDONE: position?
+    // UNDONE: position?
     pGrunt->m_vecLastPosition = tr.vecEndPos;
 
     CBeam* pBeam = CBeam::BeamCreate( "sprites/rope.spr", 10 );
@@ -2063,7 +2063,7 @@ void CDeadHGrunt::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8;
     pev->model = MAKE_STRING( "models/hgrunt.mdl" );
 
@@ -2107,7 +2107,7 @@ void CDeadHGrunt::Spawn()
 {
     SpawnCore();
 
-	// map old bodies onto new bodies
+    // map old bodies onto new bodies
     switch ( pev->body )
     {
     case 0: // Grunt with Gun

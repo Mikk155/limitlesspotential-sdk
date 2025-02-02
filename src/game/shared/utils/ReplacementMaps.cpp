@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,7 +44,7 @@ static std::string GetReplacementMapSchema()
 template <>
 struct fmt::formatter<ReplacementMapOptions>
 {
-	constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
+    constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
     {
         auto it = ctx.begin();
 
@@ -181,7 +181,7 @@ const ReplacementMap* ReplacementMapSystem::Load( const std::string& fileName, c
 
     if( map.empty() )
     {
-		// Don't waste memory and cpu time on this.
+        // Don't waste memory and cpu time on this.
         return nullptr;
     }
 
@@ -196,8 +196,8 @@ std::unique_ptr<ReplacementMap> ReplacementMapSystem::LoadMultiple( std::span<co
 {
     Replacements map;
 
-	// Load each file and insert existing entries into the new map.
-	// Only entries not in the new map will be added.
+    // Load each file and insert existing entries into the new map.
+    // Only entries not in the new map will be added.
     for( const auto& fileName : fileNames )
     {
         auto next = ParseFile( fileName.c_str(), options );
@@ -250,10 +250,10 @@ std::unique_ptr<ReplacementMap> ReplacementMapSystem::Deserialize( const json& i
     {
         m_Logger->error( "Error deserializing replacement map:\n\tReason: {}", e.what() );
 
-		// Don't leave the map in a half-initialized state.
+        // Don't leave the map in a half-initialized state.
         map.clear();
     }
 
-	// Always return a valid replacement map object.
+    // Always return a valid replacement map object.
     return std::make_unique<ReplacementMap>( std::move( map ), caseSensitive );
 }

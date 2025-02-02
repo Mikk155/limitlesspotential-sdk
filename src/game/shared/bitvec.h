@@ -33,18 +33,18 @@ class CBitVec
 public:
     CBitVec();
 
-	// Set all values to the specified value (0 or 1..)
+    // Set all values to the specified value (0 or 1..)
     void Init( int val = 0 );
 
-	// Access the bits like an array.
+    // Access the bits like an array.
     CBitVecAccessor operator[]( int i );
 
-	// Operations on other bit vectors.
+    // Operations on other bit vectors.
     CBitVec& operator=( CBitVec<NUM_BITS> const& other );
     bool operator==( CBitVec<NUM_BITS> const& other );
     bool operator!=( CBitVec<NUM_BITS> const& other );
 
-	// Get underlying dword representations of the bits.
+    // Get underlying dword representations of the bits.
     int GetNumDWords();
     uint32 GetDWord( int i );
     void SetDWord( int i, uint32 val );

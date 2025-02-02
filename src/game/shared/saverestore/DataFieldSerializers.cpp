@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -28,8 +28,8 @@ void DataFieldTimeSerializer::Serialize( CSave& save, const std::byte* fields, s
         return;
     }
 
-	// Always encode time as a delta from the current time so it can be re-based if loaded in a new level
-	// Times of 0 are never written to the file, so they will be restored as 0, not a relative time
+    // Always encode time as a delta from the current time so it can be re-based if loaded in a new level
+    // Times of 0 are never written to the file, so they will be restored as 0, not a relative time
     const float offset = save.GetData().time;
 
     for( std::size_t i = 0; i < count; ++i, ++values )
@@ -42,7 +42,7 @@ void DataFieldTimeSerializer::Deserialize( CRestore& restore, std::byte* fields,
 {
     DataFieldValueSerializer<float>::Deserialize( restore, fields, count );
 
-	// Re-base time variables
+    // Re-base time variables
     auto values = reinterpret_cast<float*>( fields );
 
     const float offset = restore.GetData().time;
@@ -90,7 +90,7 @@ void DeserializeStringOffset( CRestore& restore, std::byte* fields, std::size_t 
         {
             *address = ALLOC_STRING_VIEW( {string, length} );
 
-			// Must pass the allocated string since it's also stored in precache lists!
+            // Must pass the allocated string since it's also stored in precache lists!
             callback( STRING( *address ) );
         }
 
@@ -101,13 +101,13 @@ void DeserializeStringOffset( CRestore& restore, std::byte* fields, std::size_t 
 
 void DataFieldStringOffsetSerializer::Deserialize( CRestore& restore, std::byte* fields, std::size_t count ) const
 {
-	// Regular strings don't need additional work.
+    // Regular strings don't need additional work.
     DeserializeStringOffset( restore, fields, count, []( auto ) {} );
 }
 
 void DataFieldModelStringOffsetSerializer::Deserialize( CRestore& restore, std::byte* fields, std::size_t count ) const
 {
-	// Don't use UTIL_PrecacheModel here because we're restoring an already-replaced name.
+    // Don't use UTIL_PrecacheModel here because we're restoring an already-replaced name.
     DeserializeStringOffset( restore, fields, count, [&]( auto string )
         {
             if( restore.ShouldPrecache() )
@@ -118,7 +118,7 @@ void DataFieldModelStringOffsetSerializer::Deserialize( CRestore& restore, std::
 
 void DataFieldSoundStringOffsetSerializer::Deserialize( CRestore& restore, std::byte* fields, std::size_t count ) const
 {
-	// Don't use UTIL_PrecacheSound here because we're restoring an already-replaced name.
+    // Don't use UTIL_PrecacheSound here because we're restoring an already-replaced name.
     DeserializeStringOffset( restore, fields, count, [&]( auto string )
         {
             if( restore.ShouldPrecache() )

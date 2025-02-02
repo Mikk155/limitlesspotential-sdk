@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -14,25 +14,25 @@
  ****/
 
 /**
- *	@file
- *	base class monster functions for controlling core AI.
+ *    @file
+ *    base class monster functions for controlling core AI.
  */
 
 #include "cbase.h"
 
 void CBaseMonster::SetState( MONSTERSTATE State )
 {
-	/*
-		if ( State != m_MonsterState )
-		{
-			AILogger->trace("State Changed to {}", State);
-		}
-	*/
+    /*
+        if ( State != m_MonsterState )
+        {
+            AILogger->trace("State Changed to {}", State);
+        }
+    */
 
     switch ( State )
     {
 
-		// Drop enemy pointers when going to idle
+        // Drop enemy pointers when going to idle
     case MONSTERSTATE_IDLE:
 
         if( m_hEnemy != nullptr )
@@ -49,11 +49,11 @@ void CBaseMonster::SetState( MONSTERSTATE State )
 
 void CBaseMonster::RunAI()
 {
-	// to test model's eye height
-	// UTIL_ParticleEffect ( pev->origin + pev->view_ofs, g_vecZero, 255, 10 );
+    // to test model's eye height
+    // UTIL_ParticleEffect ( pev->origin + pev->view_ofs, g_vecZero, 255, 10 );
 
-	// IDLE sound permitted in ALERT state is because monsters were silent in ALERT state. Only play IDLE sound in IDLE state
-	// once we have sounds for that state.
+    // IDLE sound permitted in ALERT state is because monsters were silent in ALERT state. Only play IDLE sound in IDLE state
+    // once we have sounds for that state.
     if( ( m_MonsterState == MONSTERSTATE_IDLE || m_MonsterState == MONSTERSTATE_ALERT ) && RANDOM_LONG( 0, 99 ) == 0 && ( pev->spawnflags & SF_MONSTER_GAG ) == 0 )
     {
         IdleSound();
@@ -63,23 +63,23 @@ void CBaseMonster::RunAI()
         m_MonsterState != MONSTERSTATE_PRONE &&
         m_MonsterState != MONSTERSTATE_DEAD ) // don't bother with this crap if monster is prone.
     {
-		// collect some sensory Condition information.
-		// don't let monsters outside of the player's PVS act up, or most of the interesting
-		// things will happen before the player gets there!
-		// UPDATE: We now let COMBAT state monsters think and act fully outside of player PVS. This allows the player to leave
-		// an area where monsters are fighting, and the fight will continue.
+        // collect some sensory Condition information.
+        // don't let monsters outside of the player's PVS act up, or most of the interesting
+        // things will happen before the player gets there!
+        // UPDATE: We now let COMBAT state monsters think and act fully outside of player PVS. This allows the player to leave
+        // an area where monsters are fighting, and the fight will continue.
         if( UTIL_FindClientInPVS( this ) || ( m_MonsterState == MONSTERSTATE_COMBAT ) )
         {
             Look( m_flDistLook );
             Listen(); // check for audible sounds.
 
-			// now filter conditions.
+            // now filter conditions.
             ClearConditions( IgnoreConditions() );
 
             GetEnemy();
         }
 
-		// do these calculations if monster has an enemy.
+        // do these calculations if monster has an enemy.
         if( m_hEnemy != nullptr )
         {
             CheckEnemy( m_hEnemy );
@@ -94,9 +94,9 @@ void CBaseMonster::RunAI()
 
     MaintainSchedule();
 
-	// if the monster didn't use these conditions during the above call to MaintainSchedule() or CheckAITrigger()
-	// we throw them out cause we don't want them sitting around through the lifespan of a schedule
-	// that doesn't use them.
+    // if the monster didn't use these conditions during the above call to MaintainSchedule() or CheckAITrigger()
+    // we throw them out cause we don't want them sitting around through the lifespan of a schedule
+    // that doesn't use them.
     m_afConditions &= ~( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE );
 }
 
@@ -106,23 +106,23 @@ MONSTERSTATE CBaseMonster::GetIdealState()
 
     iConditions = IScheduleFlags();
 
-	// If no schedule conditions, the new ideal state is probably the reason we're in here.
+    // If no schedule conditions, the new ideal state is probably the reason we're in here.
     switch ( m_MonsterState )
     {
     case MONSTERSTATE_IDLE:
 
-		/*
-		IDLE goes to ALERT upon hearing a sound
-		-IDLE goes to ALERT upon being injured
-		IDLE goes to ALERT upon seeing food
-		-IDLE goes to COMBAT upon sighting an enemy
-		IDLE goes to HUNT upon smelling food
-		*/
+        /*
+        IDLE goes to ALERT upon hearing a sound
+        -IDLE goes to ALERT upon being injured
+        IDLE goes to ALERT upon seeing food
+        -IDLE goes to COMBAT upon sighting an enemy
+        IDLE goes to HUNT upon smelling food
+        */
         {
             if( ( iConditions & bits_COND_NEW_ENEMY ) != 0 )
             {
-				// new enemy! This means an idle monster has seen someone it dislikes, or
-				// that a monster in combat has found a more suitable target to attack
+                // new enemy! This means an idle monster has seen someone it dislikes, or
+                // that a monster in combat has found a more suitable target to attack
                 m_IdealMonsterState = MONSTERSTATE_COMBAT;
             }
             else if( ( iConditions & bits_COND_LIGHT_DAMAGE ) != 0 )
@@ -156,15 +156,15 @@ MONSTERSTATE CBaseMonster::GetIdealState()
             break;
         }
     case MONSTERSTATE_ALERT:
-		/*
-		ALERT goes to IDLE upon becoming bored
-		-ALERT goes to COMBAT upon sighting an enemy
-		ALERT goes to HUNT upon hearing a noise
-		*/
+        /*
+        ALERT goes to IDLE upon becoming bored
+        -ALERT goes to COMBAT upon sighting an enemy
+        ALERT goes to HUNT upon hearing a noise
+        */
         {
             if( ( iConditions & ( bits_COND_NEW_ENEMY | bits_COND_SEE_ENEMY ) ) != 0 )
             {
-				// see an enemy we MUST attack
+                // see an enemy we MUST attack
                 m_IdealMonsterState = MONSTERSTATE_COMBAT;
             }
             else if( ( iConditions & bits_COND_HEAR_SOUND ) != 0 )
@@ -178,26 +178,26 @@ MONSTERSTATE CBaseMonster::GetIdealState()
             break;
         }
     case MONSTERSTATE_COMBAT:
-		/*
-		COMBAT goes to HUNT upon losing sight of enemy
-		COMBAT goes to ALERT upon death of enemy
-		*/
+        /*
+        COMBAT goes to HUNT upon losing sight of enemy
+        COMBAT goes to ALERT upon death of enemy
+        */
         {
             if( m_hEnemy == nullptr )
             {
                 m_IdealMonsterState = MONSTERSTATE_ALERT;
-				// pev->effects = EF_BRIGHTFIELD;
+                // pev->effects = EF_BRIGHTFIELD;
                 AILogger->debug( "Combat state with no enemy!" );
             }
             break;
         }
     case MONSTERSTATE_HUNT:
-		/*
-		HUNT goes to ALERT upon seeing food
-		HUNT goes to ALERT upon being injured
-		HUNT goes to IDLE if goal touched
-		HUNT goes to COMBAT upon seeing enemy
-		*/
+        /*
+        HUNT goes to ALERT upon seeing food
+        HUNT goes to ALERT upon being injured
+        HUNT goes to IDLE if goal touched
+        HUNT goes to COMBAT upon seeing enemy
+        */
         {
             break;
         }

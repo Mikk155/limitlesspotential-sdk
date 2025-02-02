@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -28,7 +28,7 @@ const ReplacementMap OtisSentenceReplacement{
 namespace OtisBodyGroup
 {
 /**
- *	@brief See GuardBodyGroup::GuardBodyGroup for the enum that this extends.
+ *    @brief See GuardBodyGroup::GuardBodyGroup for the enum that this extends.
  */
 enum OtisBodyGroup
 {
@@ -119,7 +119,7 @@ void COtis::GuardFirePistol()
 
     int pitchShift = RANDOM_LONG( 0, 20 );
 
-	// Only shift about half the time
+    // Only shift about half the time
     if( pitchShift > 10 )
         pitchShift = 0;
     else
@@ -128,7 +128,7 @@ void COtis::GuardFirePistol()
 
     CSoundEnt::InsertSound( bits_SOUND_COMBAT, pev->origin, 384, 0.3 );
 
-	// UNDONE: Reload?
+    // UNDONE: Reload?
     m_cAmmoLoaded--; // take away a bullet!
 }
 
@@ -176,7 +176,7 @@ void COtis::TalkInit()
 {
     CTalkMonster::TalkInit();
 
-	// scientists speach group names (group names are in sentences.txt)
+    // scientists speach group names (group names are in sentences.txt)
 
     m_szGrp[TLK_ANSWER] = "OT_ANSWER";
     m_szGrp[TLK_QUESTION] = "OT_QUESTION";
@@ -200,7 +200,7 @@ void COtis::TalkInit()
     m_szGrp[TLK_WOUND] = "OT_WOUND";
     m_szGrp[TLK_MORTAL] = "OT_MORTAL";
 
-	// get voice for head - just one otis voice for now
+    // get voice for head - just one otis voice for now
     m_voicePitch = 100;
 }
 
@@ -235,7 +235,7 @@ void CDeadOtis::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8; // GetSkillFloat("otis_health"sv);
     pev->model = MAKE_STRING( "models/otis.mdl" );
 

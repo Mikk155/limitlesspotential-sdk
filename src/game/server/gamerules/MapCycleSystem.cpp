@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -53,12 +53,12 @@ const MapCycleItem* MapCycle::GetNextMap( int currentPlayerCount )
                 return nextItemIndex;
             }
 
-			// Start from beginning.
+            // Start from beginning.
             nextItemIndex = 0;
             itemsCount = Index;
         }
 
-		// No valid map found, use next in list.
+        // No valid map found, use next in list.
         return Index;
     }();
 
@@ -128,11 +128,11 @@ void MapCycleSystem::Shutdown()
 
 MapCycle* MapCycleSystem::GetMapCycle()
 {
-	// find the map to change to
+    // find the map to change to
     const char* mapcfile = mapcyclejsonfile.string;
     ASSERT( mapcfile != nullptr );
 
-	// Has the map cycle filename changed?
+    // Has the map cycle filename changed?
     if( m_PreviousMapCycleFile.comparei( mapcfile ) != 0 )
     {
         m_PreviousMapCycleFile = mapcfile;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -41,9 +41,9 @@ bool CHudScoreboard::Init()
 {
     gHUD.AddHudElem( this );
 
-	// Hook messages & commands here
-	// RegisterClientCommand("+showscores", &CHudScoreboard::UserCmd_ShowScores, this);
-	// RegisterClientCommand("-showscores", &CHudScoreboard::UserCmd_HideScores, this);
+    // Hook messages & commands here
+    // RegisterClientCommand("+showscores", &CHudScoreboard::UserCmd_ShowScores, this);
+    // RegisterClientCommand("-showscores", &CHudScoreboard::UserCmd_HideScores, this);
 
     g_ClientUserMessages.RegisterHandler( "ScoreInfo", &CHudScoreboard::MsgFunc_ScoreInfo, this );
     g_ClientUserMessages.RegisterHandler( "TeamScore", &CHudScoreboard::MsgFunc_TeamScore, this );
@@ -61,7 +61,7 @@ bool CHudScoreboard::Init()
 
 bool CHudScoreboard::VidInit()
 {
-	// Load sprites here
+    // Load sprites here
 
     return true;
 }
@@ -133,7 +133,7 @@ bool CHudScoreboard::Draw( float fTime )
 
     GetAllPlayersInfo();
 
-	//  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
+    //  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
     if( cl_showpacketloss && 0 != cl_showpacketloss->value && ( ScreenWidth >= 400 ) )
     {
         can_show_packetloss = true;
@@ -144,12 +144,12 @@ bool CHudScoreboard::Draw( float fTime )
         SCOREBOARD_WIDTH = 320;
     }
 
-	// just sort the list on the fly
-	// list is sorted first by frags, then by deaths
+    // just sort the list on the fly
+    // list is sorted first by frags, then by deaths
     float list_slot = 0;
     int xpos_rel = ( ScreenWidth - SCOREBOARD_WIDTH ) / 2;
 
-	// print the heading line
+    // print the heading line
     int ypos = ROW_RANGE_MIN + ( list_slot * ROW_GAP );
     int xpos = NAME_RANGE_MIN + xpos_rel;
 
@@ -201,12 +201,12 @@ bool CHudScoreboard::Draw( float fTime )
 
     if( 0 == gHUD.m_Teamplay )
     {
-		// it's not teamplay,  so just draw a simple player list
+        // it's not teamplay,  so just draw a simple player list
         DrawPlayers( xpos_rel, list_slot );
         return true;
     }
 
-	// clear out team scores
+    // clear out team scores
     for( int i = 1; i <= m_iNumTeams; i++ )
     {
         if( gHUD.m_Teamplay != 2 )
@@ -218,7 +218,7 @@ bool CHudScoreboard::Draw( float fTime )
         g_TeamInfo[i].ping = g_TeamInfo[i].packetloss = 0;
     }
 
-	// recalc the team scores, then draw them
+    // recalc the team scores, then draw them
     for( int i = 1; i < MAX_PLAYERS_HUD; i++ )
     {
         if( g_PlayerInfoList[i].name == nullptr )
@@ -227,7 +227,7 @@ bool CHudScoreboard::Draw( float fTime )
         if( g_PlayerExtraInfo[i].teamname[0] == 0 )
             continue; // skip over players who are not in a team
 
-		// find what team this player is in
+        // find what team this player is in
         int j;
         for( j = 1; j <= m_iNumTeams; j++ )
         {
@@ -252,7 +252,7 @@ bool CHudScoreboard::Draw( float fTime )
             g_TeamInfo[j].ownteam = false;
     }
 
-	// find team ping/packetloss averages
+    // find team ping/packetloss averages
     for( int i = 1; i <= m_iNumTeams; i++ )
     {
         g_TeamInfo[i].already_drawn = false;
@@ -264,7 +264,7 @@ bool CHudScoreboard::Draw( float fTime )
         }
     }
 
-	// Draw the teams
+    // Draw the teams
     while( true )
     {
         int highest_frags = -99999;
@@ -287,16 +287,16 @@ bool CHudScoreboard::Draw( float fTime )
             }
         }
 
-		// draw the best team on the scoreboard
+        // draw the best team on the scoreboard
         if( 0 == best_team )
             break;
 
-		// draw out the best team
+        // draw out the best team
         team_info_t* team_info = &g_TeamInfo[best_team];
 
         ypos = ROW_RANGE_MIN + ( list_slot * ROW_GAP );
 
-		// check we haven't drawn too far down
+        // check we haven't drawn too far down
         if( ypos > ROW_RANGE_MAX ) // don't draw to close to the lower border
             break;
 
@@ -305,7 +305,7 @@ bool CHudScoreboard::Draw( float fTime )
 
         if( team_info->ownteam ) // if it is their team, draw the background different color
         {
-			// overlay the background in blue,  then draw the score text over it
+            // overlay the background in blue,  then draw the score text over it
             FillRGBA( NAME_RANGE_MIN + xpos_rel - 5, ypos, FAR_RIGHT, ROW_GAP, {0, 0, 255}, 70 );
         }
 
@@ -314,18 +314,18 @@ bool CHudScoreboard::Draw( float fTime )
         if( gHUD.m_Teamplay != 2 )
         {
 
-			// draw their name (left to right)
+            // draw their name (left to right)
             gHUD.DrawHudString( xpos, ypos, NAME_RANGE_MAX + xpos_rel, team_info->name, textColor );
 
-			// draw kills (right to left)
+            // draw kills (right to left)
             xpos = KILLS_RANGE_MAX + xpos_rel;
             gHUD.DrawHudNumberString( xpos, ypos, KILLS_RANGE_MIN + xpos_rel, team_info->frags, textColor );
 
-			// draw divider
+            // draw divider
             xpos = DIVIDER_POS + xpos_rel;
             gHUD.DrawHudString( xpos, ypos, xpos + 20, "/", textColor );
 
-			// draw deaths
+            // draw deaths
             xpos = DEATHS_RANGE_MAX + xpos_rel;
             gHUD.DrawHudNumberString( xpos, ypos, DEATHS_RANGE_MIN + xpos_rel, team_info->deaths, textColor );
 
@@ -340,13 +340,13 @@ bool CHudScoreboard::Draw( float fTime )
             xpos = ( ( PING_RANGE_MAX - PING_RANGE_MIN ) / 2 ) + PING_RANGE_MIN + xpos_rel + 25 + 50;
         }
 
-		// draw ping
-		// draw ping & packetloss
+        // draw ping
+        // draw ping & packetloss
         sprintf( buf, "%d", team_info->ping );
 
         gHUD.DrawHudStringReverse( xpos, ypos, xpos - 50, buf, gHUD.m_HudColor );
 
-		//  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
+        //  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
         if( can_show_packetloss )
         {
             xpos = ( ( PL_RANGE_MAX - PL_RANGE_MIN ) / 2 ) + PL_RANGE_MIN + xpos_rel + 25 + 10;
@@ -358,11 +358,11 @@ bool CHudScoreboard::Draw( float fTime )
         team_info->already_drawn = true; // set the already_drawn to be true, so this team won't get drawn again
         list_slot++;
 
-		// draw all the players that belong to this team, indented slightly
+        // draw all the players that belong to this team, indented slightly
         list_slot = DrawPlayers( xpos_rel, list_slot, 10, team_info->name );
     }
 
-	// draw all the players who are not in a team
+    // draw all the players who are not in a team
     list_slot += 0.5;
     DrawPlayers( xpos_rel, list_slot, 0, "" );
 
@@ -375,7 +375,7 @@ int CHudScoreboard::DrawPlayers( int xpos_rel, float list_slot, int nameoffset, 
     bool can_show_packetloss = false;
     int FAR_RIGHT;
 
-	//  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
+    //  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
     if( cl_showpacketloss && 0 != cl_showpacketloss->value && ( ScreenWidth >= 400 ) )
     {
         can_show_packetloss = true;
@@ -397,10 +397,10 @@ int CHudScoreboard::DrawPlayers( int xpos_rel, float list_slot, int nameoffset, 
 
     FAR_RIGHT += 5;
 
-	// draw the players, in order,  and restricted to team if set
+    // draw the players, in order,  and restricted to team if set
     while( true )
     {
-		// Find the top ranking player
+        // Find the top ranking player
         int highest_frags = -99999;
         int lowest_deaths = 99999;
         int best_player = 0;
@@ -425,12 +425,12 @@ int CHudScoreboard::DrawPlayers( int xpos_rel, float list_slot, int nameoffset, 
         if( 0 == best_player )
             break;
 
-		// draw out the best player
+        // draw out the best player
         hud_player_info_t* pl_info = &g_PlayerInfoList[best_player];
 
         int ypos = ROW_RANGE_MIN + ( list_slot * ROW_GAP );
 
-		// check we haven't drawn too far down
+        // check we haven't drawn too far down
         if( ypos > ROW_RANGE_MAX ) // don't draw to close to the lower border
             break;
 
@@ -463,22 +463,22 @@ int CHudScoreboard::DrawPlayers( int xpos_rel, float list_slot, int nameoffset, 
         }
         else if( 0 != pl_info->thisplayer ) // if it is their name, draw it a different color
         {
-			// overlay the background in blue,  then draw the score text over it
+            // overlay the background in blue,  then draw the score text over it
             FillRGBA( NAME_RANGE_MIN + xpos_rel - 5, ypos, FAR_RIGHT, ROW_GAP, {0, 0, 255}, 70 );
         }
 
-		// draw their name (left to right)
+        // draw their name (left to right)
         gHUD.DrawHudString( xpos + nameoffset, ypos, NAME_RANGE_MAX + xpos_rel, pl_info->name, textColor );
 
-		// draw kills (right to left)
+        // draw kills (right to left)
         xpos = KILLS_RANGE_MAX + xpos_rel;
         gHUD.DrawHudNumberString( xpos, ypos, KILLS_RANGE_MIN + xpos_rel, g_PlayerExtraInfo[best_player].frags, textColor );
 
-		// draw divider
+        // draw divider
         xpos = DIVIDER_POS + xpos_rel;
         gHUD.DrawHudString( xpos, ypos, xpos + 20, "/", textColor );
 
-		// draw deaths
+        // draw deaths
 
         if( gHUD.m_Teamplay == 2 )
         {
@@ -491,7 +491,7 @@ int CHudScoreboard::DrawPlayers( int xpos_rel, float list_slot, int nameoffset, 
             gHUD.DrawHudNumberString( xpos_rel + DEATHS_RANGE_MAX, ypos, xpos_rel + DEATHS_RANGE_MIN, g_PlayerExtraInfo[best_player].deaths, textColor );
         }
 
-		// draw ping & packetloss
+        // draw ping & packetloss
         static char buf[64];
         sprintf( buf, "%d", g_PlayerInfoList[best_player].ping );
         xpos = ( ( PING_RANGE_MAX - PING_RANGE_MIN ) / 2 ) + PING_RANGE_MIN + xpos_rel + 25;
@@ -503,7 +503,7 @@ int CHudScoreboard::DrawPlayers( int xpos_rel, float list_slot, int nameoffset, 
 
         gHUD.DrawHudStringReverse( xpos, ypos, xpos - 50, buf, textColor );
 
-		//  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
+        //  Packetloss removed on Kelly 'shipping nazi' Bailey's orders
         if( can_show_packetloss )
         {
             if( g_PlayerInfoList[best_player].packetloss >= 63 )
@@ -568,8 +568,8 @@ void CHudScoreboard::MsgFunc_ScoreInfo( const char* pszName, BufferReader& reade
 
 // Message handler for TeamInfo message
 // accepts two values:
-//		byte: client number
-//		string: client team name
+//        byte: client number
+//        string: client team name
 void CHudScoreboard::MsgFunc_TeamInfo( const char* pszName, BufferReader& reader )
 {
     short cl = reader.ReadByte();
@@ -590,15 +590,15 @@ void CHudScoreboard::MsgFunc_TeamInfo( const char* pszName, BufferReader& reader
         return;
     }
 
-	// rebuild the list of teams
+    // rebuild the list of teams
 
-	// clear out player counts from teams
+    // clear out player counts from teams
     for( int i = 1; i <= m_iNumTeams; i++ )
     {
         g_TeamInfo[i].players = 0;
     }
 
-	// rebuild the team list
+    // rebuild the team list
     GetAllPlayersInfo();
     m_iNumTeams = 0;
     for( int i = 1; i < MAX_PLAYERS_HUD; i++ )
@@ -609,7 +609,7 @@ void CHudScoreboard::MsgFunc_TeamInfo( const char* pszName, BufferReader& reader
         if( g_PlayerExtraInfo[i].teamname[0] == 0 )
             continue; // skip over players who are not in a team
 
-		// is this player in an existing team?
+        // is this player in an existing team?
         int j;
         for( j = 1; j <= m_iNumTeams; j++ )
         {
@@ -622,7 +622,7 @@ void CHudScoreboard::MsgFunc_TeamInfo( const char* pszName, BufferReader& reader
 
         if( j > m_iNumTeams )
         { // they aren't in a listed team, so make a new one
-			// search through for an empty team slot
+            // search through for an empty team slot
             for( j = 1; j <= m_iNumTeams; j++ )
             {
                 if( g_TeamInfo[j].name[0] == '\0' )
@@ -637,7 +637,7 @@ void CHudScoreboard::MsgFunc_TeamInfo( const char* pszName, BufferReader& reader
         g_TeamInfo[j].players++;
     }
 
-	// clear out any empty teams
+    // clear out any empty teams
     for( int i = 1; i <= m_iNumTeams; i++ )
     {
         if( g_TeamInfo[i].players < 1 )
@@ -647,15 +647,15 @@ void CHudScoreboard::MsgFunc_TeamInfo( const char* pszName, BufferReader& reader
 
 // Message handler for TeamScore message
 // accepts three values:
-//		string: team name
-//		short: teams kills
-//		short: teams deaths
+//        string: team name
+//        short: teams kills
+//        short: teams deaths
 // if this message is never received, then scores will simply be the combined totals of the players.
 void CHudScoreboard::MsgFunc_TeamScore( const char* pszName, BufferReader& reader )
 {
     char* TeamName = reader.ReadString();
 
-	// find the team matching the name
+    // find the team matching the name
     int i;
     for( i = 1; i <= m_iNumTeams; i++ )
     {
@@ -665,7 +665,7 @@ void CHudScoreboard::MsgFunc_TeamScore( const char* pszName, BufferReader& reade
     if( i > m_iNumTeams )
         return;
 
-	// use this new score data instead of combined player scores
+    // use this new score data instead of combined player scores
     g_TeamInfo[i].scores_overriden = true;
     g_TeamInfo[i].frags = reader.ReadShort();
     g_TeamInfo[i].deaths = reader.ReadShort();
@@ -728,7 +728,7 @@ void CHudScoreboard::MsgFunc_PlayerIcon( const char* pszName, BufferReader& read
         }
     }
 
-	// Find an empty sprite slot
+    // Find an empty sprite slot
     for( int i = 1; i < 6; ++i )
     {
         auto& sprite = g_PlayerSpriteList[playerIndex][i];
@@ -810,7 +810,7 @@ void CHudScoreboard::MsgFunc_CTFScore( const char* pszName, BufferReader& reader
 
 void CHudScoreboard::DeathMsg( int killer, int victim )
 {
-	// if we were the one killed,  or the world killed us, set the scoreboard to indicate suicide
+    // if we were the one killed,  or the world killed us, set the scoreboard to indicate suicide
     if( victim == m_iPlayerNum || killer == 0 )
     {
         m_iLastKilledBy = 0 != killer ? killer : m_iPlayerNum;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -69,7 +69,7 @@ void CGlock::IncrementAmmo( CBasePlayer* pPlayer )
 
 bool CGlock::Deploy()
 {
-	// pev->body = 1;
+    // pev->body = 1;
     return DefaultDeploy( "models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded" );
 }
 
@@ -87,7 +87,7 @@ void CGlock::GlockFire( float flSpread, float flCycleTime, bool fUseAutoAim )
 {
     if( GetMagazine1() <= 0 )
     {
-		// if (m_fFireOnEmpty)
+        // if (m_fFireOnEmpty)
         {
             PlayEmptySound();
             m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay( 0.2 );
@@ -108,10 +108,10 @@ void CGlock::GlockFire( float flSpread, float flCycleTime, bool fUseAutoAim )
     flags = 0;
 #endif
 
-	// player "shoot" animation
+    // player "shoot" animation
     m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	// silenced
+    // silenced
     if( pev->body == 1 )
     {
         m_pPlayer->m_iWeaponVolume = QUIET_GUN_VOLUME;
@@ -119,7 +119,7 @@ void CGlock::GlockFire( float flSpread, float flCycleTime, bool fUseAutoAim )
     }
     else
     {
-		// non-silenced
+        // non-silenced
         m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
         m_pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
     }
@@ -145,7 +145,7 @@ void CGlock::GlockFire( float flSpread, float flCycleTime, bool fUseAutoAim )
     m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay( flCycleTime );
 
     if( 0 == GetMagazine1() && m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
-		// HEV suit - indicate out of ammo condition
+        // HEV suit - indicate out of ammo condition
         m_pPlayer->SetSuitUpdate( "!HEV_AMO0", 0 );
 
     m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );
@@ -178,7 +178,7 @@ void CGlock::WeaponIdle()
     if( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
         return;
 
-	// only idle if the slid isn't back
+    // only idle if the slid isn't back
     if( GetMagazine1() != 0 )
     {
         int iAnim;

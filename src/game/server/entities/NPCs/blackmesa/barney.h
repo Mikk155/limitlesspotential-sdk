@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -45,14 +45,14 @@ public:
 
     bool HasHumanGibs() override { return true; }
 
-	/**
-	 *	@brief shoots one round from the pistol at the enemy barney is facing.
-	 */
+    /**
+     *    @brief shoots one round from the pistol at the enemy barney is facing.
+     */
     virtual void GuardFirePistol();
 
-	/**
-	 *	@brief barney says "Freeze!"
-	 */
+    /**
+     *    @brief barney says "Freeze!"
+     */
     void AlertSound() override;
 
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
@@ -65,7 +65,7 @@ public:
 
     void DeclineFollowing() override;
 
-	// Override these to set behavior
+    // Override these to set behavior
     const Schedule_t* GetScheduleOfType( int Type ) override;
     const Schedule_t* GetSchedule() override;
     MONSTERSTATE GetIdealState() override;
@@ -85,7 +85,7 @@ public:
     bool m_lastAttackCheck;
 
 
-	// Used during spawn to set initial values, not restored
+    // Used during spawn to set initial values, not restored
     int m_iGuardBody;
 
 protected:

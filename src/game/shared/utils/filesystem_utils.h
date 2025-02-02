@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -16,11 +16,11 @@
 #pragma once
 
 /**
- *	@file
+ *    @file
  *
- *	Functions, types and globals to load and use the GoldSource engine filesystem interface to read and write files.
- *	See the VDC for information on which search paths exist to be used as path IDs:
- *	https://developer.valvesoftware.com/wiki/GoldSource_SteamPipe_Directories
+ *    Functions, types and globals to load and use the GoldSource engine filesystem interface to read and write files.
+ *    See the VDC for information on which search paths exist to be used as path IDs:
+ *    https://developer.valvesoftware.com/wiki/GoldSource_SteamPipe_Directories
  */
 
 #include <cstddef>
@@ -45,31 +45,31 @@ bool FileSystem_LoadFileSystem();
 void FileSystem_FreeFileSystem();
 
 /**
- *	@brief Returns the mod directory name. Only valid to call after calling FileSystem_LoadFileSystem.
+ *    @brief Returns the mod directory name. Only valid to call after calling FileSystem_LoadFileSystem.
  */
 const std::string& FileSystem_GetModDirectoryName();
 
 /**
- *	@brief Replaces occurrences of ::AlternatePathSeparatorChar with ::DefaultPathSeparatorChar.
+ *    @brief Replaces occurrences of ::AlternatePathSeparatorChar with ::DefaultPathSeparatorChar.
  */
 void FileSystem_FixSlashes( std::string& fileName );
 
 /**
- *	@brief Returns the last modification time of the given file.
- *	Filenames are relative to the game directory.
+ *    @brief Returns the last modification time of the given file.
+ *    Filenames are relative to the game directory.
  */
 time_t FileSystem_GetFileTime( const char* fileName );
 
 /**
- *	@brief Compares the file time of the given files located in the mod directory.
- *	@details Needed because IFileSystem::GetFileTime() does not provide a path ID parameter.
- *	@param filename1 First file to compare.
- *	@param filename2 Second file to compare.
- *	@param[out] iCompare Stores the result of the comparison.
- *		-@c 0 if equal
- *		-@c -1 if @p filename2 is newer than @p filename1
- *		-@c 1 if @p filename1 is newer than @p filename2
- *	@return @c true if filetimes were retrieved, false otherwise.
+ *    @brief Compares the file time of the given files located in the mod directory.
+ *    @details Needed because IFileSystem::GetFileTime() does not provide a path ID parameter.
+ *    @param filename1 First file to compare.
+ *    @param filename2 Second file to compare.
+ *    @param[out] iCompare Stores the result of the comparison.
+ *        -@c 0 if equal
+ *        -@c -1 if @p filename2 is newer than @p filename1
+ *        -@c 1 if @p filename1 is newer than @p filename2
+ *    @return @c true if filetimes were retrieved, false otherwise.
  */
 bool FileSystem_CompareFileTime( const char* filename1, const char* filename2, int* iCompare );
 
@@ -80,41 +80,41 @@ enum class FileContentFormat
 };
 
 /**
- *	@brief Loads a file from disk into a buffer.
+ *    @brief Loads a file from disk into a buffer.
  *
- *	@details If the returned buffer contains text data and @p format is @c FileContentFormat::Text it is safe to cast the data pointer to char*:
- *	@code{.cpp}
- *	auto text = reinterpret_cast<char*>(buffer.data());
- *	@endcode
+ *    @details If the returned buffer contains text data and @p format is @c FileContentFormat::Text it is safe to cast the data pointer to char*:
+ *    @code{.cpp}
+ *    auto text = reinterpret_cast<char*>(buffer.data());
+ *    @endcode
  *
- *	@param fileName Name of the file to load.
- *	@param format If @c FileContentFormat::Text, a null terminator will be appended.
- *	@param pathID If not null, only looks for the file in this search path.
- *	@return If the file was successfully loaded the contents of the buffer,
- *		with a zero byte (null terminator) appended to it if @p format is @c FileContentFormat::Text.
- *		If the file could not be loaded an empty buffer is returned.
+ *    @param fileName Name of the file to load.
+ *    @param format If @c FileContentFormat::Text, a null terminator will be appended.
+ *    @param pathID If not null, only looks for the file in this search path.
+ *    @return If the file was successfully loaded the contents of the buffer,
+ *        with a zero byte (null terminator) appended to it if @p format is @c FileContentFormat::Text.
+ *        If the file could not be loaded an empty buffer is returned.
  */
 std::vector<std::byte> FileSystem_LoadFileIntoBuffer( const char* fileName, FileContentFormat format, const char* pathID = nullptr );
 
 /**
- *	@brief Writes a text file to disk.
- *	@param fileName Name of the file to write to.
- *	@param text Null-terminated text to write. The null terminator is not written to disk.
- *	@param pathID If not null, writes to a writable location assigned to the given search path.
- *		Otherwise the first writable location will be used (in practice this will be the mod directory).
- *		If no writable location exists no file will be written to.
- *	@return True if the file was written, false if an error occurred.
+ *    @brief Writes a text file to disk.
+ *    @param fileName Name of the file to write to.
+ *    @param text Null-terminated text to write. The null terminator is not written to disk.
+ *    @param pathID If not null, writes to a writable location assigned to the given search path.
+ *        Otherwise the first writable location will be used (in practice this will be the mod directory).
+ *        If no writable location exists no file will be written to.
+ *    @return True if the file was written, false if an error occurred.
  */
 bool FileSystem_WriteTextToFile( const char* fileName, const char* text, const char* pathID = nullptr );
 
 /**
- *	@brief Returns @c true if the current game directory is that of a Valve game.
- *	Any directory whose name starts with that of a Valve game's directory name is considered to be one, matching Steam's behavior.
+ *    @brief Returns @c true if the current game directory is that of a Valve game.
+ *    Any directory whose name starts with that of a Valve game's directory name is considered to be one, matching Steam's behavior.
  */
 bool UTIL_IsValveGameDirectory();
 
 /**
- *	@brief Helper class to automatically close the file handle associated with a file.
+ *    @brief Helper class to automatically close the file handle associated with a file.
  */
 class FSFile
 {
@@ -145,7 +145,7 @@ public:
 
     ~FSFile();
 
-	constexpr bool IsOpen() const { return m_Handle != FILESYSTEM_INVALID_HANDLE; }
+    constexpr bool IsOpen() const { return m_Handle != FILESYSTEM_INVALID_HANDLE; }
 
     std::size_t Size() const { return static_cast<std::size_t>( g_pFileSystem->Size( m_Handle ) ); }
 
@@ -166,7 +166,7 @@ public:
         return g_pFileSystem->FPrintf( m_Handle, format, std::forward<Args>( args )... );
     }
 
-	constexpr operator bool() const { return IsOpen(); }
+    constexpr operator bool() const { return IsOpen(); }
 
 private:
     FileHandle_t m_Handle = FILESYSTEM_INVALID_HANDLE;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -56,7 +56,7 @@ bool CZombie::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float f
         flDamage *= GetBulletDamageFraction();
     }
 
-	// HACK HACK -- until we fix this.
+    // HACK HACK -- until we fix this.
     if( IsAlive() )
         PainSound();
     return CBaseMonster::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
@@ -81,7 +81,7 @@ void CZombie::IdleSound()
 {
     int pitch = 100 + RANDOM_LONG( -5, 5 );
 
-	// Play a random idle sound
+    // Play a random idle sound
     EmitSoundDyn( CHAN_VOICE, RANDOM_SOUND_ARRAY( pIdleSounds ), 1.0, ATTN_NORM, 0, pitch );
 }
 
@@ -89,7 +89,7 @@ void CZombie::AttackSound()
 {
     int pitch = 100 + RANDOM_LONG( -5, 5 );
 
-	// Play a random attack sound
+    // Play a random attack sound
     EmitSoundDyn( CHAN_VOICE, RANDOM_SOUND_ARRAY( pAttackSounds ), 1.0, ATTN_NORM, 0, pitch );
 }
 
@@ -105,8 +105,8 @@ float CZombie::GetBothSlashDamage()
 
 void CZombie::ZombieSlashAttack( float damage, const Vector& punchAngle, const Vector& velocity, bool playAttackSound )
 {
-	// do stuff for this event.
-	// AILogger->debug("Slash!");
+    // do stuff for this event.
+    // AILogger->debug("Slash!");
     CBaseEntity* pHurt = CheckTraceHullAttack( 70, damage, DMG_SLASH );
     if( pHurt )
     {
@@ -115,7 +115,7 @@ void CZombie::ZombieSlashAttack( float damage, const Vector& punchAngle, const V
             pHurt->pev->punchangle = punchAngle;
             pHurt->pev->velocity = pHurt->pev->velocity + velocity;
         }
-		// Play a random attack hit sound
+        // Play a random attack hit sound
         EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pAttackHitSounds ), 1.0, ATTN_NORM, 0, 100 + RANDOM_LONG( -5, 5 ) );
     }
     else // Play a random attack miss sound

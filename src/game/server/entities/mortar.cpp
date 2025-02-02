@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -16,8 +16,8 @@
 #include "cbase.h"
 
 /**
- *	@brief the "LaBuznik" mortar device
- *	Drops bombs from above
+ *    @brief the "LaBuznik" mortar device
+ *    Drops bombs from above
  */
 class CFuncMortarField : public CBaseToggle
 {
@@ -29,12 +29,12 @@ public:
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
-	// Bmodels don't go across transitions
+    // Bmodels don't go across transitions
     int ObjectCaps() override { return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	/**
-	 *	@brief If connected to a table, then use the table controllers, else hit where the trigger is.
-	 */
+    /**
+     *    @brief If connected to a table, then use the table controllers, else hit where the trigger is.
+     */
     void FieldUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
     string_t m_iszXController;
@@ -212,7 +212,7 @@ void CMortar::Precache()
 void CMortar::MortarExplode()
 {
 #if 1
-	// mortar beam
+    // mortar beam
     MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
     WRITE_BYTE( TE_BEAMPOINTS );
     WRITE_COORD( pev->origin.x );
@@ -236,7 +236,7 @@ void CMortar::MortarExplode()
 #endif
 
 #if 0
-	// blast circle
+    // blast circle
     MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
     WRITE_BYTE( TE_BEAMTORUS );
     WRITE_COORD( pev->origin.x );
@@ -269,22 +269,22 @@ void CMortar::MortarExplode()
     int pitch = RANDOM_LONG( 95, 124 );
     EmitSoundDyn( CHAN_VOICE, "weapons/mortarhit.wav", 1.0, 0.55, 0, pitch );
 
-	// ForceSound( SNDRADIUS_MP5, bits_SOUND_COMBAT );
+    // ForceSound( SNDRADIUS_MP5, bits_SOUND_COMBAT );
 
-	// ExplodeModel( pev->origin, 400, g_sModelIndexShrapnel, 30 );
+    // ExplodeModel( pev->origin, 400, g_sModelIndexShrapnel, 30 );
 
     RadiusDamage( this, GetOwner(), pev->dmg, DMG_BLAST );
 
-	/*
-	if ( RANDOM_FLOAT ( 0 , 1 ) < 0.5 )
-	{
-		UTIL_DecalTrace( pTrace, DECAL_SCORCH1 );
-	}
-	else
-	{
-		UTIL_DecalTrace( pTrace, DECAL_SCORCH2 );
-	}
-	*/
+    /*
+    if ( RANDOM_FLOAT ( 0 , 1 ) < 0.5 )
+    {
+        UTIL_DecalTrace( pTrace, DECAL_SCORCH1 );
+    }
+    else
+    {
+        UTIL_DecalTrace( pTrace, DECAL_SCORCH2 );
+    }
+    */
 
     SetThink( &CMortar::SUB_Remove );
     pev->nextthink = gpGlobals->time + 0.1;

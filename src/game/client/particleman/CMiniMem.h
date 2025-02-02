@@ -10,7 +10,7 @@ class CBaseParticle;
 #define TRIANGLE_FPS 30
 
 /**
- *	@brief Simple allocator that uses a chunk-based pool to serve requests.
+ *    @brief Simple allocator that uses a chunk-based pool to serve requests.
  */
 class CMiniMem
 {
@@ -23,7 +23,7 @@ private:
     std::size_t _visibleParticles = 0;
 
 protected:
-	// private constructor and destructor.
+    // private constructor and destructor.
     CMiniMem() = default;
     ~CMiniMem() = default;
 

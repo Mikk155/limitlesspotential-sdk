@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -22,8 +22,8 @@
 #include "utils/JSONSystem.h"
 
 /**
- *	@brief Base class for sections that specify a list of filenames.
- *	Derived classes must provide the GetListName and GetFileNamesList functions.
+ *    @brief Base class for sections that specify a list of filenames.
+ *    Derived classes must provide the GetListName and GetFileNamesList functions.
  */
 template <typename DataContext>
 class BaseFileNamesListSection : public GameConfigSection<DataContext>

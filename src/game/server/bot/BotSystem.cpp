@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,7 +44,7 @@ void BotSystem::Shutdown()
 
 void BotSystem::RunFrame()
 {
-	// Handle level changes and other problematic time changes.
+    // Handle level changes and other problematic time changes.
     float frametime = gpGlobals->time - m_LastUpdateTime;
 
     if( frametime > 0.25f || frametime < 0 )
@@ -63,13 +63,13 @@ void BotSystem::RunFrame()
             continue;
         }
 
-		// If bot is newly created finish setup here.
+        // If bot is newly created finish setup here.
 
-		// Run bot think here.
+        // Run bot think here.
 
         int buttons = 0;
 
-		// Hack: detect when dead to force respawn.
+        // Hack: detect when dead to force respawn.
         if( player->pev->deadflag == DEAD_RESPAWNABLE )
         {
             buttons |= IN_ATTACK;
@@ -77,15 +77,15 @@ void BotSystem::RunFrame()
 
         player->pev->button = buttons;
 
-		// Now update the bot.
+        // Now update the bot.
         g_engfuncs.pfnRunPlayerMove( player->edict(), player->pev->angles, 0, 0, 0, player->pev->button, player->pev->impulse, msec );
     }
 }
 
 void BotSystem::AddBot( const char* name )
 {
-	// The engine will validate the name and change it to "unnamed" if it's not valid.
-	// Any duplicates will be disambiguated by prepending a (<number>).
+    // The engine will validate the name and change it to "unnamed" if it's not valid.
+    // Any duplicates will be disambiguated by prepending a (<number>).
     const auto fakeClient = g_engfuncs.pfnCreateFakeClient( name );
 
     if( !fakeClient )
@@ -93,26 +93,26 @@ void BotSystem::AddBot( const char* name )
         return;
     }
 
-	// Use the netname variable here in case the engine changed it for some reason (usually duplicate names).
-	// Use localhost as the IP address.
+    // Use the netname variable here in case the engine changed it for some reason (usually duplicate names).
+    // Use localhost as the IP address.
     char reject[128];
     if( 0 == ClientConnect( fakeClient, STRING( fakeClient->v.netname ), "127.0.0.1", reject ) )
     {
-		// Bot was refused connection, kick it from the server to free the slot.
+        // Bot was refused connection, kick it from the server to free the slot.
         SERVER_COMMAND( UTIL_VarArgs( "kick %s\n", STRING( fakeClient->v.netname ) ) );
         return;
     }
 
-	// Finish connecting, create player.
+    // Finish connecting, create player.
     ClientPutInServer( fakeClient );
 
     auto bot = GET_PRIVATE<CBasePlayer>( fakeClient );
 
     auto infobuffer = g_engfuncs.pfnGetInfoKeyBuffer( fakeClient );
 
-	// Pick a random color to distinguish between bots.
+    // Pick a random color to distinguish between bots.
     g_engfuncs.pfnSetClientKeyValue( bot->entindex(), infobuffer, "topcolor", std::to_string( RANDOM_LONG( 0, 255 ) ).c_str() );
     g_engfuncs.pfnSetClientKeyValue( bot->entindex(), infobuffer, "bottomcolor", std::to_string( RANDOM_LONG( 0, 255 ) ).c_str() );
 
-	// Do remaining logic at least one frame later to avoid race conditions.
+    // Do remaining logic at least one frame later to avoid race conditions.
 }

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -35,8 +35,8 @@ END_DATAMAP();
 
 bool CHornet::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// don't let hornets gib, ever.
-	// filter these bits a little.
+    // don't let hornets gib, ever.
+    // filter these bits a little.
     bitsDamageType &= ~( DMG_ALWAYSGIB );
     bitsDamageType |= DMG_NEVERGIB;
 
@@ -62,7 +62,7 @@ void CHornet::Spawn()
 
     if( g_pGameRules->IsMultiplayer() )
     {
-		// hornets don't live as long in multiplayer
+        // hornets don't live as long in multiplayer
         m_flStopAttack = gpGlobals->time + 3.5;
     }
     else
@@ -95,7 +95,7 @@ void CHornet::Spawn()
     }
     else
     {
-		// no real owner, or owner isn't a client.
+        // no real owner, or owner isn't a client.
         pev->dmg = GetSkillFloat( "hornet_dmg"sv );
     }
 
@@ -155,33 +155,33 @@ void CHornet::StartDart()
 
 void CHornet::IgniteTrail()
 {
-	/*
+    /*
 
-	  ted's suggested trail colors:
+      ted's suggested trail colors:
 
-	r161
-	g25
-	b97
+    r161
+    g25
+    b97
 
-	r173
-	g39
-	b14
+    r173
+    g39
+    b14
 
-	old colors
-			case HORNET_TYPE_RED:
-				WRITE_BYTE( 255 );   // r, g, b
-				WRITE_BYTE( 128 );   // r, g, b
-				WRITE_BYTE( 0 );   // r, g, b
-				break;
-			case HORNET_TYPE_ORANGE:
-				WRITE_BYTE( 0   );   // r, g, b
-				WRITE_BYTE( 100 );   // r, g, b
-				WRITE_BYTE( 255 );   // r, g, b
-				break;
+    old colors
+            case HORNET_TYPE_RED:
+                WRITE_BYTE( 255 );   // r, g, b
+                WRITE_BYTE( 128 );   // r, g, b
+                WRITE_BYTE( 0 );   // r, g, b
+                break;
+            case HORNET_TYPE_ORANGE:
+                WRITE_BYTE( 0   );   // r, g, b
+                WRITE_BYTE( 100 );   // r, g, b
+                WRITE_BYTE( 255 );   // r, g, b
+                break;
 
-	*/
+    */
 
-	// trail
+    // trail
     MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
     WRITE_BYTE( TE_BEAMFOLLOW );
     WRITE_SHORT( entindex() );   // entity
@@ -224,7 +224,7 @@ void CHornet::TrackTarget()
         return;
     }
 
-	// UNDONE: The player pointer should come back after returning from another level
+    // UNDONE: The player pointer should come back after returning from another level
     if( m_hEnemy == nullptr )
     { // enemy is dead.
         Look( 512 );
@@ -247,7 +247,7 @@ void CHornet::TrackTarget()
     else
         vecFlightDir = pev->velocity.Normalize();
 
-	// measure how far the turn is, the wider the turn, the slow we'll go this time.
+    // measure how far the turn is, the wider the turn, the slow we'll go this time.
     flDelta = DotProduct( vecFlightDir, vecDirToEnemy );
 
     if( flDelta < 0.5 )
@@ -275,7 +275,7 @@ void CHornet::TrackTarget()
 
     if( pev->owner && ( pev->owner->v.flags & FL_MONSTER ) != 0 )
     {
-		// random pattern only applies to hornets fired by monsters, not players.
+        // random pattern only applies to hornets fired by monsters, not players.
 
         pev->velocity.x += RANDOM_FLOAT( -0.10, 0.10 ); // scramble the flight dir a bit.
         pev->velocity.y += RANDOM_FLOAT( -0.10, 0.10 );
@@ -298,8 +298,8 @@ void CHornet::TrackTarget()
 
     pev->solid = SOLID_BBOX;
 
-	// if hornet is close to the enemy, jet in a straight line for a half second.
-	// (only in the single player game)
+    // if hornet is close to the enemy, jet in a straight line for a half second.
+    // (only in the single player game)
     if( m_hEnemy != nullptr && !g_pGameRules->IsMultiplayer() )
     {
         if( flDelta >= 0.4 && ( pev->origin - m_vecEnemyLKP ).Length() <= 300 )
@@ -310,7 +310,7 @@ void CHornet::TrackTarget()
             WRITE_COORD( pev->origin.y );
             WRITE_COORD( pev->origin.z );
             WRITE_SHORT( iHornetPuff ); // model
-			// WRITE_BYTE( 0 );				// life * 10
+            // WRITE_BYTE( 0 );                // life * 10
             WRITE_BYTE( 2 );     // size * 10
             WRITE_BYTE( 128 ); // brightness
             MESSAGE_END();
@@ -329,7 +329,7 @@ void CHornet::TrackTarget()
             }
             pev->velocity = pev->velocity * 2;
             pev->nextthink = gpGlobals->time + 1.0;
-			// don't attack again
+            // don't attack again
             m_flStopAttack = gpGlobals->time;
         }
     }
@@ -345,7 +345,7 @@ void CHornet::TrackTouch( CBaseEntity* pOther )
 
     if( IRelationship( pOther ) <= Relationship::None )
     {
-		// hit something we don't want to hurt, so turn around.
+        // hit something we don't want to hurt, so turn around.
 
         pev->velocity = pev->velocity.Normalize();
 
@@ -368,8 +368,8 @@ void CHornet::DartTouch( CBaseEntity* pOther )
 
 void CHornet::DieTouch( CBaseEntity* pOther )
 {
-	// Only deal damage if the owner exists in this map.
-	// Hornets that transition without their owner (e.g. Alien Grunt) will otherwise pass a null pointer down to TakeDamage.
+    // Only deal damage if the owner exists in this map.
+    // Hornets that transition without their owner (e.g. Alien Grunt) will otherwise pass a null pointer down to TakeDamage.
     if( pOther && 0 != pOther->pev->takedamage && nullptr != pev->owner )
     { // do the damage
 

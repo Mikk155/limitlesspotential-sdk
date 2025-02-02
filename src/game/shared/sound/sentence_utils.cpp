@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -57,7 +57,7 @@ static const SentenceWordParameterInfo* FindParameterInfo( char type )
 
 std::tuple<std::string_view, std::string_view> ParseSentence( std::string_view text )
 {
-	// First, see if there's a comment in there somewhere and trim to that.
+    // First, see if there's a comment in there somewhere and trim to that.
     const auto commentStart = text.find( "//");
 
     if( commentStart != text.npos )
@@ -65,7 +65,7 @@ std::tuple<std::string_view, std::string_view> ParseSentence( std::string_view t
         text = text.substr( 0, commentStart );
     }
 
-	// Skip whitespace.
+    // Skip whitespace.
     const auto nameBegin = std::find_if( text.begin(), text.end(), []( auto c )
         { return 0 == std::isspace(c); } );
 
@@ -74,7 +74,7 @@ std::tuple<std::string_view, std::string_view> ParseSentence( std::string_view t
         return {};
     }
 
-	// Get sentence name.
+    // Get sentence name.
     const auto it = std::find_if( nameBegin, text.end(), []( auto c )
         { return 0 != std::isspace(c); } );
 
@@ -85,7 +85,7 @@ std::tuple<std::string_view, std::string_view> ParseSentence( std::string_view t
 
     const std::string_view name{nameBegin, it};
 
-	// Skip whitespace.
+    // Skip whitespace.
     const auto sentenceBegin = std::find_if( it, text.end(), []( auto c )
         { return 0 == std::isspace(c); } );
 
@@ -96,11 +96,11 @@ std::tuple<std::string_view, std::string_view> ParseSentence( std::string_view t
 
     std::string_view::reverse_iterator rev{sentenceBegin};
 
-	// Find end of sentence.
+    // Find end of sentence.
     const auto sentenceEnd = std::find_if( text.rbegin(), std::make_reverse_iterator( sentenceBegin ), []( auto c )
         { return 0 == std::isspace(c); } );
 
-	// Should never happen.
+    // Should never happen.
     if( sentenceEnd == text.rend() )
     {
         return {};
@@ -121,7 +121,7 @@ std::optional<std::tuple<std::string_view, int>> ParseGroupData( std::string_vie
         return {};
     }
 
-	// A name can't consist solely of a number.
+    // A name can't consist solely of a number.
     if( indexStart == name.rbegin() )
     {
         return {};
@@ -142,7 +142,7 @@ std::optional<std::tuple<std::string_view, int>> ParseGroupData( std::string_vie
 
 std::tuple<std::string_view, std::string_view> ParseDirectory( std::string_view sentence )
 {
-	// Parse from back to front, stopping at the first slash. This allows directories with multiple subdirectories to be used.
+    // Parse from back to front, stopping at the first slash. This allows directories with multiple subdirectories to be used.
     for( auto it = sentence.rbegin(), end = sentence.rend(); it != end; ++it )
     {
         if( *it == '/' )
@@ -152,7 +152,7 @@ std::tuple<std::string_view, std::string_view> ParseDirectory( std::string_view 
         }
     }
 
-	// No directory found, use default.
+    // No directory found, use default.
     return {DefaultSentenceDirectory, sentence};
 }
 
@@ -163,7 +163,7 @@ std::optional<std::tuple<std::string_view, std::string_view>> SentencesListParse
         return {};
     }
 
-	// Find the next valid sentence entry.
+    // Find the next valid sentence entry.
     while( true )
     {
         const auto line = GetLine( m_Contents );
@@ -179,7 +179,7 @@ std::optional<std::tuple<std::string_view, std::string_view>> SentencesListParse
 
         if( name.empty() )
         {
-			// Comment, empty line or whitespace.
+            // Comment, empty line or whitespace.
             continue;
         }
 
@@ -211,7 +211,7 @@ bool SentenceWordParser::Parse()
         case WordParseResult::ParsedWord:
             return true;
 
-			// We parsed the global parameters or there was a syntax error, need to parse the next word.
+            // We parsed the global parameters or there was a syntax error, need to parse the next word.
         case WordParseResult::SkipWord: break;
         }
     }
@@ -223,7 +223,7 @@ SentenceWordParser::WordParseResult SentenceWordParser::ParseCore()
 
     const auto end = Sentence.end();
 
-	// Skip whitespace.
+    // Skip whitespace.
     m_Next = std::find_if( m_Next, end, []( auto c )
         { return 0 == std::isspace(c); } );
 
@@ -232,20 +232,20 @@ SentenceWordParser::WordParseResult SentenceWordParser::ParseCore()
         return WordParseResult::Done;
     }
 
-	// A word is a line of text containing no whitespace, optionally followed by (), which contains zero or more parameters.
-	// A parameter is a single character indicating the type followed by the value, which is a number.
-	// Special handling is needed for the characters '.' and ',', which translate to _period and _comma respectively.
+    // A word is a line of text containing no whitespace, optionally followed by (), which contains zero or more parameters.
+    // A parameter is a single character indicating the type followed by the value, which is a number.
+    // Special handling is needed for the characters '.' and ',', which translate to _period and _comma respectively.
 
     if( CheckForSpecialCharacters() )
     {
         ++m_Next;
-		// Ignore parameters for these.
-		// TODO: probably ignored in the engine because they didn't want to allocate memory, so this could be enabled.
+        // Ignore parameters for these.
+        // TODO: probably ignored in the engine because they didn't want to allocate memory, so this could be enabled.
         SentenceWordParameters dummy;
         return ParseParameters( dummy );
     }
 
-	// Parse word until whitespace or parameters.
+    // Parse word until whitespace or parameters.
     const auto start = m_Next;
 
     for( ; m_Next != end; ++m_Next )
@@ -263,7 +263,7 @@ SentenceWordParser::WordParseResult SentenceWordParser::ParseCore()
 
     if( Word.empty() )
     {
-		// It's a set of parameters by itself, apply to all subsequent words.
+        // It's a set of parameters by itself, apply to all subsequent words.
         m_GlobalParameters = Parameters;
         return WordParseResult::SkipWord;
     }
@@ -292,20 +292,20 @@ SentenceWordParser::WordParseResult SentenceWordParser::ParseParameters( Sentenc
 
     if( m_Next == end )
     {
-		// End of sentence.
+        // End of sentence.
         return WordParseResult::ParsedWord;
     }
 
     if( *m_Next == ' )' )
     {
-		// Malformed parameter section.
+        // Malformed parameter section.
         ++m_Next;
         return WordParseResult::SkipWord;
     }
 
     if( *m_Next != '( ' )
     {
-		// Word has no parameters.
+        // Word has no parameters.
         return WordParseResult::ParsedWord;
     }
 
@@ -324,7 +324,7 @@ SentenceWordParser::WordParseResult SentenceWordParser::ParseParameters( Sentenc
         {
             if( m_Next == end || 0 == std::isdigit( *m_Next ) )
             {
-				// Invalid syntax, skip to end of parameter section.
+                // Invalid syntax, skip to end of parameter section.
                 m_Next = std::find( m_Next, end, ' )' );
 
                 if( m_Next != end )
@@ -335,14 +335,14 @@ SentenceWordParser::WordParseResult SentenceWordParser::ParseParameters( Sentenc
                 break;
             }
 
-			// Parse out up to 7 digits.
+            // Parse out up to 7 digits.
             eastl::fixed_string<char, 8, false> number;
 
             while( m_Next != end )
             {
                 number.push_back( *m_Next );
 
-				// Don't swallow non-digit characters.
+                // Don't swallow non-digit characters.
                 if( 0 == std::isdigit( number.back() ) || number.size() >= ( number.capacity() - 1 ) )
                 {
                     break;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -25,8 +25,8 @@ LINK_ENTITY_TO_CLASS( trigger, CBaseTrigger );
 
 void CBaseTrigger::InitTrigger()
 {
-	// trigger angles are used for one-way touches.  An angle of 0 is assumed
-	// to mean no restrictions, so use a yaw of 360 instead.
+    // trigger angles are used for one-way touches.  An angle of 0 is assumed
+    // to mean no restrictions, so use a yaw of 360 instead.
     if( pev->angles != g_vecZero )
         SetMovedir( this );
     pev->solid = SOLID_TRIGGER;
@@ -63,8 +63,8 @@ void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
     if( !FStringNull( pev->noise ) )
         EmitSound( CHAN_VOICE, STRING( pev->noise ), 1, ATTN_NORM );
 
-	// don't trigger again until reset
-	// pev->takedamage = DAMAGE_NO;
+    // don't trigger again until reset
+    // pev->takedamage = DAMAGE_NO;
 
     m_hActivator = pActivator;
     SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
@@ -74,7 +74,7 @@ void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
         if( auto player = ToBasePlayer( pActivator ); player )
         {
             UTIL_ShowMessage( STRING( pev->message ), player );
-			// UTIL_ConsolePrint(player, STRING(pev->message));
+            // UTIL_ConsolePrint(player, STRING(pev->message));
         }
     }
 
@@ -85,8 +85,8 @@ void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
     }
     else
     {
-		// we can't just remove (self) here, because this is a touch function
-		// called while C code is looping through area links...
+        // we can't just remove (self) here, because this is a touch function
+        // called while C code is looping through area links...
         SetTouch( nullptr );
         pev->nextthink = gpGlobals->time + 0.1;
         SetThink( &CBaseTrigger::SUB_Remove );
@@ -95,12 +95,12 @@ void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
 
 void CBaseTrigger::MultiWaitOver()
 {
-	//	if (pev->max_health)
-	//		{
-	//		pev->health		= pev->max_health;
-	//		pev->takedamage	= DAMAGE_YES;
-	//		pev->solid		= SOLID_BBOX;
-	//		}
+    //    if (pev->max_health)
+    //        {
+    //        pev->health        = pev->max_health;
+    //        pev->takedamage    = DAMAGE_YES;
+    //        pev->solid        = SOLID_BBOX;
+    //        }
     SetThink( nullptr );
 }
 
@@ -110,7 +110,7 @@ void CBaseTrigger::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE
     { // if the trigger is off, turn it on
         pev->solid = SOLID_TRIGGER;
 
-		// Force retouch
+        // Force retouch
         gpGlobals->force_retouch++;
     }
     else

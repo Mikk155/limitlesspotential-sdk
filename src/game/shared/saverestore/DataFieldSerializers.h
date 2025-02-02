@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -22,7 +22,7 @@
 #include "saverestore.h"
 
 /**
- *	@brief Provides a means of serializing and deserializing an array of fields of a specific type.
+ *    @brief Provides a means of serializing and deserializing an array of fields of a specific type.
  */
 class IDataFieldSerializer
 {
@@ -31,19 +31,19 @@ public:
 
     virtual std::size_t GetFieldSize() const = 0;
 
-	/**
-	 *	@brief Reads fields from the source and writes them to the buffer.
-	 */
+    /**
+     *    @brief Reads fields from the source and writes them to the buffer.
+     */
     virtual void Serialize( CSave& save, const std::byte* fields, std::size_t count ) const = 0;
 
-	/**
-	 *	@brief Reads fields from the buffer and writes them to the destination.
-	 */
+    /**
+     *    @brief Reads fields from the buffer and writes them to the destination.
+     */
     virtual void Deserialize( CRestore& restore, std::byte* fields, std::size_t count ) const = 0;
 };
 
 /**
- *	@brief Reads and writes fields directly.
+ *    @brief Reads and writes fields directly.
  */
 template <typename T>
 class DataFieldValueSerializer : public IDataFieldSerializer
@@ -66,7 +66,7 @@ public:
 };
 
 /**
- *	@brief Base class for serializers that convert between the in-memory and on-disk type.
+ *    @brief Base class for serializers that convert between the in-memory and on-disk type.
  */
 template <typename T, typename Derived>
 class DataFieldConvertingSerializer : public IDataFieldSerializer
@@ -109,7 +109,7 @@ public:
 };
 
 /**
- *	@brief Serializes booleans as bytes.
+ *    @brief Serializes booleans as bytes.
  */
 class DataFieldBooleanSerializer : public DataFieldConvertingSerializer<bool, DataFieldBooleanSerializer>
 {

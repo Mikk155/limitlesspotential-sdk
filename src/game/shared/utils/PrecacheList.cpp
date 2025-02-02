@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -56,14 +56,14 @@ int PrecacheList::Add( const char* str )
 
     m_Precaches.push_back( str );
 
-	// Only call into the engine if it's not at its maximum capacity.
-	// TODO: need to handle running out of precaches gracefully.
-	// TODO: This will cause problems when an invalid index or unprecached asset is used.
+    // Only call into the engine if it's not at its maximum capacity.
+    // TODO: need to handle running out of precaches gracefully.
+    // TODO: This will cause problems when an invalid index or unprecached asset is used.
     if( m_EnginePrecacheFunction && m_MaxEnginePrecaches > 0 && static_cast<unsigned int>( index ) < m_MaxEnginePrecaches )
     {
-		// This should never happen since the engine doesn't precache anything until after the game has finished.
-		// If it does happen it's because something else is calling precache functions directly.
-		// This call could cause a host error and may not return.
+        // This should never happen since the engine doesn't precache anything until after the game has finished.
+        // If it does happen it's because something else is calling precache functions directly.
+        // This call could cause a host error and may not return.
         if( const int engineIndex = m_EnginePrecacheFunction( str ); engineIndex != index )
         {
             m_Logger->error( "Precached file \"{}\" has mismatched index (engine: {}, local: {})", str, engineIndex, index );
@@ -86,7 +86,7 @@ void PrecacheList::Clear()
 {
     m_Precaches.clear();
 
-	// First entry is the empty string (invalid).
+    // First entry is the empty string (invalid).
     m_Precaches.push_back( "" );
 }
 

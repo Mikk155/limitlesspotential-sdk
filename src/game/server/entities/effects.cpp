@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,7 +24,7 @@
 #define SF_FUNNEL_REVERSE 1 // funnel effect repels particles instead of attracting them.
 
 /**
- *	@brief Lightning target, just alias landmark
+ *    @brief Lightning target, just alias landmark
  */
 LINK_ENTITY_TO_CLASS( info_target, CPointEntity );
 
@@ -55,8 +55,8 @@ BEGIN_DATAMAP( CBubbling )
     DEFINE_FIELD( m_density, FIELD_INTEGER ),
     DEFINE_FIELD( m_frequency, FIELD_INTEGER ),
     DEFINE_FIELD( m_state, FIELD_BOOLEAN ),
-	// Let spawn restore this!
-	//	DEFINE_FIELD(m_bubbleModel, FIELD_INTEGER),
+    // Let spawn restore this!
+    //    DEFINE_FIELD(m_bubbleModel, FIELD_INTEGER),
     DEFINE_FUNCTION( FizzThink ),
 END_DATAMAP();
 
@@ -72,7 +72,7 @@ void CBubbling::Spawn()
     pev->rendermode = kRenderTransTexture;
     int speed = pev->speed > 0 ? pev->speed : -pev->speed;
 
-	// HACKHACK!!! - Speed in rendercolor
+    // HACKHACK!!! - Speed in rendercolor
     pev->rendercolor.x = speed >> 8;
     pev->rendercolor.y = speed & 255;
     pev->rendercolor.z = ( pev->speed < 0 ) ? 1 : 0;
@@ -204,7 +204,7 @@ const Vector& CBeam::GetEndPos()
 
 CBeam* CBeam::BeamCreate( const char* pSpriteName, int width )
 {
-	// Create a new entity with CBeam private data
+    // Create a new entity with CBeam private data
     CBeam* pBeam = g_EntityDictionary->Create<CBeam>( "beam" );
 
     pBeam->BeamInit( pSpriteName, width );
@@ -630,7 +630,7 @@ void CLightning::StrikeThink()
         {
             if( ( pev->spawnflags & SF_BEAM_RING ) != 0 )
             {
-				// don't work
+                // don't work
                 return;
             }
         }
@@ -860,7 +860,7 @@ void CLightning::BeamUpdateVars()
     {
         if( !pointStart ) // One point entity must be in pStart
         {
-			// Swap start & end
+            // Swap start & end
             std::swap( pStart, pEnd );
             std::swap( pointStart, pointEnd );
         }
@@ -1141,7 +1141,7 @@ void CSprite::Spawn()
     else
         TurnOn();
 
-	// Worldcraft only sets y rotation, copy to Z
+    // Worldcraft only sets y rotation, copy to Z
     if( pev->angles.y != 0 && pev->angles.z == 0 )
     {
         pev->angles.z = pev->angles.y;
@@ -1153,12 +1153,12 @@ void CSprite::Precache()
 {
     PrecacheModel( STRING( pev->model ) );
 
-	// Reset attachment after save/restore
+    // Reset attachment after save/restore
     if( pev->aiment )
         SetAttachment( pev->aiment, pev->body );
     else
     {
-		// Clear attachment
+        // Clear attachment
         pev->skin = 0;
         pev->body = 0;
     }
@@ -1532,7 +1532,7 @@ CGib* CEnvShooter::CreateGib()
 }
 
 /**
- *	@brief Blood effects
+ *    @brief Blood effects
  */
 class CBlood : public CPointEntity
 {
@@ -1641,7 +1641,7 @@ void CBlood::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useTyp
 }
 
 /**
- *	@brief Screen shake
+ *    @brief Screen shake
  */
 class CShake : public CPointEntity
 {
@@ -1675,7 +1675,7 @@ LINK_ENTITY_TO_CLASS( env_shake, CShake );
 #define SF_SHAKE_EVERYONE 0x0001 // Don't check radius
 // UNDONE: These don't work yet
 #define SF_SHAKE_DISRUPT 0x0002 // Disrupt controls
-#define SF_SHAKE_INAIR 0x0004	// Shake players in air
+#define SF_SHAKE_INAIR 0x0004    // Shake players in air
 
 void CShake::Spawn()
 {
@@ -1739,7 +1739,7 @@ LINK_ENTITY_TO_CLASS( env_fade, CFade );
 
 // pev->dmg_take is duration
 // pev->dmg_save is hold duration
-#define SF_FADE_IN 0x0001		// Fade in, not out
+#define SF_FADE_IN 0x0001        // Fade in, not out
 #define SF_FADE_MODULATE 0x0002 // Modulate, don't blend
 #define SF_FADE_ONLYONE 0x0004
 
@@ -1834,7 +1834,7 @@ void CMessage::Spawn()
     }
     pev->impulse = 0;
 
-	// No volume, use normal
+    // No volume, use normal
     if( pev->scale <= 0 )
         pev->scale = 1.0;
 }
@@ -1892,7 +1892,7 @@ void CMessage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 }
 
 /**
- *	@brief FunnelEffect
+ *    @brief FunnelEffect
  */
 class CEnvFunnel : public CBaseDelay
 {
@@ -1944,9 +1944,9 @@ void CEnvFunnel::Spawn()
 }
 
 /**
- *	@brief Beverage Dispenser
- *	overloaded pev->frags, is now a flag for whether or not a can is stuck in the dispenser.
- *	overloaded pev->health, is now how many cans remain in the machine.
+ *    @brief Beverage Dispenser
+ *    overloaded pev->frags, is now a flag for whether or not a can is stuck in the dispenser.
+ *    overloaded pev->health, is now how many cans remain in the machine.
  */
 class CEnvBeverage : public CBaseDelay
 {
@@ -1968,7 +1968,7 @@ void CEnvBeverage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 {
     if( pev->frags != 0 || pev->health <= 0 )
     {
-		// no more cans while one is waiting in the dispenser, or if I'm out of cans.
+        // no more cans while one is waiting in the dispenser, or if I'm out of cans.
         return;
     }
 
@@ -1976,7 +1976,7 @@ void CEnvBeverage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 
     if( pev->skin == 6 )
     {
-		// random
+        // random
         pCan->pev->skin = RANDOM_LONG( 0, 5 );
     }
     else
@@ -1987,8 +1987,8 @@ void CEnvBeverage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     pev->frags = 1;
     pev->health--;
 
-	// SetThink (SUB_Remove);
-	// pev->nextthink = gpGlobals->time;
+    // SetThink (SUB_Remove);
+    // pev->nextthink = gpGlobals->time;
 }
 
 void CEnvBeverage::Spawn()
@@ -2005,7 +2005,7 @@ void CEnvBeverage::Spawn()
 }
 
 /**
- *	@brief Soda can
+ *    @brief Soda can
  */
 class CItemSoda : public CBaseEntity
 {
@@ -2069,13 +2069,13 @@ void CItemSoda::CanTouch( CBaseEntity* pOther )
         return;
     }
 
-	// spoit sound here
+    // spoit sound here
 
     pOther->GiveHealth( 1, DMG_GENERIC ); // a bit of health.
 
     if( !FNullEnt( pev->owner ) )
     {
-		// tell the machine the can was taken
+        // tell the machine the can was taken
         pev->owner->v.frags = 0;
     }
 
@@ -2091,7 +2091,7 @@ const int SF_WARPBALL_FIRE_ONCE = 1 << 0;
 const int SF_WARPBALL_DELAYED_DAMAGE = 1 << 1;
 
 /**
- *	@brief Alien teleportation effect
+ *    @brief Alien teleportation effect
  */
 class CWarpBall : public CBaseEntity
 {
@@ -2332,7 +2332,7 @@ void CWarpBall::BallThink()
     }
     else
     {
-		// TODO: this flag is probably supposed to be a "do radius damage" flag, but it isn't used in the Use method
+        // TODO: this flag is probably supposed to be a "do radius damage" flag, but it isn't used in the Use method
         if( ( pev->spawnflags & SF_WARPBALL_DELAYED_DAMAGE ) != 0 && !m_fDamageApplied && ( gpGlobals->time - m_flWarpStart ) >= m_flDamageDelay )
         {
             ::RadiusDamage( pev->origin, this, this, 300, 48, DMG_SHOCK );

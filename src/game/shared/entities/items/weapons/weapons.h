@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -32,7 +32,7 @@ struct PersistentWeaponState;
 void W_Precache();
 
 /**
- *	@brief Contact Grenade / Timed grenade / Satchel Charge
+ *    @brief Contact Grenade / Timed grenade / Satchel Charge
  */
 class CGrenade : public CBaseMonster
 {
@@ -63,9 +63,9 @@ public:
     void BounceTouch( CBaseEntity* pOther );
     void SlideTouch( CBaseEntity* pOther );
 
-	/**
-	 *	@brief Contact grenade, explode when it touches something
-	 */
+    /**
+     *    @brief Contact grenade, explode when it touches something
+     */
     void ExplodeTouch( CBaseEntity* pOther );
     void DangerSoundThink();
     void PreDetonate();
@@ -126,7 +126,7 @@ public:
 
 // the maximum amount of ammo each weapon's clip can hold
 
-// #define CROWBAR_MAX_CLIP		WEAPON_NOCLIP
+// #define CROWBAR_MAX_CLIP        WEAPON_NOCLIP
 #define GLOCK_MAX_CLIP 17
 #define PYTHON_MAX_CLIP 6
 #define MP5_MAX_CLIP 50
@@ -225,7 +225,7 @@ void Weapon_RegisterWeaponData();
 constexpr int RefillAllAmmoAmount = -1;
 
 /**
- *	@brief Weapons that the player has in their inventory that they can use.
+ *    @brief Weapons that the player has in their inventory that they can use.
  */
 class CBasePlayerWeapon : public CBaseItem
 {
@@ -254,75 +254,75 @@ public:
 
     void LinkWeaponInfo();
 
-	/**
-	 *	@brief return true if the item you want the item added to the player inventory
-	 */
+    /**
+     *    @brief return true if the item you want the item added to the player inventory
+     */
     virtual bool CanAddToPlayer( CBasePlayer* player ) { return true; }
 
     virtual void AddToPlayer( CBasePlayer* pPlayer );
 
-	/**
-	 *	@brief return true if you want your duplicate removed from world
-	 *	CALLED THROUGH the newly-touched weapon's instance. The existing player weapon is @c original.
-	 */
+    /**
+     *    @brief return true if you want your duplicate removed from world
+     *    CALLED THROUGH the newly-touched weapon's instance. The existing player weapon is @c original.
+     */
     virtual bool AddDuplicate( CBasePlayerWeapon* original );
 
-	/**
-	 *	@brief called by the new item with the existing item as parameter
-	 *	@details If we call ExtractAmmo(), it's because the player is picking up this type of weapon for the first time.
-	 *	If it is spawned by the world, m_iDefaultAmmo will have a default ammo amount in it.
-	 *	if this is a weapon dropped by a dying player, has 0 m_iDefaultAmmo,
-	 *	which means only the ammo in the weapon clip comes along.
-	 *	@return true if you can add ammo to yourself when picked up
-	 */
+    /**
+     *    @brief called by the new item with the existing item as parameter
+     *    @details If we call ExtractAmmo(), it's because the player is picking up this type of weapon for the first time.
+     *    If it is spawned by the world, m_iDefaultAmmo will have a default ammo amount in it.
+     *    if this is a weapon dropped by a dying player, has 0 m_iDefaultAmmo,
+     *    which means only the ammo in the weapon clip comes along.
+     *    @return true if you can add ammo to yourself when picked up
+     */
     virtual bool ExtractAmmo( CBasePlayerWeapon* weapon );
 
-	/**
-	 *	@brief Called by the new item's class with the existing item as parameter
-	 *	@return true if you can add ammo to yourself when picked up
-	 */
+    /**
+     *    @brief Called by the new item's class with the existing item as parameter
+     *    @return true if you can add ammo to yourself when picked up
+     */
     virtual bool ExtractClipAmmo( CBasePlayerWeapon* weapon );
 
-	// generic "shared" ammo handlers
+    // generic "shared" ammo handlers
     bool AddPrimaryAmmo( CBasePlayerWeapon* origin, int iCount, const char* szName, int iMaxClip );
     bool AddSecondaryAmmo( int iCount, const char* szName );
 
     void DestroyItem();
 
-	/**
-	 *	@brief returns false if struct not filled out
-	 */
+    /**
+     *    @brief returns false if struct not filled out
+     */
     virtual bool GetWeaponInfo( WeaponInfo& info ) { return false; }
 
-	/**
-	 *	@brief this function determines whether or not a weapon is useable by the player in its current state.
-	 *	(does it have ammo loaded? do I have any ammo for the weapon?, etc)
-	 */
+    /**
+     *    @brief this function determines whether or not a weapon is useable by the player in its current state.
+     *    (does it have ammo loaded? do I have any ammo for the weapon?, etc)
+     */
     virtual bool IsUseable();
 
     virtual bool CanDeploy();
 
-	/**
-	 *	@brief returns is deploy was successful
-	 */
+    /**
+     *    @brief returns is deploy was successful
+     */
     virtual bool Deploy()
     {
         return true;
     }
 
-	/**
-	 *	@brief can this weapon be put away right now?
-	 */
+    /**
+     *    @brief can this weapon be put away right now?
+     */
     virtual bool CanHolster() { return true; }
 
-	/**
-	 *	@brief Put away weapon
-	 */
+    /**
+     *    @brief Put away weapon
+     */
     virtual void Holster();
 
-	/**
-	 *	@brief updates HUD state
-	 */
+    /**
+     *    @brief updates HUD state
+     */
     virtual void UpdateItemInfo() {}
 
     virtual void SendWeaponAnim( int iAnim );
@@ -330,43 +330,43 @@ public:
     bool DefaultDeploy( const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt );
     bool DefaultReload( int iClipSize, int iAnim, float fDelay );
 
-	/**
-	 *	@brief called each frame by player PreThink
-	 */
+    /**
+     *    @brief called each frame by player PreThink
+     */
     virtual void ItemPreFrame() {}
 
-	/**
-	 *	@brief called each frame by player PostThink
-	 */
+    /**
+     *    @brief called each frame by player PostThink
+     */
     virtual void ItemPostFrame();
 
-	// called by CBasePlayerWeapons ItemPostFrame()
+    // called by CBasePlayerWeapons ItemPostFrame()
 
-	/**
-	 *	@brief do "+ATTACK"
-	 */
+    /**
+     *    @brief do "+ATTACK"
+     */
     virtual void PrimaryAttack() {}
 
-	/**
-	 *	@brief do "+ATTACK2"
-	 */
+    /**
+     *    @brief do "+ATTACK2"
+     */
     virtual void SecondaryAttack() {}
 
-	/**
-	 *	@brief do "+RELOAD"
-	 */
+    /**
+     *    @brief do "+RELOAD"
+     */
     virtual void Reload() {}
 
     virtual bool ShouldWeaponIdle() { return false; }
 
-	/**
-	 *	@brief called when no buttons pressed
-	 */
+    /**
+     *    @brief called when no buttons pressed
+     */
     virtual void WeaponIdle() {}
 
-	/**
-	 *	@brief Animate weapon model
-	 */
+    /**
+     *    @brief Animate weapon model
+     */
     virtual bool PlayEmptySound();
     virtual void ResetEmptySound();
 
@@ -378,9 +378,9 @@ public:
 
     virtual void IncrementAmmo( CBasePlayer* pPlayer ) {}
 
-	/**
-	 *	@brief sends hud info to client dll, if things have changed
-	 */
+    /**
+     *    @brief sends hud info to client dll, if things have changed
+     */
     virtual bool UpdateClientData( CBasePlayer* pPlayer );
 
     virtual void GetWeaponData( weapon_data_t& data ) {}
@@ -392,12 +392,12 @@ public:
     virtual void SavePersistentState( PersistentWeaponState& state );
     virtual void LoadPersistentState( const PersistentWeaponState& state );
 
-	/**
-	 *	@brief no more ammo for this gun, put it away.
-	 */
+    /**
+     *    @brief no more ammo for this gun, put it away.
+     */
     void RetireWeapon();
 
-	// Can't use virtual functions as think functions so this wrapper is needed.
+    // Can't use virtual functions as think functions so this wrapper is needed.
     void CallDoRetireWeapon()
     {
         DoRetireWeapon();
@@ -405,16 +405,16 @@ public:
 
     virtual void DoRetireWeapon();
 
-	/**
-	 *	@brief Whether to use relative time values that are decremented every frame or absolute time values.
-	 *	Relative time values are required for predicted weapons.
-	 *	@see UTIL_WeaponTimeBase
-	 */
+    /**
+     *    @brief Whether to use relative time values that are decremented every frame or absolute time values.
+     *    Relative time values are required for predicted weapons.
+     *    @see UTIL_WeaponTimeBase
+     */
     virtual bool UseDecrement() { return false; }
 
-	/**
-	 *	@brief An accurate way of calculating the next attack time.
-	 */
+    /**
+     *    @brief An accurate way of calculating the next attack time.
+     */
     float GetNextAttackDelay( float delay );
 
     void SetWeaponModels( const char* viewModel, const char* weaponModel );
@@ -448,16 +448,16 @@ public:
     int m_iId; // WEAPON_???
     const WeaponInfo* m_WeaponInfo{};
 
-	/**
-	 *	@brief Hack so deploy animations work when weapon prediction is enabled.
-	 */
+    /**
+     *    @brief Hack so deploy animations work when weapon prediction is enabled.
+     */
     bool m_ForceSendAnimations = false;
 
     bool m_iPlayEmptySound;
 
-	/**
-	 *	@brief True when the gun is empty and the player is still holding down the attack key(s)
-	 */
+    /**
+     *    @brief True when the gun is empty and the player is still holding down the attack key(s)
+     */
     bool m_fFireOnEmpty;
 
     float m_flPumpTime;
@@ -476,7 +476,7 @@ public:
     int m_iDefaultAmmo;           //!< how much ammo you get when you pick up this weapon as placed by a level designer.
     int m_iDefaultPrimaryAmmo; // Copy of m_iDefaultAmmo after KeyValue is handled for respawn.
 
-	// hle time creep vars
+    // hle time creep vars
     float m_flPrevPrimaryAttack;
     float m_flLastFireTime;
 
@@ -488,9 +488,9 @@ public:
 constexpr char DefaultItemPickupSound[] = "items/9mmclip1.wav";
 
 /**
- *	@brief Base class for ammo entities.
- *	@details Inheriting classes must set m_AmmoAmount to the default give amount
- *	and m_AmmoName to a valid ammo name in @c OnCreate.
+ *    @brief Base class for ammo entities.
+ *    @details Inheriting classes must set m_AmmoAmount to the default give amount
+ *    and m_AmmoName to a valid ammo name in @c OnCreate.
  */
 class CBasePlayerAmmo : public CBaseItem
 {
@@ -530,7 +530,7 @@ protected:
     virtual bool AddAmmo( CBasePlayer* player );
 
 protected:
-	// Set to -2 to detect missing initialization.
+    // Set to -2 to detect missing initialization.
     int m_AmmoAmount = -2;
     string_t m_AmmoName;
 };
@@ -547,12 +547,12 @@ inline short g_sModelIndexBloodDrop;  // holds the sprite index for blood drops
 inline short g_sModelIndexBloodSpray; // holds the sprite index for blood spray (bigger)
 
 /**
- *	@brief resets the global multi damage accumulator
+ *    @brief resets the global multi damage accumulator
  */
 void ClearMultiDamage();
 
 /**
- *	@brief inflicts contents of global multi damage register on gMultiDamage.pEntity
+ *    @brief inflicts contents of global multi damage register on gMultiDamage.pEntity
  */
 void ApplyMultiDamage( CBaseEntity* inflictor, CBaseEntity* attacker );
 void AddMultiDamage( CBaseEntity* inflictor, CBaseEntity* pEntity, float flDamage, int bitsDamageType );
@@ -562,14 +562,14 @@ void SpawnBlood( Vector vecSpot, int bloodColor, float flDamage );
 int DamageDecal( CBaseEntity* pEntity, int bitsDamageType );
 
 /**
- *	@brief this entity is exploding, or otherwise needs to inflict damage upon entities within a certain range.
- *	only damage ents that can clearly be seen by the explosion!
+ *    @brief this entity is exploding, or otherwise needs to inflict damage upon entities within a certain range.
+ *    only damage ents that can clearly be seen by the explosion!
  */
 void RadiusDamage( Vector vecSrc, CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, float flRadius,
     int bitsDamageType, EntityClassification iClassIgnore = ENTCLASS_NONE );
 
 /**
- *	@brief Collects multiple small damages into a single damage
+ *    @brief Collects multiple small damages into a single damage
  */
 struct MULTIDAMAGE
 {

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -83,14 +83,14 @@ void CTriggerTeleport::Spawn()
 
 void CTriggerTeleport::TeleportTouch( CBaseEntity* pOther )
 {
-	// Only teleport monsters or clients
+    // Only teleport monsters or clients
     if( !FBitSet( pOther->pev->flags, FL_CLIENT | FL_MONSTER ) )
         return;
 
     if( !UTIL_IsMasterTriggered( m_sMaster, pOther ) )
         return;
 
-	// No target to teleport to.
+    // No target to teleport to.
     if( FStrEq( GetTarget(), "" ) )
     {
         return;
@@ -173,7 +173,7 @@ void CPointTeleport::TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
     if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
         return;
 
-	// Figure out who to teleport
+    // Figure out who to teleport
     const char* targetName = GetTarget();
 
     CBaseEntity* teleportee = UTIL_FindEntityByTargetname( nullptr, targetName, pActivator, this );

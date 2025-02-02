@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -43,29 +43,29 @@ void CRpg::Reload()
 {
     if( GetMagazine1() == 1 )
     {
-		// don't bother with any of this if don't need to reload.
+        // don't bother with any of this if don't need to reload.
         return;
     }
 
     if( m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) <= 0 )
         return;
 
-	// because the RPG waits to autoreload when no missiles are active while  the LTD is on, the
-	// weapons code is constantly calling into this function, but is often denied because
-	// a) missiles are in flight, but the LTD is on
-	// or
-	// b) player is totally out of ammo and has nothing to switch to, and should be allowed to
-	//    shine the designator around
-	//
-	// Set the next attack time into the future so that WeaponIdle will get called more often
-	// than reload, allowing the RPG LTD to be updated
+    // because the RPG waits to autoreload when no missiles are active while  the LTD is on, the
+    // weapons code is constantly calling into this function, but is often denied because
+    // a) missiles are in flight, but the LTD is on
+    // or
+    // b) player is totally out of ammo and has nothing to switch to, and should be allowed to
+    //    shine the designator around
+    //
+    // Set the next attack time into the future so that WeaponIdle will get called more often
+    // than reload, allowing the RPG LTD to be updated
 
     m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
 
     if( 0 != m_cActiveRockets && m_fSpotActive )
     {
-		// no reloading when there are active missiles tracking the designator.
-		// ward off future autoreload attempts by setting next attack time into the future for a bit.
+        // no reloading when there are active missiles tracking the designator.
+        // ward off future autoreload attempts by setting next attack time into the future for a bit.
         return;
     }
 
@@ -139,7 +139,7 @@ bool CRpg::CanHolster()
 {
     if( m_fSpotActive && 0 != m_cActiveRockets )
     {
-		// can't put away while guiding a missile.
+        // can't put away while guiding a missile.
         return false;
     }
 
@@ -171,7 +171,7 @@ void CRpg::PrimaryAttack()
         m_pPlayer->m_iWeaponFlash = BRIGHT_GUN_FLASH;
 
 #ifndef CLIENT_DLL
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
         UTIL_MakeVectors( m_pPlayer->pev->v_angle );
@@ -183,8 +183,8 @@ void CRpg::PrimaryAttack()
         pRocket->pev->velocity = pRocket->pev->velocity + gpGlobals->v_forward * DotProduct( m_pPlayer->pev->velocity, gpGlobals->v_forward );
 #endif
 
-		// firing RPG no longer turns on the designator. ALT fire is a toggle switch for the LTD.
-		// Ken signed up for this as a global change (sjb)
+        // firing RPG no longer turns on the designator. ALT fire is a toggle switch for the LTD.
+        // Ken signed up for this as a global change (sjb)
 
         int flags;
 #if defined( CLIENT_WEAPONS )
@@ -269,7 +269,7 @@ void CRpg::UpdateSpot()
 {
 
 #ifndef CLIENT_DLL
-	// Don't turn on the laser if we're in the middle of a reload.
+    // Don't turn on the laser if we're in the middle of a reload.
     if( m_fInReload )
     {
         return;

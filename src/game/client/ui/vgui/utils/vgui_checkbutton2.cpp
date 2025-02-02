@@ -153,7 +153,7 @@ void CCheckButton2::internalMousePressed( MouseCode code )
 
 void CCheckButton2::SetupControls()
 {
-	// Initialize the checkbutton bitmap.
+    // Initialize the checkbutton bitmap.
     Image* pBitmap = m_bChecked ? m_pChecked : m_pUnchecked;
 
     Panel* controls[2] = {&m_CheckboxPanel, &m_Label};
@@ -167,12 +167,12 @@ void CCheckButton2::SetupControls()
     m_CheckboxPanel.setSize( controlSizes[0][0], controlSizes[0][1] );
 
 
-	// Get the label's size.
+    // Get the label's size.
     m_Label.getSize( controlSizes[1][0], controlSizes[1][1] );
     m_Label.setContentAlignment( Label::a_west );
 
 
-	// Position the controls.
+    // Position the controls.
     int iLeftControl = m_bCheckboxLeft ? 0 : 1;
     int rightControl = m_bCheckboxLeft ? 1 : 0;
     int iBiggestY = controlSizes[0][1] > controlSizes[1][0] ? 0 : 1;
@@ -180,7 +180,7 @@ void CCheckButton2::SetupControls()
     controls[rightControl]->setPos( controlSizes[iLeftControl][0] + EXTRA_X, ( controlSizes[iBiggestY][1] - controlSizes[rightControl][1] ) / 2 );
 
 
-	// Fit this control to the sizes of the subcontrols.
+    // Fit this control to the sizes of the subcontrols.
     setSize( controlSizes[0][0] + controlSizes[1][0] + EXTRA_X, ( controlSizes[0][1] > controlSizes[1][1] ) ? controlSizes[0][1] : controlSizes[1][1] );
     repaint();
 }

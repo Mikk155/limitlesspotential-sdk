@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -45,22 +45,22 @@ inline globalvars_t* gpGlobals = nullptr;
 #define FBitSet(flBitVector, bit) (((int)(flBitVector) & (bit)) != 0)
 
 /**
- *	@brief Gets the list of entities.
- *	Will return @c nullptr if there is no map loaded.
+ *    @brief Gets the list of entities.
+ *    Will return @c nullptr if there is no map loaded.
  */
 edict_t* UTIL_GetEntityList();
 
 /**
- *	@brief Gets the local player in singleplayer, or the first player on the server in multiplayer.
+ *    @brief Gets the local player in singleplayer, or the first player on the server in multiplayer.
  */
 CBasePlayer* UTIL_GetLocalPlayer();
 
 #define cchMapNameMost 32
 
 // Dot products for view cone checking
-#define VIEW_FIELD_FULL (float)-1.0		   // +-180 degrees
-#define VIEW_FIELD_WIDE (float)-0.7		   // +-135 degrees 0.1 // +-85 degrees, used for full FOV checks
-#define VIEW_FIELD_NARROW (float)0.7	   // +-45 degrees, more narrow check used to set up ranged attacks
+#define VIEW_FIELD_FULL (float)-1.0           // +-180 degrees
+#define VIEW_FIELD_WIDE (float)-0.7           // +-135 degrees 0.1 // +-85 degrees, used for full FOV checks
+#define VIEW_FIELD_NARROW (float)0.7       // +-45 degrees, more narrow check used to set up ranged attacks
 #define VIEW_FIELD_ULTRA_NARROW (float)0.9 // +-25 degrees, more narrow check used to set up ranged attacks
 
 // All monsters need this data
@@ -113,26 +113,26 @@ CBaseEntity* UTIL_FindEntityByTargetname( CBaseEntity* pStartEntity, const char*
     CBaseEntity* activator = nullptr, CBaseEntity* caller = nullptr );
 
 /**
- *	@brief For doing a reverse lookup. Say you have a door, and want to find its button.
+ *    @brief For doing a reverse lookup. Say you have a door, and want to find its button.
  */
 CBaseEntity* UTIL_FindEntityByTarget( CBaseEntity* pStartEntity, const char* szName );
 
 CBaseEntity* UTIL_FindEntityGeneric( const char* szName, Vector& vecSrc, float flRadius );
 
 /**
- *	@brief Finds entities by an identifier matching either classname or targetname.
+ *    @brief Finds entities by an identifier matching either classname or targetname.
  */
 CBaseEntity* UTIL_FindEntityByIdentifier( CBaseEntity* startEntity, const char* needle );
 
 /**
- *	@brief returns a CBasePlayer pointer to a player by index.
- *	Only returns if the player is spawned and connected, otherwise returns nullptr.
- *	@param playerIndex 1 based player index
+ *    @brief returns a CBasePlayer pointer to a player by index.
+ *    Only returns if the player is spawned and connected, otherwise returns nullptr.
+ *    @param playerIndex 1 based player index
  */
 CBasePlayer* UTIL_PlayerByIndex( int playerIndex );
 
 /**
- *	@brief Finds the player nearest to the given origin.
+ *    @brief Finds the player nearest to the given origin.
  */
 CBasePlayer* UTIL_FindNearestPlayer( const Vector& origin );
 
@@ -205,7 +205,7 @@ void UTIL_Remove( CBaseEntity* pEntity );
 bool UTIL_IsValidEntity( edict_t* pent );
 
 /**
- *	@brief Returns whether the given entity can be removed if requested by players or designers (killtarget).
+ *    @brief Returns whether the given entity can be removed if requested by players or designers (killtarget).
  */
 bool UTIL_IsRemovableEntity( CBaseEntity* entity );
 
@@ -220,18 +220,18 @@ void UTIL_Bubbles( Vector mins, Vector maxs, int count );
 void UTIL_BubbleTrail( Vector from, Vector to, int count );
 
 /**
- *	@brief Initializes the given entity with the given list of keyvalue pairs.
+ *    @brief Initializes the given entity with the given list of keyvalue pairs.
  */
 void UTIL_InitializeKeyValues( CBaseEntity* entity, string_t* keys, string_t* values, int numKeyValues );
 
 /**
- *	@brief Allows precaching of other entities,
- *	initializing it with the given pairs of keyvalues so custom settings precache correctly.
+ *    @brief Allows precaching of other entities,
+ *    initializing it with the given pairs of keyvalues so custom settings precache correctly.
  */
 void UTIL_PrecacheOther( const char* szClassname, string_t* keys, string_t* values, int numKeyValues );
 
 /**
- *	@brief Allows precaching of other entities
+ *    @brief Allows precaching of other entities
  */
 void UTIL_PrecacheOther( const char* szClassname );
 
@@ -275,12 +275,12 @@ void UTIL_StripToken( const char* pKey, char* pDest ); // for redundant keynames
 
 // Misc functions
 /**
- *	@brief QuakeEd only writes a single float for angles (bad idea), so up and down are just constant angles.
+ *    @brief QuakeEd only writes a single float for angles (bad idea), so up and down are just constant angles.
  */
 void SetMovedir( CBaseEntity* entity );
 
 /**
- *	@brief calculates origin of a bmodel from absmin/size because all bmodel origins are 0 0 0
+ *    @brief calculates origin of a bmodel from absmin/size because all bmodel origins are 0 0 0
  */
 Vector VecBModelOrigin( CBaseEntity* bModel );
 
@@ -304,15 +304,15 @@ inline int g_Language;
 #define SPEAKER_START_SILENT 1 // wait for trigger 'on' to start announcements
 
 // Only the first 8 flags are sent from the server to the client.
-constexpr int SND_VOLUME = 1 << 0;			 // Volume is not 255
-constexpr int SND_ATTENUATION = 1 << 1;		 // Attenuation is not 1
-constexpr int SND_LARGE_INDEX = 1 << 2;		 // Sound or sentence index is larger than 8 bits
-constexpr int SND_PITCH = 1 << 3;			 // Pitch is not 100
-constexpr int SND_SENTENCE = 1 << 4;		 // This is a sentence
-constexpr int SND_STOP = 1 << 5;			 // duplicated in protocol.h stop sound
-constexpr int SND_CHANGE_VOL = 1 << 6;		 // duplicated in protocol.h change sound vol
-constexpr int SND_CHANGE_PITCH = 1 << 7;	 // duplicated in protocol.h change sound pitch
-constexpr int SND_SPAWNING = 1 << 8;		 // duplicated in protocol.h we're spawing, used in some cases for ambients
+constexpr int SND_VOLUME = 1 << 0;             // Volume is not 255
+constexpr int SND_ATTENUATION = 1 << 1;         // Attenuation is not 1
+constexpr int SND_LARGE_INDEX = 1 << 2;         // Sound or sentence index is larger than 8 bits
+constexpr int SND_PITCH = 1 << 3;             // Pitch is not 100
+constexpr int SND_SENTENCE = 1 << 4;         // This is a sentence
+constexpr int SND_STOP = 1 << 5;             // duplicated in protocol.h stop sound
+constexpr int SND_CHANGE_VOL = 1 << 6;         // duplicated in protocol.h change sound vol
+constexpr int SND_CHANGE_PITCH = 1 << 7;     // duplicated in protocol.h change sound pitch
+constexpr int SND_SPAWNING = 1 << 8;         // duplicated in protocol.h we're spawing, used in some cases for ambients
 constexpr int SND_PLAY_WHEN_PAUSED = 1 << 9; // For client side use only: start playing sound even when paused.
 constexpr int SND_NOTHOST = 1 << 10;         // Don't send sound message to host ( only for sounds emitted by players ).
 constexpr int SND_ONLYHOST = 1 << 11;         // Don't send sound message to non-host ( only for sounds emitted by players ).
@@ -346,14 +346,14 @@ constexpr int SND_ONLYHOST = 1 << 11;         // Don't send sound message to non
 
 // triggers
 #define SF_TRIGGER_ALLOWMONSTERS 1 // monsters allowed to fire this trigger
-#define SF_TRIGGER_NOCLIENTS 2	   // players not allowed to fire this trigger
-#define SF_TRIGGER_PUSHABLES 4	   // only pushables can fire this trigger
+#define SF_TRIGGER_NOCLIENTS 2       // players not allowed to fire this trigger
+#define SF_TRIGGER_PUSHABLES 4       // only pushables can fire this trigger
 
 // func breakable
 #define SF_BREAK_TRIGGER_ONLY 1 // may only be broken by trigger
-#define SF_BREAK_TOUCH 2		// can be 'crashed through' by running player (plate glass)
-#define SF_BREAK_PRESSURE 4		// can be broken by a player standing on it
-#define SF_BREAK_CROWBAR 256	// instant break if hit with crowbar
+#define SF_BREAK_TOUCH 2        // can be 'crashed through' by running player (plate glass)
+#define SF_BREAK_PRESSURE 4        // can be broken by a player standing on it
+#define SF_BREAK_CROWBAR 256    // instant break if hit with crowbar
 
 // func_pushable (it's also func_breakable, so don't collide with those flags)
 #define SF_PUSH_BREAKABLE 128
@@ -371,19 +371,19 @@ constexpr int SND_ONLYHOST = 1 << 11;         // Don't send sound message to non
 float TEXTURETYPE_PlaySound( TraceResult* ptr, Vector vecSrc, Vector vecEnd, int iBulletType );
 
 /**
- *	@brief Just like @see CBaseEntity::EmitSoundDyn, but will skip the current host player if they have cl_lw turned on.
- *	@details entity must be the current host entity for this to work, and must be called only inside a player's PostThink method.
+ *    @brief Just like @see CBaseEntity::EmitSoundDyn, but will skip the current host player if they have cl_lw turned on.
+ *    @details entity must be the current host entity for this to work, and must be called only inside a player's PostThink method.
  */
 void EMIT_SOUND_PREDICTED( CBaseEntity* entity, int channel, const char* sample, float volume, float attenuation,
     int flags, int pitch );
 
 /**
- *	@brief play a specific sentence over the HEV suit speaker - just pass player entity, and !sentencename
+ *    @brief play a specific sentence over the HEV suit speaker - just pass player entity, and !sentencename
  */
 void EMIT_SOUND_SUIT( CBaseEntity* entity, const char* sample );
 
 /**
- *	@brief play a sentence, randomly selected from the passed in groupname
+ *    @brief play a sentence, randomly selected from the passed in groupname
  */
 void EMIT_GROUPNAME_SUIT( CBaseEntity* entity, const char* groupname );
 
@@ -440,7 +440,7 @@ struct MinuteSecondTime
 };
 
 /**
- *	@brief Converts seconds to minutes and seconds
+ *    @brief Converts seconds to minutes and seconds
  */
 inline MinuteSecondTime SecondsToTime( const int seconds )
 {
@@ -451,7 +451,7 @@ inline MinuteSecondTime SecondsToTime( const int seconds )
 template <>
 struct fmt::formatter<MinuteSecondTime>
 {
-	constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
+    constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin())
     {
         auto it = ctx.begin();
 
@@ -502,12 +502,12 @@ struct FindNextEntityFunctor
 {
     static T* Find( T* pStartEntity )
     {
-		// Start with first player, ignore world
+        // Start with first player, ignore world
         auto index = pStartEntity ? pStartEntity->entindex() + 1 : 1;
 
         auto entities = g_engfuncs.pfnPEntityOfEntIndexAllEntities( 0 );
 
-		// Find the first entity that has a valid baseentity
+        // Find the first entity that has a valid baseentity
         for( ; index < gpGlobals->maxEntities; ++index )
         {
             auto entity = static_cast<CBaseEntity*>( GET_PRIVATE( &entities[index] ) );
@@ -574,7 +574,7 @@ private:
 };
 
 /**
- *	@brief Entity enumerator optimized for iteration from start
+ *    @brief Entity enumerator optimized for iteration from start
  */
 template <typename T, typename FINDER>
 class CEntityEnumerator
@@ -604,7 +604,7 @@ private:
 };
 
 /**
- *	@brief Entity enumerator for iteration from a given start entity
+ *    @brief Entity enumerator for iteration from a given start entity
  */
 template <typename T, typename FINDER>
 class CEntityEnumeratorWithStart
@@ -675,21 +675,21 @@ template <typename T, typename FINDER>
 class CNextEntityIterator
 {
 public:
-	constexpr CNextEntityIterator() = default;
+    constexpr CNextEntityIterator() = default;
 
-	constexpr CNextEntityIterator(T* pStartEntity)
+    constexpr CNextEntityIterator(T* pStartEntity)
         : m_pEntity( pStartEntity )
     {
     }
 
-	constexpr CNextEntityIterator(const CNextEntityIterator&) = default;
-	constexpr CNextEntityIterator& operator=(const CNextEntityIterator&) = default;
+    constexpr CNextEntityIterator(const CNextEntityIterator&) = default;
+    constexpr CNextEntityIterator& operator=(const CNextEntityIterator&) = default;
 
-	constexpr const T* operator*() const { return m_pEntity; }
+    constexpr const T* operator*() const { return m_pEntity; }
 
-	constexpr T* operator*() { return m_pEntity; }
+    constexpr T* operator*() { return m_pEntity; }
 
-	constexpr T* operator->() { return m_pEntity; }
+    constexpr T* operator->() { return m_pEntity; }
 
     void operator++()
     {
@@ -701,12 +701,12 @@ public:
         ++*this;
     }
 
-	constexpr bool operator==(const CNextEntityIterator& other) const
+    constexpr bool operator==(const CNextEntityIterator& other) const
     {
         return m_pEntity == other.m_pEntity;
     }
 
-	constexpr bool operator!=(const CNextEntityIterator& other) const
+    constexpr bool operator!=(const CNextEntityIterator& other) const
     {
         return !( *this == other );
     }
@@ -716,7 +716,7 @@ private:
 };
 
 /**
- *	@brief Entity enumerator optimized for iteration from start
+ *    @brief Entity enumerator optimized for iteration from start
  */
 template <typename T, typename FINDER>
 class CNextEntityEnumerator
@@ -746,8 +746,8 @@ inline CNextEntityEnumerator<T, FindNextEntityFunctor<T>> UTIL_FindEntities()
 }
 
 /**
- *	@brief Helper type to run a function when the helper is destroyed.
- *	Useful for running cleanup on scope exit and function return.
+ *    @brief Helper type to run a function when the helper is destroyed.
+ *    Useful for running cleanup on scope exit and function return.
  */
 template <typename Func>
 struct CallOnDestroy

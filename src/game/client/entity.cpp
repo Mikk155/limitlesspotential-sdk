@@ -37,7 +37,7 @@ static TEMPENTITY* gpTempEntFree = nullptr;
 static TEMPENTITY* gpTempEntActive = nullptr;
 
 /**
- *	@brief Return 0 to filter entity from visible list for rendering
+ *    @brief Return 0 to filter entity from visible list for rendering
  */
 int DLLEXPORT HUD_AddEntity( int type, cl_entity_t* ent, const char* modelname )
 {
@@ -52,10 +52,10 @@ int DLLEXPORT HUD_AddEntity( int type, cl_entity_t* ent, const char* modelname )
     default:
         break;
     }
-	// each frame every entity passes this function, so the overview hooks it to filter the overview entities
-	// in spectator mode:
-	// each frame every entity passes this function, so the overview hooks
-	// it to filter the overview entities
+    // each frame every entity passes this function, so the overview hooks it to filter the overview entities
+    // in spectator mode:
+    // each frame every entity passes this function, so the overview hooks
+    // it to filter the overview entities
 
     if( 0 != g_iUser1 )
     {
@@ -70,33 +70,33 @@ int DLLEXPORT HUD_AddEntity( int type, cl_entity_t* ent, const char* modelname )
 }
 
 /**
- *	@brief The server sends us our origin with extra precision as part of the clientdata structure,
- *	not during the normal playerstate update in entity_state_t.
- *	In order for these overrides to eventually get to the appropriate playerstate structure,
- *	we need to copy them into the state structure at this point.
+ *    @brief The server sends us our origin with extra precision as part of the clientdata structure,
+ *    not during the normal playerstate update in entity_state_t.
+ *    In order for these overrides to eventually get to the appropriate playerstate structure,
+ *    we need to copy them into the state structure at this point.
  */
 void DLLEXPORT HUD_TxferLocalOverrides( entity_state_t* state, const clientdata_t* client )
 {
     state->origin = client->origin;
 
-	// Spectator
+    // Spectator
     state->iuser1 = client->iuser1;
     state->iuser2 = client->iuser2;
 
-	// Duck prevention
+    // Duck prevention
     state->iuser3 = client->iuser3;
 
-	// Fire prevention
+    // Fire prevention
     state->iuser4 = client->iuser4;
 }
 
 /**
- *	@brief We have received entity_state_t for this player over the network.
- *	We need to copy appropriate fields to the playerstate structure
+ *    @brief We have received entity_state_t for this player over the network.
+ *    We need to copy appropriate fields to the playerstate structure
  */
 void DLLEXPORT HUD_ProcessPlayerState( entity_state_t* dst, const entity_state_t* src )
 {
-	// Copy in network data
+    // Copy in network data
     dst->origin = src->origin;
     dst->angles = src->angles;
 
@@ -138,7 +138,7 @@ void DLLEXPORT HUD_ProcessPlayerState( entity_state_t* dst, const entity_state_t
     dst->colormap = src->colormap;
 
 
-	// Save off some data so other areas of the Client DLL can get to it
+    // Save off some data so other areas of the Client DLL can get to it
     cl_entity_t* player = gEngfuncs.GetLocalPlayer(); // Get the local player's index
     if( dst->number == player->index )
     {
@@ -152,11 +152,11 @@ void DLLEXPORT HUD_ProcessPlayerState( entity_state_t* dst, const entity_state_t
 }
 
 /**
- *	@brief Because we can predict an arbitrary number of frames before the server responds with an update,
- *	we need to be able to copy client side prediction data in from the state that the server ack'd receiving,
- *	which can be anywhere along the predicted frame path ( i.e., we could predict 20 frames into the future
- *	and the server ack's up through 10 of those frames ), so we need to copy persistent client-side only state
- *	from the 10th predicted frame to the slot the server update is occupying.
+ *    @brief Because we can predict an arbitrary number of frames before the server responds with an update,
+ *    we need to be able to copy client side prediction data in from the state that the server ack'd receiving,
+ *    which can be anywhere along the predicted frame path ( i.e., we could predict 20 frames into the future
+ *    and the server ack's up through 10 of those frames ), so we need to copy persistent client-side only state
+ *    from the 10th predicted frame to the slot the server update is occupying.
  */
 void DLLEXPORT HUD_TxferPredictionData( entity_state_t* ps, const entity_state_t* pps, clientdata_t* pcd, const clientdata_t* ppcd, weapon_data_t* wd, const weapon_data_t* pwd )
 {
@@ -179,26 +179,26 @@ void DLLEXPORT HUD_TxferPredictionData( entity_state_t* ps, const entity_state_t
 
     pcd->deadflag = ppcd->deadflag;
 
-	// Spectating or not dead == get control over view angles.
+    // Spectating or not dead == get control over view angles.
     g_iAlive = 0 != ppcd->iuser1 || ( pcd->deadflag == DEAD_NO );
 
-	// Spectator
+    // Spectator
     pcd->iuser1 = ppcd->iuser1;
     pcd->iuser2 = ppcd->iuser2;
 
-	// Duck prevention
+    // Duck prevention
     pcd->iuser3 = ppcd->iuser3;
 
     if( 0 != gEngfuncs.IsSpectateOnly() )
     {
-		// in specator mode we tell the engine who we want to spectate and how
-		// iuser3 is not used for duck prevention (since the spectator can't duck at all)
+        // in specator mode we tell the engine who we want to spectate and how
+        // iuser3 is not used for duck prevention (since the spectator can't duck at all)
         pcd->iuser1 = g_iUser1; // observer mode
         pcd->iuser2 = g_iUser2; // first target
         pcd->iuser3 = g_iUser3; // second target
     }
 
-	// Fire prevention
+    // Fire prevention
     pcd->iuser4 = ppcd->iuser4;
 
     pcd->fuser2 = ppcd->fuser2;
@@ -223,7 +223,7 @@ void BeamEndModel()
     int modelindex;
     model_t* mod;
 
-	// Load it up with some bogus data
+    // Load it up with some bogus data
     player = gEngfuncs.GetLocalPlayer();
     if( !player )
         return;
@@ -232,7 +232,7 @@ void BeamEndModel()
     if( !mod )
         return;
 
-	// Slot 1
+    // Slot 1
     model = &beams[1];
 
     *model = *player;
@@ -240,7 +240,7 @@ void BeamEndModel()
     model->model = mod;
     model->curstate.modelindex = modelindex;
 
-	// Move it out a bit
+    // Move it out a bit
     model->origin[0] = player->origin[0] - 100;
     model->origin[1] = player->origin[1];
 
@@ -284,7 +284,7 @@ void Beams()
 #endif
 
 /**
- *	@brief Gives us a chance to add additional entities to the render this frame
+ *    @brief Gives us a chance to add additional entities to the render this frame
  */
 void DLLEXPORT HUD_CreateEntities()
 {
@@ -292,15 +292,15 @@ void DLLEXPORT HUD_CreateEntities()
     Beams();
 #endif
 
-	// Add in any game specific objects
+    // Add in any game specific objects
     Game_AddObjects();
 
     GetClientVoiceMgr()->CreateEntities();
 }
 
 /**
- *	@brief The entity's studio model description indicated an event was fired during this frame,
- *	handle the event by it's tag ( e.g., muzzleflash, sound )
+ *    @brief The entity's studio model description indicated an event was fired during this frame,
+ *    handle the event by it's tag ( e.g., muzzleflash, sound )
  */
 void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* entity )
 {
@@ -328,7 +328,7 @@ void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* 
     case 5002:
         gEngfuncs.pEfxAPI->R_SparkEffect( entity->attachment[0], atoi( event->options ), -100, 100 );
         break;
-		// Client side sound
+        // Client side sound
     case 5004:
     {
         auto sample = sound::g_ClientSoundReplacement.Lookup( event->options );
@@ -341,14 +341,14 @@ void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* 
 }
 
 /**
- *	@brief Simulation and cleanup of temporary entities
- *	@param frametime Simulation time
- *	@param client_time Absolute time on client
- *	@param cl_gravity True gravity on client
- *	@param ppTempEntFree List of freed temporary ents
- *	@param ppTempEntActive List of active temporary ents
- *	@param Callback_AddVisibleEntity Callback to add an entity to the list of visible entities to draw this frame
- *	@param Callback_TempEntPlaySound Obsolete. Use CL_TempEntPlaySound instead.
+ *    @brief Simulation and cleanup of temporary entities
+ *    @param frametime Simulation time
+ *    @param client_time Absolute time on client
+ *    @param cl_gravity True gravity on client
+ *    @param ppTempEntFree List of freed temporary ents
+ *    @param ppTempEntActive List of active temporary ents
+ *    @param Callback_AddVisibleEntity Callback to add an entity to the list of visible entities to draw this frame
+ *    @param Callback_TempEntPlaySound Obsolete. Use CL_TempEntPlaySound instead.
  */
 void DLLEXPORT HUD_TempEntUpdate( 
     double frametime,
@@ -359,7 +359,7 @@ void DLLEXPORT HUD_TempEntUpdate(
     int ( *Callback_AddVisibleEntity )( cl_entity_t* pEntity ),
     void ( *Callback_TempEntPlaySound )( TEMPENTITY* pTemp, float damp ) )
 {
-	// Use our own temp ent list instead.
+    // Use our own temp ent list instead.
     ppTempEntFree = &gpTempEntFree;
     ppTempEntActive = &gpTempEntActive;
 
@@ -375,28 +375,28 @@ void DLLEXPORT HUD_TempEntUpdate(
     if( g_pParticleMan )
         g_pParticleMan->SetVariables( cl_gravity, vAngles );
 
-	// Nothing to simulate
+    // Nothing to simulate
     if( !*ppTempEntActive )
         return;
 
-	// in order to have tents collide with players, we have to run the player prediction code so
-	// that the client has the player list. We run this code once when we detect any COLLIDEALL
-	// tent, then set this bool to true so the code doesn't get run again if there's more than
-	// one COLLIDEALL ent for this update. (often are).
+    // in order to have tents collide with players, we have to run the player prediction code so
+    // that the client has the player list. We run this code once when we detect any COLLIDEALL
+    // tent, then set this bool to true so the code doesn't get run again if there's more than
+    // one COLLIDEALL ent for this update. (often are).
     gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );
 
-	// Store off the old count
+    // Store off the old count
     gEngfuncs.pEventAPI->EV_PushPMStates();
 
-	// Now add in all of the players.
+    // Now add in all of the players.
     gEngfuncs.pEventAPI->EV_SetSolidPlayers( -1 );
 
-	// !!!BUGBUG	-- This needs to be time based
+    // !!!BUGBUG    -- This needs to be time based
     gTempEntFrame = ( gTempEntFrame + 1 ) & 31;
 
     pTemp = *ppTempEntActive;
 
-	// !!! Don't simulate while paused....  This is sort of a hack, revisit.
+    // !!! Don't simulate while paused....  This is sort of a hack, revisit.
     if( frametime <= 0 )
     {
         while( pTemp )
@@ -454,14 +454,14 @@ void DLLEXPORT HUD_TempEntUpdate(
 
             if( ( pTemp->flags & FTENT_SPARKSHOWER ) != 0 )
             {
-				// Adjust speed if it's time
-				// Scale is next think time
+                // Adjust speed if it's time
+                // Scale is next think time
                 if( client_time > pTemp->entity.baseline.scale )
                 {
-					// Show Sparks
+                    // Show Sparks
                     gEngfuncs.pEfxAPI->R_SparkEffect( pTemp->entity.origin, 8, -200, 200 );
 
-					// Reduce life
+                    // Reduce life
                     pTemp->entity.baseline.framerate -= 0.1;
 
                     if( pTemp->entity.baseline.framerate <= 0.0 )
@@ -470,10 +470,10 @@ void DLLEXPORT HUD_TempEntUpdate(
                     }
                     else
                     {
-						// So it will die no matter what
+                        // So it will die no matter what
                         pTemp->die = client_time + 0.5;
 
-						// Next think
+                        // Next think
                         pTemp->entity.baseline.scale = client_time + 0.1;
                     }
                 }
@@ -521,7 +521,7 @@ void DLLEXPORT HUD_TempEntUpdate(
 
                     if( ( pTemp->flags & FTENT_SPRANIMATELOOP ) == 0 )
                     {
-						// this animating sprite isn't set to loop, so destroy it.
+                        // this animating sprite isn't set to loop, so destroy it.
                         pTemp->die = client_time;
                         pTemp = pnext;
                         continue;
@@ -536,7 +536,7 @@ void DLLEXPORT HUD_TempEntUpdate(
                     pTemp->entity.curstate.frame = pTemp->entity.curstate.frame - (int)( pTemp->entity.curstate.frame );
                 }
             }
-			// Experiment
+            // Experiment
 #if 0
             if( pTemp->flags & FTENT_SCALE )
                 pTemp->entity.curstate.framerate += 20.0 * ( frametime / pTemp->entity.curstate.framerate );
@@ -597,8 +597,8 @@ void DLLEXPORT HUD_TempEntUpdate(
 
                         if( ( pTemp->flags & FTENT_SPARKSHOWER ) != 0 )
                         {
-							// Chop spark speeds a bit more
-							//
+                            // Chop spark speeds a bit more
+                            //
                             pTemp->entity.baseline.origin = pTemp->entity.baseline.origin * 0.6;
 
                             if( pTemp->entity.baseline.origin.Length() < 10 )
@@ -618,9 +618,9 @@ void DLLEXPORT HUD_TempEntUpdate(
                 {
                     float proj, damp;
 
-					// Place at contact point
+                    // Place at contact point
                     pTemp->entity.origin = pTemp->entity.prevstate.origin + ( ( traceFraction * frametime ) * pTemp->entity.baseline.origin );
-					// Damp velocity
+                    // Damp velocity
                     damp = pTemp->bounceFactor;
                     if( ( pTemp->flags & ( FTENT_GRAVITY | FTENT_SLOWGRAVITY ) ) != 0 )
                     {
@@ -644,18 +644,18 @@ void DLLEXPORT HUD_TempEntUpdate(
 
                     if( ( pTemp->flags & FTENT_COLLIDEKILL ) != 0 )
                     {
-						// die on impact
+                        // die on impact
                         pTemp->flags &= ~FTENT_FADEOUT;
                         pTemp->die = client_time;
                     }
                     else
                     {
-						// Reflect velocity
+                        // Reflect velocity
                         if( damp != 0 )
                         {
                             proj = DotProduct( pTemp->entity.baseline.origin, traceNormal );
                             pTemp->entity.baseline.origin = pTemp->entity.baseline.origin + ( ( -proj * 2 ) * traceNormal );
-							// Reflect rotation (fake)
+                            // Reflect rotation (fake)
 
                             pTemp->entity.angles[1] = -pTemp->entity.angles[1];
                         }
@@ -700,7 +700,7 @@ void DLLEXPORT HUD_TempEntUpdate(
                 }
             }
 
-			// Cull to PVS (not frustum cull, just PVS)
+            // Cull to PVS (not frustum cull, just PVS)
             if( ( pTemp->flags & FTENT_NOMODEL ) == 0 )
             {
                 if( 0 == Callback_AddVisibleEntity( &pTemp->entity ) )
@@ -717,21 +717,21 @@ void DLLEXPORT HUD_TempEntUpdate(
     }
 
 finish:
-	// Restore state info
+    // Restore state info
     gEngfuncs.pEventAPI->EV_PopPMStates();
 }
 
 /**
- *	@brief If you specify negative numbers for beam start and end point entities,
- *	then the engine will call back into this function requesting a pointer to a cl_entity_t object
- *	that describes the entity to attach the beam onto.
- *	Indices must start at 1, not zero.
+ *    @brief If you specify negative numbers for beam start and end point entities,
+ *    then the engine will call back into this function requesting a pointer to a cl_entity_t object
+ *    that describes the entity to attach the beam onto.
+ *    Indices must start at 1, not zero.
  */
 cl_entity_t DLLEXPORT* HUD_GetUserEntity( int index )
 {
 #if defined( BEAM_TEST )
-	// None by default, you would return a valic pointer if you create a client side
-	//  beam and attach it to a client side entity.
+    // None by default, you would return a valic pointer if you create a client side
+    //  beam and attach it to a client side entity.
     if( index > 0 && index <= 1 )
     {
         return &beams[index];
@@ -869,7 +869,7 @@ static void MsgFunc_TargetLaser( const char* name, BufferReader& reader )
 {
     if( g_TargetLaser )
     {
-		// Die immediately
+        // Die immediately
         g_TargetLaser->die = 0;
         g_TargetLaser->brightness = 0;
         g_TargetLaser = nullptr;
@@ -892,10 +892,10 @@ static void MsgFunc_TargetLaser( const char* name, BufferReader& reader )
         g_TargetLaser = gEngfuncs.pEfxAPI->R_BeamEntPoint( entityIndex, vec3_origin, modelIndex,
             1.f, width, 0, 255, 10, 0, 10, color.x, color.y, color.z );
 
-		// Never dies on its own.
+        // Never dies on its own.
         g_TargetLaser->die = std::numeric_limits<float>::max();
 
-		// Initialize laser end point for first frame.
+        // Initialize laser end point for first frame.
         TempEntity_UpdateTargetLaser();
     }
 }
@@ -941,9 +941,9 @@ void TempEntity_UpdateTargetLaser()
         return;
     }
 
-	// Find the physent that represents this entity so we can ignore it during the trace.
-	// This can be nullptr if there are too many visible entities on the server side,
-	// in which case we won't be able to hit it anyway.
+    // Find the physent that represents this entity so we can ignore it during the trace.
+    // This can be nullptr if there are too many visible entities on the server side,
+    // in which case we won't be able to hit it anyway.
     auto tankPhysent = TempEntity_FindPhysent( tankEntity );
 
     Vector forward;
@@ -952,12 +952,12 @@ void TempEntity_UpdateTargetLaser()
 
     gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );
 
-	// Store off the old count
+    // Store off the old count
     gEngfuncs.pEventAPI->EV_PushPMStates();
 
     auto localPlayer = gEngfuncs.GetLocalPlayer();
 
-	// Now add in all of the players.
+    // Now add in all of the players.
     gEngfuncs.pEventAPI->EV_SetSolidPlayers( localPlayer->index - 1 );
 
     gEngfuncs.pEventAPI->EV_SetTraceHull( 2 );
@@ -971,7 +971,7 @@ void TempEntity_UpdateTargetLaser()
 
     gEngfuncs.pEventAPI->EV_PopPMStates();
 
-	// Even if we didn't hit anything this is still the best we've got.
+    // Even if we didn't hit anything this is still the best we've got.
     g_TargetLaser->target = tr.endpos;
 
     g_TargetLaser->brightness = 255;
@@ -994,7 +994,7 @@ void CL_TempEntInit()
 
 void R_KillAttachedTents( int client )
 {
-	// TODO: off by one here?
+    // TODO: off by one here?
     if( client < 0 || client > gEngfuncs.GetMaxClients() )
     {
         Con_Printf( "Bad client in R_KillAttachedTents()!\n" );
@@ -1032,7 +1032,7 @@ void CL_TempEntPrepare( TEMPENTITY* pTemp, model_t* model )
 
 static void WarnAboutTempEntOverflow()
 {
-	// Only print this once per frame to avoid frame drops.
+    // Only print this once per frame to avoid frame drops.
     static float lastTempEntOverflowWarningTime = 0;
 
     const float time = gEngfuncs.GetClientTime();
@@ -1147,7 +1147,7 @@ static efx_api_t g_EngineEFXAPI{};
 
 void TempEntity_Initialize()
 {
-	// Override engine temp entity allocation to use our own list.
+    // Override engine temp entity allocation to use our own list.
     auto efx = gEngfuncs.pEfxAPI;
 
     g_EngineEFXAPI = *efx;
@@ -1165,7 +1165,7 @@ void TempEntity_Shutdown()
 {
     if( g_EngineEFXAPI.R_AllocParticle )
     {
-		// Restore original API. Necessary in case somebody uses Change Game to load another mod.
+        // Restore original API. Necessary in case somebody uses Change Game to load another mod.
         *gEngfuncs.pEfxAPI = g_EngineEFXAPI;
     }
 }

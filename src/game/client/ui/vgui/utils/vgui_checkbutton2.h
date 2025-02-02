@@ -35,29 +35,29 @@ public:
     CCheckButton2();
     ~CCheckButton2();
 
-	// Initialize the button with these.
+    // Initialize the button with these.
     void SetImages( char const* pChecked, char const* pUnchecked );
     void SetImages( Image* pChecked, Image* pUnchecked ); // If you use this, the button will never delete the images.
     void DeleteImages();
 
-	// The checkbox can be to the left or the right of the text (default is left).
+    // The checkbox can be to the left or the right of the text (default is left).
     void SetCheckboxLeft( bool bLeftAlign );
     bool GetCheckboxLeft();
 
-	// Set the label text.
+    // Set the label text.
     void SetText( char const* pText, ... );
     void SetTextColor( int r, int g, int b, int a );
 
-	// You can register for change notification here.
+    // You can register for change notification here.
     void SetHandler( ICheckButton2Handler* pHandler );
 
-	// Get/set the check state.
+    // Get/set the check state.
     bool IsChecked();
     void SetChecked( bool bChecked );
 
 
 
-	// Panel overrides.
+    // Panel overrides.
 public:
     virtual void internalMousePressed( MouseCode code );
 
@@ -66,7 +66,7 @@ protected:
     void SetupControls();
 
 
-	// InputSignal overrides.
+    // InputSignal overrides.
 protected:
     virtual void mousePressed( MouseCode code, Panel* panel );
 

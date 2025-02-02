@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -28,7 +28,7 @@
 #define EYE_LOOK 4
 
 /**
- *	@brief evil, satan fish monster
+ *    @brief evil, satan fish monster
  */
 class CIchthyosaur : public CFlyingMonster
 {
@@ -317,7 +317,7 @@ bool CIchthyosaur::CheckMeleeAttack1( float flDot, float flDist )
 
 void CIchthyosaur::BiteTouch( CBaseEntity* pOther )
 {
-	// bite if we hit who we want to eat
+    // bite if we hit who we want to eat
     if( pOther == m_hEnemy )
     {
         m_flEnemyTouched = gpGlobals->time;
@@ -350,7 +350,7 @@ void CIchthyosaur::SetYawSpeed()
 
 void CIchthyosaur::Killed( CBaseEntity* attacker, int iGib )
 {
-	// overrides CFlyingMonster.
+    // overrides CFlyingMonster.
     CBaseMonster::Killed( attacker, iGib );
     pev->velocity = Vector( 0, 0, 0 );
 }
@@ -359,7 +359,7 @@ void CIchthyosaur::BecomeDead()
 {
     pev->takedamage = DAMAGE_YES; // don't let autoaim aim at corpses.
 
-	// give the corpse half of the monster's original maximum health.
+    // give the corpse half of the monster's original maximum health.
     pev->health = pev->max_health / 2;
     pev->max_health = 5; // max_health now becomes a counter for how many blood decals the corpse can place.
 }
@@ -437,7 +437,7 @@ void CIchthyosaur::Spawn()
 
     m_afCapability = bits_CAP_RANGE_ATTACK1 | bits_CAP_SWIM;
 
-	// Ichthyosaurs have their own use functions so never allow follow.
+    // Ichthyosaurs have their own use functions so never allow follow.
     m_AllowFollow = false;
 
     MonsterInit();
@@ -470,7 +470,7 @@ void CIchthyosaur::Precache()
 
 const Schedule_t* CIchthyosaur::GetSchedule()
 {
-	// AILogger->debug("GetSchedule()");
+    // AILogger->debug("GetSchedule()");
     switch ( m_MonsterState )
     {
     case MONSTERSTATE_IDLE:
@@ -483,12 +483,12 @@ const Schedule_t* CIchthyosaur::GetSchedule()
 
     case MONSTERSTATE_COMBAT:
         m_flMaxSpeed = 400;
-		// eat them
+        // eat them
         if( HasConditions( bits_COND_CAN_MELEE_ATTACK1 ) )
         {
             return GetScheduleOfType( SCHED_MELEE_ATTACK1 );
         }
-		// chase them down and eat them
+        // chase them down and eat them
         if( HasConditions( bits_COND_CAN_RANGE_ATTACK1 ) )
         {
             return GetScheduleOfType( SCHED_CHASE_ENEMY );
@@ -510,7 +510,7 @@ const Schedule_t* CIchthyosaur::GetSchedule()
 
 const Schedule_t* CIchthyosaur::GetScheduleOfType( int Type )
 {
-	// AILogger->debug("GetScheduleOfType({}) {}", Type, m_bOnAttack);
+    // AILogger->debug("GetScheduleOfType({}) {}", Type, m_bOnAttack);
     switch ( Type )
     {
     case SCHED_IDLE_WALK:
@@ -522,7 +522,7 @@ const Schedule_t* CIchthyosaur::GetScheduleOfType( int Type )
     case SCHED_DIE:
         if( pev->deadflag == DEAD_DEAD )
         {
-			// Already dead, immediately switch to float.
+            // Already dead, immediately switch to float.
             return slFloat;
         }
 
@@ -559,7 +559,7 @@ void CIchthyosaur::StartTask( const Task_t* pTask )
     {
         const int sequenceIndex = LookupSequence( "bellyup" );
 
-		// Don't restart the animation if we're restoring.
+        // Don't restart the animation if we're restoring.
         if( pev->sequence != sequenceIndex )
         {
             pev->skin = EYE_BASE;
@@ -595,7 +595,7 @@ void CIchthyosaur::RunTask( const Task_t* pTask )
 
             Vector vecPos = vecFrom + vecDelta * m_idealDist + vecSwim * 32;
 
-			// AILogger->debug("vecPos {:.0f}", vecPos);
+            // AILogger->debug("vecPos {:.0f}", vecPos);
 
             TraceResult tr;
 
@@ -606,7 +606,7 @@ void CIchthyosaur::RunTask( const Task_t* pTask )
 
             m_SaveVelocity = m_SaveVelocity * 0.8 + 0.2 * ( vecPos - pev->origin ).Normalize() * m_flightSpeed;
 
-			// AILogger->debug("m_SaveVelocity {:.2f}", m_SaveVelocity);
+            // AILogger->debug("m_SaveVelocity {:.2f}", m_SaveVelocity);
 
             if( HasConditions( bits_COND_ENEMY_FACING_ME ) && m_hEnemy->FVisible( this ) )
             {
@@ -642,7 +642,7 @@ void CIchthyosaur::RunTask( const Task_t* pTask )
                     m_flightSpeed += 4;
                 }
             }
-			// AILogger->debug("{:.0f}", m_idealDist);
+            // AILogger->debug("{:.0f}", m_idealDist);
         }
         else
         {
@@ -651,7 +651,7 @@ void CIchthyosaur::RunTask( const Task_t* pTask )
 
         if( m_flNextAlert < gpGlobals->time )
         {
-			// AILogger->debug("AlertSound()");
+            // AILogger->debug("AlertSound()");
             AlertSound();
             m_flNextAlert = gpGlobals->time + RANDOM_FLOAT( 3, 5 );
         }
@@ -683,7 +683,7 @@ void CIchthyosaur::RunTask( const Task_t* pTask )
         {
             pev->velocity.z -= 8;
         }
-		// AILogger->debug("{}", pev->velocity.z);
+        // AILogger->debug("{}", pev->velocity.z);
         break;
 
     default:
@@ -818,7 +818,7 @@ void CIchthyosaur::SetActivity( Activity NewActivity )
 
     CFlyingMonster::SetActivity( NewActivity );
 
-	// Restore belly up state.
+    // Restore belly up state.
     if( pev->deadflag == DEAD_DEAD )
     {
         SetSequenceByName( "bellyup" );
@@ -841,7 +841,7 @@ void CIchthyosaur::MonsterThink()
         {
             Swim();
 
-			// blink the eye
+            // blink the eye
             if( m_flBlink < gpGlobals->time )
             {
                 pev->skin = EYE_CLOSED;
@@ -895,7 +895,7 @@ void CIchthyosaur::Swim()
             SetActivity( ACT_WALK );
         if( m_IdealActivity == ACT_WALK )
             pev->framerate = m_flightSpeed / 150.0;
-		// AILogger->debug("walk {:.2f}", pev->framerate);
+        // AILogger->debug("walk {:.2f}", pev->framerate);
     }
     else
     {
@@ -903,19 +903,19 @@ void CIchthyosaur::Swim()
             SetActivity( ACT_RUN );
         if( m_IdealActivity == ACT_RUN )
             pev->framerate = m_flightSpeed / 150.0;
-		// AILogger->debug("run  {:.2f}", pev->framerate);
+        // AILogger->debug("run  {:.2f}", pev->framerate);
     }
 
-	/*
-		if (!m_pBeam)
-		{
-			m_pBeam = CBeam::BeamCreate( "sprites/laserbeam.spr", 80 );
-			m_pBeam->PointEntInit( pev->origin + m_SaveVelocity, entindex( ) );
-			m_pBeam->SetEndAttachment( 1 );
-			m_pBeam->SetColor( 255, 180, 96 );
-			m_pBeam->SetBrightness( 192 );
-		}
-	*/
+    /*
+        if (!m_pBeam)
+        {
+            m_pBeam = CBeam::BeamCreate( "sprites/laserbeam.spr", 80 );
+            m_pBeam->PointEntInit( pev->origin + m_SaveVelocity, entindex( ) );
+            m_pBeam->SetEndAttachment( 1 );
+            m_pBeam->SetColor( 255, 180, 96 );
+            m_pBeam->SetBrightness( 192 );
+        }
+    */
 #define PROBE_LENGTH 150
     Angles = UTIL_VecToAngles( m_SaveVelocity );
     Angles.x = -Angles.x;
@@ -933,7 +933,7 @@ void CIchthyosaur::Swim()
 
     Angles = Vector( -pev->angles.x, pev->angles.y, pev->angles.z );
     AngleVectors( Angles, Forward, Right, Up );
-	// AILogger->debug("{} : {}", Angles.x, Forward.z);
+    // AILogger->debug("{} : {}", Angles.x, Forward.z);
 
     float flDot = DotProduct( Forward, m_SaveVelocity );
     if( flDot > 0.5 )
@@ -943,22 +943,22 @@ void CIchthyosaur::Swim()
     else
         pev->velocity = m_SaveVelocity = m_SaveVelocity * 80;
 
-	// AILogger->debug("{:.0f} {:.0f}", m_flightSpeed, pev->velocity.Length());
+    // AILogger->debug("{:.0f} {:.0f}", m_flightSpeed, pev->velocity.Length());
 
 
-	// AILogger->debug("Steer {}", SteeringVector);
+    // AILogger->debug("Steer {}", SteeringVector);
 
-	/*
-	m_pBeam->SetStartPos( pev->origin + pev->velocity );
-	m_pBeam->RelinkBeam( );
+    /*
+    m_pBeam->SetStartPos( pev->origin + pev->velocity );
+    m_pBeam->RelinkBeam( );
 */
 
-	// AILogger->debug("speed {}", m_flightSpeed);
+    // AILogger->debug("speed {}", m_flightSpeed);
 
     Angles = UTIL_VecToAngles( m_SaveVelocity );
 
-	// Smooth Pitch
-	//
+    // Smooth Pitch
+    //
     if( Angles.x > 180 )
         Angles.x = Angles.x - 360;
     pev->angles.x = UTIL_Approach( Angles.x, pev->angles.x, 50 * 0.1 );
@@ -967,10 +967,10 @@ void CIchthyosaur::Swim()
     if( pev->angles.x > 80 )
         pev->angles.x = 80;
 
-	// Smooth Yaw and generate Roll
-	//
+    // Smooth Yaw and generate Roll
+    //
     float turn = 360;
-	// AILogger->debug("Y {:.0f} {:.0f}", Angles.y, pev->angles.y);
+    // AILogger->debug("Y {:.0f} {:.0f}", Angles.y, pev->angles.y);
 
     if( fabs( Angles.y - pev->angles.y ) < fabs( turn ) )
     {
@@ -987,7 +987,7 @@ void CIchthyosaur::Swim()
 
     float speed = m_flightSpeed * 0.1;
 
-	// AILogger->debug("speed {:.0f} {%f}", turn, speed);
+    // AILogger->debug("speed {:.0f} {%f}", turn, speed);
     if( fabs( turn ) > speed )
     {
         if( turn < 0.0 )
@@ -1007,12 +1007,12 @@ void CIchthyosaur::Swim()
 
     yaw_adj = yaw_adj * 0.8 + turn;
 
-	// AILogger->debug("yaw {} : {}", turn, yaw_adj);
+    // AILogger->debug("yaw {} : {}", turn, yaw_adj);
 
     SetBoneController( 0, -yaw_adj / 4.0 );
 
-	// Roll Smoothing
-	//
+    // Roll Smoothing
+    //
     turn = 360;
     if( fabs( Angles.z - pev->angles.z ) < fabs( turn ) )
     {
@@ -1049,7 +1049,7 @@ void CIchthyosaur::Swim()
 
     AngleVectors( Vector( -Angles.x, Angles.y, Angles.z ), Forward, Right, Up );
 
-	// UTIL_MoveToOrigin ( edict(), pev->origin + Forward * speed, speed, MOVE_STRAFE );
+    // UTIL_MoveToOrigin ( edict(), pev->origin + Forward * speed, speed, MOVE_STRAFE );
 }
 
 Vector CIchthyosaur::DoProbe( const Vector& Probe )

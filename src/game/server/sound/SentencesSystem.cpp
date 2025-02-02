@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -121,7 +121,7 @@ bool SentencesParser::ParseSentences( const json& input )
 
             if( !duplicateNameCheck.insert( std::string{name} ).second )
             {
-				// Need to ignore duplicates in the same file to match original behavior.
+                // Need to ignore duplicates in the same file to match original behavior.
                 m_Logger->warn( "Encountered duplicate sentence name \"{}\", ignoring", name );
                 continue;
             }
@@ -211,7 +211,7 @@ void SentencesSystem::LoadSentences( std::span<const std::string> fileNames )
 
     m_Logger->debug( "Loaded {} out of max {} sentences with {} sentence groups", m_Sentences.size(), MaxSentencesCount, m_SentenceGroups.size() );
 
-	// init lru lists
+    // init lru lists
     for( auto& group : m_SentenceGroups )
     {
         group.LeastRecentlyUsed.resize( group.Sentences.size() );
@@ -221,7 +221,7 @@ void SentencesSystem::LoadSentences( std::span<const std::string> fileNames )
 
 void SentencesSystem::NewMapStarted()
 {
-	// Check if the replacement map has any bad data.
+    // Check if the replacement map has any bad data.
     if( m_Logger->should_log( spdlog::level::debug ) )
     {
         const auto isSentence = [this]( const auto& name )
@@ -279,10 +279,10 @@ int SentencesSystem::GetGroupIndex( CBaseEntity* entity, const char* szgroupname
     if( !szgroupname )
         return -1;
 
-	// See if the group was replaced.
+    // See if the group was replaced.
     szgroupname = CheckForSentenceReplacement( entity, szgroupname );
 
-	// search rgsentenceg for match on szgroupname
+    // search rgsentenceg for match on szgroupname
     int i = 0;
 
     for( const auto& group : m_SentenceGroups )
@@ -297,13 +297,13 @@ int SentencesSystem::GetGroupIndex( CBaseEntity* entity, const char* szgroupname
 
 int SentencesSystem::LookupSentence( CBaseEntity* entity, const char* sample, SentenceIndexName* sentencenum ) const
 {
-	// this is a sentence name; lookup sentence number
-	// and give to engine as string.
+    // this is a sentence name; lookup sentence number
+    // and give to engine as string.
 
-	// Skip ! prefix
+    // Skip ! prefix
     ++sample;
 
-	// Handle sentence replacement.
+    // Handle sentence replacement.
     sample = CheckForSentenceReplacement( entity, sample );
 
     for( size_t i = 0; i < m_Sentences.size(); i++ )
@@ -318,7 +318,7 @@ int SentencesSystem::LookupSentence( CBaseEntity* entity, const char* sample, Se
         }
     }
 
-	// sentence name not found!
+    // sentence name not found!
     return -1;
 }
 
@@ -376,7 +376,7 @@ void SentencesSystem::InitLRU( eastl::fixed_vector<unsigned char, CSENTENCE_LRU_
 
     const int count = static_cast<int>( lru.size() );
 
-	// randomize array
+    // randomize array
     for( int i = 0; i < ( count * 4 ); i++ )
     {
         const int j = RANDOM_LONG( 0, count - 1 );
@@ -392,7 +392,7 @@ int SentencesSystem::Pick( int isentenceg, SentenceIndexName& found )
 
     auto& group = m_SentenceGroups[isentenceg];
 
-	// Make 2 attempts to find a sentence: if we don't find it the first time, reset the LRU array and try again.
+    // Make 2 attempts to find a sentence: if we don't find it the first time, reset the LRU array and try again.
     for( int iteration = 0; iteration < 2; ++iteration )
     {
         for( unsigned char& index : group.LeastRecentlyUsed )
@@ -433,11 +433,11 @@ int SentencesSystem::PickSequential( int isentenceg, SentenceIndexName& found, i
     found.clear();
     fmt::format_to( std::back_inserter( found ), "!{}", m_Sentences[sentenceIndex].Name.c_str() );
 
-	// Note: this check is never true because ipick is clamped above.
+    // Note: this check is never true because ipick is clamped above.
     if( ipick >= static_cast<int>( group.Sentences.size() ) )
     {
         if( freset )
-			// reset at end of list
+            // reset at end of list
             return 0;
         else
             return static_cast<int>( group.Sentences.size() );

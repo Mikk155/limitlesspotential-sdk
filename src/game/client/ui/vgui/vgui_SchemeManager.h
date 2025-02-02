@@ -20,19 +20,19 @@ void Scheme_Init();
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the loading of text scheme description from disk
-//			supports different font/color/size schemes at different resolutions
+//            supports different font/color/size schemes at different resolutions
 //-----------------------------------------------------------------------------
 class CSchemeManager
 {
 public:
-	// initialization
+    // initialization
     CSchemeManager( int xRes, int yRes );
     virtual ~CSchemeManager();
 
-	// scheme handling
+    // scheme handling
     SchemeHandle_t getSchemeHandle( const char* schemeName );
 
-	// getting info from schemes
+    // getting info from schemes
     vgui::Font* getFont( SchemeHandle_t schemeHandle );
     void getFgColor( SchemeHandle_t schemeHandle, int& r, int& g, int& b, int& a );
     void getBgColor( SchemeHandle_t schemeHandle, int& r, int& g, int& b, int& a );
@@ -47,7 +47,7 @@ private:
     CScheme* m_pSchemeList;
     int m_iNumSchemes;
 
-	// Resolution we were initted at.
+    // Resolution we were initted at.
     int m_xRes;
 
     CScheme* getSafeScheme( SchemeHandle_t schemeHandle );

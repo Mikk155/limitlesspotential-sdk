@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -21,7 +21,7 @@
 #include "config/sections/BaseFileNamesListSection.h"
 
 /**
- *	@brief Allows a configuration file to specify one or more global model replacement files.
+ *    @brief Allows a configuration file to specify one or more global model replacement files.
  */
 class GlobalModelReplacementSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
@@ -40,7 +40,7 @@ protected:
 };
 
 /**
- *	@brief Allows a configuration file to specify one or more global sentence replacement files.
+ *    @brief Allows a configuration file to specify one or more global sentence replacement files.
  */
 class GlobalSentenceReplacementSection final : public BaseFileNamesListSection<ServerConfigContext>
 {
@@ -59,7 +59,7 @@ protected:
 };
 
 /**
- *	@brief Allows a configuration file to specify one or more global sound replacement files.
+ *    @brief Allows a configuration file to specify one or more global sound replacement files.
  */
 class GlobalSoundReplacementSection final : public BaseFileNamesListSection<ServerConfigContext>
 {

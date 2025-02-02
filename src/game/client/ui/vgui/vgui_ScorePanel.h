@@ -131,7 +131,7 @@ public:
     {
         _dualImage->GetImage( 0 )->setText( text );
 
-		// calculate the text size
+        // calculate the text size
         Font* font = _dualImage->GetImage( 0 )->getFont();
         _gap = 0;
         for( const char* ch = text; *ch != 0; ch++ )
@@ -146,7 +146,7 @@ public:
 
     virtual void setText( const char* text )
     {
-		// strip any non-alnum characters from the end
+        // strip any non-alnum characters from the end
         char buf[512];
         strcpy( buf, text );
 
@@ -184,7 +184,7 @@ public:
         Label::setFgColor( sc );
         Label::getFgColor( r, g, b, a );
 
-		// Call the r,g,b,a version so it sets the color in the dualImage..
+        // Call the r,g,b,a version so it sets the color in the dualImage..
         setFgColor( r, g, b, a );
     }
 
@@ -198,7 +198,7 @@ public:
         _dualImage->GetImage( 1 )->setFont( font );
     }
 
-	// this adjust the absolute position of the text after alignment is calculated
+    // this adjust the absolute position of the text after alignment is calculated
     void setTextOffset( int x, int y )
     {
         _offset[0] = x;
@@ -228,7 +228,7 @@ class ScoreTablePanel;
 class ScorePanel : public Panel, public vgui::CDefaultInputSignal
 {
 private:
-	// Default panel implementation doesn't forward mouse messages when there is no cursor and we need them.
+    // Default panel implementation doesn't forward mouse messages when there is no cursor and we need them.
     class HitTestPanel : public Panel
     {
     public:
@@ -246,13 +246,13 @@ private:
 private:
     Label m_TitleLabel;
 
-	// Here is how these controls are arranged hierarchically.
-	// m_HeaderGrid
-	//     m_HeaderLabels
+    // Here is how these controls are arranged hierarchically.
+    // m_HeaderGrid
+    //     m_HeaderLabels
 
-	// m_PlayerGridScroll
-	//     m_PlayerGrid
-	//         m_PlayerEntries
+    // m_PlayerGridScroll
+    //     m_PlayerGrid
+    //         m_PlayerEntries
 
     CGrid m_HeaderGrid;
     CLabelHeader m_HeaderLabels[NUM_COLUMNS]; // Labels above the
@@ -264,7 +264,7 @@ private:
     CLabelHeader m_PlayerEntries[NUM_COLUMNS][NUM_ROWS]; // Labels for the grid entries.
 
     ScorePanel::HitTestPanel m_HitTestPanel;
-	// CommandButton* m_pCloseButton;
+    // CommandButton* m_pCloseButton;
     CommandButton* m_pStatsButton;
     CLabelHeader* GetPlayerEntry( int x, int y ) { return &m_PlayerEntries[x][y]; }
 
@@ -300,7 +300,7 @@ public:
 
     void MouseOverCell( int row, int col );
 
-	// InputSignal overrides.
+    // InputSignal overrides.
 public:
     void mousePressed( MouseCode code, Panel* panel ) override;
     void cursorMoved( int x, int y, Panel* panel ) override;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,7 +24,7 @@
 struct cvar_t;
 
 /**
- *	@brief Handles core client actions
+ *    @brief Handles core client actions
  */
 class ClientLibrary final : public GameLibrary
 {
@@ -39,14 +39,14 @@ public:
 
     bool Initialize() override;
 
-	/**
-	 *	@brief Called when the engine finishes up client initialization.
-	 */
+    /**
+     *    @brief Called when the engine finishes up client initialization.
+     */
     void HudInit();
 
-	/**
-	 *	@brief Called whenever the client connects to a server.
-	 */
+    /**
+     *    @brief Called whenever the client connects to a server.
+     */
     void VidInit();
 
     void PostInitialize();
@@ -59,11 +59,11 @@ public:
 
     void OnUserMessageReceived();
 
-	/**
-	 *	@brief Checks if the network data file needs loading.
-	 *	@details Should be called if it is possible for networked data to be accessed before the file is loaded.
-	 *	In practice this means user messages that use such data.
-	 */
+    /**
+     *    @brief Checks if the network data file needs loading.
+     *    @details Should be called if it is possible for networked data to be accessed before the file is loaded.
+     *    In practice this means user messages that use such data.
+     */
     void CheckNetworkDataFile();
 
 protected:

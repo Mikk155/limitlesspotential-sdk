@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -88,7 +88,7 @@ int CBasePlayer::AdjustAmmoByIndex( int ammoIndex, int count )
         return count;
     }
 
-	// Don't allow ammo to overflow capacity.
+    // Don't allow ammo to overflow capacity.
     const int old = m_rgAmmo[ammoIndex];
     m_rgAmmo[ammoIndex] = std::clamp( old + count, 0, ammoType->MaximumCapacity );
 
@@ -150,7 +150,7 @@ void CBasePlayer::DeployWeapon( CBasePlayerWeapon* weapon )
 {
     ResetAutoaim();
 
-	// FIX, this needs to queue them up and delay
+    // FIX, this needs to queue them up and delay
     if( m_pActiveWeapon )
         m_pActiveWeapon->Holster();
 

@@ -60,7 +60,7 @@ public:
 
 //-----------------------------------------------------------------------------
 // Purpose: Default scrollbar button
-//			Draws in new scoreboard style
+//            Draws in new scoreboard style
 //-----------------------------------------------------------------------------
 class ScrollBarButton : public Button
 {
@@ -87,7 +87,7 @@ public:
         int wide, tall;
         getPaintSize( wide, tall );
 
-		// fill the background
+        // fill the background
         drawSetColor( 0, 0, 0, 0 );
         drawFilledRect( 0, 0, wide, tall );
     }
@@ -99,10 +99,10 @@ public:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 // Input  : x -
-//			y -
-//			wide -
-//			tall -
-//			vertical -
+//            y -
+//            wide -
+//            tall -
+//            vertical -
 //-----------------------------------------------------------------------------
 ScrollBar2::ScrollBar2( int x, int y, int wide, int tall, bool vertical )
     : Panel( x, y, wide, tall )
@@ -119,7 +119,7 @@ ScrollBar2::ScrollBar2( int x, int y, int wide, int tall, bool vertical )
     }
     else
     {
-		// untested code
+        // untested code
         setSlider( new Slider2( tall, 0, wide - ( tall * 2 ), tall, false ) );
         setButton( new ScrollBarButton( "gfx/vgui/320_arrowlt.tga", 0, 0, tall + 1, tall + 1 ), 0 );
         setButton( new ScrollBarButton( "gfx/vgui/320_arrowrt.tga", wide - tall, 0, tall + 1, tall + 1 ), 1 );
@@ -157,14 +157,14 @@ void ScrollBar2::setSize( int wide, int tall )
     if( _slider->isVertical() )
     {
         _slider->setBounds( 0, wide, wide, tall - ( wide * 2 ) );
-		//_slider->setBounds(0,0,wide,tall);
+        //_slider->setBounds(0,0,wide,tall);
         _button[0]->setBounds( 0, 0, wide, wide );
         _button[1]->setBounds( 0, tall - wide, wide, wide );
     }
     else
     {
         _slider->setBounds( tall, 0, wide - ( tall * 2 ), tall );
-		//_slider->setBounds(0,0,wide,tall);
+        //_slider->setBounds(0,0,wide,tall);
         _button[0]->setBounds( 0, 0, tall, tall );
         _button[1]->setBounds( ( wide - tall ), 0, tall, tall );
     }
@@ -227,7 +227,7 @@ void ScrollBar2::setButton( Button* button, int index )
 
     validate();
 
-	//_button[index]->setVisible(false);
+    //_button[index]->setVisible(false);
 }
 
 Button* ScrollBar2::getButton( int index )

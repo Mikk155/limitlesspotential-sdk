@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -61,21 +61,21 @@ void CHud::Think()
         m_iFOV = newfov;
     }
 
-	// the clients fov is actually set in the client data update section of the hud
+    // the clients fov is actually set in the client data update section of the hud
 
-	// Set a new sensitivity
+    // Set a new sensitivity
     if( m_iFOV == default_fov->value )
     {
-		// reset to saved sensitivity
+        // reset to saved sensitivity
         m_flMouseSensitivity = 0;
     }
     else
     {
-		// set a new sensitivity that is proportional to the change from the FOV default
+        // set a new sensitivity that is proportional to the change from the FOV default
         m_flMouseSensitivity = sensitivity->value * ( (float)newfov / (float)default_fov->value ) * CVAR_GET_FLOAT( "zoom_sensitivity_ratio" );
     }
 
-	// think about default fov
+    // think about default fov
     if( m_iFOV == 0 )
     { // only let players adjust up in fov,  and only if they are not overriden by something else
         m_iFOV = std::max( default_fov->value, 90.f );
@@ -97,16 +97,16 @@ bool CHud::Redraw( float flTime, bool intermission )
     m_flTimeDelta = (double)m_flTime - m_fOldTime;
     static float m_flShotTime = 0;
 
-	// Clock was reset, reset delta
+    // Clock was reset, reset delta
     if( m_flTimeDelta < 0 )
         m_flTimeDelta = 0;
 
-	// Bring up the scoreboard during intermission
+    // Bring up the scoreboard during intermission
     if( gViewPort )
     {
         if( m_iIntermission && !intermission )
         {
-			// Have to do this here so the scoreboard goes away
+            // Have to do this here so the scoreboard goes away
             m_iIntermission = intermission;
             gViewPort->HideCommandMenu();
             gViewPort->HideScoreBoard();
@@ -116,21 +116,21 @@ bool CHud::Redraw( float flTime, bool intermission )
             }
             gViewPort->UpdateSpectatorPanel();
         }
-		// Disabled in Opposing Force.
-		/*
-		else if (!m_iIntermission && intermission)
-		{
-			m_iIntermission = intermission;
-			gViewPort->HideCommandMenu();
-			gViewPort->HideVGUIMenu();
-			gViewPort->ShowScoreBoard();
-			gViewPort->UpdateSpectatorPanel();
+        // Disabled in Opposing Force.
+        /*
+        else if (!m_iIntermission && intermission)
+        {
+            m_iIntermission = intermission;
+            gViewPort->HideCommandMenu();
+            gViewPort->HideVGUIMenu();
+            gViewPort->ShowScoreBoard();
+            gViewPort->UpdateSpectatorPanel();
 
-			// Take a screenshot if the client's got the cvar set
-			if (CVAR_GET_FLOAT("hud_takesshots") != 0)
-				m_flShotTime = flTime + 1.0; // Take a screenshot in a second
-		}
-		*/
+            // Take a screenshot if the client's got the cvar set
+            if (CVAR_GET_FLOAT("hud_takesshots") != 0)
+                m_flShotTime = flTime + 1.0; // Take a screenshot in a second
+        }
+        */
     }
 
     if( 0 != m_flShotTime && m_flShotTime < flTime )
@@ -141,10 +141,10 @@ bool CHud::Redraw( float flTime, bool intermission )
 
     m_iIntermission = intermission;
 
-	// if no redrawing is necessary
-	// return 0;
+    // if no redrawing is necessary
+    // return 0;
 
-	// draw all registered HUD elements
+    // draw all registered HUD elements
     if( 0 != m_pCvarDraw->value )
     {
         for( auto hudElement : m_HudList )
@@ -162,7 +162,7 @@ bool CHud::Redraw( float flTime, bool intermission )
         }
     }
 
-	// are we in demo mode? do we need to draw the logo in the top corner?
+    // are we in demo mode? do we need to draw the logo in the top corner?
     if( m_ShowLogo )
     {
         int x, y, i;
@@ -176,34 +176,34 @@ bool CHud::Redraw( float flTime, bool intermission )
         x = ScreenWidth - x;
         y = SPR_Height( m_hsprLogo, 0 ) / 2;
 
-		// Draw the logo at 20 fps
+        // Draw the logo at 20 fps
         int iFrame = (int)( flTime * 20 ) % MAX_LOGO_FRAMES;
         i = grgLogoFrame[iFrame] - 1;
 
         SPR_DrawAdditive( i, x, y, nullptr );
     }
 
-	/*
-	if ( g_iVisibleMouse )
-	{
-		void IN_GetMousePos( int *mx, int *my );
-		int mx, my;
+    /*
+    if ( g_iVisibleMouse )
+    {
+        void IN_GetMousePos( int *mx, int *my );
+        int mx, my;
 
-		IN_GetMousePos( &mx, &my );
+        IN_GetMousePos( &mx, &my );
 
-		if (m_hsprCursor == 0)
-		{
-			char sz[256];
-			sprintf( sz, "sprites/cursor.spr" );
-			m_hsprCursor = SPR_Load( sz );
-		}
+        if (m_hsprCursor == 0)
+        {
+            char sz[256];
+            sprintf( sz, "sprites/cursor.spr" );
+            m_hsprCursor = SPR_Load( sz );
+        }
 
-		SPR_Set(m_hsprCursor, 250, 250, 250 );
+        SPR_Set(m_hsprCursor, 250, 250, 250 );
 
-		// Draw the logo at 20 fps
-		SPR_DrawAdditive( 0, mx, my, nullptr );
-	}
-	*/
+        // Draw the logo at 20 fps
+        SPR_DrawAdditive( 0, mx, my, nullptr );
+    }
+    */
 
     return true;
 }
@@ -231,11 +231,11 @@ int CHud::DrawHudNumberString( int xpos, int ypos, int iMinX, int iNumber, const
 // draws a string from right to left (right-aligned)
 int CHud::DrawHudStringReverse( int xpos, int ypos, int iMinX, const char* szString, const RGB24& color )
 {
-	/*
-	return xpos - gEngfuncs.pfnDrawStringReverse( xpos, ypos, szString, r, g, b);
-	*/
+    /*
+    return xpos - gEngfuncs.pfnDrawStringReverse( xpos, ypos, szString, r, g, b);
+    */
 
-	// Op4 uses custom reverse drawing to fix an issue with the letter k overlapping the letter i in the string "kills"
+    // Op4 uses custom reverse drawing to fix an issue with the letter k overlapping the letter i in the string "kills"
 
     if( '\0' == *szString )
     {
@@ -284,7 +284,7 @@ int CHud::DrawHudNumber( int x, int y, int iFlags, int iNumber, const RGB24& col
 
     if( iNumber > 0 )
     {
-		// SPR_Draw 100's
+        // SPR_Draw 100's
         if( iNumber >= 100 )
         {
             k = iNumber / 100;
@@ -294,11 +294,11 @@ int CHud::DrawHudNumber( int x, int y, int iFlags, int iNumber, const RGB24& col
         }
         else if( ( iFlags & DHN_3DIGITS ) != 0 )
         {
-			// SPR_DrawAdditive( 0, x, y, &rc );
+            // SPR_DrawAdditive( 0, x, y, &rc );
             x += iWidth;
         }
 
-		// SPR_Draw 10's
+        // SPR_Draw 10's
         if( iNumber >= 10 )
         {
             k = ( iNumber % 100 ) / 10;
@@ -308,11 +308,11 @@ int CHud::DrawHudNumber( int x, int y, int iFlags, int iNumber, const RGB24& col
         }
         else if( ( iFlags & ( DHN_3DIGITS | DHN_2DIGITS ) ) != 0 )
         {
-			// SPR_DrawAdditive( 0, x, y, &rc );
+            // SPR_DrawAdditive( 0, x, y, &rc );
             x += iWidth;
         }
 
-		// SPR_Draw ones
+        // SPR_Draw ones
         k = iNumber % 10;
         SPR_Set( GetSprite( m_HudNumbers[k] ), color );
         SPR_DrawAdditive( 0, x, y, &GetSpriteRect( m_HudNumbers[k] ) );
@@ -322,20 +322,20 @@ int CHud::DrawHudNumber( int x, int y, int iFlags, int iNumber, const RGB24& col
     {
         SPR_Set( GetSprite( m_HUD_number_0 ), color );
 
-		// SPR_Draw 100's
+        // SPR_Draw 100's
         if( ( iFlags & DHN_3DIGITS ) != 0 )
         {
-			// SPR_DrawAdditive( 0, x, y, &rc );
+            // SPR_DrawAdditive( 0, x, y, &rc );
             x += iWidth;
         }
 
         if( ( iFlags & ( DHN_3DIGITS | DHN_2DIGITS ) ) != 0 )
         {
-			// SPR_DrawAdditive( 0, x, y, &rc );
+            // SPR_DrawAdditive( 0, x, y, &rc );
             x += iWidth;
         }
 
-		// SPR_Draw ones
+        // SPR_Draw ones
 
         SPR_DrawAdditive( 0, x, y, &GetSpriteRect( m_HUD_number_0 ) );
         x += iWidth;
@@ -403,7 +403,7 @@ int CHud::DrawHudNumberReverse( int x, int y, int number, int flags, const RGB24
             const int digit = remainder % 10;
             const int digitSpriteIndex = m_HudNumbers[digit];
 
-			// This has to happen *before* drawing because we're drawing in reverse
+            // This has to happen *before* drawing because we're drawing in reverse
             x -= digitWidth;
 
             SPR_Set( GetSprite( digitSpriteIndex ), color );

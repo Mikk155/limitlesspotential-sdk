@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,8 +24,8 @@
 class BufferReader;
 
 /**
- *	@brief Handles the registration and delegation of user message handlers.
- *	Allows the use of member functions.
+ *    @brief Handles the registration and delegation of user message handlers.
+ *    Allows the use of member functions.
  */
 class ClientUserMessages final
 {
@@ -49,9 +49,9 @@ public:
 
     void RegisterHandler( std::string_view name, MessageHandler&& handler );
 
-	/**
-	 *	@brief Registers an object member function as a handler.
-	 */
+    /**
+     *    @brief Registers an object member function as a handler.
+     */
     template <typename T>
     void RegisterHandler( std::string_view name, void ( T::*handler )( const char* pszName, BufferReader& reader ), T* instance )
     {
@@ -62,10 +62,10 @@ public:
             { return ( instance->*handler )( pszName, reader ); } );
     }
 
-	/**
-	 *	@brief Registers an object member function as a handler.
-	 *	The handler does not take the message name as a parameter.
-	 */
+    /**
+     *    @brief Registers an object member function as a handler.
+     *    The handler does not take the message name as a parameter.
+     */
     template <typename T>
     void RegisterHandler( std::string_view name, void ( T::*handler )( BufferReader& reader ), T* instance )
     {

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -32,17 +32,17 @@ constexpr int MAX_TEMPENTS = 2048;
 constexpr int MAX_HUDMSG_TEXT_LENGTH = 512;
 
 /**
- *	@brief Default sky to set if the map does not provide one.
- *	Should match the default value of the engine's @c sv_skyname cvar.
+ *    @brief Default sky to set if the map does not provide one.
+ *    Should match the default value of the engine's @c sv_skyname cvar.
  */
 constexpr char DefaultSkyName[] = "desert";
 
 #define MAX_WEAPONS 64 // ???
 
 /**
- *	@brief Maximum number of attack modes that weapons can have.
- *	@details These are PrimaryAttack, SecondaryAttack.
- *	If more are added then this needs to be changed so ammo types can be associated with them.
+ *    @brief Maximum number of attack modes that weapons can have.
+ *    @details These are PrimaryAttack, SecondaryAttack.
+ *    If more are added then this needs to be changed so ammo types can be associated with them.
  */
 constexpr int MAX_WEAPON_ATTACK_MODES = 2;
 
@@ -125,7 +125,7 @@ enum HudFlag
 };
 
 /**
- *	@brief Indicates that a weapon does not use magazines.
+ *    @brief Indicates that a weapon does not use magazines.
  */
 constexpr int WEAPON_NOCLIP = -1;
 
@@ -164,20 +164,20 @@ constexpr std::optional<SuitLightType> SuitLightTypeFromString(std::string_view 
 
 // instant damage
 
-#define DMG_GENERIC 0			 // generic damage was done
-#define DMG_CRUSH (1 << 0)		 // crushed by falling or moving object
-#define DMG_BULLET (1 << 1)		 // shot
-#define DMG_SLASH (1 << 2)		 // cut, clawed, stabbed
-#define DMG_BURN (1 << 3)		 // heat burned
-#define DMG_FREEZE (1 << 4)		 // frozen
-#define DMG_FALL (1 << 5)		 // fell too far
-#define DMG_BLAST (1 << 6)		 // explosive blast damage
-#define DMG_CLUB (1 << 7)		 // crowbar, punch, headbutt
-#define DMG_SHOCK (1 << 8)		 // electric shock
-#define DMG_SONIC (1 << 9)		 // sound pulse shockwave
+#define DMG_GENERIC 0             // generic damage was done
+#define DMG_CRUSH (1 << 0)         // crushed by falling or moving object
+#define DMG_BULLET (1 << 1)         // shot
+#define DMG_SLASH (1 << 2)         // cut, clawed, stabbed
+#define DMG_BURN (1 << 3)         // heat burned
+#define DMG_FREEZE (1 << 4)         // frozen
+#define DMG_FALL (1 << 5)         // fell too far
+#define DMG_BLAST (1 << 6)         // explosive blast damage
+#define DMG_CLUB (1 << 7)         // crowbar, punch, headbutt
+#define DMG_SHOCK (1 << 8)         // electric shock
+#define DMG_SONIC (1 << 9)         // sound pulse shockwave
 #define DMG_ENERGYBEAM (1 << 10) // laser or other high energy beam
-#define DMG_NEVERGIB (1 << 12)	 // with this bit OR'd in, no damage type will be able to gib victims upon death
-#define DMG_ALWAYSGIB (1 << 13)	 // with this bit OR'd in, any damage type can be made to gib victims upon death.
+#define DMG_NEVERGIB (1 << 12)     // with this bit OR'd in, no damage type will be able to gib victims upon death
+#define DMG_ALWAYSGIB (1 << 13)     // with this bit OR'd in, any damage type can be made to gib victims upon death.
 
 // time-based damage
 // mask off TF-specific stuff too
@@ -186,22 +186,22 @@ constexpr std::optional<SuitLightType> SuitLightTypeFromString(std::string_view 
 #define DMG_DROWN (1 << 14) // Drowning
 #define DMG_FIRSTTIMEBASED DMG_DROWN
 
-#define DMG_PARALYZE (1 << 15)	   // slows affected creature down
-#define DMG_NERVEGAS (1 << 16)	   // nerve toxins, very bad
-#define DMG_POISON (1 << 17)	   // blood poisioning
-#define DMG_RADIATION (1 << 18)	   // radiation exposure
+#define DMG_PARALYZE (1 << 15)       // slows affected creature down
+#define DMG_NERVEGAS (1 << 16)       // nerve toxins, very bad
+#define DMG_POISON (1 << 17)       // blood poisioning
+#define DMG_RADIATION (1 << 18)       // radiation exposure
 #define DMG_DROWNRECOVER (1 << 19) // drowning recovery
-#define DMG_ACID (1 << 20)		   // toxic chemicals or acid burns
-#define DMG_SLOWBURN (1 << 21)	   // in an oven
+#define DMG_ACID (1 << 20)           // toxic chemicals or acid burns
+#define DMG_SLOWBURN (1 << 21)       // in an oven
 #define DMG_SLOWFREEZE (1 << 22)   // in a subzero freezer
-#define DMG_MORTAR (1 << 23)	   // Hit by air raid (done to distinguish grenade from mortar)
+#define DMG_MORTAR (1 << 23)       // Hit by air raid (done to distinguish grenade from mortar)
 
 // TF ADDITIONS
-#define DMG_IGNITE (1 << 24)	   // Players hit by this begin to burn
+#define DMG_IGNITE (1 << 24)       // Players hit by this begin to burn
 #define DMG_RADIUS_MAX (1 << 25)   // Radius damage with this flag doesn't decrease over distance
 #define DMG_RADIUS_QUAKE (1 << 26) // Radius damage is done like Quake. 1/2 damage at 1/2 radius.
 #define DMG_IGNOREARMOR (1 << 27)  // Damage ignores target's armor
-#define DMG_AIMED (1 << 28)		   // Does Hit location damage
+#define DMG_AIMED (1 << 28)           // Does Hit location damage
 #define DMG_WALLPIERCING (1 << 29) // Blast Damages ents through walls
 
 #define DMG_CALTROP (1 << 30)
@@ -280,7 +280,7 @@ constexpr Vector VEC_DEAD_VIEW(0, 0, -8);
 #define MENU_CLASSHELP 6
 #define MENU_CLASSHELP2 7
 #define MENU_REPEATHELP 8
-// #define MENU_SPECHELP				9
+// #define MENU_SPECHELP                9
 #define MENU_STATSMENU 9
 #define MENU_SCOREBOARD 10
 
@@ -294,11 +294,11 @@ constexpr RGB24 RGB_HUD_COLOR{RGB_YELLOWISH};
 constexpr RGB24 RGB_CROSSHAIR_COLOR{RGB_YELLOWISH};
 
 /**
- *	@brief Amount of time, in seconds, between entity info update checks.
+ *    @brief Amount of time, in seconds, between entity info update checks.
  */
 constexpr float EntityInfoUpdateInterval = 0.2f;
 
 /**
- *	@brief Amount of time, in seconds, to draw entity info before disappearing.
+ *    @brief Amount of time, in seconds, to draw entity info before disappearing.
  */
 constexpr float EntityInfoDrawTime = 2.f;

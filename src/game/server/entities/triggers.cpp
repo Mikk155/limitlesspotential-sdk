@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	spawn and use functions for editor-placed triggers
+ *    @file
+ *    spawn and use functions for editor-placed triggers
  */
 
 #include "cbase.h"
@@ -25,15 +25,15 @@
 #include "ctf/ctf_goals.h"
 #include "UserMessages.h"
 
-#define SF_TRIGGER_PUSH_START_OFF 2		   // spawnflag that makes trigger_push spawn turned OFF
-#define SF_TRIGGER_HURT_TARGETONCE 1	   // Only fire hurt target once
-#define SF_TRIGGER_HURT_START_OFF 2		   // spawnflag that makes trigger_push spawn turned OFF
-#define SF_TRIGGER_HURT_NO_CLIENTS 8	   // spawnflag that makes trigger_push spawn turned OFF
+#define SF_TRIGGER_PUSH_START_OFF 2           // spawnflag that makes trigger_push spawn turned OFF
+#define SF_TRIGGER_HURT_TARGETONCE 1       // Only fire hurt target once
+#define SF_TRIGGER_HURT_START_OFF 2           // spawnflag that makes trigger_push spawn turned OFF
+#define SF_TRIGGER_HURT_NO_CLIENTS 8       // spawnflag that makes trigger_push spawn turned OFF
 #define SF_TRIGGER_HURT_CLIENTONLYFIRE 16  // trigger hurt will only fire its target if it is hurting a client
 #define SF_TRIGGER_HURT_CLIENTONLYTOUCH 32 // only clients may touch this trigger.
 
 /**
- *	@brief Modifies an entity's friction
+ *    @brief Modifies an entity's friction
  */
 class CFrictionModifier : public CBaseEntity
 {
@@ -44,9 +44,9 @@ public:
     void Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
-	/**
-	 *	@brief Sets toucher's friction to m_frictionFraction (1.0 = normal friction)
-	 */
+    /**
+     *    @brief Sets toucher's friction to m_frictionFraction (1.0 = normal friction)
+     */
     void ChangeFriction( CBaseEntity* pOther );
 
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -89,8 +89,8 @@ bool CFrictionModifier::KeyValue( KeyValueData* pkvd )
 #define SF_AUTO_FIREONCE 0x0001
 
 /**
- *	@brief This trigger will fire when the level spawns (or respawns if not fire once)
- *	It will check a global state before firing. It supports delay and killtargets
+ *    @brief This trigger will fire when the level spawns (or respawns if not fire once)
+ *    It will check a global state before firing. It supports delay and killtargets
  */
 class CAutoTrigger : public CBaseDelay
 {
@@ -235,9 +235,9 @@ void CTriggerRelay::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 constexpr int MAX_MULTI_TARGETS = 64; // maximum number of targets a single multi_manager entity may be assigned.
 
 /**
- *	@brief when fired, will fire up to MAX_MULTI_TARGETS targets at specified times.
- *	@details FLAG: THREAD (create clones when triggered)
- *	FLAG: CLONE (this is a clone for a threaded execution)
+ *    @brief when fired, will fire up to MAX_MULTI_TARGETS targets at specified times.
+ *    @details FLAG: THREAD (create clones when triggered)
+ *    FLAG: CLONE (this is a clone for a threaded execution)
  */
 class CMultiManager : public CBaseToggle
 {
@@ -294,10 +294,10 @@ END_DATAMAP();
 
 bool CMultiManager::KeyValue( KeyValueData* pkvd )
 {
-	// UNDONE: Maybe this should do something like this:
-	// CBaseToggle::KeyValue( pkvd );
-	// if ( !pkvd->fHandled )
-	// ... etc.
+    // UNDONE: Maybe this should do something like this:
+    // CBaseToggle::KeyValue( pkvd );
+    // if ( !pkvd->fHandled )
+    // ... etc.
 
     if( FStrEq( pkvd->szKeyName, "wait" ) )
     {
@@ -306,7 +306,7 @@ bool CMultiManager::KeyValue( KeyValueData* pkvd )
     }
     else // add this field to the target list
     {
-		// this assumes that additional fields are targetnames and their values are delay values.
+        // this assumes that additional fields are targetnames and their values are delay values.
         if( m_cTargets < MAX_MULTI_TARGETS )
         {
             char tmp[128];
@@ -332,8 +332,8 @@ void CMultiManager::Spawn()
     SetUse( &CMultiManager::ManagerUse );
     SetThink( &CMultiManager::ManagerThink );
 
-	// Sort targets
-	// Quick and dirty bubble sort
+    // Sort targets
+    // Quick and dirty bubble sort
     bool swapped = true;
 
     while( swapped )
@@ -343,7 +343,7 @@ void CMultiManager::Spawn()
         {
             if( m_flTargetDelay[i] < m_flTargetDelay[i - 1] )
             {
-				// Swap out of order elements
+                // Swap out of order elements
                 string_t name = m_iTargetName[i];
                 float delay = m_flTargetDelay[i];
                 m_iTargetName[i] = m_iTargetName[i - 1];
@@ -411,8 +411,8 @@ CMultiManager* CMultiManager::Clone()
 // The USE function builds the time table and starts the entity thinking.
 void CMultiManager::ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	// In multiplayer games, clone the MM and execute in the clone (like a thread)
-	// to allow multiple players to trigger the same multimanager
+    // In multiplayer games, clone the MM and execute in the clone (like a thread)
+    // to allow multiple players to trigger the same multimanager
     if( ShouldClone() )
     {
         CMultiManager* pClone = Clone();
@@ -451,8 +451,8 @@ void CMultiManager::ManagerReport()
 #define SF_RENDER_MASKCOLOR (1 << 3)
 
 /**
- *	@brief This entity will copy its render parameters (renderfx, rendermode, rendercolor, renderamt)
- *	to its targets when triggered.
+ *    @brief This entity will copy its render parameters (renderfx, rendermode, rendercolor, renderamt)
+ *    to its targets when triggered.
  */
 class CRenderFxManager : public CBaseEntity
 {
@@ -487,7 +487,7 @@ void CRenderFxManager::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 }
 
 /**
- *	@brief hurts anything that touches it. if the trigger has a targetname, firing it will toggle state
+ *    @brief hurts anything that touches it. if the trigger has a targetname, firing it will toggle state
  */
 class CTriggerHurt : public CBaseTrigger
 {
@@ -498,15 +498,15 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void Spawn() override;
 
-	/**
-	 *	@brief When touched, a hurt trigger does DMG points of damage each half-second
-	 */
+    /**
+     *    @brief When touched, a hurt trigger does DMG points of damage each half-second
+     */
     void HurtTouch( CBaseEntity* pOther );
 
-	/**
-	 *	@brief trigger hurt that causes radiation will do a radius check and set the player's geiger counter level
-	 *	according to distance from center of trigger
-	 */
+    /**
+     *    @brief trigger hurt that causes radiation will do a radius check and set the player's geiger counter level
+     *    according to distance from center of trigger
+     */
     void RadiationThink();
 
 private:
@@ -567,7 +567,7 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
 
     if( ( pev->spawnflags & SF_TRIGGER_HURT_CLIENTONLYTOUCH ) != 0 && !pOther->IsPlayer() )
     {
-		// this trigger is only allowed to touch clients, and this ain't a client.
+        // this trigger is only allowed to touch clients, and this ain't a client.
         return;
     }
 
@@ -576,9 +576,9 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
 
     static_assert( MAX_PLAYERS <= 32, "Rework the player mask logic to support more than 32 players" );
 
-	// HACKHACK -- In multiplayer, players touch this based on packet receipt.
-	// So the players who send packets later aren't always hurt.  Keep track of
-	// how much time has passed and whether or not you've touched that player
+    // HACKHACK -- In multiplayer, players touch this based on packet receipt.
+    // So the players who send packets later aren't always hurt.  Keep track of
+    // how much time has passed and whether or not you've touched that player
     if( g_pGameRules->IsMultiplayer() )
     {
         if( pev->dmgtime > gpGlobals->time )
@@ -589,12 +589,12 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
                 {
                     int playerMask = 1 << ( pOther->entindex() - 1 );
 
-					// If I've already touched this player (this time), then bail out
+                    // If I've already touched this player (this time), then bail out
                     if( ( pev->impulse & playerMask ) != 0 )
                         return;
 
-					// Mark this player as touched
-					// BUGBUG - There can be only 32 players!
+                    // Mark this player as touched
+                    // BUGBUG - There can be only 32 players!
                     pev->impulse |= playerMask;
                 }
                 else
@@ -605,14 +605,14 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
         }
         else
         {
-			// New clock, "un-touch" all players
+            // New clock, "un-touch" all players
             pev->impulse = 0;
             if( pOther->IsPlayer() )
             {
                 int playerMask = 1 << ( pOther->entindex() - 1 );
 
-				// Mark this player as touched
-				// BUGBUG - There can be only 32 players!
+                // Mark this player as touched
+                // BUGBUG - There can be only 32 players!
                 pev->impulse |= playerMask;
             }
         }
@@ -627,15 +627,15 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
 
 
 
-	// If this is time_based damage (poison, radiation), override the pev->dmg with a
-	// default for the given damage type.  Monsters only take time-based damage
-	// while touching the trigger.  Player continues taking damage for a while after
-	// leaving the trigger
+    // If this is time_based damage (poison, radiation), override the pev->dmg with a
+    // default for the given damage type.  Monsters only take time-based damage
+    // while touching the trigger.  Player continues taking damage for a while after
+    // leaving the trigger
 
     fldmg = pev->dmg * 0.5; // 0.5 seconds worth of damage, pev->dmg is damage/second
 
 
-	// JAY: Cut this because it wasn't fully realized.  Damage is simpler now.
+    // JAY: Cut this because it wasn't fully realized.  Damage is simpler now.
 #if 0
     switch ( m_bitsDamageInflict )
     {
@@ -655,20 +655,20 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
     else
         pOther->TakeDamage( this, this, fldmg, m_bitsDamageInflict );
 
-	// Store pain time so we can get all of the other entities on this frame
+    // Store pain time so we can get all of the other entities on this frame
     pev->pain_finished = gpGlobals->time;
 
-	// Apply damage every half second
+    // Apply damage every half second
     pev->dmgtime = gpGlobals->time + 0.5; // half second delay until this trigger can hurt toucher again
 
 
 
     if( !FStringNull( pev->target ) )
     {
-		// trigger has a target it wants to fire.
+        // trigger has a target it wants to fire.
         if( ( pev->spawnflags & SF_TRIGGER_HURT_CLIENTONLYFIRE ) != 0 )
         {
-			// if the toucher isn't a client, don't fire the target!
+            // if the toucher isn't a client, don't fire the target!
             if( !pOther->IsPlayer() )
             {
                 return;
@@ -690,10 +690,10 @@ void CTriggerHurt::RadiationThink()
     Vector origin;
     Vector view_ofs;
 
-	// check to see if a player is in pvs
-	// if not, continue
+    // check to see if a player is in pvs
+    // if not, continue
 
-	// set origin to center of trigger so that this check works
+    // set origin to center of trigger so that this check works
     origin = pev->origin;
     view_ofs = pev->view_ofs;
 
@@ -705,11 +705,11 @@ void CTriggerHurt::RadiationThink()
     pev->origin = origin;
     pev->view_ofs = view_ofs;
 
-	// reset origin
+    // reset origin
 
     if( player )
     {
-		// get range to player;
+        // get range to player;
 
         vecSpot1 = ( pev->absmin + pev->absmax ) * 0.5;
         vecSpot2 = ( player->pev->absmin + player->pev->absmax ) * 0.5;
@@ -717,9 +717,9 @@ void CTriggerHurt::RadiationThink()
         vecRange = vecSpot1 - vecSpot2;
         flRange = vecRange.Length();
 
-		// if player's current geiger counter range is larger
-		// than range to this trigger hurt, reset player's
-		// geiger counter range
+        // if player's current geiger counter range is larger
+        // than range to this trigger hurt, reset player's
+        // geiger counter range
 
         if( player->m_flgeigerRange >= flRange )
             player->m_flgeigerRange = flRange;
@@ -787,14 +787,14 @@ void CTriggerMonsterJump::Touch( CBaseEntity* pOther )
         pOther->pev->flags &= ~FL_ONGROUND;
     }
 
-	// toss the monster!
+    // toss the monster!
     pOther->pev->velocity = pev->movedir * pev->speed;
     pOther->pev->velocity.z += m_flHeight;
     pev->nextthink = gpGlobals->time;
 }
 
 /**
- *	@brief Variable sized repeatable trigger. Must be targeted at one or more entities.
+ *    @brief Variable sized repeatable trigger. Must be targeted at one or more entities.
  */
 class CTriggerMultiple : public CBaseTrigger
 {
@@ -826,14 +826,14 @@ void CTriggerMultiple::Spawn()
 
 void CTriggerMultiple::MultiTouch( CBaseEntity* pOther )
 {
-	// Only touch clients, monsters, or pushables (depending on flags)
+    // Only touch clients, monsters, or pushables (depending on flags)
     if( ( ( pOther->pev->flags & FL_CLIENT ) != 0 && ( pev->spawnflags & SF_TRIGGER_NOCLIENTS ) == 0 ) ||
         ( ( pOther->pev->flags & FL_MONSTER ) != 0 && ( pev->spawnflags & SF_TRIGGER_ALLOWMONSTERS ) != 0 ) ||
         ( pev->spawnflags & SF_TRIGGER_PUSHABLES ) != 0 && pOther->ClassnameIs( "func_pushable" ) )
     {
 
 #if 0
-		// if the trigger has an angles field, check player's facing direction
+        // if the trigger has an angles field, check player's facing direction
         if( pev->movedir != g_vecZero )
         {
             UTIL_MakeVectors( pOther->pev->angles );
@@ -847,7 +847,7 @@ void CTriggerMultiple::MultiTouch( CBaseEntity* pOther )
 }
 
 /**
- *	@brief Variable sized trigger. Triggers once, then removes itself.
+ *    @brief Variable sized trigger. Triggers once, then removes itself.
  */
 class CTriggerOnce : public CTriggerMultiple
 {
@@ -865,7 +865,7 @@ void CTriggerOnce::Spawn()
 }
 
 /**
- *	@brief Acts as an intermediary for an action that takes multiple inputs.
+ *    @brief Acts as an intermediary for an action that takes multiple inputs.
  */
 class CTriggerCounter : public CBaseTrigger
 {
@@ -902,8 +902,8 @@ bool CTriggerCounter::KeyValue( KeyValueData* pkvd )
 
 void CTriggerCounter::Spawn()
 {
-	// By making the flWait be -1, this counter-trigger will disappear after it's activated
-	// (but of course it needs cTriggersLeft "uses" before that happens).
+    // By making the flWait be -1, this counter-trigger will disappear after it's activated
+    // (but of course it needs cTriggersLeft "uses" before that happens).
     m_flWait = -1;
 
     if( m_cTriggersLeft == 0 )
@@ -927,7 +927,7 @@ void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
     {
         if( fTellActivator )
         {
-			// UNDONE: I don't think we want these Quakesque messages
+            // UNDONE: I don't think we want these Quakesque messages
             switch ( m_cTriggersLeft )
             {
             case 1:
@@ -947,7 +947,7 @@ void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
         return;
     }
 
-	// !!!UNDONE: I don't think we want these Quakesque messages
+    // !!!UNDONE: I don't think we want these Quakesque messages
     if( fTellActivator )
         Logger->debug( "Sequence completed!" );
 
@@ -955,7 +955,7 @@ void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
 }
 
 /**
- *	@brief makes an area vertically negotiable
+ *    @brief makes an area vertically negotiable
  */
 class CLadder : public CBaseTrigger
 {
@@ -974,7 +974,7 @@ bool CLadder::KeyValue( KeyValueData* pkvd )
 
 void CLadder::Precache()
 {
-	// Do all of this in here because we need to 'convert' old saved games
+    // Do all of this in here because we need to 'convert' old saved games
     pev->solid = SOLID_NOT;
     pev->skin = CONTENTS_LADDER;
     if( CVAR_GET_FLOAT( "showtriggers" ) == 0 )
@@ -994,7 +994,7 @@ void CLadder::Spawn()
 }
 
 /**
- *	@brief Pushes the player
+ *    @brief Pushes the player
  */
 class CTriggerPush : public CBaseTrigger
 {
@@ -1030,7 +1030,7 @@ void CTriggerPush::Spawn()
 
 void CTriggerPush::Touch( CBaseEntity* pOther )
 {
-	// UNDONE: Is there a better way than health to detect things that have physics? (clients/monsters)
+    // UNDONE: Is there a better way than health to detect things that have physics? (clients/monsters)
     switch ( pOther->pev->movetype )
     {
     case MOVETYPE_NONE:
@@ -1042,7 +1042,7 @@ void CTriggerPush::Touch( CBaseEntity* pOther )
 
     if( pOther->pev->solid != SOLID_NOT && pOther->pev->solid != SOLID_BSP )
     {
-		// Instant trigger, just transfer velocity and remove
+        // Instant trigger, just transfer velocity and remove
         if( FBitSet( pev->spawnflags, SF_TRIG_PUSH_ONCE ) )
         {
             pOther->pev->velocity = pOther->pev->velocity + ( pev->speed * pev->movedir );
@@ -1059,7 +1059,7 @@ void CTriggerPush::Touch( CBaseEntity* pOther )
             pOther->pev->basevelocity = vecPush;
 
             pOther->pev->flags |= FL_BASEVELOCITY;
-			// Logger->debug("Vel {}, base {}", pOther->pev->velocity.z, pOther->pev->basevelocity.z);
+            // Logger->debug("Vel {}, base {}", pOther->pev->velocity.z, pOther->pev->basevelocity.z);
         }
     }
 }
@@ -1088,7 +1088,7 @@ void CTriggerGravity::Spawn()
 
 void CTriggerGravity::GravityTouch( CBaseEntity* pOther )
 {
-	// Only save on clients
+    // Only save on clients
     if( !pOther->IsPlayer() )
         return;
 
@@ -1245,7 +1245,7 @@ void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     if( !ShouldToggle( useType, m_state ) )
         return;
 
-	// Toggle state
+    // Toggle state
     m_state = !m_state;
     if( !m_state )
     {
@@ -1282,7 +1282,7 @@ void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
         m_hTarget = GetNextTarget();
     }
 
-	// Nothing to look at!
+    // Nothing to look at!
     if( m_hTarget == nullptr )
     {
         return;
@@ -1298,7 +1298,7 @@ void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     {
         m_pentPath = UTIL_FindEntityByTargetname( nullptr, STRING( m_sPath ) );
 
-		// TODO: this was probably unintential.
+        // TODO: this was probably unintential.
         if( !m_pentPath )
         {
             m_pentPath = World;
@@ -1318,7 +1318,7 @@ void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
         m_flStopTime += m_pentPath->GetDelay();
     }
 
-	// copy over player information
+    // copy over player information
     if( FBitSet( pev->spawnflags, SF_CAMERA_PLAYER_POSITION ) )
     {
         SetOrigin( pActivator->pev->origin + pActivator->pev->view_ofs );
@@ -1338,7 +1338,7 @@ void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 
     SetModel( STRING( pActivator->pev->model ) );
 
-	// follow the player down
+    // follow the player down
     SetThink( &CTriggerCamera::FollowTarget );
     pev->nextthink = gpGlobals->time;
 
@@ -1410,27 +1410,27 @@ void CTriggerCamera::FollowTarget()
 
 void CTriggerCamera::Move()
 {
-	// Not moving on a path, return
+    // Not moving on a path, return
     if( !m_pentPath )
         return;
 
-	// Subtract movement from the previous frame
+    // Subtract movement from the previous frame
     m_moveDistance -= pev->speed * gpGlobals->frametime;
 
-	// Have we moved enough to reach the target?
+    // Have we moved enough to reach the target?
     if( m_moveDistance <= 0 )
     {
-		// Fire the passtarget if there is one
+        // Fire the passtarget if there is one
         if( !FStringNull( m_pentPath->pev->message ) )
         {
             FireTargets( STRING( m_pentPath->pev->message ), this, this, USE_TOGGLE, 0 );
             if( FBitSet( m_pentPath->pev->spawnflags, SF_CORNER_FIREONCE ) )
                 m_pentPath->pev->message = string_t::Null;
         }
-		// Time to go to the next target
+        // Time to go to the next target
         m_pentPath = m_pentPath->GetNextTarget();
 
-		// Set up next corner
+        // Set up next corner
         if( !m_pentPath )
         {
             pev->velocity = g_vecZero;
@@ -1522,7 +1522,7 @@ void CTriggerPlayerFreeze::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, U
 }
 
 /**
- *	@brief Kills anything that touches it without gibbing it
+ *    @brief Kills anything that touches it without gibbing it
  */
 class CTriggerKillNoGib : public CBaseTrigger
 {
@@ -1548,7 +1548,7 @@ void CTriggerKillNoGib::Spawn()
     SetTouch( &CTriggerKillNoGib::KillTouch );
     SetUse( nullptr );
 
-	// TODO: this needs to be removed in order to function
+    // TODO: this needs to be removed in order to function
     pev->solid = SOLID_NOT;
 }
 
@@ -1597,7 +1597,7 @@ void CTriggerXenReturn::ReturnTouch( CBaseEntity* pOther )
 
     CBaseEntity* pTarget = nullptr;
 
-	// Find the earth target nearest to the player's original location.
+    // Find the earth target nearest to the player's original location.
     for( auto pDestination : UTIL_FindEntitiesByClassname( "info_displacer_earth_target" ) )
     {
         const float flThisDist = ( player->m_DisplacerReturn - pDestination->pev->origin ).Length();
@@ -1818,7 +1818,7 @@ void CTriggerCTFGeneric::Touch( CBaseEntity* pOther )
 
     SUB_UseTargets( this, triggerType, 0 );
 
-	// TODO: constrain team_no input to valid values
+    // TODO: constrain team_no input to valid values
     if( 0 != team_score )
         teamscores[static_cast<int>( team_no ) - 1] += team_score;
 
@@ -1838,7 +1838,7 @@ void CTriggerCTFGeneric::Touch( CBaseEntity* pOther )
 
     if( 0 != team_score )
     {
-		// TOOD: not sure why this check is here since pev must be valid if the entity exists
+        // TOOD: not sure why this check is here since pev must be valid if the entity exists
         if( !pOther && 0 == score && pev )
         {
             CGameRules::Logger->trace( "World triggered \"{}\"", STRING( pev->targetname ) );

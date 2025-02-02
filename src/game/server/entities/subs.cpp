@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	frequently used global functions
+ *    @file
+ *    frequently used global functions
  */
 
 #include "cbase.h"
@@ -25,11 +25,11 @@
 void CPointEntity::Spawn()
 {
     pev->solid = SOLID_NOT;
-	//	SetSize(g_vecZero, g_vecZero);
+    //    SetSize(g_vecZero, g_vecZero);
 }
 
 /**
- *	@brief Null Entity, remove on startup
+ *    @brief Null Entity, remove on startup
  */
 class CNullEntity : public CBaseEntity
 {
@@ -46,18 +46,18 @@ LINK_ENTITY_TO_CLASS( info_null, CNullEntity );
 
 void CBaseEntity::UpdateOnRemove()
 {
-	// tell owner (if any) that we're dead.This is mostly for MonsterMaker functionality.
+    // tell owner (if any) that we're dead.This is mostly for MonsterMaker functionality.
     MaybeNotifyOwnerOfDeath();
 
     if( FBitSet( pev->flags, FL_GRAPHED ) )
     {
-		// this entity was a LinkEnt in the world node graph, so we must remove it from
-		// the graph since we are removing it from the world.
+        // this entity was a LinkEnt in the world node graph, so we must remove it from
+        // the graph since we are removing it from the world.
         for( int i = 0; i < WorldGraph.m_cLinks; i++ )
         {
             if( WorldGraph.m_pLinkPool[i].m_pLinkEnt == pev )
             {
-				// if this link has a link ent which is the same ent that is removing itself, remove it!
+                // if this link has a link ent which is the same ent that is removing itself, remove it!
                 WorldGraph.m_pLinkPool[i].m_pLinkEnt = nullptr;
             }
         }
@@ -71,7 +71,7 @@ void CBaseEntity::SUB_Remove()
     UpdateOnRemove();
     if( pev->health > 0 )
     {
-		// this situation can screw up monsters who can't tell their entity pointers are invalid.
+        // this situation can screw up monsters who can't tell their entity pointers are invalid.
         pev->health = 0;
         Logger->debug( "SUB_Remove called on entity \"{}\" ({}) with health > 0", STRING( pev->targetname ), STRING( pev->classname ) );
     }
@@ -132,25 +132,25 @@ LINK_ENTITY_TO_CLASS( delayed_use, CBaseDelay );
 
 void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, float value )
 {
-	//
-	// exit immediatly if we don't have a target or kill target
-	//
+    //
+    // exit immediatly if we don't have a target or kill target
+    //
     if( FStringNull( pev->target ) && FStringNull( m_iszKillTarget ) )
         return;
 
-	//
-	// check for a delay
-	//
+    //
+    // check for a delay
+    //
     if( m_flDelay != 0 )
     {
-		// create a temp object to fire at a later time
+        // create a temp object to fire at a later time
         CBaseDelay* pTemp = g_EntityDictionary->Create<CBaseDelay>( "delayed_use" );
 
         pTemp->pev->nextthink = gpGlobals->time + m_flDelay;
 
         pTemp->SetThink( &CBaseDelay::DelayThink );
 
-		// Save the useType
+        // Save the useType
         pTemp->pev->button = (int)useType;
         pTemp->m_iszKillTarget = m_iszKillTarget;
         pTemp->m_flDelay = 0; // prevent "recursion"
@@ -160,9 +160,9 @@ void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, floa
         return;
     }
 
-	//
-	// kill the killtargets
-	//
+    //
+    // kill the killtargets
+    //
 
     if( !FStringNull( m_iszKillTarget ) )
     {
@@ -185,9 +185,9 @@ void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, floa
         }
     }
 
-	//
-	// fire targets
-	//
+    //
+    // fire targets
+    //
     if( !FStringNull( pev->target ) )
     {
         FireTargets( GetTarget(), pActivator, this, useType, value );
@@ -196,10 +196,10 @@ void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, floa
 
 void CBaseDelay::DelayThink()
 {
-	// If a player activated this on delay
+    // If a player activated this on delay
     CBaseEntity* pActivator = m_hActivator;
 
-	// The use type is cached (and stashed) in pev->button
+    // The use type is cached (and stashed) in pev->button
     SUB_UseTargets( pActivator, ( USE_TYPE )pev->button, 0 );
     REMOVE_ENTITY( edict() );
 }
@@ -245,28 +245,28 @@ bool CBaseToggle::KeyValue( KeyValueData* pkvd )
 void CBaseToggle::LinearMove( Vector vecDest, float flSpeed )
 {
     ASSERTSZ( flSpeed != 0, "LinearMove:  no speed is defined!" );
-	//	ASSERTSZ(m_pfnCallWhenMoveDone != nullptr, "LinearMove: no post-move function defined");
+    //    ASSERTSZ(m_pfnCallWhenMoveDone != nullptr, "LinearMove: no post-move function defined");
 
     m_vecFinalDest = vecDest;
 
-	// Already there?
+    // Already there?
     if( vecDest == pev->origin )
     {
         LinearMoveDone();
         return;
     }
 
-	// set destdelta to the vector needed to move
+    // set destdelta to the vector needed to move
     Vector vecDestDelta = vecDest - pev->origin;
 
-	// divide vector length by speed to get time to reach dest
+    // divide vector length by speed to get time to reach dest
     float flTravelTime = vecDestDelta.Length() / flSpeed;
 
-	// set nextthink to trigger a call to LinearMoveDone when dest is reached
+    // set nextthink to trigger a call to LinearMoveDone when dest is reached
     pev->nextthink = pev->ltime + flTravelTime;
     SetThink( &CBaseToggle::LinearMoveDone );
 
-	// scale the destdelta vector by the time spent traveling to get velocity
+    // scale the destdelta vector by the time spent traveling to get velocity
     pev->velocity = vecDestDelta / flTravelTime;
 }
 
@@ -290,28 +290,28 @@ void CBaseToggle::LinearMoveDone()
 void CBaseToggle::AngularMove( Vector vecDestAngle, float flSpeed )
 {
     ASSERTSZ( flSpeed != 0, "AngularMove:  no speed is defined!" );
-	//	ASSERTSZ(m_pfnCallWhenMoveDone != nullptr, "AngularMove: no post-move function defined");
+    //    ASSERTSZ(m_pfnCallWhenMoveDone != nullptr, "AngularMove: no post-move function defined");
 
     m_vecFinalAngle = vecDestAngle;
 
-	// Already there?
+    // Already there?
     if( vecDestAngle == pev->angles )
     {
         AngularMoveDone();
         return;
     }
 
-	// set destdelta to the vector needed to move
+    // set destdelta to the vector needed to move
     Vector vecDestDelta = vecDestAngle - pev->angles;
 
-	// divide by speed to get time to reach dest
+    // divide by speed to get time to reach dest
     float flTravelTime = vecDestDelta.Length() / flSpeed;
 
-	// set nextthink to trigger a call to AngularMoveDone when dest is reached
+    // set nextthink to trigger a call to AngularMoveDone when dest is reached
     pev->nextthink = pev->ltime + flTravelTime;
     SetThink( &CBaseToggle::AngularMoveDone );
 
-	// scale the destdelta vector by the time spent traveling to get velocity
+    // scale the destdelta vector by the time spent traveling to get velocity
     pev->avelocity = vecDestDelta / flTravelTime;
 }
 
@@ -356,7 +356,7 @@ float CBaseToggle::AxisDelta( int flags, const Vector& angle1, const Vector& ang
 }
 
 /**
- *	@brief returns true if the passed entity is visible to caller, even if not infront ()
+ *    @brief returns true if the passed entity is visible to caller, even if not infront ()
  */
 bool FEntIsVisible( CBaseEntity* entity, CBaseEntity* target )
 {

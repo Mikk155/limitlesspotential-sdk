@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -231,7 +231,7 @@ protected:
 
     bool m_bReparseString; // set to true whenever the m_szStatusBar needs to be recalculated
 
-	// an array of colors...one color for each line
+    // an array of colors...one color for each line
     Vector* m_pflNameColors[MAX_STATUSBAR_LINES];
 };
 
@@ -327,7 +327,7 @@ private:
     static constexpr int MAX_LINES = 5;
     static constexpr int MAX_CHARS_PER_LINE = 256; // it can be less than this, depending on char size
 
-	// allow 20 pixels on either side of the text
+    // allow 20 pixels on either side of the text
     static constexpr int LINE_START = 10;
 
     cvar_t* m_HUD_saytext;
@@ -500,8 +500,8 @@ public:
     };
 
 
-	// had to make these public so CHud could access them (to enable concussion icon)
-	// could use a friend declaration instead...
+    // had to make these public so CHud could access them (to enable concussion icon)
+    // could use a friend declaration instead...
     void EnableIcon( const char* pszIconName, const RGB24& color );
     void DisableIcon( const char* pszIconName );
 
@@ -641,7 +641,7 @@ public:
 };
 
 /**
- *	@brief Displays info about this project on the HUD.
+ *    @brief Displays info about this project on the HUD.
  */
 class CHudProjectInfo : public CHudBase
 {
@@ -657,7 +657,7 @@ private:
 };
 
 /**
- *	@brief Displays info about the local player and client state on the HUD.
+ *    @brief Displays info about the local player and client state on the HUD.
  */
 class CHudDebugInfo : public CHudBase
 {
@@ -673,7 +673,7 @@ private:
 };
 
 /**
- *	@brief Displays info about a single entity on the HUD.
+ *    @brief Displays info about a single entity on the HUD.
  */
 class CHudEntityInfo : public CHudBase
 {
@@ -710,7 +710,7 @@ struct HudSprite
 class CHud
 {
 private:
-	// the memory for these arrays are allocated in the first call to CHud::VidInit(), when the hud.json and associated sprites are loaded.
+    // the memory for these arrays are allocated in the first call to CHud::VidInit(), when the hud.json and associated sprites are loaded.
     std::vector<HudSprite> m_Sprites;
 
     std::vector<CHudBase*> m_HudList;
@@ -726,7 +726,7 @@ private:
 
 public:
     HSPRITE m_hsprCursor;
-	// In case we get messages before the first update -- time will be valid
+    // In case we get messages before the first update -- time will be valid
     float m_flTime = 1;          // the current client time
     float m_fOldTime = 0;      // the time at which the HUD was last redrawn
     double m_flTimeDelta = 0; // the difference between flTime and fOldTime
@@ -742,9 +742,9 @@ public:
 
     RGB24 m_HudColor = RGB_HUD_COLOR;
 
-	/**
-	 *	@brief The color to use for Hud items
-	 */
+    /**
+     *    @brief The color to use for Hud items
+     */
     RGB24 m_HudItemColor = RGB_HUD_COLOR;
 
     RGB24 m_CrosshairColor = RGB_CROSSHAIR_COLOR;
@@ -790,10 +790,10 @@ public:
         return m_Sprites[index].Rectangle;
     }
 
-	/**
-	 *	@brief Searches through the sprite list loaded from hud.json for a name matching SpriteName
-	 *	@return An index into the gHUD.m_Sprites list, or -1 if sprite not found
-	 */
+    /**
+     *    @brief Searches through the sprite list loaded from hud.json for a name matching SpriteName
+     *    @return An index into the gHUD.m_Sprites list, or -1 if sprite not found
+     */
     int GetSpriteIndex( const char* SpriteName );
 
     CHudAmmo m_Ammo;
@@ -829,7 +829,7 @@ public:
     CHud() = default;
     ~CHud() = default;
 
-	// user messages
+    // user messages
     void MsgFunc_Damage( const char* pszName, BufferReader& reader );
     void MsgFunc_GameMode( const char* pszName, BufferReader& reader );
     void MsgFunc_HudColor( const char* pszName, BufferReader& reader );
@@ -843,7 +843,7 @@ public:
     void MsgFunc_Weapons( const char* pszName, BufferReader& reader );
     void MsgFunc_Fog( const char* pszName, BufferReader& reader );
 
-	// Screen information
+    // Screen information
     SCREENINFO m_scrinfo;
 
     std::uint64_t m_iWeaponBits = 0;
@@ -851,7 +851,7 @@ public:
     bool m_fPlayerDead = false;
     bool m_iIntermission = false;
 
-	// sprite indexes
+    // sprite indexes
     int m_HUD_number_0 = 0;
 
     std::array<int, 10> m_HudNumbers{};

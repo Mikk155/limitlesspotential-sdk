@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -20,14 +20,14 @@
 int g_fFGruntQuestion; //!< true if an idle grunt asked a question. Cleared when someone answers.
 
 /**
- *	@brief friendly hgrunt
+ *    @brief friendly hgrunt
  */
 class CHFGrunt : public CHGrunt
 {
 public:
     Relationship IRelationship( CBaseEntity* pTarget ) override
     {
-		// Players are allies
+        // Players are allies
         if( pTarget->IsPlayer() )
             return Relationship::Ally;
 
@@ -41,7 +41,7 @@ protected:
 LINK_ENTITY_TO_CLASS( monster_human_friendly_grunt, CHFGrunt );
 
 /**
- *	@brief when triggered, spawns a monster_human_friendly_grunt repelling down a line.
+ *    @brief when triggered, spawns a monster_human_friendly_grunt repelling down a line.
  */
 class CHFGruntRepel : public CHGruntRepel
 {
@@ -73,7 +73,7 @@ END_DATAMAP();
 LINK_ENTITY_TO_CLASS( monster_fgrunt_repel, CHFGruntRepel );
 
 /**
- *	@brief DEAD HGRUNT PROP
- *	@details Same as regular grunt
+ *    @brief DEAD HGRUNT PROP
+ *    @details Same as regular grunt
  */
 LINK_ENTITY_TO_CLASS( monster_fhgrunt_dead, CDeadHGrunt );

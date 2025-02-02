@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -56,7 +56,7 @@ bool CHandGrenade::GetWeaponInfo( WeaponInfo& info )
 void CHandGrenade::IncrementAmmo( CBasePlayer* pPlayer )
 {
 #ifndef CLIENT_DLL
-	// TODO: not sure how useful this is given that the player has to have this weapon for this method to be called
+    // TODO: not sure how useful this is given that the player has to have this weapon for this method to be called
     if( !pPlayer->HasNamedPlayerWeapon( "weapon_handgrenade" ) )
     {
         pPlayer->GiveNamedItem( "weapon_handgrenade" );
@@ -77,13 +77,13 @@ bool CHandGrenade::Deploy()
 
 bool CHandGrenade::CanHolster()
 {
-	// can only holster hand grenades when not primed!
+    // can only holster hand grenades when not primed!
     return ( m_flStartThrow == 0 );
 }
 
 void CHandGrenade::Holster()
 {
-	// Stop any throw that was in process so players don't blow themselves or somebody else up when the weapon is deployed again.
+    // Stop any throw that was in process so players don't blow themselves or somebody else up when the weapon is deployed again.
     m_flStartThrow = 0;
 
     m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
@@ -94,7 +94,7 @@ void CHandGrenade::Holster()
     }
     else
     {
-		// no more grenades!
+        // no more grenades!
         m_pPlayer->ClearWeaponBit( m_iId );
         SetThink( &CHandGrenade::DestroyItem );
         pev->nextthink = gpGlobals->time + 0.1;
@@ -142,7 +142,7 @@ void CHandGrenade::WeaponIdle()
 
         Vector vecThrow = gpGlobals->v_forward * flVel + m_pPlayer->pev->velocity;
 
-		// alway explode 3 seconds after the pin was pulled
+        // alway explode 3 seconds after the pin was pulled
         float time = m_flStartThrow - gpGlobals->time + 3.0;
         if( time < 0 )
             time = 0;
@@ -162,10 +162,10 @@ void CHandGrenade::WeaponIdle()
             SendWeaponAnim( HANDGRENADE_THROW3 );
         }
 
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-		// m_flReleaseThrow = 0;
+        // m_flReleaseThrow = 0;
         m_flStartThrow = 0;
         m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
         m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
@@ -174,16 +174,16 @@ void CHandGrenade::WeaponIdle()
 
         if( 0 == m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) )
         {
-			// just threw last grenade
-			// set attack times in the future, and weapon idle in the future so we can see the whole throw
-			// animation, weapon idle will automatically retire the weapon for us.
+            // just threw last grenade
+            // set attack times in the future, and weapon idle in the future so we can see the whole throw
+            // animation, weapon idle will automatically retire the weapon for us.
             m_flTimeWeaponIdle = m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 ); // ensure that the animation can finish playing
         }
         return;
     }
     else if( m_flReleaseThrow > 0 )
     {
-		// we've finished the throw, restart.
+        // we've finished the throw, restart.
         m_flStartThrow = 0;
 
         if( 0 != m_pPlayer->GetAmmoCountByIndex( m_iPrimaryAmmoType ) )

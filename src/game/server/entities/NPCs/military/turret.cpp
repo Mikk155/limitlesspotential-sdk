@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -48,9 +48,9 @@ public:
     void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
-	/**
-	 *	@brief ID as a machine
-	 */
+    /**
+     *    @brief ID as a machine
+     */
     EntityClassification Classify() override;
 
     bool IsMachine() const override { return true; }
@@ -60,31 +60,31 @@ public:
 
     void UpdateOnRemove() override;
 
-	// Think functions
+    // Think functions
 
     void ActiveThink();
 
-	/**
-	 *	@brief This search function will sit with the turret deployed and look for a new target.
-	 *	After a set amount of time, the barrel will spin down. After m_flMaxWait, the turret will retract.
-	 */
+    /**
+     *    @brief This search function will sit with the turret deployed and look for a new target.
+     *    After a set amount of time, the barrel will spin down. After m_flMaxWait, the turret will retract.
+     */
     void SearchThink();
 
-	/**
-	 *	@brief This think function will deploy the turret when something comes into range.
-	 *	This is for automatically activated turrets.
-	 */
+    /**
+     *    @brief This think function will deploy the turret when something comes into range.
+     *    This is for automatically activated turrets.
+     */
     void AutoSearchThink();
     void TurretDeath();
 
     virtual void SpinDownCall() { m_iSpin = false; }
     virtual void SpinUpCall() { m_iSpin = true; }
 
-	// void SpinDown();
-	// float SpinDownCall() { return SpinDown(); }
+    // void SpinDown();
+    // float SpinDownCall() { return SpinDown(); }
 
-	// virtual float SpinDown() { return 0;}
-	// virtual float Retire() { return 0;}
+    // virtual float SpinDown() { return 0;}
+    // virtual float Retire() { return 0;}
 
     void Deploy();
     void Retire();
@@ -95,7 +95,7 @@ public:
     virtual void EyeOn();
     virtual void EyeOff();
 
-	// other functions
+    // other functions
     void SetTurretAnim( TURRET_ANIM anim );
     bool MoveTurret();
     virtual void Shoot( Vector& vecSrc, Vector& vecDirToEnemy ) {}
@@ -123,7 +123,7 @@ public:
     float m_flMaxWait;     // Max time to seach w/o a target
     int m_iSearchSpeed;     // Not Used!
 
-	// movement
+    // movement
     float m_flStartYaw;
     Vector m_vecCurAngles;
     Vector m_vecGoalAngles;
@@ -170,7 +170,7 @@ BEGIN_DATAMAP( CBaseTurret )
     DEFINE_FUNCTION( TurretDeath ),
     DEFINE_FUNCTION( SpinDownCall ),
     DEFINE_FUNCTION( SpinUpCall ),
-	// DEFINE_FUNCTION(SpinDownCall),
+    // DEFINE_FUNCTION(SpinDownCall),
     DEFINE_FUNCTION( Deploy ),
     DEFINE_FUNCTION( Retire ),
     DEFINE_FUNCTION( Initialize ),
@@ -185,11 +185,11 @@ public:
     void OnCreate() override;
     void Spawn() override;
     void Precache() override;
-	// Think functions
+    // Think functions
     void SpinUpCall() override;
     void SpinDownCall() override;
 
-	// other functions
+    // other functions
     void Shoot( Vector& vecSrc, Vector& vecDirToEnemy ) override;
 
 private:
@@ -206,7 +206,7 @@ public:
     void OnCreate() override;
     void Spawn() override;
     void Precache() override;
-	// other functions
+    // other functions
     void Shoot( Vector& vecSrc, Vector& vecDirToEnemy ) override;
 };
 
@@ -270,7 +270,7 @@ void CBaseTurret::Spawn()
     SetBoneController( 0, 0 );
     SetBoneController( 1, 0 );
     m_flFieldOfView = VIEW_FIELD_FULL;
-	// m_flSightRange = TURRET_RANGE;
+    // m_flSightRange = TURRET_RANGE;
 }
 
 void CBaseTurret::Precache()
@@ -282,7 +282,7 @@ void CBaseTurret::Precache()
     PrecacheSound( "turret/tu_die.wav" );
     PrecacheSound( "turret/tu_die2.wav" );
     PrecacheSound( "turret/tu_die3.wav" );
-	// PrecacheSound ("turret/tu_retract.wav"); // just use deploy sound to save memory
+    // PrecacheSound ("turret/tu_retract.wav"); // just use deploy sound to save memory
     PrecacheSound( "turret/tu_deploy.wav" );
     PrecacheSound( "turret/tu_spinup.wav" );
     PrecacheSound( "turret/tu_spindown.wav" );
@@ -376,8 +376,8 @@ void CBaseTurret::Initialize()
 
     if( m_iBaseTurnRate == 0 )
         m_iBaseTurnRate = TURRET_TURNRATE;
-	// Make sure the turn rate is non-zero so a turret killed immediately after deploying
-	// will rotate its pitch to its ideal angle.
+    // Make sure the turn rate is non-zero so a turret killed immediately after deploying
+    // will rotate its pitch to its ideal angle.
     if( m_fTurnRate == 0 )
     {
         m_fTurnRate = TURRET_TURNRATE;
@@ -418,14 +418,14 @@ void CBaseTurret::TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
         m_hEnemy = nullptr;
         pev->nextthink = gpGlobals->time + 0.1;
         m_iAutoStart = false; // switching off a turret disables autostart
-		//!!!! this should spin down first!!BUGBUG
+        //!!!! this should spin down first!!BUGBUG
         SetThink( &CBaseTurret::Retire );
     }
     else
     {
         pev->nextthink = gpGlobals->time + 0.1; // turn on delay
 
-		// if the turret is flagged as an autoactivate turret, re-enable it's ability open self.
+        // if the turret is flagged as an autoactivate turret, re-enable it's ability open self.
         if( ( pev->spawnflags & SF_MONSTER_TURRET_AUTOACTIVATE ) != 0 )
         {
             m_iAutoStart = true;
@@ -437,7 +437,7 @@ void CBaseTurret::TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 
 void CBaseTurret::Ping()
 {
-	// make the pinging noise every second while searching
+    // make the pinging noise every second while searching
     if( m_flPingTime == 0 )
         m_flPingTime = gpGlobals->time + 1;
     else if( m_flPingTime <= gpGlobals->time )
@@ -494,7 +494,7 @@ void CBaseTurret::ActiveThink()
         return;
     }
 
-	// if it's dead, look for something new
+    // if it's dead, look for something new
     if( !m_hEnemy->IsAlive() )
     {
         if( 0 == m_flLastSight )
@@ -516,7 +516,7 @@ void CBaseTurret::ActiveThink()
     Vector vecMid = pev->origin + pev->view_ofs;
     Vector vecMidEnemy = m_hEnemy->BodyTarget( vecMid );
 
-	// Look for our current enemy
+    // Look for our current enemy
     bool fEnemyVisible = FBoxVisible( this, m_hEnemy, vecMidEnemy );
 
     vecDirToEnemy = vecMidEnemy - vecMid; // calculate dir and dist to enemy
@@ -524,14 +524,14 @@ void CBaseTurret::ActiveThink()
 
     Vector vec = UTIL_VecToAngles( vecMidEnemy - vecMid );
 
-	// Current enmey is not visible.
+    // Current enmey is not visible.
     if( !fEnemyVisible || ( flDistToEnemy > TURRET_RANGE ) )
     {
         if( 0 == m_flLastSight )
             m_flLastSight = gpGlobals->time + 0.5;
         else
         {
-			// Should we look for a new target?
+            // Should we look for a new target?
             if( gpGlobals->time > m_flLastSight )
             {
                 m_hEnemy = nullptr;
@@ -549,18 +549,18 @@ void CBaseTurret::ActiveThink()
 
     UTIL_MakeAimVectors( m_vecCurAngles );
 
-	// AILogger->debug("{:.0f} {:.0f} : {:.2f}", m_vecCurAngles.x, m_vecCurAngles.y, gpGlobals->v_forward);
+    // AILogger->debug("{:.0f} {:.0f} : {:.2f}", m_vecCurAngles.x, m_vecCurAngles.y, gpGlobals->v_forward);
 
     Vector vecLOS = vecDirToEnemy; // vecMid - m_vecLastSight;
     vecLOS = vecLOS.Normalize();
 
-	// Is the Gun looking at the target
+    // Is the Gun looking at the target
     if( DotProduct( vecLOS, gpGlobals->v_forward ) <= 0.866 ) // 30 degree slop
         fAttack = false;
     else
         fAttack = true;
 
-	// fire the gun
+    // fire the gun
     if( m_iSpin && ( ( fAttack ) || ( m_fBeserk ) ) )
     {
         Vector vecSrc, vecAng;
@@ -573,7 +573,7 @@ void CBaseTurret::ActiveThink()
         SetTurretAnim( TURRET_ANIM_SPIN );
     }
 
-	// move the gun
+    // move the gun
     if( m_fBeserk )
     {
         if( RANDOM_LONG( 0, 9 ) == 0 )
@@ -592,7 +592,7 @@ void CBaseTurret::ActiveThink()
         if( vec.y < 0 )
             vec.y += 360;
 
-		// const float previousPitch = vec.x;
+        // const float previousPitch = vec.x;
 
         if( vec.x < -180 )
             vec.x += 360;
@@ -600,8 +600,8 @@ void CBaseTurret::ActiveThink()
         if( vec.x > 180 )
             vec.x -= 360;
 
-		// now all numbers should be in [1...360]
-		// pin to turret limitations to [-90...15]
+        // now all numbers should be in [1...360]
+        // pin to turret limitations to [-90...15]
 
         if( m_iOrientation == 0 )
         {
@@ -618,7 +618,7 @@ void CBaseTurret::ActiveThink()
                 vec.x = -m_iMinPitch;
         }
 
-		// AILogger->debug("[{:.2f}]->[{:.2f}]", previousPitch, vec.x);
+        // AILogger->debug("[{:.2f}]->[{:.2f}]", previousPitch, vec.x);
 
         m_vecGoalAngles.y = vec.y;
         m_vecGoalAngles.x = vec.x;
@@ -694,7 +694,7 @@ void CBaseTurret::Deploy()
 
 void CBaseTurret::Retire()
 {
-	// make the turret level
+    // make the turret level
     m_vecGoalAngles.x = 0;
     m_vecGoalAngles.y = m_flStartYaw;
 
@@ -744,11 +744,11 @@ void CTurret::SpinUpCall()
     StudioFrameAdvance();
     pev->nextthink = gpGlobals->time + 0.1;
 
-	// Are we already spun up? If not start the two stage process.
+    // Are we already spun up? If not start the two stage process.
     if( !m_iSpin )
     {
         SetTurretAnim( TURRET_ANIM_SPIN );
-		// for the first pass, spin up the the barrel
+        // for the first pass, spin up the the barrel
         if( !m_iStartSpin )
         {
             pev->nextthink = gpGlobals->time + 1.0; // spinup delay
@@ -756,7 +756,7 @@ void CTurret::SpinUpCall()
             m_iStartSpin = true;
             pev->framerate = 0.1;
         }
-		// after the barrel is spun up, turn on the hum
+        // after the barrel is spun up, turn on the hum
         else if( pev->framerate >= 1.0 )
         {
             pev->nextthink = gpGlobals->time + 0.1; // retarget delay
@@ -827,13 +827,13 @@ void CBaseTurret::SetTurretAnim( TURRET_ANIM anim )
             pev->framerate = 1.0;
             break;
         }
-		// AILogger->debug("Turret anim #{}", anim);
+        // AILogger->debug("Turret anim #{}", anim);
     }
 }
 
 void CBaseTurret::SearchThink()
 {
-	// ensure rethink
+    // ensure rethink
     SetTurretAnim( TURRET_ANIM_SPIN );
     StudioFrameAdvance();
     pev->nextthink = gpGlobals->time + 0.1;
@@ -845,7 +845,7 @@ void CBaseTurret::SearchThink()
 
     Ping();
 
-	// If we have a target and we're still healthy
+    // If we have a target and we're still healthy
     if( m_hEnemy != nullptr )
     {
         if( !m_hEnemy->IsAlive() )
@@ -853,14 +853,14 @@ void CBaseTurret::SearchThink()
     }
 
 
-	// Acquire Target
+    // Acquire Target
     if( m_hEnemy == nullptr )
     {
         Look( TURRET_RANGE );
         m_hEnemy = BestVisibleEnemy();
     }
 
-	// If we've found a target, spin up the barrel and start to attack
+    // If we've found a target, spin up the barrel and start to attack
     if( m_hEnemy != nullptr )
     {
         m_flLastSight = 0;
@@ -869,21 +869,21 @@ void CBaseTurret::SearchThink()
     }
     else
     {
-		// Are we out of time, do we need to retract?
+        // Are we out of time, do we need to retract?
         if( gpGlobals->time > m_flLastSight )
         {
-			// Before we retrace, make sure that we are spun down.
+            // Before we retrace, make sure that we are spun down.
             m_flLastSight = 0;
             m_flSpinUpTime = 0;
             SetThink( &CBaseTurret::Retire );
         }
-		// should we stop the spin?
+        // should we stop the spin?
         else if( ( 0 != m_flSpinUpTime ) && ( gpGlobals->time > m_flSpinUpTime ) )
         {
             SpinDownCall();
         }
 
-		// generic hunt for new victims
+        // generic hunt for new victims
         m_vecGoalAngles.y = ( m_vecGoalAngles.y + 0.1 * m_fTurnRate );
         if( m_vecGoalAngles.y >= 360 )
             m_vecGoalAngles.y -= 360;
@@ -893,13 +893,13 @@ void CBaseTurret::SearchThink()
 
 void CBaseTurret::AutoSearchThink()
 {
-	// ensure rethink
+    // ensure rethink
     StudioFrameAdvance();
     pev->nextthink = gpGlobals->time + 0.3;
 
     UpdateShockEffect();
 
-	// If we have a target and we're still healthy
+    // If we have a target and we're still healthy
 
     if( m_hEnemy != nullptr )
     {
@@ -907,7 +907,7 @@ void CBaseTurret::AutoSearchThink()
             m_hEnemy = nullptr; // Dead enemy forces a search for new one
     }
 
-	// Acquire Target
+    // Acquire Target
 
     if( m_hEnemy == nullptr )
     {
@@ -956,7 +956,7 @@ void CBaseTurret::TurretDeath()
 
     if( pev->dmgtime + RANDOM_FLOAT( 0, 2 ) > gpGlobals->time )
     {
-		// lots of smoke
+        // lots of smoke
         MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
         WRITE_BYTE( TE_SMOKE );
         WRITE_COORD( RANDOM_FLOAT( pev->absmin.x, pev->absmax.x ) );
@@ -991,7 +991,7 @@ void CBaseTurret::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vec
 {
     if( ptr->iHitgroup == 10 )
     {
-		// hit armor
+        // hit armor
         if( pev->dmgtime != gpGlobals->time || ( RANDOM_LONG( 0, 10 ) < 1 ) )
         {
             UTIL_Ricochet( ptr->vecEndPos, RANDOM_FLOAT( 1, 2 ) );
@@ -1052,7 +1052,7 @@ void CBaseTurret::UpdateOnRemove()
         m_pEyeGlow = nullptr;
     }
 
-	// Stop looping sound.
+    // Stop looping sound.
     StopSound( CHAN_STATIC, "turret/tu_active2.wav" );
 
     CBaseMonster::UpdateOnRemove();
@@ -1061,7 +1061,7 @@ void CBaseTurret::UpdateOnRemove()
 bool CBaseTurret::MoveTurret()
 {
     bool state = false;
-	// any x movement?
+    // any x movement?
 
     if( m_vecCurAngles.x != m_vecGoalAngles.x )
     {
@@ -1069,7 +1069,7 @@ bool CBaseTurret::MoveTurret()
 
         m_vecCurAngles.x += 0.1 * m_fTurnRate * flDir;
 
-		// if we started below the goal, and now we're past, peg to goal
+        // if we started below the goal, and now we're past, peg to goal
         if( flDir == 1 )
         {
             if( m_vecCurAngles.x > m_vecGoalAngles.x )
@@ -1124,7 +1124,7 @@ bool CBaseTurret::MoveTurret()
         if( flDist < ( 0.05 * m_iBaseTurnRate ) )
             m_vecCurAngles.y = m_vecGoalAngles.y;
 
-		// AILogger->debug("{:.2f} -> {:.2f}", m_vecCurAngles.y, y);
+        // AILogger->debug("{:.2f} -> {:.2f}", m_vecCurAngles.y, y);
         if( m_iOrientation == 0 )
             SetBoneController( 0, m_vecCurAngles.y - pev->angles.y );
         else
@@ -1135,8 +1135,8 @@ bool CBaseTurret::MoveTurret()
     if( !state )
         m_fTurnRate = m_iBaseTurnRate;
 
-	// AILogger->debug("({:.2f}, {:.2f})->({:.2f}, {:.2f})", m_vecCurAngles.x,
-	//	m_vecCurAngles.y, m_vecGoalAngles.x, m_vecGoalAngles.y);
+    // AILogger->debug("({:.2f}, {:.2f})->({:.2f}, {:.2f})", m_vecCurAngles.x,
+    //    m_vecCurAngles.y, m_vecGoalAngles.x, m_vecGoalAngles.y);
     return state;
 }
 
@@ -1148,7 +1148,7 @@ EntityClassification CBaseTurret::Classify()
 }
 
 /**
- *	@brief smallest turret, placed near grunt entrenchments
+ *    @brief smallest turret, placed near grunt entrenchments
  */
 class CSentry : public CBaseTurret
 {
@@ -1158,7 +1158,7 @@ class CSentry : public CBaseTurret
 public:
     void OnCreate() override;
     void Spawn() override;
-	// other functions
+    // other functions
     void Shoot( Vector& vecSrc, Vector& vecDirToEnemy ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
     void SentryTouch( CBaseEntity* pOther );
@@ -1297,7 +1297,7 @@ void CSentry::SentryDeath()
 
     if( pev->dmgtime + RANDOM_FLOAT( 0, 2 ) > gpGlobals->time )
     {
-		// lots of smoke
+        // lots of smoke
         MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
         WRITE_BYTE( TE_SMOKE );
         WRITE_COORD( vecSrc.x + RANDOM_FLOAT( -16, 16 ) );

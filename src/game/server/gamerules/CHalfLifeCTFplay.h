@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -40,7 +40,7 @@ void DisplayTeamFlags( CBasePlayer* pPlayer );
 void ResetTeamScores();
 
 /**
- *	@brief Opposing Force CTF gamemode rules
+ *    @brief Opposing Force CTF gamemode rules
  */
 class CHalfLifeCTFplay : public CHalfLifeMultiplay
 {
@@ -132,7 +132,7 @@ private:
     bool m_fRefreshScores = false;
     float m_flNextStatsSend;
     StatsPhase m_iStatsPhase = StatsPhase::Nothing;
-	// Use a sane default to avoid lockups
+    // Use a sane default to avoid lockups
     int m_iStatsPlayer = 1;
 
     ScopedClientCommand m_CancelMenuCommand;

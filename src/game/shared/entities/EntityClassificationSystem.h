@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -35,7 +35,7 @@ constexpr EntityClassification ENTCLASS_NONE{0};
 constexpr char ENTCLASS_NONE_NAME[] = "none";
 
 /**
- *	@brief Monster to monster relationship types
+ *    @brief Monster to monster relationship types
  */
 enum class Relationship : std::int8_t
 {
@@ -48,7 +48,7 @@ enum class Relationship : std::int8_t
 };
 
 /**
- *	@brief Manages the set of entity classifications and the relations between them.
+ *    @brief Manages the set of entity classifications and the relations between them.
  */
 class EntityClassificationSystem final : public IGameSystem
 {
@@ -74,9 +74,9 @@ public:
 
     Relationship GetRelationship( EntityClassification source, EntityClassification target ) const;
 
-	/**
-	 *	@brief Returns true if the given classification is one of the given class names.
-	 */
+    /**
+     *    @brief Returns true if the given classification is one of the given class names.
+     */
     bool ClassNameIs( EntityClassification classification, std::initializer_list<const char*> classNames ) const;
 
 private:

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -83,7 +83,7 @@ void EntityTemplateSystem::MaybeApplyTemplate( CBaseEntity* entity )
 
     for( const auto& [key, value] : entityTemplate->second )
     {
-		// Skip the classname the same way the engine does.
+        // Skip the classname the same way the engine does.
         if( value == entity->GetClassname() )
         {
             continue;
@@ -107,7 +107,7 @@ std::unordered_map<std::string, std::string> EntityTemplateSystem::LoadTemplate(
 
     for( const auto& [key, value] : input.items() )
     {
-		// Don't allow templates to change the class name.
+        // Don't allow templates to change the class name.
         if( key == "classname" )
         {
             m_Logger->warn( "Skipping template key \"{}\": not allowed in template", key );

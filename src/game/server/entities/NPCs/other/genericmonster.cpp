@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -16,14 +16,14 @@
 #include "cbase.h"
 
 /**
- *	@brief For holograms, make them not solid so the player can walk through them
+ *    @brief For holograms, make them not solid so the player can walk through them
  */
 #define SF_GENERICMONSTER_NOTSOLID 4
 
 const int SF_GENERICMONSTER_CONTROLLER = 8;
 
 /**
- *	@brief purely for scripted sequence work.
+ *    @brief purely for scripted sequence work.
  */
 class CGenericMonster : public CBaseMonster
 {
@@ -98,7 +98,7 @@ void CGenericMonster::HandleAnimEvent( MonsterEvent_t* pEvent )
 
 int CGenericMonster::ISoundMask()
 {
-	// generic monster can't hear.
+    // generic monster can't hear.
     return bits_SOUND_NONE;
 }
 
@@ -182,7 +182,7 @@ void CGenericMonster::MonsterThink()
 
 void CGenericMonster::IdleHeadTurn( Vector& vecFriend )
 {
-	// turn head in desired direction only if ent has a turnable head
+    // turn head in desired direction only if ent has a turnable head
     if( ( m_afCapability & bits_CAP_TURN_HEAD ) != 0 )
     {
         float yaw = VecToYaw( vecFriend - pev->origin ) - pev->angles.y;
@@ -192,7 +192,7 @@ void CGenericMonster::IdleHeadTurn( Vector& vecFriend )
         if( yaw < -180 )
             yaw += 360;
 
-		// turn towards vector
+        // turn towards vector
         m_flIdealYaw = yaw;
     }
 }

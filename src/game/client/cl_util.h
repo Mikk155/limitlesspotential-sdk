@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1999, Valve LLC. All rights reserved.
+ *    Copyright (c) 1999, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -28,7 +28,7 @@
 #include "utils/shared_utils.h"
 
 /**
- *	@brief Helper function to register client side commands that were originally registered with @c HOOK_COMMAND.
+ *    @brief Helper function to register client side commands that were originally registered with @c HOOK_COMMAND.
  */
 template <typename T>
 void RegisterClientCommand( std::string_view name, void ( T::*handler )(), T* instance )

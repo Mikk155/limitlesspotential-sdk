@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -34,12 +34,12 @@
 namespace sound
 {
 /**
- *	@brief Maintains a cache of sounds and provides a means of loading them.
+ *    @brief Maintains a cache of sounds and provides a means of loading them.
  */
 class SoundCache final
 {
 private:
-	// Comparer that allows us to access the sound name in the set without making copies.
+    // Comparer that allows us to access the sound name in the set without making copies.
     struct LookupComparer
     {
         using is_transparent = void;

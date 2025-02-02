@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -28,8 +28,8 @@
 #include "networking/NetworkDataSystem.h"
 
 /**
- *	@brief The minimum size that the generated file must be.
- *	See https://github.com/ValveSoftware/halflife/issues/3326 for why this is necessary.
+ *    @brief The minimum size that the generated file must be.
+ *    See https://github.com/ValveSoftware/halflife/issues/3326 for why this is necessary.
  */
 constexpr std::size_t MinimumFileDataSize = MAX_QPATH + "uncompressed"sv.size() + 1 + sizeof(int);
 
@@ -92,7 +92,7 @@ bool NetworkDataSystem::GenerateNetworkDataFile()
         return false;
     }
 
-	// Remove any existing files first to prevent problems if it isn't purged by the filesystem on open.
+    // Remove any existing files first to prevent problems if it isn't purged by the filesystem on open.
     RemoveNetworkDataFiles( "GAMECONFIG" );
 
     g_pFileSystem->CreateDirHierarchy( NetworkDataDirectory.data(), "GAMECONFIG" );
@@ -102,7 +102,7 @@ bool NetworkDataSystem::GenerateNetworkDataFile()
         return false;
     }
 
-	// Precache the file so clients download it.
+    // Precache the file so clients download it.
     UTIL_PrecacheGenericDirect( STRING( ALLOC_STRING( NetworkDataFileName.c_str() ) ) );
 
     return true;
@@ -190,10 +190,10 @@ bool NetworkDataSystem::TryWriteNetworkDataFile( const std::string& fileName, co
 
     try
     {
-		// The engine generally accepts invalid UTF8 text in things like filenames so ignore invalid UTF8.
+        // The engine generally accepts invalid UTF8 text in things like filenames so ignore invalid UTF8.
         auto fileData = output.dump( -1, ' ', false, nlohmann::detail::error_handler_t::ignore );
 
-		// Pad the file with whitespace to reach the minium valid size.
+        // Pad the file with whitespace to reach the minium valid size.
         if( fileData.size() < MinimumFileDataSize )
         {
             fileData.append( MinimumFileDataSize - fileData.size(), ' ' );
@@ -228,10 +228,10 @@ bool NetworkDataSystem::TryLoadNetworkDataFile()
 
 std::optional<std::vector<std::uint8_t>> NetworkDataSystem::TryLoadDataFromFile( const std::string& fileName )
 {
-	// The file can be in either of these, so check both.
-	// Do NOT use a null path ID, since that allows overriding the file using alternate directories!
-	// Check downloads first since we clear it no matter what.
-	// If this is a listen server we'll fall back to the file saved by the server.
+    // The file can be in either of these, so check both.
+    // Do NOT use a null path ID, since that allows overriding the file using alternate directories!
+    // Check downloads first since we clear it no matter what.
+    // If this is a listen server we'll fall back to the file saved by the server.
     FSFile file{fileName.c_str(), "rb", "GAMEDOWNLOAD"};
 
     if( !file.IsOpen() )
@@ -334,9 +334,9 @@ bool NetworkDataSystem::TryParseNetworkData( const std::vector<std::uint8_t>& fi
             return false;
         }
 
-		// If this isn't a development build then stricter compatibility checks are needed.
-		// Build timestamp will never match for clients and servers,
-		// it is only used for diagnostics output not compatibility checking.
+        // If this isn't a development build then stricter compatibility checks are needed.
+        // Build timestamp will never match for clients and servers,
+        // it is only used for diagnostics output not compatibility checking.
         if( !g_ProjectInfo.IsAlphaBuild( *g_ProjectInfo.GetLocalInfo() ) )
         {
             if( branch != localInfo->BranchName || tag != localInfo->TagName || commit != localInfo->CommitHash )

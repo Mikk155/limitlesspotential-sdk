@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -126,7 +126,7 @@ void PlayerInventory::ApplyToPlayer( CBasePlayer* player ) const
 
     const bool hasActiveWeapon = player->m_pActiveWeapon != nullptr;
 
-	// Set ammo first so weapons can reload themselves if needed.
+    // Set ammo first so weapons can reload themselves if needed.
     for( const auto& ammoValue : m_AmmoValues )
     {
         player->SetAmmoCount( ammoValue.Name.c_str(), ammoValue.Count );

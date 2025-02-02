@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -16,7 +16,7 @@
 #include "cbase.h"
 
 /**
- *	@brief Base class for charger entities.
+ *    @brief Base class for charger entities.
  */
 class CBaseCharger : public CBaseToggle
 {
@@ -62,7 +62,7 @@ protected:
 
     bool m_FireOnSpawn = true;
 
-	// Initialized by derived class.
+    // Initialized by derived class.
     int m_TotalJuice = 0;
     int m_RechargeDelay = 0; // How long until charger recharges its juice.
     int m_ChargePerUse = 1;     // Amount of juice to charge per use.
@@ -116,7 +116,7 @@ bool CBaseCharger::KeyValue( KeyValueData* pkvd )
     }
     else if( FStrEq( pkvd->szKeyName, "charge_per_use" ) )
     {
-		// Allow 0 to make cosmetic chargers.
+        // Allow 0 to make cosmetic chargers.
         m_ChargePerUse = std::max( 0, atoi( pkvd->szValue ) );
         return true;
     }
@@ -159,16 +159,16 @@ void CBaseCharger::Activate()
         }
     }
 
-	// Always call this
+    // Always call this
     CheckIfOutOfCharge( m_FireOnSpawn );
 
-	// Clear this so loading save games doesn't trigger it again
+    // Clear this so loading save games doesn't trigger it again
     m_FireOnSpawn = false;
 }
 
 void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	// if it's not a player, ignore
+    // if it's not a player, ignore
     auto player = ToBasePlayer( pActivator );
 
     if( !player )
@@ -178,7 +178,7 @@ void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 
     CheckIfOutOfCharge( true );
 
-	// if the player doesn't have the suit, or there is no juice left, or the master isn't active, make the deny noise
+    // if the player doesn't have the suit, or there is no juice left, or the master isn't active, make the deny noise
     if( !UTIL_IsMasterTriggered( m_sMaster, player ) ||
         ( m_Juice != UnlimitedJuice && m_Juice <= 0 ) ||
         !player->HasSuit() )
@@ -194,11 +194,11 @@ void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     pev->nextthink = pev->ltime + 0.25;
     SetThink( &CBaseCharger::Off );
 
-	// Time to recharge yet?
+    // Time to recharge yet?
     if( m_NextCharge >= gpGlobals->time )
         return;
 
-	// Play the on sound or the looping charging sound
+    // Play the on sound or the looping charging sound
     if( State::Off == m_State )
     {
         m_State = State::Starting;
@@ -219,7 +219,7 @@ void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
         chargeToUse = std::min( chargeToUse, m_Juice );
     }
 
-	// charge the player
+    // charge the player
     if( TryCharge( player, chargeToUse ) )
     {
         if( m_Juice != UnlimitedJuice )
@@ -228,13 +228,13 @@ void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
         }
     }
 
-	// govern the rate of charge
+    // govern the rate of charge
     m_NextCharge = gpGlobals->time + 0.1;
 }
 
 void CBaseCharger::Off()
 {
-	// Stop looping sound.
+    // Stop looping sound.
     if( m_State > State::Starting )
         StopSound( CHAN_STATIC, m_DispensingSound );
 
@@ -268,10 +268,10 @@ void CBaseCharger::Recharge()
 
 void CBaseCharger::CheckIfOutOfCharge( bool fireTargets )
 {
-	// if there is no juice left, turn it off
+    // if there is no juice left, turn it off
     if( m_Juice == 0 )
     {
-		// Don't re-do turn off logic if we're already turned off.
+        // Don't re-do turn off logic if we're already turned off.
         if( pev->frame == 0 )
         {
             if( fireTargets && !FStringNull( m_FireOnEmpty ) )
@@ -290,7 +290,7 @@ void CBaseCharger::CheckIfOutOfCharge( bool fireTargets )
 }
 
 /**
- *	@brief Wall mounted health kit
+ *    @brief Wall mounted health kit
  */
 class CWallHealth : public CBaseCharger
 {

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -40,7 +40,7 @@ void DBG_AssertFunction(
     if( fExpr )
         return;
 
-	// Log as critical so it's enabled by default in debug builds.
+    // Log as critical so it's enabled by default in debug builds.
     if( szMessage != nullptr )
         g_AssertLogger->critical( "ASSERT FAILED:\n {} \n({}@{})\n{}", szExpr, szFile, szLine, szMessage );
     else
@@ -96,7 +96,7 @@ string_t ALLOC_ESCAPED_STRING( const char* str )
 
             converted.erase( index, 1 );
 
-			// TODO: support all escape characters
+            // TODO: support all escape characters
             if( next == 'n' )
             {
                 converted[index] = '\n';
@@ -111,7 +111,7 @@ string_t ALLOC_ESCAPED_STRING( const char* str )
 
 void ClearStringPool()
 {
-	// This clears the pool and frees memory
+    // This clears the pool and frees memory
     g_StringPool = StringPool{};
 }
 
@@ -135,18 +135,18 @@ void Con_SetPrintBufferingEnabled( bool enabled )
 
     if( !g_PrintBufferingEnabled )
     {
-		// Flush buffer to console. Send it one line at a time to minimize the chances of truncation.
+        // Flush buffer to console. Send it one line at a time to minimize the chances of truncation.
         if( !g_PrintBuffer.empty() )
         {
-			// Append a newline so we're sure every line ends with one.
-			// This newline will be temporarily converted to a null terminator below for the last line.
+            // Append a newline so we're sure every line ends with one.
+            // This newline will be temporarily converted to a null terminator below for the last line.
             g_PrintBuffer += '\n';
 
             std::size_t startIndex = 0;
 
             while( true )
             {
-				// Don't print last newline.
+                // Don't print last newline.
                 if( startIndex == std::string::npos || startIndex == ( g_PrintBuffer.size() - 1 ) )
                 {
                     break;
@@ -156,16 +156,16 @@ void Con_SetPrintBufferingEnabled( bool enabled )
 
                 const std::size_t actualEndIndex = endIndex != std::string::npos ? endIndex : g_PrintBuffer.size();
 
-				// const std::size_t count = actualEndIndex - startIndex;
+                // const std::size_t count = actualEndIndex - startIndex;
 
                 g_PrintBuffer[actualEndIndex] = '\0';
 
-				// Print substring.
+                // Print substring.
                 g_engfuncs.pfnServerPrint( g_PrintBuffer.data() + startIndex );
 
                 g_PrintBuffer[actualEndIndex] = '\n';
 
-				// If there was a valid newline it'll be printed next iteration.
+                // If there was a valid newline it'll be printed next iteration.
                 startIndex = endIndex;
             }
         }
@@ -272,7 +272,7 @@ const char* COM_Parse( const char* data )
     if( !data )
         return nullptr;
 
-	// skip whitespace
+    // skip whitespace
 skipwhite:
     while( ( c = *data ) <= ' ' )
     {
@@ -281,7 +281,7 @@ skipwhite:
         data++;
     }
 
-	// skip // comments
+    // skip // comments
     if( c == '/' && data[1] == '/' )
     {
         while( '\0' != *data && *data != '\n' )
@@ -290,7 +290,7 @@ skipwhite:
     }
 
 
-	// handle quoted strings specially
+    // handle quoted strings specially
     if( c == '\"' )
     {
         data++;
@@ -307,7 +307,7 @@ skipwhite:
         }
     }
 
-	// parse single characters
+    // parse single characters
     if( c == '{' || c == '}' || c == ' )' || c == '( ' || c == '\'' || c == ',' )
     {
         com_token[len] = c;
@@ -316,7 +316,7 @@ skipwhite:
         return data + 1;
     }
 
-	// parse a regular word
+    // parse a regular word
     do
     {
         com_token[len] = c;
@@ -412,7 +412,7 @@ UTIL_SharedRandomFloat
 */
 float UTIL_SharedRandomFloat( unsigned int seed, float low, float high )
 {
-	//
+    //
     unsigned int range;
 
     U_Srand( (int)seed + *(int*)&low + *(int*)&high );

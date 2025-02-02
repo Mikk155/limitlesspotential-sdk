@@ -9,7 +9,7 @@
 **
 ** Contents:
 **
-**	      interpolation.cpp: implementation of the interpolation class
+**          interpolation.cpp: implementation of the interpolation class
 **
 ******************************************************************************/
 
@@ -98,7 +98,7 @@ void CInterpolation::SetWaypoints( Vector* prev, Vector start, Vector end, Vecto
 
     if( !prev && !next )
     {
-		// no direction given, straight linear interpolation
+        // no direction given, straight linear interpolation
         m_Center = ( m_StartPoint + m_EndPoint ) / 2.0f;
     }
     else if( !prev )
@@ -125,7 +125,7 @@ void CInterpolation::SetWaypoints( Vector* prev, Vector start, Vector end, Vecto
     }
     else
     {
-		// we have a previous and a next point, great!
+        // we have a previous and a next point, great!
         a = *prev - start;
         a = a.Normalize();
         b = end - start;

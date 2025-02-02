@@ -77,23 +77,23 @@ void CommandButton::Init()
     m_pSubLabel = nullptr;
     m_pParentMenu = nullptr;
 
-	// Set text color to orange
+    // Set text color to orange
     setFgColor( Scheme::sc_primary1 );
 
-	// left align
+    // left align
     setContentAlignment( vgui::Label::a_west );
 
-	// Add the Highlight signal
+    // Add the Highlight signal
     if( !m_bNoHighlight )
         addInputSignal( new CHandler_CommandButtonHighlight( this ) );
 
-	// not bound to any button yet
+    // not bound to any button yet
     m_cBoundKey = 0;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Prepends the button text with the current bound key
-//			if no bound key, then a clear space ' ' instead
+//            if no bound key, then a clear space ' ' instead
 //-----------------------------------------------------------------------------
 void CommandButton::RecalculateText()
 {
@@ -113,7 +113,7 @@ void CommandButton::RecalculateText()
     }
     else
     {
-		// just draw a space if no key bound
+        // just draw a space if no key bound
         sprintf( szBuf, "     %s", m_sMainText );
         szBuf[MAX_BUTTON_SIZE - 1] = 0;
     }
@@ -144,7 +144,7 @@ void CommandButton::AddSubMenu( CCommandMenu* pNewMenu )
 {
     m_pSubMenu = pNewMenu;
 
-	// Prevent this button from being pushed
+    // Prevent this button from being pushed
     setMouseClickEnabled( MOUSE_LEFT, false );
 }
 
@@ -156,7 +156,7 @@ void CommandButton::UpdateSubMenus( int iAdjustment )
 
 void CommandButton::paint()
 {
-	// Make the sub label paint the same as the button
+    // Make the sub label paint the same as the button
     if( m_pSubLabel )
     {
         if( isSelected() )
@@ -165,7 +165,7 @@ void CommandButton::paint()
             m_pSubLabel->PushUp();
     }
 
-	// draw armed button text in white
+    // draw armed button text in white
     if( isArmed() )
     {
         setFgColor( Scheme::sc_secondary2 );
@@ -184,7 +184,7 @@ void CommandButton::paintBackground()
     {
         if( isArmed() )
         {
-			// Orange Border
+            // Orange Border
             drawSetColor( Scheme::sc_secondary1 );
             drawOutlinedRect( 0, 0, _size[0], _size[1] );
         }
@@ -193,12 +193,12 @@ void CommandButton::paintBackground()
     {
         if( isArmed() )
         {
-			// Orange highlight background
+            // Orange highlight background
             drawSetColor( Scheme::sc_primary2 );
             drawFilledRect( 0, 0, _size[0], _size[1] );
         }
 
-		// Orange Border
+        // Orange Border
         drawSetColor( Scheme::sc_secondary1 );
         drawOutlinedRect( 0, 0, _size[0], _size[1] );
     }
@@ -209,13 +209,13 @@ void CommandButton::paintBackground()
 //-----------------------------------------------------------------------------
 void CommandButton::cursorEntered()
 {
-	// unarm all the other buttons in this menu
+    // unarm all the other buttons in this menu
     CCommandMenu* containingMenu = getParentMenu();
     if( containingMenu )
     {
         containingMenu->ClearButtonsOfArmedState();
 
-		// make all our higher buttons armed
+        // make all our higher buttons armed
         CCommandMenu* pCParent = containingMenu->GetParentMenu();
         if( pCParent )
         {
@@ -225,7 +225,7 @@ void CommandButton::cursorEntered()
         }
     }
 
-	// arm ourselves
+    // arm ourselves
     setArmed( true );
 }
 
@@ -234,9 +234,9 @@ void CommandButton::cursorEntered()
 //-----------------------------------------------------------------------------
 void CommandButton::cursorExited()
 {
-	// only clear ourselves if we have do not have a containing menu
-	// only stay armed if we have a sub menu
-	// the buttons only unarm themselves when another button is armed instead
+    // only clear ourselves if we have do not have a containing menu
+    // only stay armed if we have a sub menu
+    // the buttons only unarm themselves when another button is armed instead
     if( !getParentMenu() || !GetSubMenu() )
     {
         setArmed( false );
@@ -265,7 +265,7 @@ void CommandButton::setParentMenu( CCommandMenu* pParentMenu )
 //===========================================================
 bool ClassButton::IsNotValid()
 {
-	// If this is the main ChangeClass button, remove it if the player's only able to be civilians
+    // If this is the main ChangeClass button, remove it if the player's only able to be civilians
     if( m_iPlayerClass == -1 )
     {
         if( gViewPort->GetValidClasses( g_iTeamNumber ) == -1 )
@@ -274,13 +274,13 @@ bool ClassButton::IsNotValid()
         return false;
     }
 
-	// Is it an illegal class?
+    // Is it an illegal class?
 
-	// Only check current class if they've got autokill on
+    // Only check current class if they've got autokill on
     bool bAutoKill = CVAR_GET_FLOAT( "hud_classautokill" ) != 0;
     if( bAutoKill )
     {
-		// Is it the player's current class?
+        // Is it the player's current class?
         if( 
             ( !gViewPort->IsRandomPC() && ( m_iPlayerClass == g_iPlayerClass ) ) )
             return true;
@@ -341,13 +341,13 @@ void CImageLabel::LoadImage( const char* pImageName )
 {
     delete m_pTGA;
 
-	// Load the Image
+    // Load the Image
     m_pTGA = vgui_LoadTGAWithDirectory( pImageName, true );
 
     if( m_pTGA == nullptr )
     {
-		// we didn't find a matching image file for this resolution
-		// try to load file resolution independent
+        // we didn't find a matching image file for this resolution
+        // try to load file resolution independent
         m_pTGA = vgui_LoadTGAWithDirectory( pImageName );
     }
 
@@ -366,7 +366,7 @@ void CImageLabel::setImage( const char* pImageName )
 {
     delete m_pTGA;
 
-	// Load the Image
+    // Load the Image
     m_pTGA = vgui_LoadTGAWithDirectory( pImageName, true );
     Label::setImage( m_pTGA );
 }
@@ -375,7 +375,7 @@ void CImageLabel::setImage( const char* pImageName )
 // Various overloaded paint functions for Custom VGUI objects
 void CCommandMenu::paintBackground()
 {
-	// Transparent black background
+    // Transparent black background
 
     if( m_iSpectCmdMenu )
         drawSetColor( 0, 0, 0, 64 );
@@ -391,14 +391,14 @@ void CCommandMenu::paintBackground()
 CTFScrollButton::CTFScrollButton( int iArrow, const char* text, int x, int y, int wide, int tall )
     : CommandButton( text, x, y, wide, tall )
 {
-	// Set text color to orange
+    // Set text color to orange
     setFgColor( Scheme::sc_primary1 );
 
-	// Load in the arrow
+    // Load in the arrow
     m_pTGA = vgui_LoadTGAWithDirectory( sArrowFilenames[iArrow], true );
     setImage( m_pTGA );
 
-	// Highlight signal
+    // Highlight signal
     InputSignal* pISignal = new CHandler_CommandButtonHighlight( this );
     addInputSignal( pISignal );
 }
@@ -408,7 +408,7 @@ void CTFScrollButton::paint()
     if( !m_pTGA )
         return;
 
-	// draw armed button text in white
+    // draw armed button text in white
     if( isArmed() )
     {
         m_pTGA->setColor( Color( 255, 255, 255, 0 ) );
@@ -423,18 +423,18 @@ void CTFScrollButton::paint()
 
 void CTFScrollButton::paintBackground()
 {
-	/*
-		if ( isArmed() )
-		{
-			// Orange highlight background
-			drawSetColor( Scheme::sc_primary2 );
-			drawFilledRect(0,0,_size[0],_size[1]);
-		}
+    /*
+        if ( isArmed() )
+        {
+            // Orange highlight background
+            drawSetColor( Scheme::sc_primary2 );
+            drawFilledRect(0,0,_size[0],_size[1]);
+        }
 
-		// Orange Border
-		drawSetColor( Scheme::sc_secondary1 );
-		drawOutlinedRect(0,0,_size[0]-1,_size[1]);
-	*/
+        // Orange Border
+        drawSetColor( Scheme::sc_secondary1 );
+        drawOutlinedRect(0,0,_size[0]-1,_size[1]);
+    */
 }
 
 void CTFSlider::paintBackground()
@@ -443,27 +443,27 @@ void CTFSlider::paintBackground()
     getPaintSize( wide, tall );
     getNobPos( nobx, noby );
 
-	// Border
+    // Border
     drawSetColor( Scheme::sc_secondary1 );
     drawOutlinedRect( 0, 0, wide, tall );
 
     if( isVertical() )
     {
-		// Nob Fill
+        // Nob Fill
         drawSetColor( Scheme::sc_primary2 );
         drawFilledRect( 0, nobx, wide, noby );
 
-		// Nob Outline
+        // Nob Outline
         drawSetColor( Scheme::sc_primary1 );
         drawOutlinedRect( 0, nobx, wide, noby );
     }
     else
     {
-		// Nob Fill
+        // Nob Fill
         drawSetColor( Scheme::sc_primary2 );
         drawFilledRect( nobx, 0, noby, tall );
 
-		// Nob Outline
+        // Nob Outline
         drawSetColor( Scheme::sc_primary1 );
         drawOutlinedRect( nobx, 0, noby, tall );
     }
@@ -505,8 +505,8 @@ void CMenuHandler_StringCommandClassSelect::actionPerformed( Panel* panel )
 {
     CMenuHandler_StringCommand::actionPerformed( panel );
 
-	// THIS IS NOW BEING DONE ON THE TFC SERVER TO AVOID KILLING SOMEONE THEN
-	// HAVE THE SERVER SAY "SORRY...YOU CAN'T BE THAT CLASS".
+    // THIS IS NOW BEING DONE ON THE TFC SERVER TO AVOID KILLING SOMEONE THEN
+    // HAVE THE SERVER SAY "SORRY...YOU CAN'T BE THAT CLASS".
 
     bool bAutoKill = CVAR_GET_FLOAT( "hud_classautokill" ) != 0;
     if( bAutoKill && g_iPlayerClass != 0 )

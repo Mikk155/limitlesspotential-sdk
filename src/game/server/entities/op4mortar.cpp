@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -76,7 +76,7 @@ void CMortarShell::Spawn()
     pev->velocity = -( gpGlobals->v_forward * m_velocity );
     pev->gravity = 1;
 
-	// Deal twice the damage that the RPG does
+    // Deal twice the damage that the RPG does
     pev->dmg = 2 * GetSkillFloat( "plr_rpg"sv );
 
     pev->nextthink = gpGlobals->time + 0.01;
@@ -165,8 +165,8 @@ void CMortarShell::MortarExplodeTouch( CBaseEntity* pOther )
     else
         UTIL_DecalTrace( &tr, DECAL_SCORCH1 );
 
-	// TODO: never used?
-	// g_engfuncs.pfnRandomFloat( 0.0, 1.0 );
+    // TODO: never used?
+    // g_engfuncs.pfnRandomFloat( 0.0, 1.0 );
 
     switch ( RANDOM_LONG( 0, 2 ) )
     {
@@ -393,7 +393,7 @@ void COp4Mortar::Spawn()
 
     m_vGunAngle = g_vecZero;
 
-	// Set the eye height to roughly the center of the model so the entity can find enemies in PVS.
+    // Set the eye height to roughly the center of the model so the entity can find enemies in PVS.
     pev->view_ofs = {0, 0, 64};
 
     m_lastupdate = gpGlobals->time;
@@ -499,7 +499,7 @@ void COp4Mortar::MortarThink()
 
 bool COp4Mortar::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-	// Ignore all damage
+    // Ignore all damage
     return CBaseMonster::TakeDamage( inflictor, attacker, 0, bitsDamageType );
 }
 
@@ -750,7 +750,7 @@ void COp4Mortar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
     {
         if( ( pev->spawnflags & SF_MORTAR_ACTIVE ) == 0 && ( pev->spawnflags & SF_MORTAR_CONTROLLABLE ) != 0 )
         {
-			// Player fired a mortar
+            // Player fired a mortar
             EmitSound( CHAN_VOICE, "weapons/mortarhit.wav", VOL_NORM, ATTN_NONE );
             UTIL_ScreenShake( pev->origin, 12.0, 100.0, 2.0, 1000.0 );
 
@@ -771,7 +771,7 @@ void COp4Mortar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
         }
     }
 
-	// Toggle AI active state
+    // Toggle AI active state
     if( ShouldToggle( useType, ( pev->spawnflags & SF_MORTAR_ACTIVE ) != 0 ) )
     {
         pev->spawnflags ^= SF_MORTAR_ACTIVE;

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -14,8 +14,8 @@
  ****/
 
 /**
- *	@file
- *	spawn, think, and touch functions for trains, etc
+ *    @file
+ *    spawn, think, and touch functions for trains, etc
  */
 
 #include "cbase.h"
@@ -38,7 +38,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
 
-	// This is done to fix spawn flag collisions between this class and a derived class
+    // This is done to fix spawn flag collisions between this class and a derived class
     virtual bool IsTogglePlat() { return ( pev->spawnflags & SF_PLAT_TOGGLE ) != 0; }
 
     string_t m_MoveSound; // sound a plat makes while moving
@@ -97,7 +97,7 @@ bool CBasePlatTrain::KeyValue( KeyValueData* pkvd )
 
 void CBasePlatTrain::Precache()
 {
-	// set the plat's "in-motion" sound
+    // set the plat's "in-motion" sound
     if( FStrEq( "", STRING( m_MoveSound ) ) )
     {
         m_MoveSound = ALLOC_STRING( "common/null.wav" );
@@ -105,7 +105,7 @@ void CBasePlatTrain::Precache()
 
     PrecacheSound( STRING( m_MoveSound ) );
 
-	// set the plat's 'reached destination' stop sound
+    // set the plat's 'reached destination' stop sound
     if( FStrEq( "", STRING( m_StopSound ) ) )
     {
         m_StopSound = ALLOC_STRING( "common/null.wav" );
@@ -115,13 +115,13 @@ void CBasePlatTrain::Precache()
 }
 
 /**
- *	@details Plats are always drawn in the extended position, so they will light correctly.
+ *    @details Plats are always drawn in the extended position, so they will light correctly.
  *
- *	If the plat is the target of another trigger or button, it will start out disabled in
- *	the extended position until it is trigger, when it will lower and become a normal plat.
+ *    If the plat is the target of another trigger or button, it will start out disabled in
+ *    the extended position until it is trigger, when it will lower and become a normal plat.
  *
- *	If the "height" key is set, that will determine the amount the plat moves, instead of
- *	being implicitly determined by the model's height.
+ *    If the "height" key is set, that will determine the amount the plat moves, instead of
+ *    being implicitly determined by the model's height.
  */
 class CFuncPlat : public CBasePlatTrain
 {
@@ -135,33 +135,33 @@ public:
 
     void Blocked( CBaseEntity* pOther ) override;
 
-	/**
-	 *	@brief Start bringing platform down.
-	 */
+    /**
+     *    @brief Start bringing platform down.
+     */
     void PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
     void CallGoDown() { GoDown(); }
     void CallHitTop() { HitTop(); }
     void CallHitBottom() { HitBottom(); }
 
-	/**
-	 *	@brief Platform is at bottom, now starts moving up
-	 */
+    /**
+     *    @brief Platform is at bottom, now starts moving up
+     */
     virtual void GoUp();
 
-	/**
-	 *	@brief Platform is at top, now starts moving down.
-	 */
+    /**
+     *    @brief Platform is at top, now starts moving down.
+     */
     virtual void GoDown();
 
-	/**
-	 *	@brief Platform has hit top. Pauses, then starts back down again.
-	 */
+    /**
+     *    @brief Platform has hit top. Pauses, then starts back down again.
+     */
     virtual void HitTop();
 
-	/**
-	 *	@brief Platform has hit bottom. Stops and waits forever.
-	 */
+    /**
+     *    @brief Platform has hit bottom. Stops and waits forever.
+     */
     virtual void HitBottom();
 };
 
@@ -180,14 +180,14 @@ class CPlatTrigger : public CBaseEntity
 public:
     int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ) | FCAP_DONT_SAVE; }
 
-	/**
-	 *	@brief Create a trigger entity for a platform.
-	 */
+    /**
+     *    @brief Create a trigger entity for a platform.
+     */
     void SpawnInsideTrigger( CFuncPlat* pPlatform );
 
-	/**
-	 *	@brief When the platform's trigger field is touched, the platform ???
-	 */
+    /**
+     *    @brief When the platform's trigger field is touched, the platform ???
+     */
     void Touch( CBaseEntity* pOther ) override;
     EntityHandle<CFuncPlat> m_hPlatform;
 };
@@ -205,7 +205,7 @@ void CFuncPlat::Setup()
     SetSize( pev->mins, pev->maxs );
     SetModel( STRING( pev->model ) );
 
-	// vecPosition1 is the top position, vecPosition2 is the bottom
+    // vecPosition1 is the top position, vecPosition2 is the bottom
     m_vecPosition1 = pev->origin;
     m_vecPosition2 = pev->origin;
     if( m_flHeight != 0 )
@@ -222,8 +222,8 @@ void CFuncPlat::Setup()
 void CFuncPlat::Precache()
 {
     CBasePlatTrain::Precache();
-	// PrecacheSound("plats/platmove1.wav");
-	// PrecacheSound("plats/platstop1.wav");
+    // PrecacheSound("plats/platmove1.wav");
+    // PrecacheSound("plats/platstop1.wav");
     if( !IsTogglePlat() )
         PlatSpawnInsideTrigger( this ); // the "start moving" trigger
 }
@@ -234,8 +234,8 @@ void CFuncPlat::Spawn()
 
     Precache();
 
-	// If this platform is the target of some button, it starts at the TOP position,
-	// and is brought down by that button.  Otherwise, it starts at BOTTOM.
+    // If this platform is the target of some button, it starts at the TOP position,
+    // and is brought down by that button.  Otherwise, it starts at BOTTOM.
     if( !FStringNull( pev->targetname ) )
     {
         SetOrigin( m_vecPosition1 );
@@ -257,12 +257,12 @@ static void PlatSpawnInsideTrigger( CFuncPlat* platform )
 void CPlatTrigger::SpawnInsideTrigger( CFuncPlat* pPlatform )
 {
     m_hPlatform = pPlatform;
-	// Create trigger entity, "point" it at the owning platform, give it a touch method
+    // Create trigger entity, "point" it at the owning platform, give it a touch method
     pev->solid = SOLID_TRIGGER;
     pev->movetype = MOVETYPE_NONE;
     pev->origin = pPlatform->pev->origin;
 
-	// Establish the trigger field's size
+    // Establish the trigger field's size
     Vector vecTMin = pPlatform->pev->mins + Vector( 25, 25, 0 );
     Vector vecTMax = pPlatform->pev->maxs + Vector( 25, 25, 8 );
     vecTMin.z = vecTMax.z - ( pPlatform->m_vecPosition1.z - pPlatform->m_vecPosition2.z + 8 );
@@ -281,24 +281,24 @@ void CPlatTrigger::SpawnInsideTrigger( CFuncPlat* pPlatform )
 
 void CPlatTrigger::Touch( CBaseEntity* pOther )
 {
-	// Platform was removed, remove trigger
+    // Platform was removed, remove trigger
     if( !m_hPlatform )
     {
         UTIL_Remove( this );
         return;
     }
 
-	// Ignore touches by non-players
+    // Ignore touches by non-players
     if( !pOther->IsPlayer() )
         return;
 
-	// Ignore touches by corpses
+    // Ignore touches by corpses
     if( !pOther->IsAlive() )
         return;
 
     CFuncPlat* platform = m_hPlatform;
 
-	// Make linked platform go up/down.
+    // Make linked platform go up/down.
     if( platform->m_toggle_state == TS_AT_BOTTOM )
         platform->GoUp();
     else if( platform->m_toggle_state == TS_AT_TOP )
@@ -309,7 +309,7 @@ void CFuncPlat::PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 {
     if( IsTogglePlat() )
     {
-		// Top is off, bottom is on
+        // Top is off, bottom is on
         bool on = ( m_toggle_state == TS_AT_BOTTOM ) ? true : false;
 
         if( !ShouldToggle( useType, on ) )
@@ -368,7 +368,7 @@ void CFuncPlat::HitTop()
 
     if( !IsTogglePlat() )
     {
-		// After a delay, the platform will automatically start going down again.
+        // After a delay, the platform will automatically start going down again.
         SetThink( &CFuncPlat::CallGoDown );
         pev->nextthink = pev->ltime + 3;
     }
@@ -377,12 +377,12 @@ void CFuncPlat::HitTop()
 void CFuncPlat::Blocked( CBaseEntity* pOther )
 {
     Logger->trace( "{} Blocked by {}", STRING( pev->classname ), STRING( pOther->pev->classname ) );
-	// Hurt the blocker a little
+    // Hurt the blocker a little
     pOther->TakeDamage( this, this, 1, DMG_CRUSH );
 
     StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
 
-	// Send the platform back where it came from
+    // Send the platform back where it came from
     ASSERT( m_toggle_state == TS_GOING_UP || m_toggle_state == TS_GOING_DOWN );
     if( m_toggle_state == TS_GOING_UP )
         GoDown();
@@ -469,10 +469,10 @@ void CFuncPlatRot::HitTop()
 
 void CFuncPlatRot::RotMove( Vector& destAngle, float time )
 {
-	// set destdelta to the vector needed to move
+    // set destdelta to the vector needed to move
     Vector vecDestDelta = destAngle - pev->angles;
 
-	// Travel time is so short, we're practically there already;  so make it so.
+    // Travel time is so short, we're practically there already;  so make it so.
     if( time >= 0.1 )
         pev->avelocity = vecDestDelta / time;
     else
@@ -483,10 +483,10 @@ void CFuncPlatRot::RotMove( Vector& destAngle, float time )
 }
 
 /**
- *	@brief Trains are moving platforms that players can ride.
- *	The targets origin specifies the min point of the train at each corner.
- *	The train spawns at the first target it is pointing at.
- *	If the train is the target of a button or trigger, it will not begin moving until activated.
+ *    @brief Trains are moving platforms that players can ride.
+ *    The targets origin specifies the min point of the train at each corner.
+ *    The train spawns at the first target it is pointing at.
+ *    If the train is the target of a button or trigger, it will not begin moving until activated.
  */
 class CFuncTrain : public CBasePlatTrain
 {
@@ -504,9 +504,9 @@ public:
 
     void Wait();
 
-	/**
-	 *	@brief path corner needs to change to next target
-	 */
+    /**
+     *    @brief path corner needs to change to next target
+     */
     void Next();
 
     EHANDLE m_CurrentTarget;
@@ -539,14 +539,14 @@ void CFuncTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
 {
     if( ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER ) != 0 )
     {
-		// Move toward my target
+        // Move toward my target
         pev->spawnflags &= ~SF_TRAIN_WAIT_RETRIGGER;
         Next();
     }
     else
     {
         pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
-		// Pop back to last target if it's available
+        // Pop back to last target if it's available
         if( m_LastTarget )
             pev->target = m_LastTarget->pev->targetname;
         pev->nextthink = 0;
@@ -558,7 +558,7 @@ void CFuncTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
 
 void CFuncTrain::Wait()
 {
-	// Fire the pass target if there is one
+    // Fire the pass target if there is one
     if( !FStringNull( m_CurrentTarget->pev->message ) )
     {
         FireTargets( STRING( m_CurrentTarget->pev->message ), this, this, USE_TOGGLE, 0 );
@@ -566,18 +566,18 @@ void CFuncTrain::Wait()
             m_CurrentTarget->pev->message = string_t::Null;
     }
 
-	// need pointer to LAST target.
+    // need pointer to LAST target.
     if( FBitSet( m_CurrentTarget->pev->spawnflags, SF_TRAIN_WAIT_RETRIGGER ) || ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER ) != 0 )
     {
         pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
-		// clear the sound channel.
+        // clear the sound channel.
         StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
         EmitSound( CHAN_VOICE, STRING( m_StopSound ), m_volume, ATTN_NORM );
         pev->nextthink = 0;
         return;
     }
 
-	// Logger->debug("{}", m_flWait);
+    // Logger->debug("{}", m_flWait);
 
     if( m_flWait != 0 )
     { // -1 wait will wait forever!
@@ -594,18 +594,18 @@ void CFuncTrain::Wait()
 
 void CFuncTrain::Next()
 {
-	// now find our next target
+    // now find our next target
     CBaseEntity* pTarg = GetNextTarget();
 
     if( !pTarg )
     {
         StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
-		// Play stop sound
+        // Play stop sound
         EmitSound( CHAN_VOICE, STRING( m_StopSound ), m_volume, ATTN_NORM );
         return;
     }
 
-	// Save last target in case we need to find it again
+    // Save last target in case we need to find it again
     pev->message = pev->target;
 
     pev->target = pTarg->pev->target;
@@ -622,18 +622,18 @@ void CFuncTrain::Next()
 
     if( FBitSet( m_CurrentTarget->pev->spawnflags, SF_CORNER_TELEPORT ) )
     {
-		// Path corner has indicated a teleport to the next corner.
+        // Path corner has indicated a teleport to the next corner.
         SetBits( pev->effects, EF_NOINTERP );
         SetOrigin( pTarg->pev->origin - ( pev->mins + pev->maxs ) * 0.5 );
         Wait(); // Get on with doing the next path corner.
     }
     else
     {
-		// Normal linear move.
+        // Normal linear move.
 
-		// CHANGED this from CHAN_VOICE to CHAN_STATIC around OEM beta time because trains should
-		// use CHAN_STATIC for their movement sounds to prevent sound field problems.
-		// this is not a hack or temporary fix, this is how things should be. (sjb).
+        // CHANGED this from CHAN_VOICE to CHAN_STATIC around OEM beta time because trains should
+        // use CHAN_STATIC for their movement sounds to prevent sound field problems.
+        // this is not a hack or temporary fix, this is how things should be. (sjb).
         StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
         EmitSound( CHAN_STATIC, STRING( m_MoveSound ), m_volume, ATTN_NORM );
         ClearBits( pev->effects, EF_NOINTERP );
@@ -644,7 +644,7 @@ void CFuncTrain::Next()
 
 void CFuncTrain::Activate()
 {
-	// Not yet active, so teleport to first target
+    // Not yet active, so teleport to first target
     if( !m_activated )
     {
         m_activated = true;
@@ -703,11 +703,11 @@ void CFuncTrain::OverrideReset()
 {
     CBaseEntity* pTarg;
 
-	// Are we moving?
+    // Are we moving?
     if( pev->velocity != g_vecZero && pev->nextthink != 0 )
     {
         pev->target = pev->message;
-		// now find our next target
+        // now find our next target
         pTarg = GetNextTarget();
         if( !pTarg )
         {
@@ -723,7 +723,7 @@ void CFuncTrain::OverrideReset()
 }
 
 /**
- *	@brief Sprite that can follow a path like a train
+ *    @brief Sprite that can follow a path like a train
  */
 class CSpriteTrain : public CBasePlatTrain
 {
@@ -742,9 +742,9 @@ public:
 
     void Wait();
 
-	/**
-	 *	@brief path corner needs to change to next target
-	 */
+    /**
+     *    @brief path corner needs to change to next target
+     */
     void Next();
 
     void Think() override;
@@ -805,18 +805,18 @@ void CSpriteTrain::LinearMove( const Vector& vecDest, float flSpeed )
         return;
     }
 
-	// set destdelta to the vector needed to move
+    // set destdelta to the vector needed to move
     Vector vecDestDelta = vecDest - pev->origin;
 
-	// divide vector length by speed to get time to reach dest
+    // divide vector length by speed to get time to reach dest
     float flTravelTime = vecDestDelta.Length() / flSpeed;
 
-	// set nextthink to trigger a call to LinearMoveDone when dest is reached
+    // set nextthink to trigger a call to LinearMoveDone when dest is reached
     m_waiting = true;
     m_stopSprite = true;
     m_waitTime = pev->ltime + flTravelTime;
 
-	// scale the destdelta vector by the time spent traveling to get velocity
+    // scale the destdelta vector by the time spent traveling to get velocity
     pev->velocity = vecDestDelta / flTravelTime;
 }
 
@@ -834,14 +834,14 @@ void CSpriteTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 {
     if( ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER ) != 0 )
     {
-		// Move toward my target
+        // Move toward my target
         pev->spawnflags &= ~SF_TRAIN_WAIT_RETRIGGER;
         Next();
     }
     else
     {
         pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
-		// Pop back to last target if it's available
+        // Pop back to last target if it's available
         if( m_LastTarget )
             pev->target = m_LastTarget->pev->targetname;
 
@@ -855,7 +855,7 @@ void CSpriteTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 
 void CSpriteTrain::Wait()
 {
-	// Fire the pass target if there is one
+    // Fire the pass target if there is one
     if( !FStringNull( m_CurrentTarget->pev->message ) )
     {
         FireTargets( STRING( m_CurrentTarget->pev->message ), this, this, USE_TOGGLE, 0 );
@@ -863,17 +863,17 @@ void CSpriteTrain::Wait()
             m_CurrentTarget->pev->message = string_t::Null;
     }
 
-	// need pointer to LAST target.
+    // need pointer to LAST target.
     if( FBitSet( m_CurrentTarget->pev->spawnflags, SF_TRAIN_WAIT_RETRIGGER ) || ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER ) != 0 )
     {
         pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
-		// clear the sound channel.
+        // clear the sound channel.
         StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
         EmitSound( CHAN_VOICE, STRING( m_StopSound ), m_volume, ATTN_NORM );
         return;
     }
 
-	// Logger->debug("{}", m_flWait);
+    // Logger->debug("{}", m_flWait);
 
     if( m_flWait != 0 )
     { // -1 wait will wait forever!
@@ -892,18 +892,18 @@ void CSpriteTrain::Wait()
 
 void CSpriteTrain::Next()
 {
-	// now find our next target
+    // now find our next target
     CBaseEntity* pTarg = GetNextTarget();
 
     if( !pTarg )
     {
         StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
-		// Play stop sound
+        // Play stop sound
         EmitSound( CHAN_VOICE, STRING( m_StopSound ), m_volume, ATTN_NORM );
         return;
     }
 
-	// Save last target in case we need to find it again
+    // Save last target in case we need to find it again
     pev->message = pev->target;
 
     pev->target = pTarg->pev->target;
@@ -920,18 +920,18 @@ void CSpriteTrain::Next()
 
     if( FBitSet( m_CurrentTarget->pev->spawnflags, SF_CORNER_TELEPORT ) )
     {
-		// Path corner has indicated a teleport to the next corner.
+        // Path corner has indicated a teleport to the next corner.
         SetBits( pev->effects, EF_NOINTERP );
         SetOrigin( pTarg->pev->origin - ( pev->mins + pev->maxs ) * 0.5 );
         Wait(); // Get on with doing the next path corner.
     }
     else
     {
-		// Normal linear move.
+        // Normal linear move.
 
-		// CHANGED this from CHAN_VOICE to CHAN_STATIC around OEM beta time because trains should
-		// use CHAN_STATIC for their movement sounds to prevent sound field problems.
-		// this is not a hack or temporary fix, this is how things should be. (sjb).
+        // CHANGED this from CHAN_VOICE to CHAN_STATIC around OEM beta time because trains should
+        // use CHAN_STATIC for their movement sounds to prevent sound field problems.
+        // this is not a hack or temporary fix, this is how things should be. (sjb).
         StopSound( CHAN_STATIC, STRING( m_MoveSound ) );
         EmitSound( CHAN_STATIC, STRING( m_MoveSound ), m_volume, ATTN_NORM );
         ClearBits( pev->effects, EF_NOINTERP );
@@ -942,7 +942,7 @@ void CSpriteTrain::Next()
 
 void CSpriteTrain::Activate()
 {
-	// Not yet active, so teleport to first target
+    // Not yet active, so teleport to first target
     if( !m_activated )
     {
         m_activated = true;
@@ -1018,11 +1018,11 @@ void CSpriteTrain::OverrideReset()
 {
     CBaseEntity* pTarg;
 
-	// Are we moving?
+    // Are we moving?
     if( pev->velocity != g_vecZero && pev->nextthink != 0 )
     {
         pev->target = pev->message;
-		// now find our next target
+        // now find our next target
         pTarg = GetNextTarget();
         if( !pTarg )
         {
@@ -1148,7 +1148,7 @@ void CFuncTrackTrain::NextThink( float thinkTime, bool alwaysThink )
 
 void CFuncTrackTrain::Blocked( CBaseEntity* pOther )
 {
-	// Blocker is on-ground on the train
+    // Blocker is on-ground on the train
     if( FBitSet( pOther->pev->flags, FL_ONGROUND ) && pOther->GetGroundEntity() == this )
     {
         float deltaSpeed = fabs( pev->speed );
@@ -1164,7 +1164,7 @@ void CFuncTrackTrain::Blocked( CBaseEntity* pOther )
     Logger->trace( "TRAIN({}): Blocked by {} (dmg:{:.2f})", STRING( pev->targetname ), STRING( pOther->pev->classname ), pev->dmg );
     if( pev->dmg <= 0 )
         return;
-	// we can't hurt this thing, so we're not concerned with it
+    // we can't hurt this thing, so we're not concerned with it
     pOther->TakeDamage( this, this, pev->dmg, DMG_CRUSH );
 }
 
@@ -1234,7 +1234,7 @@ static void FixupAngles( Vector& v )
 
 void CFuncTrackTrain::StopTrainSound()
 {
-	// if sound playing, stop it
+    // if sound playing, stop it
     if( m_soundPlaying && !FStringNull( m_sounds ) )
     {
         StopSound( CHAN_STATIC, STRING( m_sounds ) );
@@ -1251,12 +1251,12 @@ void CFuncTrackTrain::UpdateTrainSound()
 
     const float flpitch = TRAIN_STARTPITCH + ( fabs( pev->speed ) * ( TRAIN_MAXPITCH - TRAIN_STARTPITCH ) / TRAIN_MAXSPEED );
 
-	// If a player has joined we need to restart the train sound so they can hear it.
+    // If a player has joined we need to restart the train sound so they can hear it.
     if( !m_soundPlaying || m_LastPlayerJoinTimeCheck < g_LastPlayerJoinTime )
     {
         if( !m_soundPlaying )
         {
-			// play startup sound for train
+            // play startup sound for train
             EmitSound( CHAN_ITEM, "plats/ttrain_start1.wav", m_flVolume, ATTN_NORM );
         }
 
@@ -1265,7 +1265,7 @@ void CFuncTrackTrain::UpdateTrainSound()
     }
     else if( flpitch != m_CachedPitch )
     {
-		// update pitch
+        // update pitch
         EmitSoundDyn( CHAN_STATIC, STRING( m_sounds ), m_flVolume, ATTN_NORM, SND_CHANGE_PITCH, (int)flpitch );
     }
 
@@ -1284,8 +1284,8 @@ void CFuncTrackTrain::Next()
         return;
     }
 
-	//	if ( !m_ppath )
-	//		m_ppath = CPathTrack::Instance(UTIL_FindEntityByTargetname(nullptr, STRING(pev->target)));
+    //    if ( !m_ppath )
+    //        m_ppath = CPathTrack::Instance(UTIL_FindEntityByTargetname(nullptr, STRING(pev->target)));
     if( !m_ppath )
     {
         Logger->trace( "TRAIN({}): Lost path", STRING( pev->targetname ) );
@@ -1313,10 +1313,10 @@ void CFuncTrackTrain::Next()
 
     Vector delta = nextFront - pev->origin;
     Vector angles = UTIL_VecToAngles( delta );
-	// The train actually points west
+    // The train actually points west
     angles.y += 180;
 
-	// !!!  All of this crap has to be done to make the angles not wrap around, revisit this.
+    // !!!  All of this crap has to be done to make the angles not wrap around, revisit this.
     FixupAngles( angles );
     FixupAngles( pev->angles );
 
@@ -1354,7 +1354,7 @@ void CFuncTrackTrain::Next()
                 pFire = m_ppath;
 
             m_ppath = pnext;
-			// Fire the pass target if there is one
+            // Fire the pass target if there is one
             if( !FStringNull( pFire->pev->message ) )
             {
                 FireTargets( STRING( pFire->pev->message ), this, this, USE_TOGGLE, 0 );
@@ -1365,7 +1365,7 @@ void CFuncTrackTrain::Next()
             if( ( pFire->pev->spawnflags & SF_PATH_DISABLE_TRAIN ) != 0 )
                 pev->spawnflags |= SF_TRACKTRAIN_NOCONTROL;
 
-			// Don't override speed if under user control
+            // Don't override speed if under user control
             if( ( pev->spawnflags & SF_TRACKTRAIN_NOCONTROL ) != 0 )
             {
                 if( pFire->pev->speed != 0 )
@@ -1389,12 +1389,12 @@ void CFuncTrackTrain::Next()
 
         pev->speed = 0;
 
-		// Move to the dead end
+        // Move to the dead end
 
-		// Are we there yet?
+        // Are we there yet?
         if( distance > 0 )
         {
-			// no, how long to get there?
+            // no, how long to get there?
             time = distance / m_oldSpeed;
             pev->velocity = pev->velocity * ( m_oldSpeed / distance );
             SetThink( &CFuncTrackTrain::DeadEnd );
@@ -1409,14 +1409,14 @@ void CFuncTrackTrain::Next()
 
 void CFuncTrackTrain::DeadEnd()
 {
-	// Fire the dead-end target if there is one
+    // Fire the dead-end target if there is one
     CPathTrack *pTrack, *pNext;
 
     pTrack = m_ppath;
 
-	// Find the dead end path node
-	// HACKHACK -- This is bugly, but the train can actually stop moving at a different node depending on it's speed
-	// so we have to traverse the list to it's end.
+    // Find the dead end path node
+    // HACKHACK -- This is bugly, but the train can actually stop moving at a different node depending on it's speed
+    // so we have to traverse the list to it's end.
     if( pTrack )
     {
         if( m_oldSpeed < 0 )
@@ -1469,7 +1469,7 @@ bool CFuncTrackTrain::OnControls( CBaseEntity* controller )
     if( ( pev->spawnflags & SF_TRACKTRAIN_NOCONTROL ) != 0 )
         return false;
 
-	// Transform offset into local coordinates
+    // Transform offset into local coordinates
     UTIL_MakeVectors( pev->angles );
     Vector local;
     local.x = DotProduct( offset, gpGlobals->v_forward );
@@ -1505,7 +1505,7 @@ void CFuncTrackTrain::Find()
     look.z += m_height;
 
     pev->angles = UTIL_VecToAngles( look - nextPos );
-	// The train actually points west
+    // The train actually points west
     pev->angles.y += 180;
 
     if( ( pev->spawnflags & SF_TRACKTRAIN_NOPITCH ) != 0 )
@@ -1528,7 +1528,7 @@ void CFuncTrackTrain::NearestPath()
 
     while( ( pTrack = UTIL_FindEntityInSphere( pTrack, pev->origin, 1024 ) ) != nullptr )
     {
-		// filter out non-tracks
+        // filter out non-tracks
         if( ( pTrack->pev->flags & ( FL_CLIENT | FL_MONSTER ) ) == 0 && pTrack->ClassnameIs( "path_track" ) )
         {
             dist = ( pev->origin - pTrack->pev->origin ).Length();
@@ -1548,7 +1548,7 @@ void CFuncTrackTrain::NearestPath()
     }
 
     Logger->trace( "TRAIN: {}, Nearest track is {}", STRING( pev->targetname ), STRING( pNearest->pev->targetname ) );
-	// If I'm closer to the next path_track on this path, then it's my real path
+    // If I'm closer to the next path_track on this path, then it's my real path
     pTrack = ( ( CPathTrack* )pNearest )->GetNext();
     if( pTrack )
     {
@@ -1606,14 +1606,14 @@ void CFuncTrackTrain::Spawn()
     SetSize( pev->mins, pev->maxs );
     SetOrigin( pev->origin );
 
-	// Cache off placed origin for train controls
+    // Cache off placed origin for train controls
     pev->oldorigin = pev->origin;
 
     m_controlMins = pev->mins;
     m_controlMaxs = pev->maxs;
     m_controlMaxs.z += 72;
-	// start trains on the next frame, to make sure their targets have had
-	// a chance to spawn/activate
+    // start trains on the next frame, to make sure their targets have had
+    // a chance to spawn/activate
     NextThink( pev->ltime + 0.1, false );
     SetThink( &CFuncTrackTrain::Find );
     Precache();
@@ -1638,7 +1638,7 @@ void CFuncTrackTrain::Precache()
 }
 
 /**
- *	@brief This class defines the volume of space that the player must stand in to control the train
+ *    @brief This class defines the volume of space that the player must stand in to control the train
  */
 class CFuncTrainControls : public CBaseEntity
 {
@@ -1704,10 +1704,10 @@ enum TRAIN_CODE
 };
 
 /**
- *	@brief Track changer / Train elevator
- *	@details This entity is a rotating/moving platform that will carry a train to a new track.
- *	It must be larger in X-Y planar area than the train,
- *	since it must contain the train within these dimensions in order to operate when the train is near it.
+ *    @brief Track changer / Train elevator
+ *    @details This entity is a rotating/moving platform that will carry a train to a new track.
+ *    It must be larger in X-Y planar area than the train,
+ *    since it must contain the train within these dimensions in order to operate when the train is near it.
  */
 class CFuncTrackChange : public CFuncPlatRot
 {
@@ -1718,7 +1718,7 @@ public:
     void Spawn() override;
     void Precache() override;
 
-	//	void	Blocked() override;
+    //    void    Blocked() override;
     void GoUp() override;
     void GoDown() override;
 
@@ -1801,7 +1801,7 @@ void CFuncTrackChange::Spawn()
 
 void CFuncTrackChange::Precache()
 {
-	// Can't trigger sound
+    // Can't trigger sound
     PrecacheSound( "buttons/button11.wav" );
 
     CFuncPlatRot::Precache();
@@ -1844,7 +1844,7 @@ void CFuncTrackChange::OverrideReset()
 
 void CFuncTrackChange::Find()
 {
-	// Find track entities
+    // Find track entities
     auto target = UTIL_FindEntityByTargetname( nullptr, STRING( m_trackTopName ) );
     if( !FNullEnt( target ) )
     {
@@ -1873,7 +1873,7 @@ void CFuncTrackChange::Find()
             else
             {
                 Logger->error( "Can't find train for track change! {}", STRING( m_trainName ) );
-				// TODO: probably unnecessary
+                // TODO: probably unnecessary
                 target = UTIL_FindEntityByTargetname( nullptr, STRING( m_trainName ) );
             }
         }
@@ -1886,7 +1886,7 @@ void CFuncTrackChange::Find()
 
 TRAIN_CODE CFuncTrackChange::EvaluateTrain( CPathTrack* pcurrent )
 {
-	// Go ahead and work, we don't have anything to switch, so just be an elevator
+    // Go ahead and work, we don't have anything to switch, so just be an elevator
     if( !pcurrent || !m_train )
         return TRAIN_SAFE;
 
@@ -1917,13 +1917,13 @@ void CFuncTrackChange::UpdateTrain( Vector& dest )
     m_train->pev->avelocity = pev->avelocity;
     m_train->NextThink( m_train->pev->ltime + time, false );
 
-	// Attempt at getting the train to rotate properly around the origin of the trackchange
+    // Attempt at getting the train to rotate properly around the origin of the trackchange
     if( time <= 0 )
         return;
 
     Vector offset = m_train->pev->origin - pev->origin;
     Vector delta = dest - pev->angles;
-	// Transform offset into local coordinates
+    // Transform offset into local coordinates
     UTIL_MakeInvVectors( delta, gpGlobals );
     Vector local;
     local.x = DotProduct( offset, gpGlobals->v_forward );
@@ -1939,11 +1939,11 @@ void CFuncTrackChange::GoDown()
     if( m_code == TRAIN_BLOCKING )
         return;
 
-	// HitBottom may get called during CFuncPlat::GoDown(), so set up for that
-	// before you call GoDown()
+    // HitBottom may get called during CFuncPlat::GoDown(), so set up for that
+    // before you call GoDown()
 
     UpdateAutoTargets( TS_GOING_DOWN );
-	// If ROTMOVE, move & rotate
+    // If ROTMOVE, move & rotate
     if( FBitSet( pev->spawnflags, SF_TRACK_DONT_MOVE ) )
     {
         SetMoveDone( &CFuncTrackChange::CallHitBottom );
@@ -1956,9 +1956,9 @@ void CFuncTrackChange::GoDown()
         SetMoveDone( &CFuncTrackChange::CallHitBottom );
         RotMove( m_start, pev->nextthink - pev->ltime );
     }
-	// Otherwise, rotate first, move second
+    // Otherwise, rotate first, move second
 
-	// If the train is moving with the platform, update it
+    // If the train is moving with the platform, update it
     if( m_code == TRAIN_FOLLOWING )
     {
         UpdateTrain( m_start );
@@ -1971,8 +1971,8 @@ void CFuncTrackChange::GoUp()
     if( m_code == TRAIN_BLOCKING )
         return;
 
-	// HitTop may get called during CFuncPlat::GoUp(), so set up for that
-	// before you call GoUp();
+    // HitTop may get called during CFuncPlat::GoUp(), so set up for that
+    // before you call GoUp();
 
     UpdateAutoTargets( TS_GOING_UP );
     if( FBitSet( pev->spawnflags, SF_TRACK_DONT_MOVE ) )
@@ -1983,15 +1983,15 @@ void CFuncTrackChange::GoUp()
     }
     else
     {
-		// If ROTMOVE, move & rotate
+        // If ROTMOVE, move & rotate
         CFuncPlat::GoUp();
         SetMoveDone( &CFuncTrackChange::CallHitTop );
         RotMove( m_end, pev->nextthink - pev->ltime );
     }
 
-	// Otherwise, move first, rotate second
+    // Otherwise, move first, rotate second
 
-	// If the train is moving with the platform, update it
+    // If the train is moving with the platform, update it
     if( m_code == TRAIN_FOLLOWING )
     {
         UpdateTrain( m_end );
@@ -2020,7 +2020,7 @@ void CFuncTrackChange::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     if( m_toggle_state != TS_AT_TOP && m_toggle_state != TS_AT_BOTTOM )
         return;
 
-	// If train is in "safe" area, but not on the elevator, play alarm sound
+    // If train is in "safe" area, but not on the elevator, play alarm sound
     if( m_toggle_state == TS_AT_TOP )
         m_code = EvaluateTrain( m_trackTop );
     else if( m_toggle_state == TS_AT_BOTTOM )
@@ -2029,14 +2029,14 @@ void CFuncTrackChange::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
         m_code = TRAIN_BLOCKING;
     if( m_code == TRAIN_BLOCKING )
     {
-		// Play alarm and return
+        // Play alarm and return
         EmitSound( CHAN_VOICE, "buttons/button11.wav", 1, ATTN_NORM );
         return;
     }
 
-	// Otherwise, it's safe to move
-	// If at top, go down
-	// at bottom, go up
+    // Otherwise, it's safe to move
+    // If at top, go down
+    // at bottom, go up
 
     DisableUse();
     if( m_toggle_state == TS_AT_TOP )
@@ -2050,7 +2050,7 @@ void CFuncTrackChange::HitBottom()
     CFuncPlatRot::HitBottom();
     if( m_code == TRAIN_FOLLOWING )
     {
-		//		UpdateTrain();
+        //        UpdateTrain();
         m_train->SetTrack( m_trackBottom );
     }
     SetThink( nullptr );
@@ -2066,11 +2066,11 @@ void CFuncTrackChange::HitTop()
     CFuncPlatRot::HitTop();
     if( m_code == TRAIN_FOLLOWING )
     {
-		//		UpdateTrain();
+        //        UpdateTrain();
         m_train->SetTrack( m_trackTop );
     }
 
-	// Don't let the plat go back down
+    // Don't let the plat go back down
     SetThink( nullptr );
     pev->nextthink = -1;
     UpdateAutoTargets( m_toggle_state );
@@ -2131,7 +2131,7 @@ void CFuncTrackAuto::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     if( pActivator->ClassnameIs( "func_tracktrain" ) )
     {
         m_code = EvaluateTrain( pTarget );
-		// Safe to fire?
+        // Safe to fire?
         if( m_code == TRAIN_FOLLOWING && m_toggle_state != m_targetState )
         {
             DisableUse();
@@ -2160,9 +2160,9 @@ void CFuncTrackAuto::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 #define FGUNTARGET_START_ON 0x0001
 
 /**
- *	@details pev->speed is the travel speed
- *	pev->health is current health
- *	pev->max_health is the amount to reset to each time it starts
+ *    @details pev->speed is the travel speed
+ *    pev->health is current health
+ *    pev->max_health is the amount to reset to each time it starts
  */
 class CGunTarget : public CBaseMonster
 {
@@ -2220,7 +2220,7 @@ void CGunTarget::Spawn()
     if( pev->speed == 0 )
         pev->speed = 100;
 
-	// Don't take damage until "on"
+    // Don't take damage until "on"
     pev->takedamage = DAMAGE_NO;
     pev->flags |= FL_MONSTER;
 
@@ -2238,7 +2238,7 @@ void CGunTarget::Activate()
 {
     CBaseEntity* pTarg;
 
-	// now find our next target
+    // now find our next target
     pTarg = GetNextTarget();
     if( pTarg )
     {
@@ -2278,7 +2278,7 @@ void CGunTarget::Wait()
         return;
     }
 
-	// Fire the pass target if there is one
+    // Fire the pass target if there is one
     if( !FStringNull( pTarget->pev->message ) )
     {
         FireTargets( STRING( pTarget->pev->message ), this, this, USE_TOGGLE, 0 );

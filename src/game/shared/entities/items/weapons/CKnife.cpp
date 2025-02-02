@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -95,8 +95,8 @@ bool CKnife::Swing( const bool bFirst )
         UTIL_TraceHull( vecSrc, vecEnd, dont_ignore_monsters, head_hull, m_pPlayer->edict(), &tr );
         if( tr.flFraction < 1.0 )
         {
-			// Calculate the point of intersection of the line (or hull) and the object we hit
-			// This is and approximation of the "best" intersection
+            // Calculate the point of intersection of the line (or hull) and the object we hit
+            // This is and approximation of the "best" intersection
             CBaseEntity* pHit = CBaseEntity::Instance( tr.pHit );
             if( !pHit || pHit->IsBSPModel() )
                 FindHullIntersection( vecSrc, tr, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX, m_pPlayer );
@@ -117,10 +117,10 @@ bool CKnife::Swing( const bool bFirst )
     {
         if( bFirst )
         {
-			// miss
+            // miss
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
 
-			// player "shoot" animation
+            // player "shoot" animation
             m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
         }
     }
@@ -139,12 +139,12 @@ bool CKnife::Swing( const bool bFirst )
             break;
         }
 
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 #ifndef CLIENT_DLL
 
-		// hit
+        // hit
         bDidHit = true;
         CBaseEntity* pEntity = CBaseEntity::Instance( tr.pHit );
 
@@ -189,7 +189,7 @@ bool CKnife::Swing( const bool bFirst )
 
 #ifndef CLIENT_DLL
 
-		// play thwack, smack, or dong sound
+        // play thwack, smack, or dong sound
         float flVol = 1.0;
         bool bHitWorld = true;
 
@@ -197,7 +197,7 @@ bool CKnife::Swing( const bool bFirst )
         {
             if( pEntity->Classify() != ENTCLASS_NONE && !pEntity->IsMachine() )
             {
-				// play thwack or smack sound
+                // play thwack or smack sound
                 switch ( RANDOM_LONG( 0, 1 ) )
                 {
                 case 0:
@@ -217,8 +217,8 @@ bool CKnife::Swing( const bool bFirst )
             }
         }
 
-		// play texture hit sound
-		// UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
+        // play texture hit sound
+        // UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
 
         if( bHitWorld )
         {
@@ -226,13 +226,13 @@ bool CKnife::Swing( const bool bFirst )
 
             if( g_pGameRules->IsMultiplayer() )
             {
-				// override the volume here, cause we don't play texture sounds in multiplayer,
-				// and fvolbar is going to be 0 from the above call.
+                // override the volume here, cause we don't play texture sounds in multiplayer,
+                // and fvolbar is going to be 0 from the above call.
 
                 fvolbar = 1;
             }
 
-			// also play crowbar strike
+            // also play crowbar strike
             switch ( RANDOM_LONG( 0, 1 ) )
             {
             case 0:
@@ -243,7 +243,7 @@ bool CKnife::Swing( const bool bFirst )
                 break;
             }
 
-			// delay the decal a bit
+            // delay the decal a bit
             m_trHit = tr;
         }
 

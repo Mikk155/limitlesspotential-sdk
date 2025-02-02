@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   This source code contains proprietary and confidential information of
  *   Valve LLC and its suppliers.  Access to this code is restricted to
@@ -20,7 +20,7 @@
 #include "scientist.h"
 
 /**
- *	@brief human scientist (passive lab worker)
+ *    @brief human scientist (passive lab worker)
  */
 class CCleansuitScientist : public CScientist
 {
@@ -50,7 +50,7 @@ void CCleansuitScientist::Heal()
         return;
 
     m_hTargetEnt->GiveHealth( GetSkillFloat( "cleansuit_scientist_heal"sv ), DMG_GENERIC );
-	// Don't heal again for 1 minute
+    // Don't heal again for 1 minute
     m_healTime = gpGlobals->time + 60;
 }
 
@@ -85,7 +85,7 @@ void CDeadCleansuitScientist::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-	// Corpses have less health
+    // Corpses have less health
     pev->health = 8; // GetSkillFloat("scientist_health"sv);
     pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
 
@@ -116,11 +116,11 @@ void CDeadCleansuitScientist::Spawn()
     if( pev->body == -1 )
     {
         pev->body = 0;
-		// -1 chooses a random head
-		// pick a head, any head
+        // -1 chooses a random head
+        // pick a head, any head
         SetBodygroup( ScientistBodygroup::Head, RANDOM_LONG( 0, GetBodygroupSubmodelCount( ScientistBodygroup::Head ) - 1 ) );
     }
-	// Luther is black, make his hands black
+    // Luther is black, make his hands black
     if( pev->body == HEAD_LUTHER )
         pev->skin = 1;
     else
@@ -132,7 +132,7 @@ void CDeadCleansuitScientist::Spawn()
         AILogger->debug( "Dead scientist with bad pose" );
     }
 
-	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
+    //    pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
     MonsterInitDead();
 }
 

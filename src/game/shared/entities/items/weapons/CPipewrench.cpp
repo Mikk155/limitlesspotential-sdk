@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -44,11 +44,11 @@ void CPipewrench::Precache()
     PrecacheModel( "models/v_pipe_wrench.mdl" );
     PrecacheModel( STRING( m_WorldModel ) );
     PrecacheModel( "models/p_pipe_wrench.mdl" );
-	// Shepard - The commented sounds below are unused
-	// in Opposing Force, if you wish to use them,
-	// uncomment all the appropriate lines.
-	/*PrecacheSound("weapons/pwrench_big_hit1.wav");
-	PrecacheSound("weapons/pwrench_big_hit2.wav");*/
+    // Shepard - The commented sounds below are unused
+    // in Opposing Force, if you wish to use them,
+    // uncomment all the appropriate lines.
+    /*PrecacheSound("weapons/pwrench_big_hit1.wav");
+    PrecacheSound("weapons/pwrench_big_hit2.wav");*/
     PrecacheSound( "weapons/pwrench_big_hitbod1.wav" );
     PrecacheSound( "weapons/pwrench_big_hitbod2.wav" );
     PrecacheSound( "weapons/pwrench_big_miss.wav" );
@@ -70,7 +70,7 @@ bool CPipewrench::Deploy()
 
 void CPipewrench::Holster()
 {
-	// Cancel any swing in progress.
+    // Cancel any swing in progress.
     m_iSwingMode = SWING_NONE;
     SetThink( nullptr );
 
@@ -131,8 +131,8 @@ bool CPipewrench::Swing( const bool bFirst )
         UTIL_TraceHull( vecSrc, vecEnd, dont_ignore_monsters, head_hull, m_pPlayer->edict(), &tr );
         if( tr.flFraction < 1.0 )
         {
-			// Calculate the point of intersection of the line (or hull) and the object we hit
-			// This is and approximation of the "best" intersection
+            // Calculate the point of intersection of the line (or hull) and the object we hit
+            // This is and approximation of the "best" intersection
             CBaseEntity* pHit = CBaseEntity::Instance( tr.pHit );
             if( !pHit || pHit->IsBSPModel() )
                 FindHullIntersection( vecSrc, tr, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX, m_pPlayer );
@@ -153,25 +153,25 @@ bool CPipewrench::Swing( const bool bFirst )
     {
         if( bFirst )
         {
-			// miss
+            // miss
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.75 );
             m_flNextSecondaryAttack = GetNextAttackDelay( 0.75 );
             m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
 
-			// Shepard - In Opposing Force, the "miss" sound is
-			// played twice (maybe it's a mistake from Gearbox or
-			// an intended feature), if you only want a single
-			// sound, comment this "switch" or the one in the
-			// event (EV_Pipewrench)
-			/*
-			switch ( ((m_iSwing++) % 1) )
-			{
-			case 0: m_pPlayer->EmitSound(CHAN_ITEM, "weapons/pwrench_miss1.wav", 1, ATTN_NORM); break;
-			case 1: m_pPlayer->EmitSound(CHAN_ITEM, "weapons/pwrench_miss2.wav", 1, ATTN_NORM); break;
-			}
-			*/
+            // Shepard - In Opposing Force, the "miss" sound is
+            // played twice (maybe it's a mistake from Gearbox or
+            // an intended feature), if you only want a single
+            // sound, comment this "switch" or the one in the
+            // event (EV_Pipewrench)
+            /*
+            switch ( ((m_iSwing++) % 1) )
+            {
+            case 0: m_pPlayer->EmitSound(CHAN_ITEM, "weapons/pwrench_miss1.wav", 1, ATTN_NORM); break;
+            case 1: m_pPlayer->EmitSound(CHAN_ITEM, "weapons/pwrench_miss2.wav", 1, ATTN_NORM); break;
+            }
+            */
 
-			// player "shoot" animation
+            // player "shoot" animation
             m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
         }
     }
@@ -190,12 +190,12 @@ bool CPipewrench::Swing( const bool bFirst )
             break;
         }
 
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 #ifndef CLIENT_DLL
 
-		// hit
+        // hit
         bDidHit = true;
         CBaseEntity* pEntity = CBaseEntity::Instance( tr.pHit );
 
@@ -205,12 +205,12 @@ bool CPipewrench::Swing( const bool bFirst )
 
             if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_Skill.GetValue( "pipewrench_full_damage" ) != 0 )
             {
-				// first swing does full damage
+                // first swing does full damage
                 pEntity->TraceAttack( m_pPlayer, GetSkillFloat( "plr_pipewrench"sv ), gpGlobals->v_forward, &tr, DMG_CLUB );
             }
             else
             {
-				// subsequent swings do half
+                // subsequent swings do half
                 pEntity->TraceAttack( m_pPlayer, GetSkillFloat( "plr_pipewrench"sv ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
             }
 
@@ -229,7 +229,7 @@ bool CPipewrench::Swing( const bool bFirst )
 
 #ifndef CLIENT_DLL
 
-		// play thwack, smack, or dong sound
+        // play thwack, smack, or dong sound
         float flVol = 1.0;
         bool bHitWorld = true;
 
@@ -237,7 +237,7 @@ bool CPipewrench::Swing( const bool bFirst )
         {
             if( pEntity->Classify() != ENTCLASS_NONE && !pEntity->IsMachine() )
             {
-				// play thwack or smack sound
+                // play thwack or smack sound
                 switch ( RANDOM_LONG( 0, 2 ) )
                 {
                 case 0:
@@ -260,8 +260,8 @@ bool CPipewrench::Swing( const bool bFirst )
             }
         }
 
-		// play texture hit sound
-		// UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
+        // play texture hit sound
+        // UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
 
         if( bHitWorld )
         {
@@ -269,13 +269,13 @@ bool CPipewrench::Swing( const bool bFirst )
 
             if( g_pGameRules->IsMultiplayer() )
             {
-				// override the volume here, cause we don't play texture sounds in multiplayer,
-				// and fvolbar is going to be 0 from the above call.
+                // override the volume here, cause we don't play texture sounds in multiplayer,
+                // and fvolbar is going to be 0 from the above call.
 
                 fvolbar = 1;
             }
 
-			// also play pipe wrench strike
+            // also play pipe wrench strike
             switch ( RANDOM_LONG( 0, 1 ) )
             {
             case 0:
@@ -286,7 +286,7 @@ bool CPipewrench::Swing( const bool bFirst )
                 break;
             }
 
-			// delay the decal a bit
+            // delay the decal a bit
             m_trHit = tr;
         }
 
@@ -321,8 +321,8 @@ void CPipewrench::BigSwing()
         UTIL_TraceHull( vecSrc, vecEnd, dont_ignore_monsters, head_hull, m_pPlayer->edict(), &tr );
         if( tr.flFraction < 1.0 )
         {
-			// Calculate the point of intersection of the line (or hull) and the object we hit
-			// This is and approximation of the "best" intersection
+            // Calculate the point of intersection of the line (or hull) and the object we hit
+            // This is and approximation of the "best" intersection
             CBaseEntity* pHit = CBaseEntity::Instance( tr.pHit );
             if( !pHit || pHit->IsBSPModel() )
                 FindHullIntersection( vecSrc, tr, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX, m_pPlayer );
@@ -339,26 +339,26 @@ void CPipewrench::BigSwing()
 
     if( tr.flFraction >= 1.0 )
     {
-		// miss
+        // miss
         m_flNextPrimaryAttack = GetNextAttackDelay( 1.0 );
         m_flNextSecondaryAttack = GetNextAttackDelay( 1.0 );
         m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
 
         SendWeaponAnim( PIPEWRENCH_BIG_SWING_MISS );
 
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
     }
     else
     {
         SendWeaponAnim( PIPEWRENCH_BIG_SWING_HIT );
 
-		// player "shoot" animation
+        // player "shoot" animation
         m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 #ifndef CLIENT_DLL
 
-		// hit
+        // hit
         CBaseEntity* pEntity = CBaseEntity::Instance( tr.pHit );
 
         if( pEntity )
@@ -368,18 +368,18 @@ void CPipewrench::BigSwing()
             float flDamage = ( gpGlobals->time - m_flBigSwingStart ) * GetSkillFloat( "plr_pipewrench"sv ) + 25.0f;
             if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_Skill.GetValue( "pipewrench_full_damage" ) != 0 )
             {
-				// first swing does full damage
+                // first swing does full damage
                 pEntity->TraceAttack( m_pPlayer, flDamage, gpGlobals->v_forward, &tr, DMG_CLUB );
             }
             else
             {
-				// subsequent swings do half
+                // subsequent swings do half
                 pEntity->TraceAttack( m_pPlayer, flDamage / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
             }
             ApplyMultiDamage( m_pPlayer, m_pPlayer );
         }
 
-		// play thwack, smack, or dong sound
+        // play thwack, smack, or dong sound
         float flVol = 1.0;
         bool bHitWorld = true;
 
@@ -387,7 +387,7 @@ void CPipewrench::BigSwing()
         {
             if( pEntity->Classify() != ENTCLASS_NONE && !pEntity->IsMachine() )
             {
-				// play thwack or smack sound
+                // play thwack or smack sound
                 switch ( RANDOM_LONG( 0, 1 ) )
                 {
                 case 0:
@@ -407,8 +407,8 @@ void CPipewrench::BigSwing()
             }
         }
 
-		// play texture hit sound
-		// UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
+        // play texture hit sound
+        // UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
 
         if( bHitWorld )
         {
@@ -416,40 +416,40 @@ void CPipewrench::BigSwing()
 
             if( g_pGameRules->IsMultiplayer() )
             {
-				// override the volume here, cause we don't play texture sounds in multiplayer,
-				// and fvolbar is going to be 0 from the above call.
+                // override the volume here, cause we don't play texture sounds in multiplayer,
+                // and fvolbar is going to be 0 from the above call.
 
                 fvolbar = 1;
             }
 
-			// also play pipe wrench strike
-			// Shepard - The commented sounds below are unused
-			// in Opposing Force, if you wish to use them,
-			// uncomment all the appropriate lines.
+            // also play pipe wrench strike
+            // Shepard - The commented sounds below are unused
+            // in Opposing Force, if you wish to use them,
+            // uncomment all the appropriate lines.
             switch ( RANDOM_LONG( 0, 1 ) )
             {
             case 0:
                 m_pPlayer->EmitSoundDyn( CHAN_ITEM, "weapons/pwrench_hit1.wav", fvolbar, ATTN_NORM, 0, 98 + RANDOM_LONG( 0, 3 ) );
-				// m_pPlayer->EmitSoundDyn(CHAN_ITEM, "weapons/pwrench_big_hit1.wav", fvolbar, ATTN_NORM, 0, 98 + RANDOM_LONG(0,3));
+                // m_pPlayer->EmitSoundDyn(CHAN_ITEM, "weapons/pwrench_big_hit1.wav", fvolbar, ATTN_NORM, 0, 98 + RANDOM_LONG(0,3));
                 break;
             case 1:
                 m_pPlayer->EmitSoundDyn( CHAN_ITEM, "weapons/pwrench_hit2.wav", fvolbar, ATTN_NORM, 0, 98 + RANDOM_LONG( 0, 3 ) );
-				// m_pPlayer->EmitSoundDyn(CHAN_ITEM, "weapons/pwrench_big_hit2.wav", fvolbar, ATTN_NORM, 0, 98 + RANDOM_LONG(0,3));
+                // m_pPlayer->EmitSoundDyn(CHAN_ITEM, "weapons/pwrench_big_hit2.wav", fvolbar, ATTN_NORM, 0, 98 + RANDOM_LONG(0,3));
                 break;
             }
 
-			// delay the decal a bit
+            // delay the decal a bit
             m_trHit = tr;
         }
 
         m_pPlayer->m_iWeaponVolume = flVol * PIPEWRENCH_WALLHIT_VOLUME;
 
-		// Shepard - The original Opposing Force's pipe wrench
-		// doesn't make a bullet hole decal when making a big
-		// swing. If you want that decal, just uncomment the
-		// 2 lines below.
-		/*SetThink( &CPipewrench::Smack );
-		SetNextThink( UTIL_WeaponTimeBase() + 0.2 );*/
+        // Shepard - The original Opposing Force's pipe wrench
+        // doesn't make a bullet hole decal when making a big
+        // swing. If you want that decal, just uncomment the
+        // 2 lines below.
+        /*SetThink( &CPipewrench::Smack );
+        SetNextThink( UTIL_WeaponTimeBase() + 0.2 );*/
 #endif
         m_flNextPrimaryAttack = GetNextAttackDelay( 1.0 );
         m_flNextSecondaryAttack = GetNextAttackDelay( 1.0 );

@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -24,7 +24,7 @@ template <auto Function>
 struct DeleterWrapper final
 {
     template <typename T>
-	constexpr void operator()(T* object) const
+    constexpr void operator()(T* object) const
     {
         Function( object );
     }
@@ -81,18 +81,18 @@ constexpr ALuint NullSource = 0;
 
 struct OpenALBuffer final
 {
-	constexpr OpenALBuffer() noexcept = default;
+    constexpr OpenALBuffer() noexcept = default;
 
     OpenALBuffer( const OpenALBuffer& ) = delete;
     OpenALBuffer& operator=( const OpenALBuffer& ) = delete;
 
-	constexpr OpenALBuffer(OpenALBuffer&& other) noexcept
+    constexpr OpenALBuffer(OpenALBuffer&& other) noexcept
         : Id( other.Id )
     {
         other.Id = NullBuffer;
     }
 
-	constexpr OpenALBuffer& operator=(OpenALBuffer&& other) noexcept
+    constexpr OpenALBuffer& operator=(OpenALBuffer&& other) noexcept
     {
         if( this != &other )
         {
@@ -116,7 +116,7 @@ struct OpenALBuffer final
         return buffer;
     }
 
-	constexpr bool IsValid() const { return Id != NullBuffer; }
+    constexpr bool IsValid() const { return Id != NullBuffer; }
 
     void Delete()
     {
@@ -127,25 +127,25 @@ struct OpenALBuffer final
         }
     }
 
-	constexpr auto operator<=>(const OpenALBuffer&) const = default;
+    constexpr auto operator<=>(const OpenALBuffer&) const = default;
 
     ALuint Id = NullBuffer;
 };
 
 struct OpenALSource final
 {
-	constexpr OpenALSource() noexcept = default;
+    constexpr OpenALSource() noexcept = default;
 
     OpenALSource( const OpenALSource& ) = delete;
     OpenALSource& operator=( const OpenALSource& ) = delete;
 
-	constexpr OpenALSource(OpenALSource&& other) noexcept
+    constexpr OpenALSource(OpenALSource&& other) noexcept
         : Id( other.Id )
     {
         other.Id = NullSource;
     }
 
-	constexpr OpenALSource& operator=(OpenALSource&& other) noexcept
+    constexpr OpenALSource& operator=(OpenALSource&& other) noexcept
     {
         if( this != &other )
         {
@@ -169,7 +169,7 @@ struct OpenALSource final
         return source;
     }
 
-	constexpr bool IsValid() const { return Id != NullSource; }
+    constexpr bool IsValid() const { return Id != NullSource; }
 
     void Delete()
     {
@@ -180,7 +180,7 @@ struct OpenALSource final
         }
     }
 
-	constexpr auto operator<=>(const OpenALSource&) const = default;
+    constexpr auto operator<=>(const OpenALSource&) const = default;
 
     ALuint Id = NullSource;
 };

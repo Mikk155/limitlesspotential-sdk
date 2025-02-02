@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -80,7 +80,7 @@ void CM249::WeaponIdle()
 {
     ResetEmptySound();
 
-	// Update auto-aim
+    // Update auto-aim
     m_pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
     if( m_bReloading && gpGlobals->time >= m_flReloadStart + 1.33 )
@@ -243,7 +243,7 @@ void CM249::PrimaryAttack()
     {
         m_pPlayer->pev->velocity = m_pPlayer->pev->velocity - vecInvPushDir;
 
-		// Restore Z velocity to make deathmatch easier.
+        // Restore Z velocity to make deathmatch easier.
         m_pPlayer->pev->velocity.z = flZVel;
     }
     else

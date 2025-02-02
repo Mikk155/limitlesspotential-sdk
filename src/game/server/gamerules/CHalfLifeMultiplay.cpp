@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -62,7 +62,7 @@ constexpr int MAX_INTERMISSION_TIME = 120;
 
 static int GetChatTime()
 {
-	// bounds check
+    // bounds check
     const int time = int( mp_chattime.value );
 
     const int clampedTime = std::clamp( time, 1, MAX_INTERMISSION_TIME );
@@ -79,12 +79,12 @@ void CHalfLifeMultiplay::Think()
 {
     g_VoiceGameMgr.Update( gpGlobals->frametime );
 
-	///// Check game rules /////
+    ///// Check game rules /////
     if( g_fGameOver ) // someone else quit the game already
     {
         m_flIntermissionEndTime = m_flIntermissionStartTime + GetChatTime();
 
-		// check to see if we should change levels now
+        // check to see if we should change levels now
         if( m_flIntermissionEndTime < gpGlobals->time )
         {
             if( m_iEndIntermissionButtonHit // check that someone has pressed a key, or the max intermission time is over
@@ -112,7 +112,7 @@ void CHalfLifeMultiplay::Think()
         int bestfrags = 9999;
         int remain;
 
-		// check if any player is over the frag limit
+        // check if any player is over the frag limit
         for( int i = 1; i <= gpGlobals->maxClients; i++ )
         {
             CBaseEntity* pPlayer = UTIL_PlayerByIndex( i );
@@ -138,7 +138,7 @@ void CHalfLifeMultiplay::Think()
 
     static int last_frags;
 
-	// Updates when frags change
+    // Updates when frags change
     if( frags_remaining != last_frags )
     {
         g_engfuncs.pfnCvar_DirectSet( &fragsleft, UTIL_ToString( frags_remaining ).c_str() );
@@ -148,7 +148,7 @@ void CHalfLifeMultiplay::Think()
 
     static int last_time;
 
-	// Updates once per second
+    // Updates once per second
     if( timeleft.value != last_time )
     {
         g_engfuncs.pfnCvar_DirectSet( &timeleft, UTIL_ToString( time_remaining ).c_str() );
@@ -162,29 +162,29 @@ bool CHalfLifeMultiplay::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerW
 {
     if( !pWeapon->CanDeploy() )
     {
-		// that weapon can't deploy anyway.
+        // that weapon can't deploy anyway.
         return false;
     }
 
     if( !pPlayer->m_pActiveWeapon )
     {
-		// player doesn't have an active item!
+        // player doesn't have an active item!
         return true;
     }
 
     if( !pPlayer->m_pActiveWeapon->CanHolster() )
     {
-		// can't put away the active item.
+        // can't put away the active item.
         return false;
     }
 
-	// Never switch
+    // Never switch
     if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never )
     {
         return false;
     }
 
-	// Only switch if not attacking
+    // Only switch if not attacking
     if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::IfBetter && ( pPlayer->m_afButtonLast & ( IN_ATTACK | IN_ATTACK2 ) ) != 0 )
     {
         return false;
@@ -234,7 +234,7 @@ bool CHalfLifeMultiplay::ClientConnected( edict_t* pEntity, const char* pszName,
 
     if( pEntity )
     {
-		// TODO: really shouldn't be modifying this directly
+        // TODO: really shouldn't be modifying this directly
         auto portNumber = strchr( const_cast<char*>( pszAddress ), ':' );
 
         if( portNumber )
@@ -255,7 +255,7 @@ void CHalfLifeMultiplay::UpdateGameMode( CBasePlayer* pPlayer )
 
 void CHalfLifeMultiplay::InitHUD( CBasePlayer* pl )
 {
-	// notify other clients of player joining the game
+    // notify other clients of player joining the game
     UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s has joined the game\n",
                                              ( !FStringNull( pl->pev->netname ) && STRING( pl->pev->netname )[0] != 0 ) ? STRING( pl->pev->netname ) : "unconnected" ) );
 
@@ -263,8 +263,8 @@ void CHalfLifeMultiplay::InitHUD( CBasePlayer* pl )
 
     UpdateGameMode( pl );
 
-	// sending just one score makes the hud scoreboard active;  otherwise
-	// it is just disabled for single play
+    // sending just one score makes the hud scoreboard active;  otherwise
+    // it is just disabled for single play
     pl->SendScoreInfo( pl );
 
     SendMOTDToClient( pl );
@@ -275,10 +275,10 @@ void CHalfLifeMultiplay::InitHUD( CBasePlayer* pl )
         pl->Player_Menu();
     }
 
-	// loop through all active players and send their score info to the new client
+    // loop through all active players and send their score info to the new client
     for( int i = 1; i <= gpGlobals->maxClients; i++ )
     {
-		// FIXME:  Probably don't need to cast this just to read m_iDeaths
+        // FIXME:  Probably don't need to cast this just to read m_iDeaths
         CBasePlayer* plr = UTIL_PlayerByIndex( i );
 
         if( plr )
@@ -417,11 +417,11 @@ void CHalfLifeMultiplay::PlayerThink( CBasePlayer* pPlayer )
 
     if( g_fGameOver )
     {
-		// check for button presses
+        // check for button presses
         if( ( pPlayer->m_afButtonPressed & ( IN_DUCK | IN_ATTACK | IN_ATTACK2 | IN_USE | IN_JUMP ) ) != 0 )
             m_iEndIntermissionButtonHit = true;
 
-		// clear attack/use commands from player
+        // clear attack/use commands from player
         pPlayer->m_afButtonPressed = 0;
         pPlayer->pev->button = 0;
         pPlayer->m_afButtonReleased = 0;
@@ -470,7 +470,7 @@ void CHalfLifeMultiplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKille
     }
     else if( peKiller )
     {
-		// if a player dies in a deathmatch game and the killer is a client, award the killer some points
+        // if a player dies in a deathmatch game and the killer is a client, award the killer some points
         pKiller->pev->frags += IPointsForKill( peKiller, pVictim );
 
         FireTargets( "game_playerkill", peKiller, peKiller, USE_TOGGLE, 0 );
@@ -480,16 +480,16 @@ void CHalfLifeMultiplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKille
         pKiller->pev->frags -= 1;
     }
 
-	// update the scores
-	// killed scores
+    // update the scores
+    // killed scores
     pVictim->SendScoreInfoAll();
 
-	// killers score, if it's a player
+    // killers score, if it's a player
     if( peKiller )
     {
         peKiller->SendScoreInfoAll();
 
-		// let the killer paint another decal as soon as he'd like.
+        // let the killer paint another decal as soon as he'd like.
         peKiller->m_flNextDecalTime = gpGlobals->time;
     }
 
@@ -506,11 +506,11 @@ void CHalfLifeMultiplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKille
 
 void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor )
 {
-	// Work out what killed the player, and send a message to all clients about it
+    // Work out what killed the player, and send a message to all clients about it
     const char* killer_weapon_name = "world"; // by default, the player is killed by the world
     int killer_index = 0;
 
-	// Hack to fix name change
+    // Hack to fix name change
     const char* tau = "tau_cannon";
     const char* gluon = "gluon gun";
 
@@ -522,7 +522,7 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller
         {
             if( inflictor == pKiller )
             {
-				// If the inflictor is the killer,  then it must be their current weapon doing the damage
+                // If the inflictor is the killer,  then it must be their current weapon doing the damage
                 CBasePlayer* pPlayer = ToBasePlayer( pKiller );
 
                 if( pPlayer->m_pActiveWeapon )
@@ -541,7 +541,7 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller
         killer_weapon_name = STRING( inflictor->pev->classname );
     }
 
-	// strip the monster_* or weapon_* from the inflictor's classname
+    // strip the monster_* or weapon_* from the inflictor's classname
     if( strncmp( killer_weapon_name, "ARgr", 4 ) == 0 )
         killer_weapon_name += 2;
     else if( strncmp( killer_weapon_name, "weapon_", 7 ) == 0 )
@@ -557,7 +557,7 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller
     WRITE_STRING( killer_weapon_name ); // what they were killed by (should this be a string?)
     MESSAGE_END();
 
-	// replace the code names with the 'real' names
+    // replace the code names with the 'real' names
     if( 0 == strcmp( killer_weapon_name, "egon" ) )
         killer_weapon_name = gluon;
     else if( 0 == strcmp( killer_weapon_name, "gauss" ) )
@@ -565,7 +565,7 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller
 
     if( pVictim == pKiller )
     {
-		// killed self
+        // killed self
         Logger->trace( "{} committed suicide with \"{}\"", PlayerLogInfo{*pVictim}, killer_weapon_name );
     }
     else if( ( pKiller->pev->flags & FL_CLIENT ) != 0 )
@@ -575,7 +575,7 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller
     }
     else
     {
-		// killed by the world
+        // killed by the world
         Logger->trace( "{} committed suicide with \"{}\" (world)", PlayerLogInfo{*pVictim}, killer_weapon_name );
     }
 
@@ -590,53 +590,53 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller
     WRITE_LONG( 7 | DRC_FLAG_DRAMATIC );      // eventflags (priority and flags)
     MESSAGE_END();
 
-	//  Print a standard message
-	// TODO: make this go direct to console
+    //  Print a standard message
+    // TODO: make this go direct to console
     return; // just remove for now
-			/*
-	char	szText[ 128 ];
-		
-	if ( pKiller->flags & FL_MONSTER )
-	{
-		// killed by a monster
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " was killed by a monster.\n" );
-		return;
-	}
-		
-	if ( pKiller == pVictim->pev )
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " commited suicide.\n" );
-	}
-	else if ( pKiller->flags & FL_CLIENT )
-	{
-		strcpy ( szText, STRING( pKiller->netname ) );
-		
-		strcat( szText, " : " );
-		strcat( szText, killer_weapon_name );
-		strcat( szText, " : " );
-		
-		strcat ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, "\n" );
-	}
-	else if (pKiller->ClassnameIs("worldspawn"))
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " fell or drowned or something.\n" );
-	}
-	else if ( pKiller->solid == SOLID_BSP )
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " was mooshed.\n" );
-	}
-	else
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " died mysteriously.\n" );
-	}
-		
-	UTIL_ClientPrintAll( szText );
+            /*
+    char    szText[ 128 ];
+        
+    if ( pKiller->flags & FL_MONSTER )
+    {
+        // killed by a monster
+        strcpy ( szText, STRING( pVictim->pev->netname ) );
+        strcat ( szText, " was killed by a monster.\n" );
+        return;
+    }
+        
+    if ( pKiller == pVictim->pev )
+    {
+        strcpy ( szText, STRING( pVictim->pev->netname ) );
+        strcat ( szText, " commited suicide.\n" );
+    }
+    else if ( pKiller->flags & FL_CLIENT )
+    {
+        strcpy ( szText, STRING( pKiller->netname ) );
+        
+        strcat( szText, " : " );
+        strcat( szText, killer_weapon_name );
+        strcat( szText, " : " );
+        
+        strcat ( szText, STRING( pVictim->pev->netname ) );
+        strcat ( szText, "\n" );
+    }
+    else if (pKiller->ClassnameIs("worldspawn"))
+    {
+        strcpy ( szText, STRING( pVictim->pev->netname ) );
+        strcat ( szText, " fell or drowned or something.\n" );
+    }
+    else if ( pKiller->solid == SOLID_BSP )
+    {
+        strcpy ( szText, STRING( pVictim->pev->netname ) );
+        strcat ( szText, " was mooshed.\n" );
+    }
+    else
+    {
+        strcpy ( szText, STRING( pVictim->pev->netname ) );
+        strcat ( szText, " died mysteriously.\n" );
+    }
+        
+    UTIL_ClientPrintAll( szText );
 */
 }
 
@@ -646,8 +646,8 @@ void CHalfLifeMultiplay::PlayerGotItem( CBasePlayer* player, CBaseItem* item )
 
 bool CHalfLifeMultiplay::IsAllowedToSpawn( CBaseEntity* pEntity )
 {
-	//	if ( pEntity->pev->flags & FL_MONSTER )
-	//		return false;
+    //    if ( pEntity->pev->flags & FL_MONSTER )
+    //        return false;
 
     return true;
 }
@@ -664,7 +664,7 @@ int CHalfLifeMultiplay::DeadPlayerAmmo( CBasePlayer* pPlayer )
 
 int CHalfLifeMultiplay::PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget )
 {
-	// half life deathmatch has only enemies
+    // half life deathmatch has only enemies
     return GR_NOTTEAMMATE;
 }
 
@@ -697,7 +697,7 @@ void CHalfLifeMultiplay::GoToIntermission()
 }
 
 /**
- *	@brief Determine the current # of active players on the server for map cycling logic
+ *    @brief Determine the current # of active players on the server for map cycling logic
  */
 int CountPlayers()
 {
@@ -730,7 +730,7 @@ void CHalfLifeMultiplay::ChangeLevel()
     }
     else
     {
-		// Fall back to restarting the current map if we can't determine which map to switch to.
+        // Fall back to restarting the current map if we can't determine which map to switch to.
         nextMap = STRING( gpGlobals->mapname );
     }
 
@@ -756,20 +756,20 @@ void CHalfLifeMultiplay::ChangeLevel()
 
 void CHalfLifeMultiplay::SendMOTDToClient( CBasePlayer* player )
 {
-	// read from the MOTD.txt file
+    // read from the MOTD.txt file
     const auto fileContents = FileSystem_LoadFileIntoBuffer( CVAR_GET_STRING( "motdfile" ), FileContentFormat::Text );
 
     int char_count = 0;
     const char* const aFileList = reinterpret_cast<const char*>( fileContents.data() );
     const char* pFileList = aFileList;
 
-	// send the server name
+    // send the server name
     MESSAGE_BEGIN( MSG_ONE, gmsgServerName, nullptr, player );
     WRITE_STRING( CVAR_GET_STRING( "hostname" ) );
     MESSAGE_END();
 
-	// Send the message of the day
-	// read it chunk-by-chunk,  and send it in parts
+    // Send the message of the day
+    // read it chunk-by-chunk,  and send it in parts
 
     while( pFileList && '\0' != *pFileList && char_count < MAX_MOTD_LENGTH )
     {

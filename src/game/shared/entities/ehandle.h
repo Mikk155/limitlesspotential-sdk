@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -20,8 +20,8 @@
 class CBaseEntity;
 
 /**
- *	@brief Base class for entity handles.
- *	Should not be used directly. Use EntityHandle instead.
+ *    @brief Base class for entity handles.
+ *    Should not be used directly. Use EntityHandle instead.
  */
 class BaseEntityHandle
 {
@@ -31,8 +31,8 @@ public:
     CBaseEntity* InternalGetEntity() const;
     void InternalSetEntity( CBaseEntity* entity );
 
-	constexpr bool operator==(const BaseEntityHandle& other) const = default;
-	constexpr bool operator!=(const BaseEntityHandle& other) const = default;
+    constexpr bool operator==(const BaseEntityHandle& other) const = default;
+    constexpr bool operator!=(const BaseEntityHandle& other) const = default;
 
 private:
     edict_t* m_Edict = nullptr;
@@ -40,9 +40,9 @@ private:
 };
 
 /**
- *	@brief Safe way to point to CBaseEntities who may die between frames
- *	@tparam TBaseEntity A class type, either CBaseEntity or a type deriving from it
- *		that all entities assigned to this handle must derive from.
+ *    @brief Safe way to point to CBaseEntities who may die between frames
+ *    @tparam TBaseEntity A class type, either CBaseEntity or a type deriving from it
+ *        that all entities assigned to this handle must derive from.
  */
 template <typename TBaseEntity>
 class EntityHandle : protected BaseEntityHandle
@@ -50,16 +50,16 @@ class EntityHandle : protected BaseEntityHandle
 public:
     TBaseEntity* operator=( TBaseEntity* entity );
 
-	/**
-	 *	@brief Gets the entity this handle points to,
-	 *	or @c nullptr if it does not point to a valid entity.
-	 */
+    /**
+     *    @brief Gets the entity this handle points to,
+     *    or @c nullptr if it does not point to a valid entity.
+     */
     TBaseEntity* Get() const;
 
-	/**
-	 *	@brief Gets the entity this handle points to as @c TOtherBaseEntity,
-	 *	or @c nullptr if it does not point to a valid entity.
-	 */
+    /**
+     *    @brief Gets the entity this handle points to as @c TOtherBaseEntity,
+     *    or @c nullptr if it does not point to a valid entity.
+     */
     template <typename TOtherBaseEntity>
     TOtherBaseEntity* Get() const;
 
@@ -89,7 +89,7 @@ TOtherBaseEntity* EntityHandle<TBaseEntity>::Get() const
 {
     auto entity = this->Get();
 
-	// In debug builds this verifies that the dynamic type is the expected type.
+    // In debug builds this verifies that the dynamic type is the expected type.
     assert( !entity || dynamic_cast<TOtherBaseEntity*>( entity ) );
 
     return static_cast<TOtherBaseEntity*>( entity );

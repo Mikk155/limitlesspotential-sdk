@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
+ *    Copyright (c) 1996-2001, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *    This product contains software technology licensed from Id
+ *    Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *    All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -79,7 +79,7 @@ void CSoundEnt::Think()
         {
             int iNext = m_SoundPool[iSound].m_iNext;
 
-			// move this sound back into the free list
+            // move this sound back into the free list
             FreeSound( iSound, iPreviousSound );
 
             iSound = iNext;
@@ -107,24 +107,24 @@ void CSoundEnt::FreeSound( int iSound, int iPrevious )
 {
     if( !pSoundEnt )
     {
-		// no sound ent!
+        // no sound ent!
         return;
     }
 
     if( iPrevious != SOUNDLIST_EMPTY )
     {
-		// iSound is not the head of the active list, so
-		// must fix the index for the Previous sound
-		//		pSoundEnt->m_SoundPool[ iPrevious ].m_iNext = m_SoundPool[ iSound ].m_iNext;
+        // iSound is not the head of the active list, so
+        // must fix the index for the Previous sound
+        //        pSoundEnt->m_SoundPool[ iPrevious ].m_iNext = m_SoundPool[ iSound ].m_iNext;
         pSoundEnt->m_SoundPool[iPrevious].m_iNext = pSoundEnt->m_SoundPool[iSound].m_iNext;
     }
     else
     {
-		// the sound we're freeing IS the head of the active list.
+        // the sound we're freeing IS the head of the active list.
         pSoundEnt->m_iActiveSound = pSoundEnt->m_SoundPool[iSound].m_iNext;
     }
 
-	// make iSound the head of the Free list.
+    // make iSound the head of the Free list.
     pSoundEnt->m_SoundPool[iSound].m_iNext = pSoundEnt->m_iFreeSound;
     pSoundEnt->m_iFreeSound = iSound;
 }
@@ -133,13 +133,13 @@ int CSoundEnt::IAllocSound()
 {
     if( m_iFreeSound == SOUNDLIST_EMPTY )
     {
-		// no free sound!
+        // no free sound!
         Logger->debug( "Free Sound List is full!" );
         return SOUNDLIST_EMPTY;
     }
 
-	// there is at least one sound available, so move it to the
-	// Active sound list, and return its SoundPool index.
+    // there is at least one sound available, so move it to the
+    // Active sound list, and return its SoundPool index.
 
     const int iNewSound = m_iFreeSound; // copy the index of the next free sound
 
@@ -156,7 +156,7 @@ void CSoundEnt::InsertSound( int iType, const Vector& vecOrigin, int iVolume, fl
 {
     if( !pSoundEnt )
     {
-		// no sound ent!
+        // no sound ent!
         return;
     }
 
@@ -190,7 +190,7 @@ void CSoundEnt::Initialize()
     m_SoundPool[i - 1].m_iNext = SOUNDLIST_EMPTY; // terminate the list here.
 
 
-	// now reserve enough sounds for each client
+    // now reserve enough sounds for each client
     for( i = 0; i < gpGlobals->maxClients; i++ )
     {
         const int iSound = pSoundEnt->IAllocSound();
