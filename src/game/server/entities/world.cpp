@@ -188,6 +188,10 @@ bool CDecal::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
+BEGIN_DATAMAP( CWorld )
+    DEFINE_FIELD( m_mapcfg, FIELD_STRING ),
+END_DATAMAP();
+
 LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
 
 CWorld::CWorld()
@@ -488,6 +492,11 @@ bool CWorld::KeyValue( KeyValueData* pkvd )
         {
             pev->spawnflags |= SF_WORLD_FORCETEAM;
         }
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "mapcfg" ) )
+    {
+        m_mapcfg = ALLOC_STRING( pkvd->szValue );
         return true;
     }
 

@@ -501,9 +501,21 @@ void ServerLibrary::LoadServerConfigFiles()
 
     std::string mapConfigFileName;
 
+    if( CWorld* pWorld = static_cast<CWorld*>( CBaseEntity::World ); pWorld != nullptr && !FStringNull( pWorld->m_mapcfg ) )
+    {
+        if( auto mapCfgFileName = fmt::format( "cfg/maps/{}.json", STRING( pWorld->m_mapcfg ) ); g_pFileSystem->FileExists( mapCfgFileName.c_str() ) )
+        {
+            mapConfigFileName = std::move( mapCfgFileName );
+            goto map_cfg_is_loaded;
+        }
+        else
+        {
+            g_GameLogger->debug( "Failed to open map cfg file \"{}\"", mapCfgFileName );
+        }
+    }
+
     // Use the map-specific cfg if it exists.
-    if( auto mapCfgFileName = fmt::format( "cfg/maps/{}.json", STRING( gpGlobals->mapname ) );
-        g_pFileSystem->FileExists( mapCfgFileName.c_str() ) )
+    if( auto mapCfgFileName = fmt::format( "cfg/maps/{}.json", STRING( gpGlobals->mapname ) ); g_pFileSystem->FileExists( mapCfgFileName.c_str() ) )
     {
         mapConfigFileName = std::move( mapCfgFileName );
     }
@@ -512,6 +524,8 @@ void ServerLibrary::LoadServerConfigFiles()
         g_GameLogger->debug( "Using default map config file \"{}\"", DefaultMapConfigFileName );
         mapConfigFileName = DefaultMapConfigFileName;
     }
+
+map_cfg_is_loaded:
 
     g_GameLogger->trace( "Loading map config file" );
     const std::optional<GameConfig<ServerConfigContext>> mapConfig = m_MapConfigDefinition->TryLoad( mapConfigFileName.c_str() );

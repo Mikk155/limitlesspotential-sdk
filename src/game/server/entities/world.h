@@ -26,6 +26,9 @@
  */
 class CWorld : public CBaseEntity
 {
+    DECLARE_CLASS( CWorld, CBaseEntity );
+    DECLARE_DATAMAP();
+
 public:
     CWorld();
     ~CWorld() override;
@@ -33,4 +36,6 @@ public:
     void Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
+
+    string_t m_mapcfg;
 };
