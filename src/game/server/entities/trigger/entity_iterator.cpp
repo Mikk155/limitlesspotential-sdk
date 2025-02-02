@@ -152,11 +152,29 @@ void CTriggerEntityIterator :: Use( CBaseEntity* pActivator, CBaseEntity* pCalle
 {
     if( run_mode == RUN_MODE_TOGGLE_ON_OFF )
     {
-        if( !IsThinking )
+        bool ShouldThink = true;
+
+        switch( useType )
         {
-            SetThink( &CTriggerEntityIterator::IteratorThink );
-            IsThinking = true;
-            pev->nextthink = gpGlobals->time + 0.1;
+            case USE_OFF:
+                ShouldThink = false;
+            break;
+            case USE_ON:
+                ShouldThink = true;
+            break;
+            default:
+                ShouldThink = !IsThinking;
+            break;
+        }
+
+        if( ShouldThink )
+        {
+            if( !IsThinking )
+            {
+                SetThink( &CTriggerEntityIterator::IteratorThink );
+                IsThinking = true;
+                pev->nextthink = gpGlobals->time + 0.1;
+            }
         }
         else
         {
@@ -176,7 +194,10 @@ void CTriggerEntityIterator :: IteratorFind()
     {
         for( auto pTarget : UTIL_FindEntitiesByTargetname( STRING( name_filter ) ) )
         {
-            if( pTarget )
+            if( !FStringNull( classname_filter ) && FStrEq( STRING( classname_filter ), STRING( pTarget->pev->classname ) ) )
+                continue;
+
+            if( pTarget != nullptr )
             {
                 IteratorTrigger( pTarget );
             }
@@ -186,7 +207,7 @@ void CTriggerEntityIterator :: IteratorFind()
     {
         for( auto pTarget : UTIL_FindEntitiesByClassname( STRING( classname_filter ) ) )
         {
-            if( pTarget )
+            if( pTarget != nullptr )
             {
                 IteratorTrigger( pTarget );
             }
