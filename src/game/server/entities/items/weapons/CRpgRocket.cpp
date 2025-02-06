@@ -52,7 +52,7 @@ CRpgRocket* CRpgRocket::CreateRpgRocket( Vector vecOrigin, Vector vecAngles, CBa
     return pRocket;
 }
 
-void CRpgRocket::Spawn()
+bool CRpgRocket::Spawn()
 {
     Precache();
     // motor
@@ -76,6 +76,8 @@ void CRpgRocket::Spawn()
     pev->nextthink = gpGlobals->time + 0.4;
 
     pev->dmg = GetSkillFloat( "plr_rpg"sv );
+
+    return true;
 }
 
 void CRpgRocket::RocketTouch( CBaseEntity* pOther )

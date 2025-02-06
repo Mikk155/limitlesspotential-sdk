@@ -35,7 +35,7 @@ public:
 public:
     void Precache() override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     void BounceSound() override;
 

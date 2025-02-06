@@ -33,7 +33,7 @@ class CHornet : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
 
     bool IsBioWeapon() const override { return true; }

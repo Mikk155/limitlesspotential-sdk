@@ -25,7 +25,7 @@ class CGMan : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
@@ -90,7 +90,7 @@ int CGMan::ISoundMask()
     return bits_SOUND_NONE;
 }
 
-void CGMan::Spawn()
+bool CGMan::Spawn()
 {
     Precache();
 
@@ -104,6 +104,8 @@ void CGMan::Spawn()
     m_MonsterState = MONSTERSTATE_NONE;
 
     MonsterInit();
+
+    return true;
 }
 
 void CGMan::Precache()

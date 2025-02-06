@@ -1346,20 +1346,20 @@ void UTIL_BubbleTrail( Vector from, Vector to, int count )
 }
 
 
-void UTIL_Remove( CBaseEntity* pEntity )
+void UTIL_Remove( CBaseEntity* entity )
 {
-    if( !pEntity )
-        return;
-
-    // Ignore attempts to remove the world. This will cause all sorts of problems.
-    if( pEntity == CBaseEntity::World )
+    if( entity != nullptr )
     {
-        return;
-    }
+        // This will cause all sorts of problems.
+        if( entity == CBaseEntity::World || entity->IsPlayer() )
+        {
+            return;
+        }
 
-    pEntity->UpdateOnRemove();
-    pEntity->pev->flags |= FL_KILLME;
-    pEntity->pev->targetname = string_t::Null;
+        entity->UpdateOnRemove();
+        entity->pev->flags |= FL_KILLME;
+        entity->pev->targetname = string_t::Null;
+    }
 }
 
 

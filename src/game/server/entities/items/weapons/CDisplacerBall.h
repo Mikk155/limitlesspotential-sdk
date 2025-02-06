@@ -25,7 +25,7 @@ private:
 
 public:
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void BallTouch( CBaseEntity* pOther );
 

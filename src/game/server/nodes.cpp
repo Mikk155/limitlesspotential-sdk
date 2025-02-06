@@ -1538,7 +1538,7 @@ bool CNodeEnt::KeyValue( KeyValueData* pkvd )
 
 //=========================================================
 //=========================================================
-void CNodeEnt::Spawn()
+bool CNodeEnt::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     pev->solid = SOLID_NOT; // always solid_not
@@ -1546,7 +1546,7 @@ void CNodeEnt::Spawn()
     if( 0 != WorldGraph.m_fGraphPresent )
     { // graph loaded from disk, so discard all these node ents as soon as they spawn
         REMOVE_ENTITY( edict() );
-        return;
+        return false;
     }
 
     if( WorldGraph.m_cNodes == 0 )
@@ -1558,11 +1558,12 @@ void CNodeEnt::Spawn()
     if( WorldGraph.m_cNodes >= MAX_NODES )
     {
         CGraph::Logger->error( "cNodes >= MAX_NODES" );
-        return;
+        REMOVE_ENTITY( edict() );
+        return false;
     }
 
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_vecOriginPeek =
-        WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_vecOrigin = pev->origin;
+    WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_vecOrigin = pev->origin;
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_flHintYaw = pev->angles.y;
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_sHintType = m_sHintType;
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_sHintActivity = m_sHintActivity;
@@ -1575,6 +1576,7 @@ void CNodeEnt::Spawn()
     WorldGraph.m_cNodes++;
 
     REMOVE_ENTITY( edict() );
+    return false; // Should we really be aware if this failed?
 }
 
 //=========================================================
@@ -3439,7 +3441,7 @@ class CNodeViewer : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
 
     int m_iBaseNode;
     int m_iDraw;
@@ -3464,13 +3466,12 @@ LINK_ENTITY_TO_CLASS( node_viewer_human, CNodeViewer );
 LINK_ENTITY_TO_CLASS( node_viewer_fly, CNodeViewer );
 LINK_ENTITY_TO_CLASS( node_viewer_large, CNodeViewer );
 
-void CNodeViewer::Spawn()
+bool CNodeViewer::Spawn()
 {
     if( 0 == WorldGraph.m_fGraphPresent || 0 == WorldGraph.m_fGraphPointersSet )
     { // protect us in the case that the node graph isn't available or built
         CGraph::Logger->error( "Graph not ready!" );
-        UTIL_Remove( this );
-        return;
+        return false;
     }
 
 
@@ -3499,7 +3500,7 @@ void CNodeViewer::Spawn()
     if( m_iBaseNode < 0 )
     {
         CGraph::Logger->debug( "No nearby node" );
-        return;
+        return false;
     }
 
     m_nVisited = 0;
@@ -3537,6 +3538,8 @@ void CNodeViewer::Spawn()
     m_iDraw = 0;
     SetThink( &CNodeViewer::DrawThink );
     pev->nextthink = gpGlobals->time;
+
+    return true;
 }
 
 

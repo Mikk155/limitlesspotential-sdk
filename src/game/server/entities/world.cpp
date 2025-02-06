@@ -92,7 +92,7 @@ class CDecal : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void StaticDecal();
     void TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
@@ -106,12 +106,12 @@ END_DATAMAP();
 LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 
 // UNDONE:  These won't get sent to joining players in multi-player
-void CDecal::Spawn()
+bool CDecal::Spawn()
 {
     if( pev->skin < 0 || ( g_pGameRules->IsMultiplayer() && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH ) ) )
     {
         REMOVE_ENTITY( edict() );
-        return;
+        return false;
     }
 
     if( FStringNull( pev->targetname ) )
@@ -126,6 +126,8 @@ void CDecal::Spawn()
         SetThink( nullptr );
         SetUse( &CDecal::TriggerDecal );
     }
+
+    return true;
 }
 
 void CDecal::TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
@@ -224,7 +226,7 @@ CWorld::~CWorld()
     g_GameLogger->trace( "worldspawn destroyed" );
 }
 
-void CWorld::Spawn()
+bool CWorld::Spawn()
 {
     g_fGameOver = false;
     Precache();
@@ -234,6 +236,8 @@ void CWorld::Spawn()
     {
         ResetTeamScores();
     }
+
+    return true;
 }
 
 void CWorld::Precache()

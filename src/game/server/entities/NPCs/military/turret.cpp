@@ -40,7 +40,7 @@ class CBaseTurret : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
@@ -183,7 +183,7 @@ class CTurret : public CBaseTurret
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     // Think functions
     void SpinUpCall() override;
@@ -204,7 +204,7 @@ class CMiniTurret : public CBaseTurret
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     // other functions
     void Shoot( Vector& vecSrc, Vector& vecDirToEnemy ) override;
@@ -248,7 +248,7 @@ void CBaseTurret::OnCreate()
     m_SoundOffset.z = 1;
 }
 
-void CBaseTurret::Spawn()
+bool CBaseTurret::Spawn()
 {
     Precache();
     pev->nextthink = gpGlobals->time + 1;
@@ -271,6 +271,8 @@ void CBaseTurret::Spawn()
     SetBoneController( 1, 0 );
     m_flFieldOfView = VIEW_FIELD_FULL;
     // m_flSightRange = TURRET_RANGE;
+
+    return true;
 }
 
 void CBaseTurret::Precache()
@@ -300,7 +302,7 @@ void CTurret::OnCreate()
     pev->model = MAKE_STRING( "models/turret.mdl" );
 }
 
-void CTurret::Spawn()
+bool CTurret::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) );
@@ -323,6 +325,8 @@ void CTurret::Spawn()
     m_eyeBrightness = 0;
 
     pev->nextthink = gpGlobals->time + 0.3;
+
+    return true;
 }
 
 void CTurret::Precache()
@@ -339,7 +343,7 @@ void CMiniTurret::OnCreate()
     pev->model = MAKE_STRING( "models/miniturret.mdl" );
 }
 
-void CMiniTurret::Spawn()
+bool CMiniTurret::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) );
@@ -355,6 +359,8 @@ void CMiniTurret::Spawn()
 
     SetThink( &CMiniTurret::Initialize );
     pev->nextthink = gpGlobals->time + 0.3;
+
+    return true;
 }
 
 void CMiniTurret::Precache()
@@ -1157,7 +1163,7 @@ class CSentry : public CBaseTurret
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     // other functions
     void Shoot( Vector& vecSrc, Vector& vecDirToEnemy ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
@@ -1180,7 +1186,7 @@ void CSentry::OnCreate()
     pev->model = MAKE_STRING( "models/sentry.mdl" );
 }
 
-void CSentry::Spawn()
+bool CSentry::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) );
@@ -1198,6 +1204,8 @@ void CSentry::Spawn()
     SetTouch( &CSentry::SentryTouch );
     SetThink( &CSentry::Initialize );
     pev->nextthink = gpGlobals->time + 0.3;
+
+    return true;
 }
 
 void CSentry::Shoot( Vector& vecSrc, Vector& vecDirToEnemy )

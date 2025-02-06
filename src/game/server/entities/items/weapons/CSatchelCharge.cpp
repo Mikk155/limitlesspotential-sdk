@@ -36,7 +36,7 @@ void CSatchelCharge::Deactivate()
     UTIL_Remove( this );
 }
 
-void CSatchelCharge::Spawn()
+bool CSatchelCharge::Spawn()
 {
     Precache();
     // motor
@@ -59,6 +59,8 @@ void CSatchelCharge::Spawn()
     pev->dmg = GetSkillFloat( "plr_satchel"sv );
     // ResetSequenceInfo( );
     pev->sequence = 1;
+
+    return true;
 }
 
 void CSatchelCharge::SatchelSlide( CBaseEntity* pOther )

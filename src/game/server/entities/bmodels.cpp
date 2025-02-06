@@ -33,7 +33,7 @@
 class CFuncWall : public CBaseEntity
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
     // Bmodels don't go across transitions
@@ -42,7 +42,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_wall, CFuncWall );
 
-void CFuncWall::Spawn()
+bool CFuncWall::Spawn()
 {
     pev->angles = g_vecZero;
     pev->movetype = MOVETYPE_PUSH; // so it doesn't get pushed by anything
@@ -51,6 +51,8 @@ void CFuncWall::Spawn()
 
     // If it can't move/go away, it's really part of the world
     pev->flags |= FL_WORLDBRUSH;
+
+    return true;
 }
 
 void CFuncWall::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
@@ -64,7 +66,7 @@ void CFuncWall::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
 class CFuncWallToggle : public CFuncWall
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     void TurnOff();
     void TurnOn();
@@ -73,11 +75,16 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_wall_toggle, CFuncWallToggle );
 
-void CFuncWallToggle::Spawn()
+bool CFuncWallToggle::Spawn()
 {
     CFuncWall::Spawn();
+
     if( ( pev->spawnflags & SF_WALL_START_OFF ) != 0 )
+    {
         TurnOff();
+    }
+
+    return true;
 }
 
 void CFuncWallToggle::TurnOff()
@@ -120,14 +127,14 @@ void CFuncWallToggle::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 class CFuncConveyor : public CFuncWall
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     void UpdateSpeed( float speed );
 };
 
 LINK_ENTITY_TO_CLASS( func_conveyor, CFuncConveyor );
 
-void CFuncConveyor::Spawn()
+bool CFuncConveyor::Spawn()
 {
     SetMovedir( this );
     CFuncWall::Spawn();
@@ -146,6 +153,8 @@ void CFuncConveyor::Spawn()
         pev->speed = 100;
 
     UpdateSpeed( pev->speed );
+
+    return true;
 }
 
 // HACKHACK -- This is ugly, but encode the speed in the rendercolor to avoid adding more data to the network stream
@@ -175,7 +184,7 @@ void CFuncConveyor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 class CFuncIllusionary : public CBaseToggle
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
@@ -193,7 +202,7 @@ bool CFuncIllusionary::KeyValue( KeyValueData* pkvd )
     return CBaseToggle::KeyValue( pkvd );
 }
 
-void CFuncIllusionary::Spawn()
+bool CFuncIllusionary::Spawn()
 {
     pev->angles = g_vecZero;
     pev->movetype = MOVETYPE_NONE;
@@ -204,6 +213,7 @@ void CFuncIllusionary::Spawn()
     // these entities after they have been moved to the client, or respawn them ala Quake
     // Perhaps we can do this in deathmatch only.
     //    g_engfuncs.pfnMakeStatic(edict());
+    return true;
 }
 
 /**
@@ -215,18 +225,19 @@ void CFuncIllusionary::Spawn()
 class CFuncMonsterClip : public CFuncWall
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override {} // Clear out func_wall's use function
 };
 
 LINK_ENTITY_TO_CLASS( func_monsterclip, CFuncMonsterClip );
 
-void CFuncMonsterClip::Spawn()
+bool CFuncMonsterClip::Spawn()
 {
     CFuncWall::Spawn();
     if( CVAR_GET_FLOAT( "showtriggers" ) == 0 )
         pev->effects = EF_NODRAW;
     pev->flags |= FL_MONSTERCLIP;
+    return true;
 }
 
 /**
@@ -242,7 +253,7 @@ class CFuncRotating : public CBaseEntity
 
 public:
     // basic functions
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
 
     /**
@@ -330,7 +341,7 @@ bool CFuncRotating::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void CFuncRotating::Spawn()
+bool CFuncRotating::Spawn()
 {
     // set final pitch.  Must not be PITCH_NORM, since we
     // plan on pitch shifting later.
@@ -412,6 +423,7 @@ void CFuncRotating::Spawn()
     }
 
     Precache();
+    return true;
 }
 
 void CFuncRotating::Precache()
@@ -621,7 +633,7 @@ class CPendulum : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Swing();
     void PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
@@ -677,7 +689,7 @@ bool CPendulum::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void CPendulum::Spawn()
+bool CPendulum::Spawn()
 {
     // set the axis of rotation
     CBaseToggle::AxisDir( this );
@@ -690,29 +702,30 @@ void CPendulum::Spawn()
     SetOrigin( pev->origin );
     SetModel( STRING( pev->model ) );
 
-    if( m_distance == 0 )
-        return;
-
-    if( pev->speed == 0 )
-        pev->speed = 100;
-
-    m_accel = ( pev->speed * pev->speed ) / ( 2 * fabs( m_distance ) ); // Calculate constant acceleration from speed and distance
-    m_maxSpeed = pev->speed;
-    m_start = pev->angles;
-    m_center = pev->angles + ( m_distance * 0.5 ) * pev->movedir;
-
-    if( FBitSet( pev->spawnflags, SF_BRUSH_ROTATE_INSTANT ) )
+    if( m_distance != 0 )
     {
-        SetThink( &CPendulum::SUB_CallUseToggle );
-        pev->nextthink = gpGlobals->time + 0.1;
-    }
-    pev->speed = 0;
-    SetUse( &CPendulum::PendulumUse );
+        if( pev->speed == 0 )
+            pev->speed = 100;
 
-    if( FBitSet( pev->spawnflags, SF_PENDULUM_SWING ) )
-    {
-        SetTouch( &CPendulum::RopeTouch );
+        m_accel = ( pev->speed * pev->speed ) / ( 2 * fabs( m_distance ) ); // Calculate constant acceleration from speed and distance
+        m_maxSpeed = pev->speed;
+        m_start = pev->angles;
+        m_center = pev->angles + ( m_distance * 0.5 ) * pev->movedir;
+
+        if( FBitSet( pev->spawnflags, SF_BRUSH_ROTATE_INSTANT ) )
+        {
+            SetThink( &CPendulum::SUB_CallUseToggle );
+            pev->nextthink = gpGlobals->time + 0.1;
+        }
+        pev->speed = 0;
+        SetUse( &CPendulum::PendulumUse );
+
+        if( FBitSet( pev->spawnflags, SF_PENDULUM_SWING ) )
+        {
+            SetTouch( &CPendulum::RopeTouch );
+        }
     }
+    return true;
 }
 
 void CPendulum::PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

@@ -30,7 +30,7 @@ class CWeaponBox : public CBaseEntity
 public:
     void OnCreate() override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     /**
      *    @brief try to add my contents to the toucher if the toucher is a player.

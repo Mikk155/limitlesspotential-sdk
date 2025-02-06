@@ -50,7 +50,7 @@ void CHornet::OnCreate()
     SetClassification( "alien_bioweapon" );
 }
 
-void CHornet::Spawn()
+bool CHornet::Spawn()
 {
     Precache();
 
@@ -101,6 +101,8 @@ void CHornet::Spawn()
 
     pev->nextthink = gpGlobals->time + 0.1;
     ResetSequenceInfo();
+
+    return true;
 }
 
 void CHornet::Precache()

@@ -551,7 +551,7 @@ class CPlayerHasWeapon : public CPointEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
@@ -590,12 +590,14 @@ bool CPlayerHasWeapon::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CPlayerHasWeapon::Spawn()
+bool CPlayerHasWeapon::Spawn()
 {
     if( FStringNull( m_WeaponName ) )
     {
         Logger->warn( "{}:{}:{}: No weapon name set", GetClassname(), entindex(), GetTargetname() );
     }
+
+    return true;
 }
 
 void CPlayerHasWeapon::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

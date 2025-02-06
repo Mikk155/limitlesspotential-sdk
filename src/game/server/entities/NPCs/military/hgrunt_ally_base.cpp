@@ -2196,12 +2196,14 @@ bool CBaseHGruntAllyRepel::KeyValue( KeyValueData* pkvd )
     return CBaseMonster::KeyValue( pkvd );
 }
 
-void CBaseHGruntAllyRepel::Spawn()
+bool CBaseHGruntAllyRepel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
 
     SetUse( &CBaseHGruntAllyRepel::RepelUse );
+
+    return true;
 }
 
 void CBaseHGruntAllyRepel::Precache()

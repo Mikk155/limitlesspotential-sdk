@@ -46,7 +46,7 @@ class CHAssassin : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;
@@ -241,7 +241,7 @@ void CHAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CHAssassin::Spawn()
+bool CHAssassin::Spawn()
 {
     Precache();
 
@@ -264,6 +264,8 @@ void CHAssassin::Spawn()
     pev->rendermode = kRenderTransTexture;
 
     MonsterInit();
+
+    return true;
 }
 
 void CHAssassin::Precache()

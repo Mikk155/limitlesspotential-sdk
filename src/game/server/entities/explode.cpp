@@ -29,7 +29,7 @@ class CShower : public CBaseEntity
 public:
     void OnCreate() override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
     void Touch( CBaseEntity* pOther ) override;
     int ObjectCaps() override { return FCAP_DONT_SAVE; }
@@ -50,7 +50,7 @@ void CShower::Precache()
     PrecacheModel( STRING( pev->model ) );
 }
 
-void CShower::Spawn()
+bool CShower::Spawn()
 {
     Precache();
 
@@ -71,6 +71,8 @@ void CShower::Spawn()
     pev->speed = RANDOM_FLOAT( 0.5, 1.5 );
 
     pev->angles = g_vecZero;
+
+    return true;
 }
 
 void CShower::Think()
@@ -102,7 +104,7 @@ class CEnvExplosion : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Smoke();
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
@@ -131,7 +133,7 @@ bool CEnvExplosion::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void CEnvExplosion::Spawn()
+bool CEnvExplosion::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->effects = EF_NODRAW;
@@ -159,6 +161,8 @@ void CEnvExplosion::Spawn()
     }
 
     m_spriteScale = (int)flSpriteScale;
+
+    return true;
 }
 
 void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

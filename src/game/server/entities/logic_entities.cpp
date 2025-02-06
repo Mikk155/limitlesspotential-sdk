@@ -184,7 +184,7 @@ class CLogicSetSkill : public CPointEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
@@ -209,10 +209,12 @@ bool CLogicSetSkill::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CLogicSetSkill::Spawn()
+bool CLogicSetSkill::Spawn()
 {
     // Check to make sure the skill level was specified at all.
     m_SkillLevel = ValidateSkillLevel( this, m_SkillLevel );
+
+    return true;
 }
 
 void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
@@ -237,7 +239,7 @@ class CLogicSetSkillVar : public CPointEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
@@ -269,12 +271,14 @@ bool CLogicSetSkillVar::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CLogicSetSkillVar::Spawn()
+bool CLogicSetSkillVar::Spawn()
 {
     if( FStringNull( m_Name ) )
     {
         Logger->error( "{}:{}:{}: No variable name set", GetClassname(), entindex(), GetTargetname() );
     }
+
+    return true;
 }
 
 void CLogicSetSkillVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
@@ -321,7 +325,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     void RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
@@ -385,9 +389,11 @@ bool CLogicRandom::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CLogicRandom::Spawn()
+bool CLogicRandom::Spawn()
 {
     SetUse( &CLogicRandom::RandomUse );
+
+    return true;
 }
 
 void CLogicRandom::RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

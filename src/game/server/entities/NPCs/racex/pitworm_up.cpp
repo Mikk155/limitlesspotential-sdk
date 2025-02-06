@@ -62,7 +62,7 @@ class COFPitWormUp : public CBaseMonster
 public:
     void OnCreate() override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     int BloodColor() override { return BLOOD_COLOR_GREEN; }
 
@@ -329,7 +329,7 @@ void COFPitWormUp::Precache()
     UTIL_PrecacheOther( "pitworm_gib" );
 }
 
-void COFPitWormUp::Spawn()
+bool COFPitWormUp::Spawn()
 {
     Precache();
 
@@ -407,6 +407,8 @@ void COFPitWormUp::Spawn()
     }
 
     m_pBeam = nullptr;
+
+    return true;
 }
 
 void COFPitWormUp::StartupThink()
@@ -1369,19 +1371,21 @@ void COFPitWormUp::RemoveEffects()
 class COFPitWormSteamTrigger : public CPointEntity
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 };
 
 LINK_ENTITY_TO_CLASS( info_pitworm_steam_lock, COFPitWormSteamTrigger );
 
-void COFPitWormSteamTrigger::Spawn()
+bool COFPitWormSteamTrigger::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
     pev->effects = EF_NODRAW;
     SetOrigin( pev->origin );
+
+    return true;
 }
 
 void COFPitWormSteamTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
@@ -1418,7 +1422,7 @@ class COFInfoPW : public CPointEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     void StartNode();
 
@@ -1463,10 +1467,12 @@ bool COFInfoPW::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void COFInfoPW::Spawn()
+bool COFInfoPW::Spawn()
 {
     SetThink( &COFInfoPW::StartNode );
     pev->nextthink = gpGlobals->time + 0.1;
+
+    return true;
 }
 
 void COFInfoPW::StartNode()
@@ -1482,7 +1488,7 @@ class COFPitWormGib : public CBaseEntity
 
 public:
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void GibFloat();
 };
@@ -1498,7 +1504,7 @@ void COFPitWormGib::Precache()
     PrecacheModel( "models/pit_worm_gibs.mdl" );
 }
 
-void COFPitWormGib::Spawn()
+bool COFPitWormGib::Spawn()
 {
     Precache();
 
@@ -1517,6 +1523,8 @@ void COFPitWormGib::Spawn()
 
     pev->nextthink = gpGlobals->time + 0.1;
     SetThink( &COFPitWormGib::GibFloat );
+
+    return true;
 }
 
 void COFPitWormGib::GibFloat()
@@ -1548,7 +1556,7 @@ class COFPitWormGibShooter : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void ShootThink();
@@ -1613,7 +1621,7 @@ void COFPitWormGibShooter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, U
     pev->nextthink = gpGlobals->time;
 }
 
-void COFPitWormGibShooter::Spawn()
+bool COFPitWormGibShooter::Spawn()
 {
     Precache();
 
@@ -1627,6 +1635,8 @@ void COFPitWormGibShooter::Spawn()
 
     SetMovedir( this );
     pev->body = MODEL_FRAMES( m_iGibModelIndex );
+
+    return true;
 }
 
 
@@ -1721,7 +1731,7 @@ public:
 
     void StartMonster() override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     bool KeyValue( KeyValueData* pkvd ) override
     {
@@ -2043,7 +2053,7 @@ void COFPitWorm::StartMonster()
     pev->nextthink += RANDOM_FLOAT( 0.1, 0.4 ); // spread think times.
 }
 
-void COFPitWorm::Spawn()
+bool COFPitWorm::Spawn()
 {
     Precache();
 
@@ -2064,6 +2074,8 @@ void COFPitWorm::Spawn()
     m_flDistLook = 1024;
     m_slowTime = 0;
     m_pBeam = nullptr;
+
+    return true;
 }
 
 void COFPitWorm::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )

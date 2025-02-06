@@ -19,6 +19,11 @@
 
 LINK_ENTITY_TO_CLASS( info_ctfdetect, CTFDetect );
 
+bool CTFDetect::Spawn()
+{
+    return true;
+}
+
 bool CTFDetect::KeyValue( KeyValueData* pkvd )
 {
     if( FStrEq( "is_ctf", pkvd->szKeyName ) )

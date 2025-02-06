@@ -21,7 +21,7 @@ public:
 
     void OnCreate() override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void SetNuclearBombButton( bool fOn );
 };
@@ -40,7 +40,7 @@ void COFNuclearBombButton::Precache()
     PrecacheModel( STRING( pev->model ) );
 }
 
-void COFNuclearBombButton::Spawn()
+bool COFNuclearBombButton::Spawn()
 {
     Precache();
 
@@ -57,12 +57,14 @@ void COFNuclearBombButton::Spawn()
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
         CBaseEntity::Logger->error( "Nuclear Bomb Button fell out of level at {}", pev->origin );
-        UTIL_Remove( this );
+        return false;
     }
     else
     {
         pev->skin = 0;
     }
+
+    return true;
 }
 
 void COFNuclearBombButton::SetNuclearBombButton( bool fOn )
@@ -80,7 +82,7 @@ public:
 
     void OnCreate() override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void NuclearBombTimerThink();
 
@@ -109,7 +111,7 @@ void COFNuclearBombTimer::Precache()
     PrecacheSound( "common/nuke_ticking.wav" );
 }
 
-void COFNuclearBombTimer::Spawn()
+bool COFNuclearBombTimer::Spawn()
 {
     Precache();
 
@@ -134,6 +136,8 @@ void COFNuclearBombTimer::Spawn()
         bPlayBombSound = true;
         bBombSoundPlaying = true;
     }
+
+    return true;
 }
 
 void COFNuclearBombTimer::NuclearBombTimerThink()
@@ -186,7 +190,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void OnCreate() override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
@@ -257,7 +261,7 @@ void COFNuclearBomb::Precache()
     m_pButton->pev->skin = static_cast<int>( m_fOn );
 }
 
-void COFNuclearBomb::Spawn()
+bool COFNuclearBomb::Spawn()
 {
     Precache();
 
@@ -278,8 +282,9 @@ void COFNuclearBomb::Spawn()
     else
     {
         CBaseEntity::Logger->error( "Nuclear Bomb fell out of level at {}", pev->origin );
-        UTIL_Remove( this );
+        return false;
     }
+    return true;
 }
 
 void COFNuclearBomb::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

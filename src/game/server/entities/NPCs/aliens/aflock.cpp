@@ -31,7 +31,7 @@ class CFlockingFlyerFlock : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void SpawnFlock();
@@ -55,7 +55,7 @@ class CFlockingFlyer : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SpawnCommonCode();
     void IdleThink();
@@ -172,12 +172,14 @@ bool CFlockingFlyerFlock::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-void CFlockingFlyerFlock::Spawn()
+bool CFlockingFlyerFlock::Spawn()
 {
     Precache();
     SpawnFlock();
 
     REMOVE_ENTITY( edict() ); // dump the spawn ent
+
+    return true;
 }
 
 void CFlockingFlyerFlock::Precache()
@@ -242,7 +244,7 @@ void CFlockingFlyerFlock::SpawnFlock()
     }
 }
 
-void CFlockingFlyer::Spawn()
+bool CFlockingFlyer::Spawn()
 {
     Precache();
     SpawnCommonCode();
@@ -250,6 +252,8 @@ void CFlockingFlyer::Spawn()
     pev->frame = 0;
     pev->nextthink = gpGlobals->time + 0.1;
     SetThink( &CFlockingFlyer::IdleThink );
+
+    return true;
 }
 
 void CFlockingFlyer::Precache()

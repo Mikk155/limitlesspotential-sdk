@@ -703,7 +703,7 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CHGrunt::Spawn()
+bool CHGrunt::Spawn()
 {
     Precache();
 
@@ -765,6 +765,8 @@ void CHGrunt::Spawn()
     CTalkMonster::g_talkWaitTime = 0;
 
     MonsterInit();
+
+    return true;
 }
 
 void CHGrunt::Precache()
@@ -2008,12 +2010,14 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( monster_grunt_repel, CHGruntRepel );
 
-void CHGruntRepel::Spawn()
+bool CHGruntRepel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
 
     SetUse( &CHGruntRepel::RepelUse );
+
+    return true;
 }
 
 void CHGruntRepel::PrecacheCore( const char* classname )
@@ -2103,7 +2107,7 @@ void CDeadHGrunt::SpawnCore()
     MonsterInitDead();
 }
 
-void CDeadHGrunt::Spawn()
+bool CDeadHGrunt::Spawn()
 {
     SpawnCore();
 
@@ -2135,4 +2139,6 @@ void CDeadHGrunt::Spawn()
         SetBodygroup( HGruntBodyGroup::Weapons, HGruntWeapon::Blank );
         break;
     }
+
+    return true;
 }

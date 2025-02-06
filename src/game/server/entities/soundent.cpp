@@ -55,12 +55,14 @@ bool CSound::FIsScent()
     return false;
 }
 
-void CSoundEnt::Spawn()
+bool CSoundEnt::Spawn()
 {
     pev->solid = SOLID_NOT;
     Initialize();
 
     pev->nextthink = gpGlobals->time + 1;
+
+    return true;
 }
 
 void CSoundEnt::Think()

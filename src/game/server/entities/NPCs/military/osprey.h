@@ -31,7 +31,7 @@ public:
 
     void OnCreate() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     int BloodColor() override { return DONT_BLEED; }
     void Killed( CBaseEntity* attacker, int iGib ) override;

@@ -35,7 +35,7 @@ class CISlave : public CSquadMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;
@@ -474,7 +474,7 @@ void CISlave::StartTask( const Task_t* pTask )
     CSquadMonster::StartTask( pTask );
 }
 
-void CISlave::Spawn()
+bool CISlave::Spawn()
 {
     Precache();
 
@@ -493,6 +493,8 @@ void CISlave::Spawn()
     m_voicePitch = RANDOM_LONG( 85, 110 );
 
     MonsterInit();
+
+    return true;
 }
 
 void CISlave::Precache()
@@ -778,7 +780,7 @@ class CDeadISlave : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasAlienGibs() override { return true; }
 
@@ -814,7 +816,7 @@ void CDeadISlave::OnCreate()
     SetClassification( "alien_passive" );
 }
 
-void CDeadISlave::Spawn()
+bool CDeadISlave::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -830,4 +832,6 @@ void CDeadISlave::Spawn()
     }
 
     MonsterInitDead();
+
+    return true;
 }

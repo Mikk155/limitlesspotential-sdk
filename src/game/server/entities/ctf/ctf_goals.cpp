@@ -52,7 +52,7 @@ bool CTFGoal::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-void CTFGoal::Spawn()
+bool CTFGoal::Spawn()
 {
     if( !FStringNull( pev->model ) )
     {
@@ -74,6 +74,8 @@ void CTFGoal::Spawn()
 
     SetThink( &CTFGoal::PlaceGoal );
     pev->nextthink = gpGlobals->time + 0.2;
+
+    return true;
 }
 
 void CTFGoal::SetObjectCollisionBox()
@@ -162,7 +164,7 @@ void CTFGoalBase::BaseThink()
     pev->nextthink = gpGlobals->time + 20.0;
 }
 
-void CTFGoalBase::Spawn()
+bool CTFGoalBase::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->solid = SOLID_NOT;
@@ -182,27 +184,27 @@ void CTFGoalBase::Spawn()
     if( 0 == g_engfuncs.pfnDropToFloor( edict() ) )
     {
         CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin );
-        UTIL_Remove( this );
+        return false;
     }
-    else
+
+    if( !FStringNull( pev->model ) )
     {
-        if( !FStringNull( pev->model ) )
+        PrecacheModel( STRING( pev->model ) );
+        SetModel( STRING( pev->model ) );
+
+        pev->sequence = LookupSequence( "on_ground" );
+
+        if( pev->sequence != -1 )
         {
-            PrecacheModel( STRING( pev->model ) );
-            SetModel( STRING( pev->model ) );
-
-            pev->sequence = LookupSequence( "on_ground" );
-
-            if( pev->sequence != -1 )
-            {
-                ResetSequenceInfo();
-                pev->frame = 0;
-            }
+            ResetSequenceInfo();
+            pev->frame = 0;
         }
-
-        SetThink( &CTFGoalBase::BaseThink );
-        pev->nextthink = gpGlobals->time + 0.1;
     }
+
+    SetThink( &CTFGoalBase::BaseThink );
+    pev->nextthink = gpGlobals->time + 0.1;
+
+    return true;
 }
 
 void CTFGoalBase::TurnOnLight( CBasePlayer* pPlayer )
@@ -419,7 +421,7 @@ void CTFGoalFlag::goal_item_dropthink()
     }
 }
 
-void CTFGoalFlag::Spawn()
+bool CTFGoalFlag::Spawn()
 {
     Precache();
 
@@ -441,45 +443,45 @@ void CTFGoalFlag::Spawn()
         if( 0 == g_engfuncs.pfnDropToFloor( edict() ) )
         {
             CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin );
-            UTIL_Remove( this );
+            return false;
         }
-        else
+
+        if( !FStringNull( pev->model ) )
         {
-            if( !FStringNull( pev->model ) )
+            SetModel( STRING( pev->model ) );
+
+            pev->sequence = LookupSequence( "flag_positioned" );
+
+            if( pev->sequence != -1 )
             {
-                SetModel( STRING( pev->model ) );
-
-                pev->sequence = LookupSequence( "flag_positioned" );
-
-                if( pev->sequence != -1 )
-                {
-                    ResetSequenceInfo();
-                    pev->frame = 0;
-                }
+                ResetSequenceInfo();
+                pev->frame = 0;
             }
-
-            m_iGoalState = 1;
-            pev->solid = SOLID_TRIGGER;
-
-            if( FStringNull( pev->netname ) )
-            {
-                pev->netname = MAKE_STRING( "goalflag" );
-            }
-
-            SetOrigin( pev->origin );
-
-            m_OriginalAngles = pev->angles;
-
-            SetTouch( &CTFGoalFlag::goal_item_touch );
-            SetThink( &CTFGoalFlag::PlaceItem );
-
-            pev->nextthink = gpGlobals->time + 0.2;
         }
+
+        m_iGoalState = 1;
+        pev->solid = SOLID_TRIGGER;
+
+        if( FStringNull( pev->netname ) )
+        {
+            pev->netname = MAKE_STRING( "goalflag" );
+        }
+
+        SetOrigin( pev->origin );
+
+        m_OriginalAngles = pev->angles;
+
+        SetTouch( &CTFGoalFlag::goal_item_touch );
+        SetThink( &CTFGoalFlag::PlaceItem );
+
+        pev->nextthink = gpGlobals->time + 0.2;
     }
     else
     {
         CBaseEntity::Logger->error( "Invalid goal_no set for CTF flag" );
     }
+
+    return true;
 }
 
 void CTFGoalFlag::ReturnFlagThink()

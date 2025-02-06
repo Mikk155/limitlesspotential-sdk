@@ -50,7 +50,7 @@ class CSmoker;
 class CSpiral : public CBaseEntity
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
     int ObjectCaps() override { return FCAP_DONT_SAVE; }
     static CSpiral* Create( const Vector& origin, float height, float radius, float duration );
@@ -64,7 +64,7 @@ class CStomp : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
     static CStomp* StompCreate( const Vector& origin, const Vector& end, float speed );
 
@@ -95,7 +95,7 @@ CStomp* CStomp::StompCreate( const Vector& origin, const Vector& end, float spee
     return pStomp;
 }
 
-void CStomp::Spawn()
+bool CStomp::Spawn()
 {
     pev->nextthink = gpGlobals->time;
     pev->dmgtime = gpGlobals->time;
@@ -105,6 +105,8 @@ void CStomp::Spawn()
     pev->rendermode = kRenderTransTexture;
     pev->renderamt = 0;
     EmitSoundDyn( CHAN_BODY, GARG_STOMP_BUZZ_SOUND, 1, ATTN_NORM, 0, PITCH_NORM * 0.55 );
+
+    return true;
 }
 
 #define STOMP_INTERVAL 0.025
@@ -202,7 +204,7 @@ class CGargantua : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
@@ -722,7 +724,7 @@ void CGargantua::SetYawSpeed()
     pev->yaw_speed = ys;
 }
 
-void CGargantua::Spawn()
+bool CGargantua::Spawn()
 {
     Precache();
 
@@ -744,6 +746,8 @@ void CGargantua::Spawn()
     EyeOff();
     m_seeTime = gpGlobals->time + 5;
     m_flameTime = gpGlobals->time + 2;
+
+    return true;
 }
 
 void CGargantua::Precache()
@@ -1151,13 +1155,13 @@ void CGargantua::RunTask( const Task_t* pTask )
 class CSmoker : public CBaseEntity
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
 };
 
 LINK_ENTITY_TO_CLASS( env_smoker, CSmoker );
 
-void CSmoker::Spawn()
+bool CSmoker::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     pev->nextthink = gpGlobals->time;
@@ -1165,6 +1169,8 @@ void CSmoker::Spawn()
     SetSize( g_vecZero, g_vecZero );
     pev->effects |= EF_NODRAW;
     pev->angles = g_vecZero;
+
+    return true;
 }
 
 void CSmoker::Think()
@@ -1187,7 +1193,7 @@ void CSmoker::Think()
         UTIL_Remove( this );
 }
 
-void CSpiral::Spawn()
+bool CSpiral::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     pev->nextthink = gpGlobals->time;
@@ -1195,6 +1201,8 @@ void CSpiral::Spawn()
     SetSize( g_vecZero, g_vecZero );
     pev->effects |= EF_NODRAW;
     pev->angles = g_vecZero;
+
+    return true;
 }
 
 CSpiral* CSpiral::Create( const Vector& origin, float height, float radius, float duration )

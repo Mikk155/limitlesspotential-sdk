@@ -308,7 +308,7 @@ public:
     char m_szTeamName[TEAM_NAME_LENGTH];
 
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Pain();
 
     bool HasHumanGibs() override { return true; }

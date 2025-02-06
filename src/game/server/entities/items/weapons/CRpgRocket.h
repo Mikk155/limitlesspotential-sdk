@@ -27,7 +27,7 @@ class CRpgRocket : public CGrenade
 public:
     ~CRpgRocket() override;
 
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void FollowThink();
     void IgniteThink();

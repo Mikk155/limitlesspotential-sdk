@@ -521,7 +521,7 @@ bool CScientist::KeyValue( KeyValueData* pkvd )
     return CTalkMonster::KeyValue( pkvd );
 }
 
-void CScientist::Spawn()
+bool CScientist::Spawn()
 {
     Precache();
 
@@ -577,6 +577,8 @@ void CScientist::Spawn()
     SetBodygroup( ScientistBodygroup::Item, static_cast<int>( m_Item ) );
 
     MonsterInit();
+
+    return true;
 }
 
 void CScientist::Precache()
@@ -982,7 +984,7 @@ class CDeadScientist : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -1017,7 +1019,7 @@ bool CDeadScientist::KeyValue( KeyValueData* pkvd )
     return CBaseMonster::KeyValue( pkvd );
 }
 
-void CDeadScientist::Spawn()
+bool CDeadScientist::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -1048,6 +1050,8 @@ void CDeadScientist::Spawn()
 
     //    pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
     MonsterInitDead();
+
+    return true;
 }
 
 LINK_ENTITY_TO_CLASS( monster_sitting_scientist, CSittingScientist );
@@ -1079,7 +1083,7 @@ void CSittingScientist::OnCreate()
     SetClassification( "human_passive" );
 }
 
-void CSittingScientist::Spawn()
+bool CSittingScientist::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -1118,6 +1122,8 @@ void CSittingScientist::Spawn()
     pev->nextthink = gpGlobals->time + 0.1;
 
     DROP_TO_FLOOR( edict() );
+
+    return true;
 }
 
 void CSittingScientist::Precache()

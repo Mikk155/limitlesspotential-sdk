@@ -71,7 +71,7 @@ public:
     static inline std::shared_ptr<spdlog::logger> AIScriptLogger;
 
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     void Blocked( CBaseEntity* pOther ) override;

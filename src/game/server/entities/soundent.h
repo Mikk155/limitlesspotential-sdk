@@ -78,7 +78,7 @@ class CSoundEnt : public CBaseEntity
 {
 public:
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     /**
      *    @brief at interval, the entire active sound list is checked for sounds that have ExpireTimes

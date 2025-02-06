@@ -37,7 +37,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Activate() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
@@ -135,7 +135,7 @@ void CBaseCharger::Precache()
     PrecacheSound( m_DispensingSound );
 }
 
-void CBaseCharger::Spawn()
+bool CBaseCharger::Spawn()
 {
     Precache();
 
@@ -147,6 +147,8 @@ void CBaseCharger::Spawn()
     SetModel( STRING( pev->model ) );
     m_Juice = m_TotalJuice;
     pev->frame = 0;
+
+    return true;
 }
 
 void CBaseCharger::Activate()

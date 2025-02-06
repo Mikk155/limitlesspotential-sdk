@@ -26,48 +26,58 @@ static void SetObjectCollisionBox( entvars_t* pev );
 
 int DispatchSpawn( edict_t* pent )
 {
-    CBaseEntity* pEntity = (CBaseEntity*)GET_PRIVATE( pent );
+    CBaseEntity* entity = (CBaseEntity*)GET_PRIVATE( pent );
 
-    if( pEntity )
+    if( entity != nullptr )
     {
         // Initialize these or entities who don't link to the world won't have anything in here
-        pEntity->pev->absmin = pEntity->pev->origin - Vector( 1, 1, 1 );
-        pEntity->pev->absmax = pEntity->pev->origin + Vector( 1, 1, 1 );
+        entity->pev->absmin = entity->pev->origin - Vector( 1, 1, 1 );
+        entity->pev->absmax = entity->pev->origin + Vector( 1, 1, 1 );
 
-        pEntity->Spawn();
-
-        // Try to get the pointer again, in case the spawn function deleted the entity.
-        // UNDONE: Spawn() should really return a code to ask that the entity be deleted, but
-        // that would touch too much code for me to do that right now.
-        pEntity = (CBaseEntity*)GET_PRIVATE( pent );
-
-        if( pEntity )
+        if( !entity->Spawn() )
         {
-            if( g_pGameRules && !g_pGameRules->IsAllowedToSpawn( pEntity ) )
-                return -1; // return that this entity should be deleted
-            if( ( pEntity->pev->flags & FL_KILLME ) != 0 )
-                return -1;
+            // If the entity didn't deleted itself we'll do it here.
+            if( entity = (CBaseEntity*)GET_PRIVATE( pent ); entity != nullptr )
+            {
+                UTIL_Remove(entity);
+            }
+
+            return -1;
         }
 
+        if( g_pGameRules && !g_pGameRules->IsAllowedToSpawn( entity ) )
+        {
+            return -1; // return that this entity should be deleted
+        }
+
+        if( ( entity->pev->flags & FL_KILLME ) != 0 )
+        {
+            return -1;
+        }
 
         // Handle global stuff here
-        if( pEntity && !FStringNull( pEntity->pev->globalname ) )
+        if( !FStringNull( entity->pev->globalname ) )
         {
-            const globalentity_t* pGlobal = gGlobalState.EntityFromTable( pEntity->pev->globalname );
+            const globalentity_t* pGlobal = gGlobalState.EntityFromTable( entity->pev->globalname );
+
             if( pGlobal )
             {
                 // Already dead? delete
                 if( pGlobal->state == GLOBAL_DEAD )
+                {
                     return -1;
+                }
                 else if( !FStrEq( STRING( gpGlobals->mapname ), pGlobal->levelName ) )
-                    pEntity->MakeDormant(); // Hasn't been moved to this level yet, wait but stay alive
+                {
+                    entity->MakeDormant(); // Hasn't been moved to this level yet, wait but stay alive
                                             // In this level & not dead, continue on as normal
+                }
             }
             else
             {
                 // Spawned entities default to 'On'
-                gGlobalState.EntityAdd( pEntity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
-                // CBaseEntity::Logger->trace("Added global entity {} ({})", STRING(pEntity->pev->classname), STRING(pEntity->pev->globalname));
+                gGlobalState.EntityAdd( entity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
+                // CBaseEntity::Logger->trace("Added global entity {} ({})", STRING(entity->pev->classname), STRING(entity->pev->globalname));
             }
         }
     }
@@ -329,15 +339,11 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
 
         if( ( pEntity->ObjectCaps() & FCAP_MUST_SPAWN ) != 0 )
         {
-            pEntity->Spawn();
-        }
-        else
-        {
-            pEntity->Precache();
+            if( !pEntity->Spawn() )
+                return -1;
         }
 
-        // Again, could be deleted, get the pointer again.
-        pEntity = (CBaseEntity*)GET_PRIVATE( pent );
+        pEntity->Precache();
 
 #if 0
         if( pEntity && pEntity->pev->globalname && globalEntity )

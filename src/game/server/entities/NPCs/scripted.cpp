@@ -94,7 +94,7 @@ void CCineMonster::OnCreate()
     m_AllowFollow = false; // So nothing gets confused about what we can do.
 }
 
-void CCineMonster::Spawn()
+bool CCineMonster::Spawn()
 {
     // pev->solid = SOLID_TRIGGER;
     // SetSize(Vector(-8, -8, -8), Vector(8, 8, 8));
@@ -113,6 +113,8 @@ void CCineMonster::Spawn()
         m_interruptable = false;
     else
         m_interruptable = true;
+
+    return true;
 }
 
 bool CCineMonster::FCanOverrideState()
@@ -769,7 +771,7 @@ class CScriptedSentence : public CBaseToggle
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     void FindThink();
@@ -869,7 +871,7 @@ void CScriptedSentence::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     pev->nextthink = gpGlobals->time;
 }
 
-void CScriptedSentence::Spawn()
+bool CScriptedSentence::Spawn()
 {
     pev->solid = SOLID_NOT;
 
@@ -905,6 +907,8 @@ void CScriptedSentence::Spawn()
     // No volume, use normal
     if( m_flVolume <= 0 )
         m_flVolume = 1.0;
+
+    return true;
 }
 
 void CScriptedSentence::FindThink()
@@ -1032,7 +1036,7 @@ public:
      *    @brief This used to have something to do with bees flying,
      *    but now it only initializes moving furniture in scripted sequences
      */
-    void Spawn() override;
+    bool Spawn() override;
     bool IsMonster() override { return false; }
 
     void Die();
@@ -1058,7 +1062,7 @@ void CFurniture::Die()
     pev->nextthink = gpGlobals->time;
 }
 
-void CFurniture::Spawn()
+bool CFurniture::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -1077,4 +1081,6 @@ void CFurniture::Spawn()
     ResetSequenceInfo();
     pev->frame = 0;
     MonsterInit();
+
+    return true;
 }

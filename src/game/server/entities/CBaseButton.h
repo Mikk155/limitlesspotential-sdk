@@ -55,7 +55,7 @@ class CBaseButton : public CBaseToggle
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 

@@ -33,7 +33,7 @@ public:
     CWorld();
     ~CWorld() override;
 
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 

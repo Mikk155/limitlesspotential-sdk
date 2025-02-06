@@ -44,7 +44,7 @@ class CSquidSpit : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
 
     static void Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVelocity );
     void Touch( CBaseEntity* pOther ) override;
@@ -60,7 +60,7 @@ BEGIN_DATAMAP( CSquidSpit )
     DEFINE_FUNCTION( Animate ),
 END_DATAMAP();
 
-void CSquidSpit::Spawn()
+bool CSquidSpit::Spawn()
 {
     pev->movetype = MOVETYPE_FLY;
 
@@ -75,6 +75,8 @@ void CSquidSpit::Spawn()
     SetSize( Vector( 0, 0, 0 ), Vector( 0, 0, 0 ) );
 
     m_maxFrame = (float)MODEL_FRAMES( pev->modelindex ) - 1;
+
+    return true;
 }
 
 void CSquidSpit::Animate()
@@ -172,7 +174,7 @@ class CBullsquid : public CBaseMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;
@@ -628,7 +630,7 @@ void CBullsquid::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CBullsquid::Spawn()
+bool CBullsquid::Spawn()
 {
     Precache();
 
@@ -646,6 +648,8 @@ void CBullsquid::Spawn()
     m_flNextSpitTime = gpGlobals->time;
 
     MonsterInit();
+
+    return true;
 }
 
 void CBullsquid::Precache()

@@ -56,7 +56,7 @@ bool CWeaponBox::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-void CWeaponBox::Spawn()
+bool CWeaponBox::Spawn()
 {
     Precache();
 
@@ -66,6 +66,8 @@ void CWeaponBox::Spawn()
     SetSize( g_vecZero, g_vecZero );
 
     SetModel( STRING( pev->model ) );
+
+    return true;
 }
 
 void CWeaponBox::UpdateOnRemove()

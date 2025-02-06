@@ -43,7 +43,7 @@ void CSpore::Precache()
     PrecacheSound( "weapons/splauncher_bounce.wav" );
 }
 
-void CSpore::Spawn()
+bool CSpore::Spawn()
 {
     Precache();
 
@@ -110,6 +110,8 @@ void CSpore::Spawn()
     m_fRegisteredSound = false;
 
     m_flSoundDelay = gpGlobals->time;
+
+    return true;
 }
 
 void CSpore::BounceSound()

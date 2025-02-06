@@ -33,7 +33,7 @@ class CSqueakGrenade : public CGrenade
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SuperBounceTouch( CBaseEntity* pOther );
     void HuntThink();
@@ -84,7 +84,7 @@ void CSqueakGrenade::OnCreate()
     SetClassification( "alien_bioweapon" );
 }
 
-void CSqueakGrenade::Spawn()
+bool CSqueakGrenade::Spawn()
 {
     Precache();
     // motor
@@ -118,6 +118,8 @@ void CSqueakGrenade::Spawn()
 
     pev->sequence = WSQUEAK_RUN;
     ResetSequenceInfo();
+
+    return true;
 }
 
 void CSqueakGrenade::Precache()
@@ -402,13 +404,15 @@ void CSqueak::OnCreate()
     m_WorldModel = pev->model = MAKE_STRING( "models/w_sqknest.mdl" );
 }
 
-void CSqueak::Spawn()
+bool CSqueak::Spawn()
 {
     CBasePlayerWeapon::Spawn();
 
     pev->sequence = 1;
     pev->animtime = gpGlobals->time;
     pev->framerate = 1.0;
+
+    return true;
 }
 
 void CSqueak::Precache()

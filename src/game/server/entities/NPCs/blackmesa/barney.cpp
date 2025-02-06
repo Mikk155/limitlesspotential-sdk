@@ -289,7 +289,7 @@ void CBarney::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CBarney::Spawn()
+bool CBarney::Spawn()
 {
     Precache();
 
@@ -308,6 +308,8 @@ void CBarney::Spawn()
     SetBodygroup( GuardBodyGroup::Weapons, NPCWeaponState::Holstered + m_iGuardBody );
 
     MonsterInit();
+
+    return true;
 }
 
 void CBarney::Precache()
@@ -647,7 +649,7 @@ class CDeadBarney : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -689,7 +691,7 @@ bool CDeadBarney::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_barney_dead, CDeadBarney );
 
-void CDeadBarney::Spawn()
+bool CDeadBarney::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -708,4 +710,6 @@ void CDeadBarney::Spawn()
     }
 
     MonsterInitDead();
+
+    return true;
 }

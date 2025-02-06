@@ -25,7 +25,7 @@ class CMultiSource : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     int ObjectCaps() override { return ( CPointEntity::ObjectCaps() | FCAP_MASTER ); }

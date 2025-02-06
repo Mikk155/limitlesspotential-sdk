@@ -20,7 +20,7 @@ class CBasePlayer;
 class CHUDIconTrigger : public CBaseToggle
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 

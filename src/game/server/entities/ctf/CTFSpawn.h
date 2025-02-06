@@ -22,7 +22,7 @@ class CTFSpawn : public CBaseEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     bool IsTriggered( CBaseEntity* pEntity ) override;
 

@@ -30,7 +30,7 @@ public:
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
 
@@ -80,9 +80,11 @@ bool CTriggerChangeKeyValue::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-void CTriggerChangeKeyValue::Spawn()
+bool CTriggerChangeKeyValue::Spawn()
 {
     // Nothing
+
+    return true;
 }
 
 void CTriggerChangeKeyValue::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

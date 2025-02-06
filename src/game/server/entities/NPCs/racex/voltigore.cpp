@@ -24,7 +24,7 @@ class COFChargedBolt : public CBaseEntity
 
 public:
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void InitBeams();
     void ClearBeams();
@@ -76,7 +76,7 @@ void COFChargedBolt::Precache()
     m_iShowerSparks = PrecacheModel( "sprites/spark1.spr" );
 }
 
-void COFChargedBolt::Spawn()
+bool COFChargedBolt::Spawn()
 {
     Precache();
 
@@ -96,6 +96,8 @@ void COFChargedBolt::Spawn()
     pev->scale = 0.75;
 
     InitBeams();
+
+    return true;
 }
 
 void COFChargedBolt::InitBeams()
@@ -525,9 +527,11 @@ void COFVoltigore::SpawnCore( const Vector& mins, const Vector& maxs )
     MonsterInit();
 }
 
-void COFVoltigore::Spawn()
+bool COFVoltigore::Spawn()
 {
     SpawnCore( {-80, -80, 0}, {80, 80, 90} );
+
+    return true;
 }
 
 void COFVoltigore::Precache()

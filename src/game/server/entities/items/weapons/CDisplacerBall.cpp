@@ -85,7 +85,7 @@ void CDisplacerBall::Precache()
     PrecacheSound( "weapons/displacer_teleport.wav" );
 }
 
-void CDisplacerBall::Spawn()
+bool CDisplacerBall::Spawn()
 {
     Precache();
 
@@ -110,6 +110,8 @@ void CDisplacerBall::Spawn()
     pev->nextthink = gpGlobals->time + 0.2;
 
     InitBeams();
+
+    return true;
 }
 
 void CDisplacerBall::BallTouch( CBaseEntity* pOther )

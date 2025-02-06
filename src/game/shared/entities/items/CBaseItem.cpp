@@ -123,7 +123,7 @@ void CBaseItem::Precache()
     PrecacheSound( "items/suitchargeok1.wav" );
 }
 
-void CBaseItem::Spawn()
+bool CBaseItem::Spawn()
 {
 #ifndef CLIENT_DLL
     Precache();
@@ -136,6 +136,8 @@ void CBaseItem::Spawn()
     SetModel( GetModelName() );
     SetupItem( {-16, -16, 0}, {16, 16, 16} );
 #endif
+
+    return true;
 }
 
 void CBaseItem::FallThink()

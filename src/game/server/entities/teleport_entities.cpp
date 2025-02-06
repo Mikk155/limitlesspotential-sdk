@@ -47,7 +47,7 @@ class CTriggerTeleport : public CBaseTrigger
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void TeleportTouch( CBaseEntity* pOther );
 
@@ -74,11 +74,13 @@ bool CTriggerTeleport::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CTriggerTeleport::Spawn()
+bool CTriggerTeleport::Spawn()
 {
     InitTrigger();
 
     SetTouch( &CTriggerTeleport::TeleportTouch );
+
+    return true;
 }
 
 void CTriggerTeleport::TeleportTouch( CBaseEntity* pOther )
@@ -131,7 +133,7 @@ class CPointTeleport : public CPointEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
@@ -157,9 +159,11 @@ bool CPointTeleport::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CPointTeleport::Spawn()
+bool CPointTeleport::Spawn()
 {
     SetUse( &CPointTeleport::TeleportUse );
+
+    return true;
 }
 
 void CPointTeleport::TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )

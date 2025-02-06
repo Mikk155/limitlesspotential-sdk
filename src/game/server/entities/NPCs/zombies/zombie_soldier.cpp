@@ -38,7 +38,7 @@ class CDeadZombieSoldier : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasAlienGibs() override { return true; }
 
@@ -74,7 +74,7 @@ bool CDeadZombieSoldier::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_zombie_soldier_dead, CDeadZombieSoldier );
 
-void CDeadZombieSoldier::Spawn()
+bool CDeadZombieSoldier::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -92,4 +92,6 @@ void CDeadZombieSoldier::Spawn()
     }
 
     MonsterInitDead();
+
+    return true;
 }

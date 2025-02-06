@@ -82,7 +82,7 @@ void CElectrifiedWire::Precache()
     m_iLightningSprite = PrecacheModel( "sprites/lgtning.spr" );
 }
 
-void CElectrifiedWire::Spawn()
+bool CElectrifiedWire::Spawn()
 {
     BaseClass::Spawn();
 
@@ -118,6 +118,8 @@ void CElectrifiedWire::Spawn()
     m_flLastSparkTime = gpGlobals->time;
 
     SetSoundAllowed( false );
+
+    return true;
 }
 
 void CElectrifiedWire::Think()

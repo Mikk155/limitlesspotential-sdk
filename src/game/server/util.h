@@ -201,7 +201,7 @@ float UTIL_ApproachAngle( float target, float value, float speed );
 float UTIL_AngleDistance( float next, float cur );
 
 char* UTIL_VarArgs( const char* format, ... );
-void UTIL_Remove( CBaseEntity* pEntity );
+void UTIL_Remove( CBaseEntity* entity );
 bool UTIL_IsValidEntity( edict_t* pent );
 
 /**

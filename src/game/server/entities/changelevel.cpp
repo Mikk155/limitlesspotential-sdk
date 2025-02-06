@@ -34,18 +34,20 @@ LINK_ENTITY_TO_CLASS( info_landmark, CPointEntity );
 class CTriggerVolume : public CPointEntity
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_transition, CTriggerVolume );
 
-void CTriggerVolume::Spawn()
+bool CTriggerVolume::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
     SetModel( STRING( pev->model ) ); // set size and link into world
     pev->model = string_t::Null;
     pev->modelindex = 0;
+
+    return true;
 }
 
 /**
@@ -54,7 +56,7 @@ void CTriggerVolume::Spawn()
 class CFireAndDie : public CBaseDelay
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void Think() override;
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() | FCAP_FORCE_TRANSITION; } // Always go across transitions
@@ -62,9 +64,11 @@ public:
 
 LINK_ENTITY_TO_CLASS( fireanddie, CFireAndDie );
 
-void CFireAndDie::Spawn()
+bool CFireAndDie::Spawn()
 {
     // Don't call Precache() - it should be called on restore
+
+    return true;
 }
 
 void CFireAndDie::Precache()
@@ -131,7 +135,7 @@ bool CChangeLevel::KeyValue( KeyValueData* pkvd )
     return CBaseTrigger::KeyValue( pkvd );
 }
 
-void CChangeLevel::Spawn()
+bool CChangeLevel::Spawn()
 {
     if( FStrEq( m_szMapName, "" ) )
         Logger->warn( "a trigger_changelevel doesn't have a map" );
@@ -157,6 +161,8 @@ void CChangeLevel::Spawn()
     if( ( pev->spawnflags & SF_CHANGELEVEL_USEONLY ) == 0 )
         SetTouch( &CChangeLevel::TouchChangeLevel );
     //    Logger->debug("TRANSITION: {} ({})", m_szMapName, m_szLandmarkName);
+
+    return true;
 }
 
 CBaseEntity* CChangeLevel::FindLandmark( const char* pLandmarkName )
@@ -458,7 +464,7 @@ class CTriggerSave : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void SaveTouch( CBaseEntity* pOther );
 };
 
@@ -468,16 +474,18 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_autosave, CTriggerSave );
 
-void CTriggerSave::Spawn()
+bool CTriggerSave::Spawn()
 {
     if( g_pGameRules->IsMultiplayer() )
     {
         REMOVE_ENTITY( edict() );
-        return;
+        return false;
     }
 
     InitTrigger();
     SetTouch( &CTriggerSave::SaveTouch );
+
+    return true;
 }
 
 void CTriggerSave::SaveTouch( CBaseEntity* pOther )
@@ -502,7 +510,7 @@ class CTriggerEndSection : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void EndSectionTouch( CBaseEntity* pOther );
     bool KeyValue( KeyValueData* pkvd ) override;
     void EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
@@ -530,12 +538,12 @@ void CTriggerEndSection::EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pC
     UTIL_Remove( this );
 }
 
-void CTriggerEndSection::Spawn()
+bool CTriggerEndSection::Spawn()
 {
     if( g_pGameRules->IsMultiplayer() )
     {
         REMOVE_ENTITY( edict() );
-        return;
+        return false;
     }
 
     InitTrigger();
@@ -544,6 +552,8 @@ void CTriggerEndSection::Spawn()
     // If it is a "use only" trigger, then don't set the touch function.
     if( ( pev->spawnflags & SF_ENDSECTION_USEONLY ) == 0 )
         SetTouch( &CTriggerEndSection::EndSectionTouch );
+
+    return true;
 }
 
 void CTriggerEndSection::EndSectionTouch( CBaseEntity* pOther )

@@ -64,7 +64,7 @@ class CHoundeye : public CSquadMonster
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     void SetYawSpeed() override;
@@ -293,7 +293,7 @@ void CHoundeye::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CHoundeye::Spawn()
+bool CHoundeye::Spawn()
 {
     Precache();
 
@@ -312,6 +312,8 @@ void CHoundeye::Spawn()
     m_afCapability |= bits_CAP_SQUAD;
 
     MonsterInit();
+
+    return true;
 }
 
 void CHoundeye::Precache()
@@ -1222,7 +1224,7 @@ class CDeadHoundeye : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasAlienGibs() override { return true; }
 
@@ -1258,7 +1260,7 @@ bool CDeadHoundeye::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_houndeye_dead, CDeadHoundeye );
 
-void CDeadHoundeye::Spawn()
+bool CDeadHoundeye::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -1276,4 +1278,6 @@ void CDeadHoundeye::Spawn()
     }
 
     MonsterInitDead();
+
+    return true;
 }

@@ -25,7 +25,7 @@ class CFuncMortarField : public CBaseToggle
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -88,7 +88,7 @@ bool CFuncMortarField::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-void CFuncMortarField::Spawn()
+bool CFuncMortarField::Spawn()
 {
     pev->solid = SOLID_NOT;
     SetModel( STRING( pev->model ) ); // set size and link into world
@@ -96,6 +96,8 @@ void CFuncMortarField::Spawn()
     SetBits( pev->effects, EF_NODRAW );
     SetUse( &CFuncMortarField::FieldUse );
     Precache();
+
+    return true;
 }
 
 void CFuncMortarField::Precache()
@@ -177,7 +179,7 @@ class CMortar : public CGrenade
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
 
     void MortarExplode();
@@ -191,7 +193,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( monster_mortar, CMortar );
 
-void CMortar::Spawn()
+bool CMortar::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     pev->solid = SOLID_NOT;
@@ -202,6 +204,8 @@ void CMortar::Spawn()
     pev->nextthink = 0;
 
     Precache();
+
+    return true;
 }
 
 void CMortar::Precache()

@@ -36,12 +36,12 @@ bool CTFSpawn::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void CTFSpawn::Spawn()
+bool CTFSpawn::Spawn()
 {
     if( team_no < CTFTeam::None || team_no > CTFTeam::OpposingForce )
     {
         Logger->debug( "Teamspawnpoint with an invalid team_no of {}", static_cast<int>( team_no ) );
-        return;
+        return false;
     }
 
     m_sMaster = pev->classname;
@@ -49,6 +49,8 @@ void CTFSpawn::Spawn()
     // Change the classname to the owning team's spawn name
     pev->classname = MAKE_STRING( sTeamSpawnNames[static_cast<int>( team_no )] );
     m_fState = true;
+
+    return true;
 }
 
 bool CTFSpawn::IsTriggered( CBaseEntity* pEntity )

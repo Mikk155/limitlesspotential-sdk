@@ -82,11 +82,13 @@ public:
         m_voicePitch = 100;
     }
 
-    void Spawn() override
+    bool Spawn() override
     {
         BaseClass::Spawn();
 
         SetBodygroup( GuardBodyGroup::Weapons, NPCWeaponState::Blank );
+
+        return true;
     }
 
 protected:

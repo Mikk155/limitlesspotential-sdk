@@ -80,7 +80,7 @@ bool COsprey::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void COsprey::Spawn()
+bool COsprey::Spawn()
 {
     Precache();
     // motor
@@ -117,6 +117,8 @@ void COsprey::Spawn()
     m_pos2 = pev->origin;
     m_ang2 = pev->angles;
     m_vel2 = pev->velocity;
+
+    return true;
 }
 
 void COsprey::PrecacheCore( const char* tailModel, const char* bodyModel, const char* engineModel )

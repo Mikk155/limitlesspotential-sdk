@@ -147,7 +147,7 @@ void CZombie::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CZombie::Spawn()
+bool CZombie::Spawn()
 {
     Precache();
 
@@ -163,6 +163,8 @@ void CZombie::Spawn()
     m_afCapability = bits_CAP_DOORS_GROUP;
 
     MonsterInit();
+
+    return true;
 }
 
 void CZombie::Precache()

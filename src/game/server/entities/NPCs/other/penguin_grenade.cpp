@@ -34,7 +34,7 @@ public:
     void Precache() override;
     void GibMonster() override;
     void SuperBounceTouch( CBaseEntity* pOther );
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasAlienGibs() override { return true; }
 
@@ -218,7 +218,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
     m_flNextBounceSoundTime = gpGlobals->time + 0.5; // half second.
 }
 
-void CPenguinGrenade::Spawn()
+bool CPenguinGrenade::Spawn()
 {
     Precache();
     // motor
@@ -253,6 +253,8 @@ void CPenguinGrenade::Spawn()
     // TODO: shouldn't use index
     pev->sequence = MONSTERPENGUIN_RUN;
     ResetSequenceInfo();
+
+    return true;
 }
 
 Relationship CPenguinGrenade::IRelationship( CBaseEntity* pTarget )

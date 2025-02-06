@@ -125,7 +125,7 @@ void CRope::Precache()
     PRECACHE_SOUND_ARRAY( g_pszCreakSounds );
 }
 
-void CRope::Spawn()
+bool CRope::Spawn()
 {
     m_bMakeSound = true;
 
@@ -223,6 +223,8 @@ void CRope::Spawn()
     InitializeRopeSim();
 
     pev->nextthink = gpGlobals->time + 0.01;
+
+    return true;
 }
 
 void CRope::UpdateOnRemove()

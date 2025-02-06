@@ -280,7 +280,7 @@ class CBaseHGruntAllyRepel : public CBaseMonster
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
     int m_iSpriteTexture; // Don't save, precache

@@ -33,7 +33,7 @@ public:
      */
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
     // void Pain( float flDamage );
 
@@ -62,7 +62,7 @@ void CCycler::OnCreate()
     pev->health = 80000; // no cycler should die
 }
 
-void CCycler::Spawn()
+bool CCycler::Spawn()
 {
     const char* szModel = STRING( pev->model );
 
@@ -73,7 +73,7 @@ void CCycler::Spawn()
     {
         CBaseEntity::Logger->error( "cycler at {:.0f} missing modelname", pev->origin );
         REMOVE_ENTITY( edict() );
-        return;
+        return false;
     }
 
     PrecacheModel( szModel );
@@ -106,6 +106,8 @@ void CCycler::Spawn()
     }
 
     SetSize( vecMin, vecMax );
+
+    return true;
 }
 
 void CCycler::Think()
@@ -174,7 +176,7 @@ class CCyclerSprite : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE ); }
@@ -195,7 +197,7 @@ BEGIN_DATAMAP( CCyclerSprite )
     DEFINE_FIELD( m_maxFrame, FIELD_FLOAT ),
 END_DATAMAP();
 
-void CCyclerSprite::Spawn()
+bool CCyclerSprite::Spawn()
 {
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_NONE;
@@ -211,6 +213,8 @@ void CCyclerSprite::Spawn()
     SetModel( STRING( pev->model ) );
 
     m_maxFrame = (float)MODEL_FRAMES( pev->modelindex ) - 1;
+
+    return true;
 }
 
 void CCyclerSprite::Think()
@@ -253,7 +257,7 @@ class CWreckage : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void Think() override;
     bool IsMonster() override { return false; }
@@ -268,7 +272,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( cycler_wreckage, CWreckage );
 
-void CWreckage::Spawn()
+bool CWreckage::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -286,6 +290,8 @@ void CWreckage::Spawn()
     // pev->scale = 5.0;
 
     m_flStartTime = gpGlobals->time;
+
+    return true;
 }
 
 void CWreckage::Precache()

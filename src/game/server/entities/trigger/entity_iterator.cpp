@@ -32,7 +32,7 @@ class CTriggerEntityIterator : public CBaseDelay
     DECLARE_DATAMAP();
 
     public:
-        void Spawn() override;
+        bool Spawn() override;
         void IteratorThink();
         void IteratorFind();
         void IteratorTrigger( CBaseEntity* pTarget );
@@ -71,7 +71,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_entity_iterator, CTriggerEntityIterator );
 
-void CTriggerEntityIterator :: Spawn()
+bool CTriggerEntityIterator :: Spawn()
 {
     pev->solid = SOLID_NOT;
 
@@ -81,6 +81,8 @@ void CTriggerEntityIterator :: Spawn()
         IsThinking = true;
         pev->nextthink = gpGlobals->time + 0.1;
     }
+
+    return true;
 }
 
 void CTriggerEntityIterator :: IteratorThink()

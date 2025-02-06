@@ -27,7 +27,7 @@ class CCrossbowBolt : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void BubbleThink();
     void BoltTouch( CBaseEntity* pOther );
@@ -56,7 +56,7 @@ CCrossbowBolt* CCrossbowBolt::BoltCreate()
     return pBolt;
 }
 
-void CCrossbowBolt::Spawn()
+bool CCrossbowBolt::Spawn()
 {
     Precache();
     pev->movetype = MOVETYPE_FLY;
@@ -72,6 +72,8 @@ void CCrossbowBolt::Spawn()
     SetTouch( &CCrossbowBolt::BoltTouch );
     SetThink( &CCrossbowBolt::BubbleThink );
     pev->nextthink = gpGlobals->time + 0.2;
+
+    return true;
 }
 
 void CCrossbowBolt::Precache()

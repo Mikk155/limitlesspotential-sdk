@@ -35,7 +35,7 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
@@ -339,7 +339,7 @@ void CController::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CController::Spawn()
+bool CController::Spawn()
 {
     Precache();
 
@@ -355,6 +355,8 @@ void CController::Spawn()
     m_MonsterState = MONSTERSTATE_NONE;
 
     MonsterInit();
+
+    return true;
 }
 
 void CController::Precache()
@@ -1045,7 +1047,7 @@ class CControllerHeadBall : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void HuntThink();
     void DieThink();
@@ -1068,7 +1070,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( controller_head_ball, CControllerHeadBall );
 
-void CControllerHeadBall::Spawn()
+bool CControllerHeadBall::Spawn()
 {
     Precache();
     // motor
@@ -1095,6 +1097,8 @@ void CControllerHeadBall::Spawn()
 
     m_hOwner = Instance( pev->owner );
     pev->dmgtime = gpGlobals->time;
+
+    return true;
 }
 
 void CControllerHeadBall::Precache()
@@ -1246,7 +1250,7 @@ class CControllerZapBall : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void AnimateThink();
     void ExplodeTouch( CBaseEntity* pOther );
@@ -1262,7 +1266,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( controller_energy_ball, CControllerZapBall );
 
-void CControllerZapBall::Spawn()
+bool CControllerZapBall::Spawn()
 {
     Precache();
     // motor
@@ -1286,6 +1290,8 @@ void CControllerZapBall::Spawn()
     m_hOwner = Instance( pev->owner );
     pev->dmgtime = gpGlobals->time; // keep track of when ball spawned
     pev->nextthink = gpGlobals->time + 0.1;
+
+    return true;
 }
 
 void CControllerZapBall::Precache()

@@ -44,12 +44,7 @@ public:
 
     void Precache() override;
 
-    void Spawn() override
-    {
-        // Scientist changes pitch based on head submodel, so force it back.
-        CScientist::Spawn();
-        m_voicePitch = 100;
-    }
+    bool Spawn() override;
 
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
@@ -59,6 +54,15 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( monster_rosenberg, CRosenberg );
+
+bool CRosenberg::Spawn()
+{
+    // Scientist changes pitch based on head submodel, so force it back.
+    CScientist::Spawn();
+    m_voicePitch = 100;
+
+    return true;
+}
 
 void CRosenberg::Precache()
 {

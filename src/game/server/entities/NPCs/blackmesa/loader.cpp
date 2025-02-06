@@ -28,7 +28,7 @@ public:
     void OnCreate() override;
     void Precache() override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     void SetYawSpeed() override;
 
@@ -74,7 +74,7 @@ void COFLoader::Precache()
     PrecacheSound( "ambience/loader_hydra1.wav" );
 }
 
-void COFLoader::Spawn()
+bool COFLoader::Spawn()
 {
     Precache();
 
@@ -98,6 +98,8 @@ void COFLoader::Spawn()
 
     m_AllowFollow = false;
     MonsterInit();
+
+    return true;
 }
 
 void COFLoader::SetYawSpeed()

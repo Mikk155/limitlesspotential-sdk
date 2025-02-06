@@ -28,10 +28,12 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( rope_sample, CRopeSample );
 
-void CRopeSample::Spawn()
+bool CRopeSample::Spawn()
 {
     // TODO: needed?
     // pev->effects |= EF_NODRAW;
+
+    return true;
 }
 
 CRopeSample* CRopeSample::CreateSample()

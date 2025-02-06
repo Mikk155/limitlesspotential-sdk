@@ -40,7 +40,7 @@ class CPathTrack : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Activate() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -76,7 +76,7 @@ class CFuncTrackTrain : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
 
     void Blocked( CBaseEntity* pOther ) override;

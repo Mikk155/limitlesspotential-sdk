@@ -53,13 +53,15 @@ void CSporeLauncher::Precache()
     m_usFireSpore = PRECACHE_EVENT( 1, "events/spore.sc" );
 }
 
-void CSporeLauncher::Spawn()
+bool CSporeLauncher::Spawn()
 {
     CBasePlayerWeapon::Spawn();
 
     pev->sequence = 0;
     pev->animtime = gpGlobals->time;
     pev->framerate = 1;
+
+    return true;
 }
 
 bool CSporeLauncher::Deploy()
@@ -370,42 +372,7 @@ public:
         PrecacheSound( "weapons/spore_ammo.wav" );
     }
 
-    void Spawn() override
-    {
-        Precache();
-
-        SetModel( STRING( pev->model ) );
-
-        pev->movetype = MOVETYPE_FLY;
-
-        SetSize( Vector( -16, -16, -16 ), Vector( 16, 16, 16 ) );
-
-        pev->origin.z += 16;
-
-        SetOrigin( pev->origin );
-
-        pev->angles.x -= 90;
-
-        pev->sequence = SPOREAMMO_SPAWNDN;
-
-        pev->animtime = gpGlobals->time;
-
-        pev->nextthink = gpGlobals->time + 4;
-
-        pev->frame = 0;
-        pev->framerate = 1;
-
-        pev->health = 1;
-
-        pev->body = SPOREAMMOBODY_FULL;
-
-        pev->takedamage = DAMAGE_AIM;
-
-        pev->solid = SOLID_BBOX;
-
-        SetTouch( &CSporeAmmo::SporeTouch );
-        SetThink( &CSporeAmmo::Idling );
-    }
+    bool Spawn() override;
 
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override
     {
@@ -501,6 +468,45 @@ public:
         }
     }
 };
+
+bool CSporeAmmo::Spawn()
+{
+    Precache();
+
+    SetModel( STRING( pev->model ) );
+
+    pev->movetype = MOVETYPE_FLY;
+
+    SetSize( Vector( -16, -16, -16 ), Vector( 16, 16, 16 ) );
+
+    pev->origin.z += 16;
+
+    SetOrigin( pev->origin );
+
+    pev->angles.x -= 90;
+
+    pev->sequence = SPOREAMMO_SPAWNDN;
+
+    pev->animtime = gpGlobals->time;
+
+    pev->nextthink = gpGlobals->time + 4;
+
+    pev->frame = 0;
+    pev->framerate = 1;
+
+    pev->health = 1;
+
+    pev->body = SPOREAMMOBODY_FULL;
+
+    pev->takedamage = DAMAGE_AIM;
+
+    pev->solid = SOLID_BBOX;
+
+    SetTouch( &CSporeAmmo::SporeTouch );
+    SetThink( &CSporeAmmo::Idling );
+
+    return true;
+}
 
 BEGIN_DATAMAP( CSporeAmmo )
     DEFINE_FUNCTION( Idling ),

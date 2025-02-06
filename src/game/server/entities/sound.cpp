@@ -112,7 +112,7 @@ class CAmbientGeneric : public CBaseEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
 
     /**
@@ -159,7 +159,7 @@ BEGIN_DATAMAP( CAmbientGeneric )
     DEFINE_FUNCTION( RampThink ),
 END_DATAMAP();
 
-void CAmbientGeneric::Spawn()
+bool CAmbientGeneric::Spawn()
 {
     /*
             -1 : "Default"
@@ -197,7 +197,7 @@ void CAmbientGeneric::Spawn()
         Logger->error( "EMPTY AMBIENT AT: {}", pev->origin );
         pev->nextthink = gpGlobals->time + 0.1;
         SetThink( &CAmbientGeneric::SUB_Remove );
-        return;
+        return true;
     }
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -220,6 +220,8 @@ void CAmbientGeneric::Spawn()
     else
         m_fLooping = true;
     Precache();
+
+    return true;
 }
 
 void CAmbientGeneric::Precache()
@@ -846,7 +848,7 @@ public:
     int ObjectCaps() override { return ( CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ); }
 
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
     void TriggerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
     void RadiusThink();
@@ -930,7 +932,7 @@ bool CAmbientMusic::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void CAmbientMusic::Spawn()
+bool CAmbientMusic::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -945,6 +947,8 @@ void CAmbientMusic::Spawn()
     }
 
     SetUse( &CAmbientMusic::TriggerUse );
+
+    return true;
 }
 
 void CAmbientMusic::TriggerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
@@ -1047,7 +1051,7 @@ class CEnvSound : public CPointEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
 
     /**
     *    @brief A client that is visible and in range of a sound entity will have its room_type set by that sound entity.If two or more
@@ -1182,10 +1186,12 @@ void CEnvSound::Think()
     pev->nextthink = gpGlobals->time + ( shouldThinkFast ? 0.25 : 0.75 );
 }
 
-void CEnvSound::Spawn()
+bool CEnvSound::Spawn()
 {
     // spread think times
     pev->nextthink = gpGlobals->time + RANDOM_FLOAT( 0.0, 0.5 );
+
+    return true;
 }
 
 // ===================== MATERIAL TYPE DETECTION, MAIN ROUTINES ========================
@@ -1383,7 +1389,7 @@ class CSpeaker : public CBaseEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
 
     /**
@@ -1406,7 +1412,7 @@ BEGIN_DATAMAP( CSpeaker )
     DEFINE_FUNCTION( SpeakerThink ),
 END_DATAMAP();
 
-void CSpeaker::Spawn()
+bool CSpeaker::Spawn()
 {
     const char* szSoundFile = STRING( pev->message );
 
@@ -1415,7 +1421,7 @@ void CSpeaker::Spawn()
         Logger->error( "SPEAKER with no Level/Sentence! at: {}", pev->origin );
         pev->nextthink = gpGlobals->time + 0.1;
         SetThink( &CSpeaker::SUB_Remove );
-        return;
+        return true;
     }
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -1429,6 +1435,8 @@ void CSpeaker::Spawn()
     SetUse( &CSpeaker::ToggleUse );
 
     Precache();
+
+    return true;
 }
 
 #define ANNOUNCE_MINUTES_MIN 0.25

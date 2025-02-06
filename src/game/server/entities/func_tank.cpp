@@ -43,7 +43,7 @@ class CFuncTank : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
@@ -205,7 +205,7 @@ static Vector gTankSpread[] =
 
 #define MAX_FIRING_SPREADS std::size(gTankSpread)
 
-void CFuncTank::Spawn()
+bool CFuncTank::Spawn()
 {
     Precache();
 
@@ -228,6 +228,8 @@ void CFuncTank::Spawn()
         m_spread = 0;
 
     pev->oldorigin = pev->origin;
+
+    return true;
 }
 
 void CFuncTank::Precache()
@@ -1176,7 +1178,7 @@ class CFuncTankControls : public CBaseEntity
 
 public:
     int ObjectCaps() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
     void Think() override;
 
@@ -1216,7 +1218,7 @@ void CFuncTankControls::Think()
     CBaseEntity::Logger->debug( "No tank {}", STRING( pev->target ) );
 }
 
-void CFuncTankControls::Spawn()
+bool CFuncTankControls::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     pev->movetype = MOVETYPE_NONE;
@@ -1228,5 +1230,5 @@ void CFuncTankControls::Spawn()
 
     pev->nextthink = gpGlobals->time + 0.3; // After all the func_tank's have spawned
 
-    CBaseEntity::Spawn();
+    return CBaseEntity::Spawn();
 }

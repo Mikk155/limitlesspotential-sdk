@@ -23,7 +23,7 @@ class CShockBeam : public CGrenade
 
 public:
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void FlyThink();
     void ExplodeThink();

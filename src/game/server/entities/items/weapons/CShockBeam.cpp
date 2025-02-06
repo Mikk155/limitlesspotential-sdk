@@ -38,7 +38,7 @@ void CShockBeam::Precache()
     PrecacheSound( "weapons/shock_impact.wav" );
 }
 
-void CShockBeam::Spawn()
+bool CShockBeam::Spawn()
 {
     Precache();
 
@@ -84,7 +84,7 @@ void CShockBeam::Spawn()
         if( g_pGameRules->IsMultiplayer() )
         {
             pev->nextthink = gpGlobals->time + 0.01;
-            return;
+            return true;
         }
 
         m_pBeam2 = CBeam::BeamCreate( "sprites/lgtning.spr", 20 );
@@ -109,6 +109,8 @@ void CShockBeam::Spawn()
             pev->nextthink = gpGlobals->time + 0.01;
         }
     }
+
+    return true;
 }
 
 void CShockBeam::FlyThink()

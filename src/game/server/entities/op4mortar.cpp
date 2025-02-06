@@ -21,7 +21,7 @@ class CMortarShell : public CGrenade
 
 public:
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void BurnThink();
 
@@ -56,7 +56,7 @@ void CMortarShell::Precache()
     PrecacheSound( "weapons/ofmortar.wav" );
 }
 
-void CMortarShell::Spawn()
+bool CMortarShell::Spawn()
 {
     Precache();
 
@@ -82,6 +82,8 @@ void CMortarShell::Spawn()
     pev->nextthink = gpGlobals->time + 0.01;
     m_flIgniteTime = gpGlobals->time;
     m_iSoundedOff = false;
+
+    return true;
 }
 
 void CMortarShell::BurnThink()
@@ -232,7 +234,7 @@ public:
 
     void Precache() override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     int ObjectCaps() override { return 0; }
 
@@ -363,7 +365,7 @@ void COp4Mortar::Precache()
     PrecacheSound( "player/pl_grate1.wav" );
 }
 
-void COp4Mortar::Spawn()
+bool COp4Mortar::Spawn()
 {
     Precache();
 
@@ -407,6 +409,8 @@ void COp4Mortar::Spawn()
 
     pev->nextthink = gpGlobals->time + 0.01;
     SetThink( &COp4Mortar::MortarThink );
+
+    return true;
 }
 
 void COp4Mortar::MortarThink()
@@ -791,7 +795,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     void Reverse();
 
@@ -822,7 +826,7 @@ bool COp4MortarController::KeyValue( KeyValueData* pkvd )
     return CBaseToggle::KeyValue( pkvd );
 }
 
-void COp4MortarController::Spawn()
+bool COp4MortarController::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_PUSH;
@@ -833,6 +837,8 @@ void COp4MortarController::Spawn()
 
     m_direction = 1;
     m_lastpush = gpGlobals->time;
+
+    return true;
 }
 
 void COp4MortarController::Reverse()

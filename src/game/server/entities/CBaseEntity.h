@@ -194,7 +194,7 @@ public:
 
     void Destruct();
 
-    virtual void Spawn() {}
+    virtual bool Spawn() { return true; }
 
     /**
      *    @brief precaches all resources this entity needs

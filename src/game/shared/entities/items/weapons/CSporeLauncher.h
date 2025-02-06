@@ -46,7 +46,7 @@ public:
 
     void Precache() override;
 
-    void Spawn() override;
+    bool Spawn() override;
 
     bool Deploy() override;
 

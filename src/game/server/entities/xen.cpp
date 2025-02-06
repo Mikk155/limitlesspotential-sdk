@@ -56,7 +56,7 @@ class CXenPLight : public CActAnimating
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void Touch( CBaseEntity* pOther ) override;
     void Think() override;
@@ -82,7 +82,7 @@ void CXenPLight::OnCreate()
     pev->model = MAKE_STRING( "models/light.mdl" );
 }
 
-void CXenPLight::Spawn()
+bool CXenPLight::Spawn()
 {
     Precache();
 
@@ -98,6 +98,8 @@ void CXenPLight::Spawn()
     m_pGlow = CSprite::SpriteCreate( XEN_PLANT_GLOW_SPRITE, pev->origin + Vector( 0, 0, ( pev->mins.z + pev->maxs.z ) * 0.5 ), false );
     m_pGlow->SetTransparency( kRenderGlow, pev->rendercolor.x, pev->rendercolor.y, pev->rendercolor.z, pev->renderamt, pev->renderfx );
     m_pGlow->SetAttachment( edict(), 1 );
+
+    return true;
 }
 
 void CXenPLight::Precache()
@@ -181,7 +183,7 @@ class CXenHair : public CActAnimating
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void Think() override;
 };
@@ -197,7 +199,7 @@ void CXenHair::OnCreate()
     pev->model = MAKE_STRING( "models/hair.mdl" );
 }
 
-void CXenHair::Spawn()
+bool CXenHair::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) );
@@ -214,6 +216,8 @@ void CXenHair::Spawn()
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
     pev->nextthink = gpGlobals->time + RANDOM_FLOAT( 0.1, 0.4 ); // Load balance these a bit
+
+    return true;
 }
 
 void CXenHair::Think()
@@ -265,7 +269,7 @@ class CXenTree : public CActAnimating
 
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void Touch( CBaseEntity* pOther ) override;
     void Think() override;
@@ -301,7 +305,7 @@ void CXenTree::OnCreate()
     SetClassification( "alien_flora" );
 }
 
-void CXenTree::Spawn()
+bool CXenTree::Spawn()
 {
     Precache();
 
@@ -323,6 +327,8 @@ void CXenTree::Spawn()
     // Create the trigger
     m_pTrigger = CXenTreeTrigger::TriggerCreate( this, triggerPosition );
     m_pTrigger->SetSize( Vector( -24, -24, 0 ), Vector( 24, 24, 128 ) );
+
+    return true;
 }
 
 const char* CXenTree::pAttackHitSounds[] =
@@ -442,7 +448,7 @@ void CXenTree::UpdateOnRemove()
 class CXenSpore : public CActAnimating
 {
 public:
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void Touch( CBaseEntity* pOther ) override;
     void Think() override;
@@ -459,17 +465,17 @@ public:
 
 class CXenSporeSmall : public CXenSpore
 {
-    void Spawn() override;
+    bool Spawn() override;
 };
 
 class CXenSporeMed : public CXenSpore
 {
-    void Spawn() override;
+    bool Spawn() override;
 };
 
 class CXenSporeLarge : public CXenSpore
 {
-    void Spawn() override;
+    bool Spawn() override;
 
     static const Vector m_hullSizes[];
 };
@@ -512,17 +518,21 @@ LINK_ENTITY_TO_CLASS( xen_spore_medium, CXenSporeMed );
 LINK_ENTITY_TO_CLASS( xen_spore_large, CXenSporeLarge );
 LINK_ENTITY_TO_CLASS( xen_hull, CXenHull );
 
-void CXenSporeSmall::Spawn()
+bool CXenSporeSmall::Spawn()
 {
     pev->skin = 0;
     CXenSpore::Spawn();
     SetSize( Vector( -16, -16, 0 ), Vector( 16, 16, 64 ) );
+
+    return true;
 }
-void CXenSporeMed::Spawn()
+bool CXenSporeMed::Spawn()
 {
     pev->skin = 1;
     CXenSpore::Spawn();
     SetSize( Vector( -40, -40, 0 ), Vector( 40, 40, 120 ) );
+
+    return true;
 }
 
 // I just eyeballed these -- fill in hulls for the legs
@@ -535,7 +545,7 @@ const Vector CXenSporeLarge::m_hullSizes[] =
         Vector( -90, 60, 0 ),
 };
 
-void CXenSporeLarge::Spawn()
+bool CXenSporeLarge::Spawn()
 {
     pev->skin = 2;
     CXenSpore::Spawn();
@@ -548,9 +558,11 @@ void CXenSporeLarge::Spawn()
     // Rotate the leg hulls into position
     for( std::size_t i = 0; i < std::size( m_hullSizes ); i++ )
         CXenHull::CreateHull( this, Vector( -12, -12, 0 ), Vector( 12, 12, 120 ), ( m_hullSizes[i].x * forward ) + ( m_hullSizes[i].y * right ) );
+
+    return true;
 }
 
-void CXenSpore::Spawn()
+bool CXenSpore::Spawn()
 {
     Precache();
     if( FStringNull( pev->model ) )
@@ -572,6 +584,8 @@ void CXenSpore::Spawn()
     pev->framerate = RANDOM_FLOAT( 0.7, 1.4 );
     ResetSequenceInfo();
     pev->nextthink = gpGlobals->time + RANDOM_FLOAT( 0.1, 0.4 ); // Load balance these a bit
+
+    return true;
 }
 
 const char* CXenSpore::pModelNames[] =

@@ -87,7 +87,7 @@ class COFMedicAlly : public CBaseHGruntAlly
 public:
     void OnCreate() override;
 
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     void StartTask( const Task_t* pTask ) override;
@@ -289,7 +289,7 @@ void COFMedicAlly::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void COFMedicAlly::Spawn()
+bool COFMedicAlly::Spawn()
 {
     SpawnCore();
 
@@ -348,6 +348,8 @@ void COFMedicAlly::Spawn()
     }
 
     SetUse( &COFMedicAlly::HealerUse );
+
+    return true;
 }
 
 void COFMedicAlly::Precache()

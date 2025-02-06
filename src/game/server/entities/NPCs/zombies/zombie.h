@@ -25,7 +25,7 @@ class CZombie : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;

@@ -21,7 +21,7 @@ class CBloater : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
@@ -165,7 +165,7 @@ void CBloater::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CBloater::Spawn()
+bool CBloater::Spawn()
 {
     Precache();
 
@@ -181,6 +181,8 @@ void CBloater::Spawn()
     m_MonsterState = MONSTERSTATE_NONE;
 
     MonsterInit();
+
+    return true;
 }
 
 void CBloater::Precache()

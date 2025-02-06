@@ -2720,7 +2720,7 @@ pt_end:
     m_afButtonLast = pev->button;
 }
 
-void CBasePlayer::Spawn()
+bool CBasePlayer::Spawn()
 {
     m_bIsSpawning = true;
 
@@ -2862,6 +2862,8 @@ void CBasePlayer::Spawn()
         if( g_pGameRules->IsCTF() )
             Player_Menu();
     }
+
+    return true;
 }
 
 void CBasePlayer::Precache()
@@ -5115,7 +5117,7 @@ class CDeadHEV : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -5151,7 +5153,7 @@ bool CDeadHEV::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_hevsuit_dead, CDeadHEV );
 
-void CDeadHEV::Spawn()
+bool CDeadHEV::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -5172,6 +5174,8 @@ void CDeadHEV::Spawn()
     }
 
     MonsterInitDead();
+
+    return true;
 }
 
 /**
@@ -5179,11 +5183,11 @@ void CDeadHEV::Spawn()
  */
 class CInfoIntermission : public CPointEntity
 {
-    void Spawn() override;
+    bool Spawn() override;
     void Think() override;
 };
 
-void CInfoIntermission::Spawn()
+bool CInfoIntermission::Spawn()
 {
     SetOrigin( pev->origin );
     pev->solid = SOLID_NOT;
@@ -5191,6 +5195,8 @@ void CInfoIntermission::Spawn()
     pev->v_angle = g_vecZero;
 
     pev->nextthink = gpGlobals->time + 2; // let targets spawn!
+
+    return true;
 }
 
 void CInfoIntermission::Think()

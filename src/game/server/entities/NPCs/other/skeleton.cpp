@@ -18,7 +18,7 @@ class COFSkeleton : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -52,7 +52,7 @@ bool COFSkeleton::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_skeleton_dead, COFSkeleton );
 
-void COFSkeleton::Spawn()
+bool COFSkeleton::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -70,4 +70,6 @@ void COFSkeleton::Spawn()
     }
 
     MonsterInitDead();
+
+    return true;
 }

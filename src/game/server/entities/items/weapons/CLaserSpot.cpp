@@ -30,7 +30,7 @@ CLaserSpot* CLaserSpot::CreateSpot()
     return pSpot;
 }
 
-void CLaserSpot::Spawn()
+bool CLaserSpot::Spawn()
 {
     Precache();
     pev->movetype = MOVETYPE_NONE;
@@ -42,6 +42,8 @@ void CLaserSpot::Spawn()
 
     SetModel( "sprites/laserdot.spr" );
     SetOrigin( pev->origin );
+
+    return true;
 }
 
 void CLaserSpot::Suspend( float flSuspendTime )

@@ -42,7 +42,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
     void Precache() override;
-    void Spawn() override;
+    bool Spawn() override;
 
     void BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
     void BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
@@ -101,7 +101,7 @@ void CBlowerCannon::Precache()
     UTIL_PrecacheOther( "shock_beam" );
 }
 
-void CBlowerCannon::Spawn()
+bool CBlowerCannon::Spawn()
 {
     SetThink( nullptr );
     SetUse( &CBlowerCannon::BlowerCannonStart );
@@ -114,6 +114,8 @@ void CBlowerCannon::Spawn()
     }
 
     Precache();
+
+    return true;
 }
 
 void CBlowerCannon::BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
