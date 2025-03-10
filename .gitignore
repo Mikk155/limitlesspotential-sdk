@@ -3,6 +3,8 @@ build/*
 
 # CSharp
 src/FGDGenerator/FGD/*
+src/FGDGenerator/bin/*
+src/FGDGenerator/obj/*
 
 # Stuff
 stuff/*
