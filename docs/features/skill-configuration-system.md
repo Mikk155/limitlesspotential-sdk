@@ -28,11 +28,11 @@ See the `skill.json` file included with the SDK for a list of variables.
 
 ```jsonc
 {
-	"plr_crowbar": 10,
-	// HEALTH/SUIT CHARGE DISTRIBUTION
-	"suitcharger1": 75,
-	"suitcharger2": 50,
-	"suitcharger3": 35
+    "plr_crowbar": 10,
+    // HEALTH/SUIT CHARGE DISTRIBUTION
+    "suitcharger1": 75,
+    "suitcharger2": 50,
+    "suitcharger3": 35
 }
 ```
 
@@ -40,8 +40,9 @@ See the `skill.json` file included with the SDK for a list of variables.
 
 To use a skill variable in code, simply get the value like this:
 ```cpp
-GetSkillFloat("my_variable"sv)
+GetSkillFloat( "my_variable"sv, 100 )
 ```
+the second argument is not necesary but will be used if the system fails on getting the variable from the json.
 
 `GetSkillFloat` is a static `CBaseEntity` method that calls `g_Skill.GetValue`. It takes a `std::string_view`, so as to avoid performing unnecessary string length calculations each time the [`sv` literal](https://en.cppreference.com/w/cpp/string/basic_string_view/operator%22%22sv) is used.
 
@@ -172,5 +173,5 @@ or
 
 2. Use the variable in your code:
 ```cpp
-pev->health = GetSkillFloat("my_variable"sv);
+pev->health = GetSkillFloat("my_variable"sv, 10);
 ```
