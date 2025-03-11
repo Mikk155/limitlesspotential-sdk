@@ -427,7 +427,7 @@ class CMOFAssassinRepel : public CHGruntRepel
 public:
     void Precache() override;
     bool Spawn() override;
-    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 };
 
 BEGIN_DATAMAP( CMOFAssassinRepel )
@@ -448,7 +448,7 @@ bool CMOFAssassinRepel::Spawn()
     return true;
 }
 
-void CMOFAssassinRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMOFAssassinRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     CreateMonster( "monster_male_assassin" );
 }

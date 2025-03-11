@@ -73,7 +73,7 @@ public:
     void OnCreate() override;
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Blocked( CBaseEntity* pOther ) override;
     void Touch( CBaseEntity* pOther ) override;
     // Don't allow player to +use this.

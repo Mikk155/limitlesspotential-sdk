@@ -144,7 +144,7 @@ void COsprey::Precache()
     PrecacheCore( "models/osprey_tailgibs.mdl", "models/osprey_bodygibs.mdl", "models/osprey_enginegibs.mdl" );
 }
 
-void COsprey::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COsprey::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     pev->nextthink = gpGlobals->time + 0.1;
 }

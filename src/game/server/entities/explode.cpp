@@ -107,7 +107,7 @@ public:
     bool Spawn() override;
     void Smoke();
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool IsMonster() override { return false; }
 
     int m_iMagnitude;  // how large is the fireball? how much damage?
@@ -165,7 +165,7 @@ bool CEnvExplosion::Spawn()
     return true;
 }
 
-void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CEnvExplosion::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     TraceResult tr;
 
@@ -264,5 +264,5 @@ void ExplosionCreate( const Vector& center, const Vector& angles, CBaseEntity* o
         pExplosion->pev->spawnflags |= SF_ENVEXPLOSION_NODAMAGE;
 
     pExplosion->Spawn();
-    pExplosion->Use( nullptr, nullptr, USE_TOGGLE, 0 );
+    pExplosion->Use( nullptr, nullptr, USE_TOGGLE );
 }

@@ -35,7 +35,7 @@ public:
     /**
      *    @brief If connected to a table, then use the table controllers, else hit where the trigger is.
      */
-    void FieldUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void FieldUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     string_t m_iszXController;
     string_t m_iszYController;
@@ -107,7 +107,7 @@ void CFuncMortarField::Precache()
     PrecacheModel( "sprites/lgtning.spr" );
 }
 
-void CFuncMortarField::FieldUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncMortarField::FieldUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     Vector vecStart;
 

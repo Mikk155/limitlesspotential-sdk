@@ -122,7 +122,7 @@ void CTriggerTeleport::TeleportTouch( CBaseEntity* pOther )
 
     if( !FStringNull( m_FireOnTeleportTarget ) )
     {
-        FireTargets( STRING( m_FireOnTeleportTarget ), pOther, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( m_FireOnTeleportTarget ), pOther, this, USE_TOGGLE );
     }
 }
 
@@ -135,7 +135,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
 
-    void TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
 private:
     string_t m_FireOnTeleportTarget;
@@ -166,7 +166,7 @@ bool CPointTeleport::Spawn()
     return true;
 }
 
-void CPointTeleport::TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPointTeleport::TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( FStringNull( pev->target ) )
     {
@@ -193,6 +193,6 @@ void CPointTeleport::TeleportUse( CBaseEntity* pActivator, CBaseEntity* pCaller,
 
     if( !FStringNull( m_FireOnTeleportTarget ) )
     {
-        FireTargets( STRING( m_FireOnTeleportTarget ), pActivator, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( m_FireOnTeleportTarget ), pActivator, this, USE_TOGGLE );
     }
 }

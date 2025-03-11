@@ -246,7 +246,7 @@ public:
     /**
      *    @brief will make a monster angry at whomever activated it.
      */
-    void MonsterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void MonsterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     // overrideable Monster member functions
 
@@ -886,7 +886,7 @@ public:
     virtual void DeclineFollowing() {}
     void LimitFollowers( CBaseEntity* pPlayer, int maxFollowers );
 
-    void FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} );
 };
 
 template <typename Callback>

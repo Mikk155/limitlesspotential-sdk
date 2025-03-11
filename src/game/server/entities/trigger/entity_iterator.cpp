@@ -37,7 +37,7 @@ class CTriggerEntityIterator : public CBaseDelay
         void IteratorFind();
         void IteratorTrigger( CBaseEntity* pTarget );
         bool KeyValue( KeyValueData* pkvd ) override;
-        void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+        void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     private:
         string_t name_filter;
@@ -150,7 +150,7 @@ bool CTriggerEntityIterator :: KeyValue( KeyValueData* pkvd )
     return true;
 }
 
-void CTriggerEntityIterator :: Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerEntityIterator :: Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( run_mode == RUN_MODE_TOGGLE_ON_OFF )
     {
@@ -220,7 +220,7 @@ void CTriggerEntityIterator :: IteratorFind()
 
     if( !FStringNull( trigger_after_run ) )
     {
-        FireTargets( STRING( trigger_after_run ), this, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( trigger_after_run ), this, this, USE_TOGGLE );
     }
 }
 
@@ -238,10 +238,10 @@ void CTriggerEntityIterator :: IteratorTrigger( CBaseEntity* pTarget )
     {
         flNextDelayTrigger += delay_between_triggers;
         m_flDelay = flNextDelayTrigger;
-        SUB_UseTargets( pTarget, UseType, 0 );
+        SUB_UseTargets( pTarget, UseType );
     }
     else
     {
-        FireTargets( STRING( pev->target ), pTarget, this, UseType, 0 );
+        FireTargets( STRING( pev->target ), pTarget, this, UseType );
     }
 }

@@ -24,11 +24,11 @@ This file contains "stubs" of class member implementations so that we can predic
 #include "cbase.h"
 #include "nodes.h"
 
-    DEFINE_DUMMY_DATAMAP(CBaseDelay);
-    DEFINE_DUMMY_DATAMAP( CBaseAnimating );
-    DEFINE_DUMMY_DATAMAP(CBaseToggle);
-    DEFINE_DUMMY_DATAMAP(CBaseMonster);
-    DEFINE_DUMMY_DATAMAP(CBasePlayer);
+DEFINE_DUMMY_DATAMAP(CBaseDelay);
+DEFINE_DUMMY_DATAMAP( CBaseAnimating );
+DEFINE_DUMMY_DATAMAP(CBaseToggle);
+DEFINE_DUMMY_DATAMAP(CBaseMonster);
+DEFINE_DUMMY_DATAMAP(CBasePlayer);
 
 BEGIN_CUSTOM_SCHEDULES_NOBASE(CBaseMonster)
 END_CUSTOM_SCHEDULES();
@@ -103,7 +103,7 @@ void CGrenade::Precache() {}
 bool CGrenade::Spawn() { return true; }
 CGrenade* CGrenade::ShootTimed( CBaseEntity* owner, Vector vecStart, Vector vecVelocity, float time ) { return nullptr; }
 CGrenade* CGrenade::ShootContact( CBaseEntity* owner, Vector vecStart, Vector vecVelocity ) { return nullptr; }
-void CGrenade::DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) {}
+void CGrenade::DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value ) {}
 
 void UTIL_Remove( CBaseEntity* pEntity ) {}
 CBaseEntity* UTIL_FindEntityInSphere( CBaseEntity* pStartEntity, const Vector& vecCenter, float flRadius ) { return nullptr; }
@@ -129,7 +129,7 @@ CSound* CBaseMonster::PBestSound() { return nullptr; }
 CSound* CBaseMonster::PBestScent() { return nullptr; }
 float CBaseAnimating::StudioFrameAdvance( float flInterval ) { return 0.0; }
 void CBaseMonster::MonsterThink() {}
-void CBaseMonster::MonsterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) {}
+void CBaseMonster::MonsterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value ) {}
 int CBaseMonster::IgnoreConditions() { return 0; }
 void CBaseMonster::RouteClear() {}
 void CBaseMonster::RouteNew() {}

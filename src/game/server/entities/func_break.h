@@ -51,7 +51,7 @@ public:
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void BreakTouch( CBaseEntity* pOther );
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     /**
      *    @brief play shard sound when func_breakable takes damage.

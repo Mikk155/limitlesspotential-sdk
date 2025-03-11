@@ -27,7 +27,7 @@ class CLight : public CPointEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     int m_iStyle;
@@ -84,7 +84,7 @@ bool CLight::Spawn()
     return true;
 }
 
-void CLight::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLight::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( m_iStyle >= 32 )
     {

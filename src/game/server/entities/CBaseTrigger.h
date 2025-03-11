@@ -35,7 +35,7 @@ public:
     /**
      *    @brief If this is the USE function for a trigger, its state will toggle every time it's fired
      */
-    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void InitTrigger();
 

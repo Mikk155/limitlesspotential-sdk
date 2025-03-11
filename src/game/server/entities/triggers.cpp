@@ -163,7 +163,7 @@ void CAutoTrigger::Think()
 {
     if( FStringNull( m_globalstate ) || gGlobalState.EntityGetState( m_globalstate ) == GLOBAL_ON )
     {
-        SUB_UseTargets( this, triggerType, 0 );
+        SUB_UseTargets( this, triggerType );
         if( ( pev->spawnflags & SF_AUTO_FIREONCE ) != 0 )
             UTIL_Remove( this );
     }
@@ -179,7 +179,7 @@ class CTriggerRelay : public CBaseDelay
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
@@ -221,14 +221,14 @@ bool CTriggerRelay::Spawn()
     return true;
 }
 
-void CTriggerRelay::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerRelay::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
     {
         return;
     }
 
-    SUB_UseTargets( this, triggerType, 0 );
+    SUB_UseTargets( this, triggerType );
     if( ( pev->spawnflags & SF_RELAY_FIREONCE ) != 0 )
         UTIL_Remove( this );
 }
@@ -253,7 +253,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
     void ManagerThink();
-    void ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
 #if _DEBUG
     void ManagerReport();
@@ -381,7 +381,7 @@ void CMultiManager::ManagerThink()
     time = gpGlobals->time - m_startTime;
     while( m_index < m_cTargets && m_flTargetDelay[m_index] <= time )
     {
-        FireTargets( STRING( m_iTargetName[m_index] ), m_hActivator, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( m_iTargetName[m_index] ), m_hActivator, this, USE_TOGGLE );
         m_index++;
     }
 
@@ -416,7 +416,7 @@ CMultiManager* CMultiManager::Clone()
 }
 
 // The USE function builds the time table and starts the entity thinking.
-void CMultiManager::ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMultiManager::ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // In multiplayer games, clone the MM and execute in the clone (like a thread)
     // to allow multiple players to trigger the same multimanager
@@ -465,7 +465,7 @@ class CRenderFxManager : public CBaseEntity
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 LINK_ENTITY_TO_CLASS( env_render, CRenderFxManager );
@@ -477,7 +477,7 @@ bool CRenderFxManager::Spawn()
     return true;
 }
 
-void CRenderFxManager::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CRenderFxManager::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !FStringNull( pev->target ) )
     {
@@ -686,7 +686,7 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
             }
         }
 
-        SUB_UseTargets( pOther, USE_TOGGLE, 0 );
+        SUB_UseTargets( pOther, USE_TOGGLE );
         if( ( pev->spawnflags & SF_TRIGGER_HURT_TARGETONCE ) != 0 )
             pev->target = string_t::Null;
     }
@@ -891,7 +891,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
 
-    void CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
 private:
     int m_cTriggersLeft; // trigger_counter only, # of activations remaining
@@ -928,7 +928,7 @@ bool CTriggerCounter::Spawn()
     return true;
 }
 
-void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     m_cTriggersLeft--;
     m_hActivator = pActivator;
@@ -1127,7 +1127,7 @@ class CTriggerChangeTarget : public CBaseDelay
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
@@ -1157,7 +1157,7 @@ bool CTriggerChangeTarget::Spawn()
     return true;
 }
 
-void CTriggerChangeTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerChangeTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     CBaseEntity* pTarget = UTIL_FindEntityByTargetname( nullptr, STRING( pev->target ) );
 
@@ -1184,7 +1184,7 @@ class CTriggerCamera : public CBaseDelay
 public:
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void FollowTarget();
     void Move();
 
@@ -1266,7 +1266,7 @@ bool CTriggerCamera::KeyValue( KeyValueData* pkvd )
     return CBaseDelay::KeyValue( pkvd );
 }
 
-void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_state ) )
         return;
@@ -1390,7 +1390,7 @@ void CTriggerCamera::FollowTarget()
         player->m_hViewEntity = nullptr;
         player->m_bResetViewEntity = false;
 
-        SUB_UseTargets( this, USE_TOGGLE, 0 );
+        SUB_UseTargets( this, USE_TOGGLE );
         pev->avelocity = Vector( 0, 0, 0 );
         m_state = false;
         return;
@@ -1449,7 +1449,7 @@ void CTriggerCamera::Move()
         // Fire the passtarget if there is one
         if( !FStringNull( m_pentPath->pev->message ) )
         {
-            FireTargets( STRING( m_pentPath->pev->message ), this, this, USE_TOGGLE, 0 );
+            FireTargets( STRING( m_pentPath->pev->message ), this, this, USE_TOGGLE );
             if( FBitSet( m_pentPath->pev->spawnflags, SF_CORNER_FIREONCE ) )
                 m_pentPath->pev->message = string_t::Null;
         }
@@ -1490,7 +1490,7 @@ class CTriggerPlayerFreeze : public CBaseDelay
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 public:
     bool m_AllPlayers = false;
@@ -1515,7 +1515,7 @@ bool CTriggerPlayerFreeze::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CTriggerPlayerFreeze::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerPlayerFreeze::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     m_bUnFrozen = !m_bUnFrozen;
 
@@ -1782,7 +1782,7 @@ void COFTriggerGeneWormHit::GeneWormHitTouch( CBaseEntity* pOther )
             if( !FStringNull( pev->target ) &&
                 ( ( pev->spawnflags & SF_GENEWORM_HIT_FIRE_CLIENT_ONLY ) == 0 || pOther->IsPlayer() ) )
             {
-                SUB_UseTargets( pOther, USE_TOGGLE, 0 );
+                SUB_UseTargets( pOther, USE_TOGGLE );
 
                 if( ( pev->spawnflags & SF_GENEWORM_HIT_TARGET_ONCE ) != 0 )
                     pev->target = string_t::Null;
@@ -1794,7 +1794,7 @@ void COFTriggerGeneWormHit::GeneWormHitTouch( CBaseEntity* pOther )
 class CTriggerCTFGeneric : public CBaseTrigger
 {
 public:
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     bool Spawn() override;
 
@@ -1812,7 +1812,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( trigger_ctfgeneric, CTriggerCTFGeneric );
 
-void CTriggerCTFGeneric::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerCTFGeneric::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     Touch( nullptr );
 }
@@ -1850,7 +1850,7 @@ void CTriggerCTFGeneric::Touch( CBaseEntity* pOther )
         }
     }
 
-    SUB_UseTargets( this, triggerType, 0 );
+    SUB_UseTargets( this, triggerType );
 
     // TODO: constrain team_no input to valid values
     if( 0 != team_score )

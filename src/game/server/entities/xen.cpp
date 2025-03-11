@@ -167,14 +167,14 @@ void CXenPLight::UpdateOnRemove()
 
 void CXenPLight::LightOn()
 {
-    SUB_UseTargets( this, USE_ON, 0 );
+    SUB_UseTargets( this, USE_ON );
     if( m_pGlow )
         m_pGlow->pev->effects &= ~EF_NODRAW;
 }
 
 void CXenPLight::LightOff()
 {
-    SUB_UseTargets( this, USE_OFF, 0 );
+    SUB_UseTargets( this, USE_OFF );
     if( m_pGlow )
         m_pGlow->pev->effects |= EF_NODRAW;
 }

@@ -55,7 +55,7 @@ public:
     }
 
     void Cycle();
-    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void Start();
     void DieThink();
 
@@ -734,7 +734,7 @@ void CTentacle::Cycle()
     }
 }
 
-void CTentacle::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTentacle::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // AILogger->debug("{} triggered {}", STRING(pev->targetname), useType);
     switch ( useType )

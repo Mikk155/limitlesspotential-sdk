@@ -106,7 +106,7 @@ public:
 
     void HealOff();
 
-    void HealerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void HealerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} );
 
     void HealerActivate( CBaseMonster* pTarget );
 
@@ -650,7 +650,7 @@ void COFMedicAlly::MonsterThink()
         auto player = m_PlayerToFollow.Get();
         m_PlayerToFollow = nullptr;
 
-        FollowerUse( player, player, USE_TOGGLE, 0 );
+        FollowerUse( player, player, USE_TOGGLE );
     }
 
     CBaseHGruntAlly::MonsterThink();
@@ -762,7 +762,7 @@ void COFMedicAlly::HealerActivate( CBaseMonster* pTarget )
     }
 }
 
-void COFMedicAlly::HealerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFMedicAlly::HealerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( m_useTime > gpGlobals->time || m_flLastUseTime > gpGlobals->time || pActivator == m_hEnemy )
     {

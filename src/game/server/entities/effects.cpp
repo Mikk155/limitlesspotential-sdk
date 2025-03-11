@@ -39,7 +39,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
     void FizzThink();
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
@@ -95,7 +95,7 @@ void CBubbling::Precache()
     m_bubbleModel = PrecacheModel( "sprites/bubble.spr" ); // Precache bubble sprite
 }
 
-void CBubbling::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBubbling::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ShouldToggle( useType, m_state ) )
         m_state = !m_state;
@@ -310,7 +310,7 @@ void CBeam::TriggerTouch( CBaseEntity* pOther )
         if( pev->owner )
         {
             CBaseEntity* pOwner = CBaseEntity::Instance( pev->owner );
-            pOwner->Use( pOther, this, USE_TOGGLE, 0 );
+            pOwner->Use( pOther, this, USE_TOGGLE );
         }
         CBaseEntity::Logger->debug( "Firing targets!!!" );
     }
@@ -362,8 +362,8 @@ public:
     void RandomArea();
     void RandomPoint( Vector& vecSrc );
     void Zap( const Vector& vecSrc, const Vector& vecDest );
-    void StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
-    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
+    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     inline bool ServerSide()
     {
@@ -546,7 +546,7 @@ bool CLightning::KeyValue( KeyValueData* pkvd )
     return CBeam::KeyValue( pkvd );
 }
 
-void CLightning::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLightning::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_active ) )
         return;
@@ -569,7 +569,7 @@ void CLightning::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     }
 }
 
-void CLightning::StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLightning::StrikeUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_active ) )
         return;
@@ -1020,7 +1020,7 @@ void CLaser::TurnOn()
     pev->nextthink = gpGlobals->time;
 }
 
-void CLaser::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLaser::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     bool active = IsOn();
 
@@ -1276,7 +1276,7 @@ void CSprite::TurnOn()
     pev->frame = 0;
 }
 
-void CSprite::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CSprite::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     bool on = pev->effects != EF_NODRAW;
     if( ShouldToggle( useType, on ) )
@@ -1302,7 +1302,7 @@ public:
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void ShootThink();
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     virtual CGib* CreateGib();
 
@@ -1366,7 +1366,7 @@ bool CGibShooter::KeyValue( KeyValueData* pkvd )
     return CBaseDelay::KeyValue( pkvd );
 }
 
-void CGibShooter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CGibShooter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &CGibShooter::ShootThink );
     pev->nextthink = gpGlobals->time;
@@ -1552,7 +1552,7 @@ class CBlood : public CPointEntity
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     inline int Color() { return pev->impulse; }
@@ -1637,7 +1637,7 @@ Vector CBlood::BloodPosition( CBaseEntity* pActivator )
     return pev->origin;
 }
 
-void CBlood::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBlood::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ( pev->spawnflags & SF_BLOOD_STREAM ) != 0 )
         UTIL_BloodStream( BloodPosition( pActivator ), Direction(), ( Color() == BLOOD_COLOR_RED ) ? 70 : Color(), BloodAmount() );
@@ -1663,7 +1663,7 @@ class CShake : public CPointEntity
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     inline float Amplitude() { return pev->scale; }
@@ -1732,7 +1732,7 @@ bool CShake::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CShake::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CShake::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     UTIL_ScreenShake( pev->origin, Amplitude(), Frequency(), Duration(), Radius() );
 }
@@ -1741,7 +1741,7 @@ class CFade : public CPointEntity
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     inline float Duration() { return pev->dmg_take; }
@@ -1787,7 +1787,7 @@ bool CFade::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CFade::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFade::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     int fadeFlags = 0;
 
@@ -1808,7 +1808,7 @@ void CFade::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType
     {
         UTIL_ScreenFadeAll( pev->rendercolor, Duration(), HoldTime(), pev->renderamt, fadeFlags );
     }
-    SUB_UseTargets( this, USE_TOGGLE, 0 );
+    SUB_UseTargets( this, USE_TOGGLE );
 }
 
 class CMessage : public CPointEntity
@@ -1816,7 +1816,7 @@ class CMessage : public CPointEntity
 public:
     bool Spawn() override;
     void Precache() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
 private:
@@ -1888,7 +1888,7 @@ bool CMessage::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CMessage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMessage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ( pev->spawnflags & SF_MESSAGE_ALL ) != 0 )
         UTIL_ShowMessageAll( STRING( pev->message ) );
@@ -1910,7 +1910,7 @@ void CMessage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
     if( ( pev->spawnflags & SF_MESSAGE_ONCE ) != 0 )
         UTIL_Remove( this );
 
-    SUB_UseTargets( this, USE_TOGGLE, 0 );
+    SUB_UseTargets( this, USE_TOGGLE );
 }
 
 /**
@@ -1921,7 +1921,7 @@ class CEnvFunnel : public CBaseDelay
 public:
     bool Spawn() override;
     void Precache() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int m_iSprite; // Don't save, precache
 };
@@ -1933,7 +1933,7 @@ void CEnvFunnel::Precache()
 
 LINK_ENTITY_TO_CLASS( env_funnel, CEnvFunnel );
 
-void CEnvFunnel::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CEnvFunnel::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
     WRITE_BYTE( TE_LARGEFUNNEL );
@@ -1977,7 +1977,7 @@ class CEnvBeverage : public CBaseDelay
 public:
     bool Spawn() override;
     void Precache() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 void CEnvBeverage::Precache()
@@ -1988,7 +1988,7 @@ void CEnvBeverage::Precache()
 
 LINK_ENTITY_TO_CLASS( env_beverage, CEnvBeverage );
 
-void CEnvBeverage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CEnvBeverage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( pev->frags != 0 || pev->health <= 0 )
     {
@@ -2134,7 +2134,7 @@ public:
 
     void UpdateOnRemove() override;
 
-    void WarpBallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void WarpBallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void BallThink();
 
@@ -2253,7 +2253,7 @@ void CWarpBall::UpdateOnRemove()
     CBaseEntity::UpdateOnRemove();
 }
 
-void CWarpBall::WarpBallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CWarpBall::WarpBallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !m_fPlaying )
     {
@@ -2332,7 +2332,7 @@ void CWarpBall::WarpBallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
             m_fDamageApplied = false;
         }
 
-        SUB_UseTargets( this, USE_TOGGLE, 0 );
+        SUB_UseTargets( this, USE_TOGGLE );
 
         UTIL_ScreenShake( pev->origin, 4, 100, 2, 1000 );
 

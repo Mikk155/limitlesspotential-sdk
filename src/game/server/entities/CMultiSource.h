@@ -27,7 +27,7 @@ class CMultiSource : public CPointEntity
 public:
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     int ObjectCaps() override { return ( CPointEntity::ObjectCaps() | FCAP_MASTER ); }
     bool IsTriggered( CBaseEntity* pActivator ) override;
     void Register();

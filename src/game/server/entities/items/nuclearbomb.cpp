@@ -192,7 +192,7 @@ public:
     void Precache() override;
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     COFNuclearBombTimer* m_pTimer;
     COFNuclearBombButton* m_pButton;
@@ -287,7 +287,7 @@ bool COFNuclearBomb::Spawn()
     return true;
 }
 
-void COFNuclearBomb::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFNuclearBomb::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ( m_flWait != -1.0 || m_iPushCount <= 0 ) && m_flWait <= gpGlobals->time - m_flLastPush && ShouldToggle( useType, m_fOn ) )
     {
@@ -302,7 +302,7 @@ void COFNuclearBomb::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
             EmitSound( CHAN_VOICE, "buttons/button6.wav", VOL_NORM, ATTN_NORM );
         }
 
-        SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
+        SUB_UseTargets( pActivator, USE_TOGGLE );
 
         if( m_pButton )
         {

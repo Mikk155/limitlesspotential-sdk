@@ -95,7 +95,7 @@ public:
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void StaticDecal();
-    void TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 };
 
 BEGIN_DATAMAP( CDecal )
@@ -130,7 +130,7 @@ bool CDecal::Spawn()
     return true;
 }
 
-void CDecal::TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CDecal::TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // this is set up as a USE function for infodecals that have targetnames, so that the
     // decal doesn't get applied until it is fired. (usually by a scripted sequence)

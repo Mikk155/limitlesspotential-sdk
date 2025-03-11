@@ -282,7 +282,7 @@ public:
 
     bool Spawn() override;
     void Precache() override;
-    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     int m_iSpriteTexture; // Don't save, precache
 
     int m_iGruntHead;

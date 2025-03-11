@@ -120,7 +120,7 @@ public:
      *    If the ambient is a looping sound, mark sound as active (m_fActive) if it's playing, innactive if not.
      *    If the sound is not a looping sound, never mark it as active.
      */
-    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     /**
      *    @brief Think at 5hz if we are dynamically modifying pitch or volume of the playing sound.
@@ -528,7 +528,7 @@ void CAmbientGeneric::InitModulationParms()
                                       // if we intend to pitch shift later!
 }
 
-void CAmbientGeneric::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CAmbientGeneric::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     const char* szSoundFile = STRING( pev->message );
     float fraction;
@@ -542,8 +542,7 @@ void CAmbientGeneric::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, 
 
     if( useType == USE_SET && m_fActive ) // Momentary buttons will pass down a float in here
     {
-
-        fraction = value;
+        fraction = value.m_float;
 
         if( fraction > 1.0 )
             fraction = 1.0;
@@ -849,7 +848,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
-    void TriggerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void TriggerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void RadiusThink();
 
@@ -951,7 +950,7 @@ bool CAmbientMusic::Spawn()
     return true;
 }
 
-void CAmbientMusic::TriggerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CAmbientMusic::TriggerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     const std::string command = GetCommand();
 
@@ -1395,7 +1394,7 @@ public:
     /**
      *    @brief if an announcement is pending, cancel it. If no announcement is pending, start one.
      */
-    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void SpeakerThink();
 
@@ -1512,7 +1511,7 @@ void CSpeaker::SpeakerThink()
     return;
 }
 
-void CSpeaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CSpeaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     bool fActive = ( pev->nextthink > 0.0 );
 

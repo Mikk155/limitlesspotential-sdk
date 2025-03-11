@@ -37,7 +37,7 @@ class CEnvGlobal : public CPointEntity
 public:
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     string_t m_globalstate;
     int m_triggermode;
@@ -88,7 +88,7 @@ bool CEnvGlobal::Spawn()
     return true;
 }
 
-void CEnvGlobal::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CEnvGlobal::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     GLOBALESTATE oldState = gGlobalState.EntityGetState( m_globalstate );
     GLOBALESTATE newState;
@@ -160,7 +160,7 @@ bool CMultiSource::Spawn()
     return true;
 }
 
-void CMultiSource::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMultiSource::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     int i = 0;
 
@@ -187,7 +187,7 @@ void CMultiSource::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
         USE_TYPE targetUseType = USE_TOGGLE;
         if( !FStringNull( m_globalstate ) )
             targetUseType = USE_ON;
-        SUB_UseTargets( nullptr, targetUseType, 0 );
+        SUB_UseTargets( nullptr, targetUseType );
     }
 }
 
@@ -355,7 +355,7 @@ bool CBaseButton::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
 
         // Toggle buttons fire when they get back to their "home" position
         if( ( pev->spawnflags & SF_BUTTON_TOGGLE ) == 0 )
-            SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
+            SUB_UseTargets( m_hActivator, USE_TOGGLE );
         ButtonReturn();
     }
     else // code == BUTTON_ACTIVATE
@@ -471,7 +471,7 @@ void CBaseButton::ButtonSpark()
     DoSpark( this, pev->absmin );
 }
 
-void CBaseButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
     // UNDONE: Should this use ButtonResponseToTouch() too?
@@ -538,7 +538,7 @@ void CBaseButton::ButtonTouch( CBaseEntity* pOther )
     if( code == BUTTON_RETURN )
     {
         EmitSound( CHAN_VOICE, STRING( m_sounds ), 1, ATTN_NORM );
-        SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
+        SUB_UseTargets( m_hActivator, USE_TOGGLE );
         ButtonReturn();
     }
     else // code == BUTTON_ACTIVATE
@@ -601,7 +601,7 @@ void CBaseButton::TriggerAndWait()
     pev->frame = 1; // use alternate textures
 
 
-    SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
+    SUB_UseTargets( m_hActivator, USE_TOGGLE );
 }
 
 void CBaseButton::ButtonReturn()
@@ -627,7 +627,7 @@ void CBaseButton::ButtonBackHome()
     {
         // EmitSound(CHAN_VOICE, STRING(m_sounds), 1, ATTN_NORM);
 
-        SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
+        SUB_UseTargets( m_hActivator, USE_TOGGLE );
     }
 
 
@@ -638,7 +638,7 @@ void CBaseButton::ButtonBackHome()
             if( !target->ClassnameIs( "multisource" ) )
                 continue;
 
-            target->Use( m_hActivator, this, USE_TOGGLE, 0 );
+            target->Use( m_hActivator, this, USE_TOGGLE );
         }
     }
 
@@ -756,7 +756,7 @@ public:
             return flags;
         return flags | FCAP_CONTINUOUS_USE;
     }
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Off();
     void Return();
     void UpdateSelf( float value );
@@ -852,7 +852,7 @@ void CMomentaryRotButton::PlaySound()
 // BUGBUG: This design causes a latentcy.  When the button is retriggered, the first impulse
 // will send the target in the wrong direction because the parameter is calculated based on the
 // current, not future position.
-void CMomentaryRotButton::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMomentaryRotButton::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     pev->ideal_yaw = CBaseToggle::AxisDelta( pev->spawnflags, pev->angles, m_start ) / m_flMoveDistance;
 
@@ -924,7 +924,7 @@ void CMomentaryRotButton::UpdateTarget( float value )
     {
         for( auto target : UTIL_FindEntitiesByTargetname( STRING( pev->target ) ) )
         {
-            target->Use( this, this, USE_SET, value );
+            target->Use( this, this, USE_SET, UseValue(value) );
         }
     }
 }
@@ -979,8 +979,8 @@ public:
     bool Spawn() override;
     void Precache() override;
     void SparkThink();
-    void SparkStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
-    void SparkStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void SparkStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
+    void SparkStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     bool KeyValue( KeyValueData* pkvd ) override;
 
     float m_flDelay;
@@ -1051,14 +1051,14 @@ void CEnvSpark::SparkThink()
     DoSpark( this, pev->origin );
 }
 
-void CEnvSpark::SparkStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CEnvSpark::SparkStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetUse( &CEnvSpark::SparkStop );
     SetThink( &CEnvSpark::SparkThink );
     pev->nextthink = gpGlobals->time + ( 0.1 + RANDOM_FLOAT( 0, m_flDelay ) );
 }
 
-void CEnvSpark::SparkStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CEnvSpark::SparkStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetUse( &CEnvSpark::SparkStart );
     SetThink( nullptr );
@@ -1071,7 +1071,7 @@ class CButtonTarget : public CBaseEntity
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
     int ObjectCaps() override;
 };
@@ -1091,15 +1091,15 @@ bool CButtonTarget::Spawn()
     return true;
 }
 
-void CButtonTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CButtonTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, 0 != pev->frame ) )
         return;
     pev->frame = 1 - pev->frame;
     if( 0 != pev->frame )
-        SUB_UseTargets( pActivator, USE_ON, 0 );
+        SUB_UseTargets( pActivator, USE_ON );
     else
-        SUB_UseTargets( pActivator, USE_OFF, 0 );
+        SUB_UseTargets( pActivator, USE_OFF );
 }
 
 int CButtonTarget::ObjectCaps()
@@ -1114,7 +1114,7 @@ int CButtonTarget::ObjectCaps()
 
 bool CButtonTarget::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-    Use( Instance( attacker ), this, USE_TOGGLE, 0 );
+    Use( Instance( attacker ), this, USE_TOGGLE );
 
     return true;
 }

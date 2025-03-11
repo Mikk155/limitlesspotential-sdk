@@ -40,7 +40,7 @@ public:
     bool Spawn() override;
     void Activate() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     void Off();
@@ -157,7 +157,7 @@ void CBaseCharger::Activate()
     {
         if( m_Juice != 0 && !FStringNull( m_FireOnRecharge ) )
         {
-            FireTargets( STRING( m_FireOnRecharge ), this, this, USE_ON, 0 );
+            FireTargets( STRING( m_FireOnRecharge ), this, this, USE_ON );
         }
     }
 
@@ -168,7 +168,7 @@ void CBaseCharger::Activate()
     m_FireOnSpawn = false;
 }
 
-void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // if it's not a player, ignore
     auto player = ToBasePlayer( pActivator );
@@ -263,7 +263,7 @@ void CBaseCharger::Recharge()
 
         if( !FStringNull( m_FireOnRecharge ) )
         {
-            FireTargets( STRING( m_FireOnRecharge ), this, this, USE_ON, 0 );
+            FireTargets( STRING( m_FireOnRecharge ), this, this, USE_ON );
         }
     }
 }
@@ -278,7 +278,7 @@ void CBaseCharger::CheckIfOutOfCharge( bool fireTargets )
         {
             if( fireTargets && !FStringNull( m_FireOnEmpty ) )
             {
-                FireTargets( STRING( m_FireOnEmpty ), this, this, USE_OFF, 0 );
+                FireTargets( STRING( m_FireOnEmpty ), this, this, USE_OFF );
             }
 
             pev->frame = 1;

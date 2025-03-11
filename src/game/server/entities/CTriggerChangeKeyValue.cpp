@@ -32,7 +32,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     string_t m_changeTargetName;
@@ -87,7 +87,7 @@ bool CTriggerChangeKeyValue::Spawn()
     return true;
 }
 
-void CTriggerChangeKeyValue::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerChangeKeyValue::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     for( auto target : UTIL_FindEntitiesByTargetname( STRING( pev->target ) ) )
     {

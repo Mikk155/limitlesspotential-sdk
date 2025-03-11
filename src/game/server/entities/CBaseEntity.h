@@ -62,6 +62,38 @@ enum USE_TYPE : int
     USE_TOGGLE = 3
 };
 
+class UseValue
+{
+    public:
+        int m_int;
+        float m_float;
+        double m_double;
+        edict_t* m_edict;
+        const char* m_char;
+        Vector m_Vector;
+        CBaseEntity* m_entity;
+
+    UseValue() = default;
+
+    explicit UseValue( int value ) 
+        : m_int( value ), m_float( static_cast<float>( value ) ), m_double(static_cast<double>( value ) ) { }
+
+    explicit UseValue( float value) 
+        : m_int( static_cast<int>( std::round(value) ) ),
+          m_float( value ), 
+          m_double( static_cast<double>( value ) ) { }
+
+    explicit UseValue( double value ) 
+        : m_int( static_cast<int>( std::round( value ) ) ),
+          m_float( static_cast<float>( value ) ), 
+          m_double( value ) { }
+
+    explicit UseValue( edict_t* value ) : m_edict( value ) { }
+    explicit UseValue( CBaseEntity* value ) : m_entity( value ) { }
+    explicit UseValue( const char* value ) : m_char( value ) { }
+    explicit UseValue( Vector value ) : m_Vector( value ) { }
+};
+
 // people gib if their health is <= this at the time of death
 #define GIB_HEALTH_VALUE -30
 
@@ -95,7 +127,7 @@ enum USE_TYPE : int
 // TODO: 4 is used as a magic number in FireBullets(Player) above. Refactor.
 #define TRACER_FREQ 4 // Tracers fire every 4 bullets
 
-void FireTargets( const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* caller, USE_TYPE use_type, UseValue value = {} );
 
 /**
  *    @brief Base Entity. All entity types derive from this
@@ -355,7 +387,7 @@ public:
         if( m_pfnTouch )
             ( this->*m_pfnTouch )( pOther );
     }
-    virtual void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+    virtual void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} )
     {
         if( m_pfnUse )
             ( this->*m_pfnUse )( pActivator, pCaller, useType, value );
@@ -399,7 +431,7 @@ public:
      */
     void SUB_StartFadeOut();
     void SUB_FadeOut();
-    void SUB_CallUseToggle() { this->Use( this, this, USE_TOGGLE, 0 ); }
+    void SUB_CallUseToggle() { this->Use( this, this, USE_TOGGLE, UseValue(0) ); }
     bool ShouldToggle( USE_TYPE useType, bool currentState );
 
     /**
@@ -426,7 +458,7 @@ public:
      *    Search for (string)targetname in all entities that
      *    match (string)self.target and call their .use function (if they have one)
      */
-    void SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, float value );
+    void SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, UseValue value = {} );
     // Do the bounding boxes of these two intersect?
     bool Intersects( CBaseEntity* pOther );
     void MakeDormant();

@@ -46,7 +46,7 @@ public:
 
     void SetPrevious( CPathTrack* pprevious );
     void Link();
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     CPathTrack* ValidPath( CPathTrack* ppath, bool testFlag ); // Returns ppath if enabled, nullptr otherwise
     void Project( CPathTrack* pstart, CPathTrack* pend, Vector* origin, float dist );
@@ -80,7 +80,7 @@ public:
     void Precache() override;
 
     void Blocked( CBaseEntity* pOther ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     void Next();

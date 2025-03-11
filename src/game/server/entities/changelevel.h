@@ -34,7 +34,7 @@ public:
     /**
      *    @brief allows level transitions to be triggered by buttons, etc.
      */
-    void UseChangeLevel( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void UseChangeLevel( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void TouchChangeLevel( CBaseEntity* pOther );
     void ChangeLevelNow( CBaseEntity* pActivator );

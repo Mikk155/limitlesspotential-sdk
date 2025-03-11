@@ -98,7 +98,7 @@ void ClientDisconnect( edict_t* pEntity )
 
         if( pPlayer->m_pTank != nullptr )
         {
-            pPlayer->m_pTank->Use( pPlayer, pPlayer, USE_OFF, 0 );
+            pPlayer->m_pTank->Use( pPlayer, pPlayer, USE_OFF );
             pPlayer->m_pTank = nullptr;
         }
     }
@@ -776,7 +776,7 @@ void SV_CreateClientCommands()
                     value = atof( args.Argument( 3 ) );
                 }
 
-                FireTargets( args.Argument( 1 ), player, player, useType, value );
+                FireTargets( args.Argument( 1 ), player, player, useType, UseValue(value) );
             }
             else
             {

@@ -32,6 +32,6 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
     // common member functions
-    void SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, float value );
+    void SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, UseValue value = {} );
     void DelayThink();
 };

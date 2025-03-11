@@ -44,8 +44,8 @@ public:
     void Precache() override;
     bool Spawn() override;
 
-    void BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
-    void BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
+    void BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void BlowerCannonThink();
 
     // TODO: probably shadowing CBaseDelay
@@ -118,7 +118,7 @@ bool CBlowerCannon::Spawn()
     return true;
 }
 
-void CBlowerCannon::BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBlowerCannon::BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetUse( &CBlowerCannon::BlowerCannonStop );
     SetThink( &CBlowerCannon::BlowerCannonThink );
@@ -126,7 +126,7 @@ void CBlowerCannon::BlowerCannonStart( CBaseEntity* pActivator, CBaseEntity* pCa
     pev->nextthink = gpGlobals->time + m_flDelay;
 }
 
-void CBlowerCannon::BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBlowerCannon::BlowerCannonStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetUse( &CBlowerCannon::BlowerCannonStart );
     SetThink( nullptr );

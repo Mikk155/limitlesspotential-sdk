@@ -138,7 +138,7 @@ public:
     /**
      *    @brief Start bringing platform down.
      */
-    void PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void CallGoDown() { GoDown(); }
     void CallHitTop() { HitTop(); }
@@ -307,7 +307,7 @@ void CPlatTrigger::Touch( CBaseEntity* pOther )
         platform->pev->nextthink = platform->pev->ltime + 1; // delay going down
 }
 
-void CFuncPlat::PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncPlat::PlatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( IsTogglePlat() )
     {
@@ -503,7 +503,7 @@ public:
     void OverrideReset() override;
 
     void Blocked( CBaseEntity* pOther ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 
     void Wait();
@@ -539,7 +539,7 @@ void CFuncTrain::Blocked( CBaseEntity* pOther )
     pOther->TakeDamage( this, this, pev->dmg, DMG_CRUSH );
 }
 
-void CFuncTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER ) != 0 )
     {
@@ -565,7 +565,7 @@ void CFuncTrain::Wait()
     // Fire the pass target if there is one
     if( !FStringNull( m_CurrentTarget->pev->message ) )
     {
-        FireTargets( STRING( m_CurrentTarget->pev->message ), this, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( m_CurrentTarget->pev->message ), this, this, USE_TOGGLE );
         if( FBitSet( m_CurrentTarget->pev->spawnflags, SF_CORNER_FIREONCE ) )
             m_CurrentTarget->pev->message = string_t::Null;
     }
@@ -743,7 +743,7 @@ public:
     void OverrideReset() override;
 
     void Blocked( CBaseEntity* pOther ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 
     void Wait();
@@ -836,7 +836,7 @@ void CSpriteTrain::Blocked( CBaseEntity* pOther )
     pOther->TakeDamage( this, this, pev->dmg, DMG_CRUSH );
 }
 
-void CSpriteTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CSpriteTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER ) != 0 )
     {
@@ -864,7 +864,7 @@ void CSpriteTrain::Wait()
     // Fire the pass target if there is one
     if( !FStringNull( m_CurrentTarget->pev->message ) )
     {
-        FireTargets( STRING( m_CurrentTarget->pev->message ), this, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( m_CurrentTarget->pev->message ), this, this, USE_TOGGLE );
         if( FBitSet( m_CurrentTarget->pev->spawnflags, SF_CORNER_FIREONCE ) )
             m_CurrentTarget->pev->message = string_t::Null;
     }
@@ -1176,7 +1176,7 @@ void CFuncTrackTrain::Blocked( CBaseEntity* pOther )
     pOther->TakeDamage( this, this, pev->dmg, DMG_CRUSH );
 }
 
-void CFuncTrackTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncTrackTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( useType != USE_SET )
     {
@@ -1200,7 +1200,7 @@ void CFuncTrackTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
     }
     else
     {
-        float delta = value;
+        float delta = value.m_float;
 
         delta = ( (int)( pev->speed * 4 ) / (int)m_speed ) * 0.25 + 0.25 * delta;
         if( delta > 1 )
@@ -1365,7 +1365,7 @@ void CFuncTrackTrain::Next()
             // Fire the pass target if there is one
             if( !FStringNull( pFire->pev->message ) )
             {
-                FireTargets( STRING( pFire->pev->message ), this, this, USE_TOGGLE, 0 );
+                FireTargets( STRING( pFire->pev->message ), this, this, USE_TOGGLE );
                 if( FBitSet( pFire->pev->spawnflags, SF_PATH_FIREONCE ) )
                     pFire->pev->message = string_t::Null;
             }
@@ -1456,7 +1456,7 @@ void CFuncTrackTrain::DeadEnd()
     {
         Logger->trace( "TRAIN({}): Dead end at ", STRING( pev->targetname ), STRING( pTrack->pev->targetname ) );
         if( !FStringNull( pTrack->pev->netname ) )
-            FireTargets( STRING( pTrack->pev->netname ), this, this, USE_TOGGLE, 0 );
+            FireTargets( STRING( pTrack->pev->netname ), this, this, USE_TOGGLE );
     }
     else
         Logger->trace( "TRAIN({}): Dead end", STRING( pev->targetname ) );
@@ -1735,7 +1735,7 @@ public:
     void GoDown() override;
 
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Find();
     TRAIN_CODE EvaluateTrain( CPathTrack* pcurrent );
     void UpdateTrain( Vector& dest );
@@ -2029,7 +2029,7 @@ void CFuncTrackChange::UpdateAutoTargets( int toggleState )
         SetBits( m_trackBottom->pev->spawnflags, SF_PATH_DISABLED );
 }
 
-void CFuncTrackChange::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncTrackChange::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( m_toggle_state != TS_AT_TOP && m_toggle_state != TS_AT_BOTTOM )
         return;
@@ -2094,7 +2094,7 @@ void CFuncTrackChange::HitTop()
 class CFuncTrackAuto : public CFuncTrackChange
 {
 public:
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void UpdateAutoTargets( int toggleState ) override;
 };
 
@@ -2121,14 +2121,14 @@ void CFuncTrackAuto::UpdateAutoTargets( int toggleState )
     {
         ClearBits( pTarget->pev->spawnflags, SF_PATH_DISABLED );
         if( m_code == TRAIN_FOLLOWING && m_train && m_train->pev->speed == 0 )
-            m_train->Use( this, this, USE_ON, 0 );
+            m_train->Use( this, this, USE_ON );
     }
 
     if( pNextTarget )
         SetBits( pNextTarget->pev->spawnflags, SF_PATH_DISABLED );
 }
 
-void CFuncTrackAuto::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncTrackAuto::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     CPathTrack* pTarget;
 
@@ -2196,7 +2196,7 @@ public:
 
     int BloodColor() override { return DONT_BLEED; }
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     Vector BodyTarget( const Vector& posSrc ) override { return pev->origin; }
 
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -2265,7 +2265,7 @@ void CGunTarget::Activate()
 
 void CGunTarget::Start()
 {
-    Use( this, this, USE_ON, 0 );
+    Use( this, this, USE_ON );
 }
 
 void CGunTarget::Next()
@@ -2297,7 +2297,7 @@ void CGunTarget::Wait()
     // Fire the pass target if there is one
     if( !FStringNull( pTarget->pev->message ) )
     {
-        FireTargets( STRING( pTarget->pev->message ), this, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( pTarget->pev->message ), this, this, USE_TOGGLE );
         if( FBitSet( pTarget->pev->spawnflags, SF_CORNER_FIREONCE ) )
             pTarget->pev->message = string_t::Null;
     }
@@ -2333,13 +2333,13 @@ bool CGunTarget::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, floa
             pev->health = 0;
             Stop();
             if( !FStringNull( pev->message ) )
-                FireTargets( STRING( pev->message ), this, this, USE_TOGGLE, 0 );
+                FireTargets( STRING( pev->message ), this, this, USE_TOGGLE );
         }
     }
     return false;
 }
 
-void CGunTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CGunTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_on ) )
         return;

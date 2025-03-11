@@ -151,7 +151,7 @@ void CElectrifiedWire::Think()
     BaseClass::Think();
 }
 
-void CElectrifiedWire::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float flValue )
+void CElectrifiedWire::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue flValue )
 {
     m_bIsActive = !m_bIsActive;
 

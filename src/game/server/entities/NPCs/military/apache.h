@@ -43,7 +43,7 @@ public:
     void FlyTouch( CBaseEntity* pOther );
     void CrashTouch( CBaseEntity* pOther );
     void DyingThink();
-    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void NullThink();
 
     void ShowDamage();

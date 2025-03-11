@@ -34,7 +34,7 @@ class CFuncWall : public CBaseEntity
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     // Bmodels don't go across transitions
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -55,7 +55,7 @@ bool CFuncWall::Spawn()
     return true;
 }
 
-void CFuncWall::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncWall::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ShouldToggle( useType, pev->frame != 0 ) )
         pev->frame = 1 - pev->frame;
@@ -67,7 +67,7 @@ class CFuncWallToggle : public CFuncWall
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void TurnOff();
     void TurnOn();
     bool IsOn();
@@ -108,7 +108,7 @@ bool CFuncWallToggle::IsOn()
     return true;
 }
 
-void CFuncWallToggle::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncWallToggle::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     bool status = IsOn();
 
@@ -128,7 +128,7 @@ class CFuncConveyor : public CFuncWall
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void UpdateSpeed( float speed );
 };
 
@@ -172,7 +172,7 @@ void CFuncConveyor::UpdateSpeed( float speed )
     pev->rendercolor.z = ( speedCode & 0xFF );
 }
 
-void CFuncConveyor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncConveyor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     pev->speed = -pev->speed;
     UpdateSpeed( pev->speed );
@@ -226,7 +226,7 @@ class CFuncMonsterClip : public CFuncWall
 {
 public:
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override {} // Clear out func_wall's use function
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value ) override {} // Clear out func_wall's use function
 };
 
 LINK_ENTITY_TO_CLASS( func_monsterclip, CFuncMonsterClip );
@@ -273,7 +273,7 @@ public:
      */
     void HurtTouch( CBaseEntity* pOther );
 
-    void RotatingUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void RotatingUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void Rotate();
 
     /**
@@ -573,7 +573,7 @@ void CFuncRotating::Rotate()
     pev->nextthink = pev->ltime + 10;
 }
 
-void CFuncRotating::RotatingUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncRotating::RotatingUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // is this a brush that should accelerate and decelerate when turned on/off (fan)?
     if( FBitSet( pev->spawnflags, SF_BRUSH_ACCDCC ) )
@@ -636,7 +636,7 @@ public:
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Swing();
-    void PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void Stop();
     void Touch( CBaseEntity* pOther ) override;
     void RopeTouch( CBaseEntity* pOther ); // this touch func makes the pendulum a rope
@@ -728,7 +728,7 @@ bool CPendulum::Spawn()
     return true;
 }
 
-void CPendulum::PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPendulum::PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( 0 != pev->speed ) // Pendulum is moving, stop it and auto-return if necessary
     {

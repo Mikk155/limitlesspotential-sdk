@@ -485,7 +485,7 @@ void CBaseMonster::MonsterThink()
 #endif
 }
 
-void CBaseMonster::MonsterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseMonster::MonsterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // Don't do this because it can resurrect dying monsters
     // m_IdealMonsterState = MONSTERSTATE_ALERT;
@@ -1230,7 +1230,7 @@ float CBaseMonster::OpenDoorAndWait( CBaseEntity* door )
     if( door && !door->IsLockedByMaster() )
     {
         // AILogger->trace("unlocked!");
-        door->Use( this, this, USE_ON, 0.0 );
+        door->Use( this, this, USE_ON );
         // AILogger->trace("door->pev->nextthink = {} ms", (int)(1000*door->pev->nextthink));
         // AILogger->trace("door->pev->ltime = {} ms", (int)(1000*door->pev->ltime));
         // AILogger->trace("pev->nextthink = {} ms", (int)(1000*pev->nextthink));
@@ -1245,7 +1245,7 @@ float CBaseMonster::OpenDoorAndWait( CBaseEntity* door )
                 {
                     if( target->ClassnameIs( STRING( door->pev->classname ) ) )
                     {
-                        target->Use( this, this, USE_ON, 0.0 );
+                        target->Use( this, this, USE_ON );
                     }
                 }
             }
@@ -2391,7 +2391,7 @@ void CBaseMonster::HandleAnimEvent( MonsterEvent_t* pEvent )
         break;
 
     case SCRIPT_EVENT_FIREEVENT: // Fire a trigger
-        FireTargets( pEvent->options, this, this, USE_TOGGLE, 0 );
+        FireTargets( pEvent->options, this, this, USE_TOGGLE );
         break;
 
     case SCRIPT_EVENT_NOINTERRUPT: // Can't be interrupted from now on
@@ -2810,7 +2810,7 @@ bool CBaseMonster::FCheckAITrigger()
     {
         // fire the target, then set the trigger conditions to NONE so we don't fire again
         AILogger->debug( "AI Trigger Fire Target" );
-        FireTargets( STRING( m_iszTriggerTarget ), this, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( m_iszTriggerTarget ), this, this, USE_TOGGLE );
         m_iTriggerCondition = AITRIGGER_NONE;
         return true;
     }
@@ -3301,7 +3301,7 @@ void CBaseMonster::LimitFollowers( CBaseEntity* pPlayer, int maxFollowers )
         true );
 }
 
-void CBaseMonster::FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseMonster::FollowerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // Don't allow use during a scripted_sentence
     if( m_useTime > gpGlobals->time )

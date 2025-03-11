@@ -43,7 +43,7 @@ public:
     bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
@@ -414,7 +414,7 @@ void CBaseTurret::Initialize()
         SetThink( nullptr );
 }
 
-void CBaseTurret::TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseTurret::TurretUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_iOn ) )
         return;
@@ -670,7 +670,7 @@ void CBaseTurret::Deploy()
         m_iOn = true;
         SetTurretAnim( TURRET_ANIM_DEPLOY );
         EmitSound( CHAN_BODY, "turret/tu_deploy.wav", TURRET_MACHINE_VOLUME, ATTN_NORM );
-        SUB_UseTargets( this, USE_ON, 0 );
+        SUB_UseTargets( this, USE_ON );
     }
 
     if( m_fSequenceFinished )
@@ -720,7 +720,7 @@ void CBaseTurret::Retire()
         {
             SetTurretAnim( TURRET_ANIM_RETIRE );
             EmitSoundDyn( CHAN_BODY, "turret/tu_deploy.wav", TURRET_MACHINE_VOLUME, ATTN_NORM, 0, 120 );
-            SUB_UseTargets( this, USE_OFF, 0 );
+            SUB_UseTargets( this, USE_OFF );
         }
         else if( m_fSequenceFinished )
         {
@@ -1032,7 +1032,7 @@ bool CBaseTurret::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
 
         SetUse( nullptr );
         SetThink( &CBaseTurret::TurretDeath );
-        SUB_UseTargets( this, USE_ON, 0 ); // wake up others
+        SUB_UseTargets( this, USE_ON ); // wake up others
         pev->nextthink = gpGlobals->time + 0.1;
 
         return false;
@@ -1250,7 +1250,7 @@ bool CSentry::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float f
 
         SetUse( nullptr );
         SetThink( &CSentry::SentryDeath );
-        SUB_UseTargets( this, USE_ON, 0 ); // wake up others
+        SUB_UseTargets( this, USE_ON ); // wake up others
         pev->nextthink = gpGlobals->time + 0.1;
 
         return false;

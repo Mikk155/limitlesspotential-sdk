@@ -70,7 +70,7 @@ public:
     void DangerSoundThink();
     void PreDetonate();
     void Detonate();
-    void DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void TumbleThink();
 
     virtual void BounceSound();

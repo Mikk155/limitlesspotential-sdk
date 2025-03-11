@@ -51,7 +51,7 @@ public:
     void Killed( CBaseEntity* attacker, int iGib ) override;
     void BecomeDead() override;
 
-    void CombatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CombatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void BiteTouch( CBaseEntity* pOther );
 
     void StartTask( const Task_t* pTask ) override;
@@ -325,7 +325,7 @@ void CIchthyosaur::BiteTouch( CBaseEntity* pOther )
     }
 }
 
-void CIchthyosaur::CombatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CIchthyosaur::CombatUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_bOnAttack ) )
         return;

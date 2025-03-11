@@ -79,7 +79,7 @@ void CFireAndDie::Precache()
 
 void CFireAndDie::Think()
 {
-    SUB_UseTargets( this, USE_TOGGLE, 0 );
+    SUB_UseTargets( this, USE_TOGGLE );
     UTIL_Remove( this );
 }
 
@@ -183,7 +183,7 @@ CBaseEntity* CChangeLevel::FindLandmark( const char* pLandmarkName )
     return nullptr;
 }
 
-void CChangeLevel::UseChangeLevel( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CChangeLevel::UseChangeLevel( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} )
 {
     ChangeLevelNow( pActivator );
 }
@@ -249,7 +249,7 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
     }
 
     m_hActivator = pActivator;
-    SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
+    SUB_UseTargets( pActivator, USE_TOGGLE );
 
     // Init landmark to empty string
     const char* landmarkNameInNextMap = "";
@@ -513,7 +513,7 @@ public:
     bool Spawn() override;
     void EndSectionTouch( CBaseEntity* pOther );
     bool KeyValue( KeyValueData* pkvd ) override;
-    void EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 };
 
 BEGIN_DATAMAP( CTriggerEndSection )
@@ -523,7 +523,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_endsection, CTriggerEndSection );
 
-void CTriggerEndSection::EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerEndSection::EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // Only save on clients
     if( pActivator && !pActivator->IsNetClient() )
@@ -590,7 +590,7 @@ class CRevertSaved : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void MessageThink();
     void LoadThink();
     bool KeyValue( KeyValueData* pkvd ) override;
@@ -645,7 +645,7 @@ bool CRevertSaved::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CRevertSaved::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CRevertSaved::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     UTIL_ScreenFadeAll( pev->rendercolor, Duration(), HoldTime(), pev->renderamt, FFADE_OUT );
     pev->nextthink = gpGlobals->time + MessageTime();

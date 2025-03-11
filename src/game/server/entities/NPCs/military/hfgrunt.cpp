@@ -62,7 +62,7 @@ public:
         return true;
     }
 
-    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
     {
         CreateMonster( "monster_human_friendly_grunt" );
     }

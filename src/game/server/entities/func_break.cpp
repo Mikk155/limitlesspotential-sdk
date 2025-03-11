@@ -436,7 +436,7 @@ void CBreakable::BreakTouch( CBaseEntity* pOther )
     }
 }
 
-void CBreakable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBreakable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( IsBreakable() )
     {
@@ -710,7 +710,7 @@ void CBreakable::Die()
 
     pev->solid = SOLID_NOT;
     // Fire targets on break
-    SUB_UseTargets( nullptr, USE_TOGGLE, 0 );
+    SUB_UseTargets( nullptr, USE_TOGGLE );
 
     SetThink( &CBreakable::SUB_Remove );
     pev->nextthink = pev->ltime + 0.1;
@@ -755,7 +755,7 @@ public:
     /**
      *    @brief Pull the func_pushable
      */
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     void StopPushSound();
     //    virtual void    SetActivator( CBaseEntity *pActivator ) { m_pPusher = pActivator; }
@@ -859,7 +859,7 @@ bool CPushable::KeyValue( KeyValueData* pkvd )
     return CBreakable::KeyValue( pkvd );
 }
 
-void CPushable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPushable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !pActivator || !pActivator->IsPlayer() )
     {

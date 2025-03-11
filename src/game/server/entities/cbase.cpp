@@ -188,7 +188,7 @@ void DispatchUse( edict_t* pentUsed, edict_t* pentOther )
     CBaseEntity* pOther = (CBaseEntity*)GET_PRIVATE( pentOther );
 
     if( pEntity && ( pEntity->pev->flags & FL_KILLME ) == 0 )
-        pEntity->Use( pOther, pOther, USE_TOGGLE, 0 );
+        pEntity->Use( pOther, pOther, USE_TOGGLE );
 }
 
 void DispatchThink( edict_t* pent )

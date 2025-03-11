@@ -67,7 +67,7 @@ void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
     // pev->takedamage = DAMAGE_NO;
 
     m_hActivator = pActivator;
-    SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
+    SUB_UseTargets( m_hActivator, USE_TOGGLE );
 
     if( !FStringNull( pev->message ) )
     {
@@ -104,7 +104,7 @@ void CBaseTrigger::MultiWaitOver()
     SetThink( nullptr );
 }
 
-void CBaseTrigger::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseTrigger::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( pev->solid == SOLID_NOT )
     { // if the trigger is off, turn it on

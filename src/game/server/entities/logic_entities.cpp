@@ -25,7 +25,7 @@ class CLogicSetCVar : public CPointEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     string_t m_CVarName;
@@ -58,7 +58,7 @@ bool CLogicSetCVar::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CLogicSetCVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLogicSetCVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
     {
@@ -119,7 +119,7 @@ class CLogicIsSkill : public CPointEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     string_t m_Targets[SkillLevelCount];
@@ -156,7 +156,7 @@ bool CLogicIsSkill::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-void CLogicIsSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLogicIsSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
     {
@@ -174,7 +174,7 @@ void CLogicIsSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
         return;
     }
 
-    FireTargets( STRING( target ), pActivator, this, USE_ON, 0 );
+    FireTargets( STRING( target ), pActivator, this, USE_ON );
 }
 
 class CLogicSetSkill : public CPointEntity
@@ -186,7 +186,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     int m_SkillLevel = 0;
@@ -217,7 +217,7 @@ bool CLogicSetSkill::Spawn()
     return true;
 }
 
-void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
     {
@@ -229,7 +229,7 @@ void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     // Cached variables will be unaffected.
     g_Skill.SetSkillLevel( SkillLevel( m_SkillLevel ) );
 
-    SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
+    SUB_UseTargets( pActivator, USE_TOGGLE );
 }
 
 class CLogicSetSkillVar : public CPointEntity
@@ -241,7 +241,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     string_t m_Name;
@@ -281,7 +281,7 @@ bool CLogicSetSkillVar::Spawn()
     return true;
 }
 
-void CLogicSetSkillVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLogicSetSkillVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
     {
@@ -290,7 +290,7 @@ void CLogicSetSkillVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 
     g_Skill.SetValue( STRING( m_Name ), m_Value );
 
-    SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
+    SUB_UseTargets( pActivator, USE_TOGGLE );
 }
 
 class CLogicCampaignSelect : public CPointEntity
@@ -298,12 +298,12 @@ class CLogicCampaignSelect : public CPointEntity
     DECLARE_CLASS( CLogicCampaignSelect, CPointEntity );
 
 public:
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 LINK_ENTITY_TO_CLASS( logic_campaignselect, CLogicCampaignSelect );
 
-void CLogicCampaignSelect::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLogicCampaignSelect::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( auto player = ToBasePlayer( pActivator ); player )
     {
@@ -327,7 +327,7 @@ public:
 
     bool Spawn() override;
 
-    void RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
 private:
     eastl::fixed_vector<std::uint8_t, MaxRandomTargets, false> BuildMap() const;
@@ -396,7 +396,7 @@ bool CLogicRandom::Spawn()
     return true;
 }
 
-void CLogicRandom::RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CLogicRandom::RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( const auto map = BuildMap(); !map.empty() )
     {
@@ -406,7 +406,7 @@ void CLogicRandom::RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE
 
         const char* target = STRING( m_iszTargets[targetIndex] );
 
-        FireTargets( target, pActivator, this, useType, 0 );
+        FireTargets( target, pActivator, this, useType );
     }
 }
 

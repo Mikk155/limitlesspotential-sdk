@@ -29,7 +29,7 @@ bool CHUDIconTrigger::Spawn()
     return true;
 }
 
-void CHUDIconTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CHUDIconTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( m_flNextActiveTime <= gpGlobals->time && UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
     {
@@ -38,7 +38,7 @@ void CHUDIconTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 
         m_hActivator = pActivator;
 
-        SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 );
+        SUB_UseTargets( m_hActivator, USE_TOGGLE );
 
         if( !FStringNull( pev->message ) )
         {

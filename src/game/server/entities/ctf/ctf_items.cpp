@@ -252,7 +252,7 @@ void CItemCTF::ItemTouch( CBaseEntity* pOther )
 
     if( MyTouch( player ) )
     {
-        SUB_UseTargets( player, USE_TOGGLE, 0 );
+        SUB_UseTargets( player, USE_TOGGLE );
         SetTouch( nullptr );
 
         pev->movetype = MOVETYPE_NONE;

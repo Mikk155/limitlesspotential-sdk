@@ -129,7 +129,7 @@ bool CCineAI::FCanOverrideState()
     return true;
 }
 
-void CCineMonster::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CCineMonster::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     // do I already know who I should use
     CBaseEntity* pEntity = m_hTargetEnt;
@@ -458,7 +458,7 @@ void CCineMonster::SequenceDone( CBaseMonster* pMonster )
 
     // This may cause a sequence to attempt to grab this guy NOW, so we have to clear him out
     // of the existing sequence
-    SUB_UseTargets( nullptr, USE_TOGGLE, 0 );
+    SUB_UseTargets( nullptr, USE_TOGGLE );
 }
 
 void CCineMonster::FixScriptMonsterSchedule( CBaseMonster* pMonster )
@@ -773,7 +773,7 @@ class CScriptedSentence : public CBaseToggle
 public:
     bool Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void FindThink();
     void DelayThink();
     int ObjectCaps() override { return ( CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ); }
@@ -862,7 +862,7 @@ bool CScriptedSentence::KeyValue( KeyValueData* pkvd )
     return CBaseToggle::KeyValue( pkvd );
 }
 
-void CScriptedSentence::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CScriptedSentence::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !m_active )
         return;
@@ -1020,7 +1020,7 @@ bool CScriptedSentence::StartSentence( CBaseMonster* pTarget )
 
     pTarget->PlayScriptedSentence( STRING( m_iszSentence ), m_flDuration, m_flVolume, m_flAttenuation, bConcurrent, pListener );
     CCineMonster::AIScriptLogger->debug( "Playing sentence {} ({:.1f})", STRING( m_iszSentence ), m_flDuration );
-    SUB_UseTargets( nullptr, USE_TOGGLE, 0 );
+    SUB_UseTargets( nullptr, USE_TOGGLE );
     return true;
 }
 

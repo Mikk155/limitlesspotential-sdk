@@ -46,7 +46,7 @@ public:
     bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Think() override;
     void PostRestore() override;
     void TrackTarget();
@@ -489,7 +489,7 @@ void CFuncTank::ControllerPostFrame()
     }
 }
 
-void CFuncTank::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncTank::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( ( pev->spawnflags & SF_TANK_CANCONTROL ) != 0 )
     { // player controlled turret
@@ -499,7 +499,7 @@ void CFuncTank::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
         if( !player )
             return;
 
-        if( value == 2 && useType == USE_SET )
+        if( value.m_int == 2 && useType == USE_SET )
         {
             ControllerPostFrame();
         }
@@ -899,7 +899,7 @@ void CFuncTank::Fire( const Vector& barrelEnd, const Vector& forward, CBaseEntit
             // Hack Hack, make it stick around for at least 100 ms.
             pSprite->pev->nextthink += 0.1;
         }
-        SUB_UseTargets( this, USE_TOGGLE, 0 );
+        SUB_UseTargets( this, USE_TOGGLE );
     }
     m_fireLast = gpGlobals->time;
 }
@@ -1179,7 +1179,7 @@ class CFuncTankControls : public CBaseEntity
 public:
     int ObjectCaps() override;
     bool Spawn() override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Think() override;
 
     CFuncTank* m_pTank;
@@ -1196,7 +1196,7 @@ int CFuncTankControls::ObjectCaps()
     return ( CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION ) | FCAP_IMPULSE_USE;
 }
 
-void CFuncTankControls::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CFuncTankControls::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 { // pass the Use command onto the controls
     if( m_pTank )
         m_pTank->Use( pActivator, pCaller, useType, value );

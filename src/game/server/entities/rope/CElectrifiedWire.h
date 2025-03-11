@@ -35,7 +35,7 @@ public:
 
     void Think() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float flValue ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue flValue ) override;
 
     bool IsActive() const { return m_bIsActive != false; }
 

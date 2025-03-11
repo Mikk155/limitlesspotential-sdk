@@ -30,7 +30,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     Vector m_HudColor{vec3_origin};
@@ -60,7 +60,7 @@ bool CPlayerSetHudColor::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CPlayerSetHudColor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPlayerSetHudColor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     auto player = ToBasePlayer( pActivator );
 
@@ -102,7 +102,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     Vector m_CrosshairColor{vec3_origin};
@@ -132,7 +132,7 @@ bool CPlayerSetCrosshairColor::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CPlayerSetCrosshairColor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPlayerSetCrosshairColor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     auto player = ToBasePlayer( pActivator );
 
@@ -168,7 +168,7 @@ class CPlayerSetSuitLightType : public CPointEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     bool m_AllPlayers = false;
@@ -198,7 +198,7 @@ bool CPlayerSetSuitLightType::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CPlayerSetSuitLightType::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPlayerSetSuitLightType::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     const auto executor = [this]( CBasePlayer* player )
     {
@@ -241,7 +241,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     int m_Flags = StripFlagRemoveWeapons;
@@ -311,7 +311,7 @@ bool CStripWeapons::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CStripWeapons::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CStripWeapons::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     const auto executor = [this]( CBasePlayer* player )
     {
@@ -369,7 +369,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     int m_Flags = 0;
@@ -441,7 +441,7 @@ bool CPlayerSetHealth::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CPlayerSetHealth::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPlayerSetHealth::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     const auto executor = [this]( CBasePlayer* player )
     {
@@ -489,7 +489,7 @@ class CPlayerHasSuit : public CPointEntity
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     string_t m_PassTarget;
@@ -519,7 +519,7 @@ bool CPlayerHasSuit::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-void CPlayerHasSuit::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPlayerHasSuit::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     auto player = ToBasePlayer( pActivator );
 
@@ -532,14 +532,14 @@ void CPlayerHasSuit::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     {
         if( !FStringNull( m_PassTarget ) )
         {
-            FireTargets( STRING( m_PassTarget ), pActivator, this, USE_TOGGLE, 0 );
+            FireTargets( STRING( m_PassTarget ), pActivator, this, USE_TOGGLE );
         }
     }
     else
     {
         if( !FStringNull( m_FailTarget ) )
         {
-            FireTargets( STRING( m_FailTarget ), pActivator, this, USE_TOGGLE, 0 );
+            FireTargets( STRING( m_FailTarget ), pActivator, this, USE_TOGGLE );
         }
     }
 }
@@ -553,7 +553,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
     string_t m_PassTarget;
@@ -600,7 +600,7 @@ bool CPlayerHasWeapon::Spawn()
     return true;
 }
 
-void CPlayerHasWeapon::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CPlayerHasWeapon::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     auto player = ToBasePlayer( pActivator );
 
@@ -613,14 +613,14 @@ void CPlayerHasWeapon::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     {
         if( !FStringNull( m_PassTarget ) )
         {
-            FireTargets( STRING( m_PassTarget ), pActivator, this, USE_TOGGLE, 0 );
+            FireTargets( STRING( m_PassTarget ), pActivator, this, USE_TOGGLE );
         }
     }
     else
     {
         if( !FStringNull( m_FailTarget ) )
         {
-            FireTargets( STRING( m_FailTarget ), pActivator, this, USE_TOGGLE, 0 );
+            FireTargets( STRING( m_FailTarget ), pActivator, this, USE_TOGGLE );
         }
     }
 }

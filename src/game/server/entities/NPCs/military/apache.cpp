@@ -126,7 +126,7 @@ void CApache::NullThink()
     pev->nextthink = gpGlobals->time + 0.5;
 }
 
-void CApache::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CApache::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &CApache::HuntThink );
     SetTouch( &CApache::FlyTouch );

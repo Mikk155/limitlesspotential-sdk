@@ -2122,7 +2122,7 @@ class CShockTrooperRepel : public CBaseMonster
 public:
     bool Spawn() override;
     void Precache() override;
-    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     int m_iSpriteTexture; // Don't save, precache
 };
 
@@ -2148,7 +2148,7 @@ void CShockTrooperRepel::Precache()
     m_iSpriteTexture = PrecacheModel( "sprites/rope.spr" );
 }
 
-void CShockTrooperRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CShockTrooperRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     TraceResult tr;
     UTIL_TraceLine( pev->origin, pev->origin + Vector( 0, 0, -4096.0 ), dont_ignore_monsters, edict(), &tr );

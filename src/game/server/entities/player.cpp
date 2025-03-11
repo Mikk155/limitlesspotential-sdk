@@ -714,7 +714,7 @@ void CBasePlayer::RemoveAllItems( bool removeSuit )
 
     if( m_pTank != nullptr )
     {
-        m_pTank->Use( this, this, USE_OFF, 0 );
+        m_pTank->Use( this, this, USE_OFF );
         m_pTank = nullptr;
     }
 
@@ -759,7 +759,7 @@ void CBasePlayer::Killed( CBaseEntity* attacker, int iGib )
 
     if( m_pTank != nullptr )
     {
-        m_pTank->Use( this, this, USE_OFF, 0 );
+        m_pTank->Use( this, this, USE_OFF );
         m_pTank = nullptr;
     }
 
@@ -1319,7 +1319,7 @@ void CBasePlayer::StartObserver( Vector vecPosition, Vector vecViewAngle )
 
     if( m_pTank != nullptr )
     {
-        m_pTank->Use( this, this, USE_OFF, 0 );
+        m_pTank->Use( this, this, USE_OFF );
         m_pTank = nullptr;
     }
 
@@ -1392,7 +1392,7 @@ void CBasePlayer::PlayerUse()
         {
             // Stop controlling the tank
             // TODO: Send HUD Update
-            m_pTank->Use( this, this, USE_OFF, 0 );
+            m_pTank->Use( this, this, USE_OFF );
             m_pTank = nullptr;
             return;
         }
@@ -1477,12 +1477,12 @@ void CBasePlayer::PlayerUse()
             if( ( caps & FCAP_CONTINUOUS_USE ) != 0 )
                 m_afPhysicsFlags |= PFLAG_USING;
 
-            pObject->Use( this, this, USE_SET, 1 );
+            pObject->Use( this, this, USE_SET, UseValue(1) );
         }
         // UNDONE: Send different USE codes for ON/OFF.  Cache last ONOFF_USE object to send 'off' if you turn away
         else if( ( m_afButtonReleased & IN_USE ) != 0 && ( pObject->ObjectCaps() & FCAP_ONOFF_USE ) != 0 ) // BUGBUG This is an "off" use
         {
-            pObject->Use( this, this, USE_SET, 0 );
+            pObject->Use( this, this, USE_SET );
         }
     }
     else
@@ -2046,12 +2046,12 @@ void CBasePlayer::PreThink()
         if( ( m_afButtonPressed & IN_FORWARD ) != 0 )
         {
             vel = 1;
-            pTrain->Use( this, this, USE_SET, vel );
+            pTrain->Use( this, this, USE_SET, UseValue(vel) );
         }
         else if( ( m_afButtonPressed & IN_BACK ) != 0 )
         {
             vel = -1;
-            pTrain->Use( this, this, USE_SET, vel );
+            pTrain->Use( this, this, USE_SET, UseValue(vel) );
         }
 
         if( 0 != vel )
@@ -2575,11 +2575,11 @@ void CBasePlayer::PostThink()
     { // if they've moved too far from the gun,  or selected a weapon, unuse the gun
         if( m_pTank->OnControls( this ) && FStringNull( pev->weaponmodel ) )
         {
-            m_pTank->Use( this, this, USE_SET, 2 ); // try fire the gun
+            m_pTank->Use( this, this, USE_SET, UseValue(2) ); // try fire the gun
         }
         else
         { // they've moved off the platform
-            m_pTank->Use( this, this, USE_OFF, 0 );
+            m_pTank->Use( this, this, USE_OFF );
             m_pTank = nullptr;
         }
     }
@@ -2790,7 +2790,7 @@ bool CBasePlayer::Spawn()
 
     if( auto spawnpoint = g_pGameRules->GetPlayerSpawnSpot( this ); spawnpoint != nullptr && !FStringNull( spawnpoint->pev->target ) )
     {
-        FireTargets( STRING( spawnpoint->pev->target ), this, spawnpoint, USE_TOGGLE, 0 );
+        FireTargets( STRING( spawnpoint->pev->target ), this, spawnpoint, USE_TOGGLE );
     }
 
     SetModel( "models/player.mdl" );
@@ -3847,7 +3847,7 @@ void CBasePlayer::UpdateClientData()
     {
         m_HasActivated = true;
         g_Server.PlayerActivating( this );
-        FireTargets( "game_playeractivate", this, this, USE_TOGGLE, 0 );
+        FireTargets( "game_playeractivate", this, this, USE_TOGGLE );
     }
 
     if( m_fInitHUD )
@@ -3871,7 +3871,7 @@ void CBasePlayer::UpdateClientData()
 
             if( g_pGameRules->IsMultiplayer() )
             {
-                FireTargets( "game_playerjoin", this, this, USE_TOGGLE, 0 );
+                FireTargets( "game_playerjoin", this, this, USE_TOGGLE );
             }
         }
 
@@ -3893,7 +3893,7 @@ void CBasePlayer::UpdateClientData()
 
         // This counts as spawning, it suppresses weapon pickup notifications.
         m_bIsSpawning = true;
-        FireTargets( "game_playerspawn", this, this, USE_TOGGLE, 0 );
+        FireTargets( "game_playerspawn", this, this, USE_TOGGLE );
         m_bIsSpawning = false;
 
         m_AutoWepSwitch = savedAutoWepSwitch;

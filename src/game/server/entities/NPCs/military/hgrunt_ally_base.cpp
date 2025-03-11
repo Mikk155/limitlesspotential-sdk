@@ -2212,7 +2212,7 @@ void CBaseHGruntAllyRepel::Precache()
     m_iSpriteTexture = PrecacheModel( "sprites/rope.spr" );
 }
 
-void CBaseHGruntAllyRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseHGruntAllyRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     TraceResult tr;
     UTIL_TraceLine( pev->origin, pev->origin + Vector( 0, 0, -4096.0 ), dont_ignore_monsters, edict(), &tr );

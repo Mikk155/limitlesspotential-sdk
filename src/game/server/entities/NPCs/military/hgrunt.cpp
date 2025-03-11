@@ -2058,7 +2058,7 @@ void CHGruntRepel::CreateMonster( const char* classname )
     UTIL_Remove( this );
 }
 
-void CHGruntRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CHGruntRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     CreateMonster( "monster_human_grunt" );
 }

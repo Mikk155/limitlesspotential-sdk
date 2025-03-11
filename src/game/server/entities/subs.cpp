@@ -105,7 +105,7 @@ bool CBaseDelay::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void CBaseEntity::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, float value )
+void CBaseEntity::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, UseValue value )
 {
     if( !FStringNull( pev->target ) )
     {
@@ -113,28 +113,29 @@ void CBaseEntity::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, flo
     }
 }
 
-void FireTargets( const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* caller, USE_TYPE use_type, UseValue value )
 {
-    if( !targetName )
+    if( !target )
         return;
 
-    CBaseEntity::IOLogger->debug( "Firing: ({})", targetName );
+    CBaseEntity::IOLogger->debug( "Firing: ({})", target );
 
-    CBaseEntity* target = nullptr;
+    CBaseEntity* entity = nullptr;
 
-    while( ( target = UTIL_FindEntityByTargetname( target, targetName, pActivator, pCaller ) ) != nullptr )
+    while( ( entity = UTIL_FindEntityByTargetname( entity, target, activator, caller ) ) != nullptr )
     {
-        if( target && ( target->pev->flags & FL_KILLME ) == 0 ) // Don't use dying ents
-        {
-            CBaseEntity::IOLogger->debug( "Found: {}, firing ({})", STRING( target->pev->classname ), targetName );
-            target->Use( pActivator, pCaller, useType, value );
-        }
+        if( !entity || ( entity->pev->flags & FL_KILLME ) != 0 ) // Don't use dying ents
+            continue;
+
+        CBaseEntity::IOLogger->debug( "Found: {}, firing ({})", STRING( entity->pev->classname ), target );
+
+        entity->Use( activator, caller, use_type, value );
     }
 }
 
 LINK_ENTITY_TO_CLASS( delayed_use, CBaseDelay );
 
-void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, float value )
+void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, UseValue value )
 {
     //
     // exit immediatly if we don't have a target or kill target
@@ -204,7 +205,7 @@ void CBaseDelay::DelayThink()
     CBaseEntity* pActivator = m_hActivator;
 
     // The use type is cached (and stashed) in pev->button
-    SUB_UseTargets( pActivator, ( USE_TYPE )pev->button, 0 );
+    SUB_UseTargets( pActivator, ( USE_TYPE )pev->button );
     REMOVE_ENTITY( edict() );
 }
 

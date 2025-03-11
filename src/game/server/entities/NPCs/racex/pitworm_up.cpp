@@ -107,9 +107,9 @@ public:
 
     void HitTouch( CBaseEntity* pOther );
 
-    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
-    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void ChangeLevel();
 
@@ -677,7 +677,7 @@ void COFPitWormUp::HitTouch( CBaseEntity* pOther )
     }
 }
 
-void COFPitWormUp::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFPitWormUp::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     switch ( useType )
     {
@@ -696,7 +696,7 @@ void COFPitWormUp::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, US
     }
 }
 
-void COFPitWormUp::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFPitWormUp::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &COFPitWormUp::HuntThink );
     pev->nextthink = gpGlobals->time + 0.1;
@@ -1373,7 +1373,7 @@ class COFPitWormSteamTrigger : public CPointEntity
 public:
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 LINK_ENTITY_TO_CLASS( info_pitworm_steam_lock, COFPitWormSteamTrigger );
@@ -1388,7 +1388,7 @@ bool COFPitWormSteamTrigger::Spawn()
     return true;
 }
 
-void COFPitWormSteamTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFPitWormSteamTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     auto pPitworm = static_cast<COFPitWormUp*>( UTIL_FindEntityByClassname( nullptr, "monster_pitworm_up" ) );
 
@@ -1560,7 +1560,7 @@ public:
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void ShootThink();
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     virtual COFPitWormGib* CreateGib();
 
@@ -1615,7 +1615,7 @@ bool COFPitWormGibShooter::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-void COFPitWormGibShooter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFPitWormGibShooter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &COFPitWormGibShooter::ShootThink );
     pev->nextthink = gpGlobals->time;
@@ -1771,7 +1771,7 @@ public:
 
     void StrafeBeam();
 
-    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void UpdateEye();
 
@@ -2440,7 +2440,7 @@ void COFPitWorm::StrafeBeam()
     }
 }
 
-void COFPitWorm::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFPitWorm::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &COFPitWorm::CallMonsterThink );
     pev->nextthink = gpGlobals->time + 0.1;

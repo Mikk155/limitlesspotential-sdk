@@ -54,7 +54,7 @@ public:
 
     CBaseEntity* RandomClassname( const char* szName );
 
-    // void SphereUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+    // void SphereUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, UseValue value);
 
     void MovetoTarget( Vector vecTarget );
     virtual void Crawl();
@@ -116,9 +116,9 @@ public:
     void HuntThink();
     void CrashTouch( CBaseEntity* pOther );
     void DyingThink();
-    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     void NullThink();
-    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     void FloatSequence();
     void NextActivity();
@@ -127,7 +127,7 @@ public:
 
     bool AbsorbSphere();
     bool EmitSphere();
-    void TargetSphere( USE_TYPE useType, float value );
+    void TargetSphere( USE_TYPE useType, UseValue value );
     CBaseEntity* RandomTargetname( const char* szName );
     void ShootBalls();
     void MakeFriend( Vector vecPos );
@@ -391,7 +391,7 @@ void CNihilanth::NullThink()
     pev->nextthink = gpGlobals->time + 0.5;
 }
 
-void CNihilanth::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CNihilanth::StartupUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &CNihilanth::HuntThink );
     pev->nextthink = gpGlobals->time + 0.1;
@@ -475,7 +475,7 @@ void CNihilanth::DyingThink()
         if( fabs( pev->origin.z - m_flMaxZ ) < 16 )
         {
             pev->velocity = Vector( 0, 0, 0 );
-            FireTargets( m_szDeadUse, this, this, USE_ON, 1.0 );
+            FireTargets( m_szDeadUse, this, this, USE_ON, UseValue(1.0) );
             pev->deadflag = DEAD_DEAD;
         }
     }
@@ -789,7 +789,7 @@ void CNihilanth::NextActivity()
                 char szText[128];
 
                 sprintf( szText, "%s%d", m_szDrawUse, m_iLevel );
-                FireTargets( szText, this, this, USE_ON, 1.0 );
+                FireTargets( szText, this, this, USE_ON, UseValue(1.0) );
 
                 AILogger->debug( "fireing {}", szText );
             }
@@ -1030,7 +1030,7 @@ bool CNihilanth::EmitSphere()
     return true;
 }
 
-void CNihilanth::TargetSphere( USE_TYPE useType, float value )
+void CNihilanth::TargetSphere( USE_TYPE useType, UseValue value )
 {
     CBaseMonster* pSphere = nullptr;
     int i;
@@ -1201,7 +1201,7 @@ void CNihilanth::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-void CNihilanth::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CNihilanth::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     switch ( useType )
     {
@@ -1604,7 +1604,7 @@ void CNihilanthHVR::TeleportThink()
         UTIL_Remove( this );
 
         if( m_hTargetEnt != nullptr )
-            m_hTargetEnt->Use( m_hEnemy, m_hEnemy, USE_ON, 1.0 );
+            m_hTargetEnt->Use( m_hEnemy, m_hEnemy, USE_ON, UseValue(1.0) );
 
         if( m_hTouch != nullptr && m_hEnemy != nullptr )
             m_hTouch->Touch( m_hEnemy );
@@ -1661,7 +1661,7 @@ void CNihilanthHVR::TeleportTouch( CBaseEntity* pOther )
     if( pOther == pEnemy )
     {
         if( m_hTargetEnt != nullptr )
-            m_hTargetEnt->Use( pEnemy, pEnemy, USE_ON, 1.0 );
+            m_hTargetEnt->Use( pEnemy, pEnemy, USE_ON, UseValue(1.0) );
 
         if( m_hTouch != nullptr && pEnemy != nullptr )
             m_hTouch->Touch( pEnemy );

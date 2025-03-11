@@ -42,12 +42,12 @@ public:
     /**
      *    @brief activates/deactivates the monster maker
      */
-    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     /**
      *    @brief drops one monster from the monstermaker each time we call this.
      */
-    void CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
     /**
      *    @brief creates a new monster every so often
@@ -271,16 +271,16 @@ void CMonsterMaker::MakeMonster()
     if( !FStringNull( pev->target ) )
     {
         // delay already overloaded for this entity, so can't call SUB_UseTargets()
-        FireTargets( STRING( pev->target ), this, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( pev->target ), this, this, USE_TOGGLE );
     }
 }
 
-void CMonsterMaker::CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMonsterMaker::CyclicUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     MakeMonster();
 }
 
-void CMonsterMaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMonsterMaker::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( !ShouldToggle( useType, m_fActive ) )
         return;

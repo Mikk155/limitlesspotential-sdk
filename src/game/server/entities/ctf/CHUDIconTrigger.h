@@ -22,7 +22,7 @@ class CHUDIconTrigger : public CBaseToggle
 public:
     bool Spawn() override;
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     bool KeyValue( KeyValueData* pkvd ) override;
 

@@ -26,6 +26,7 @@
 #include "DataFieldSerializers.h"
 
 enum USE_TYPE : int;
+class UseValue;
 
 class SINGLE_INHERITANCE CBaseEntity;
 
@@ -36,7 +37,7 @@ template <typename T>
 using TENTITYFUNCPTR = void ( T::* )( CBaseEntity* pOther );
 
 template <typename T>
-using TUSEPTR = void ( T::* )( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+using TUSEPTR = void ( T::* )( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
 using BASEPTR = TBASEPTR<CBaseEntity>;
 using ENTITYFUNCPTR = TENTITYFUNCPTR<CBaseEntity>;

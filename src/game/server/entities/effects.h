@@ -51,7 +51,7 @@ public:
     }
     void AnimateThink();
     void ExpandThink();
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Animate( float frames );
     void Expand( float scaleSpeed, float fadeSpeed );
     void SpriteInit( const char* pSpriteName, const Vector& origin );
@@ -216,7 +216,7 @@ public:
     void FireAtPoint( TraceResult& point );
 
     void StrikeThink();
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     void UpdateOnRemove() override;
 

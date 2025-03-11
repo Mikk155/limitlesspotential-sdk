@@ -252,7 +252,7 @@ public:
 
     void UpdatePosition( int direction, int controller );
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     bool IsMonster() override { return false; }
 
@@ -748,7 +748,7 @@ void COp4Mortar::UpdatePosition( int direction, int controller )
     }
 }
 
-void COp4Mortar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COp4Mortar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( useType == USE_TOGGLE && ( !pActivator || pActivator->IsPlayer() ) )
     {
@@ -799,7 +799,7 @@ public:
 
     void Reverse();
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int m_direction;
     int m_controller;
@@ -847,7 +847,7 @@ void COp4MortarController::Reverse()
     SetThink( nullptr );
 }
 
-void COp4MortarController::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COp4MortarController::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( gpGlobals->time - m_lastpush > 0.5 )
         m_direction = -m_direction;

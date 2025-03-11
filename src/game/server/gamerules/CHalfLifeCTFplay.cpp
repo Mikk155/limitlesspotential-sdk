@@ -745,7 +745,7 @@ void CHalfLifeCTFplay::ClientDisconnected( edict_t* pClient )
             }
             v2->m_iTeamNum = CTFTeam::None;
             v2->m_iNewTeamNum = CTFTeam::None;
-            FireTargets( "game_playerleave", v2, v2, USE_TOGGLE, 0.0 );
+            FireTargets( "game_playerleave", v2, v2, USE_TOGGLE );
 
             Logger->trace( "{} disconnected", PlayerLogInfo{*v2} );
 
@@ -1315,7 +1315,7 @@ void CHalfLifeCTFplay::ChangePlayerTeam( CBasePlayer* pPlayer, const char* pChar
         {
             auto v42 = pPlayer->m_pTank.operator CBaseEntity*();
 
-            v42->Use( pPlayer, pPlayer, USE_OFF, 0 );
+            v42->Use( pPlayer, pPlayer, USE_OFF );
 
             pPlayer->m_pTank = nullptr;
         }

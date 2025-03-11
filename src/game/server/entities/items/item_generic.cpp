@@ -30,7 +30,7 @@ public:
     void StartItem();
     void AnimateThink();
 
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     string_t m_iSequence;
 };
@@ -150,7 +150,7 @@ void CGenericItem::AnimateThink()
     pev->nextthink = gpGlobals->time + 0.1;
 }
 
-void CGenericItem::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CGenericItem::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &CGenericItem::SUB_Remove );
     pev->nextthink = gpGlobals->time + 0.1;

@@ -28,7 +28,7 @@ public:
     bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void Blocked( CBaseEntity* pOther ) override;
 
 
@@ -363,7 +363,7 @@ void CBaseDoor::DoorTouch( CBaseEntity* pOther )
         SetTouch( nullptr ); // Temporarily disable the touch function, until movement is finished.
 }
 
-void CBaseDoor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CBaseDoor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     m_hActivator = pActivator;
     // if not ready to be used, ignore "use" command.
@@ -473,9 +473,9 @@ void CBaseDoor::DoorHitTop()
 
     // Fire the close target (if startopen is set, then "top" is closed) - netname is the close target
     if( !FStringNull( pev->netname ) && ( pev->spawnflags & SF_DOOR_START_OPEN ) != 0 )
-        FireTargets( STRING( pev->netname ), m_hActivator, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( pev->netname ), m_hActivator, this, USE_TOGGLE );
 
-    SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 ); // this isn't finished
+    SUB_UseTargets( m_hActivator, USE_TOGGLE ); // this isn't finished
 }
 
 void CBaseDoor::DoorGoDown()
@@ -517,11 +517,11 @@ void CBaseDoor::DoorHitBottom()
     else // touchable door
         SetTouch( &CBaseDoor::DoorTouch );
 
-    SUB_UseTargets( m_hActivator, USE_TOGGLE, 0 ); // this isn't finished
+    SUB_UseTargets( m_hActivator, USE_TOGGLE ); // this isn't finished
 
     // Fire the close target (if startopen is set, then "top" is closed) - netname is the close target
     if( !FStringNull( pev->netname ) && ( pev->spawnflags & SF_DOOR_START_OPEN ) == 0 )
-        FireTargets( STRING( pev->netname ), m_hActivator, this, USE_TOGGLE, 0 );
+        FireTargets( STRING( pev->netname ), m_hActivator, this, USE_TOGGLE );
 }
 
 void CBaseDoor::Blocked( CBaseEntity* pOther )
@@ -658,7 +658,7 @@ public:
     void Precache() override;
 
     bool KeyValue( KeyValueData* pkvd ) override;
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     int ObjectCaps() override { return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
     /**
@@ -749,17 +749,17 @@ bool CMomentaryDoor::KeyValue( KeyValueData* pkvd )
     return CBaseToggle::KeyValue( pkvd );
 }
 
-void CMomentaryDoor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CMomentaryDoor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( useType != USE_SET ) // Momentary buttons will pass down a float in here
         return;
 
-    if( value > 1.0 )
-        value = 1.0;
-    if( value < 0.0 )
-        value = 0.0;
+    if( value.m_float > 1.0 )
+        value.m_float = 1.0;
+    if( value.m_float < 0.0 )
+        value.m_float = 0.0;
 
-    Vector move = m_vecPosition1 + ( value * ( m_vecPosition2 - m_vecPosition1 ) );
+    Vector move = m_vecPosition1 + ( value.m_float * ( m_vecPosition2 - m_vecPosition1 ) );
 
     Vector delta = move - pev->origin;
     // float speed = delta.Length() * 10;

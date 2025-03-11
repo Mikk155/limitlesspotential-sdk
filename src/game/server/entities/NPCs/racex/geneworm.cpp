@@ -600,7 +600,7 @@ public:
 
     void HitTouch( CBaseEntity* pOther );
 
-    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+    void CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} );
 
     void NextActivity();
 
@@ -1126,7 +1126,7 @@ void COFGeneWorm::DyingThink()
 
         m_flDeathStart = gpGlobals->time;
 
-        FireTargets( "GeneWormDead", this, this, USE_TOGGLE, 0 );
+        FireTargets( "GeneWormDead", this, this, USE_TOGGLE );
 
         for( auto pTrooper : UTIL_FindEntitiesByClassname( "monster_shocktrooper" ) )
         {
@@ -1146,7 +1146,7 @@ void COFGeneWorm::DyingThink()
         if( g_pGameRules->IsMultiplayer() )
         {
             // Fire this so level designers can respond to this at the right time.
-            FireTargets( "GeneWormTeleport", this, this, USE_ON, 1 );
+            FireTargets( "GeneWormTeleport", this, this, USE_ON, UseValue(1) );
         }
         else
         {
@@ -1162,7 +1162,7 @@ void COFGeneWorm::DyingThink()
                     AILogger->debug( "Touching Target GeneWormTeleport" );
                 }
 
-                FireTargets( "GeneWormTeleport", pPlayer, pPlayer, USE_ON, 1 );
+                FireTargets( "GeneWormTeleport", pPlayer, pPlayer, USE_ON, UseValue(1) );
             }
         }
 
@@ -1228,7 +1228,7 @@ void COFGeneWorm::HitTouch( CBaseEntity* pOther )
     }
 }
 
-void COFGeneWorm::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void COFGeneWorm::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     if( useType == USE_TOGGLE && !m_fActivated )
     {
@@ -1607,7 +1607,7 @@ bool COFGeneWorm::FVisible( const Vector& vecOrigin )
     return tr.flFraction == 1.0;
 }
 
-void FireHurtTargets( const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void FireHurtTargets( const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} )
 {
     if( !targetName )
         return;
@@ -1650,31 +1650,31 @@ void COFGeneWorm::HandleAnimEvent( MonsterEvent_t* pEvent )
         break;
 
     case AE_GENEWORM_SLASH_LEFT_ON:
-        FireHurtTargets( "GeneWormLeftSlash", this, this, USE_ON, 0 );
+        FireHurtTargets( "GeneWormLeftSlash", this, this, USE_ON );
         break;
 
     case AE_GENEWORM_SLASH_LEFT_OFF:
-        FireHurtTargets( "GeneWormLeftSlash", this, this, USE_OFF, 0 );
+        FireHurtTargets( "GeneWormLeftSlash", this, this, USE_OFF );
         break;
 
     case AE_GENEWORM_SLASH_RIGHT_ON:
-        FireHurtTargets( "GeneWormRightSlash", this, this, USE_ON, 0 );
+        FireHurtTargets( "GeneWormRightSlash", this, this, USE_ON );
         break;
 
     case AE_GENEWORM_SLASH_RIGHT_OFF:
-        FireHurtTargets( "GeneWormRightSlash", this, this, USE_OFF, 0 );
+        FireHurtTargets( "GeneWormRightSlash", this, this, USE_OFF );
         break;
 
     case AE_GENEWORM_SLASH_CENTER_ON:
-        FireHurtTargets( "GeneWormCenterSlash", this, this, USE_ON, 0 );
+        FireHurtTargets( "GeneWormCenterSlash", this, this, USE_ON );
         break;
 
     case AE_GENEWORM_SLASH_CENTER_OFF:
-        FireHurtTargets( "GeneWormCenterSlash", this, this, USE_OFF, 0 );
+        FireHurtTargets( "GeneWormCenterSlash", this, this, USE_OFF );
         break;
 
     case AE_GENEWORM_HIT_WALL:
-        FireTargets( "GeneWormWallHit", this, this, USE_TOGGLE, 0 );
+        FireTargets( "GeneWormWallHit", this, this, USE_TOGGLE );
         UTIL_ScreenShake( pev->origin, 24, 3, 5, 2048 );
         break;
 

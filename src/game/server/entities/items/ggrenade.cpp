@@ -149,7 +149,7 @@ void CGrenade::Killed( CBaseEntity* attacker, int iGib )
     Detonate();
 }
 
-void CGrenade::DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CGrenade::DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     SetThink( &CGrenade::Detonate );
     pev->nextthink = gpGlobals->time;
@@ -456,7 +456,7 @@ void CGrenade::UseSatchelCharges( CBaseEntity* owner, SATCHELCODE code )
         if( FBitSet( pEnt->pev->spawnflags, SF_DETONATE ) && pEnt->GetOwner() == owner )
         {
             if( code == SATCHEL_DETONATE )
-                pEnt->Use( owner, owner, USE_ON, 0 );
+                pEnt->Use( owner, owner, USE_ON );
             else // SATCHEL_RELEASE
                 pEnt->pev->owner = nullptr;
         }
