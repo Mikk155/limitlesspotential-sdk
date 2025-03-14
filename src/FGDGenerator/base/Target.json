@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Base",
     "data": {
         "target": {
@@ -61,11 +61,12 @@
             "title": "Target::m_UseType",
             "description": "Target::m_UseType::description"
         },
-        "m_UseValue":
+        "m_UseLockType":
         {
-            "variable": "float",
-            "title": "Target::m_UseValue",
-            "description": "Target::m_UseValue::description"
+            "variable": "integer",
+            "value": 0,
+            "title": "Target::m_UseLockType",
+            "description": "Target::m_UseLockType::description"
         }
     }
 }

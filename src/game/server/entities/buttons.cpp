@@ -525,7 +525,7 @@ void CBaseButton::ButtonTouch( CBaseEntity* pOther )
     if( code == BUTTON_NOTHING )
         return;
 
-    if( !UTIL_IsMasterTriggered( m_sMaster, pOther ) )
+    if( IsLockedByMaster( pOther ) )
     {
         // play button locked sound
         PlayLockSounds( this, &m_ls, true, true );
@@ -549,7 +549,7 @@ void CBaseButton::ButtonActivate()
 {
     EmitSound( CHAN_VOICE, STRING( m_sounds ), 1, ATTN_NORM );
 
-    if( !UTIL_IsMasterTriggered( m_sMaster, m_hActivator ) )
+    if( IsLockedByMaster() )
     {
         // button is locked, play locked sound
         PlayLockSounds( this, &m_ls, true, true );
@@ -575,7 +575,7 @@ void CBaseButton::TriggerAndWait()
 {
     ASSERT( m_toggle_state == TS_GOING_UP );
 
-    if( !UTIL_IsMasterTriggered( m_sMaster, m_hActivator ) )
+    if( IsLockedByMaster() )
         return;
 
     m_toggle_state = TS_AT_TOP;

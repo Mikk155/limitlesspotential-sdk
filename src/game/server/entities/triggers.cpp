@@ -223,10 +223,8 @@ bool CTriggerRelay::Spawn()
 
 void CTriggerRelay::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
-    {
+    if( IsLockedByMaster( pActivator ) )
         return;
-    }
 
     SUB_UseTargets( this, triggerType );
     if( ( pev->spawnflags & SF_RELAY_FIREONCE ) != 0 )

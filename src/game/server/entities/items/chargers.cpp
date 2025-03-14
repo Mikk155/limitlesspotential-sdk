@@ -181,7 +181,7 @@ void CBaseCharger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     CheckIfOutOfCharge( true );
 
     // if the player doesn't have the suit, or there is no juice left, or the master isn't active, make the deny noise
-    if( !UTIL_IsMasterTriggered( m_sMaster, player ) ||
+    if( IsLockedByMaster( player ) ||
         ( m_Juice != UnlimitedJuice && m_Juice <= 0 ) ||
         !player->HasSuit() )
     {

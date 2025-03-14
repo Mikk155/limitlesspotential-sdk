@@ -58,5 +58,5 @@ bool CTFSpawn::IsTriggered( CBaseEntity* pEntity )
     if( !FStringNull( pev->targetname ) && STRING( pev->targetname ) )
         return m_fState;
     else
-        return UTIL_IsMasterTriggered( m_sMaster, pEntity );
+        return !( IsLockedByMaster( pEntity ) );
 }

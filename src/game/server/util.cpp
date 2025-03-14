@@ -913,25 +913,6 @@ Vector UTIL_GetAimVector( edict_t* pent, float flSpeed )
     return tmp;
 }
 
-bool UTIL_IsMasterTriggered( string_t sMaster, CBaseEntity* pActivator )
-{
-    if( !FStringNull( sMaster ) )
-    {
-        auto master = UTIL_FindEntityByTargetname( nullptr, STRING( sMaster ) );
-
-        if( !FNullEnt( master ) )
-        {
-            if( ( master->ObjectCaps() & FCAP_MASTER ) != 0 )
-                return master->IsTriggered( pActivator );
-        }
-
-        CBaseEntity::IOLogger->debug( "Master was null or not a master!" );
-    }
-
-    // if this isn't a master entity, just say yes.
-    return true;
-}
-
 bool UTIL_ShouldShowBlood( int color )
 {
     if( color != DONT_BLEED )
@@ -1498,4 +1479,29 @@ bool UTIL_IsMultiplayer()
 {
     // Can be null during weapon registration.
     return g_pGameRules != nullptr && g_pGameRules->IsMultiplayer();
+}
+
+const char* UTIL_GetBestEntityName( CBaseEntity* entity, bool generic )
+{
+    if( entity != nullptr )
+    {
+        if( entity->IsPlayer() )
+        {
+            return STRING( entity->pev->netname ); // Player's name
+        }
+
+        if( generic && entity->IsMonster() )
+        {
+            // -TODO Return display name
+        }
+
+        if( !FStringNull( entity->pev->targetname ) )
+        {
+            return STRING( entity->pev->targetname );
+        }
+
+        return STRING( entity->pev->classname );
+    }
+
+    return "nullptr";
 }

@@ -118,18 +118,287 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
     if( !target )
         return;
 
-    CBaseEntity::IOLogger->debug( "Firing: ({})", target );
+    // If has semicolon then it's multiple targets
+    if( std::strchr( target, ';' ) )
+    {
+        CBaseEntity::IOLogger->debug( "[FireTargets] Firing multi-targets: ({})", target );
+
+        char buffer[256];
+        std::strncpy( buffer, target, sizeof( buffer ) - 1 );
+        buffer[ sizeof( buffer ) - 1 ] = '\0';
+
+        char* token = std::strtok( buffer, ";" );
+
+        while( token )
+        {
+            FireTargets( token, activator, caller, use_type, value );
+            token = std::strtok( nullptr, ";" );
+        }
+
+        return;
+    }
+
+    // if custom USE_TYPE is sent then let's hack it here.
+    if( caller != nullptr && caller->m_UseType != USE_UNSET )
+    {
+        use_type = caller->m_UseType;
+    }
+
+    // Do we have a custom USE_TYPE for this specific target?
+    if( std::strchr( target, '#' ) != nullptr )
+    {
+        std::string target_copy = std::string( target );
+
+        auto hash_index = target_copy.find( "#" );
+
+        int use_value = atoi( target_copy.substr( hash_index + 1 ).c_str() );
+
+        if( use_value >= USE_UNKNOWN || use_value <= USE_UNSET )
+        {
+            CBaseEntity::IOLogger->debug( "[FireTargets] Invalid USE_TYPE index #{} at {}. Ignoring custom USE_TYPE...", use_value, target );
+        }
+        else
+        {
+            value.m_usetype = static_cast<USE_TYPE>(use_value);
+        }
+
+        FireTargets( target_copy.substr( 0, hash_index ).c_str(), activator, caller, use_type, value );
+
+        value.m_usetype = USE_UNSET;
+
+        return;
+    }
+
+    if( value.m_usetype != USE_UNSET )
+    {
+        use_type = value.m_usetype;
+    }
+
+    CBaseEntity::IOLogger->debug( "[FireTargets] Firing: ({})", target );
+
+    // Lambda used for debugging purposes
+    auto lUseType = []( USE_TYPE UseType ) -> std::string
+    {
+        switch( UseType )
+        {
+            case USE_OFF:       return "USE_OFF (0)";
+            case USE_ON:        return "USE_ON (1)";
+            case USE_SET:       return "USE_SET (2)";
+            case USE_TOGGLE:    return "USE_TOGGLE (3)";
+            case USE_KILL:      return "USE_KILL (4)";
+            case USE_SAME:      return "USE_SAME (5)";
+            case USE_OPPOSITE:  return "USE_OPPOSITE (6)";
+            case USE_TOUCH:     return "USE_TOUCH (7)";
+            case USE_LOCK:      return "USE_LOCK (8)";
+            case USE_UNLOCK:    return "USE_UNLOCK (9)";
+        }
+        return "USE_UNKNOWN";
+    };
+
+    auto lUseLock = []( int value ) -> std::string
+    {
+        return ( value == 0 ? "USE_VALUE_UNKNOWN" : 
+            fmt::format( "( {}{}{}{} )",
+                ( FBitSet( value, USE_VALUE_MASTER ) ? "Master " : "" ),
+                ( FBitSet( value, USE_VALUE_TOUCH ) ? "Touch " : "" ),
+                ( FBitSet( value, USE_VALUE_USE ) ? "Use " : "" ),
+                ( FBitSet( value, USE_VALUE_THINK ) ? "Think " : "" )
+            )
+        );
+    };
 
     CBaseEntity* entity = nullptr;
 
     while( ( entity = UTIL_FindEntityByTargetname( entity, target, activator, caller ) ) != nullptr )
     {
-        if( !entity || ( entity->pev->flags & FL_KILLME ) != 0 ) // Don't use dying ents
-            continue;
+        if( !entity || FBitSet( entity->pev->flags, FL_KILLME ) )
+        {
+            continue; // Don't use dying ents
+        }
 
-        CBaseEntity::IOLogger->debug( "Found: {}, firing ({})", STRING( entity->pev->classname ), target );
+        if( FBitSet( entity->m_UseLocked, USE_VALUE_USE ) && use_type != USE_UNLOCK ) // Entity locked for using.
+        {
+            CBaseEntity::IOLogger->debug( "Entity {} locked from Use. Skipping.", UTIL_GetBestEntityName( entity, false ) );
+            continue; // Do this check in here instead so if USE_UNLOCK is sent we catch it
+        }
 
-        entity->Use( activator, caller, use_type, value );
+        switch( use_type )
+        {
+            case USE_ON:
+            case USE_OFF:
+            case USE_TOGGLE:
+            case USE_SET:
+            {
+                entity->m_UseTypeLast = use_type; // Store the last USE_TYPE that we got.
+
+                CBaseEntity::IOLogger->debug(
+                    "{}->Use( {}, {}, {}, {} )",
+                    UTIL_GetBestEntityName( entity, false ),
+                    UTIL_GetBestEntityName( activator, false ),
+                    UTIL_GetBestEntityName( caller, false ),
+                    lUseType( use_type ),
+                    value.print_data()
+                );
+
+                entity->Use( activator, caller, use_type, value );
+
+                break;
+            }
+            case USE_KILL:
+            {
+                entity->m_UseTypeLast = USE_KILL;
+
+                CBaseEntity::IOLogger->debug( "{}->UpdateOnRemove()", UTIL_GetBestEntityName( entity, false ) );
+
+                UTIL_Remove( entity );
+
+                break;
+            }
+            case USE_SAME:
+            {
+                if( !caller || caller == nullptr || caller->m_UseTypeLast == USE_UNSET || caller->m_UseTypeLast == USE_SAME ) // Avoid repeating
+                {
+                    CBaseEntity::IOLogger->debug( "Got {} on caller! setting as USE_TOGGLE.", ( caller != nullptr ? lUseType( caller->m_UseTypeLast ) : "nullptr" ) );
+                    entity->m_UseTypeLast = USE_TOGGLE;
+                }
+                else
+                {
+                    entity->m_UseTypeLast = caller->m_UseTypeLast;
+                }
+
+                CBaseEntity::IOLogger->debug(
+                    "{}->Use( {}, {}, {} > {}, {} )",
+                    UTIL_GetBestEntityName( entity, false ),
+                    UTIL_GetBestEntityName( activator, false ),
+                    UTIL_GetBestEntityName( caller, false ),
+                    lUseType( USE_SAME ),
+                    lUseType( entity->m_UseTypeLast ),
+                    value.print_data()
+                );
+
+                entity->Use( activator, caller, entity->m_UseTypeLast, value );
+
+                break;
+            }
+            case USE_OPPOSITE:
+            {
+                entity->m_UseTypeLast = USE_OPPOSITE;
+
+                if( !caller || caller == nullptr )
+                {
+                    CBaseEntity::IOLogger->debug( "Can't invert USE_TYPE with a null caller! Skipping." );
+                    break;
+                }
+
+                if( caller->m_UseTypeLast != USE_ON
+                && caller->m_UseTypeLast != USE_OFF
+                && caller->m_UseTypeLast != USE_LOCK
+                && caller->m_UseTypeLast != USE_UNLOCK )
+                {
+                    CBaseEntity::IOLogger->debug(
+                        "Can't invert USE_TYPE {}. only {}, {}, {} and {} are supported! Skipping.",
+                        lUseType( entity->m_UseTypeLast ),
+                        lUseType( USE_ON ),
+                        lUseType( USE_OFF ),
+                        lUseType( USE_LOCK ),
+                        lUseType( USE_UNLOCK )
+                    );
+                    break;
+                }
+
+                // will be USE_OPPOSITE only if failed.
+                entity->m_UseTypeLast = ( caller->m_UseTypeLast == USE_ON ? USE_OFF : caller->m_UseTypeLast == USE_OFF ? USE_ON :
+                    caller->m_UseTypeLast == USE_LOCK ? USE_UNLOCK : USE_LOCK );
+
+                CBaseEntity::IOLogger->debug(
+                    "{}->Use( {}, {}, {} > {}, {} )",
+                    UTIL_GetBestEntityName( entity, false ),
+                    UTIL_GetBestEntityName( activator, false ),
+                    UTIL_GetBestEntityName( caller, false ),
+                    lUseType( USE_OPPOSITE ),
+                    lUseType( entity->m_UseTypeLast ),
+                    value.print_data()
+                );
+
+                entity->Use( activator, caller, entity->m_UseTypeLast );
+                break;
+            }
+            case USE_TOUCH:
+            {
+                entity->m_UseTypeLast = USE_TOUCH;
+
+                CBaseEntity::IOLogger->debug( "{}->Touch( {} )", UTIL_GetBestEntityName( entity, false ), UTIL_GetBestEntityName( activator, false ) );
+
+                if( FBitSet( entity->m_UseLocked, USE_VALUE_TOUCH ) ) // Entity locked for Touching.
+                {
+                    CBaseEntity::IOLogger->debug( "Entity locked from Touch. Skipping." );
+                    break;
+                }
+
+                entity->Touch( activator );
+
+                break;
+            }
+            case USE_LOCK:
+            {
+                entity->m_UseTypeLast = USE_LOCK;
+
+                if( !caller || caller == nullptr )
+                {
+                    CBaseEntity::IOLogger->debug( "{}->{} but got a nullptr caller! Skipping.", UTIL_GetBestEntityName( entity, false ), lUseLock( USE_LOCK ) );
+                    break;
+                }
+
+                if( !caller || caller == nullptr )
+                {
+                    CBaseEntity::IOLogger->debug( "{}->{} but got a zero value on caller! Skipping.", UTIL_GetBestEntityName( entity, false ), lUseLock( USE_LOCK ) );
+                    break;
+                }
+
+                CBaseEntity::IOLogger->debug( "{}->{} Locked. won't receive any calls until get {}", UTIL_GetBestEntityName( entity, false ), lUseLock( USE_LOCK ), lUseType( USE_UNLOCK ) );
+
+                // -TODO Does this work with multiple? Or i have to manualy remove each one?
+                SetBits( entity->m_UseLocked, caller->m_UseLockType );
+
+                break;
+            }
+            case USE_UNLOCK:
+            {
+                entity->m_UseTypeLast = USE_UNLOCK;
+
+                if( !caller || caller == nullptr )
+                {
+                    CBaseEntity::IOLogger->debug( "{}->{} but got a nullptr caller! Skipping.", UTIL_GetBestEntityName( entity, false ), lUseLock( USE_UNLOCK ) );
+                    break;
+                }
+
+                if( !caller || caller == nullptr )
+                {
+                    CBaseEntity::IOLogger->debug( "{}->{} but got a zero value on caller! Skipping.", UTIL_GetBestEntityName( entity, false ), lUseLock( USE_UNLOCK ) );
+                    break;
+                }
+
+                CBaseEntity::IOLogger->debug( "{}->{} Un-Locked. will receive calls now", UTIL_GetBestEntityName( entity, false ), lUseLock( USE_UNLOCK ) );
+
+                ClearBits( entity->m_UseLocked, caller->m_UseLockType );
+
+                break;
+            }
+            default:
+            {
+                CBaseEntity::IOLogger->debug(
+                    "{}->Use( {}, {}, {} )",
+                    UTIL_GetBestEntityName( entity, false ),
+                    UTIL_GetBestEntityName( activator, false ),
+                    UTIL_GetBestEntityName( caller, false ),
+                    lUseType( use_type )
+                );
+    
+                entity->m_UseTypeLast = use_type;
+                entity->Use( activator, caller, use_type, value );
+                break;
+            }
+        }
     }
 }
 

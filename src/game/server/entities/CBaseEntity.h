@@ -56,11 +56,24 @@ struct ReplacementMap;
 
 enum USE_TYPE : int
 {
-    USE_OFF = 0,
-    USE_ON = 1,
-    USE_SET = 2,
-    USE_TOGGLE = 3
+    USE_UNSET = -1,
+    USE_OFF,
+    USE_ON,
+    USE_SET,
+    USE_TOGGLE,
+    USE_KILL,
+    USE_SAME,
+    USE_OPPOSITE,
+    USE_TOUCH,
+    USE_LOCK,
+    USE_UNLOCK,
+    USE_UNKNOWN
 };
+
+#define USE_VALUE_USE ( 1 << 0 )
+#define USE_VALUE_TOUCH ( 1 << 1 )
+#define USE_VALUE_MASTER ( 1 << 2 )
+#define USE_VALUE_THINK ( 1 << 3 )
 
 class UseValue
 {
@@ -68,30 +81,22 @@ class UseValue
         int m_int;
         float m_float;
         double m_double;
-        edict_t* m_edict;
-        const char* m_char;
         Vector m_Vector;
+        const char* m_char;
         CBaseEntity* m_entity;
+
+        USE_TYPE m_usetype = USE_UNSET; // This is only used by FireTargets for allowing custom USE_TYPEs in the target's string
+
+        const char* print_data();
 
     UseValue() = default;
 
-    explicit UseValue( int value ) 
-        : m_int( value ), m_float( static_cast<float>( value ) ), m_double(static_cast<double>( value ) ) { }
-
-    explicit UseValue( float value) 
-        : m_int( static_cast<int>( std::round(value) ) ),
-          m_float( value ), 
-          m_double( static_cast<double>( value ) ) { }
-
-    explicit UseValue( double value ) 
-        : m_int( static_cast<int>( std::round( value ) ) ),
-          m_float( static_cast<float>( value ) ), 
-          m_double( value ) { }
-
-    explicit UseValue( edict_t* value ) : m_edict( value ) { }
-    explicit UseValue( CBaseEntity* value ) : m_entity( value ) { }
-    explicit UseValue( const char* value ) : m_char( value ) { }
     explicit UseValue( Vector value ) : m_Vector( value ) { }
+    explicit UseValue( const char* value ) : m_char( value ) { }
+    explicit UseValue( CBaseEntity* value ) : m_entity( value ) { }
+    explicit UseValue( int value ) : m_int( value ), m_float( static_cast<float>( value ) ), m_double(static_cast<double>( value ) ) { }
+    explicit UseValue( float value) : m_int( static_cast<int>( std::round( value ) ) ), m_float( value ), m_double( static_cast<double>( value ) ) { }
+    explicit UseValue( double value ) : m_int( static_cast<int>( std::round( value ) ) ), m_float( static_cast<float>( value ) ), m_double( value ) { }
 };
 
 // people gib if their health is <= this at the time of death
@@ -367,7 +372,6 @@ public:
     virtual bool IsNetClient() { return false; }
     virtual const char* TeamID() { return ""; }
 
-
     //    virtual void    SetActivator( CBaseEntity *pActivator ) {}
     virtual CBaseEntity* GetNextTarget();
 
@@ -463,7 +467,7 @@ public:
     bool Intersects( CBaseEntity* pOther );
     void MakeDormant();
     bool IsDormant();
-    bool IsLockedByMaster();
+    bool IsLockedByMaster( CBaseEntity* pActivator = nullptr );
 
     static CBaseEntity* Instance( edict_t* pent )
     {
@@ -650,6 +654,18 @@ public:
      *    @details The entity's angles affect this offset.
      */
     Vector m_SoundOffset{};
+
+    // Default USE_TYPE if is not USE_UNSET.
+    USE_TYPE m_UseType = USE_UNSET;
+
+    // Mapper's value to use as UseValue. Commonly used with USE_LOCK and USE_UNLOCK or USE_SET.
+    int m_UseLockType;
+
+    // Last received USE_TYPE. this is used for USE_SAME and USE_OPPOSITE
+    USE_TYPE m_UseTypeLast = USE_UNSET;
+
+    // Bit locking this entity from doing a specific task by USE_LOCK and USE_UNLOCK
+    int m_UseLocked;
 
     /**
      *  @brief Allocate a new entity instance for pActivator.

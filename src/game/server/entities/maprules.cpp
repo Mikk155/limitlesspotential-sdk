@@ -44,15 +44,7 @@ bool CRuleEntity::Spawn()
 
 bool CRuleEntity::CanFireForActivator( CBaseEntity* pActivator )
 {
-    if( !FStringNull( m_sMaster ) )
-    {
-        if( UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
-            return true;
-        else
-            return false;
-    }
-
-    return true;
+    return !( IsLockedByMaster( pActivator ) );
 }
 
 /**

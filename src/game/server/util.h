@@ -181,7 +181,6 @@ void UTIL_TraceModel( const Vector& vecStart, const Vector& vecEnd, int hullNumb
 Vector UTIL_GetAimVector( edict_t* pent, float flSpeed );
 int UTIL_PointContents( const Vector& vec );
 
-bool UTIL_IsMasterTriggered( string_t sMaster, CBaseEntity* pActivator );
 void UTIL_BloodStream( const Vector& origin, const Vector& direction, int color, int amount );
 void UTIL_BloodDrips( const Vector& origin, const Vector& direction, int color, int amount );
 Vector UTIL_RandomBloodVector();
@@ -203,6 +202,12 @@ float UTIL_AngleDistance( float next, float cur );
 char* UTIL_VarArgs( const char* format, ... );
 void UTIL_Remove( CBaseEntity* entity );
 bool UTIL_IsValidEntity( edict_t* pent );
+
+/**
+ *    @brief Returns the best name for the given entity. mostly used for debug purposes
+ *    @param generic if true. will print the monster's default name. otherwise will always display targetname
+ */
+const char* UTIL_GetBestEntityName( CBaseEntity* entity, bool generic = true );
 
 /**
  *    @brief Returns whether the given entity can be removed if requested by players or designers (killtarget).

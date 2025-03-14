@@ -1208,9 +1208,13 @@
 {
 "english": "Unlock"
 },
-"Target::m_UseValue":
+"Target::m_UseLockType":
 {
-"english": "Value to pass"
+"english": "Trigger Un-Lock type"
+},
+"Target::m_UseLockType::description":
+{
+"english": "bit-wise operation. 1 = Use, 2 = Touch, 4 = Master"
 },
 "Global::globalname":
 {

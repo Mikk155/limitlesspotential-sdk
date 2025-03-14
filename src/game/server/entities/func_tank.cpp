@@ -393,11 +393,8 @@ bool CFuncTank::StartControl( CBasePlayer* pController )
         return false;
 
     // Team only or disabled?
-    if( !FStringNull( m_sMaster ) )
-    {
-        if( !UTIL_IsMasterTriggered( m_sMaster, pController ) )
-            return false;
-    }
+    if( IsLockedByMaster( pController ) )
+        return false;
 
     CBaseEntity::Logger->debug( "using TANK!" );
 

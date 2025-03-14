@@ -60,10 +60,8 @@ bool CLogicSetCVar::KeyValue( KeyValueData* pkvd )
 
 void CLogicSetCVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
-    {
+    if( IsLockedByMaster( pActivator ) )
         return;
-    }
 
     const auto cvarName = STRING( m_CVarName );
     const auto cvarValue = STRING( m_CVarValue );
@@ -158,10 +156,8 @@ bool CLogicIsSkill::KeyValue( KeyValueData* pkvd )
 
 void CLogicIsSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
-    {
+    if( IsLockedByMaster( pActivator ) )
         return;
-    }
 
     const int skillLevelIndex = int( g_Skill.GetSkillLevel() ) - 1;
 
@@ -219,10 +215,8 @@ bool CLogicSetSkill::Spawn()
 
 void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
-    {
+    if( IsLockedByMaster( pActivator ) )
         return;
-    }
 
     CVAR_SET_FLOAT( "skill", m_SkillLevel );
 
@@ -283,10 +277,8 @@ bool CLogicSetSkillVar::Spawn()
 
 void CLogicSetSkillVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( !UTIL_IsMasterTriggered( m_sMaster, pActivator ) )
-    {
+    if( IsLockedByMaster( pActivator ) )
         return;
-    }
 
     g_Skill.SetValue( STRING( m_Name ), m_Value );
 

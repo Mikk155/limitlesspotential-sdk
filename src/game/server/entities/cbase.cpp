@@ -178,7 +178,7 @@ void DispatchTouch( edict_t* pentTouched, edict_t* pentOther )
     CBaseEntity* pEntity = (CBaseEntity*)GET_PRIVATE( pentTouched );
     CBaseEntity* pOther = (CBaseEntity*)GET_PRIVATE( pentOther );
 
-    if( pEntity && pOther && ( ( pEntity->pev->flags | pOther->pev->flags ) & FL_KILLME ) == 0 )
+    if( pEntity && pOther && ( ( pEntity->pev->flags | pOther->pev->flags ) & FL_KILLME ) == 0 && !FBitSet( pEntity->m_UseLocked, USE_VALUE_TOUCH ) )
         pEntity->Touch( pOther );
 }
 
@@ -187,7 +187,7 @@ void DispatchUse( edict_t* pentUsed, edict_t* pentOther )
     CBaseEntity* pEntity = (CBaseEntity*)GET_PRIVATE( pentUsed );
     CBaseEntity* pOther = (CBaseEntity*)GET_PRIVATE( pentOther );
 
-    if( pEntity && ( pEntity->pev->flags & FL_KILLME ) == 0 )
+    if( pEntity && ( pEntity->pev->flags & FL_KILLME ) == 0 && !FBitSet( pEntity->m_UseLocked, USE_VALUE_USE ) )
         pEntity->Use( pOther, pOther, USE_TOGGLE );
 }
 
@@ -597,6 +597,19 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
     {
         m_sNewActivator = ALLOC_STRING( pkvd->szValue );
     }
+    else if( FStrEq( pkvd->szKeyName, "m_UseType" ) )
+    {
+        int value = atoi( pkvd->szValue );
+
+        if( value >= USE_UNKNOWN || value <= USE_UNSET )
+            return false;
+
+        m_UseType = static_cast<USE_TYPE>( value );
+    }
+    else if( FStrEq( pkvd->szKeyName, "m_UseLockType" ) )
+    {
+        m_UseLockType = atoi( pkvd->szValue );
+    }
     else return false;
     return true;
 }
@@ -815,9 +828,26 @@ bool CBaseEntity::IsDormant()
     return FBitSet( pev->flags, FL_DORMANT );
 }
 
-bool CBaseEntity::IsLockedByMaster()
+bool CBaseEntity::IsLockedByMaster( CBaseEntity* pActivator )
 {
-    return !FStringNull( m_sMaster ) && !UTIL_IsMasterTriggered( m_sMaster, m_hActivator );
+    if( FBitSet( m_UseLocked, USE_VALUE_MASTER ) )
+        return true;
+
+    if( FStringNull( m_sMaster ) )
+        return false;
+
+    auto master = UTIL_FindEntityByTargetname( nullptr, STRING( m_sMaster ) );
+
+    if( FNullEnt( master ) )
+        return false;
+
+    if( ( master->ObjectCaps() & FCAP_MASTER ) == 0 )
+        return false;
+
+    if( !master->IsTriggered( ( pActivator != nullptr ? pActivator : m_hActivator.Get() ) ) )
+        return false;
+
+    return true;
 }
 
 bool CBaseEntity::IsInWorld()
@@ -935,4 +965,38 @@ CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntit
     }
 
     return pActivator;
+}
+
+const char* UseValue::print_data()
+{
+    static std::string message;
+
+    message.clear();
+
+    if( m_char )
+        message += fmt::format( "string({}), ", m_char );
+
+    if( m_entity != nullptr )
+        message += fmt::format( "entity({}), ", UTIL_GetBestEntityName( m_entity ) );
+
+    if( m_int )
+        message += fmt::format( "int({}), ", m_int );
+
+    if( m_float != 0.0f )
+        message += fmt::format( "float({:.2f}), ", m_float );
+
+    if( m_double != 0.0 )
+        message += fmt::format( "double({:.2f}), ", m_double );
+
+    if( m_Vector != g_vecZero )
+        message += fmt::format( "Vector({}, {}, {}), ", m_Vector[0], m_Vector[1], m_Vector[2] );
+
+    if( message.empty() )
+        return "null";
+
+    // Remove last coma and space
+    message.pop_back(); 
+    message.pop_back();
+
+    return message.c_str();
 }
