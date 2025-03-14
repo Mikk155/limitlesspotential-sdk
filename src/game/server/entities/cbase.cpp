@@ -30,14 +30,14 @@ int DispatchSpawn( edict_t* pent )
 
     if( entity != nullptr )
     {
-        if( !pEntity->ShouldAppearByFlags() ) {
-            UTIL_Remove( pEntity );
+        if( !entity->ShouldAppearByFlags() ) {
+            UTIL_Remove( entity );
             return -1;
         }
 
         // Initialize these or entities who don't link to the world won't have anything in here
-        pEntity->pev->absmin = pEntity->pev->origin - Vector( 1, 1, 1 );
-        pEntity->pev->absmax = pEntity->pev->origin + Vector( 1, 1, 1 );
+        entity->pev->absmin = entity->pev->origin - Vector( 1, 1, 1 );
+        entity->pev->absmax = entity->pev->origin + Vector( 1, 1, 1 );
 
         if( !entity->Spawn() )
         {
