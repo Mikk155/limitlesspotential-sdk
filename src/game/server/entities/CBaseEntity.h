@@ -99,6 +99,13 @@ class UseValue
     explicit UseValue( double value ) : m_int( static_cast<int>( std::round( value ) ) ), m_float( static_cast<float>( value ) ), m_double( value ) { }
 };
 
+enum appearflags : int
+{
+    NotIn = -1, // Does not appears when
+    Default = 0, // Has no effect
+    OnlyIn = 1 // Only appears when
+};
+
 // people gib if their health is <= this at the time of death
 #define GIB_HEALTH_VALUE -30
 
@@ -674,6 +681,12 @@ public:
      */
     CBaseEntity* AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget );
     string_t m_sNewActivator;
+
+    std::unordered_map<std::string_view, appearflags> m_appearflags;
+    /**
+     *    @brief Returns whatever a entity is fine to exists by the current rules it has.
+     */
+    bool ShouldAppearByFlags();
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }

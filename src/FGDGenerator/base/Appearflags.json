@@ -83,7 +83,7 @@
 			"title": "Appearflags::appearflag_deathmatch",
 			"description": "Appearflags::appearflag_deathmatch::description"
 		},
-		"appearflag_cft":
+		"appearflag_ctf":
 		{
 			"variable": "choices",
 			"value": "0",
@@ -100,8 +100,8 @@
 					"description": "Appearflags_onlyin::description"
 				}
 			},
-			"title": "Appearflags::appearflag_cft",
-			"description": "Appearflags::appearflag_cft::description"
+			"title": "Appearflags::appearflag_ctf",
+			"description": "Appearflags::appearflag_ctf::description"
 		},
 		"appearflag_teamplay":
 		{

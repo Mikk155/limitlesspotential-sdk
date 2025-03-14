@@ -30,9 +30,14 @@ int DispatchSpawn( edict_t* pent )
 
     if( entity != nullptr )
     {
+        if( !pEntity->ShouldAppearByFlags() ) {
+            UTIL_Remove( pEntity );
+            return -1;
+        }
+
         // Initialize these or entities who don't link to the world won't have anything in here
-        entity->pev->absmin = entity->pev->origin - Vector( 1, 1, 1 );
-        entity->pev->absmax = entity->pev->origin + Vector( 1, 1, 1 );
+        pEntity->pev->absmin = pEntity->pev->origin - Vector( 1, 1, 1 );
+        pEntity->pev->absmax = pEntity->pev->origin + Vector( 1, 1, 1 );
 
         if( !entity->Spawn() )
         {
@@ -597,6 +602,17 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
     {
         m_sNewActivator = ALLOC_STRING( pkvd->szValue );
     }
+    else if( strstr( pkvd->szKeyName, "appearflag_" ) != nullptr )
+    {
+        if( int value = atoi( pkvd->szValue ); value == appearflags::NotIn || value == appearflags::OnlyIn )
+        {
+            m_appearflags[ std::string_view( pkvd->szKeyName ) ] = static_cast<appearflags>( value );
+        }
+        else
+        {
+            return false;
+        }
+    }
     else if( FStrEq( pkvd->szKeyName, "m_UseType" ) )
     {
         int value = atoi( pkvd->szValue );
@@ -999,4 +1015,97 @@ const char* UseValue::print_data()
     message.pop_back();
 
     return message.c_str();
+}
+
+bool CBaseEntity::ShouldAppearByFlags()
+{
+    bool should_not = false;
+
+    auto matched = []( appearflags bit, bool condition ) -> bool
+    {
+        switch( bit )
+        {
+            case appearflags::NotIn:
+                return condition;
+            case appearflags::OnlyIn:
+                return !condition;
+        }
+        return true;
+    };
+
+    auto Appearance = m_appearflags.begin();
+
+    while( m_appearflags.end() != Appearance )
+    {
+        bool reusable = true;
+
+        if( Appearance->second == appearflags::Default )
+        {
+            Appearance = m_appearflags.erase(Appearance);
+            continue;
+        }
+        else if( Appearance->first == "appearflag_singleplayer"sv )
+        {
+            should_not = matched( Appearance->second, !( g_pGameRules->IsMultiplayer() ) );
+            goto gt_remove;
+        }
+        else if( Appearance->first == "appearflag_multiplayer"sv )
+        {
+            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() ) );
+            goto gt_remove;
+        }
+        else if( Appearance->first == "appearflag_cooperative"sv )
+        {
+            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsCoOp() ) );
+            goto gt_remove;
+        }
+        else if( Appearance->first == "appearflag_skilleasy"sv )
+        {
+            should_not = matched( Appearance->second, ( g_Skill.GetSkillLevel() == SkillLevel::Easy ) );
+        }
+        else if( Appearance->first == "appearflag_skillmedium"sv )
+        {
+            should_not = matched( Appearance->second, ( g_Skill.GetSkillLevel() == SkillLevel::Medium ) );
+        }
+        else if( Appearance->first == "appearflag_skillhard"sv )
+        {
+            should_not = matched( Appearance->second, ( g_Skill.GetSkillLevel() == SkillLevel::Hard ) );
+        }
+        else if( Appearance->first == "appearflag_deathmatch"sv )
+        {
+            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsDeathmatch() ) );
+            goto gt_remove;
+        }
+        else if( Appearance->first == "appearflag_teamplay"sv )
+        {
+            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsTeamplay() ) );
+            goto gt_remove;
+        }
+        else if( Appearance->first == "appearflag_ctf"sv )
+        {
+            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsCTF() ) );
+            goto gt_remove;
+        }
+        else if( Appearance->first == "appearflag_dedicated"sv )
+        {
+            should_not = matched( Appearance->second, ( IS_DEDICATED_SERVER() ) );
+            goto gt_remove;
+        }
+
+        Appearance++;
+
+        gt_re_check:
+
+        if( should_not ) {
+            return false;
+        }
+
+        continue;
+
+        gt_remove:
+        Appearance = m_appearflags.erase(Appearance);
+        goto gt_re_check;
+    }
+
+    return true;
 }
