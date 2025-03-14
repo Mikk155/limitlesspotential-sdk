@@ -57,7 +57,7 @@ void CBaseTrigger::ActivateMultiTrigger( CBaseEntity* pActivator )
     if( pev->nextthink > gpGlobals->time )
         return; // still waiting for reset time
 
-    if( IsLockedByMaster() )
+    if( IsLockedByMaster( pActivator ) )
         return;
 
     if( !FStringNull( pev->noise ) )
