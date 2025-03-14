@@ -282,16 +282,19 @@ class Program
 
         Program.Buffer.Append( $"\n@{Class}Class " );
 
-        // Get Bases
-        string UsingBases = string.Empty;
-        if( bases is not null )
+        if( classname != "Mandatory" )
         {
-            // Mandatory should contain targetname and spawnflag "Not in deathmatch" as all entities support and uses these.
-            UsingBases = "base( Mandatory";
-            foreach( string KeyBase in bases ) {
-                UsingBases += $", {KeyBase}";
+            // Get Bases
+            string UsingBases = string.Empty;
+            if( bases is not null )
+            {
+                // Mandatory should contain targetname and spawnflag "Not in deathmatch" as all entities support and uses these.
+                UsingBases = "base( Mandatory";
+                foreach( string KeyBase in bases ) {
+                    UsingBases += $", {KeyBase}";
+                }
+                Program.Buffer.Append( $"{UsingBases} ) " );
             }
-            Program.Buffer.Append( $"{UsingBases} ) " );
         }
 
         foreach( KeyValuePair<string, JToken?> DataKeys in (JObject)data )
