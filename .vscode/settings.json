@@ -1,4 +1,9 @@
 {
+    "[csharp]":
+    {
+        "editor.codeLens": false
+    },
+
     "files.exclude":
     {
         "build/": true,
