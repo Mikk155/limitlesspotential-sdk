@@ -10,22 +10,49 @@ using Newtonsoft.Json.Linq;
 
 class Program
 {
-    // This is the name of the program. since generating a FGD For Valve Hammer Editor would have issues since it doesn't support some J.A.C.K features.
+    /// <summary>
+    /// This is the name of the program. Since generating a FGD For Valve Hammer Editor would have issues as it doesn't support some J.A.C.K features.
+    /// </summary>
     private static string program = string.Empty;
-    // These entities doesn't use any BaseClass and it's data must be on its own class.
+
+    /// <summary>
+    /// These entities doesn't use any BaseClass and it's data must be on its own class.
+    /// </summary>
     private static readonly string[] unique_entities = [ "worldspawn", "infodecal" ];
-    // The whole game data objects
+
+    /// <summary>
+    /// The whole game data objects
+    /// </summary>
     private static JObject FGD = [];
-    // Contains all entity descriptions with multiple languages.
+
+    /// <summary>
+    /// Contains all entity descriptions with multiple languages.
+    /// </summary>
     private static JObject Sentences = [];
-    // Contains all entity data. not base classes
+
+    /// <summary>
+    /// Contains all entity data. not base classes
+    /// </summary>
     private static List<string> entities = [];
-    // keep track of writted baseclasses
+
+    /// <summary>
+    /// keep track of writted baseclasses
+    /// </summary>
     private static List<string> writed_classes = [];
-    // Buffer to write to the .fgd file
+
+    /// <summary>
+    /// Buffer to write to the .fgd file
+    /// </summary>
     private static StringBuilder Buffer = new();
 
+    /// <summary>
+    /// Supported languages in sentences.json
+    /// </summary>
     private static List<JToken> languages = [ "english" ];
+
+    /// <summary>
+    /// Current language label to get from sentences.json
+    /// </summary>
     private static string language = string.Empty;
 
     static string WorkSpace()
@@ -205,6 +232,7 @@ class Program
             {
                 if( Program.program == "hammer" )
                 {
+                    // These are JACK-Only value types.
                     switch( Key )
                     {
                         case "float":
@@ -219,6 +247,7 @@ class Program
                         break;
                     }
                 }
+
                 string title = GetSentence(Value[ "title" ]?.ToString(), true);
                 string description = GetSentence(Value[ "description" ]?.ToString());
                 string variable = Value[ "variable" ]?.ToString();
