@@ -1,0 +1,57 @@
+// Multiplayer-only skill values
+{
+    "suitcharger": 30,
+
+    "plr_crowbar": 25,
+    "plr_9mm_bullet": 12,
+    "plr_357_bullet": 40,
+    "plr_9mmAR_bullet": 12,
+    "plr_9mmAR_grenade": 100,
+    "plr_buckshot": 20, // fewer pellets in deathmatch
+    "plr_xbow_bolt_client": 20,
+    "plr_rpg": 120,
+    "plr_egon_wide": 20,
+    "plr_egon_narrow": 10,
+    "plr_hand_grenade": 100,
+    "plr_satchel": 120,
+    "plr_tripmine": 150,
+    "plr_hornet_dmg": 10,
+    "plr_grapple": 50,
+
+    "crowbar_full_damage": 1,
+    "revolver_laser_sight": 1,
+    "smg_wide_spread": 1,
+    "shotgun_single_tight_spread": 1,
+    "shotgun_double_wide_spread": 1,
+    "crossbow_sniper_bolt": 1,
+    "crossbow_explosive_bolt": 1,
+    "gauss_charge_time": 1.5,
+    "gauss_fast_ammo_use": 1,
+    "gauss_vertical_force": 1,
+    "gauss_damage_radius": 1.75,
+    "egon_narrow_ammo_per_second": 10,
+    "egon_wide_ammo_per_second": 6,
+    "egon_wide_radius_damage": 1,
+    "pipewrench_full_damage": 1,
+    "knife_allow_backstab": 1,
+    "grapple_fast": 1,
+    "m249_wide_spread": 1,
+    "shockrifle_fast": 1,
+
+    "allow_flashlight" : 0,
+
+    "allow_monsters": 0,
+
+    "falldamagemode": 0,
+
+    "healthcharger_recharge_time": 60,
+    "hevcharger_recharge_time": 30,
+
+    "weapon_respawn_time": 20,
+    "ammo_respawn_time": 20,
+    "pickupitem_respawn_time": 30,
+
+    "weapon_instant_respawn": 0,
+
+    "allow_player_weapon_dropping": 1
+}
