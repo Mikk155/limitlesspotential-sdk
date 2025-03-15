@@ -339,8 +339,6 @@ void CHudSpectator::SetSpectatorStartPosition()
     else if( UTIL_FindEntityInMap( "info_player_deathmatch", m_cameraOrigin, m_cameraAngles ) )
         iJumpSpectator = true;
 
-    else if( UTIL_FindEntityInMap( "info_player_coop", m_cameraOrigin, m_cameraAngles ) )
-        iJumpSpectator = true;
     else
     {
         // jump to 0,0,0 if no better position was found
