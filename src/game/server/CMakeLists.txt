@@ -190,6 +190,7 @@ target_sources(server PRIVATE
     entities/rope/CRopeSegment.cpp
     entities/rope/CRopeSegment.h
 
+    entities/trigger/entity_condition.cpp
     entities/trigger/entity_iterator.cpp
     
     entities/NPCs/basemonster.h
