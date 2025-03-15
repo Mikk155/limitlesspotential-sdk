@@ -21,8 +21,6 @@ Consult TWHL's entity guide for more complete information about existing entitie
 * [player_sethealth](entities/player_sethealth.md)
 * [player_sethudcolor](entities/player_sethudcolor.md)
 * [player_setsuitlighttype](entities/player_setsuitlighttype.md)
-* [player_hassuit](entities/player_hassuit.md)
-* [player_hasweapon](entities/player_hasweapon.md)
 * [point_teleport](entities/point_teleport.md)
 * [trigger_changekeyvalue](entities/trigger_changekeyvalue.md)
 * [trigger_playerfreeze](entities/trigger_playerfreeze.md)
