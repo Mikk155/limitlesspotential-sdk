@@ -5,7 +5,6 @@ build/*
 src/FGDGenerator/FGD/*
 src/FGDGenerator/bin/*
 src/FGDGenerator/obj/*
-halflife-unified-sdk.sln
 
 # JACK crap
 src/mapsrc/*.max
