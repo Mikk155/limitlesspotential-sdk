@@ -92,4 +92,6 @@ void CTriggerEntityCondition :: Use( CBaseEntity* pActivator, CBaseEntity* pCall
     }
 
     FireTargets( ( bCondition ? STRING( m_PassTarget ) : STRING( m_FailTarget ) ), pActivator, this, USE_TOGGLE, value );
+
+    FireTargets( STRING( pev->target ), pActivator, this, USE_TOGGLE, value );
 }
