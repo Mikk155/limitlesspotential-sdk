@@ -22,7 +22,7 @@ class CTriggerEntityCondition : public CPointEntity
 
     public:
         bool KeyValue( KeyValueData* pkvd ) override;
-        void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+        void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     private:
         string_t m_PassTarget;
@@ -65,7 +65,7 @@ bool CTriggerEntityCondition :: KeyValue( KeyValueData* pkvd )
     return true;
 }
 
-void CTriggerEntityCondition :: Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
+void CTriggerEntityCondition :: Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     bool bCondition = false;
 

@@ -158,7 +158,6 @@ class CTriggerRelay : public CBaseDelay
 //    DECLARE_DATAMAP();
 
 public:
-    bool KeyValue( KeyValueData* pkvd ) override;
     bool Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
