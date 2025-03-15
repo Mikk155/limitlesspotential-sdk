@@ -44,7 +44,6 @@ class CTriggerEntityIterator : public CBaseDelay
         string_t classname_filter;
         string_t trigger_after_run;
         int status_filter = 0;
-        int triggerstate = 2;
         int run_mode = 0;
         int maximum_runs = 0;
         int current_runs = 0;
@@ -59,7 +58,6 @@ BEGIN_DATAMAP( CTriggerEntityIterator )
     DEFINE_FIELD( run_mode, FIELD_INTEGER ),
     DEFINE_FIELD( IsThinking, FIELD_BOOLEAN ),
     DEFINE_FIELD( name_filter, FIELD_STRING ),
-    DEFINE_FIELD( triggerstate, FIELD_INTEGER ),
     DEFINE_FIELD( maximum_runs, FIELD_INTEGER ),
     DEFINE_FIELD( current_runs, FIELD_INTEGER ),
     DEFINE_FIELD( status_filter, FIELD_INTEGER ),
@@ -117,10 +115,6 @@ bool CTriggerEntityIterator :: KeyValue( KeyValueData* pkvd )
     else if( FStrEq( pkvd->szKeyName, "status_filter" ) )
     {
         status_filter = atoi( pkvd->szValue );
-    }
-    else if( FStrEq( pkvd->szKeyName, "triggerstate" ) )
-    {
-        triggerstate = atoi( pkvd->szValue );
     }
     else if( FStrEq( pkvd->szKeyName, "run_mode" ) )
     {
@@ -232,16 +226,14 @@ void CTriggerEntityIterator :: IteratorTrigger( CBaseEntity* pTarget )
     || ( status_filter == FILTER_STATUS_ONLY_LIVING && !pTarget->IsAlive() )
     ) { return; }
 
-    USE_TYPE UseType = static_cast<USE_TYPE>( triggerstate );
-
     if( delay_between_triggers > 0.0 )
     {
         flNextDelayTrigger += delay_between_triggers;
         m_flDelay = flNextDelayTrigger;
-        SUB_UseTargets( pTarget, UseType );
+        SUB_UseTargets( pTarget, m_UseType );
     }
     else
     {
-        FireTargets( STRING( pev->target ), pTarget, this, UseType );
+        FireTargets( STRING( pev->target ), pTarget, this, m_UseType );
     }
 }

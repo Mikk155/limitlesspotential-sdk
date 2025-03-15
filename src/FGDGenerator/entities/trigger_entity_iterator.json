@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "size": [
         [
@@ -62,26 +62,6 @@
             "value": "",
             "title": "trigger_entity_iterator::target",
             "description": "trigger_entity_iterator::target::description"
-        },
-        "triggerstate": {
-            "variable": "choices",
-            "value": "0",
-            "choices": {
-                "0": {
-                    "title": "trigger_entity_iterator::triggerstate::0",
-                    "description": "trigger_entity_iterator::triggerstate::0::description"
-                },
-                "1": {
-                    "title": "trigger_entity_iterator::triggerstate::1",
-                    "description": "trigger_entity_iterator::triggerstate::1::description"
-                },
-                "2": {
-                    "title": "trigger_entity_iterator::triggerstate::2",
-                    "description": "trigger_entity_iterator::triggerstate::2::description"
-                }
-            },
-            "title": "trigger_entity_iterator::triggerstate",
-            "description": "trigger_entity_iterator::triggerstate::description"
         },
         "run_mode": {
             "variable": "choices",

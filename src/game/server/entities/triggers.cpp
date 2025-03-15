@@ -109,14 +109,12 @@ public:
 
 private:
     string_t m_globalstate;
-    USE_TYPE triggerType;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_auto, CAutoTrigger );
 
 BEGIN_DATAMAP( CAutoTrigger )
     DEFINE_FIELD( m_globalstate, FIELD_STRING ),
-    DEFINE_FIELD( triggerType, FIELD_INTEGER ),
 END_DATAMAP();
 
 bool CAutoTrigger::KeyValue( KeyValueData* pkvd )
@@ -124,23 +122,6 @@ bool CAutoTrigger::KeyValue( KeyValueData* pkvd )
     if( FStrEq( pkvd->szKeyName, "globalstate" ) )
     {
         m_globalstate = ALLOC_STRING( pkvd->szValue );
-        return true;
-    }
-    else if( FStrEq( pkvd->szKeyName, "triggerstate" ) )
-    {
-        int type = atoi( pkvd->szValue );
-        switch ( type )
-        {
-        case 0:
-            triggerType = USE_OFF;
-            break;
-        case 2:
-            triggerType = USE_TOGGLE;
-            break;
-        default:
-            triggerType = USE_ON;
-            break;
-        }
         return true;
     }
 
@@ -163,7 +144,7 @@ void CAutoTrigger::Think()
 {
     if( FStringNull( m_globalstate ) || gGlobalState.EntityGetState( m_globalstate ) == GLOBAL_ON )
     {
-        SUB_UseTargets( this, triggerType );
+        SUB_UseTargets( this, m_UseType );
         if( ( pev->spawnflags & SF_AUTO_FIREONCE ) != 0 )
             UTIL_Remove( this );
     }
@@ -174,7 +155,7 @@ void CAutoTrigger::Think()
 class CTriggerRelay : public CBaseDelay
 {
     DECLARE_CLASS( CTriggerRelay, CBaseDelay );
-    DECLARE_DATAMAP();
+//    DECLARE_DATAMAP();
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
@@ -182,39 +163,12 @@ public:
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-
-private:
-    USE_TYPE triggerType;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_relay, CTriggerRelay );
 
-BEGIN_DATAMAP( CTriggerRelay )
-    DEFINE_FIELD( triggerType, FIELD_INTEGER ),
-END_DATAMAP();
-
-bool CTriggerRelay::KeyValue( KeyValueData* pkvd )
-{
-    if( FStrEq( pkvd->szKeyName, "triggerstate" ) )
-    {
-        int type = atoi( pkvd->szValue );
-        switch ( type )
-        {
-        case 0:
-            triggerType = USE_OFF;
-            break;
-        case 2:
-            triggerType = USE_TOGGLE;
-            break;
-        default:
-            triggerType = USE_ON;
-            break;
-        }
-        return true;
-    }
-
-    return CBaseDelay::KeyValue( pkvd );
-}
+// BEGIN_DATAMAP( CTriggerRelay )
+// END_DATAMAP();
 
 bool CTriggerRelay::Spawn()
 {
@@ -226,7 +180,7 @@ void CTriggerRelay::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     if( IsLockedByMaster( pActivator ) )
         return;
 
-    SUB_UseTargets( this, triggerType );
+    SUB_UseTargets( this, m_UseType );
     if( ( pev->spawnflags & SF_RELAY_FIREONCE ) != 0 )
         UTIL_Remove( this );
 }
@@ -1800,7 +1754,6 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    USE_TYPE triggerType;
     CTFTeam team_no;
     float trigger_delay;
     float m_flTriggerDelayTime;
@@ -1848,7 +1801,7 @@ void CTriggerCTFGeneric::Touch( CBaseEntity* pOther )
         }
     }
 
-    SUB_UseTargets( this, triggerType );
+    SUB_UseTargets( this, m_UseType );
 
     // TODO: constrain team_no input to valid values
     if( 0 != team_score )
@@ -1906,25 +1859,6 @@ bool CTriggerCTFGeneric::KeyValue( KeyValueData* pkvd )
     else if( FStrEq( "team_score", pkvd->szKeyName ) )
     {
         team_score = atof( pkvd->szValue );
-        return true;
-    }
-    else if( FStrEq( "triggerstate", pkvd->szKeyName ) )
-    {
-        switch ( atoi( pkvd->szValue ) )
-        {
-        case 1:
-            triggerType = USE_ON;
-            break;
-
-        case 2:
-            triggerType = USE_TOGGLE;
-            break;
-
-        default:
-            triggerType = USE_OFF;
-            break;
-        }
-
         return true;
     }
 

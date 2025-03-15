@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "base": [
         "Target",
@@ -14,26 +14,6 @@
                     "description": "game_team_master::spawnflags::1::description"
                 }
             }
-        },
-        "triggerstate": {
-            "variable": "choices",
-            "value": "0",
-            "choices": {
-                "0": {
-                    "title": "game_team_master::triggerstate::0",
-                    "description": "game_team_master::triggerstate::0::description"
-                },
-                "1": {
-                    "title": "game_team_master::triggerstate::1",
-                    "description": "game_team_master::triggerstate::1::description"
-                },
-                "2": {
-                    "title": "game_team_master::triggerstate::2",
-                    "description": "game_team_master::triggerstate::2::description"
-                }
-            },
-            "title": "game_team_master::triggerstate",
-            "description": "game_team_master::triggerstate::description"
         },
         "teamindex": {
             "variable": "integer",

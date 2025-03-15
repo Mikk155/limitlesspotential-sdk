@@ -3548,22 +3548,6 @@
 {
 "english": "Remove On fire"
 },
-"game_team_master::triggerstate":
-{
-"english": "Trigger State"
-},
-"game_team_master::triggerstate::0":
-{
-"english": "Off"
-},
-"game_team_master::triggerstate::1":
-{
-"english": "On"
-},
-"game_team_master::triggerstate::2":
-{
-"english": "Toggle"
-},
 "game_team_master::teamindex":
 {
 "english": "Team Index (-1 = no team)"
@@ -5233,22 +5217,6 @@
 {
 "english": "Global State to Read"
 },
-"trigger_auto::triggerstate":
-{
-"english": "Trigger State"
-},
-"trigger_auto::triggerstate::0":
-{
-"english": "Off"
-},
-"trigger_auto::triggerstate::1":
-{
-"english": "On"
-},
-"trigger_auto::triggerstate::2":
-{
-"english": "Toggle"
-},
 "trigger_autosave::classname":
 {
 "english": "AutoSave Trigger"
@@ -5556,22 +5524,6 @@
 "trigger_relay::spawnflags::1":
 {
 "english": "Remove On fire"
-},
-"trigger_relay::triggerstate":
-{
-"english": "Trigger State"
-},
-"trigger_relay::triggerstate::0":
-{
-"english": "Off"
-},
-"trigger_relay::triggerstate::1":
-{
-"english": "On"
-},
-"trigger_relay::triggerstate::2":
-{
-"english": "Toggle"
 },
 "TeleportBase::fire_on_teleport":
 {
@@ -7149,22 +7101,6 @@
 {
 "english": "Team Score"
 },
-"trigger_ctfgeneric::triggerstate":
-{
-"english": "Trigger State"
-},
-"trigger_ctfgeneric::triggerstate::0":
-{
-"english": "Off"
-},
-"trigger_ctfgeneric::triggerstate::1":
-{
-"english": "On"
-},
-"trigger_ctfgeneric::triggerstate::2":
-{
-"english": "Toggle"
-},
 "env_warpball::classname":
 {
 "english": "Warp In Ball"
@@ -7328,22 +7264,6 @@
 "trigger_entity_iterator::target":
 {
 "english": "Entity's Trigger Target"
-},
-"trigger_entity_iterator::triggerstate":
-{
-"english": "Entity's Trigger State"
-},
-"trigger_entity_iterator::triggerstate::0":
-{
-"english": "Off"
-},
-"trigger_entity_iterator::triggerstate::1":
-{
-"english": "On"
-},
-"trigger_entity_iterator::triggerstate::2":
-{
-"english": "Toggle"
 },
 "trigger_entity_iterator::run_mode":
 {

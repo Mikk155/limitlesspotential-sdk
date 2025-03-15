@@ -329,7 +329,6 @@ private:
     bool TeamMatch( CBaseEntity* pActivator );
 
     int m_teamIndex;
-    USE_TYPE triggerType;
 };
 
 LINK_ENTITY_TO_CLASS( game_team_master, CGameTeamMaster );
@@ -339,23 +338,6 @@ bool CGameTeamMaster::KeyValue( KeyValueData* pkvd )
     if( FStrEq( pkvd->szKeyName, "teamindex" ) )
     {
         m_teamIndex = atoi( pkvd->szValue );
-        return true;
-    }
-    else if( FStrEq( pkvd->szKeyName, "triggerstate" ) )
-    {
-        int type = atoi( pkvd->szValue );
-        switch ( type )
-        {
-        case 0:
-            triggerType = USE_OFF;
-            break;
-        case 2:
-            triggerType = USE_TOGGLE;
-            break;
-        default:
-            triggerType = USE_ON;
-            break;
-        }
         return true;
     }
 
@@ -382,7 +364,7 @@ void CGameTeamMaster::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 
     if( TeamMatch( pActivator ) )
     {
-        SUB_UseTargets( pActivator, triggerType, value );
+        SUB_UseTargets( pActivator, m_UseType, value );
         if( RemoveOnFire() )
             UTIL_Remove( this );
     }
