@@ -47,7 +47,7 @@ CBaseEntity
 #include "EntityDictionary.h"
 #include "animation.h"
 #include "decals.h"
-#include "skill.h"
+#include "ConfigurationSystem.h"
 #include "game.h"
 #include "CGameRules.h"
 #include "CGlobalState.h"

@@ -6,8 +6,8 @@ function(add_game_shared_sources target)
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/palette.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/ProjectInfoSystem.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/ProjectInfoSystem.h
-            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/skill.cpp
-            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/skill.h
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/ConfigurationSystem.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/ConfigurationSystem.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/voice_common.h
             
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/ehandle.cpp

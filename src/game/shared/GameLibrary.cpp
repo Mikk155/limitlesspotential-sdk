@@ -18,7 +18,7 @@
 #include "AmmoTypeSystem.h"
 #include "GameLibrary.h"
 #include "ProjectInfoSystem.h"
-#include "skill.h"
+#include "ConfigurationSystem.h"
 #include "WeaponDataSystem.h"
 
 #include "entities/EntityClassificationSystem.h"

@@ -24,7 +24,7 @@
 #include "util.h"
 #include "DataMap.h"
 #include "EntityClassificationSystem.h"
-#include "skill.h"
+#include "ConfigurationSystem.h"
 
 class CBaseEntity;
 class CBaseItem;

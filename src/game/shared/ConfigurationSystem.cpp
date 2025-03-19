@@ -23,7 +23,7 @@
 #include <EASTL/fixed_vector.h>
 
 #include "cbase.h"
-#include "skill.h"
+#include "ConfigurationSystem.h"
 
 #include "ConCommandSystem.h"
 #include "GameLibrary.h"

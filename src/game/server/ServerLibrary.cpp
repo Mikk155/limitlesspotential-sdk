@@ -31,7 +31,7 @@
 #include "scripted.h"
 #include "ServerConfigContext.h"
 #include "ServerLibrary.h"
-#include "skill.h"
+#include "ConfigurationSystem.h"
 #include "UserMessages.h"
 #include "voice_gamemgr.h"
 

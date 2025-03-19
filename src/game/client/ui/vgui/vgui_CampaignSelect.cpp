@@ -20,7 +20,7 @@
 
 #include "hud.h"
 #include "CampaignSelectSystem.h"
-#include "skill.h"
+#include "ConfigurationSystem.h"
 #include "vgui_CampaignSelect.h"
 #include "vgui_listbox.h"
 
