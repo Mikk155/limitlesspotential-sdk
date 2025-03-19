@@ -183,7 +183,6 @@ void CAGrunt::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = GetSkillFloat( "agrunt_health"sv );
     pev->model = MAKE_STRING( "models/agrunt.mdl" );
 
     SetClassification( "alien_military" );
@@ -539,6 +538,7 @@ bool CAGrunt::Spawn()
 {
     Precache();
 
+    pev->health = g_Skill.GetValue( "agrunt_health"sv, 120, this );
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );
 

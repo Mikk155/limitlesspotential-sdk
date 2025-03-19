@@ -1152,6 +1152,14 @@
 {
 "english": "Sentence replacement file"
 },
+"ReplacementFiles::configlist":
+{
+"english": "Configuration file (Custom Skill file only for now.)"
+},
+"ReplacementFiles::configlist::description":
+{
+"english": "Supposed to be a full-configuration list in a future."
+},
 "CustomModel::model":
 {
 "english": "Model"

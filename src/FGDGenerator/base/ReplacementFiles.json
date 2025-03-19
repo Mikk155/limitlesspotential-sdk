@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Base",
     "data": {
         "modellist": {
@@ -19,6 +19,12 @@
             "value": "",
             "title": "ReplacementFiles::sentencelist",
             "description": "ReplacementFiles::sentencelist::description"
+        },
+        "configlist": {
+            "variable": "string",
+            "value": "",
+            "title": "ReplacementFiles::configlist",
+            "description": "ReplacementFiles::configlist::description"
         }
     }
 }

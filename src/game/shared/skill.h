@@ -118,18 +118,23 @@ public:
     /**
      *    @brief Gets the value for a given skill variable.
      */
-    float GetValue( std::string_view name, float defaultValue = 0.f ) const;
+    float GetValue( std::string_view name, float defaultValue = 0.f, CBaseEntity* entity = nullptr ) const;
 
     void SetValue( std::string_view name, float value );
 
 #ifndef CLIENT_DLL
     void SendAllNetworkedSkillVars( CBasePlayer* player );
+
+    /**
+     *    @brief Get the index for the given file. if doesn't exist then initialize it.
+     */
+    int AsignCustomMap( const char* filename );
 #endif
 
 private:
     static float ClampValue( float value, const SkillVarConstraints& constraints );
 
-    bool ParseConfiguration( const json& input );
+    bool ParseConfiguration( const json& input, const bool CustomMap );
 
 #ifdef CLIENT_DLL
     void MsgFunc_SkillVars( BufferReader& reader );
@@ -145,6 +150,9 @@ private:
     int m_NextNetworkedIndex = 0;
 
     bool m_LoadingSkillFiles = false;
+
+    std::vector<std::vector<SkillVariable>> m_CustomMaps;
+    std::unordered_map<std::string, int> m_CustomMapIndex;
 };
 
 inline SkillSystem g_Skill;

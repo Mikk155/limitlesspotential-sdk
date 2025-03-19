@@ -272,6 +272,8 @@ void SkillSystem::LoadSkillConfigFiles( std::span<const std::string> fileNames )
             it = m_SkillVariables.erase( it );
         }
     }
+    m_CustomMaps.clear();
+    m_CustomMapIndex.clear();
 
     m_LoadingSkillFiles = true;
 
@@ -282,7 +284,7 @@ void SkillSystem::LoadSkillConfigFiles( std::span<const std::string> fileNames )
         if( const auto result = g_JSON.ParseJSONFile( fileName.c_str(),
                 {.SchemaName = SkillConfigSchemaName, .PathID = "GAMECONFIG"},
                 [this]( const json& input )
-                { return ParseConfiguration( input ); } );
+                { return ParseConfiguration( input, false ); } );
             !result.value_or( false ) )
         {
             m_Logger->error( "Error loading skill configuration file \"{}\"", fileName );
@@ -343,12 +345,22 @@ void SkillSystem::DefineVariable( std::string name, float initialValue, const Sk
     m_SkillVariables.emplace_back( std::move( variable ) );
 }
 
-float SkillSystem::GetValue( std::string_view name, float defaultValue ) const
+float SkillSystem::GetValue( std::string_view name, float defaultValue, CBaseEntity* entity ) const
 {
-    if( const auto it = std::find_if( m_SkillVariables.begin(), m_SkillVariables.end(), [&]( const auto& variable )
-            { return variable.Name == name; } );
-        it != m_SkillVariables.end() )
+#ifndef CLIENT_DLL
+    if( entity != nullptr && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
     {
+        std::vector<SkillVariable> skill_map = m_CustomMaps.at( entity->m_config );
+
+        if( const auto it = std::find_if( skill_map.begin(), skill_map.end(), [&]( const auto& variable )
+                { return variable.Name == name; } ); it != skill_map.end() ) {
+            return it->CurrentValue;
+        }
+    }
+#endif
+
+    if( const auto it = std::find_if( m_SkillVariables.begin(), m_SkillVariables.end(), [&]( const auto& variable )
+            { return variable.Name == name; } ); it != m_SkillVariables.end() ) {
         return it->CurrentValue;
     }
 
@@ -459,12 +471,14 @@ float SkillSystem::ClampValue( float value, const SkillVarConstraints& constrain
     return value;
 }
 
-bool SkillSystem::ParseConfiguration( const json& input )
+bool SkillSystem::ParseConfiguration( const json& input, const bool CustomMap )
 {
     if( !input.is_object() )
     {
         return false;
     }
+
+    std::vector<SkillVariable> skill_map;
 
     for( const auto& item : input.items() )
     {
@@ -492,8 +506,40 @@ bool SkillSystem::ParseConfiguration( const json& input )
 
         if( !skillLevel.has_value() || skillLevel.value() == GetSkillLevel() )
         {
-            SetValue( std::get<0>( variableName ), valueFloat );
+            if( CustomMap )
+            {
+                std::string_view name = std::get<0>( variableName );
+
+                auto it = std::find_if( skill_map.begin(), skill_map.end(), [&]( const auto& variable )
+                    { return variable.Name == name; } );
+
+                if( it == skill_map.end() )
+                {
+                    SkillVariable variable{
+                        .Name = std::string(name),
+                        .CurrentValue = 0,
+                        .InitialValue = 0
+                    };
+            
+                    skill_map.emplace_back( std::move( variable ) );
+            
+                    it = skill_map.end() - 1;
+                }
+
+                m_Logger->debug( "Skill value \"{}\" changed to \"{}\"", name, valueFloat );
+
+                it->CurrentValue = ClampValue( valueFloat, it->Constraints );
+            }
+            else
+            {
+                SetValue( std::get<0>( variableName ), valueFloat );
+            }
         }
+    }
+
+    if( CustomMap )
+    {
+        m_CustomMaps.emplace_back( std::move( skill_map ) );
     }
 
     return true;
@@ -530,5 +576,33 @@ void SkillSystem::MsgFunc_SkillVars( BufferReader& reader )
             m_Logger->error( "Could not find networked skill variable with index {}", networkIndex );
         }();
     }
+}
+#endif
+
+
+#ifndef CLIENT_DLL
+int SkillSystem::AsignCustomMap( const char* filename )
+{
+    std::string name = std::string( filename );
+
+    if( m_CustomMapIndex.find( name ) != m_CustomMapIndex.end() )
+    {
+        return m_CustomMapIndex.at( name );
+    }
+
+    int map_index = (int)m_CustomMaps.size();
+    m_Logger->trace( "Loading custom skill \"{}\" at index {}", filename, map_index );
+
+    if( const auto result = g_JSON.ParseJSONFile( filename,
+            {.SchemaName = SkillConfigSchemaName, .PathID = "GAMECONFIG"},
+            [this]( const json& input )
+            { return ParseConfiguration( input, true ); } );
+        !result.value_or( false ) )
+    {
+        m_Logger->error( "Error loading skill configuration file \"{}\"", filename );
+    }
+
+    m_CustomMapIndex[ name ] = map_index;
+    return map_index;
 }
 #endif

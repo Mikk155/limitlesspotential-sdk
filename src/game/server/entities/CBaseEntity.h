@@ -648,6 +648,9 @@ public:
     const ReplacementMap* m_SoundReplacement{};
     const ReplacementMap* m_SentenceReplacement{};
 
+    // Index of configuration file.
+    int m_config;
+
     Vector m_CustomHullMin{vec3_origin};
     Vector m_CustomHullMax{vec3_origin};
     bool m_HasCustomHullMin{false};

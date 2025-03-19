@@ -562,7 +562,12 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
 {
     // Replacement maps can be changed at runtime using trigger_changekeyvalue.
     // Note that this may cause host_error or sys_error if files aren't precached.
-    if( FStrEq( pkvd->szKeyName, "modellist" ) )
+    if( FStrEq( pkvd->szKeyName, "configlist" ) )
+    {
+        m_config = g_Skill.AsignCustomMap( pkvd->szValue );
+        return ( m_config >= 0 );
+    }
+    else if( FStrEq( pkvd->szKeyName, "modellist" ) )
     {
         m_ModelReplacementFileName = ALLOC_STRING( pkvd->szValue );
         LoadFileNameReplacementMap( m_ModelReplacement, m_ModelReplacementFileName );
