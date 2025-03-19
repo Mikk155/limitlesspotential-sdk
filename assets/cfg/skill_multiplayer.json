@@ -1,5 +1,7 @@
 // Multiplayer-only skill values
 {
+    "$schema": "../schemas/server/Config.json",
+
     "suitcharger": 30,
 
     "plr_crowbar": 25,

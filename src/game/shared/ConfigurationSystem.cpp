@@ -49,9 +49,11 @@ static std::string GetConfigSchema()
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Configuration System",
     "type": "object",
+    "properties": {{ "$schema": {{ "type": "string" }} }},
     "patternProperties": {{
         "{}": {{
-            "type": "number"
+            "oneOf": [ {{ "type": "string" }}, {{ "type": "number" }}, {{ "type": "boolean" }} ],
+            "description": "Configuration value. Could end with a number from 1 to 3 representing the value used for the current skill level."
         }}
     }},
     "additionalProperties": false
@@ -96,7 +98,7 @@ static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> Tr
 
 bool ConfigurationSystem::Initialize()
 {
-    m_Logger = g_Logging.CreateLogger( "Configuration" );
+    m_Logger = g_Logging.CreateLogger( "cfg" );
 
     g_JSON.RegisterSchema( ConfigSchemaName, &GetConfigSchema );
 
@@ -345,6 +347,30 @@ void ConfigurationSystem::DefineVariable( std::string name, float initialValue, 
     m_ConfigVariables.emplace_back( std::move( variable ) );
 }
 
+std::string ConfigurationSystem::GetValue( std::string_view name, std::string_view defaultValue, CBaseEntity* entity ) const
+{
+#ifndef CLIENT_DLL
+    if( entity != nullptr && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
+    {
+        std::vector<ConfigVariable> config_map = m_CustomMaps.at( entity->m_config );
+
+        if( const auto it = std::find_if( config_map.begin(), config_map.end(), [&]( const auto& variable )
+                { return variable.Name == name; } ); it != config_map.end() ) {
+            return it->StringValue;
+        }
+    }
+#endif
+
+    if( const auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
+            { return variable.Name == name; } ); it != m_ConfigVariables.end() ) {
+        return it->StringValue;
+    }
+
+    m_Logger->debug( "Undefined variable {}{}", name, m_SkillLevel );
+
+    return std::string( defaultValue );
+}
+
 float ConfigurationSystem::GetValue( std::string_view name, float defaultValue, CBaseEntity* entity ) const
 {
 #ifndef CLIENT_DLL
@@ -369,7 +395,7 @@ float ConfigurationSystem::GetValue( std::string_view name, float defaultValue, 
     return defaultValue;
 }
 
-void ConfigurationSystem::SetValue( std::string_view name, float value )
+void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value )
 {
     auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
         { return variable.Name == name; } );
@@ -379,21 +405,43 @@ void ConfigurationSystem::SetValue( std::string_view name, float value )
         ConfigVariable variable{
             .Name = std::string{name},
             .CurrentValue = 0,
-            .InitialValue = 0};
+            .InitialValue = 0
+        };
 
         m_ConfigVariables.emplace_back( std::move( variable ) );
 
         it = m_ConfigVariables.end() - 1;
     }
 
-    value = ClampValue( value, it->Constraints );
+    float fValue;
 
-    if( it->CurrentValue != value )
+    if( std::holds_alternative<float>(value) )
+    {
+        fValue = std::get<float>(value);
+    }
+    else if( std::holds_alternative<int>(value) )
+    {
+        fValue = std::get<int>(value);
+    }
+    else if( std::holds_alternative<bool>(value) )
+    {
+        fValue = ( std::get<bool>(value) ? 1 : 0 );
+        it->Constraints.Type = ConfigVarType::Boolean;
+    }
+    else if( std::holds_alternative<std::string_view>(value) )
+    {
+        it->StringValue = std::string( std::get<std::string_view>(value) );
+        it->Constraints.Type = ConfigVarType::String;
+    }
+
+    fValue = ClampValue( fValue, it->Constraints );
+
+    if( it->CurrentValue != fValue )
     {
         m_Logger->debug( "Config value \"{}\" changed to \"{}\"{}",
-            name, value, it->NetworkIndex != NotNetworkedIndex ? " (Networked)" : "" );
+            name, fValue, it->NetworkIndex != NotNetworkedIndex ? " (Networked)" : "" );
 
-        it->CurrentValue = value;
+        it->CurrentValue = fValue;
 
 #ifndef CLIENT_DLL
         if( !m_LoadingConfigurationFiles )
@@ -402,7 +450,17 @@ void ConfigurationSystem::SetValue( std::string_view name, float value )
             {
                 MESSAGE_BEGIN( MSG_ALL, gmsgConfigVars );
                 WRITE_BYTE( it->NetworkIndex );
-                WRITE_FLOAT( it->CurrentValue );
+
+                if( it->Constraints.Type == ConfigVarType::String )
+                {
+                    WRITE_FLOAT( -3 );
+                    WRITE_STRING( it->StringValue.c_str() );
+                }
+                else
+                {
+                    WRITE_FLOAT( it->CurrentValue );
+                }
+
                 MESSAGE_END();
             }
         }
@@ -441,7 +499,16 @@ void ConfigurationSystem::SendAllNetworkedConfigVars( CBasePlayer* player )
         }
 
         WRITE_BYTE( variable.NetworkIndex );
-        WRITE_FLOAT( variable.CurrentValue );
+
+        if( variable.Constraints.Type == ConfigVarType::String )
+        {
+            WRITE_FLOAT( -3 );
+            WRITE_STRING( variable.StringValue.c_str() );
+        }
+        else
+        {
+            WRITE_FLOAT( variable.CurrentValue );
+        }
 
         totalMessageSize += SingleMessageSize;
     }
@@ -452,7 +519,7 @@ void ConfigurationSystem::SendAllNetworkedConfigVars( CBasePlayer* player )
 
 float ConfigurationSystem::ClampValue( float value, const ConfigVarConstraints& constraints )
 {
-    if( constraints.Type == ConfigVarType::Integer )
+    if( constraints.Type == ConfigVarType::Integer || constraints.Type == ConfigVarType::Boolean )
     {
         // Round value to integer.
         value = int( value );
@@ -484,12 +551,6 @@ bool ConfigurationSystem::ParseConfiguration( const json& input, const bool Cust
     {
         const json value = item.value();
 
-        if( !value.is_number() )
-        {
-            // Already validated by schema.
-            continue;
-        }
-
         // Get the config variable base name and skill level.
         const auto maybeVariableName = TryParseConfigVariableName( item.key(), *m_Logger );
 
@@ -500,17 +561,15 @@ bool ConfigurationSystem::ParseConfiguration( const json& input, const bool Cust
 
         const auto& variableName = maybeVariableName.value();
 
-        const auto valueFloat = value.get<float>();
-
         const auto& skillLevel = std::get<1>( variableName );
 
         if( !skillLevel.has_value() || skillLevel.value() == GetSkillLevel() )
         {
+            std::string_view name = std::get<0>( variableName );
+
             if( CustomMap )
             {
                 // -TODO Should move this in within SetValue and just target the right vector.
-                std::string_view name = std::get<0>( variableName );
-
                 auto it = std::find_if( config_map.begin(), config_map.end(), [&]( const auto& variable )
                     { return variable.Name == name; } );
 
@@ -527,13 +586,20 @@ bool ConfigurationSystem::ParseConfiguration( const json& input, const bool Cust
                     it = config_map.end() - 1;
                 }
 
-                m_Logger->debug( "Config value \"{}\" changed to \"{}\"", name, valueFloat );
+                m_Logger->debug( "Config value \"{}\" changed to \"{}\"", name, value.get<float>() );
 
-                it->CurrentValue = ClampValue( valueFloat, it->Constraints );
+                it->CurrentValue = ClampValue( value.get<float>(), it->Constraints );
             }
             else
             {
-                SetValue( std::get<0>( variableName ), valueFloat );
+                if( value.is_number() )
+                    SetValue( name, value.get<float>() );
+                else if( value.is_string() )
+                    SetValue( name, value.get<std::string>() );
+                else if( value.is_boolean() )
+                    SetValue( name, value.get<bool>() );
+                else
+                    m_Logger->warn( "Config value \"{}\" is not one of float, int, string or boolean.", name );
             }
         }
     }
@@ -569,7 +635,14 @@ void ConfigurationSystem::MsgFunc_ConfigVars( BufferReader& reader )
                 if( variable.NetworkIndex == networkIndex )
                 {
                     // Don't need to log since the server logs the change. The client only follows its lead.
-                    variable.CurrentValue = value;
+                    if( (int)value == -3 )
+                    {
+                        const char* string_value = reader.ReadString();
+                        variable.StringValue = std::string( string_value );
+                        variable.Constraints.Type = ConfigVarType::String;
+                    }
+                    else
+                        variable.CurrentValue = value;
                     return;
                 }
             }

@@ -53,7 +53,9 @@ constexpr bool IsValidSkillLevel(SkillLevel skillLevel)
 enum class ConfigVarType
 {
     Float = 0,
-    Integer
+    Integer,
+    String,
+    Boolean
 };
 
 struct ConfigVarConstraints
@@ -90,6 +92,7 @@ private:
     struct ConfigVariable
     {
         std::string Name;
+        std::string StringValue;
         float CurrentValue = 0;
         float InitialValue = 0;
         float NetworkedValue = 0;
@@ -115,12 +118,13 @@ public:
 
     void DefineVariable( std::string name, float initialValue, const ConfigVarConstraints& constraints = {} );
 
-    /**
-     *    @brief Gets the value for a given skill variable.
-     */
+    /*
+     *  @brief Gets the value for a given skill variable.
+    */
     float GetValue( std::string_view name, float defaultValue = 0.f, CBaseEntity* entity = nullptr ) const;
+    std::string GetValue( std::string_view name, std::string_view defaultValue, CBaseEntity* entity = nullptr ) const;
 
-    void SetValue( std::string_view name, float value );
+    void SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value );
 
 #ifndef CLIENT_DLL
     void SendAllNetworkedConfigVars( CBasePlayer* player );

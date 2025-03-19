@@ -12,6 +12,9 @@ src/mapsrc/*.rmx
 # Let's use .map as is not binary.
 src/mapsrc/*.rmf
 
+# json schemas (The game generates them)
+assets/schemas/*
+
 # Stuff
 stuff/*
 

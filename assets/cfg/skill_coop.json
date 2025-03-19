@@ -1,5 +1,7 @@
 // Skill values for the Co-op gamemode
 {
+    "$schema": "../schemas/server/Config.json",
+
     "allow_monsters": 1,
     "falldamagemode": 1,
     "healthcharger_recharge_time": -1,

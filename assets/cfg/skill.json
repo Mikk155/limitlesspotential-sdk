@@ -1,5 +1,7 @@
 // DON'T MESS WITH THIS.
 {
+    "$schema": "../schemas/server/Config.json",
+
     // MONSTERS
 
     // Alien Grunt
