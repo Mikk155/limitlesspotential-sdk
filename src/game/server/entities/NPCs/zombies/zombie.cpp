@@ -24,7 +24,7 @@ void CZombie::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "zombie_health"sv, 100, this );
+    pev->health = g_cfg.GetValue( "zombie_health"sv, 100, this );
     pev->model = MAKE_STRING( "models/zombie.mdl" );
 
     SetClassification( "alien_monster" );
@@ -95,12 +95,12 @@ void CZombie::AttackSound()
 
 float CZombie::GetOneSlashDamage()
 {
-    return g_Skill.GetValue( "zombie_dmg_one_slash"sv, 20, this );
+    return g_cfg.GetValue( "zombie_dmg_one_slash"sv, 20, this );
 }
 
 float CZombie::GetBothSlashDamage()
 {
-    return g_Skill.GetValue( "zombie_dmg_both_slash"sv, 40, this );
+    return g_cfg.GetValue( "zombie_dmg_both_slash"sv, 40, this );
 }
 
 void CZombie::ZombieSlashAttack( float damage, const Vector& punchAngle, const Vector& velocity, bool playAttackSound )

@@ -79,7 +79,7 @@ void CHalfLifeRules::ClientDisconnected( edict_t* pClient )
 
 bool CHalfLifeRules::AllowAutoTargetCrosshair()
 {
-    return ( g_Skill.GetSkillLevel() == SkillLevel::Easy );
+    return ( g_cfg.GetSkillLevel() == SkillLevel::Easy );
 }
 
 void CHalfLifeRules::PlayerThink( CBasePlayer* pPlayer )

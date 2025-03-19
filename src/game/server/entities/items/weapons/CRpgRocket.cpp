@@ -75,7 +75,7 @@ bool CRpgRocket::Spawn()
 
     pev->nextthink = gpGlobals->time + 0.4;
 
-    pev->dmg = g_Skill.GetValue( "plr_rpg"sv, 100, this );
+    pev->dmg = g_cfg.GetValue( "plr_rpg"sv, 100, this );
 
     return true;
 }

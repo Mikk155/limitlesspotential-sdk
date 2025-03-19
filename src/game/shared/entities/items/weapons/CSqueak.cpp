@@ -78,7 +78,7 @@ void CSqueakGrenade::OnCreate()
 {
     CGrenade::OnCreate();
 
-    pev->health = g_Skill.GetValue( "snark_health"sv, 2 );
+    pev->health = g_cfg.GetValue( "snark_health"sv, 2 );
     pev->model = MAKE_STRING( "models/w_squeak.mdl" );
 
     SetClassification( "alien_bioweapon" );
@@ -105,7 +105,7 @@ bool CSqueakGrenade::Spawn()
     pev->gravity = 0.5;
     pev->friction = 0.5;
 
-    pev->dmg = g_Skill.GetValue( "snark_dmg_pop"sv, 5, this );
+    pev->dmg = g_cfg.GetValue( "snark_dmg_pop"sv, 5, this );
 
     m_flDie = gpGlobals->time + SQUEEK_DETONATE_DELAY;
 
@@ -338,13 +338,13 @@ void CSqueakGrenade::SuperBounceTouch( CBaseEntity* pOther )
             {
                 // AILogger->debug("hit enemy");
                 ClearMultiDamage();
-                pOther->TraceAttack( this, g_Skill.GetValue( "snark_dmg_bite"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_SLASH );
+                pOther->TraceAttack( this, g_cfg.GetValue( "snark_dmg_bite"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_SLASH );
                 if( m_hOwner != nullptr )
                     ApplyMultiDamage( this, m_hOwner );
                 else
                     ApplyMultiDamage( this, this );
 
-                pev->dmg += g_Skill.GetValue( "snark_dmg_pop"sv, 5, this ); // add more explosion damage
+                pev->dmg += g_cfg.GetValue( "snark_dmg_pop"sv, 5, this ); // add more explosion damage
                 // m_flDie += 2.0; // add more life
 
                 // make bite sound

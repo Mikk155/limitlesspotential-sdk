@@ -50,24 +50,24 @@ constexpr bool IsValidSkillLevel(SkillLevel skillLevel)
     return skillLevel >= SkillLevel::Easy && skillLevel <= SkillLevel::Hard;
 }
 
-enum class SkillVarType
+enum class ConfigVarType
 {
     Float = 0,
     Integer
 };
 
-struct SkillVarConstraints
+struct ConfigVarConstraints
 {
     std::optional<float> Minimum{std::nullopt};
     std::optional<float> Maximum{std::nullopt};
     bool Networked{false};
-    SkillVarType Type{SkillVarType::Float};
+    ConfigVarType Type{ConfigVarType::Float};
 };
 
 /**
  *    @brief Loads skill variables from files and provides a means of looking them up.
  */
-class SkillSystem final : public IGameSystem, public INetworkDataBlockHandler
+class ConfigurationSystem final : public IGameSystem, public INetworkDataBlockHandler
 {
 private:
     // Change to std::uint16_t and change WRITE_BYTE to WRITE_SHORT to have more networked variables.
@@ -87,19 +87,19 @@ private:
         VarFlag_IsExplicitlyDefined = 1 << 0,
     };
 
-    struct SkillVariable
+    struct ConfigVariable
     {
         std::string Name;
         float CurrentValue = 0;
         float InitialValue = 0;
         float NetworkedValue = 0;
-        SkillVarConstraints Constraints;
+        ConfigVarConstraints Constraints;
         int NetworkIndex = NotNetworkedIndex;
         int Flags = 0;
     };
 
 public:
-    const char* GetName() const override { return "Skill"; }
+    const char* GetName() const override { return "Configuration"; }
 
     bool Initialize() override;
     void PostInitialize() override {}
@@ -107,13 +107,13 @@ public:
 
     void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-    void LoadSkillConfigFiles( std::span<const std::string> fileNames );
+    void LoadConfigurationFiles( std::span<const std::string> fileNames );
 
     constexpr SkillLevel GetSkillLevel() const { return m_SkillLevel; }
 
     void SetSkillLevel( SkillLevel skillLevel );
 
-    void DefineVariable( std::string name, float initialValue, const SkillVarConstraints& constraints = {} );
+    void DefineVariable( std::string name, float initialValue, const ConfigVarConstraints& constraints = {} );
 
     /**
      *    @brief Gets the value for a given skill variable.
@@ -123,21 +123,21 @@ public:
     void SetValue( std::string_view name, float value );
 
 #ifndef CLIENT_DLL
-    void SendAllNetworkedSkillVars( CBasePlayer* player );
+    void SendAllNetworkedConfigVars( CBasePlayer* player );
 
     /**
      *    @brief Get the index for the given file. if doesn't exist then initialize it.
      */
-    int AsignCustomMap( const char* filename );
+    int CustomConfigurationFile( const char* filename );
 #endif
 
 private:
-    static float ClampValue( float value, const SkillVarConstraints& constraints );
+    static float ClampValue( float value, const ConfigVarConstraints& constraints );
 
     bool ParseConfiguration( const json& input, const bool CustomMap );
 
 #ifdef CLIENT_DLL
-    void MsgFunc_SkillVars( BufferReader& reader );
+    void MsgFunc_ConfigVars( BufferReader& reader );
 #endif
 
 private:
@@ -145,19 +145,19 @@ private:
 
     SkillLevel m_SkillLevel = SkillLevel::Easy;
 
-    std::vector<SkillVariable> m_SkillVariables;
+    std::vector<ConfigVariable> m_ConfigVariables;
 
     int m_NextNetworkedIndex = 0;
 
-    bool m_LoadingSkillFiles = false;
+    bool m_LoadingConfigurationFiles = false;
 
-    std::vector<std::vector<SkillVariable>> m_CustomMaps;
+    std::vector<std::vector<ConfigVariable>> m_CustomMaps;
     std::unordered_map<std::string, int> m_CustomMapIndex;
 };
 
-inline SkillSystem g_Skill;
+inline ConfigurationSystem g_cfg;
 
-inline void SkillSystem::SetSkillLevel( SkillLevel skillLevel )
+inline void ConfigurationSystem::SetSkillLevel( SkillLevel skillLevel )
 {
     if( !IsValidSkillLevel( skillLevel ) )
     {

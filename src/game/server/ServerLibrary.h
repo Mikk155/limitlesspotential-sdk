@@ -111,7 +111,7 @@ private:
 
     void CreateConfigDefinitions();
 
-    void DefineSkillVariables();
+    void DefineConfigVariables();
 
     void LoadServerConfigFiles();
 

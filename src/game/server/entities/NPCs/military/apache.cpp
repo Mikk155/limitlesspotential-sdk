@@ -49,7 +49,7 @@ void CApache::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "apache_health"sv, 400, this );
+    pev->health = g_cfg.GetValue( "apache_health"sv, 400, this );
     pev->model = MAKE_STRING( "models/apache.mdl" );
 
     SetClassification( "human_military" );
@@ -491,7 +491,7 @@ void CApache::HuntThink()
         }
 
         // don't fire rockets and gun on easy mode
-        if( g_Skill.GetSkillLevel() == SkillLevel::Easy )
+        if( g_cfg.GetSkillLevel() == SkillLevel::Easy )
             m_flNextRocket = gpGlobals->time + 10.0;
     }
 

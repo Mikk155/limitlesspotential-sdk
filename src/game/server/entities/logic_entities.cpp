@@ -159,7 +159,7 @@ void CLogicIsSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     if( IsLockedByMaster( pActivator ) )
         return;
 
-    const int skillLevelIndex = int( g_Skill.GetSkillLevel() ) - 1;
+    const int skillLevelIndex = int( g_cfg.GetSkillLevel() ) - 1;
 
     assert( skillLevelIndex >= 0 && skillLevelIndex < SkillLevelCount );
 
@@ -221,7 +221,7 @@ void CLogicSetSkill::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     CVAR_SET_FLOAT( "skill", m_SkillLevel );
 
     // Cached variables will be unaffected.
-    g_Skill.SetSkillLevel( SkillLevel( m_SkillLevel ) );
+    g_cfg.SetSkillLevel( SkillLevel( m_SkillLevel ) );
 
     SUB_UseTargets( pActivator, USE_TOGGLE );
 }
@@ -280,7 +280,7 @@ void CLogicSetSkillVar::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     if( IsLockedByMaster( pActivator ) )
         return;
 
-    g_Skill.SetValue( STRING( m_Name ), m_Value );
+    g_cfg.SetValue( STRING( m_Name ), m_Value );
 
     SUB_UseTargets( pActivator, USE_TOGGLE );
 }

@@ -40,13 +40,13 @@ See the `skill.json` file included with the SDK for a list of variables.
 
 To use a skill variable in code, simply get the value like this:
 ```cpp
-g_Skill.GetValue( "my_variable"sv, 100, this )
+g_cfg.GetValue( "my_variable"sv, 100, this )
 ```
 the second argument is not necesary but will be used if the system fails on getting the variable from the json.
 
 the third argument is a CBaseEntity instance to use their custom config file if it exists.
 
-`g_Skill.GetValue` takes a `std::string_view`, so as to avoid performing unnecessary string length calculations each time the [`sv` literal](https://en.cppreference.com/w/cpp/string/basic_string_view/operator%22%22sv) is used.
+`g_cfg.GetValue` takes a `std::string_view`, so as to avoid performing unnecessary string length calculations each time the [`sv` literal](https://en.cppreference.com/w/cpp/string/basic_string_view/operator%22%22sv) is used.
 
 There is no other work required to use skill variables.
 
@@ -54,27 +54,27 @@ If the variable has not been defined in the configuration file the default value
 
 ### Constraints
 
-Skill variables can be explicitly defined in code to add constraints to them. This is done in `ServerLibrary::DefineSkillVariables`.
+Skill variables can be explicitly defined in code to add constraints to them. This is done in `ServerLibrary::DefineConfigVariables`.
 
 Variables should only be defined on the server side. The client receives information about all networked variables on connect.
 
 Defining a variable without constraints is done simply by doing this:
 ```cpp
-g_Skill.DefineVariable("my_variable", 60);
+g_cfg.DefineVariable("my_variable", 60);
 ```
 
 This defines a variable `my_variable` with a default value of **60**.
 
 Constraints are added by using the last parameter:
 ```cpp
-g_Skill.DefineVariable("my_variable", 60, {.Minimum = -1});
+g_cfg.DefineVariable("my_variable", 60, {.Minimum = -1});
 ```
 
 This adds a minimum value constraint of **-1**. Values smaller than this will be clamped to the constraint.
 
 Multiple constraints can be added like this:
 ```cpp
-g_Skill.DefineVariable("chainsaw_melee", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = SkillVarType::Integer});
+g_cfg.DefineVariable("chainsaw_melee", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = ConfigVarType::Integer});
 ```
 
 List of constraints:
@@ -83,16 +83,16 @@ List of constraints:
 | Minimum | Minimum value to allow |
 | Maximum | Maximum value to allow |
 | Networked | If true, the value is sent to clients to allow client-side code to access it |
-| Type | Type of the value. By default all skill variables are floats, this allows the value to be round to the nearest integer value by setting the type to `SkillVarType::Integer` |
+| Type | Type of the value. By default all skill variables are floats, this allows the value to be round to the nearest integer value by setting the type to `ConfigVarType::Integer` |
 
 ## Console commands
 
-### sk_find
+### cfg_find
 
-Syntax: `sk_find <search_term> [filter]`
+Syntax: `cfg_find <search_term> [filter]`
 
 Finds a previously defined skill variable. Partial case-sensitive matching is used to print a list of candidates.
-To get a list of all defined variables use `sk_find *`.
+To get a list of all defined variables use `cfg_find *`.
 
 The value of each variable will also be printed.
 
@@ -102,9 +102,9 @@ To filter variables by type, use one of these filter names:
 | all | All variables will be checked |
 | networkedonly | Only variables marked as networked will be checked |
 
-### sk_set
+### cfg_set
 
-Syntax: `sk_set <name> <value>`
+Syntax: `cfg_set <name> <value>`
 
 Sets a skill variable to the given value. If the variable does not exist it will be created.
 
@@ -175,5 +175,5 @@ or
 
 2. Use the variable in your code:
 ```cpp
-pev->health = g_Skill.GetValue( "my_variable"sv, 10, this );
+pev->health = g_cfg.GetValue( "my_variable"sv, 10, this );
 ```

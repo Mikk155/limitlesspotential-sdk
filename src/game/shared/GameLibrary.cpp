@@ -102,7 +102,7 @@ void GameLibrary::AddGameSystems()
     g_GameSystems.Add( &g_ProjectInfo );
     g_GameSystems.Add( &g_WeaponData );
     g_GameSystems.Add( &g_AmmoTypes );
-    g_GameSystems.Add( &g_Skill );
+    g_GameSystems.Add( &g_cfg );
     g_GameSystems.Add( &g_HudReplacements );
     g_GameSystems.Add( &g_EntityClassifications );
 }

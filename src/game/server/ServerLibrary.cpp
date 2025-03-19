@@ -147,17 +147,17 @@ bool ServerLibrary::Initialize()
             } } );
 
     g_ConCommands.RegisterChangeCallback( &sv_infinite_ammo, []( const auto& state )
-        { g_Skill.SetValue( "infinite_ammo", state.Cvar->value ); } );
+        { g_cfg.SetValue( "infinite_ammo", state.Cvar->value ); } );
 
     g_ConCommands.RegisterChangeCallback( &sv_bottomless_magazines, []( const auto& state )
-        { g_Skill.SetValue( "bottomless_magazines", state.Cvar->value ); } );
+        { g_cfg.SetValue( "bottomless_magazines", state.Cvar->value ); } );
 
     RegisterCommandWhitelistSchema();
 
     LoadCommandWhitelist();
 
     CreateConfigDefinitions();
-    DefineSkillVariables();
+    DefineConfigVariables();
 
     return true;
 }
@@ -448,51 +448,51 @@ void ServerLibrary::CreateConfigDefinitions()
             return sections; }() );
 }
 
-void ServerLibrary::DefineSkillVariables()
+void ServerLibrary::DefineConfigVariables()
 {
     // Gamemode variables
-    g_Skill.DefineVariable( "coop_persistent_inventory_grace_period", 60, {.Minimum = -1} );
-    g_Skill.DefineVariable( "allow_monsters", 1, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "falldamagemode", 0,
+    g_cfg.DefineVariable( "coop_persistent_inventory_grace_period", 60, {.Minimum = -1} );
+    g_cfg.DefineVariable( "allow_monsters", 1, {.Minimum = 0, .Maximum = 1, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "falldamagemode", 0,
         {.Minimum = int( FallDamageMode::Fixed ),
             .Maximum = int( FallDamageMode::Progressive ),
-            .Type = SkillVarType::Integer} );
+            .Type = ConfigVarType::Integer} );
 
     // Item variables
-    g_Skill.DefineVariable( "healthcharger_recharge_time", -1,
-        {.Minimum = ChargerRechargeDelayNever, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "hevcharger_recharge_time", -1,
-        {.Minimum = ChargerRechargeDelayNever, .Type = SkillVarType::Integer} );
+    g_cfg.DefineVariable( "healthcharger_recharge_time", -1,
+        {.Minimum = ChargerRechargeDelayNever, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "hevcharger_recharge_time", -1,
+        {.Minimum = ChargerRechargeDelayNever, .Type = ConfigVarType::Integer} );
 
-    g_Skill.DefineVariable( "weapon_respawn_time", ITEM_NEVER_RESPAWN_DELAY,
-        {.Minimum = -1, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "ammo_respawn_time", ITEM_NEVER_RESPAWN_DELAY,
-        {.Minimum = -1, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "pickupitem_respawn_time", ITEM_NEVER_RESPAWN_DELAY,
-        {.Minimum = -1, .Type = SkillVarType::Integer} );
+    g_cfg.DefineVariable( "weapon_respawn_time", ITEM_NEVER_RESPAWN_DELAY,
+        {.Minimum = -1, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "ammo_respawn_time", ITEM_NEVER_RESPAWN_DELAY,
+        {.Minimum = -1, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "pickupitem_respawn_time", ITEM_NEVER_RESPAWN_DELAY,
+        {.Minimum = -1, .Type = ConfigVarType::Integer} );
 
-    g_Skill.DefineVariable( "weapon_instant_respawn", 0, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "allow_npc_item_dropping", 1, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "allow_player_weapon_dropping", 0, {.Minimum = 0, .Maximum = 1, .Type = SkillVarType::Integer} );
+    g_cfg.DefineVariable( "weapon_instant_respawn", 0, {.Minimum = 0, .Maximum = 1, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "allow_npc_item_dropping", 1, {.Minimum = 0, .Maximum = 1, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "allow_player_weapon_dropping", 0, {.Minimum = 0, .Maximum = 1, .Type = ConfigVarType::Integer} );
 
     // Weapon variables
-    g_Skill.DefineVariable( "infinite_ammo", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "bottomless_magazines", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = SkillVarType::Integer} );
+    g_cfg.DefineVariable( "infinite_ammo", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "bottomless_magazines", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = ConfigVarType::Integer} );
 
-    g_Skill.DefineVariable( "chainsaw_melee", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = SkillVarType::Integer} );
-    g_Skill.DefineVariable( "revolver_laser_sight", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "smg_wide_spread", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "shotgun_single_tight_spread", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "shotgun_double_wide_spread", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "crossbow_sniper_bolt", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "gauss_charge_time", 4, {.Minimum = 0.1f, .Maximum = 10.f, .Networked = true} );
-    g_Skill.DefineVariable( "gauss_fast_ammo_use", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "gauss_damage_radius", 2.5f, {.Minimum = 0} );
-    g_Skill.DefineVariable( "egon_narrow_ammo_per_second", 6, {.Minimum = 0} );
-    g_Skill.DefineVariable( "egon_wide_ammo_per_second", 10, {.Minimum = 0} );
-    g_Skill.DefineVariable( "grapple_fast", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "m249_wide_spread", 0, {.Networked = true} );
-    g_Skill.DefineVariable( "shockrifle_fast", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "chainsaw_melee", 0, {.Minimum = 0, .Maximum = 1, .Networked = true, .Type = ConfigVarType::Integer} );
+    g_cfg.DefineVariable( "revolver_laser_sight", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "smg_wide_spread", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "shotgun_single_tight_spread", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "shotgun_double_wide_spread", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "crossbow_sniper_bolt", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "gauss_charge_time", 4, {.Minimum = 0.1f, .Maximum = 10.f, .Networked = true} );
+    g_cfg.DefineVariable( "gauss_fast_ammo_use", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "gauss_damage_radius", 2.5f, {.Minimum = 0} );
+    g_cfg.DefineVariable( "egon_narrow_ammo_per_second", 6, {.Minimum = 0} );
+    g_cfg.DefineVariable( "egon_wide_ammo_per_second", 10, {.Minimum = 0} );
+    g_cfg.DefineVariable( "grapple_fast", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "m249_wide_spread", 0, {.Networked = true} );
+    g_cfg.DefineVariable( "shockrifle_fast", 0, {.Networked = true} );
 }
 
 void ServerLibrary::LoadServerConfigFiles()
@@ -608,17 +608,17 @@ map_cfg_is_loaded:
 
     sentences::g_Sentences.LoadSentences( context.SentencesFiles );
     g_MaterialSystem.LoadMaterials( context.MaterialsFiles );
-    g_Skill.LoadSkillConfigFiles( context.SkillFiles );
+    g_cfg.LoadConfigurationFiles( context.SkillFiles );
 
     // Override skill vars with cvars if they are enabled only.
     if( sv_infinite_ammo.value != 0 )
     {
-        g_Skill.SetValue( "infinite_ammo", sv_infinite_ammo.value );
+        g_cfg.SetValue( "infinite_ammo", sv_infinite_ammo.value );
     }
 
     if( sv_bottomless_magazines.value != 0 )
     {
-        g_Skill.SetValue( "bottomless_magazines", sv_bottomless_magazines.value );
+        g_cfg.SetValue( "bottomless_magazines", sv_bottomless_magazines.value );
     }
 
     m_MapState->m_GlobalModelReplacement = g_ReplacementMaps.LoadMultiple( 

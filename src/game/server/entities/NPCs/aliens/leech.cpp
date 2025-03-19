@@ -148,7 +148,7 @@ void CLeech::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "leech_health"sv, 2, this );
+    pev->health = g_cfg.GetValue( "leech_health"sv, 2, this );
     pev->model = MAKE_STRING( "models/leech.mdl" );
 
     SetClassification( "insect" );
@@ -303,7 +303,7 @@ void CLeech::HandleAnimEvent( MonsterEvent_t* pEvent )
 
 
             if( DotProduct( dir, face ) > 0.9 ) // Only take damage if the leech is facing the prey
-                pEnemy->TakeDamage( this, this, g_Skill.GetValue( "leech_dmg_bite"sv, 2, this ), DMG_SLASH );
+                pEnemy->TakeDamage( this, this, g_cfg.GetValue( "leech_dmg_bite"sv, 2, this ), DMG_SLASH );
         }
         m_stateTime -= 2;
         break;

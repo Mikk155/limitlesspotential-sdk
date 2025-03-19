@@ -268,21 +268,21 @@ void CBasePlayer::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vec
         case HITGROUP_GENERIC:
             break;
         case HITGROUP_HEAD:
-            flDamage *= g_Skill.GetValue( "player_head"sv, 3, this );
+            flDamage *= g_cfg.GetValue( "player_head"sv, 3, this );
             break;
         case HITGROUP_CHEST:
-            flDamage *= g_Skill.GetValue( "player_chest"sv, 1, this );
+            flDamage *= g_cfg.GetValue( "player_chest"sv, 1, this );
             break;
         case HITGROUP_STOMACH:
-            flDamage *= g_Skill.GetValue( "player_stomach"sv, 1, this );
+            flDamage *= g_cfg.GetValue( "player_stomach"sv, 1, this );
             break;
         case HITGROUP_LEFTARM:
         case HITGROUP_RIGHTARM:
-            flDamage *= g_Skill.GetValue( "player_arm"sv, 1, this );
+            flDamage *= g_cfg.GetValue( "player_arm"sv, 1, this );
             break;
         case HITGROUP_LEFTLEG:
         case HITGROUP_RIGHTLEG:
-            flDamage *= g_Skill.GetValue( "player_leg"sv, 1, this );
+            flDamage *= g_cfg.GetValue( "player_leg"sv, 1, this );
             break;
         default:
             break;
@@ -2735,10 +2735,10 @@ bool CBasePlayer::Spawn()
     pev->takedamage = DAMAGE_AIM;
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_WALK;
-    pev->health = g_Skill.GetValue( "player_health"sv, 100, this );
-    pev->armorvalue = g_Skill.GetValue( "player_armor"sv, 0, this );
-    pev->max_health = g_Skill.GetValue( "player_maxhealth"sv, 100, this );
-    pev->armortype = g_Skill.GetValue( "player_maxarmor"sv, 100, this );
+    pev->health = g_cfg.GetValue( "player_health"sv, 100, this );
+    pev->armorvalue = g_cfg.GetValue( "player_armor"sv, 0, this );
+    pev->max_health = g_cfg.GetValue( "player_maxhealth"sv, 100, this );
+    pev->armortype = g_cfg.GetValue( "player_maxarmor"sv, 100, this );
     pev->flags &= FL_PROXY | FL_FAKECLIENT; // keep proxy and fakeclient flags set by engine
     pev->flags |= FL_CLIENT;
     pev->air_finished = gpGlobals->time + 12;
@@ -3756,7 +3756,7 @@ void CBasePlayer::ItemPostFrame()
 
     const bool canUseItem = m_flNextAttack <= UTIL_WeaponTimeBase();
 
-    if( canUseItem || g_Skill.GetValue( "allow_use_while_busy"sv, 0, this ) != 0 )
+    if( canUseItem || g_cfg.GetValue( "allow_use_while_busy"sv, 0, this ) != 0 )
     {
         // Handle use events
         PlayerUse();
@@ -4110,7 +4110,7 @@ void CBasePlayer::UpdateClientData()
 
     if( fullHUDInitRequired || m_bRestored )
     {
-        g_Skill.SendAllNetworkedSkillVars( this );
+        g_cfg.SendAllNetworkedConfigVars( this );
     }
 
     // Handled anything that needs resetting
@@ -4274,7 +4274,7 @@ Vector CBasePlayer::GetAutoaimVector( float flDelta )
 
 Vector CBasePlayer::GetAutoaimVectorFromPoint( const Vector& vecSrc, float flDelta )
 {
-    if( g_Skill.GetSkillLevel() == SkillLevel::Hard )
+    if( g_cfg.GetSkillLevel() == SkillLevel::Hard )
     {
         UTIL_MakeVectors( pev->v_angle + pev->punchangle );
         return gpGlobals->v_forward;
@@ -4284,7 +4284,7 @@ Vector CBasePlayer::GetAutoaimVectorFromPoint( const Vector& vecSrc, float flDel
 
     // always use non-sticky autoaim
     // UNDONE: use sever variable to chose!
-    if (true /*|| g_Skill.GetSkillLevel() == SkillLevel::Medium*/)
+    if (true /*|| g_cfg.GetSkillLevel() == SkillLevel::Medium*/)
     {
         m_vecAutoAim = Vector( 0, 0, 0 );
         // flDelta *= 0.5;
@@ -4322,7 +4322,7 @@ Vector CBasePlayer::GetAutoaimVectorFromPoint( const Vector& vecSrc, float flDel
 
     // always use non-sticky autoaim
     // UNDONE: use sever variable to chose!
-    if( false || g_Skill.GetSkillLevel() == SkillLevel::Easy )
+    if( false || g_cfg.GetSkillLevel() == SkillLevel::Easy )
     {
         m_vecAutoAim = m_vecAutoAim * 0.67 + angles * 0.33;
     }
@@ -4504,7 +4504,7 @@ int CBasePlayer::GetCustomDecalFrames()
 
 void CBasePlayer::DropPlayerWeapon( const char* pszItemName )
 {
-    if( g_Skill.GetValue( "allow_player_weapon_dropping", 0 ) == 0 )
+    if( g_cfg.GetValue( "allow_player_weapon_dropping", 0 ) == 0 )
     {
         return;
     }

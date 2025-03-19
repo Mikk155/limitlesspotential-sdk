@@ -121,7 +121,7 @@ void CHoundeye::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "houndeye_health"sv, 30, this );
+    pev->health = g_cfg.GetValue( "houndeye_health"sv, 30, this );
     pev->model = MAKE_STRING( "models/houndeye.mdl" );
 
     SetClassification( "alien_monster" );
@@ -573,12 +573,12 @@ void CHoundeye::SonicAttack()
                 if( SquadCount() > 1 )
                 {
                     // squad gets attack bonus.
-                    flAdjustedDamage = g_Skill.GetValue( "houndeye_dmg_blast"sv, 15, this ) + g_Skill.GetValue( "houndeye_dmg_blast"sv, 15, this ) * ( HOUNDEYE_SQUAD_BONUS * ( SquadCount() - 1 ) );
+                    flAdjustedDamage = g_cfg.GetValue( "houndeye_dmg_blast"sv, 15, this ) + g_cfg.GetValue( "houndeye_dmg_blast"sv, 15, this ) * ( HOUNDEYE_SQUAD_BONUS * ( SquadCount() - 1 ) );
                 }
                 else
                 {
                     // solo
-                    flAdjustedDamage = g_Skill.GetValue( "houndeye_dmg_blast"sv, 15, this );
+                    flAdjustedDamage = g_cfg.GetValue( "houndeye_dmg_blast"sv, 15, this );
                 }
 
                 flDist = ( pEntity->Center() - pev->origin ).Length();

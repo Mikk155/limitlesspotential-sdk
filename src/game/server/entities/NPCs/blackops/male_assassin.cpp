@@ -105,7 +105,7 @@ void CMOFAssassin::OnCreate()
 {
     CHGrunt::OnCreate();
 
-    pev->health = g_Skill.GetValue( "massassin_health"sv, 80, this );
+    pev->health = g_cfg.GetValue( "massassin_health"sv, 80, this );
     pev->model = MAKE_STRING( "models/massn.mdl" );
 }
 
@@ -164,7 +164,7 @@ bool CMOFAssassin::CheckRangeAttack1( float flDot, float flDist )
 
 bool CMOFAssassin::CheckRangeAttack2( float flDot, float flDist )
 {
-    return CheckRangeAttack2Core( flDot, flDist, g_Skill.GetValue( "massassin_gspeed"sv, 800, this ) );
+    return CheckRangeAttack2Core( flDot, flDist, g_cfg.GetValue( "massassin_gspeed"sv, 800, this ) );
 }
 
 void CMOFAssassin::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
@@ -289,7 +289,7 @@ void CMOFAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
             UTIL_MakeVectors( pev->angles );
             pHurt->pev->punchangle.x = 15;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_forward * 100 + gpGlobals->v_up * 50;
-            pHurt->TakeDamage( this, this, g_Skill.GetValue( "massassin_kick"sv, 25, this ), DMG_CLUB );
+            pHurt->TakeDamage( this, this, g_cfg.GetValue( "massassin_kick"sv, 25, this ), DMG_CLUB );
         }
     }
     break;

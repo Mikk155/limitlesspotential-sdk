@@ -76,7 +76,7 @@ inline int gmsgEmitSound = 0;
 
 inline int gmsgTempEntity = 0;
 
-inline int gmsgSkillVars = 0;
+inline int gmsgConfigVars = 0;
 
 inline int gmsgCampaignSelect = 0;
 

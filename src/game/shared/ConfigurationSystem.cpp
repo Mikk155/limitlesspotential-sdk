@@ -37,17 +37,17 @@
 
 using namespace std::literals;
 
-constexpr std::string_view SkillConfigSchemaName{"SkillConfig"sv};
+constexpr std::string_view ConfigSchemaName{"Config"sv};
 
-constexpr std::string_view SkillVariableNameRegexPattern{"^([a-zA-Z_](?:[a-zA-Z_0-9]*[a-zA-Z_]))([123]?)$"};
-const std::regex SkillVariableNameRegex{SkillVariableNameRegexPattern.data(), SkillVariableNameRegexPattern.length()};
+constexpr std::string_view ConfigVariableNameRegexPattern{"^([a-zA-Z_](?:[a-zA-Z_0-9]*[a-zA-Z_]))([123]?)$"};
+const std::regex ConfigVariableNameRegex{ConfigVariableNameRegexPattern.data(), ConfigVariableNameRegexPattern.length()};
 
-static std::string GetSkillConfigSchema()
+static std::string GetConfigSchema()
 {
     return fmt::format( R"(
 {{
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Skill System Configuration",
+    "title": "Configuration System",
     "type": "object",
     "patternProperties": {{
         "{}": {{
@@ -57,14 +57,14 @@ static std::string GetSkillConfigSchema()
     "additionalProperties": false
 }}
 )",
-        SkillVariableNameRegexPattern );
+        ConfigVariableNameRegexPattern );
 }
 
-static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> TryParseSkillVariableName( std::string_view key, spdlog::logger& logger )
+static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> TryParseConfigVariableName( std::string_view key, spdlog::logger& logger )
 {
     std::match_results<std::string_view::const_iterator> matches;
 
-    if( !std::regex_match( key.begin(), key.end(), matches, SkillVariableNameRegex ) )
+    if( !std::regex_match( key.begin(), key.end(), matches, ConfigVariableNameRegex ) )
     {
         return {};
     }
@@ -85,7 +85,7 @@ static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> Tr
         if( result.ec != std::errc::result_out_of_range )
         {
             // In case something else goes wrong.
-            logger.error( "Invalid skill variable name \"{}\": {}", key, std::make_error_code( result.ec ).message() );
+            logger.error( "Invalid configuration variable name \"{}\": {}", key, std::make_error_code( result.ec ).message() );
         }
 
         return {};
@@ -94,17 +94,17 @@ static std::optional<std::tuple<std::string_view, std::optional<SkillLevel>>> Tr
     return {{baseName, static_cast<SkillLevel>( skillLevel )}};
 }
 
-bool SkillSystem::Initialize()
+bool ConfigurationSystem::Initialize()
 {
-    m_Logger = g_Logging.CreateLogger( "skill" );
+    m_Logger = g_Logging.CreateLogger( "Configuration" );
 
-    g_JSON.RegisterSchema( SkillConfigSchemaName, &GetSkillConfigSchema );
+    g_JSON.RegisterSchema( ConfigSchemaName, &GetConfigSchema );
 
-    g_NetworkData.RegisterHandler( "Skill", this );
+    g_NetworkData.RegisterHandler( "Configuration", this );
 
 #ifndef CLIENT_DLL
     g_ConCommands.CreateCommand( 
-        "sk_find", [this]( const auto& args )
+        "cfg_find", [this]( const auto& args )
         {
             if( args.Count() < 2 )
             {
@@ -129,7 +129,7 @@ bool SkillSystem::Initialize()
                 }
             }
 
-            const auto printer = [=]( const SkillVariable& variable )
+            const auto printer = [=]( const ConfigVariable& variable )
             {
                 if( networkedOnly && variable.NetworkIndex == NotNetworkedIndex )
                 {
@@ -145,7 +145,7 @@ bool SkillSystem::Initialize()
             if( searchTerm == "*" )
             {
                 //List all keys.
-                for( const auto& variable : m_SkillVariables )
+                for( const auto& variable : m_ConfigVariables )
                 {
                     printer( variable );
                 }
@@ -153,7 +153,7 @@ bool SkillSystem::Initialize()
             else
             {
                 //List all keys that are a full or partial match.
-                for( const auto& variable : m_SkillVariables )
+                for( const auto& variable : m_ConfigVariables )
                 {
                     if( variable.Name.find( searchTerm ) != std::string::npos )
                     {
@@ -164,7 +164,7 @@ bool SkillSystem::Initialize()
         CommandLibraryPrefix::No );
 
     g_ConCommands.CreateCommand( 
-        "sk_set", [this]( const auto& args )
+        "cfg_set", [this]( const auto& args )
         {
             if( args.Count() != 3 )
             {
@@ -186,24 +186,24 @@ bool SkillSystem::Initialize()
             SetValue( name, value ); },
         CommandLibraryPrefix::No );
 #else
-    g_ClientUserMessages.RegisterHandler( "SkillVars", &SkillSystem::MsgFunc_SkillVars, this );
+    g_ClientUserMessages.RegisterHandler( "ConfigVars", &ConfigurationSystem::MsgFunc_ConfigVars, this );
 #endif
 
     return true;
 }
 
-void SkillSystem::Shutdown()
+void ConfigurationSystem::Shutdown()
 {
     m_Logger.reset();
 }
 
-void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
+void ConfigurationSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 {
     if( block.Mode == NetworkDataMode::Serialize )
     {
-        eastl::fixed_string<SkillVariable*, MaxNetworkedVariables> variables;
+        eastl::fixed_string<ConfigVariable*, MaxNetworkedVariables> variables;
 
-        for( auto& variable : m_SkillVariables )
+        for( auto& variable : m_ConfigVariables )
         {
             if( variable.NetworkIndex != NotNetworkedIndex )
             {
@@ -223,7 +223,7 @@ void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
             varData.emplace( "Name", variable->Name );
             varData.emplace( "Value", variable->CurrentValue );
 
-            // So SendAllNetworkedSkillVars only sends variables that have changed compared to the configured value.
+            // So SendAllNetworkedConfigVars only sends variables that have changed compared to the configured value.
             variable->NetworkedValue = variable->CurrentValue;
 
             block.Data.push_back( std::move( varData ) );
@@ -231,7 +231,7 @@ void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
     }
     else
     {
-        m_SkillVariables.clear();
+        m_ConfigVariables.clear();
         m_NextNetworkedIndex = 0;
 
         for( const auto& varData : block.Data )
@@ -241,7 +241,7 @@ void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 
             if( name.empty() )
             {
-                block.ErrorMessage = "Invalid skill variable name";
+                block.ErrorMessage = "Invalid configuration variable name";
                 return;
             }
 
@@ -250,7 +250,7 @@ void SkillSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
     }
 }
 
-void SkillSystem::LoadSkillConfigFiles( std::span<const std::string> fileNames )
+void ConfigurationSystem::LoadConfigurationFiles( std::span<const std::string> fileNames )
 {
     // Refresh skill level setting first.
     int iSkill = (int)CVAR_GET_FLOAT( "skill" );
@@ -260,7 +260,7 @@ void SkillSystem::LoadSkillConfigFiles( std::span<const std::string> fileNames )
     SetSkillLevel( static_cast<SkillLevel>( iSkill ) );
 
     // Erase all previous data.
-    for( auto it = m_SkillVariables.begin(); it != m_SkillVariables.end(); )
+    for( auto it = m_ConfigVariables.begin(); it != m_ConfigVariables.end(); )
     {
         if( ( it->Flags & VarFlag_IsExplicitlyDefined ) != 0 )
         {
@@ -269,44 +269,44 @@ void SkillSystem::LoadSkillConfigFiles( std::span<const std::string> fileNames )
         }
         else
         {
-            it = m_SkillVariables.erase( it );
+            it = m_ConfigVariables.erase( it );
         }
     }
     m_CustomMaps.clear();
     m_CustomMapIndex.clear();
 
-    m_LoadingSkillFiles = true;
+    m_LoadingConfigurationFiles = true;
 
     for( const auto& fileName : fileNames )
     {
         m_Logger->trace( "Loading {}", fileName );
 
         if( const auto result = g_JSON.ParseJSONFile( fileName.c_str(),
-                {.SchemaName = SkillConfigSchemaName, .PathID = "GAMECONFIG"},
+                {.SchemaName = ConfigSchemaName, .PathID = "GAMECONFIG"},
                 [this]( const json& input )
                 { return ParseConfiguration( input, false ); } );
             !result.value_or( false ) )
         {
-            m_Logger->error( "Error loading skill configuration file \"{}\"", fileName );
+            m_Logger->error( "Error loading configuration file \"{}\"", fileName );
         }
     }
 
-    m_LoadingSkillFiles = false;
+    m_LoadingConfigurationFiles = false;
 }
 
-void SkillSystem::DefineVariable( std::string name, float initialValue, const SkillVarConstraints& constraints )
+void ConfigurationSystem::DefineVariable( std::string name, float initialValue, const ConfigVarConstraints& constraints )
 {
-    auto it = std::find_if( m_SkillVariables.begin(), m_SkillVariables.end(), [&]( const auto& variable )
+    auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
         { return variable.Name == name; } );
 
-    if( it != m_SkillVariables.end() )
+    if( it != m_ConfigVariables.end() )
     {
         m_Logger->error( "Cannot define variable \"{}\": already defined", name );
         assert( !"Variable already defined" );
         return;
     }
 
-    SkillVarConstraints updatedConstraints = constraints;
+    ConfigVarConstraints updatedConstraints = constraints;
 
     int networkIndex = NotNetworkedIndex;
 
@@ -334,7 +334,7 @@ void SkillSystem::DefineVariable( std::string name, float initialValue, const Sk
 
     initialValue = ClampValue( initialValue, updatedConstraints );
 
-    SkillVariable variable{
+    ConfigVariable variable{
         .Name = std::move( name ),
         .CurrentValue = initialValue,
         .InitialValue = initialValue,
@@ -342,25 +342,25 @@ void SkillSystem::DefineVariable( std::string name, float initialValue, const Sk
         .NetworkIndex = networkIndex,
         .Flags = VarFlag_IsExplicitlyDefined};
 
-    m_SkillVariables.emplace_back( std::move( variable ) );
+    m_ConfigVariables.emplace_back( std::move( variable ) );
 }
 
-float SkillSystem::GetValue( std::string_view name, float defaultValue, CBaseEntity* entity ) const
+float ConfigurationSystem::GetValue( std::string_view name, float defaultValue, CBaseEntity* entity ) const
 {
 #ifndef CLIENT_DLL
     if( entity != nullptr && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
     {
-        std::vector<SkillVariable> skill_map = m_CustomMaps.at( entity->m_config );
+        std::vector<ConfigVariable> config_map = m_CustomMaps.at( entity->m_config );
 
-        if( const auto it = std::find_if( skill_map.begin(), skill_map.end(), [&]( const auto& variable )
-                { return variable.Name == name; } ); it != skill_map.end() ) {
+        if( const auto it = std::find_if( config_map.begin(), config_map.end(), [&]( const auto& variable )
+                { return variable.Name == name; } ); it != config_map.end() ) {
             return it->CurrentValue;
         }
     }
 #endif
 
-    if( const auto it = std::find_if( m_SkillVariables.begin(), m_SkillVariables.end(), [&]( const auto& variable )
-            { return variable.Name == name; } ); it != m_SkillVariables.end() ) {
+    if( const auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
+            { return variable.Name == name; } ); it != m_ConfigVariables.end() ) {
         return it->CurrentValue;
     }
 
@@ -369,38 +369,38 @@ float SkillSystem::GetValue( std::string_view name, float defaultValue, CBaseEnt
     return defaultValue;
 }
 
-void SkillSystem::SetValue( std::string_view name, float value )
+void ConfigurationSystem::SetValue( std::string_view name, float value )
 {
-    auto it = std::find_if( m_SkillVariables.begin(), m_SkillVariables.end(), [&]( const auto& variable )
+    auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
         { return variable.Name == name; } );
 
-    if( it == m_SkillVariables.end() )
+    if( it == m_ConfigVariables.end() )
     {
-        SkillVariable variable{
+        ConfigVariable variable{
             .Name = std::string{name},
             .CurrentValue = 0,
             .InitialValue = 0};
 
-        m_SkillVariables.emplace_back( std::move( variable ) );
+        m_ConfigVariables.emplace_back( std::move( variable ) );
 
-        it = m_SkillVariables.end() - 1;
+        it = m_ConfigVariables.end() - 1;
     }
 
     value = ClampValue( value, it->Constraints );
 
     if( it->CurrentValue != value )
     {
-        m_Logger->debug( "Skill value \"{}\" changed to \"{}\"{}",
+        m_Logger->debug( "Config value \"{}\" changed to \"{}\"{}",
             name, value, it->NetworkIndex != NotNetworkedIndex ? " (Networked)" : "" );
 
         it->CurrentValue = value;
 
 #ifndef CLIENT_DLL
-        if( !m_LoadingSkillFiles )
+        if( !m_LoadingConfigurationFiles )
         {
             if( it->NetworkIndex != NotNetworkedIndex )
             {
-                MESSAGE_BEGIN( MSG_ALL, gmsgSkillVars );
+                MESSAGE_BEGIN( MSG_ALL, gmsgConfigVars );
                 WRITE_BYTE( it->NetworkIndex );
                 WRITE_FLOAT( it->CurrentValue );
                 MESSAGE_END();
@@ -411,16 +411,16 @@ void SkillSystem::SetValue( std::string_view name, float value )
 }
 
 #ifndef CLIENT_DLL
-void SkillSystem::SendAllNetworkedSkillVars( CBasePlayer* player )
+void ConfigurationSystem::SendAllNetworkedConfigVars( CBasePlayer* player )
 {
-    // Send skill vars in bursts.
+    // Send config vars in bursts.
     const int maxMessageSize = int( MaxUserMessageLength ) / SingleMessageSize;
 
     int totalMessageSize = 0;
 
-    MESSAGE_BEGIN( MSG_ONE, gmsgSkillVars, nullptr, player );
+    MESSAGE_BEGIN( MSG_ONE, gmsgConfigVars, nullptr, player );
 
-    for( const auto& variable : m_SkillVariables )
+    for( const auto& variable : m_ConfigVariables )
     {
         if( variable.NetworkIndex == NotNetworkedIndex )
         {
@@ -436,7 +436,7 @@ void SkillSystem::SendAllNetworkedSkillVars( CBasePlayer* player )
         if( totalMessageSize >= maxMessageSize )
         {
             MESSAGE_END();
-            MESSAGE_BEGIN( MSG_ONE, gmsgSkillVars, nullptr, player );
+            MESSAGE_BEGIN( MSG_ONE, gmsgConfigVars, nullptr, player );
             totalMessageSize = 0;
         }
 
@@ -450,9 +450,9 @@ void SkillSystem::SendAllNetworkedSkillVars( CBasePlayer* player )
 }
 #endif
 
-float SkillSystem::ClampValue( float value, const SkillVarConstraints& constraints )
+float ConfigurationSystem::ClampValue( float value, const ConfigVarConstraints& constraints )
 {
-    if( constraints.Type == SkillVarType::Integer )
+    if( constraints.Type == ConfigVarType::Integer )
     {
         // Round value to integer.
         value = int( value );
@@ -471,14 +471,14 @@ float SkillSystem::ClampValue( float value, const SkillVarConstraints& constrain
     return value;
 }
 
-bool SkillSystem::ParseConfiguration( const json& input, const bool CustomMap )
+bool ConfigurationSystem::ParseConfiguration( const json& input, const bool CustomMap )
 {
     if( !input.is_object() )
     {
         return false;
     }
 
-    std::vector<SkillVariable> skill_map;
+    std::vector<ConfigVariable> config_map;
 
     for( const auto& item : input.items() )
     {
@@ -490,8 +490,8 @@ bool SkillSystem::ParseConfiguration( const json& input, const bool CustomMap )
             continue;
         }
 
-        // Get the skill variable base name and skill level.
-        const auto maybeVariableName = TryParseSkillVariableName( item.key(), *m_Logger );
+        // Get the config variable base name and skill level.
+        const auto maybeVariableName = TryParseConfigVariableName( item.key(), *m_Logger );
 
         if( !maybeVariableName.has_value() )
         {
@@ -508,25 +508,26 @@ bool SkillSystem::ParseConfiguration( const json& input, const bool CustomMap )
         {
             if( CustomMap )
             {
+                // -TODO Should move this in within SetValue and just target the right vector.
                 std::string_view name = std::get<0>( variableName );
 
-                auto it = std::find_if( skill_map.begin(), skill_map.end(), [&]( const auto& variable )
+                auto it = std::find_if( config_map.begin(), config_map.end(), [&]( const auto& variable )
                     { return variable.Name == name; } );
 
-                if( it == skill_map.end() )
+                if( it == config_map.end() )
                 {
-                    SkillVariable variable{
+                    ConfigVariable variable{
                         .Name = std::string(name),
                         .CurrentValue = 0,
                         .InitialValue = 0
                     };
             
-                    skill_map.emplace_back( std::move( variable ) );
+                    config_map.emplace_back( std::move( variable ) );
             
-                    it = skill_map.end() - 1;
+                    it = config_map.end() - 1;
                 }
 
-                m_Logger->debug( "Skill value \"{}\" changed to \"{}\"", name, valueFloat );
+                m_Logger->debug( "Config value \"{}\" changed to \"{}\"", name, valueFloat );
 
                 it->CurrentValue = ClampValue( valueFloat, it->Constraints );
             }
@@ -539,14 +540,14 @@ bool SkillSystem::ParseConfiguration( const json& input, const bool CustomMap )
 
     if( CustomMap )
     {
-        m_CustomMaps.emplace_back( std::move( skill_map ) );
+        m_CustomMaps.emplace_back( std::move( config_map ) );
     }
 
     return true;
 }
 
 #ifdef CLIENT_DLL
-void SkillSystem::MsgFunc_SkillVars( BufferReader& reader )
+void ConfigurationSystem::MsgFunc_ConfigVars( BufferReader& reader )
 {
     const int messageCount = reader.GetSize() / SingleMessageSize;
 
@@ -559,11 +560,11 @@ void SkillSystem::MsgFunc_SkillVars( BufferReader& reader )
 
             if( networkIndex < 0 || networkIndex >= m_NextNetworkedIndex )
             {
-                m_Logger->error( "Invalid network index {} received for networked skill variable", networkIndex );
+                m_Logger->error( "Invalid network index {} received for networked config variable", networkIndex );
                 return;
             }
 
-            for( auto& variable : m_SkillVariables )
+            for( auto& variable : m_ConfigVariables )
             {
                 if( variable.NetworkIndex == networkIndex )
                 {
@@ -573,7 +574,7 @@ void SkillSystem::MsgFunc_SkillVars( BufferReader& reader )
                 }
             }
 
-            m_Logger->error( "Could not find networked skill variable with index {}", networkIndex );
+            m_Logger->error( "Could not find networked config variable with index {}", networkIndex );
         }();
     }
 }
@@ -581,7 +582,7 @@ void SkillSystem::MsgFunc_SkillVars( BufferReader& reader )
 
 
 #ifndef CLIENT_DLL
-int SkillSystem::AsignCustomMap( const char* filename )
+int ConfigurationSystem::CustomConfigurationFile( const char* filename )
 {
     std::string name = std::string( filename );
 
@@ -591,15 +592,15 @@ int SkillSystem::AsignCustomMap( const char* filename )
     }
 
     int map_index = (int)m_CustomMaps.size();
-    m_Logger->trace( "Loading custom skill \"{}\" at index {}", filename, map_index );
+    m_Logger->trace( "Loading custom configuration \"{}\" at index {}", filename, map_index );
 
     if( const auto result = g_JSON.ParseJSONFile( filename,
-            {.SchemaName = SkillConfigSchemaName, .PathID = "GAMECONFIG"},
+            {.SchemaName = ConfigSchemaName, .PathID = "GAMECONFIG"},
             [this]( const json& input )
             { return ParseConfiguration( input, true ); } );
         !result.value_or( false ) )
     {
-        m_Logger->error( "Error loading skill configuration file \"{}\"", filename );
+        m_Logger->error( "Error loading configuration file \"{}\"", filename );
     }
 
     m_CustomMapIndex[ name ] = map_index;

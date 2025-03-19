@@ -158,7 +158,7 @@ void CM249::PrimaryAttack()
 
     Vector vecSpread;
 
-    if( g_Skill.GetValue( "m249_wide_spread" ) != 0 )
+    if( g_cfg.GetValue( "m249_wide_spread" ) != 0 )
     {
         if( ( m_pPlayer->pev->button & IN_DUCK ) != 0 )
         {

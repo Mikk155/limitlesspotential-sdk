@@ -112,7 +112,7 @@ void COFGonomeGuts::Touch( CBaseEntity* pOther )
     }
     else
     {
-        pOther->TakeDamage( this, this, g_Skill.GetValue( "gonome_dmg_guts"sv, 15, this ), DMG_GENERIC );
+        pOther->TakeDamage( this, this, g_cfg.GetValue( "gonome_dmg_guts"sv, 15, this ), DMG_GENERIC );
     }
 
     SetThink( &COFGonomeGuts::SUB_Remove );
@@ -223,7 +223,7 @@ public:
     EntityHandle<CBasePlayer> m_PlayerLocked;
 
 protected:
-    float GetOneSlashDamage() override { return g_Skill.GetValue( "gonome_dmg_one_slash"sv, 20, this ); }
+    float GetOneSlashDamage() override { return g_cfg.GetValue( "gonome_dmg_one_slash"sv, 20, this ); }
     float GetBothSlashDamage() override { return 0; } // Not used, so just return 0
 
     // Take 15% damage from bullets
@@ -276,7 +276,7 @@ void COFGonome::OnCreate()
 {
     CZombie::OnCreate();
 
-    pev->health = g_Skill.GetValue( "gonome_health"sv, 160, this );
+    pev->health = g_cfg.GetValue( "gonome_health"sv, 160, this );
     pev->model = MAKE_STRING( "models/gonome.mdl" );
 }
 
@@ -406,7 +406,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         // do stuff for this event.
         // AILogger->debug("Slash left!");
-        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_Skill.GetValue( "gonome_dmg_one_bite"sv, 14, this ), DMG_SLASH );
+        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_cfg.GetValue( "gonome_dmg_one_bite"sv, 14, this ), DMG_SLASH );
         if( pHurt )
         {
             if( ( pHurt->pev->flags & ( FL_MONSTER | FL_CLIENT ) ) != 0 )
@@ -434,7 +434,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         // do stuff for this event.
         // AILogger->debug("Slash left!");
-        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_Skill.GetValue( "gonome_dmg_one_bite"sv, 14, this ), DMG_SLASH );
+        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_cfg.GetValue( "gonome_dmg_one_bite"sv, 14, this ), DMG_SLASH );
         if( pHurt )
         {
             if( ( pHurt->pev->flags & ( FL_MONSTER | FL_CLIENT ) ) != 0 )

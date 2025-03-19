@@ -360,7 +360,7 @@ void CBigMomma::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 150 * g_Skill.GetValue( "bigmomma_health_factor"sv, 2, this );
+    pev->health = 150 * g_cfg.GetValue( "bigmomma_health_factor"sv, 2, this );
     pev->model = MAKE_STRING( "models/big_mom.mdl" );
 
     SetClassification( "alien_monster" );
@@ -424,7 +424,7 @@ void CBigMomma::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         if( pHurt )
         {
-            pHurt->TakeDamage( this, this, g_Skill.GetValue( "bigmomma_dmg_slash"sv, 70, this ), DMG_CRUSH | DMG_SLASH );
+            pHurt->TakeDamage( this, this, g_cfg.GetValue( "bigmomma_dmg_slash"sv, 70, this ), DMG_CRUSH | DMG_SLASH );
             pHurt->pev->punchangle.x = 15;
             switch ( pEvent->event )
             {
@@ -693,7 +693,7 @@ void CBigMomma::NodeReach()
         return;
 
     if( 0 != pTarget->pev->health )
-        pev->max_health = pev->health = pTarget->pev->health * g_Skill.GetValue( "bigmomma_health_factor"sv, 2, this );
+        pev->max_health = pev->health = pTarget->pev->health * g_cfg.GetValue( "bigmomma_health_factor"sv, 2, this );
 
     if( !HasMemory( bits_MEMORY_FIRED_NODE ) )
     {
@@ -1146,6 +1146,6 @@ void CBMortar::Touch( CBaseEntity* pOther )
 
     auto owner = GetOwner();
 
-    RadiusDamage( pev->origin, this, owner, g_Skill.GetValue( "bigmomma_dmg_blast"sv, 160, this ), g_Skill.GetValue( "bigmomma_radius_blast"sv, 275, this ), DMG_ACID );
+    RadiusDamage( pev->origin, this, owner, g_cfg.GetValue( "bigmomma_dmg_blast"sv, 160, this ), g_cfg.GetValue( "bigmomma_radius_blast"sv, 275, this ), DMG_ACID );
     UTIL_Remove( this );
 }

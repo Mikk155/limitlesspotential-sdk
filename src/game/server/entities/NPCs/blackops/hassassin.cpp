@@ -122,7 +122,7 @@ void CHAssassin::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "hassassin_health"sv, 50, this );
+    pev->health = g_cfg.GetValue( "hassassin_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/hassassin.mdl" );
 
     SetClassification( "human_military" );
@@ -600,7 +600,7 @@ void CHAssassin::RunAI()
 
     // always visible if moving
     // always visible is not on hard
-    if( g_Skill.GetSkillLevel() != SkillLevel::Hard || m_hEnemy == nullptr || pev->deadflag != DEAD_NO || m_Activity == ACT_RUN || m_Activity == ACT_WALK || ( pev->flags & FL_ONGROUND ) == 0 )
+    if( g_cfg.GetSkillLevel() != SkillLevel::Hard || m_hEnemy == nullptr || pev->deadflag != DEAD_NO || m_Activity == ACT_RUN || m_Activity == ACT_WALK || ( pev->flags & FL_ONGROUND ) == 0 )
         m_iTargetRanderamt = 255;
     else
         m_iTargetRanderamt = 20;

@@ -82,7 +82,7 @@ void LinkUserMessages()
     gmsgEntityInfo = REG_USER_MSG( "EntityInfo", -1 );
     gmsgEmitSound = REG_USER_MSG( "EmitSound", -1 );
     gmsgTempEntity = REG_USER_MSG( "TempEntity", -1 );
-    gmsgSkillVars = REG_USER_MSG( "SkillVars", -1 );
+    gmsgConfigVars = REG_USER_MSG( "ConfigVars", -1 );
 
     gmsgCampaignSelect = REG_USER_MSG( "CmpgnSlct", 0 );
 

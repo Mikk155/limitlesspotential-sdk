@@ -564,7 +564,7 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
     // Note that this may cause host_error or sys_error if files aren't precached.
     if( FStrEq( pkvd->szKeyName, "configlist" ) )
     {
-        m_config = g_Skill.AsignCustomMap( pkvd->szValue );
+        m_config = g_cfg.CustomConfigurationFile( pkvd->szValue );
         return ( m_config >= 0 );
     }
     else if( FStrEq( pkvd->szKeyName, "modellist" ) )
@@ -1066,15 +1066,15 @@ bool CBaseEntity::ShouldAppearByFlags()
         }
         else if( Appearance->first == "appearflag_skilleasy"sv )
         {
-            should_not = matched( Appearance->second, ( g_Skill.GetSkillLevel() == SkillLevel::Easy ) );
+            should_not = matched( Appearance->second, ( g_cfg.GetSkillLevel() == SkillLevel::Easy ) );
         }
         else if( Appearance->first == "appearflag_skillmedium"sv )
         {
-            should_not = matched( Appearance->second, ( g_Skill.GetSkillLevel() == SkillLevel::Medium ) );
+            should_not = matched( Appearance->second, ( g_cfg.GetSkillLevel() == SkillLevel::Medium ) );
         }
         else if( Appearance->first == "appearflag_skillhard"sv )
         {
-            should_not = matched( Appearance->second, ( g_Skill.GetSkillLevel() == SkillLevel::Hard ) );
+            should_not = matched( Appearance->second, ( g_cfg.GetSkillLevel() == SkillLevel::Hard ) );
         }
         else if( Appearance->first == "appearflag_deathmatch"sv )
         {

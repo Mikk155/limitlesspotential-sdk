@@ -54,7 +54,7 @@ void CHGrunt::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "hgrunt_health"sv, 80, this );
+    pev->health = g_cfg.GetValue( "hgrunt_health"sv, 80, this );
     pev->model = MAKE_STRING( "models/hgrunt.mdl" );
 
     SetClassification( "human_military" );
@@ -371,7 +371,7 @@ bool CHGrunt::CheckRangeAttack2Core( float flDot, float flDist, float grenadeSpe
 
 bool CHGrunt::CheckRangeAttack2( float flDot, float flDist )
 {
-    return CheckRangeAttack2Core( flDot, flDist, g_Skill.GetValue( "hgrunt_gspeed"sv, 800, this ) );
+    return CheckRangeAttack2Core( flDot, flDist, g_cfg.GetValue( "hgrunt_gspeed"sv, 800, this ) );
 }
 
 void CHGrunt::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
@@ -561,7 +561,7 @@ void CHGrunt::Shoot( bool firstShotInBurst )
 
                 Vector vecShellVelocity = gpGlobals->v_right * RANDOM_FLOAT( 40, 90 ) + gpGlobals->v_up * RANDOM_FLOAT( 75, 200 ) + gpGlobals->v_forward * RANDOM_FLOAT( -40, 40 );
                 EjectBrass( vecShootOrigin - vecShootDir * 24, vecShellVelocity, pev->angles.y, m_iShotgunShell, TE_BOUNCE_SHOTSHELL );
-                FireBullets( g_Skill.GetValue( "hgrunt_pellets"sv, 6, this ), vecShootOrigin, vecShootDir, VECTOR_CONE_15DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0 ); // shoot +-7.5 degrees
+                FireBullets( g_cfg.GetValue( "hgrunt_pellets"sv, 6, this ), vecShootOrigin, vecShootDir, VECTOR_CONE_15DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0 ); // shoot +-7.5 degrees
 
                 pev->effects |= EF_MUZZLEFLASH;
 
@@ -652,7 +652,7 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
         EmitSound( CHAN_WEAPON, "weapons/glauncher.wav", 0.8, ATTN_NORM );
         CGrenade::ShootContact( this, GetGunPosition(), m_vecTossVelocity );
         m_fThrowGrenade = false;
-        if( g_Skill.GetSkillLevel() == SkillLevel::Hard )
+        if( g_cfg.GetSkillLevel() == SkillLevel::Hard )
             m_flNextGrenadeCheck = gpGlobals->time + RANDOM_FLOAT( 2, 5 ); // wait a random amount of time before shooting again
         else
             m_flNextGrenadeCheck = gpGlobals->time + 6; // wait six seconds before even looking again to see if a grenade can be thrown.
@@ -682,7 +682,7 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
             UTIL_MakeVectors( pev->angles );
             pHurt->pev->punchangle.x = 15;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_forward * 100 + gpGlobals->v_up * 50;
-            pHurt->TakeDamage( this, this, g_Skill.GetValue( "hgrunt_kick"sv, 10, this ), DMG_CLUB );
+            pHurt->TakeDamage( this, this, g_cfg.GetValue( "hgrunt_kick"sv, 10, this ), DMG_CLUB );
         }
     }
     break;
@@ -1861,7 +1861,7 @@ const Schedule_t* CHGrunt::GetScheduleOfType( int Type )
     {
         if( InSquad() )
         {
-            if( g_Skill.GetSkillLevel() == SkillLevel::Hard && HasConditions( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
+            if( g_cfg.GetSkillLevel() == SkillLevel::Hard && HasConditions( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
             {
                 if( FOkToSpeak() )
                 {

@@ -21,7 +21,7 @@ LINK_ENTITY_TO_CLASS( weapon_357, CPython );
 
 inline bool UseLaserSight()
 {
-    return g_Skill.GetValue( "revolver_laser_sight" ) != 0;
+    return g_cfg.GetValue( "revolver_laser_sight" ) != 0;
 }
 
 void CPython::OnCreate()

@@ -252,7 +252,7 @@ void CGrapple::PrimaryAttack()
 
         m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
 
-        if( g_Skill.GetValue( "grapple_fast" ) != 0 )
+        if( g_cfg.GetValue( "grapple_fast" ) != 0 )
         {
             m_flShootTime = gpGlobals->time;
         }
@@ -329,7 +329,7 @@ void CGrapple::PrimaryAttack()
 #ifndef CLIENT_DLL
                         ClearMultiDamage();
 
-                        float flDamage = g_Skill.GetValue( "plr_grapple"sv, 25, this );
+                        float flDamage = g_cfg.GetValue( "plr_grapple"sv, 25, this );
 
                         pHit->TraceAttack( this, flDamage, gpGlobals->v_forward, &tr, DMG_ALWAYSGIB | DMG_CLUB );
 
@@ -362,7 +362,7 @@ void CGrapple::PrimaryAttack()
     }
 #endif
 
-    if( g_Skill.GetValue( "grapple_fast" ) != 0 )
+    if( g_cfg.GetValue( "grapple_fast" ) != 0 )
     {
         m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase();
     }
@@ -428,7 +428,7 @@ void CGrapple::EndAttack()
 
     m_flTimeWeaponIdle = UTIL_WeaponTimeBase();
 
-    if( g_Skill.GetValue( "grapple_fast" ) != 0 )
+    if( g_cfg.GetValue( "grapple_fast" ) != 0 )
     {
         m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase();
     }

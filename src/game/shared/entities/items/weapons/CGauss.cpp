@@ -30,7 +30,7 @@ END_DATAMAP();
 
 float CGauss::GetFullChargeTime()
 {
-    return g_Skill.GetValue( "gauss_charge_time" );
+    return g_cfg.GetValue( "gauss_charge_time" );
 }
 
 void CGauss::OnCreate()
@@ -195,7 +195,7 @@ void CGauss::SecondaryAttack()
             {
                 m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -1 );
 
-                if( g_Skill.GetValue( "gauss_fast_ammo_use" ) != 0 )
+                if( g_cfg.GetValue( "gauss_fast_ammo_use" ) != 0 )
                 {
                     m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.1;
                 }
@@ -285,7 +285,7 @@ void CGauss::StartFire()
 #ifdef CLIENT_DLL
         flDamage = 20;
 #else
-        flDamage = g_Skill.GetValue( "plr_gauss"sv, 20, this );
+        flDamage = g_cfg.GetValue( "plr_gauss"sv, 20, this );
 #endif
     }
 
@@ -301,7 +301,7 @@ void CGauss::StartFire()
             m_pPlayer->pev->velocity = m_pPlayer->pev->velocity - gpGlobals->v_forward * flDamage * 5;
         }
 
-        if( g_Skill.GetValue( "gauss_vertical_force" ) == 0 )
+        if( g_cfg.GetValue( "gauss_vertical_force" ) == 0 )
         {
             // Don't pop you up into the air.
             m_pPlayer->pev->velocity.z = flZVel;
@@ -437,7 +437,7 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 
                             // exit blast damage
                             // m_pPlayer->RadiusDamage(beam_tr.vecEndPos + vecDir * 8, this, m_pPlayer, flDamage, DMG_BLAST);
-                            const float damage_radius = flDamage * g_Skill.GetValue( "gauss_damage_radius" );
+                            const float damage_radius = flDamage * g_cfg.GetValue( "gauss_damage_radius" );
 
                             ::RadiusDamage( beam_tr.vecEndPos + vecDir * 8, this, m_pPlayer, flDamage, damage_radius, DMG_BLAST );
 

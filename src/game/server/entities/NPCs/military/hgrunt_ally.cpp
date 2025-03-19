@@ -143,7 +143,7 @@ void CHGruntAlly::OnCreate()
 {
     CBaseHGruntAlly::OnCreate();
 
-    pev->health = g_Skill.GetValue( "hgrunt_ally_health"sv, 50, this );
+    pev->health = g_cfg.GetValue( "hgrunt_ally_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/hgrunt_opfor.mdl" );
 }
 
@@ -249,7 +249,7 @@ void CHGruntAlly::Shoot( bool firstShotInBurst )
             {
                 const Vector vecShellVelocity = gpGlobals->v_right * RANDOM_FLOAT( 40, 90 ) + gpGlobals->v_up * RANDOM_FLOAT( 75, 200 ) + gpGlobals->v_forward * RANDOM_FLOAT( -40, 40 );
                 EjectBrass( vecShootOrigin - vecShootDir * 24, vecShellVelocity, pev->angles.y, m_iShotgunShell, TE_BOUNCE_SHOTSHELL );
-                FireBullets( g_Skill.GetValue( "hgrunt_ally_pellets"sv, 3, this ), vecShootOrigin, vecShootDir, VECTOR_CONE_15DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0 ); // shoot +-7.5 degrees
+                FireBullets( g_cfg.GetValue( "hgrunt_ally_pellets"sv, 3, this ), vecShootOrigin, vecShootDir, VECTOR_CONE_15DEGREES, 2048, BULLET_PLAYER_BUCKSHOT, 0 ); // shoot +-7.5 degrees
 
                 firedShot = true;
             }

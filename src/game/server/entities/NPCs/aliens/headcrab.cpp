@@ -95,7 +95,7 @@ public:
 
     bool HasAlienGibs() override { return true; }
 
-    virtual float GetDamageAmount() { return g_Skill.GetValue( "headcrab_dmg_bite"sv, 10, this ); }
+    virtual float GetDamageAmount() { return g_cfg.GetValue( "headcrab_dmg_bite"sv, 10, this ); }
     virtual int GetVoicePitch() { return 100; }
     virtual float GetSoundVolue() { return 1.0; }
     const Schedule_t* GetScheduleOfType( int Type ) override;
@@ -157,7 +157,7 @@ void CHeadCrab::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_Skill.GetValue( "headcrab_health"sv, 20, this );
+    pev->health = g_cfg.GetValue( "headcrab_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/headcrab.mdl" );
 
     SetClassification( "alien_prey" );
@@ -441,7 +441,7 @@ public:
     void OnCreate() override;
     bool Spawn() override;
     void SetYawSpeed() override;
-    float GetDamageAmount() override { return g_Skill.GetValue( "headcrab_dmg_bite"sv, 10, this ) * 0.3; }
+    float GetDamageAmount() override { return g_cfg.GetValue( "headcrab_dmg_bite"sv, 10, this ) * 0.3; }
     bool CheckRangeAttack1( float flDot, float flDist ) override;
     const Schedule_t* GetScheduleOfType( int Type ) override;
     int GetVoicePitch() override { return PITCH_NORM + RANDOM_LONG( 40, 50 ); }
@@ -454,7 +454,7 @@ void CBabyCrab::OnCreate()
 {
     CHeadCrab::OnCreate();
 
-    pev->health = g_Skill.GetValue( "headcrab_health"sv, 20, this ) * 0.25; // less health than full grown
+    pev->health = g_cfg.GetValue( "headcrab_health"sv, 20, this ) * 0.25; // less health than full grown
     pev->model = MAKE_STRING( "models/baby_headcrab.mdl" );
 }
 

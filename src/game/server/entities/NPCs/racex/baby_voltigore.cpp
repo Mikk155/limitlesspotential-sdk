@@ -70,7 +70,7 @@ void COFBabyVoltigore::OnCreate()
 {
     COFVoltigore::OnCreate();
 
-    pev->health = g_Skill.GetValue( "babyvoltigore_health"sv, 120, this );
+    pev->health = g_cfg.GetValue( "babyvoltigore_health"sv, 120, this );
     pev->model = MAKE_STRING( "models/baby_voltigore.mdl" );
 }
 
@@ -125,7 +125,7 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case VOLTIGORE_AE_LEFT_PUNCH:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_Skill.GetValue( "babyvoltigore_dmg_punch"sv, 20, this ), DMG_CLUB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_cfg.GetValue( "babyvoltigore_dmg_punch"sv, 20, this ), DMG_CLUB );
 
         if( pHurt )
         {
@@ -155,7 +155,7 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case VOLTIGORE_AE_RIGHT_PUNCH:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_Skill.GetValue( "babyvoltigore_dmg_punch"sv, 20, this ), DMG_CLUB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_cfg.GetValue( "babyvoltigore_dmg_punch"sv, 20, this ), DMG_CLUB );
 
         if( pHurt )
         {

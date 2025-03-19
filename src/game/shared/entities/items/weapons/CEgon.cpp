@@ -263,13 +263,13 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
             ClearMultiDamage();
             if( 0 != pEntity->pev->takedamage )
             {
-                pEntity->TraceAttack( m_pPlayer, g_Skill.GetValue( "plr_egon_narrow"sv, 6, this ), vecDir, &tr, DMG_ENERGYBEAM );
+                pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue( "plr_egon_narrow"sv, 6, this ), vecDir, &tr, DMG_ENERGYBEAM );
             }
             ApplyMultiDamage( m_pPlayer, m_pPlayer );
 
             if( gpGlobals->time >= m_flAmmoUseTime )
             {
-                const float ammoPerSecond = g_Skill.GetValue( "egon_narrow_ammo_per_second"sv, 6, this );
+                const float ammoPerSecond = g_cfg.GetValue( "egon_narrow_ammo_per_second"sv, 6, this );
 
                 if( ammoPerSecond > 0 )
                 {
@@ -297,14 +297,14 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
             ClearMultiDamage();
             if( 0 != pEntity->pev->takedamage )
             {
-                pEntity->TraceAttack( m_pPlayer, g_Skill.GetValue( "plr_egon_wide"sv, 14, this ), vecDir, &tr, DMG_ENERGYBEAM | DMG_ALWAYSGIB );
+                pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue( "plr_egon_wide"sv, 14, this ), vecDir, &tr, DMG_ENERGYBEAM | DMG_ALWAYSGIB );
             }
             ApplyMultiDamage( m_pPlayer, m_pPlayer );
 
-            if( g_Skill.GetValue( "egon_wide_radius_damage"sv, 0, this ) != 0 )
+            if( g_cfg.GetValue( "egon_wide_radius_damage"sv, 0, this ) != 0 )
             {
                 // radius damage a little more potent in multiplayer.
-                ::RadiusDamage( tr.vecEndPos, this, m_pPlayer, g_Skill.GetValue( "plr_egon_wide"sv, 14, this ) / 4, 128, DMG_ENERGYBEAM | DMG_BLAST | DMG_ALWAYSGIB );
+                ::RadiusDamage( tr.vecEndPos, this, m_pPlayer, g_cfg.GetValue( "plr_egon_wide"sv, 14, this ) / 4, 128, DMG_ENERGYBEAM | DMG_BLAST | DMG_ALWAYSGIB );
             }
 
             if( !m_pPlayer->IsAlive() )
@@ -312,7 +312,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
 
             if( gpGlobals->time >= m_flAmmoUseTime )
             {
-                const float ammoPerSecond = g_Skill.GetValue( "egon_wide_ammo_per_second"sv, 10, this );
+                const float ammoPerSecond = g_cfg.GetValue( "egon_wide_ammo_per_second"sv, 10, this );
 
                 if( ammoPerSecond > 0 )
                 {

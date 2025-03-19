@@ -110,7 +110,7 @@ bool CTripmineGrenade::Spawn()
     pev->nextthink = gpGlobals->time + 0.2;
 
     pev->takedamage = DAMAGE_YES;
-    pev->dmg = g_Skill.GetValue( "plr_tripmine"sv, 150, this );
+    pev->dmg = g_cfg.GetValue( "plr_tripmine"sv, 150, this );
     pev->health = 1; // don't let die normally
 
     if( auto owner = GetOwner(); owner )
