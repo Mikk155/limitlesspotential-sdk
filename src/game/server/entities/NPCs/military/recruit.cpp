@@ -37,7 +37,7 @@ public:
     {
         CBarney::OnCreate();
 
-        pev->health = GetSkillFloat( "barney_health"sv );
+        pev->health = g_Skill.GetValue( "barney_health"sv, 35, this );
         pev->model = MAKE_STRING( "models/recruit.mdl" );
 
         m_iszUse = MAKE_STRING( "RC_OK" );

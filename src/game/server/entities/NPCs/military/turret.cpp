@@ -298,7 +298,7 @@ void CTurret::OnCreate()
 {
     CBaseTurret::OnCreate();
 
-    pev->health = GetSkillFloat( "turret_health"sv );
+    pev->health = g_Skill.GetValue( "turret_health"sv, 60, this );
     pev->model = MAKE_STRING( "models/turret.mdl" );
 }
 
@@ -339,7 +339,7 @@ void CMiniTurret::OnCreate()
 {
     CBaseTurret::OnCreate();
 
-    pev->health = GetSkillFloat( "miniturret_health"sv );
+    pev->health = g_Skill.GetValue( "miniturret_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/miniturret.mdl" );
 }
 
@@ -1182,7 +1182,7 @@ void CSentry::OnCreate()
 {
     CBaseTurret::OnCreate();
 
-    pev->health = GetSkillFloat( "sentry_health"sv );
+    pev->health = g_Skill.GetValue( "sentry_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/sentry.mdl" );
 }
 

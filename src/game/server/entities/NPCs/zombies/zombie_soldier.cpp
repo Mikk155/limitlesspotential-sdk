@@ -23,13 +23,13 @@ public:
     {
         CZombie::OnCreate();
 
-        pev->health = GetSkillFloat( "zombie_soldier_health"sv );
+        pev->health = g_Skill.GetValue( "zombie_soldier_health"sv, 120, this );
         pev->model = MAKE_STRING( "models/zombie_soldier.mdl" );
     }
 
 protected:
-    float GetOneSlashDamage() override { return GetSkillFloat( "zombie_soldier_dmg_one_slash"sv ); }
-    float GetBothSlashDamage() override { return GetSkillFloat( "zombie_soldier_dmg_both_slash"sv ); }
+    float GetOneSlashDamage() override { return g_Skill.GetValue( "zombie_soldier_dmg_one_slash"sv, 20, this ); }
+    float GetBothSlashDamage() override { return g_Skill.GetValue( "zombie_soldier_dmg_both_slash"sv, 40, this ); }
 };
 
 LINK_ENTITY_TO_CLASS( monster_zombie_soldier, CZombieSoldier );

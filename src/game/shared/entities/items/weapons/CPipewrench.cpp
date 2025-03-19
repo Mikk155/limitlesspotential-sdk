@@ -206,12 +206,12 @@ bool CPipewrench::Swing( const bool bFirst )
             if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_Skill.GetValue( "pipewrench_full_damage" ) != 0 )
             {
                 // first swing does full damage
-                pEntity->TraceAttack( m_pPlayer, GetSkillFloat( "plr_pipewrench"sv ), gpGlobals->v_forward, &tr, DMG_CLUB );
+                pEntity->TraceAttack( m_pPlayer, g_Skill.GetValue( "plr_pipewrench"sv, 20, this ), gpGlobals->v_forward, &tr, DMG_CLUB );
             }
             else
             {
                 // subsequent swings do half
-                pEntity->TraceAttack( m_pPlayer, GetSkillFloat( "plr_pipewrench"sv ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
+                pEntity->TraceAttack( m_pPlayer, g_Skill.GetValue( "plr_pipewrench"sv, 20, this ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
             }
 
             ApplyMultiDamage( m_pPlayer, m_pPlayer );
@@ -219,7 +219,7 @@ bool CPipewrench::Swing( const bool bFirst )
 
 #endif
 
-        if( GetSkillFloat( "chainsaw_melee" ) == 0 )
+        if( g_Skill.GetValue( "chainsaw_melee"sv, 0, this ) == 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
             m_flNextSecondaryAttack = GetNextAttackDelay( 0.5 );
@@ -296,7 +296,7 @@ bool CPipewrench::Swing( const bool bFirst )
         pev->nextthink = gpGlobals->time + 0.2;
 #endif
 
-        if( GetSkillFloat( "chainsaw_melee" ) != 0 )
+        if( g_Skill.GetValue( "chainsaw_melee"sv, 0, this ) != 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
             m_flNextSecondaryAttack = GetNextAttackDelay( 0.5 );
@@ -365,7 +365,7 @@ void CPipewrench::BigSwing()
         {
             ClearMultiDamage();
 
-            float flDamage = ( gpGlobals->time - m_flBigSwingStart ) * GetSkillFloat( "plr_pipewrench"sv ) + 25.0f;
+            float flDamage = ( gpGlobals->time - m_flBigSwingStart ) * g_Skill.GetValue( "plr_pipewrench"sv, 20, this ) + 25.0f;
             if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_Skill.GetValue( "pipewrench_full_damage" ) != 0 )
             {
                 // first swing does full damage

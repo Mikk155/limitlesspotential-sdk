@@ -1264,21 +1264,21 @@ void CBaseMonster::TraceAttack( CBaseEntity* attacker, float flDamage, Vector ve
         case HITGROUP_GENERIC:
             break;
         case HITGROUP_HEAD:
-            flDamage *= GetSkillFloat( "monster_head"sv );
+            flDamage *= g_Skill.GetValue( "monster_head"sv, 3, this );
             break;
         case HITGROUP_CHEST:
-            flDamage *= GetSkillFloat( "monster_chest"sv );
+            flDamage *= g_Skill.GetValue( "monster_chest"sv, 1, this );
             break;
         case HITGROUP_STOMACH:
-            flDamage *= GetSkillFloat( "monster_stomach"sv );
+            flDamage *= g_Skill.GetValue( "monster_stomach"sv, 1, this );
             break;
         case HITGROUP_LEFTARM:
         case HITGROUP_RIGHTARM:
-            flDamage *= GetSkillFloat( "monster_arm"sv );
+            flDamage *= g_Skill.GetValue( "monster_arm"sv, 1, this );
             break;
         case HITGROUP_LEFTLEG:
         case HITGROUP_RIGHTLEG:
-            flDamage *= GetSkillFloat( "monster_leg"sv );
+            flDamage *= g_Skill.GetValue( "monster_leg"sv, 1, this );
             break;
         default:
             break;
@@ -1371,16 +1371,16 @@ void CBaseEntity::FireBullets( unsigned int cShots, Vector vecSrc, Vector vecDir
                 switch ( iBulletType )
                 {
                 case BULLET_PLAYER_MP5:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_9mmAR_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_9mmAR_bullet"sv, 5, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_357:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_357_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_357_bullet"sv, 40, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_BUCKSHOT:
                     // make distance based!
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_buckshot"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_buckshot"sv, 5, this ), vecDir, &tr, DMG_BULLET );
 
                     TEXTURETYPE_PlaySound( &tr, vecSrc, vecEnd, iBulletType );
                     DecalGunshot( &tr, iBulletType );
@@ -1388,7 +1388,7 @@ void CBaseEntity::FireBullets( unsigned int cShots, Vector vecSrc, Vector vecDir
 
                 default:
                 case BULLET_MONSTER_9MM:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "bullet_9mm"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "bullet_9mm"sv, 8, this ), vecDir, &tr, DMG_BULLET );
 
                     TEXTURETYPE_PlaySound( &tr, vecSrc, vecEnd, iBulletType );
                     DecalGunshot( &tr, iBulletType );
@@ -1396,7 +1396,7 @@ void CBaseEntity::FireBullets( unsigned int cShots, Vector vecSrc, Vector vecDir
                     break;
 
                 case BULLET_MONSTER_MP5:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "bullet_9mmAR"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "bullet_9mmAR"sv, 5, this ), vecDir, &tr, DMG_BULLET );
 
                     TEXTURETYPE_PlaySound( &tr, vecSrc, vecEnd, iBulletType );
                     DecalGunshot( &tr, iBulletType );
@@ -1404,25 +1404,25 @@ void CBaseEntity::FireBullets( unsigned int cShots, Vector vecSrc, Vector vecDir
                     break;
 
                 case BULLET_MONSTER_12MM:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "bullet_12mm"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "bullet_12mm"sv, 10, this ), vecDir, &tr, DMG_BULLET );
                     TEXTURETYPE_PlaySound( &tr, vecSrc, vecEnd, iBulletType );
                     DecalGunshot( &tr, iBulletType );
                     break;
 
                 case BULLET_PLAYER_556:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_556_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_556_bullet"sv, 15, this ), vecDir, &tr, DMG_BULLET );
                     TEXTURETYPE_PlaySound( &tr, vecSrc, vecEnd, iBulletType );
                     DecalGunshot( &tr, iBulletType );
                     break;
 
                 case BULLET_PLAYER_762:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_762_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_762_bullet"sv, 100, this ), vecDir, &tr, DMG_BULLET );
                     TEXTURETYPE_PlaySound( &tr, vecSrc, vecEnd, iBulletType );
                     DecalGunshot( &tr, iBulletType );
                     break;
 
                 case BULLET_PLAYER_EAGLE:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_eagle"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_eagle"sv, 34, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_NONE: // FIX
@@ -1491,28 +1491,28 @@ Vector CBaseEntity::FireBulletsPlayer( unsigned int cShots, Vector vecSrc, Vecto
                 {
                 default:
                 case BULLET_PLAYER_9MM:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_9mm_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_9mm_bullet"sv, 8, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_MP5:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_9mmAR_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_9mmAR_bullet"sv, 5, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_BUCKSHOT:
                     // make distance based!
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_buckshot"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_buckshot"sv, 5, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_357:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_357_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_357_bullet"sv, 40, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_556:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_556_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_556_bullet"sv, 15, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_PLAYER_762:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_762_bullet"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_762_bullet"sv, 100, this ), vecDir, &tr, DMG_BULLET );
 
                     if( tr.pHit && tr.pHit->v.takedamage != DAMAGE_NO )
                     {
@@ -1551,7 +1551,7 @@ Vector CBaseEntity::FireBulletsPlayer( unsigned int cShots, Vector vecSrc, Vecto
                     break;
 
                 case BULLET_PLAYER_EAGLE:
-                    pEntity->TraceAttack( attacker, GetSkillFloat( "plr_eagle"sv ), vecDir, &tr, DMG_BULLET );
+                    pEntity->TraceAttack( attacker, g_Skill.GetValue( "plr_eagle"sv, 34, this ), vecDir, &tr, DMG_BULLET );
                     break;
 
                 case BULLET_NONE: // FIX

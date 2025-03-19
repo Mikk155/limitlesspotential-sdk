@@ -40,11 +40,13 @@ See the `skill.json` file included with the SDK for a list of variables.
 
 To use a skill variable in code, simply get the value like this:
 ```cpp
-GetSkillFloat( "my_variable"sv, 100 )
+g_Skill.GetValue( "my_variable"sv, 100, this )
 ```
 the second argument is not necesary but will be used if the system fails on getting the variable from the json.
 
-`GetSkillFloat` is a static `CBaseEntity` method that calls `g_Skill.GetValue`. It takes a `std::string_view`, so as to avoid performing unnecessary string length calculations each time the [`sv` literal](https://en.cppreference.com/w/cpp/string/basic_string_view/operator%22%22sv) is used.
+the third argument is a CBaseEntity instance to use their custom config file if it exists.
+
+`g_Skill.GetValue` takes a `std::string_view`, so as to avoid performing unnecessary string length calculations each time the [`sv` literal](https://en.cppreference.com/w/cpp/string/basic_string_view/operator%22%22sv) is used.
 
 There is no other work required to use skill variables.
 
@@ -173,5 +175,5 @@ or
 
 2. Use the variable in your code:
 ```cpp
-pev->health = GetSkillFloat("my_variable"sv, 10);
+pev->health = g_Skill.GetValue( "my_variable"sv, 10, this );
 ```

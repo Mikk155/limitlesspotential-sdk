@@ -94,7 +94,7 @@ void COtis::OnCreate()
 {
     CBarney::OnCreate();
 
-    pev->health = GetSkillFloat( "otis_health"sv );
+    pev->health = g_Skill.GetValue( "otis_health"sv, 35, this );
     pev->model = MAKE_STRING( "models/otis.mdl" );
 
     m_iszUse = MAKE_STRING( "OT_OK" );
@@ -238,7 +238,7 @@ void CDeadOtis::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // GetSkillFloat("otis_health"sv);
+    pev->health = 8; // g_Skill.GetValue( "otis_health"sv, 35, this );
     pev->model = MAKE_STRING( "models/otis.mdl" );
 
     SetClassification( "player_ally" );

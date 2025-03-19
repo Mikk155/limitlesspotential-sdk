@@ -161,7 +161,7 @@ void COFMedicAlly::OnCreate()
 {
     CBaseHGruntAlly::OnCreate();
 
-    pev->health = GetSkillFloat( "medic_ally_health"sv );
+    pev->health = g_Skill.GetValue( "medic_ally_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/hgrunt_medic.mdl" );
 
     // get voice pitch
@@ -294,7 +294,7 @@ bool COFMedicAlly::Spawn()
     SpawnCore();
 
     m_flLastUseTime = 0;
-    m_iHealCharge = GetSkillFloat( "medic_ally_heal"sv );
+    m_iHealCharge = g_Skill.GetValue( "medic_ally_heal"sv, 75, this );
     m_fHealActive = false;
     m_fUseHealing = false;
     m_fHealing = false;

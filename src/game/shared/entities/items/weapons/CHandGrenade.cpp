@@ -26,7 +26,7 @@ void CHandGrenade::OnCreate()
     m_iId = WEAPON_HANDGRENADE;
     m_iDefaultAmmo = HANDGRENADE_DEFAULT_GIVE;
 #ifndef CLIENT_DLL
-    pev->dmg = GetSkillFloat( "plr_hand_grenade"sv );
+    pev->dmg = g_Skill.GetValue( "plr_hand_grenade"sv, 100, this );
 #endif
     m_WorldModel = pev->model = MAKE_STRING( "models/w_grenade.mdl" );
 }

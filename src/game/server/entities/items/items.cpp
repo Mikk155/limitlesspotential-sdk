@@ -123,7 +123,7 @@ public:
     void OnCreate() override
     {
         CItem::OnCreate();
-        m_HealthAmount = GetSkillFloat( "healthkit"sv );
+        m_HealthAmount = g_Skill.GetValue( "healthkit"sv, 10, this );
         pev->model = MAKE_STRING( "models/w_medkit.mdl" );
     }
 
@@ -196,7 +196,7 @@ public:
     void OnCreate() override
     {
         CItem::OnCreate();
-        m_ArmorAmount = GetSkillFloat( "battery"sv );
+        m_ArmorAmount = g_Skill.GetValue( "battery"sv, 10, this );
         pev->model = MAKE_STRING( "models/w_battery.mdl" );
     }
 

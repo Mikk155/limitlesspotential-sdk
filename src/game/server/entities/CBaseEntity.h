@@ -619,11 +619,6 @@ public:
      */
     virtual bool FVisible( const Vector& vecOrigin );
 
-    static float GetSkillFloat( std::string_view name, float defaultValue = 0.f )
-    {
-        return g_Skill.GetValue( name, defaultValue );
-    }
-
     // Sound playback.
     void EmitSound( int channel, const char* sample, float volume, float attenuation );
     void EmitSoundDyn( int channel, const char* sample, float volume, float attenuation, int flags, int pitch );

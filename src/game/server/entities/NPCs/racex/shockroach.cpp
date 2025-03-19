@@ -93,7 +93,7 @@ public:
     bool CheckRangeAttack2( float flDot, float flDist ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
-    virtual float GetDamageAmount() { return GetSkillFloat( "shockroach_dmg_bite"sv ); }
+    virtual float GetDamageAmount() { return g_Skill.GetValue( "shockroach_dmg_bite"sv, 10, this ); }
     virtual int GetVoicePitch() { return 100; }
     virtual float GetSoundVolue() { return 1.0; }
     const Schedule_t* GetScheduleOfType( int Type ) override;
@@ -156,7 +156,7 @@ void COFShockRoach::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = GetSkillFloat( "shockroach_health"sv );
+    pev->health = g_Skill.GetValue( "shockroach_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/w_shock_rifle.mdl" );
 
     SetClassification( "alien_prey" );
@@ -460,7 +460,7 @@ void COFShockRoach::MonsterThink()
         m_fRoachSolid = true;
     }
 
-    if( lifeTime >= GetSkillFloat( "shockroach_lifespan"sv ) )
+    if( lifeTime >= g_Skill.GetValue( "shockroach_lifespan"sv, 10, this ) )
         TakeDamage( this, this, pev->health, DMG_NEVERGIB );
 
     CBaseMonster::MonsterThink();

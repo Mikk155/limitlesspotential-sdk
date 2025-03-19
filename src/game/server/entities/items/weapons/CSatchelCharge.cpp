@@ -56,7 +56,7 @@ bool CSatchelCharge::Spawn()
     pev->gravity = 0.5;
     pev->friction = 0.8;
 
-    pev->dmg = GetSkillFloat( "plr_satchel"sv );
+    pev->dmg = g_Skill.GetValue( "plr_satchel"sv, 150, this );
     // ResetSequenceInfo( );
     pev->sequence = 1;
 

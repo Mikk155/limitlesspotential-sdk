@@ -470,7 +470,7 @@ void CAGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case AGRUNT_AE_LEFT_PUNCH:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( AGRUNT_MELEE_DIST, GetSkillFloat( "agrunt_dmg_punch"sv ), DMG_CLUB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( AGRUNT_MELEE_DIST, g_Skill.GetValue( "agrunt_dmg_punch"sv, 20, this ), DMG_CLUB );
 
         if( pHurt )
         {
@@ -500,7 +500,7 @@ void CAGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case AGRUNT_AE_RIGHT_PUNCH:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( AGRUNT_MELEE_DIST, GetSkillFloat( "agrunt_dmg_punch"sv ), DMG_CLUB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( AGRUNT_MELEE_DIST, g_Skill.GetValue( "agrunt_dmg_punch"sv, 20, this ), DMG_CLUB );
 
         if( pHurt )
         {

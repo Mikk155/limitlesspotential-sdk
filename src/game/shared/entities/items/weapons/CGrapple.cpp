@@ -329,7 +329,7 @@ void CGrapple::PrimaryAttack()
 #ifndef CLIENT_DLL
                         ClearMultiDamage();
 
-                        float flDamage = GetSkillFloat( "plr_grapple"sv );
+                        float flDamage = g_Skill.GetValue( "plr_grapple"sv, 25, this );
 
                         pHit->TraceAttack( this, flDamage, gpGlobals->v_forward, &tr, DMG_ALWAYSGIB | DMG_CLUB );
 

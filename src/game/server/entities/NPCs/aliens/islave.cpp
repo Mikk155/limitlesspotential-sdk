@@ -147,7 +147,7 @@ void CISlave::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = GetSkillFloat( "islave_health"sv );
+    pev->health = g_Skill.GetValue( "islave_health"sv, 60, this );
     pev->model = MAKE_STRING( "models/islave.mdl" );
 
     SetClassification( "alien_military" );
@@ -286,7 +286,7 @@ void CISlave::HandleAnimEvent( MonsterEvent_t* pEvent )
     case ISLAVE_AE_CLAW:
     {
         // SOUND HERE!
-        CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "islave_dmg_claw"sv ), DMG_SLASH );
+        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_Skill.GetValue( "islave_dmg_claw"sv, 10, this ), DMG_SLASH );
         if( pHurt )
         {
             if( ( pHurt->pev->flags & ( FL_MONSTER | FL_CLIENT ) ) != 0 )
@@ -307,7 +307,7 @@ void CISlave::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case ISLAVE_AE_CLAWRAKE:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( 70, GetSkillFloat( "islave_dmg_clawrake"sv ), DMG_SLASH );
+        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_Skill.GetValue( "islave_dmg_clawrake"sv, 25, this ), DMG_SLASH );
         if( pHurt )
         {
             if( ( pHurt->pev->flags & ( FL_MONSTER | FL_CLIENT ) ) != 0 )
@@ -742,7 +742,7 @@ void CISlave::ZapBeam( int side )
     pEntity = CBaseEntity::Instance( tr.pHit );
     if( pEntity != nullptr && 0 != pEntity->pev->takedamage )
     {
-        pEntity->TraceAttack( this, GetSkillFloat( "islave_dmg_zap"sv ), vecAim, &tr, DMG_SHOCK );
+        pEntity->TraceAttack( this, g_Skill.GetValue( "islave_dmg_zap"sv, 15, this ), vecAim, &tr, DMG_SHOCK );
     }
     EmitAmbientSound( tr.vecEndPos, "weapons/electro4.wav", 0.5, ATTN_NORM, 0, RANDOM_LONG( 140, 160 ) );
 }
@@ -810,7 +810,7 @@ void CDeadISlave::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // GetSkillFloat("islave_health"sv);
+    pev->health = 8; // g_Skill.GetValue( "islave_health"sv, 60, this );
     pev->model = MAKE_STRING( "models/islave.mdl" );
 
     SetClassification( "alien_passive" );

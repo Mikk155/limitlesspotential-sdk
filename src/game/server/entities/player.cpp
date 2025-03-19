@@ -268,21 +268,21 @@ void CBasePlayer::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vec
         case HITGROUP_GENERIC:
             break;
         case HITGROUP_HEAD:
-            flDamage *= GetSkillFloat( "player_head"sv );
+            flDamage *= g_Skill.GetValue( "player_head"sv, 3, this );
             break;
         case HITGROUP_CHEST:
-            flDamage *= GetSkillFloat( "player_chest"sv );
+            flDamage *= g_Skill.GetValue( "player_chest"sv, 1, this );
             break;
         case HITGROUP_STOMACH:
-            flDamage *= GetSkillFloat( "player_stomach"sv );
+            flDamage *= g_Skill.GetValue( "player_stomach"sv, 1, this );
             break;
         case HITGROUP_LEFTARM:
         case HITGROUP_RIGHTARM:
-            flDamage *= GetSkillFloat( "player_arm"sv );
+            flDamage *= g_Skill.GetValue( "player_arm"sv, 1, this );
             break;
         case HITGROUP_LEFTLEG:
         case HITGROUP_RIGHTLEG:
-            flDamage *= GetSkillFloat( "player_leg"sv );
+            flDamage *= g_Skill.GetValue( "player_leg"sv, 1, this );
             break;
         default:
             break;
@@ -2735,10 +2735,10 @@ bool CBasePlayer::Spawn()
     pev->takedamage = DAMAGE_AIM;
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_WALK;
-    pev->health = GetSkillFloat("player_health"sv, 100 );
-    pev->armorvalue = GetSkillFloat("player_armor"sv, 0 );
-    pev->max_health = GetSkillFloat("player_maxhealth"sv, 100 );
-    pev->armortype = GetSkillFloat("player_maxarmor"sv, 100 );
+    pev->health = g_Skill.GetValue( "player_health"sv, 100, this );
+    pev->armorvalue = g_Skill.GetValue( "player_armor"sv, 0, this );
+    pev->max_health = g_Skill.GetValue( "player_maxhealth"sv, 100, this );
+    pev->armortype = g_Skill.GetValue( "player_maxarmor"sv, 100, this );
     pev->flags &= FL_PROXY | FL_FAKECLIENT; // keep proxy and fakeclient flags set by engine
     pev->flags |= FL_CLIENT;
     pev->air_finished = gpGlobals->time + 12;
@@ -3756,7 +3756,7 @@ void CBasePlayer::ItemPostFrame()
 
     const bool canUseItem = m_flNextAttack <= UTIL_WeaponTimeBase();
 
-    if( canUseItem || GetSkillFloat( "allow_use_while_busy" ) != 0 )
+    if( canUseItem || g_Skill.GetValue( "allow_use_while_busy"sv, 0, this ) != 0 )
     {
         // Handle use events
         PlayerUse();

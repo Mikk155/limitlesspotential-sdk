@@ -49,7 +49,7 @@ void CApache::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = GetSkillFloat( "apache_health"sv );
+    pev->health = g_Skill.GetValue( "apache_health"sv, 400, this );
     pev->model = MAKE_STRING( "models/apache.mdl" );
 
     SetClassification( "human_military" );

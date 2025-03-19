@@ -373,7 +373,7 @@ CGrenade* CGrenade::ShootContact( CBaseEntity* owner, Vector vecStart, Vector ve
     // Explode on contact
     pGrenade->SetTouch( &CGrenade::ExplodeTouch );
 
-    pGrenade->pev->dmg = GetSkillFloat( "plr_9mmAR_grenade"sv );
+    pGrenade->pev->dmg = g_Skill.GetValue( "plr_9mmAR_grenade"sv, 100, owner );
 
     return pGrenade;
 }

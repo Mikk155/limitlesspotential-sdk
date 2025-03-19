@@ -167,7 +167,7 @@ void CIchthyosaur::OnCreate()
 {
     CFlyingMonster::OnCreate();
 
-    pev->health = GetSkillFloat( "ichthyosaur_health"sv );
+    pev->health = g_Skill.GetValue( "ichthyosaur_health"sv, 400, this );
     pev->model = MAKE_STRING( "models/icky.mdl" );
 
     SetClassification( "alien_monster" );
@@ -398,7 +398,7 @@ void CIchthyosaur::HandleAnimEvent( MonsterEvent_t* pEvent )
                     pHurt->pev->angles.z = 0;
                     pHurt->pev->fixangle = FIXANGLE_ABSOLUTE;
                 }
-                pHurt->TakeDamage( this, this, GetSkillFloat( "ichthyosaur_shake"sv ), DMG_SLASH );
+                pHurt->TakeDamage( this, this, g_Skill.GetValue( "ichthyosaur_shake"sv, 50, this ), DMG_SLASH );
             }
         }
         BiteSound();
