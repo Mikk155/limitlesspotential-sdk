@@ -95,6 +95,10 @@ void CSquidSpit::Animate()
 void CSquidSpit::Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVelocity )
 {
     CSquidSpit* pSpit = g_EntityDictionary->Create<CSquidSpit>( "squidspit" );
+
+    if( owner != nullptr && owner->m_config >= 0 )
+        pSpit->m_config = owner->m_config;
+
     pSpit->Spawn();
 
     pSpit->SetOrigin( vecStart );

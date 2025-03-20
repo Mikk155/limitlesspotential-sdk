@@ -53,7 +53,7 @@ public:
     bool Spawn() override;
     void Think() override;
     int ObjectCaps() override { return FCAP_DONT_SAVE; }
-    static CSpiral* Create( const Vector& origin, float height, float radius, float duration );
+    static CSpiral* Create( const Vector& origin, float height, float radius, float duration, CBaseEntity* owner );
 };
 
 LINK_ENTITY_TO_CLASS( streak_spiral, CSpiral );
@@ -66,7 +66,7 @@ class CStomp : public CBaseEntity
 public:
     bool Spawn() override;
     void Think() override;
-    static CStomp* StompCreate( const Vector& origin, const Vector& end, float speed );
+    static CStomp* StompCreate( const Vector& origin, const Vector& end, float speed, CBaseEntity* owner );
 
     float m_flLastThinkTime;
 
@@ -81,9 +81,12 @@ BEGIN_DATAMAP( CStomp )
     DEFINE_FIELD( m_flLastThinkTime, FIELD_TIME ),
 END_DATAMAP();
 
-CStomp* CStomp::StompCreate( const Vector& origin, const Vector& end, float speed )
+CStomp* CStomp::StompCreate( const Vector& origin, const Vector& end, float speed, CBaseEntity* owner )
 {
     CStomp* pStomp = g_EntityDictionary->Create<CStomp>( "garg_stomp" );
+
+    if( owner != nullptr && owner->m_config >= 0 )
+        pStomp->m_config = owner->m_config;
 
     pStomp->pev->origin = origin;
     Vector dir = ( end - origin );
@@ -480,7 +483,7 @@ void CGargantua::StompAttack()
     Vector vecEnd = ( vecAim * 1024 ) + vecStart;
 
     UTIL_TraceLine( vecStart, vecEnd, ignore_monsters, edict(), &trace );
-    CStomp::StompCreate( vecStart, trace.vecEndPos, 0 );
+    CStomp::StompCreate( vecStart, trace.vecEndPos, 0, this );
     UTIL_ScreenShake( pev->origin, 12.0, 100.0, 2.0, 1000 );
     EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pStompSounds ), 1.0, ATTN_GARG, 0, PITCH_NORM + RANDOM_LONG( -10, 10 ) );
 
@@ -833,7 +836,7 @@ void CGargantua::DeathEffect()
     Vector deathPos = pev->origin + gpGlobals->v_forward * 100;
 
     // Create a spiral of streaks
-    CSpiral::Create( deathPos, ( pev->absmax.z - pev->absmin.z ) * 0.6, 125, 1.5 );
+    CSpiral::Create( deathPos, ( pev->absmax.z - pev->absmin.z ) * 0.6, 125, 1.5, this );
 
     Vector position = pev->origin;
     position.z += 32;
@@ -1051,6 +1054,9 @@ void CGargantua::RunTask( const Task_t* pTask )
             {
                 CGib* pGib = g_EntityDictionary->Create<CGib>( "gib" );
 
+                if( m_config >= 0 )
+                    pGib->m_config = m_config;
+        
                 pGib->Spawn( GARG_GIB_MODEL );
 
                 int bodyPart = 0;
@@ -1206,12 +1212,16 @@ bool CSpiral::Spawn()
     return true;
 }
 
-CSpiral* CSpiral::Create( const Vector& origin, float height, float radius, float duration )
+CSpiral* CSpiral::Create( const Vector& origin, float height, float radius, float duration, CBaseEntity* owner )
 {
     if( duration <= 0 )
         return nullptr;
 
     CSpiral* pSpiral = g_EntityDictionary->Create<CSpiral>( "streak_spiral" );
+
+    if( owner != nullptr && owner->m_config >= 0 )
+        pSpiral->m_config = owner->m_config;
+
     pSpiral->Spawn();
     pSpiral->pev->dmgtime = pSpiral->pev->nextthink;
     pSpiral->pev->origin = origin;

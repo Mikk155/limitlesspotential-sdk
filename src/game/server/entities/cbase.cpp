@@ -931,6 +931,9 @@ CBaseEntity* CBaseEntity::Create( const char* szName, const Vector& vecOrigin, c
     entity->pev->origin = vecOrigin;
     entity->pev->angles = vecAngles;
 
+    if( owner != nullptr && owner->m_config >= 0 )
+        entity->m_config = owner->m_config;
+
     if( callSpawn )
     {
         DispatchSpawn( entity->edict() );

@@ -96,6 +96,9 @@ void CPitdroneSpike::Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVeloc
 {
     CPitdroneSpike* pSpit = g_EntityDictionary->Create<CPitdroneSpike>( "pitdronespike" );
 
+    if( owner != nullptr && owner->m_config >= 0 )
+        pSpit->m_config = owner->m_config;
+
     pSpit->pev->angles = vecAngles;
     pSpit->SetOrigin( vecStart );
 
