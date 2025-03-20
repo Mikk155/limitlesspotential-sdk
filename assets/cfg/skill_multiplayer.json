@@ -45,7 +45,8 @@
 
     "allow_monsters": false,
 
-    "falldamagemode": 0,
+    // Default old hardcoded value for multiplayer
+    "fall_damage": -10,
 
     "healthcharger_recharge_time": 60,
     "hevcharger_recharge_time": 30,

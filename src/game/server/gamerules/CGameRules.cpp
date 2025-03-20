@@ -177,17 +177,18 @@ CGameRules::CGameRules()
 
 float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
 {
-    switch ( FallDamageMode( g_cfg.GetValue<float>( "falldamagemode"sv, 1 ) ) )
+    if( int damage = g_cfg.GetValue<int>( "fall_damage"sv, 1, pPlayer ); damage <= 0 )
     {
-    case FallDamageMode::Progressive:
-        // subtract off the speed at which a player is allowed to fall without being hurt,
-        // so damage will be based on speed beyond that, not the entire fall
-        pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
-        return pPlayer->m_flFallVelocity * DAMAGE_FOR_FALL_SPEED;
-    default:
-    case FallDamageMode::Fixed:
-        return 10;
+        if( damage < 0 ) // Invert the damage
+            damage *= -1.0f;
+        return damage;
     }
+    
+    // subtract off the speed at which a player is allowed to fall without being hurt,
+    // so damage will be based on speed beyond that, not the entire fall
+    pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
+
+    return pPlayer->m_flFallVelocity * g_cfg.GetValue<float>( "fall_damage"sv, 0.22522522522f );
 }
 
 void CGameRules::SetupPlayerInventory( CBasePlayer* player )

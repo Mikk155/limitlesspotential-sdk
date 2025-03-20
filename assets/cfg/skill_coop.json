@@ -3,7 +3,7 @@
     "$schema": "../schemas/server/Config.json",
 
     "allow_monsters": true,
-    "falldamagemode": 1,
+    "fall_damage": 0.22522522522,
     "healthcharger_recharge_time": -1,
     "hevcharger_recharge_time": -1,
     "weapon_respawn_time": -1,

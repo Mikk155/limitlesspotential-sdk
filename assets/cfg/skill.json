@@ -567,9 +567,10 @@
 
     "allow_monsters": true,
 
-    // 0 == fixed damage
-    // 1 == progressive, longer falls deal more damage
-    "falldamagemode": 1,
+    // 0 == No damage
+    // 1 == progressive, longer distance * fall_damage
+    // Negative values is a fixed damage value.
+    "fall_damage": 0.22522522522,
 
     // -1 == never recharge
     // 0 == recharge immediately

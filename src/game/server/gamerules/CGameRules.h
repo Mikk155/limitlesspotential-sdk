@@ -27,12 +27,6 @@ class CBaseMonster;
 class CBasePlayer;
 class CBasePlayerWeapon;
 
-enum class FallDamageMode
-{
-    Fixed = 0,
-    Progressive
-};
-
 /**
  *    @brief weapon respawning return codes
  */
