@@ -143,7 +143,6 @@ void CController::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "controller_health"sv, 100, this );
     pev->model = MAKE_STRING( "models/controller.mdl" );
 
     SetClassification( "alien_military" );
@@ -342,6 +341,8 @@ void CController::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CController::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "controller_health"sv, 100, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );

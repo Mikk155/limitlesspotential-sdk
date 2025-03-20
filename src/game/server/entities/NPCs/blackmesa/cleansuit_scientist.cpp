@@ -36,7 +36,6 @@ void CCleansuitScientist::OnCreate()
 {
     CScientist::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "cleansuit_scientist_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
 }
 
@@ -107,6 +106,8 @@ bool CDeadCleansuitScientist::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
+
+    pev->health = g_cfg.GetValue<float>( "cleansuit_scientist_health"sv, 20, this );
 
     pev->effects = 0;
     pev->sequence = 0;

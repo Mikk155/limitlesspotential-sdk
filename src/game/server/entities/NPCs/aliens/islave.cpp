@@ -147,7 +147,6 @@ void CISlave::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "islave_health"sv, 60, this );
     pev->model = MAKE_STRING( "models/islave.mdl" );
 
     SetClassification( "alien_military" );
@@ -477,6 +476,8 @@ void CISlave::StartTask( const Task_t* pTask )
 bool CISlave::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "islave_health"sv, 60, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );

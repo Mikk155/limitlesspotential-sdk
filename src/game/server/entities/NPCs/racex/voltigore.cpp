@@ -298,7 +298,6 @@ void COFVoltigore::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "voltigore_health"sv, 450, this );
     pev->model = MAKE_STRING( "models/voltigore.mdl" );
 
     SetClassification( "alien_military" );
@@ -531,6 +530,7 @@ bool COFVoltigore::Spawn()
 {
     SpawnCore( {-80, -80, 0}, {80, 80, 90} );
 
+    pev->health = g_cfg.GetValue<float>( "voltigore_health"sv, 450, this );
     return true;
 }
 

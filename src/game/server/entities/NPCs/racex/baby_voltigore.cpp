@@ -70,7 +70,6 @@ void COFBabyVoltigore::OnCreate()
 {
     COFVoltigore::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "babyvoltigore_health"sv, 120, this );
     pev->model = MAKE_STRING( "models/baby_voltigore.mdl" );
 }
 
@@ -206,6 +205,7 @@ bool COFBabyVoltigore::Spawn()
 {
     SpawnCore( {-16, -16, 0}, {16, 16, 32} );
 
+    pev->health = g_cfg.GetValue<float>( "babyvoltigore_health"sv, 120, this );
     return true;
 }
 

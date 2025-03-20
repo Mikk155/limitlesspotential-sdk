@@ -157,7 +157,6 @@ void CHeadCrab::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "headcrab_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/headcrab.mdl" );
 
     SetClassification( "alien_prey" );
@@ -265,6 +264,8 @@ void CHeadCrab::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CHeadCrab::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "headcrab_health"sv, 20, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -12, -12, 0 ), Vector( 12, 12, 24 ) );
@@ -454,13 +455,15 @@ void CBabyCrab::OnCreate()
 {
     CHeadCrab::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "baby_headcrab_dmg_bite"sv, 20, this ); // less health than full grown
     pev->model = MAKE_STRING( "models/baby_headcrab.mdl" );
 }
 
 bool CBabyCrab::Spawn()
 {
     CHeadCrab::Spawn();
+
+    pev->health = g_cfg.GetValue<float>( "baby_headcrab_dmg_bite"sv, 20, this ); // less health than full grown
+
     pev->rendermode = kRenderTransTexture;
     pev->renderamt = 192;
     SetSize( Vector( -12, -12, 0 ), Vector( 12, 12, 24 ) );

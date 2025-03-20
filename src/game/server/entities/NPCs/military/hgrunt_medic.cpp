@@ -161,7 +161,6 @@ void COFMedicAlly::OnCreate()
 {
     CBaseHGruntAlly::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "medic_ally_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/hgrunt_medic.mdl" );
 
     // get voice pitch
@@ -292,6 +291,8 @@ void COFMedicAlly::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool COFMedicAlly::Spawn()
 {
     SpawnCore();
+
+    pev->health = g_cfg.GetValue<float>( "medic_ally_health"sv, 50, this );
 
     m_flLastUseTime = 0;
     m_iHealCharge = g_cfg.GetValue<float>( "medic_ally_heal"sv, 75, this );

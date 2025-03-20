@@ -54,7 +54,6 @@ void CHGrunt::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "hgrunt_health"sv, 80, this );
     pev->model = MAKE_STRING( "models/hgrunt.mdl" );
 
     SetClassification( "human_military" );
@@ -706,6 +705,8 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CHGrunt::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "hgrunt_health"sv, 80, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );

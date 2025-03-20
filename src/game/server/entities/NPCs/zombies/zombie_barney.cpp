@@ -23,8 +23,16 @@ public:
     {
         CZombie::OnCreate();
 
-        pev->health = g_cfg.GetValue<float>( "zombie_barney_health"sv, 100, this );
         pev->model = MAKE_STRING( "models/zombie_barney.mdl" );
+    }
+
+    bool Spawn() override
+    {
+        if( !CZombie::Spawn() )
+            return false;
+
+        pev->health = g_cfg.GetValue<float>( "zombie_barney_health"sv, 100, this );
+        return true;
     }
 
 protected:

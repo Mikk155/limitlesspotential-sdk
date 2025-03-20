@@ -24,7 +24,6 @@ void CZombie::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "zombie_health"sv, 100, this );
     pev->model = MAKE_STRING( "models/zombie.mdl" );
 
     SetClassification( "alien_monster" );
@@ -154,6 +153,7 @@ bool CZombie::Spawn()
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
 
+    pev->health = g_cfg.GetValue<float>( "zombie_health"sv, 100, this );
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_STEP;
     m_bloodColor = BLOOD_COLOR_GREEN;

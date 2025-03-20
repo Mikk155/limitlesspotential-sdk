@@ -49,7 +49,6 @@ void CApache::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "apache_health"sv, 400, this );
     pev->model = MAKE_STRING( "models/apache.mdl" );
 
     SetClassification( "human_military" );
@@ -61,6 +60,8 @@ bool CApache::Spawn()
     // motor
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
+
+    pev->health = g_cfg.GetValue<float>( "apache_health"sv, 400, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, -64 ), Vector( 32, 32, 0 ) );

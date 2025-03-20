@@ -246,7 +246,6 @@ void CBullsquid::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "bullsquid_health"sv, 120, this );
     pev->model = MAKE_STRING( "models/bullsquid.mdl" );
 
     SetClassification( "alien_predator" );
@@ -636,6 +635,8 @@ bool CBullsquid::Spawn()
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );
+
+    pev->health = g_cfg.GetValue<float>( "bullsquid_health"sv, 120, this );
 
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_STEP;

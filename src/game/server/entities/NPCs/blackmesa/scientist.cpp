@@ -290,7 +290,6 @@ void CScientist::OnCreate()
 {
     CTalkMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/scientist.mdl" );
 
     m_iszUse = MAKE_STRING( "SC_OK" );
@@ -524,6 +523,8 @@ bool CScientist::KeyValue( KeyValueData* pkvd )
 bool CScientist::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
 
     SetModel( STRING( pev->model ) );
 

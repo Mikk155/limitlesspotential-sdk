@@ -360,7 +360,6 @@ void CBigMomma::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2.0, this );
     pev->model = MAKE_STRING( "models/big_mom.mdl" );
 
     SetClassification( "alien_monster" );
@@ -614,6 +613,8 @@ void CBigMomma::LaunchMortar()
 bool CBigMomma::Spawn()
 {
     Precache();
+
+    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2.0, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );

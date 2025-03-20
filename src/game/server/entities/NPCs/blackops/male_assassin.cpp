@@ -105,7 +105,6 @@ void CMOFAssassin::OnCreate()
 {
     CHGrunt::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "massassin_health"sv, 80, this );
     pev->model = MAKE_STRING( "models/massn.mdl" );
 }
 
@@ -303,6 +302,8 @@ void CMOFAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CMOFAssassin::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "massassin_health"sv, 80, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );

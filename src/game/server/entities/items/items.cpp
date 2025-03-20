@@ -123,8 +123,14 @@ public:
     void OnCreate() override
     {
         CItem::OnCreate();
-        m_HealthAmount = g_cfg.GetValue<float>( "healthkit"sv, 10, this );
         pev->model = MAKE_STRING( "models/w_medkit.mdl" );
+    }
+
+    bool Spawn() override
+    {
+        CItem::Spawn();
+        m_HealthAmount = g_cfg.GetValue<float>( "healthkit"sv, 10, this );
+        return true;
     }
 
     void Precache() override
@@ -196,8 +202,14 @@ public:
     void OnCreate() override
     {
         CItem::OnCreate();
-        m_ArmorAmount = g_cfg.GetValue<float>( "battery"sv, 10, this );
         pev->model = MAKE_STRING( "models/w_battery.mdl" );
+    }
+
+    bool Spawn() override
+    {
+        CItem::Spawn();
+        m_ArmorAmount = g_cfg.GetValue<float>( "battery"sv, 10, this );
+        return true;
     }
 
     bool KeyValue( KeyValueData* pkvd ) override

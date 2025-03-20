@@ -276,7 +276,6 @@ void COFGonome::OnCreate()
 {
     CZombie::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "gonome_health"sv, 160, this );
     pev->model = MAKE_STRING( "models/gonome.mdl" );
 }
 
@@ -461,6 +460,7 @@ bool COFGonome::Spawn()
     m_pGonomeGuts = nullptr;
     m_PlayerLocked = nullptr;
 
+    pev->health = g_cfg.GetValue<float>( "gonome_health"sv, 160, this );
     return CZombie::Spawn();
 }
 

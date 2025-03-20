@@ -94,7 +94,6 @@ void COtis::OnCreate()
 {
     CBarney::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "otis_health"sv, 35, this );
     pev->model = MAKE_STRING( "models/otis.mdl" );
 
     m_iszUse = MAKE_STRING( "OT_OK" );
@@ -157,6 +156,8 @@ void COtis::Precache()
 bool COtis::Spawn()
 {
     CBarney::Spawn();
+
+    pev->health = g_cfg.GetValue<float>( "otis_health"sv, 35, this );
 
     if( pev->skin == OtisSkin::Random )
     {

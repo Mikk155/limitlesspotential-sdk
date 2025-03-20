@@ -297,11 +297,11 @@ void CBaseCharger::CheckIfOutOfCharge( bool fireTargets )
 class CWallHealth : public CBaseCharger
 {
 public:
+    bool Spawn() override;
+
     void OnCreate() override
     {
         CBaseCharger::OnCreate();
-        m_TotalJuice = g_cfg.GetValue<float>( "healthcharger"sv, 25, this );
-        m_RechargeDelay = g_pGameRules->HealthChargerRechargeTime();
         m_SoundVolume = VOL_NORM;
         m_StartupSound = "items/medshot4.wav";
         m_DenySound = "items/medshotno1.wav";
@@ -315,16 +315,23 @@ protected:
     }
 };
 
+bool CWallHealth::Spawn()
+{
+    m_TotalJuice = g_cfg.GetValue<float>( "healthcharger"sv, 25, this );
+    m_RechargeDelay = g_pGameRules->HealthChargerRechargeTime();
+    return true;
+}
+
 LINK_ENTITY_TO_CLASS( func_healthcharger, CWallHealth );
 
 class CRecharge : public CBaseCharger
 {
 public:
+    bool Spawn() override;
+
     void OnCreate() override
     {
         CBaseCharger::OnCreate();
-        m_TotalJuice = g_cfg.GetValue<float>( "suitcharger"sv, 35, this );
-        m_RechargeDelay = g_pGameRules->HEVChargerRechargeTime();
         m_SoundVolume = 0.85f;
         m_StartupSound = "items/suitchargeok1.wav";
         m_DenySound = "items/suitchargeno1.wav";
@@ -347,5 +354,12 @@ protected:
         return true;
     }
 };
+
+bool CRecharge::Spawn()
+{
+    m_TotalJuice = g_cfg.GetValue<float>( "suitcharger"sv, 35, this );
+    m_RechargeDelay = g_pGameRules->HEVChargerRechargeTime();
+    return true;
+}
 
 LINK_ENTITY_TO_CLASS( func_recharge, CRecharge );

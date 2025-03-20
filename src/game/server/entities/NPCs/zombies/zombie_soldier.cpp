@@ -23,10 +23,17 @@ public:
     {
         CZombie::OnCreate();
 
-        pev->health = g_cfg.GetValue<float>( "zombie_soldier_health"sv, 120, this );
         pev->model = MAKE_STRING( "models/zombie_soldier.mdl" );
     }
 
+    bool Spawn() override
+    {
+        if( !CZombie::Spawn() )
+            return false;
+
+        pev->health = g_cfg.GetValue<float>( "zombie_soldier_health"sv, 120, this );
+        return true;
+    }
 protected:
     float GetOneSlashDamage() override { return g_cfg.GetValue<float>( "zombie_soldier_dmg_one_slash"sv, 20, this ); }
     float GetBothSlashDamage() override { return g_cfg.GetValue<float>( "zombie_soldier_dmg_both_slash"sv, 40, this ); }

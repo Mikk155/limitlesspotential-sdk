@@ -268,7 +268,6 @@ void CShockTrooper::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "shocktrooper_health"sv, 200, this );
     pev->model = MAKE_STRING( "models/strooper.mdl" );
 
     SetClassification( "race_x" );
@@ -855,6 +854,7 @@ bool CShockTrooper::Spawn()
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -24, -24, 0 ), Vector( 24, 24, 72 ) );
 
+    pev->health = g_cfg.GetValue<float>( "shocktrooper_health"sv, 200, this );
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_STEP;
     m_bloodColor = BLOOD_COLOR_GREEN;

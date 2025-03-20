@@ -167,7 +167,6 @@ void CIchthyosaur::OnCreate()
 {
     CFlyingMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "ichthyosaur_health"sv, 400, this );
     pev->model = MAKE_STRING( "models/icky.mdl" );
 
     SetClassification( "alien_monster" );
@@ -421,6 +420,8 @@ void CIchthyosaur::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CIchthyosaur::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "ichthyosaur_health"sv, 400, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, -32 ), Vector( 32, 32, 32 ) );

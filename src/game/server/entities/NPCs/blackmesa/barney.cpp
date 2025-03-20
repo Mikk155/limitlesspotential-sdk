@@ -129,7 +129,6 @@ void CBarney::OnCreate()
 {
     CTalkMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
     pev->model = MAKE_STRING( "models/barney.mdl" );
 
     SetClassification( "player_ally" );
@@ -292,6 +291,8 @@ void CBarney::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CBarney::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );

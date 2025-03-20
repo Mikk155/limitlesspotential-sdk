@@ -286,7 +286,6 @@ void COFPitWormUp::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "pitworm_health"sv, 100, this );
     pev->model = MAKE_STRING( "models/pit_worm_up.mdl" );
 
     SetClassification( "alien_military" );
@@ -336,6 +335,7 @@ bool COFPitWormUp::Spawn()
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
+    pev->health = g_cfg.GetValue<float>( "pitworm_health"sv, 100, this );
     SetModel( STRING( pev->model ) );
 
     SetSize( {-32, -32, 0}, {32, 32, 64} );
@@ -1912,7 +1912,6 @@ void COFPitWorm::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2, this );
     pev->model = MAKE_STRING( "models/pit_worm.mdl" );
 
     SetClassification( "alien_monster" );
@@ -2060,6 +2059,7 @@ bool COFPitWorm::Spawn()
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );
 
+    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2, this );
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_STEP;
     m_bloodColor = BLOOD_COLOR_GREEN;

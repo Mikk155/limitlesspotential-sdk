@@ -148,7 +148,6 @@ void CLeech::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "leech_health"sv, 2, this );
     pev->model = MAKE_STRING( "models/leech.mdl" );
 
     SetClassification( "insect" );
@@ -162,9 +161,11 @@ bool CLeech::Spawn()
     Precache();
     SetModel( STRING( pev->model ) );
 
-    //    SetSize(g_vecZero, g_vecZero);
-    SetSize( Vector( -1, -1, 0 ), Vector( 1, 1, 2 ) );
+    pev->health = g_cfg.GetValue<float>( "leech_health"sv, 2, this );
+
     // Don't push the minz down too much or the water check will fail because this entity is really point-sized
+    SetSize( Vector( -1, -1, 0 ), Vector( 1, 1, 2 ) );
+
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_FLY;
     SetBits( pev->flags, FL_SWIM );

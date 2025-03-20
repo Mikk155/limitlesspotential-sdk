@@ -37,7 +37,6 @@ public:
     {
         CBarney::OnCreate();
 
-        pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
         pev->model = MAKE_STRING( "models/recruit.mdl" );
 
         m_iszUse = MAKE_STRING( "RC_OK" );
@@ -45,6 +44,13 @@ public:
 
         SetClassification( "human_military_ally" );
         m_SentenceReplacement = &RecruitSentenceReplacement;
+    }
+
+    bool Spawn() override
+    {
+        CBarney::Spawn();
+        pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
+        return true;
     }
 
     void TalkInit() override

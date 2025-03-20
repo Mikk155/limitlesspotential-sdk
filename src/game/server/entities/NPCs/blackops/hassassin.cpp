@@ -122,7 +122,6 @@ void CHAssassin::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "hassassin_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/hassassin.mdl" );
 
     SetClassification( "human_military" );
@@ -244,6 +243,8 @@ void CHAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CHAssassin::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "hassassin_health"sv, 50, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
