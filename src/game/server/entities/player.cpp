@@ -1815,7 +1815,7 @@ void CBasePlayer::PreThink()
     ItemPreFrame();
     WaterMove();
 
-    if( g_pGameRules && g_pGameRules->FAllowFlashlight() )
+    if( g_cfg.GetValue<bool>( "allow_flashlight"sv, true, this ) )
         m_iHideHUD &= ~HIDEHUD_FLASHLIGHT;
     else
         m_iHideHUD |= HIDEHUD_FLASHLIGHT;
@@ -3195,7 +3195,7 @@ static void UpdateFlashlight( CBasePlayer* player, bool isOn )
 
 void CBasePlayer::FlashlightTurnOn()
 {
-    if( !g_pGameRules->FAllowFlashlight() )
+    if( !g_cfg.GetValue<bool>( "allow_flashlight"sv, true, this ) )
     {
         return;
     }

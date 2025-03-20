@@ -95,11 +95,6 @@ public:
     virtual bool IsAllowedToSpawn( CBaseEntity* pEntity ) = 0;
 
     /**
-     *    @brief Are players allowed to switch on their flashlight
-     */
-    bool FAllowFlashlight();
-
-    /**
      *    @brief should the player switch to this weapon?
      */
     virtual bool FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon ) = 0;

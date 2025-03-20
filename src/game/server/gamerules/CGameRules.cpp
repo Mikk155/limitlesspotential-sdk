@@ -175,11 +175,6 @@ CGameRules::CGameRules()
                 player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) ); } );
 }
 
-bool CGameRules::FAllowFlashlight()
-{
-    return g_cfg.GetValue<bool>( "allow_flashlight"sv, true );
-}
-
 float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
 {
     switch ( FallDamageMode( g_cfg.GetValue<float>( "falldamagemode"sv, 1 ) ) )
