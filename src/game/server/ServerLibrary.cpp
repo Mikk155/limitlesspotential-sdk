@@ -453,7 +453,7 @@ void ServerLibrary::DefineConfigVariables()
     // Gamemode variables
     g_cfg.DefineVariable( "coop_persistent_inventory_grace_period", 60, {.Minimum = -1} );
     g_cfg.DefineVariable( "allow_monsters", 1, {.Minimum = 0, .Maximum = 1, .Type = ConfigVarType::Integer} );
-    g_cfg.DefineVariable( "fall_damage", 0.22522522522, {.Minimum = 0 } );
+    g_cfg.DefineVariable( "fall_damage", 0.22522522522 );
 
     // Item variables
     g_cfg.DefineVariable( "healthcharger_recharge_time", -1,
