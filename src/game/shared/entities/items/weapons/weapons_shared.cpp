@@ -468,7 +468,7 @@ void CBasePlayerWeapon::AdjustMagazine1( int count )
     if( count < 0 )
     {
         // Subtract from reserve ammo first.
-        if( g_cfg.GetValue<float>( "bottomless_magazines"sv ) != 0 )
+        if( g_cfg.GetValue<float>( "bottomless_magazines"sv, 0 ) != 0 )
         {
             const int amountAdjusted = m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, count );
 

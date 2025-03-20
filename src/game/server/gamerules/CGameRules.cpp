@@ -177,12 +177,12 @@ CGameRules::CGameRules()
 
 bool CGameRules::FAllowFlashlight()
 {
-    return g_cfg.GetValue<float>( "allow_flashlight"sv ) != 0;
+    return g_cfg.GetValue<float>( "allow_flashlight"sv, 1 ) != 0;
 }
 
 float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
 {
-    switch ( FallDamageMode( g_cfg.GetValue<float>( "falldamagemode"sv ) ) )
+    switch ( FallDamageMode( g_cfg.GetValue<float>( "falldamagemode"sv, 1 ) ) )
     {
     case FallDamageMode::Progressive:
         // subtract off the speed at which a player is allowed to fall without being hurt,

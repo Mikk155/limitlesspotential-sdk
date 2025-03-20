@@ -320,7 +320,7 @@ void ClientPredictionSystem::WeaponsPostThink( local_state_t* from, local_state_
         // Make sure the 357 has the right body
         if( pWeapon->ClassnameIs( "weapon_357" ) )
         {
-            pWeapon->pev->body = g_cfg.GetValue<float>( "revolver_laser_sight"sv ) != 0 ? 1 : 0;
+            pWeapon->pev->body = g_cfg.GetValue<float>( "revolver_laser_sight"sv, 0 ) != 0 ? 1 : 0;
         }
 
         // Force a fixed anim down to viewmodel

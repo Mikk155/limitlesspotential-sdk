@@ -164,7 +164,7 @@ bool CCrowbar::Swing( bool fFirst )
 
         ClearMultiDamage();
 
-        if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue<float>( "crowbar_full_damage"sv ) != 0 )
+        if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue<float>( "crowbar_full_damage"sv, 0 ) != 0 )
         {
             // first swing does full damage
             pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue<float>( "plr_crowbar"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_CLUB );

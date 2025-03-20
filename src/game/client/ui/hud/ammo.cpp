@@ -136,7 +136,7 @@ int WeaponsResource::CountAmmo( const AmmoType* type )
     if( !type )
         return 0;
 
-    if( g_cfg.GetValue<float>( "infinite_ammo"sv ) != 0 )
+    if( g_cfg.GetValue<float>( "infinite_ammo"sv, 0 ) != 0 )
     {
         return type->MaximumCapacity;
     }
@@ -153,7 +153,7 @@ bool WeaponsResource::HasAmmo( WEAPON* p )
     if( !p->AmmoTypes[0] || p->AmmoTypes[0]->MaximumCapacity == WEAPON_NOCLIP )
         return true;
 
-    if( g_cfg.GetValue<float>( "infinite_ammo"sv ) != 0 )
+    if( g_cfg.GetValue<float>( "infinite_ammo"sv. 0 ) != 0 )
     {
         return true;
     }
