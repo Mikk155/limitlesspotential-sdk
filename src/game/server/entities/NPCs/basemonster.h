@@ -222,8 +222,6 @@ public:
 
     float m_flLastYawTime;
 
-    bool m_AllowItemDropping = true;
-
     int ObjectCaps() override
     {
         int caps = BaseClass::ObjectCaps();

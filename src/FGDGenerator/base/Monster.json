@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Base",
     "base": [
         "UseLineOfSight"
@@ -120,22 +120,6 @@
                     "description": "Monster::spawnflags::512::description"
                 }
             }
-        },
-        "allow_item_dropping": {
-            "variable": "choices",
-            "value": 1,
-            "choices": {
-                "0": {
-                    "title": "Monster::allow_item_dropping::0",
-                    "description": "Monster::allow_item_dropping::0::description"
-                },
-                "1": {
-                    "title": "Monster::allow_item_dropping::1",
-                    "description": "Monster::allow_item_dropping::1::description"
-                }
-            },
-            "title": "Monster::allow_item_dropping",
-            "description": "Monster::allow_item_dropping::description"
         },
         "allow_follow": {
             "variable": "choices",

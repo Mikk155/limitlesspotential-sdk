@@ -1560,18 +1560,6 @@
 {
 "english": "Fade Corpse"
 },
-"Monster::allow_item_dropping":
-{
-"english": "Allow Item Dropping"
-},
-"Monster::allow_item_dropping::0":
-{
-"english": "No"
-},
-"Monster::allow_item_dropping::1":
-{
-"english": "Yes"
-},
 "Monster::allow_follow":
 {
 "english": "Allow NPC to follow players"

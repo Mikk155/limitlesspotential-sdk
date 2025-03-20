@@ -107,14 +107,6 @@ This keyvalue is only supported by some NPCs.
 
 ## Shared between all NPCs
 
-### allow_item_dropping
-
-Syntax: `allow_item_dropping <0|1>`
-
-Default: `1`
-
-Controls whether this NPC drops items on death.
-
 ### is_player_ally
 
 Syntax: `is_player_ally <0|1|2>`

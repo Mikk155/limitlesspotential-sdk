@@ -87,7 +87,6 @@ BEGIN_DATAMAP(CBaseMonster)
 
     DEFINE_FIELD( m_scriptState, FIELD_INTEGER ),
     DEFINE_FIELD( m_pCine, FIELD_CLASSPTR ),
-    DEFINE_FIELD( m_AllowItemDropping, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_AllowFollow, FIELD_BOOLEAN ),
 
     DEFINE_FUNCTION( MonsterUse ),
@@ -2694,11 +2693,6 @@ bool CBaseMonster::KeyValue( KeyValueData* pkvd )
         m_iTriggerCondition = atoi( pkvd->szValue );
         return true;
     }
-    else if( FStrEq( pkvd->szKeyName, "allow_item_dropping" ) )
-    {
-        m_AllowItemDropping = atoi( pkvd->szValue ) != 0;
-        return true;
-    }
     else if( FStrEq( pkvd->szKeyName, "is_player_ally" ) )
     {
         m_PlayerAllyRelationship = std::clamp( 
@@ -3116,11 +3110,6 @@ CBaseEntity* CBaseMonster::DropItem( const char* pszItemName, const Vector& vecP
     }
 
     if( g_cfg.GetValue<bool>( "allow_npc_item_dropping"sv, true, this ) )
-    {
-        return nullptr;
-    }
-
-    if( !m_AllowItemDropping )
     {
         return nullptr;
     }
