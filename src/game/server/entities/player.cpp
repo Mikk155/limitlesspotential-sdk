@@ -4504,7 +4504,7 @@ int CBasePlayer::GetCustomDecalFrames()
 
 void CBasePlayer::DropPlayerWeapon( const char* pszItemName )
 {
-    if( g_cfg.GetValue<float>( "allow_player_weapon_dropping", 0 ) == 0 )
+    if( g_cfg.GetValue<float>( "allow_player_weapon_dropping"sv, 0 ) == 0 )
     {
         return;
     }

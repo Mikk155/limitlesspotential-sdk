@@ -36,14 +36,14 @@ class ItemRespawnTimeVisitor final : public IItemVisitor
 public:
     void Visit( CBasePlayerAmmo* ammo ) override
     {
-        RespawnTime = g_cfg.GetValue<float>( "ammo_respawn_time", ITEM_NEVER_RESPAWN_DELAY );
+        RespawnTime = g_cfg.GetValue<float>( "ammo_respawn_time"sv, ITEM_NEVER_RESPAWN_DELAY );
     }
 
     void Visit( CBasePlayerWeapon* weapon ) override
     {
-        RespawnTime = g_cfg.GetValue<float>( "weapon_respawn_time", ITEM_NEVER_RESPAWN_DELAY );
+        RespawnTime = g_cfg.GetValue<float>( "weapon_respawn_time"sv, ITEM_NEVER_RESPAWN_DELAY );
 
-        if( RespawnTime != ITEM_NEVER_RESPAWN_DELAY && g_cfg.GetValue<float>( "weapon_instant_respawn", 0 ) != 0 )
+        if( RespawnTime != ITEM_NEVER_RESPAWN_DELAY && g_cfg.GetValue<float>( "weapon_instant_respawn"sv, 0 ) != 0 )
         {
             // make sure it's only certain weapons
             if( ( weapon->iFlags() & ITEM_FLAG_LIMITINWORLD ) == 0 )
@@ -56,7 +56,7 @@ public:
 
     void Visit( CItem* pickupItem ) override
     {
-        RespawnTime = g_cfg.GetValue<float>( "pickupitem_respawn_time", ITEM_NEVER_RESPAWN_DELAY );
+        RespawnTime = g_cfg.GetValue<float>( "pickupitem_respawn_time"sv, ITEM_NEVER_RESPAWN_DELAY );
     }
 
     // Don't respawn unknown items.
@@ -108,7 +108,7 @@ public:
 
     void Visit( CBasePlayerWeapon* weapon ) override
     {
-        if( g_cfg.GetValue<float>( "weapon_instant_respawn", 0 ) != 0 )
+        if( g_cfg.GetValue<float>( "weapon_instant_respawn"sv, 0 ) != 0 )
         {
             if( ( weapon->iFlags() & ITEM_FLAG_LIMITINWORLD ) == 0 )
             {
@@ -389,17 +389,17 @@ bool CGameRules::CanHaveItem( CBasePlayer* player, CBaseItem* item )
 
 int CGameRules::HealthChargerRechargeTime()
 {
-    return g_cfg.GetValue<float>( "healthcharger_recharge_time", ChargerRechargeDelayNever );
+    return g_cfg.GetValue<float>( "healthcharger_recharge_time"sv, ChargerRechargeDelayNever );
 }
 
 int CGameRules::HEVChargerRechargeTime()
 {
-    return g_cfg.GetValue<float>( "hevcharger_recharge_time", ChargerRechargeDelayNever );
+    return g_cfg.GetValue<float>( "hevcharger_recharge_time"sv, ChargerRechargeDelayNever );
 }
 
 bool CGameRules::FAllowMonsters()
 {
-    return g_cfg.GetValue<float>( "allow_monsters", 1 ) != 0;
+    return g_cfg.GetValue<float>( "allow_monsters"sv, 1 ) != 0;
 }
 
 void CGameRules::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )
