@@ -752,7 +752,7 @@ bool CItemRegenerationCTF::MyTouch( CBasePlayer* pPlayer )
                 // TODO: check player's max health.
                 if( pPlayer->pev->health < 100.0 )
                 {
-                    pPlayer->GiveHealth( g_cfg.GetValue( "healthkit"sv, 10, this ), DMG_GENERIC );
+                    pPlayer->GiveHealth( g_cfg.GetValue<float>( "healthkit"sv, 10, this ), DMG_GENERIC );
                 }
 
                 return true;

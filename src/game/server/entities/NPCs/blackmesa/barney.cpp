@@ -129,7 +129,7 @@ void CBarney::OnCreate()
 {
     CTalkMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "barney_health"sv, 35, this );
+    pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
     pev->model = MAKE_STRING( "models/barney.mdl" );
 
     SetClassification( "player_ally" );
@@ -667,7 +667,7 @@ void CDeadBarney::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // g_cfg.GetValue( "barney_health"sv, 35, this );
+    pev->health = 8; // g_cfg.GetValue<float>( "barney_health"sv, 35, this );
     pev->model = MAKE_STRING( "models/barney.mdl" );
 
     SetClassification( "player_ally" );

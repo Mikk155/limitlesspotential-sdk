@@ -268,21 +268,21 @@ void CBasePlayer::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vec
         case HITGROUP_GENERIC:
             break;
         case HITGROUP_HEAD:
-            flDamage *= g_cfg.GetValue( "player_head"sv, 3, this );
+            flDamage *= g_cfg.GetValue<float>( "player_head"sv, 3, this );
             break;
         case HITGROUP_CHEST:
-            flDamage *= g_cfg.GetValue( "player_chest"sv, 1, this );
+            flDamage *= g_cfg.GetValue<float>( "player_chest"sv, 1, this );
             break;
         case HITGROUP_STOMACH:
-            flDamage *= g_cfg.GetValue( "player_stomach"sv, 1, this );
+            flDamage *= g_cfg.GetValue<float>( "player_stomach"sv, 1, this );
             break;
         case HITGROUP_LEFTARM:
         case HITGROUP_RIGHTARM:
-            flDamage *= g_cfg.GetValue( "player_arm"sv, 1, this );
+            flDamage *= g_cfg.GetValue<float>( "player_arm"sv, 1, this );
             break;
         case HITGROUP_LEFTLEG:
         case HITGROUP_RIGHTLEG:
-            flDamage *= g_cfg.GetValue( "player_leg"sv, 1, this );
+            flDamage *= g_cfg.GetValue<float>( "player_leg"sv, 1, this );
             break;
         default:
             break;
@@ -2735,10 +2735,10 @@ bool CBasePlayer::Spawn()
     pev->takedamage = DAMAGE_AIM;
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_WALK;
-    pev->health = g_cfg.GetValue( "player_health"sv, 100, this );
-    pev->armorvalue = g_cfg.GetValue( "player_armor"sv, 0, this );
-    pev->max_health = g_cfg.GetValue( "player_maxhealth"sv, 100, this );
-    pev->armortype = g_cfg.GetValue( "player_maxarmor"sv, 100, this );
+    pev->health = g_cfg.GetValue<float>( "player_health"sv, 100, this );
+    pev->armorvalue = g_cfg.GetValue<float>( "player_armor"sv, 0, this );
+    pev->max_health = g_cfg.GetValue<float>( "player_maxhealth"sv, 100, this );
+    pev->armortype = g_cfg.GetValue<float>( "player_maxarmor"sv, 100, this );
     pev->flags &= FL_PROXY | FL_FAKECLIENT; // keep proxy and fakeclient flags set by engine
     pev->flags |= FL_CLIENT;
     pev->air_finished = gpGlobals->time + 12;
@@ -3756,7 +3756,7 @@ void CBasePlayer::ItemPostFrame()
 
     const bool canUseItem = m_flNextAttack <= UTIL_WeaponTimeBase();
 
-    if( canUseItem || g_cfg.GetValue( "allow_use_while_busy"sv, 0, this ) != 0 )
+    if( canUseItem || g_cfg.GetValue<float>( "allow_use_while_busy"sv, 0, this ) != 0 )
     {
         // Handle use events
         PlayerUse();
@@ -4504,7 +4504,7 @@ int CBasePlayer::GetCustomDecalFrames()
 
 void CBasePlayer::DropPlayerWeapon( const char* pszItemName )
 {
-    if( g_cfg.GetValue( "allow_player_weapon_dropping", 0 ) == 0 )
+    if( g_cfg.GetValue<float>( "allow_player_weapon_dropping", 0 ) == 0 )
     {
         return;
     }

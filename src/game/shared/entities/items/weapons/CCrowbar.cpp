@@ -164,21 +164,21 @@ bool CCrowbar::Swing( bool fFirst )
 
         ClearMultiDamage();
 
-        if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue( "crowbar_full_damage" ) != 0 )
+        if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue<float>( "crowbar_full_damage"sv ) != 0 )
         {
             // first swing does full damage
-            pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue( "plr_crowbar"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_CLUB );
+            pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue<float>( "plr_crowbar"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_CLUB );
         }
         else
         {
             // subsequent swings do half
-            pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue( "plr_crowbar"sv, 10, this ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
+            pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue<float>( "plr_crowbar"sv, 10, this ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
         }
         ApplyMultiDamage( m_pPlayer, m_pPlayer );
 
 #endif
 
-        if( g_cfg.GetValue( "chainsaw_melee"sv, 0, this ) == 0 )
+        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) == 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }
@@ -248,7 +248,7 @@ bool CCrowbar::Swing( bool fFirst )
         m_pPlayer->m_iWeaponVolume = flVol * CROWBAR_WALLHIT_VOLUME;
 #endif
 
-        if( g_cfg.GetValue( "chainsaw_melee"sv, 0, this ) != 0 )
+        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) != 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }

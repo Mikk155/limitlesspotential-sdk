@@ -152,11 +152,11 @@ bool CKnife::Swing( const bool bFirst )
         {
             ClearMultiDamage();
 
-            float damage = g_cfg.GetValue( "plr_knife"sv, 10, this );
+            float damage = g_cfg.GetValue<float>( "plr_knife"sv, 10, this );
 
             int damageTypes = DMG_CLUB;
 
-            if( g_cfg.GetValue( "knife_allow_backstab"sv, 0, this ) != 0 )
+            if( g_cfg.GetValue<float>( "knife_allow_backstab"sv, 0, this ) != 0 )
             {
                 UTIL_MakeVectors( pEntity->pev->angles );
 
@@ -182,7 +182,7 @@ bool CKnife::Swing( const bool bFirst )
 
 #endif
 
-        if( g_cfg.GetValue( "chainsaw_melee"sv, 0, this ) == 0 )
+        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) == 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }
@@ -253,7 +253,7 @@ bool CKnife::Swing( const bool bFirst )
         pev->nextthink = gpGlobals->time + 0.2;
 #endif
 
-        if( g_cfg.GetValue( "chainsaw_melee"sv, 0, this ) != 0 )
+        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) != 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }

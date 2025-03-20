@@ -93,7 +93,7 @@ bool CSpore::Spawn()
         pev->friction = 0.7;
     }
 
-    pev->dmg = g_cfg.GetValue( "plr_spore"sv, 50, this );
+    pev->dmg = g_cfg.GetValue<float>( "plr_spore"sv, 50, this );
 
     m_flIgniteTime = gpGlobals->time;
 
@@ -223,7 +223,7 @@ void CSpore::RocketTouch( CBaseEntity* pOther )
 {
     if( pOther->pev->takedamage != DAMAGE_NO )
     {
-        pOther->TakeDamage( this, GetOwner(), g_cfg.GetValue( "plr_spore"sv, 50, this ), DMG_GENERIC );
+        pOther->TakeDamage( this, GetOwner(), g_cfg.GetValue<float>( "plr_spore"sv, 50, this ), DMG_GENERIC );
     }
 
     IgniteThink();
@@ -254,7 +254,7 @@ void CSpore::MyBounceTouch( CBaseEntity* pOther )
     }
     else
     {
-        pOther->TakeDamage( this, GetOwner(), g_cfg.GetValue( "plr_spore"sv, 50, this ), DMG_GENERIC );
+        pOther->TakeDamage( this, GetOwner(), g_cfg.GetValue<float>( "plr_spore"sv, 50, this ), DMG_GENERIC );
 
         IgniteThink();
     }

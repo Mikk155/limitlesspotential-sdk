@@ -102,11 +102,11 @@ void CCrossbowBolt::BoltTouch( CBaseEntity* pOther )
 
         if( pOther->IsPlayer() )
         {
-            pOther->TraceAttack( owner, g_cfg.GetValue( "plr_xbow_bolt_client"sv, 10, this ), pev->velocity.Normalize(), &tr, DMG_NEVERGIB );
+            pOther->TraceAttack( owner, g_cfg.GetValue<float>( "plr_xbow_bolt_client"sv, 10, this ), pev->velocity.Normalize(), &tr, DMG_NEVERGIB );
         }
         else
         {
-            pOther->TraceAttack( owner, g_cfg.GetValue( "plr_xbow_bolt_monster"sv, 50, this ), pev->velocity.Normalize(), &tr, DMG_BULLET | DMG_NEVERGIB );
+            pOther->TraceAttack( owner, g_cfg.GetValue<float>( "plr_xbow_bolt_monster"sv, 50, this ), pev->velocity.Normalize(), &tr, DMG_BULLET | DMG_NEVERGIB );
         }
 
         ApplyMultiDamage( this, owner );
@@ -155,7 +155,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity* pOther )
         }
     }
 
-    if( g_cfg.GetValue( "crossbow_explosive_bolt" ) != 0 )
+    if( g_cfg.GetValue<float>( "crossbow_explosive_bolt"sv ) != 0 )
     {
         SetThink( &CCrossbowBolt::ExplodeThink );
         pev->nextthink = gpGlobals->time + 0.1;
@@ -265,7 +265,7 @@ void CCrossbow::Holster()
 
 void CCrossbow::PrimaryAttack()
 {
-    if( m_pPlayer->m_iFOV != 0 && g_cfg.GetValue( "crossbow_sniper_bolt" ) != 0 )
+    if( m_pPlayer->m_iFOV != 0 && g_cfg.GetValue<float>( "crossbow_sniper_bolt"sv ) != 0 )
     {
         FireSniperBolt();
         return;

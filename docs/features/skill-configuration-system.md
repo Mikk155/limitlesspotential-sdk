@@ -40,9 +40,10 @@ See the `skill.json` file included with the SDK for a list of variables.
 
 To use a skill variable in code, simply get the value like this:
 ```cpp
-g_cfg.GetValue( "my_variable"sv, 100, this )
+g_cfg.GetValue<float>( "my_variable"sv, 100, this )
 ```
 the second argument is not necesary but will be used if the system fails on getting the variable from the json.
+if the system fails and not a default value was set the game will crash. the default value MUST match the cast type.
 
 the third argument is a CBaseEntity instance to use their custom config file if it exists.
 
@@ -175,5 +176,5 @@ or
 
 2. Use the variable in your code:
 ```cpp
-pev->health = g_cfg.GetValue( "my_variable"sv, 10, this );
+pev->health = g_cfg.GetValue<float>( "my_variable"sv, 10, this );
 ```

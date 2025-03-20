@@ -124,7 +124,7 @@ void COFGeneWormCloud::GeneWormCloudTouch( CBaseEntity* pOther )
     {
         if( pOther->pev->takedamage != DAMAGE_NO )
         {
-            pOther->TakeDamage( this, this, g_cfg.GetValue( "geneworm_dmg_spit"sv, 30, this ), DMG_ACID );
+            pOther->TakeDamage( this, this, g_cfg.GetValue<float>( "geneworm_dmg_spit"sv, 30, this ), DMG_ACID );
         }
 
         pev->nextthink = gpGlobals->time;
@@ -755,7 +755,7 @@ void COFGeneWorm::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "geneworm_health"sv, 100, this );
+    pev->health = g_cfg.GetValue<float>( "geneworm_health"sv, 100, this );
     pev->model = MAKE_STRING( "models/geneworm.mdl" );
 
     SetClassification( "alien_monster" );

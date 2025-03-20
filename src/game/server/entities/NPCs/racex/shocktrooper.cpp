@@ -268,7 +268,7 @@ void CShockTrooper::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "shocktrooper_health"sv, 200, this );
+    pev->health = g_cfg.GetValue<float>( "shocktrooper_health"sv, 200, this );
     pev->model = MAKE_STRING( "models/strooper.mdl" );
 
     SetClassification( "race_x" );
@@ -508,7 +508,7 @@ bool CShockTrooper::CheckRangeAttack2( float flDot, float flDist )
         vecTarget = m_vecEnemyLKP + ( m_hEnemy->BodyTarget( pev->origin ) - m_hEnemy->pev->origin );
         // estimate position
         if( HasConditions( bits_COND_SEE_ENEMY ) )
-            vecTarget = vecTarget + ( ( vecTarget - pev->origin ).Length() / g_cfg.GetValue( "shocktrooper_gspeed"sv, 800, this ) ) * m_hEnemy->pev->velocity;
+            vecTarget = vecTarget + ( ( vecTarget - pev->origin ).Length() / g_cfg.GetValue<float>( "shocktrooper_gspeed"sv, 800, this ) ) * m_hEnemy->pev->velocity;
     }
 
     // are any of my squad members near the intended grenade impact area?
@@ -554,7 +554,7 @@ bool CShockTrooper::CheckRangeAttack2( float flDot, float flDist )
     }
     else
     {
-        Vector vecToss = VecCheckThrow( this, GetGunPosition(), vecTarget, g_cfg.GetValue( "shocktrooper_gspeed"sv, 800, this ), 0.5 );
+        Vector vecToss = VecCheckThrow( this, GetGunPosition(), vecTarget, g_cfg.GetValue<float>( "shocktrooper_gspeed"sv, 800, this ), 0.5 );
 
         if( vecToss != g_vecZero )
         {
@@ -827,7 +827,7 @@ void CShockTrooper::HandleAnimEvent( MonsterEvent_t* pEvent )
             UTIL_MakeVectors( pev->angles );
             pHurt->pev->punchangle.x = 15;
             pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_forward * 100 + gpGlobals->v_up * 50;
-            pHurt->TakeDamage( this, this, g_cfg.GetValue( "shocktrooper_kick"sv, 10, this ), DMG_CLUB );
+            pHurt->TakeDamage( this, this, g_cfg.GetValue<float>( "shocktrooper_kick"sv, 10, this ), DMG_CLUB );
         }
     }
     break;
@@ -876,7 +876,7 @@ bool CShockTrooper::Spawn()
 
     pev->weapons = HGRUNT_9MMAR | HGRUNT_HANDGRENADE;
 
-    m_cClipSize = g_cfg.GetValue( "shocktrooper_maxcharge"sv, 8, this );
+    m_cClipSize = g_cfg.GetValue<float>( "shocktrooper_maxcharge"sv, 8, this );
     m_cAmmoLoaded = m_cClipSize;
 
     m_flLastChargeTime = m_flLastBlinkTime = m_flLastBlinkInterval = gpGlobals->time;
@@ -2072,7 +2072,7 @@ const Schedule_t* CShockTrooper::GetScheduleOfType( int Type )
 
 void CShockTrooper::MonsterThink()
 {
-    if( gpGlobals->time - m_flLastChargeTime >= g_cfg.GetValue( "shocktrooper_rchgspeed"sv, 1, this ) )
+    if( gpGlobals->time - m_flLastChargeTime >= g_cfg.GetValue<float>( "shocktrooper_rchgspeed"sv, 1, this ) )
     {
         if( m_cAmmoLoaded < m_cClipSize )
         {

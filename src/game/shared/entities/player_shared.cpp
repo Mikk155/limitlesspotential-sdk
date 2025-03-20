@@ -45,7 +45,7 @@ int CBasePlayer::GetAmmoCountByIndex( int ammoIndex ) const
         return -1;
     }
 
-    if( g_cfg.GetValue( "infinite_ammo" ) != 0 )
+    if( g_cfg.GetValue<float>( "infinite_ammo"sv ) != 0 )
     {
         return g_AmmoTypes.GetByIndex( ammoIndex )->MaximumCapacity;
     }
@@ -65,7 +65,7 @@ void CBasePlayer::SetAmmoCountByIndex( int ammoIndex, int count )
         return;
     }
 
-    if( g_cfg.GetValue( "infinite_ammo" ) != 0 )
+    if( g_cfg.GetValue<float>( "infinite_ammo"sv ) != 0 )
     {
         count = g_AmmoTypes.GetByIndex( ammoIndex )->MaximumCapacity;
     }
@@ -82,7 +82,7 @@ int CBasePlayer::AdjustAmmoByIndex( int ammoIndex, int count )
 
     const auto ammoType = g_AmmoTypes.GetByIndex( ammoIndex );
 
-    if( g_cfg.GetValue( "infinite_ammo" ) != 0 )
+    if( g_cfg.GetValue<float>( "infinite_ammo"sv ) != 0 )
     {
         m_rgAmmo[ammoIndex] = ammoType->MaximumCapacity;
         return count;

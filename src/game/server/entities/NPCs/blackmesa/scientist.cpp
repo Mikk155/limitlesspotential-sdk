@@ -290,7 +290,7 @@ void CScientist::OnCreate()
 {
     CTalkMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "scientist_health"sv, 20, this );
+    pev->health = g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/scientist.mdl" );
 
     m_iszUse = MAKE_STRING( "SC_OK" );
@@ -975,7 +975,7 @@ void CScientist::Heal()
     if( target.Length() > 100 )
         return;
 
-    m_hTargetEnt->GiveHealth( g_cfg.GetValue( "scientist_heal"sv, 25, this ), DMG_GENERIC );
+    m_hTargetEnt->GiveHealth( g_cfg.GetValue<float>( "scientist_heal"sv, 25, this ), DMG_GENERIC );
     // Don't heal again for 1 minute
     m_healTime = gpGlobals->time + 60;
 }
@@ -1002,7 +1002,7 @@ void CDeadScientist::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // g_cfg.GetValue( "scientist_health"sv, 20, this );
+    pev->health = 8; // g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/scientist.mdl" );
 
     SetClassification( "human_passive" );

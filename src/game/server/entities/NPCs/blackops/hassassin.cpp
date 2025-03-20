@@ -122,7 +122,7 @@ void CHAssassin::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "hassassin_health"sv, 50, this );
+    pev->health = g_cfg.GetValue<float>( "hassassin_health"sv, 50, this );
     pev->model = MAKE_STRING( "models/hassassin.mdl" );
 
     SetClassification( "human_military" );

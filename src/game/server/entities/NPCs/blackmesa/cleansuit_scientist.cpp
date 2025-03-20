@@ -36,7 +36,7 @@ void CCleansuitScientist::OnCreate()
 {
     CScientist::OnCreate();
 
-    pev->health = g_cfg.GetValue( "cleansuit_scientist_health"sv, 20, this );
+    pev->health = g_cfg.GetValue<float>( "cleansuit_scientist_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
 }
 
@@ -49,7 +49,7 @@ void CCleansuitScientist::Heal()
     if( target.Length() > 100 )
         return;
 
-    m_hTargetEnt->GiveHealth( g_cfg.GetValue( "cleansuit_scientist_heal"sv, 25, this ), DMG_GENERIC );
+    m_hTargetEnt->GiveHealth( g_cfg.GetValue<float>( "cleansuit_scientist_heal"sv, 25, this ), DMG_GENERIC );
     // Don't heal again for 1 minute
     m_healTime = gpGlobals->time + 60;
 }
@@ -86,7 +86,7 @@ void CDeadCleansuitScientist::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // g_cfg.GetValue( "scientist_health"sv, 20, this );
+    pev->health = 8; // g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
     pev->model = MAKE_STRING( "models/cleansuit_scientist.mdl" );
 
     SetClassification( "human_passive" );

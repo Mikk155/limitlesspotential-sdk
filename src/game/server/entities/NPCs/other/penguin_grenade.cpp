@@ -75,7 +75,7 @@ void CPenguinGrenade::OnCreate()
 {
     CGrenade::OnCreate();
 
-    pev->health = g_cfg.GetValue( "snark_health"sv, 2, this );
+    pev->health = g_cfg.GetValue<float>( "snark_health"sv, 2, this );
     pev->model = MAKE_STRING( "models/w_penguin.mdl" );
 
     SetClassification( "alien_bioweapon" );
@@ -153,7 +153,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
             {
                 // AILogger->debug("hit enemy");
                 ClearMultiDamage();
-                pOther->TraceAttack( this, g_cfg.GetValue( "snark_dmg_bite"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_SLASH );
+                pOther->TraceAttack( this, g_cfg.GetValue<float>( "snark_dmg_bite"sv, 10, this ), gpGlobals->v_forward, &tr, DMG_SLASH );
                 if( m_hOwner != nullptr )
                     ApplyMultiDamage( this, m_hOwner );
                 else
@@ -161,9 +161,9 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
 
                 // add more explosion damage
                 if( hurtTarget )
-                    pev->dmg += g_cfg.GetValue( "plr_hand_grenade"sv, 100, this );
+                    pev->dmg += g_cfg.GetValue<float>( "plr_hand_grenade"sv, 100, this );
                 else
-                    pev->dmg += g_cfg.GetValue( "plr_hand_grenade"sv, 100, this ) / 5.0;
+                    pev->dmg += g_cfg.GetValue<float>( "plr_hand_grenade"sv, 100, this ) / 5.0;
 
                 if( pev->dmg > 500.0 )
                 {
@@ -239,7 +239,7 @@ bool CPenguinGrenade::Spawn()
     pev->gravity = 0.5;
     pev->friction = 0.5;
 
-    pev->dmg = g_cfg.GetValue( "plr_hand_grenade"sv, 100, this );
+    pev->dmg = g_cfg.GetValue<float>( "plr_hand_grenade"sv, 100, this );
 
     m_flDie = gpGlobals->time + PENGUIN_DETONATE_DELAY;
 

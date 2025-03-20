@@ -121,8 +121,8 @@ public:
     /*
      *  @brief Gets the value for a given skill variable.
     */
-    float GetValue( std::string_view name, float defaultValue = 0.f, CBaseEntity* entity = nullptr ) const;
-    std::string GetValue( std::string_view name, std::string_view defaultValue, CBaseEntity* entity = nullptr ) const;
+    template <typename T>
+    T GetValue( std::string_view name, std::optional<T> defaultValue = std::nullopt, CBaseEntity* entity = nullptr ) const;
 
     void SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value );
 

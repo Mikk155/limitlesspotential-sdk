@@ -142,7 +142,7 @@ void CStomp::Think()
             owner = this;
 
         if( pEntity )
-            pEntity->TakeDamage( this, owner, g_cfg.GetValue( "gargantua_dmg_stomp"sv, 100, this ), DMG_SONIC );
+            pEntity->TakeDamage( this, owner, g_cfg.GetValue<float>( "gargantua_dmg_stomp"sv, 100, this ), DMG_SONIC );
     }
 
     // Accelerate the effect
@@ -442,7 +442,7 @@ void CGargantua::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "gargantua_health"sv, 1000, this );
+    pev->health = g_cfg.GetValue<float>( "gargantua_health"sv, 1000, this );
     pev->model = MAKE_STRING( "models/garg.mdl" );
 
     SetClassification( "alien_monster" );
@@ -579,8 +579,8 @@ void CGargantua::FlameUpdate()
                 streaks = true;
                 UTIL_DecalTrace( &trace, DECAL_SMALLSCORCH1 + RANDOM_LONG( 0, 2 ) );
             }
-            // RadiusDamage(trace.vecEndPos, this, this, g_cfg.GetValue( "gargantua_dmg_fire"sv, 5, this ), DMG_BURN, Classify());
-            FlameDamage( vecStart, trace.vecEndPos, this, this, g_cfg.GetValue( "gargantua_dmg_fire"sv, 5, this ), DMG_BURN, Classify() );
+            // RadiusDamage(trace.vecEndPos, this, this, g_cfg.GetValue<float>( "gargantua_dmg_fire"sv, 5, this ), DMG_BURN, Classify());
+            FlameDamage( vecStart, trace.vecEndPos, this, this, g_cfg.GetValue<float>( "gargantua_dmg_fire"sv, 5, this ), DMG_BURN, Classify() );
 
             MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
             WRITE_BYTE( TE_ELIGHT );
@@ -916,7 +916,7 @@ void CGargantua::HandleAnimEvent( MonsterEvent_t* pEvent )
     case GARG_AE_SLASH_LEFT:
     {
         // HACKHACK!!!
-        CBaseEntity* pHurt = GargantuaCheckTraceHullAttack( GARG_ATTACKDIST + 10.0, g_cfg.GetValue( "gargantua_dmg_slash"sv, 30, this ), DMG_SLASH );
+        CBaseEntity* pHurt = GargantuaCheckTraceHullAttack( GARG_ATTACKDIST + 10.0, g_cfg.GetValue<float>( "gargantua_dmg_slash"sv, 30, this ), DMG_SLASH );
         if( pHurt )
         {
             if( ( pHurt->pev->flags & ( FL_MONSTER | FL_CLIENT ) ) != 0 )

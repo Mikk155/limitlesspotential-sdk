@@ -119,7 +119,7 @@ void CPitdroneSpike::SpikeTouch( CBaseEntity* pOther )
     }
     else
     {
-        pOther->TakeDamage( this, this, g_cfg.GetValue( "pitdrone_dmg_spit"sv, 15, this ), DMG_GENERIC );
+        pOther->TakeDamage( this, this, g_cfg.GetValue<float>( "pitdrone_dmg_spit"sv, 15, this ), DMG_GENERIC );
         EmitSoundDyn( CHAN_VOICE, "weapons/xbow_hitbod1.wav", VOL_NORM, ATTN_NORM, 0, iPitch );
     }
 
@@ -257,7 +257,7 @@ void CPitdrone::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "pitdrone_health"sv, 110, this );
+    pev->health = g_cfg.GetValue<float>( "pitdrone_health"sv, 110, this );
     pev->model = MAKE_STRING( "models/pit_drone.mdl" );
 
     SetClassification( "alien_predator" );
@@ -501,7 +501,7 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
     case PITDRONE_AE_BITE:
     {
         // SOUND HERE!
-        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_cfg.GetValue( "pitdrone_dmg_bite"sv, 25, this ), DMG_SLASH );
+        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_cfg.GetValue<float>( "pitdrone_dmg_bite"sv, 25, this ), DMG_SLASH );
 
         if( pHurt )
         {
@@ -515,7 +515,7 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case PITDRONE_AE_TAILWHIP:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_cfg.GetValue( "pitdrone_dmg_whip"sv, 35, this ), DMG_CLUB | DMG_ALWAYSGIB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( 70, g_cfg.GetValue<float>( "pitdrone_dmg_whip"sv, 35, this ), DMG_CLUB | DMG_ALWAYSGIB );
         if( pHurt )
         {
             pHurt->pev->punchangle.z = -20;

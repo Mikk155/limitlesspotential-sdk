@@ -35,6 +35,9 @@
 #include "networking/ClientUserMessages.h"
 #endif
 
+// idk. Random number sent just to tell the client to read or not a string.
+#define NETWORK_STRING_VARIABLE -3
+
 using namespace std::literals;
 
 constexpr std::string_view ConfigSchemaName{"Config"sv};
@@ -347,53 +350,64 @@ void ConfigurationSystem::DefineVariable( std::string name, float initialValue, 
     m_ConfigVariables.emplace_back( std::move( variable ) );
 }
 
-std::string ConfigurationSystem::GetValue( std::string_view name, std::string_view defaultValue, CBaseEntity* entity ) const
+template <typename T>
+T ConfigurationSystem::GetValue(
+    std::string_view name,
+    std::optional<T> defaultValue,
+    CBaseEntity* entity
+) const
 {
+    std::optional<ConfigVariable> variable;
+
 #ifndef CLIENT_DLL
     if( entity != nullptr && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
     {
         std::vector<ConfigVariable> config_map = m_CustomMaps.at( entity->m_config );
 
-        if( const auto it = std::find_if( config_map.begin(), config_map.end(), [&]( const auto& variable )
-                { return variable.Name == name; } ); it != config_map.end() ) {
-            return it->StringValue;
-        }
+        if( const auto it = std::find_if( config_map.begin(), config_map.end(),
+            [&]( const auto& variable )
+                { return variable.Name == name; } );
+                    it != config_map.end() )
+                        { variable = *it; }
     }
 #endif
 
-    if( const auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
-            { return variable.Name == name; } ); it != m_ConfigVariables.end() ) {
-        return it->StringValue;
-    }
-
-    m_Logger->debug( "Undefined variable {}{}", name, m_SkillLevel );
-
-    return std::string( defaultValue );
-}
-
-float ConfigurationSystem::GetValue( std::string_view name, float defaultValue, CBaseEntity* entity ) const
-{
-#ifndef CLIENT_DLL
-    if( entity != nullptr && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
+    if( !variable.has_value() )
     {
-        std::vector<ConfigVariable> config_map = m_CustomMaps.at( entity->m_config );
-
-        if( const auto it = std::find_if( config_map.begin(), config_map.end(), [&]( const auto& variable )
-                { return variable.Name == name; } ); it != config_map.end() ) {
-            return it->CurrentValue;
-        }
+        if( const auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(),
+            [&]( const auto& variable )
+                { return variable.Name == name; } );
+                    it != m_ConfigVariables.end() )
+                        { variable = *it; }
     }
-#endif
 
-    if( const auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
-            { return variable.Name == name; } ); it != m_ConfigVariables.end() ) {
-        return it->CurrentValue;
+    if( variable.has_value() )
+    {
+        if constexpr ( std::is_same_v<T, bool> )
+            return ( static_cast<int>( variable.value().CurrentValue ) >= 1 );
+        if constexpr ( std::is_same_v<T, int> )
+            return static_cast<int>( variable.value().CurrentValue );
+        if constexpr ( std::is_same_v<T, float> )
+            return variable.value().CurrentValue;
+        if constexpr ( std::is_same_v<T, std::string> )
+            return variable.value().StringValue;
     }
 
     m_Logger->debug( "Undefined variable {}{}", name, m_SkillLevel );
 
-    return defaultValue;
+    if( !defaultValue.has_value() )
+    {
+        m_Logger->debug( "Unable to get value for variable \"{}\" and no default value were provided", name );
+        assert( !"Unable to get variable. no default value provided!" );
+    }
+
+    return defaultValue.value();
 }
+
+template float ConfigurationSystem::GetValue<float>( std::string_view name, std::optional<float> defaultValue, CBaseEntity* entity ) const;
+template int ConfigurationSystem::GetValue<int>( std::string_view name, std::optional<int> defaultValue, CBaseEntity* entity ) const;
+template bool ConfigurationSystem::GetValue<bool>( std::string_view name, std::optional<bool> defaultValue, CBaseEntity* entity ) const;
+template std::string ConfigurationSystem::GetValue<std::string>( std::string_view name, std::optional<std::string> defaultValue, CBaseEntity* entity ) const;
 
 void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value )
 {
@@ -453,7 +467,7 @@ void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, i
 
                 if( it->Constraints.Type == ConfigVarType::String )
                 {
-                    WRITE_FLOAT( -3 );
+                    WRITE_FLOAT( NETWORK_STRING_VARIABLE );
                     WRITE_STRING( it->StringValue.c_str() );
                 }
                 else
@@ -502,7 +516,7 @@ void ConfigurationSystem::SendAllNetworkedConfigVars( CBasePlayer* player )
 
         if( variable.Constraints.Type == ConfigVarType::String )
         {
-            WRITE_FLOAT( -3 );
+            WRITE_FLOAT( NETWORK_STRING_VARIABLE );
             WRITE_STRING( variable.StringValue.c_str() );
         }
         else
@@ -635,14 +649,16 @@ void ConfigurationSystem::MsgFunc_ConfigVars( BufferReader& reader )
                 if( variable.NetworkIndex == networkIndex )
                 {
                     // Don't need to log since the server logs the change. The client only follows its lead.
-                    if( (int)value == -3 )
+                    if( (int)value == NETWORK_STRING_VARIABLE )
                     {
                         const char* string_value = reader.ReadString();
                         variable.StringValue = std::string( string_value );
                         variable.Constraints.Type = ConfigVarType::String;
                     }
                     else
+                    {
                         variable.CurrentValue = value;
+                    }
                     return;
                 }
             }

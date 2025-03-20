@@ -91,12 +91,12 @@ bool CHornet::Spawn()
 
     if( !FNullEnt( pev->owner ) && ( pev->owner->v.flags & FL_CLIENT ) != 0 )
     {
-        pev->dmg = g_cfg.GetValue( "plr_hornet_dmg"sv, 7, this );
+        pev->dmg = g_cfg.GetValue<float>( "plr_hornet_dmg"sv, 7, this );
     }
     else
     {
         // no real owner, or owner isn't a client.
-        pev->dmg = g_cfg.GetValue( "hornet_dmg"sv, 8, this );
+        pev->dmg = g_cfg.GetValue<float>( "hornet_dmg"sv, 8, this );
     }
 
     pev->nextthink = gpGlobals->time + 0.1;

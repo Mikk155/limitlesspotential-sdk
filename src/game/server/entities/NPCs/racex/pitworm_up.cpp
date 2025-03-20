@@ -286,7 +286,7 @@ void COFPitWormUp::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "pitworm_health"sv, 100, this );
+    pev->health = g_cfg.GetValue<float>( "pitworm_health"sv, 100, this );
     pev->model = MAKE_STRING( "models/pit_worm_up.mdl" );
 
     SetClassification( "alien_military" );
@@ -807,8 +807,8 @@ void COFPitWormUp::ShootBeam()
             if( pHit && pHit->pev->takedamage != DAMAGE_NO )
             {
                 ClearMultiDamage();
-                pHit->TraceAttack( this, g_cfg.GetValue( "pitworm_dmg_beam"sv, 20, this ), m_vecBeam, &tr, 1024 );
-                pHit->TakeDamage( this, this, g_cfg.GetValue( "pitworm_dmg_beam"sv, 20, this ), 1024 );
+                pHit->TraceAttack( this, g_cfg.GetValue<float>( "pitworm_dmg_beam"sv, 20, this ), m_vecBeam, &tr, 1024 );
+                pHit->TakeDamage( this, this, g_cfg.GetValue<float>( "pitworm_dmg_beam"sv, 20, this ), 1024 );
             }
             else if( tr.flFraction != 1.0 )
             {
@@ -889,8 +889,8 @@ void COFPitWormUp::StrafeBeam()
     {
         ClearMultiDamage();
 
-        pHit->TraceAttack( this, g_cfg.GetValue( "pitworm_dmg_beam"sv, 20, this ), m_vecBeam, &tr, DMG_ENERGYBEAM );
-        pHit->TakeDamage( this, this, g_cfg.GetValue( "pitworm_dmg_beam"sv, 20, this ), DMG_ENERGYBEAM );
+        pHit->TraceAttack( this, g_cfg.GetValue<float>( "pitworm_dmg_beam"sv, 20, this ), m_vecBeam, &tr, DMG_ENERGYBEAM );
+        pHit->TakeDamage( this, this, g_cfg.GetValue<float>( "pitworm_dmg_beam"sv, 20, this ), DMG_ENERGYBEAM );
 
         // TODO: missing an ApplyMultiDamage call here
         // Should probably replace the TakeDamage call
@@ -1912,7 +1912,7 @@ void COFPitWorm::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 150 * g_cfg.GetValue( "bigmomma_health_factor"sv, 2, this );
+    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2, this );
     pev->model = MAKE_STRING( "models/pit_worm.mdl" );
 
     SetClassification( "alien_monster" );
@@ -2360,7 +2360,7 @@ void COFPitWorm::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         if( pHurt )
         {
-            pHurt->TakeDamage( this, this, g_cfg.GetValue( "bigmomma_dmg_slash"sv, 70, this ), DMG_CRUSH | DMG_SLASH );
+            pHurt->TakeDamage( this, this, g_cfg.GetValue<float>( "bigmomma_dmg_slash"sv, 70, this ), DMG_CRUSH | DMG_SLASH );
             pHurt->pev->punchangle.x = 15;
 
             pHurt->pev->velocity = pHurt->pev->velocity + ( forward * 220 ) + Vector( 0, 0, 200 );

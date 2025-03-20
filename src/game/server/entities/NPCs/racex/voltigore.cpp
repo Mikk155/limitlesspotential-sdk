@@ -262,7 +262,7 @@ void COFChargedBolt::ChargedBoltTouch( CBaseEntity* pOther )
     else
     {
         ClearMultiDamage();
-        pOther->TakeDamage( this, this, g_cfg.GetValue( "voltigore_dmg_beam"sv, 60, this ), DMG_ALWAYSGIB | DMG_SHOCK );
+        pOther->TakeDamage( this, this, g_cfg.GetValue<float>( "voltigore_dmg_beam"sv, 60, this ), DMG_ALWAYSGIB | DMG_SHOCK );
     }
 
     pev->velocity = g_vecZero;
@@ -274,7 +274,7 @@ void COFChargedBolt::ChargedBoltTouch( CBaseEntity* pOther )
 
     ClearMultiDamage();
 
-    RadiusDamage( pev->origin, this, pevOwner, g_cfg.GetValue( "voltigore_dmg_beam"sv, 60, this ), 128.0, DMG_ALWAYSGIB | DMG_SHOCK );
+    RadiusDamage( pev->origin, this, pevOwner, g_cfg.GetValue<float>( "voltigore_dmg_beam"sv, 60, this ), 128.0, DMG_ALWAYSGIB | DMG_SHOCK );
 
     SetThink( &COFChargedBolt::ShutdownChargedBolt );
     pev->nextthink = gpGlobals->time + 0.5;
@@ -298,7 +298,7 @@ void COFVoltigore::OnCreate()
 {
     CSquadMonster::OnCreate();
 
-    pev->health = g_cfg.GetValue( "voltigore_health"sv, 450, this );
+    pev->health = g_cfg.GetValue<float>( "voltigore_health"sv, 450, this );
     pev->model = MAKE_STRING( "models/voltigore.mdl" );
 
     SetClassification( "alien_military" );
@@ -436,7 +436,7 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case VOLTIGORE_AE_LEFT_PUNCH:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_cfg.GetValue( "voltigore_dmg_punch"sv, 50, this ), DMG_CLUB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_cfg.GetValue<float>( "voltigore_dmg_punch"sv, 50, this ), DMG_CLUB );
 
         if( pHurt )
         {
@@ -466,7 +466,7 @@ void COFVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
 
     case VOLTIGORE_AE_RIGHT_PUNCH:
     {
-        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_cfg.GetValue( "voltigore_dmg_punch"sv, 50, this ), DMG_CLUB );
+        CBaseEntity* pHurt = CheckTraceHullAttack( GetMeleeDistance(), g_cfg.GetValue<float>( "voltigore_dmg_punch"sv, 50, this ), DMG_CLUB );
 
         if( pHurt )
         {
@@ -1132,7 +1132,7 @@ void COFVoltigore::DeathGibThink()
 
         ClearMultiDamage();
 
-        ::RadiusDamage( pev->origin, this, this, g_cfg.GetValue( "voltigore_dmg_beam"sv, 60, this ), 160.0, DMG_ALWAYSGIB | DMG_SHOCK );
+        ::RadiusDamage( pev->origin, this, this, g_cfg.GetValue<float>( "voltigore_dmg_beam"sv, 60, this ), 160.0, DMG_ALWAYSGIB | DMG_SHOCK );
     }
 }
 

@@ -203,15 +203,15 @@ bool CPipewrench::Swing( const bool bFirst )
         {
             ClearMultiDamage();
 
-            if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue( "pipewrench_full_damage" ) != 0 )
+            if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue<float>( "pipewrench_full_damage"sv ) != 0 )
             {
                 // first swing does full damage
-                pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue( "plr_pipewrench"sv, 20, this ), gpGlobals->v_forward, &tr, DMG_CLUB );
+                pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue<float>( "plr_pipewrench"sv, 20, this ), gpGlobals->v_forward, &tr, DMG_CLUB );
             }
             else
             {
                 // subsequent swings do half
-                pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue( "plr_pipewrench"sv, 20, this ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
+                pEntity->TraceAttack( m_pPlayer, g_cfg.GetValue<float>( "plr_pipewrench"sv, 20, this ) / 2, gpGlobals->v_forward, &tr, DMG_CLUB );
             }
 
             ApplyMultiDamage( m_pPlayer, m_pPlayer );
@@ -219,7 +219,7 @@ bool CPipewrench::Swing( const bool bFirst )
 
 #endif
 
-        if( g_cfg.GetValue( "chainsaw_melee"sv, 0, this ) == 0 )
+        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) == 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
             m_flNextSecondaryAttack = GetNextAttackDelay( 0.5 );
@@ -296,7 +296,7 @@ bool CPipewrench::Swing( const bool bFirst )
         pev->nextthink = gpGlobals->time + 0.2;
 #endif
 
-        if( g_cfg.GetValue( "chainsaw_melee"sv, 0, this ) != 0 )
+        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) != 0 )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.5 );
             m_flNextSecondaryAttack = GetNextAttackDelay( 0.5 );
@@ -365,8 +365,8 @@ void CPipewrench::BigSwing()
         {
             ClearMultiDamage();
 
-            float flDamage = ( gpGlobals->time - m_flBigSwingStart ) * g_cfg.GetValue( "plr_pipewrench"sv, 20, this ) + 25.0f;
-            if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue( "pipewrench_full_damage" ) != 0 )
+            float flDamage = ( gpGlobals->time - m_flBigSwingStart ) * g_cfg.GetValue<float>( "plr_pipewrench"sv, 20, this ) + 25.0f;
+            if( ( m_flNextPrimaryAttack + 1 < UTIL_WeaponTimeBase() ) || g_cfg.GetValue<float>( "pipewrench_full_damage"sv ) != 0 )
             {
                 // first swing does full damage
                 pEntity->TraceAttack( m_pPlayer, flDamage, gpGlobals->v_forward, &tr, DMG_CLUB );
