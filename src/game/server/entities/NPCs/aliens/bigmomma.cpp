@@ -360,7 +360,7 @@ void CBigMomma::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2, this );
+    pev->health = 150 * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2.0, this );
     pev->model = MAKE_STRING( "models/big_mom.mdl" );
 
     SetClassification( "alien_monster" );
@@ -693,7 +693,7 @@ void CBigMomma::NodeReach()
         return;
 
     if( 0 != pTarget->pev->health )
-        pev->max_health = pev->health = pTarget->pev->health * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2, this );
+        pev->max_health = pev->health = pTarget->pev->health * g_cfg.GetValue<float>( "bigmomma_health_factor"sv, 2.0, this );
 
     if( !HasMemory( bits_MEMORY_FIRED_NODE ) )
     {

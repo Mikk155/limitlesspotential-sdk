@@ -252,7 +252,7 @@ void CGrapple::PrimaryAttack()
 
         m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
 
-        if( g_cfg.GetValue<float>( "grapple_fast"sv, 0 ) != 0 )
+        if( g_cfg.GetValue<bool>( "grapple_fast"sv, false ) )
         {
             m_flShootTime = gpGlobals->time;
         }
@@ -362,7 +362,7 @@ void CGrapple::PrimaryAttack()
     }
 #endif
 
-    if( g_cfg.GetValue<float>( "grapple_fast"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "grapple_fast"sv, false ) )
     {
         m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase();
     }
@@ -428,7 +428,7 @@ void CGrapple::EndAttack()
 
     m_flTimeWeaponIdle = UTIL_WeaponTimeBase();
 
-    if( g_cfg.GetValue<float>( "grapple_fast"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "grapple_fast"sv, false ) )
     {
         m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase();
     }

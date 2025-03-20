@@ -139,7 +139,7 @@ void CGrappleTip::FlyThink()
 
     pev->velocity = pev->velocity * 0.2 + ( flNewVel * gpGlobals->v_forward );
 
-    const float maxSpeed = g_cfg.GetValue<float>( "grapple_fast"sv, 0 ) != 0 ? 2000 : 1600;
+    const float maxSpeed = g_cfg.GetValue<bool>( "grapple_fast"sv, false ) ? 2000 : 1600;
 
     // TODO: should probably clamp at sv_maxvelocity to prevent the tip from going off course.
     if( pev->velocity.Length() > maxSpeed )

@@ -19,12 +19,13 @@
     "plr_tripmine": 150,
     "plr_hornet_dmg": 10,
     "plr_grapple": 50,
+    "plr_shockroach": 15,
 
     "crowbar_full_damage": 1,
-    "revolver_laser_sight": 1,
+    "revolver_laser_sight": true,
     "smg_wide_spread": 1,
     "shotgun_single_tight_spread": 1,
-    "shotgun_double_wide_spread": 1,
+    "shotgun_double_wide_spread": true,
     "crossbow_sniper_bolt": 1,
     "crossbow_explosive_bolt": 1,
     "gauss_charge_time": 1.5,
@@ -36,13 +37,13 @@
     "egon_wide_radius_damage": 1,
     "pipewrench_full_damage": 1,
     "knife_allow_backstab": 1,
-    "grapple_fast": 1,
+    "grapple_fast": true,
     "m249_wide_spread": 1,
     "shockrifle_fast": 1,
 
-    "allow_flashlight" : 0,
+    "allow_flashlight" : false,
 
-    "allow_monsters": 0,
+    "allow_monsters": false,
 
     "falldamagemode": 0,
 
@@ -53,7 +54,7 @@
     "ammo_respawn_time": 20,
     "pickupitem_respawn_time": 30,
 
-    "weapon_instant_respawn": 0,
+    "weapon_instant_respawn": false,
 
     "allow_player_weapon_dropping": 1
 }

@@ -2,15 +2,14 @@
 {
     "$schema": "../schemas/server/Config.json",
 
-    "allow_monsters": 1,
+    "allow_monsters": true,
     "falldamagemode": 1,
     "healthcharger_recharge_time": -1,
     "hevcharger_recharge_time": -1,
     "weapon_respawn_time": -1,
     "ammo_respawn_time": -1,
     "pickupitem_respawn_time": -1,
-
-    "weapon_instant_respawn": 0,
-
+    "weapon_instant_respawn": false,
+    "allow_flashlight" : true,
     "allow_player_weapon_dropping": 1
 }

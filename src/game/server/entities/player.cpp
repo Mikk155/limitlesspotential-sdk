@@ -3756,7 +3756,7 @@ void CBasePlayer::ItemPostFrame()
 
     const bool canUseItem = m_flNextAttack <= UTIL_WeaponTimeBase();
 
-    if( canUseItem || g_cfg.GetValue<float>( "allow_use_while_busy"sv, 0, this ) != 0 )
+    if( canUseItem || g_cfg.GetValue<bool>( "allow_use_while_busy"sv, false, this ) )
     {
         // Handle use events
         PlayerUse();
@@ -4504,7 +4504,7 @@ int CBasePlayer::GetCustomDecalFrames()
 
 void CBasePlayer::DropPlayerWeapon( const char* pszItemName )
 {
-    if( g_cfg.GetValue<float>( "allow_player_weapon_dropping"sv, 0 ) == 0 )
+    if( !g_cfg.GetValue<bool>( "allow_player_weapon_dropping"sv, true ) )
     {
         return;
     }

@@ -41,7 +41,7 @@
     // Big momma
     "bigmomma_health_factor1": 1.0,
     "bigmomma_health_factor2": 1.5,
-    "bigmomma_health_factor3": 2,
+    "bigmomma_health_factor3": 2.0,
 
     "bigmomma_dmg_slash1": 50,
     "bigmomma_dmg_slash2": 60,
@@ -83,9 +83,19 @@
     "headcrab_health2": 10,
     "headcrab_health3": 20,
 
-    "headcrab_dmg_bite1": 5,
+    "headcrab_dmg_bite1": 1.5,
     "headcrab_dmg_bite2": 10,
     "headcrab_dmg_bite3": 10,
+
+    // Used to be ( headcrab_dmg_bite * 0.3 )
+    "baby_headcrab_health1": 2.5,
+    "baby_headcrab_health2": 2.5,
+    "baby_headcrab_health3": 5,
+
+    // Used to be ( headcrab_health * 0.25 )
+    "baby_headcrab_dmg_bite1": 5,
+    "baby_headcrab_dmg_bite2": 3,
+    "baby_headcrab_dmg_bite3": 3,
 
     // Hgrunt 
     "hgrunt_health1": 50,
@@ -398,6 +408,9 @@
 
     "shockroach_lifespan": 10,
 
+    // Op4 mortar. used to be ( 2 * plr_rpg )
+    "op4mortar": 200,
+
     // PLAYER WEAPONS
 
     // Crowbar whack
@@ -414,6 +427,7 @@
 
     // M203 grenade
     "plr_9mmAR_grenade": 100,
+    "monster_9mmAR_grenade": 100,
 
     // Shotgun buckshot
     "plr_buckshot": 5,
@@ -462,8 +476,7 @@
     "plr_displacer_other": 250,
     "plr_displacer_radius": 300,
 
-    "plr_shockroachs": 10,
-    "plr_shockroachm": 15,
+    "plr_shockroach": 10,
 
     "plr_spore": 50,
 
@@ -528,10 +541,10 @@
 
     // Multiplayer weapon configuration
     "crowbar_full_damage": 0,
-    "revolver_laser_sight": 0,
+    "revolver_laser_sight": false,
     "smg_wide_spread": 0,
     "shotgun_single_tight_spread": 0,
-    "shotgun_double_wide_spread": 0,
+    "shotgun_double_wide_spread": false,
     "crossbow_sniper_bolt": 0,
     "crossbow_explosive_bolt": 0,
     "gauss_charge_time": 4,
@@ -543,16 +556,16 @@
     "egon_wide_radius_damage": 0,
     "pipewrench_full_damage": 0,
     "knife_allow_backstab": 0,
-    "grapple_fast": 0,
+    "grapple_fast": false,
     "m249_wide_spread": 0,
     "shockrifle_fast": 0,
 
     // If set to 1, players can +USE entities while their current weapon is busy
-    "allow_use_while_busy": 0,
+    "allow_use_while_busy": false,
 
-    "allow_flashlight" : 1,
+    "allow_flashlight" : true,
 
-    "allow_monsters": 1,
+    "allow_monsters": true,
 
     // 0 == fixed damage
     // 1 == progressive, longer falls deal more damage
@@ -571,9 +584,9 @@
     "ammo_respawn_time": -1,
     "pickupitem_respawn_time": -1,
 
-    // If set to 1, weapons not flagged to be limited in world will respawn immediately
-    "weapon_instant_respawn": 0,
+    // Weapons not flagged to be limited in world will respawn immediately
+    "weapon_instant_respawn": false,
 
-    "allow_npc_item_dropping": 1,
-    "allow_player_weapon_dropping": 0
+    "allow_npc_item_dropping": true,
+    "allow_player_weapon_dropping": true
 }

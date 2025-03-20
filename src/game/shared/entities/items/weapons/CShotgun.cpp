@@ -193,7 +193,7 @@ void CShotgun::SecondaryAttack()
 
     Vector vecDir;
 
-    if( g_cfg.GetValue<float>( "shotgun_double_wide_spread"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "shotgun_double_wide_spread"sv, false ) )
     {
         // tuned for deathmatch
         vecDir = m_pPlayer->FireBulletsPlayer( 8, vecSrc, vecAiming, VECTOR_CONE_DM_DOUBLESHOTGUN, 2048, BULLET_PLAYER_BUCKSHOT, 0, 0, m_pPlayer, m_pPlayer->random_seed );

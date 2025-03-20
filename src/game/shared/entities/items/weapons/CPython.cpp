@@ -21,7 +21,7 @@ LINK_ENTITY_TO_CLASS( weapon_357, CPython );
 
 inline bool UseLaserSight()
 {
-    return g_cfg.GetValue<float>( "revolver_laser_sight"sv, 0 ) != 0;
+    return g_cfg.GetValue<bool>( "revolver_laser_sight"sv, false );
 }
 
 void CPython::OnCreate()

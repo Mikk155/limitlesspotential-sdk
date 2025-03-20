@@ -43,7 +43,7 @@ public:
     {
         RespawnTime = g_cfg.GetValue<float>( "weapon_respawn_time"sv, ITEM_NEVER_RESPAWN_DELAY );
 
-        if( RespawnTime != ITEM_NEVER_RESPAWN_DELAY && g_cfg.GetValue<float>( "weapon_instant_respawn"sv, 0 ) != 0 )
+        if( RespawnTime != ITEM_NEVER_RESPAWN_DELAY && g_cfg.GetValue<bool>( "weapon_instant_respawn"sv, false ) )
         {
             // make sure it's only certain weapons
             if( ( weapon->iFlags() & ITEM_FLAG_LIMITINWORLD ) == 0 )
@@ -108,7 +108,7 @@ public:
 
     void Visit( CBasePlayerWeapon* weapon ) override
     {
-        if( g_cfg.GetValue<float>( "weapon_instant_respawn"sv, 0 ) != 0 )
+        if( g_cfg.GetValue<bool>( "weapon_instant_respawn"sv, false ) )
         {
             if( ( weapon->iFlags() & ITEM_FLAG_LIMITINWORLD ) == 0 )
             {
@@ -177,7 +177,7 @@ CGameRules::CGameRules()
 
 bool CGameRules::FAllowFlashlight()
 {
-    return g_cfg.GetValue<float>( "allow_flashlight"sv, 1 ) != 0;
+    return g_cfg.GetValue<bool>( "allow_flashlight"sv, true );
 }
 
 float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
@@ -399,7 +399,7 @@ int CGameRules::HEVChargerRechargeTime()
 
 bool CGameRules::FAllowMonsters()
 {
-    return g_cfg.GetValue<float>( "allow_monsters"sv, 1 ) != 0;
+    return g_cfg.GetValue<bool>( "allow_monsters"sv, true );
 }
 
 void CGameRules::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )

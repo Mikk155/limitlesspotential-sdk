@@ -42,8 +42,10 @@ To use a skill variable in code, simply get the value like this:
 ```cpp
 g_cfg.GetValue<float>( "my_variable"sv, 100, this )
 ```
-the second argument is not necesary but will be used if the system fails on getting the variable from the json.
+The second argument is not necesary but will be used if the system fails on getting the variable from the json.
 if the system fails and not a default value was set the game will crash. the default value MUST match the cast type.
+
+It can be casted to ``bool``, ``std::string``, ``int`` and ``float``
 
 the third argument is a CBaseEntity instance to use their custom config file if it exists.
 

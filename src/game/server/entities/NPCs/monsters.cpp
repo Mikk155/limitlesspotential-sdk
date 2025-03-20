@@ -3115,7 +3115,7 @@ CBaseEntity* CBaseMonster::DropItem( const char* pszItemName, const Vector& vecP
         return nullptr;
     }
 
-    if( g_cfg.GetValue<float>( "allow_npc_item_dropping"sv, 1, this ) == 0 )
+    if( g_cfg.GetValue<bool>( "allow_npc_item_dropping"sv, true, this ) )
     {
         return nullptr;
     }

@@ -76,8 +76,7 @@ bool CMortarShell::Spawn()
     pev->velocity = -( gpGlobals->v_forward * m_velocity );
     pev->gravity = 1;
 
-    // Deal twice the damage that the RPG does
-    pev->dmg = 2 * g_cfg.GetValue<float>( "plr_rpg"sv, 100, this );
+    pev->dmg = g_cfg.GetValue<float>( "op4mortar"sv, 100, this );
 
     pev->nextthink = gpGlobals->time + 0.01;
     m_flIgniteTime = gpGlobals->time;
