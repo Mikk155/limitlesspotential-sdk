@@ -1,6 +1,6 @@
 // DON'T MESS WITH THIS.
 {
-    "$schema": "../../schemas/server/cfg.json",
+    "$schema": "../schemas/server/cfg.json",
 
     // MONSTERS
 
