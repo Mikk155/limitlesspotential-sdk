@@ -680,11 +680,12 @@ public:
     CBaseEntity* AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget );
     string_t m_sNewActivator;
 
-    std::unordered_map<std::string_view, appearflags> m_appearflags;
     /**
      *    @brief Returns whatever a entity is fine to exists by the current rules it has.
      */
-    bool ShouldAppearByFlags();
+    bool ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags);
+    std::vector<std::string> m_AppearFlagNotIn;
+    std::vector<std::string> m_AppearFlagOnlyIn;
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }

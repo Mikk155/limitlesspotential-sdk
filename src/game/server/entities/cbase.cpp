@@ -30,7 +30,8 @@ int DispatchSpawn( edict_t* pent )
 
     if( entity != nullptr )
     {
-        if( !entity->ShouldAppearByFlags() ) {
+        if(!entity->ShouldAppearByFlags( entity->m_AppearFlagNotIn, appearflags::NotIn )
+        ||  !entity->ShouldAppearByFlags( entity->m_AppearFlagOnlyIn, appearflags::OnlyIn ) ) {
             UTIL_Remove( entity );
             return -1;
         }
@@ -609,14 +610,20 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
     }
     else if( strstr( pkvd->szKeyName, "appearflag_" ) != nullptr )
     {
-        if( int value = atoi( pkvd->szValue ); value == appearflags::NotIn || value == appearflags::OnlyIn )
+        switch( std::max( -1, std::min( 1, atoi( pkvd->szValue ) ) ) )
         {
-            m_appearflags[ std::string_view( pkvd->szKeyName ) ] = static_cast<appearflags>( value );
+            case appearflags::NotIn:
+            {
+                m_AppearFlagNotIn.push_back( std::move( std::string( pkvd->szKeyName ) ) );
+                return true;
+            }
+            case appearflags::OnlyIn:
+            {
+                m_AppearFlagOnlyIn.push_back( std::move( std::string( pkvd->szKeyName ) ) );
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     else if( FStrEq( pkvd->szKeyName, "m_UseType" ) )
     {
@@ -1025,96 +1032,49 @@ const char* UseValue::print_data()
     return message.c_str();
 }
 
-bool CBaseEntity::ShouldAppearByFlags()
+bool CBaseEntity::ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags )
 {
-    bool should_not = false;
-
-    auto matched = []( appearflags bit, bool condition ) -> bool
-    {
-        switch( bit )
-        {
-            case appearflags::NotIn:
-                return condition;
-            case appearflags::OnlyIn:
-                return !condition;
-        }
-        return true;
+    // You can add more rules here
+    std::unordered_map<std::string_view, bool> condition_flags = {
+        { "appearflag_multiplayer"sv, g_pGameRules->IsMultiplayer() },
+        { "appearflag_cooperative"sv, g_pGameRules->IsCoOp() },
+        { "appearflag_skilleasy"sv, g_cfg.GetSkillLevel() == SkillLevel::Easy },
+        { "appearflag_skillmedium"sv, g_cfg.GetSkillLevel() == SkillLevel::Medium },
+        { "appearflag_skillhard"sv, g_cfg.GetSkillLevel() == SkillLevel::Hard },
+        { "appearflag_deathmatch"sv, g_pGameRules->IsDeathmatch() },
+        { "appearflag_teamplay"sv, g_pGameRules->IsTeamplayDeathmatch() },
+        { "appearflag_ctf"sv, g_pGameRules->IsCTF() },
+        { "appearflag_dedicated"sv, IS_DEDICATED_SERVER() }
     };
 
-    auto Appearance = m_appearflags.begin();
+    bool should_appear = true;
 
-    while( m_appearflags.end() != Appearance )
+    for( std::string& variable : keynames )
     {
-        bool reusable = true;
-
-        if( Appearance->second == appearflags::Default )
+        if( condition_flags.find( variable ) != condition_flags.end() )
         {
-            Appearance = m_appearflags.erase(Appearance);
-            continue;
+            if( flags == appearflags::NotIn )
+            {
+                if( !condition_flags[ variable ] )
+                {
+                    CBaseEntity::Logger->debug( "Entity got appearflags \"Not in\" for key \"{}\"", variable );
+                    should_appear = false;
+                    break;
+                }
+            }
+            else if( flags == appearflags::OnlyIn )
+            {
+                if( condition_flags[ variable ] )
+                {
+                    CBaseEntity::Logger->debug( "Entity got appearflags \"Only in\" for key \"{}\"", variable );
+                    should_appear = false;
+                    break;
+                }
+            }
         }
-        else if( Appearance->first == "appearflag_singleplayer"sv )
-        {
-            should_not = matched( Appearance->second, !( g_pGameRules->IsMultiplayer() ) );
-            goto gt_remove;
-        }
-        else if( Appearance->first == "appearflag_multiplayer"sv )
-        {
-            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() ) );
-            goto gt_remove;
-        }
-        else if( Appearance->first == "appearflag_cooperative"sv )
-        {
-            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsCoOp() ) );
-            goto gt_remove;
-        }
-        else if( Appearance->first == "appearflag_skilleasy"sv )
-        {
-            should_not = matched( Appearance->second, ( g_cfg.GetSkillLevel() == SkillLevel::Easy ) );
-        }
-        else if( Appearance->first == "appearflag_skillmedium"sv )
-        {
-            should_not = matched( Appearance->second, ( g_cfg.GetSkillLevel() == SkillLevel::Medium ) );
-        }
-        else if( Appearance->first == "appearflag_skillhard"sv )
-        {
-            should_not = matched( Appearance->second, ( g_cfg.GetSkillLevel() == SkillLevel::Hard ) );
-        }
-        else if( Appearance->first == "appearflag_deathmatch"sv )
-        {
-            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsDeathmatch() ) );
-            goto gt_remove;
-        }
-        else if( Appearance->first == "appearflag_teamplay"sv )
-        {
-            // HACK since coop and ctf gamerules returns true for IsTeamplay
-            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsTeamplayDeathmatch() ) );
-            goto gt_remove;
-        }
-        else if( Appearance->first == "appearflag_ctf"sv )
-        {
-            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsCTF() ) );
-            goto gt_remove;
-        }
-        else if( Appearance->first == "appearflag_dedicated"sv )
-        {
-            should_not = matched( Appearance->second, ( IS_DEDICATED_SERVER() ) );
-            goto gt_remove;
-        }
-
-        Appearance++;
-
-        gt_re_check:
-
-        if( should_not ) {
-            return false;
-        }
-
-        continue;
-
-        gt_remove:
-        Appearance = m_appearflags.erase(Appearance);
-        goto gt_re_check;
     }
 
-    return true;
+    keynames.clear();
+
+    return should_appear;
 }
