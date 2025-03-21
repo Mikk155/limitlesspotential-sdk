@@ -58,29 +58,42 @@ bool CHornet::Spawn()
     pev->solid = SOLID_BBOX;
     pev->takedamage = DAMAGE_YES;
     pev->flags |= FL_MONSTER;
-    pev->health = 1; // weak!
+    pev->health = g_cfg.GetValue<float>( "hornet_health"sv, 1, this ); // weak!
 
-    if( g_pGameRules->IsMultiplayer() )
-    {
-        // hornets don't live as long in multiplayer
-        m_flStopAttack = gpGlobals->time + 3.5;
-    }
-    else
-    {
-        m_flStopAttack = gpGlobals->time + 5.0;
-    }
+    m_flStopAttack = gpGlobals->time + g_cfg.GetValue<float>( "hornet_lifetime"sv, 3.5, this );
 
     m_flFieldOfView = 0.9; // +- 25 degrees
 
-    if( RANDOM_LONG( 1, 5 ) <= 2 )
+    int hornet_type = std::max( -2, g_cfg.GetValue<int>( "hornet_type"sv, 0, this ) );
+
+    bool is_red_hornet = false;
+
+    switch( hornet_type )
+    {
+        case -2:
+        break;
+        case -1:
+            is_red_hornet = true;
+        break;
+        case 0:
+            if( RANDOM_LONG( 1, 5 ) <= 2 )
+                is_red_hornet = true;
+        break;
+        default:
+            if( RANDOM_LONG( 0, 100 ) <= hornet_type )
+                is_red_hornet = true;
+        break;
+    }
+
+    if( is_red_hornet )
     {
         m_iHornetType = HORNET_TYPE_RED;
-        m_flFlySpeed = HORNET_RED_SPEED;
+        m_flFlySpeed = g_cfg.GetValue<float>( "hornet_red_speed"sv, 600, this );
     }
     else
     {
         m_iHornetType = HORNET_TYPE_ORANGE;
-        m_flFlySpeed = HORNET_ORANGE_SPEED;
+        m_flFlySpeed = g_cfg.GetValue<float>( "hornet_orange_speed"sv, 800, this );
     }
 
     SetModel( "models/hornet.mdl" );

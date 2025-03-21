@@ -239,9 +239,12 @@ void CAGrunt::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir,
             MESSAGE_END();
         }
 
-        flDamage -= 20;
-        if( flDamage <= 0 )
-            flDamage = 0.1; // don't hurt the monster much, but allow bits_COND_LIGHT_DAMAGE to be generated
+        if( int deduction = g_cfg.GetValue<float>( "agrunt_dmg_armor"sv, 20, this ); deduction > 0 )
+        {
+            flDamage -= deduction;
+            if( flDamage <= 0 )
+                flDamage = 0.1; // don't hurt the monster much, but allow bits_COND_LIGHT_DAMAGE to be generated
+        }
     }
     else
     {
@@ -356,10 +359,10 @@ void CAGrunt::SetYawSpeed()
     {
     case ACT_TURN_LEFT:
     case ACT_TURN_RIGHT:
-        ys = 110;
+        ys = g_cfg.GetValue<int>( "agrunt_yawspd"sv, 110, this );
         break;
     default:
-        ys = 100;
+        ys = g_cfg.GetValue<int>( "agrunt_yawspd_normal"sv, 100, this );
     }
 
     pev->yaw_speed = ys;
@@ -481,7 +484,7 @@ void CAGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
             if( pHurt->IsPlayer() )
             {
                 // this is a player. Knock him around.
-                pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * 250;
+                pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * g_cfg.GetValue<float>( "agrunt_player_knock"sv, 250, this );
             }
 
             EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pAttackHitSounds ), 1.0, ATTN_NORM, 0, 100 + RANDOM_LONG( -5, 5 ) );
@@ -511,7 +514,7 @@ void CAGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
             if( pHurt->IsPlayer() )
             {
                 // this is a player. Knock him around.
-                pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * -250;
+                pHurt->pev->velocity = pHurt->pev->velocity + gpGlobals->v_right * -g_cfg.GetValue<float>( "agrunt_player_knock"sv, 250, this );
             }
 
             EmitSoundDyn( CHAN_WEAPON, RANDOM_SOUND_ARRAY( pAttackHitSounds ), 1.0, ATTN_NORM, 0, 100 + RANDOM_LONG( -5, 5 ) );
@@ -546,7 +549,7 @@ bool CAGrunt::Spawn()
     pev->movetype = MOVETYPE_STEP;
     m_bloodColor = BLOOD_COLOR_GREEN;
     pev->effects = 0;
-    m_flFieldOfView = 0.2; // indicates the width of this monster's forward view cone ( as a dotproduct result )
+    m_flFieldOfView = g_cfg.GetValue<float>( "agrunt_fov"sv, 0.2, this ); // indicates the width of this monster's forward view cone ( as a dotproduct result )
     m_MonsterState = MONSTERSTATE_NONE;
     m_afCapability = 0;
     m_afCapability |= bits_CAP_SQUAD;
@@ -777,7 +780,7 @@ Schedule_t slAGruntThreatDisplay[] =
 };
 
 BEGIN_CUSTOM_SCHEDULES( CAGrunt )
-slAGruntFail,
+    slAGruntFail,
     slAGruntCombatFail,
     slAGruntStandoff,
     slAGruntSuppress,
@@ -786,7 +789,7 @@ slAGruntFail,
     slAGruntTakeCoverFromEnemy,
     slAGruntVictoryDance,
     slAGruntThreatDisplay
-    END_CUSTOM_SCHEDULES();
+END_CUSTOM_SCHEDULES();
 
 bool CAGrunt::FCanCheckAttacks()
 {

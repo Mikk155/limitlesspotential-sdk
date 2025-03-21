@@ -270,8 +270,8 @@ void ConfigurationSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
 void ConfigurationSystem::LoadConfigurationFiles()
 {
     std::vector<std::string> fileNames;
-    fileNames.push_back( "cfg/config/general.json" );
-    fileNames.push_back( "cfg/config/monsters/alien_grunt.json" );
+    fileNames.push_back( "cfg/default_configuration.json" );
+    fileNames.push_back( fmt::format( "cfg/maps/{}_cfg.json", STRING( gpGlobals->mapname ) ) );
 
     // Refresh skill level setting first.
     int iSkill = (int)CVAR_GET_FLOAT( "skill" );

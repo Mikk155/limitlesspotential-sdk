@@ -4,6 +4,45 @@
 
     // MONSTERS
 
+    "agrunt_health1": 60,
+    "agrunt_health2": 90,
+    "agrunt_health3": 120,
+
+    "agrunt_dmg_punch1": 10,
+    "agrunt_dmg_punch2": 20,
+    "agrunt_dmg_punch3": 20,
+
+    // Armor damage deduction ( hitgroup 10, dmg bullet, slash, club )
+    "agrunt_dmg_armor": 20,
+
+    // yaw turn speed
+    "agrunt_yawspd": 110,
+    // No left-right activity
+    "agrunt_yawspd_normal": 100,
+
+    // Knock players ( velocity + v_right/left * agrunt_player_knock )
+    "agrunt_player_knock": 250,
+
+    // Field of view
+    "agrunt_fov": 0.2,
+
+    "hornet_dmg1": 4,
+    "hornet_dmg2": 5,
+    "hornet_dmg3": 8,
+
+    "hornet_health": 1,
+
+    // 0 = random vanilla
+    // -1 = red
+    // -2 = orange
+    // > 0 < 100 = percent changes of being red
+    "hornet_type": 0,
+
+    "hornet_orange_speed": 800,
+    "hornet_red_speed": 600,
+
+    "hornet_lifetime": 5.0,
+
     // Apache 
     "apache_health1": 150,
     "apache_health2": 250,
@@ -626,7 +665,8 @@
         "ammo_respawn_time": 20,
         "pickupitem_respawn_time": 30,
         "weapon_instant_respawn": false,
-        "allow_player_weapon_dropping": 1
+        "allow_player_weapon_dropping": 1,
+        "hornet_lifetime": 3.5
     },
 
     // Skill values for the Co-op gamemode
