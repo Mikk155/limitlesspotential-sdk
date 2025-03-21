@@ -111,9 +111,14 @@ public:
     virtual bool IsDeathmatch() = 0;
 
     /**
-     *    @brief is this deathmatch game being played with team rules?
+     *    @brief is this a game being played with teams?
      */
     virtual bool IsTeamplay() { return false; }
+
+    /**
+     *    @brief is this deathmatch game being played with team rules?
+     */
+    virtual bool IsTeamplayDeathmatch() { return false; }
 
     /**
      *    @brief is this a coop game?

@@ -587,7 +587,7 @@ bool ConfigurationSystem::ParseConfiguration( json& input, const bool CustomMap 
     gamemodes[ "cooperative" ] = g_pGameRules->IsCoOp();
     gamemodes[ "ctf" ] = g_pGameRules->IsCTF();
     gamemodes[ "deathmatch" ] = g_pGameRules->IsDeathmatch();
-    gamemodes[ "teamplay" ] = g_pGameRules->IsTeamplay();
+    gamemodes[ "teamplay" ] = ( g_pGameRules->IsTeamplayDeathmatch() );
 
     for( const auto& gamemode :  gamemodes )
     {

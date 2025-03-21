@@ -1086,7 +1086,8 @@ bool CBaseEntity::ShouldAppearByFlags()
         }
         else if( Appearance->first == "appearflag_teamplay"sv )
         {
-            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsTeamplay() ) );
+            // HACK since coop and ctf gamerules returns true for IsTeamplay
+            should_not = matched( Appearance->second, ( g_pGameRules->IsMultiplayer() && g_pGameRules->IsTeamplayDeathmatch() ) );
             goto gt_remove;
         }
         else if( Appearance->first == "appearflag_ctf"sv )
