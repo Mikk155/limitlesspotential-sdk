@@ -6,6 +6,7 @@
 
     "files.exclude":
     {
+        ".vs": true,
         "build/": true,
         "cmake/": true,
         "src/FGDGenerator/obj/": true,
@@ -20,6 +21,7 @@
 
     "search.exclude":
     {
+        ".vs": true,
         "build/": true,
         "cmake/": true,
         "src/FGDGenerator/obj/": true,
