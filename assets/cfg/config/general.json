@@ -1,17 +1,8 @@
 // DON'T MESS WITH THIS.
 {
-    "$schema": "../schemas/server/Config.json",
+    "$schema": "../../schemas/server/Config.json",
 
     // MONSTERS
-
-    // Alien Grunt
-    "agrunt_health1": 60,
-    "agrunt_health2": 90,
-    "agrunt_health3": 120,
-
-    "agrunt_dmg_punch1": 10,
-    "agrunt_dmg_punch2": 20,
-    "agrunt_dmg_punch3": 20,
 
     // Apache 
     "apache_health1": 150,
@@ -493,11 +484,6 @@
     "bullet_9mm2": 5,
     "bullet_9mm3": 8,
 
-    // HORNET
-    "hornet_dmg1": 4,
-    "hornet_dmg2": 5,
-    "hornet_dmg3": 8,
-
     // HEALTH/SUIT CHARGE DISTRIBUTION
     "suitcharger1": 75,
     "suitcharger2": 50,
@@ -589,5 +575,75 @@
     "weapon_instant_respawn": false,
 
     "allow_npc_item_dropping": true,
-    "allow_player_weapon_dropping": true
+    "allow_player_weapon_dropping": true,
+
+    // Multiplayer-only skill values
+    "multiplayer": 
+    {
+        "suitcharger": 30,
+        "plr_crowbar": 25,
+        "plr_9mm_bullet": 12,
+        "plr_357_bullet": 40,
+        "plr_9mmAR_bullet": 12,
+        "plr_9mmAR_grenade": 100,
+        "plr_buckshot": 20, // fewer pellets in deathmatch
+        "plr_xbow_bolt_client": 20,
+        "plr_rpg": 120,
+        "plr_egon_wide": 20,
+        "plr_egon_narrow": 10,
+        "plr_hand_grenade": 100,
+        "plr_satchel": 120,
+        "plr_tripmine": 150,
+        "plr_hornet_dmg": 10,
+        "plr_grapple": 50,
+        "plr_shockroach": 15,
+        "crowbar_full_damage": 1,
+        "revolver_laser_sight": true,
+        "smg_wide_spread": 1,
+        "shotgun_single_tight_spread": 1,
+        "shotgun_double_wide_spread": true,
+        "crossbow_sniper_bolt": 1,
+        "crossbow_explosive_bolt": 1,
+        "gauss_charge_time": 1.5,
+        "gauss_fast_ammo_use": 1,
+        "gauss_vertical_force": 1,
+        "gauss_damage_radius": 1.75,
+        "egon_narrow_ammo_per_second": 10,
+        "egon_wide_ammo_per_second": 6,
+        "egon_wide_radius_damage": 1,
+        "pipewrench_full_damage": 1,
+        "knife_allow_backstab": 1,
+        "grapple_fast": true,
+        "m249_wide_spread": 1,
+        "shockrifle_fast": 1,
+        "allow_flashlight" : false,
+        "allow_monsters": false,
+        // Default old hardcoded value for multiplayer
+        "fall_damage": -10,
+        "healthcharger_recharge_time": 60,
+        "hevcharger_recharge_time": 30,
+        "weapon_respawn_time": 20,
+        "ammo_respawn_time": 20,
+        "pickupitem_respawn_time": 30,
+        "weapon_instant_respawn": false,
+        "allow_player_weapon_dropping": 1
+    },
+
+    // Skill values for the Co-op gamemode
+    "cooperative":
+    {
+        "allow_monsters": true,
+        "fall_damage": 0.22522522522,
+        "healthcharger_recharge_time": -1,
+        "hevcharger_recharge_time": -1,
+        "weapon_respawn_time": -1,
+        "ammo_respawn_time": -1,
+        "pickupitem_respawn_time": -1,
+        "weapon_instant_respawn": false,
+        "allow_flashlight" : true,
+        "allow_player_weapon_dropping": 1
+    },
+    "ctf": {},
+    "deathmatch": {},
+    "teamplay": {}
 }

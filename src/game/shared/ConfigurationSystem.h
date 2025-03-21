@@ -110,7 +110,7 @@ public:
 
     void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
-    void LoadConfigurationFiles( std::span<const std::string> fileNames );
+    void LoadConfigurationFiles();
 
     constexpr SkillLevel GetSkillLevel() const { return m_SkillLevel; }
 
@@ -138,7 +138,7 @@ public:
 private:
     static float ClampValue( float value, const ConfigVarConstraints& constraints );
 
-    bool ParseConfiguration( const json& input, const bool CustomMap );
+    bool ParseConfiguration( json& input, const bool CustomMap );
 
 #ifdef CLIENT_DLL
     void MsgFunc_ConfigVars( BufferReader& reader );
@@ -157,6 +157,9 @@ private:
 
     std::vector<std::vector<ConfigVariable>> m_CustomMaps;
     std::unordered_map<std::string, int> m_CustomMapIndex;
+
+public:
+    std::vector<std::string> m_skill_files;
 };
 
 inline ConfigurationSystem g_cfg;

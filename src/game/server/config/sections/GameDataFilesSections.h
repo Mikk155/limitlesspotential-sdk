@@ -73,6 +73,6 @@ protected:
 
     std::vector<std::string>& GetFileNamesList( ServerConfigContext& context ) const override final
     {
-        return context.SkillFiles;
+        return g_cfg.m_skill_files;
     }
 };

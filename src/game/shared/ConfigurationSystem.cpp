@@ -40,7 +40,7 @@
 
 using namespace std::literals;
 
-constexpr std::string_view ConfigSchemaName{"Config"sv};
+constexpr std::string_view ConfigSchemaName{"cfg"sv};
 
 constexpr std::string_view ConfigVariableNameRegexPattern{"^([a-zA-Z_](?:[a-zA-Z_0-9]*[a-zA-Z_]))([123]?)$"};
 const std::regex ConfigVariableNameRegex{ConfigVariableNameRegexPattern.data(), ConfigVariableNameRegexPattern.length()};
@@ -52,11 +52,25 @@ static std::string GetConfigSchema()
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Configuration System",
     "type": "object",
-    "properties": {{ "$schema": {{ "type": "string" }} }},
-    "patternProperties": {{
-        "{}": {{
-            "oneOf": [ {{ "type": "string" }}, {{ "type": "number" }}, {{ "type": "boolean" }} ],
-            "description": "Configuration value. Could end with a number from 1 to 3 representing the value used for the current skill level."
+    "$ref": "#/$defs/configValue",
+    "cooperative": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+    "multiplayer": {{ "type": "object", "$ref": "#/$defs/configValue"}},
+    "ctf": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+    "deathmatch": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+    "teamplay": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+    "properties": {{
+        "$schema": {{
+            "type": "string"
+        }}
+    }},
+    "$defs": {{
+        "configValue": {{
+            "patternProperties": {{
+                "{}": {{
+                    "oneOf": [ {{ "type": "string" }}, {{ "type": "number" }}, {{ "type": "boolean" }} ],
+                    "description": "Configuration value. Could end with a number from 1 to 3 representing the value used for the current skill level."
+                }}
+            }}
         }}
     }},
     "additionalProperties": false
@@ -255,8 +269,12 @@ void ConfigurationSystem::HandleNetworkDataBlock( NetworkDataBlock& block )
     }
 }
 
-void ConfigurationSystem::LoadConfigurationFiles( std::span<const std::string> fileNames )
+void ConfigurationSystem::LoadConfigurationFiles()
 {
+    std::vector<std::string> fileNames;
+    fileNames.push_back( "cfg/config/general.json" );
+    fileNames.push_back( "cfg/config/monsters/alien_grunt.json" );
+
     // Refresh skill level setting first.
     int iSkill = (int)CVAR_GET_FLOAT( "skill" );
 
@@ -288,11 +306,15 @@ void ConfigurationSystem::LoadConfigurationFiles( std::span<const std::string> f
 
         if( const auto result = g_JSON.ParseJSONFile( fileName.c_str(),
                 {.SchemaName = ConfigSchemaName, .PathID = "GAMECONFIG"},
-                [this]( const json& input )
+                [this]( json& input )
                 { return ParseConfiguration( input, false ); } );
             !result.value_or( false ) )
         {
             m_Logger->error( "Error loading configuration file \"{}\"", fileName );
+        }
+        else
+        {
+            m_skill_files.push_back( std::move( fileName ) );
         }
     }
 
@@ -552,7 +574,7 @@ float ConfigurationSystem::ClampValue( float value, const ConfigVarConstraints& 
     return value;
 }
 
-bool ConfigurationSystem::ParseConfiguration( const json& input, const bool CustomMap )
+bool ConfigurationSystem::ParseConfiguration( json& input, const bool CustomMap )
 {
     if( !input.is_object() )
     {
@@ -560,6 +582,28 @@ bool ConfigurationSystem::ParseConfiguration( const json& input, const bool Cust
     }
 
     std::vector<ConfigVariable> config_map;
+
+    // Parse gamerule blocks and override outside's variables
+    std::unordered_map<std::string_view, bool> gamemodes;
+    gamemodes[ "multiplayer" ] = g_pGameRules->IsMultiplayer();
+    gamemodes[ "cooperative" ] = g_pGameRules->IsCoOp();
+    gamemodes[ "ctf" ] = g_pGameRules->IsCTF();
+    gamemodes[ "deathmatch" ] = g_pGameRules->IsDeathmatch();
+    gamemodes[ "teamplay" ] = g_pGameRules->IsTeamplay();
+
+    for( const auto& gamemode :  gamemodes )
+    {
+        if( const auto index = input.find( gamemode.first ); index != input.end() )
+        {
+            if( gamemode.second )
+            {
+                m_Logger->debug( "File got an override gamemode rule: {}", gamemode.first );
+                if( const json& gm_json = input[ gamemode.first ]; gm_json.is_object() )
+                    input.update( gm_json );
+            }
+            input.erase( index );
+        }
+    }
 
     for( const auto& item : input.items() )
     {
@@ -575,12 +619,12 @@ bool ConfigurationSystem::ParseConfiguration( const json& input, const bool Cust
 
         const auto& variableName = maybeVariableName.value();
 
+        std::string_view name = std::get<0>( variableName );
+
         const auto& skillLevel = std::get<1>( variableName );
 
         if( !skillLevel.has_value() || skillLevel.value() == GetSkillLevel() )
         {
-            std::string_view name = std::get<0>( variableName );
-
             if( CustomMap )
             {
                 // -TODO Should move this in within SetValue and just target the right vector.
@@ -685,11 +729,15 @@ int ConfigurationSystem::CustomConfigurationFile( const char* filename )
 
     if( const auto result = g_JSON.ParseJSONFile( filename,
             {.SchemaName = ConfigSchemaName, .PathID = "GAMECONFIG"},
-            [this]( const json& input )
+            [this]( json& input )
             { return ParseConfiguration( input, true ); } );
         !result.value_or( false ) )
     {
         m_Logger->error( "Error loading configuration file \"{}\"", filename );
+    }
+    else
+    {
+        m_skill_files.push_back( std::move( fmt::format( "[{}] {}", map_index, name ) ) );
     }
 
     m_CustomMapIndex[ name ] = map_index;

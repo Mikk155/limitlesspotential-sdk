@@ -574,17 +574,6 @@ map_cfg_is_loaded:
     // Initialize file lists to their defaults.
     context.SentencesFiles.push_back( "sound/sentences.json" );
     context.MaterialsFiles.push_back( "sound/materials.json" );
-    context.SkillFiles.push_back( "cfg/skill.json" );
-
-    if( g_pGameRules->IsMultiplayer() )
-    {
-        context.SkillFiles.push_back( "cfg/skill_multiplayer.json" );
-    }
-
-    if( g_pGameRules->IsCoOp() )
-    {
-        context.SkillFiles.push_back( "cfg/skill_coop.json" );
-    }
 
     context.EntityClassificationsFileName = "cfg/default_entity_classes.json";
 
@@ -605,7 +594,7 @@ map_cfg_is_loaded:
 
     sentences::g_Sentences.LoadSentences( context.SentencesFiles );
     g_MaterialSystem.LoadMaterials( context.MaterialsFiles );
-    g_cfg.LoadConfigurationFiles( context.SkillFiles );
+    g_cfg.LoadConfigurationFiles();
 
     // Override skill vars with cvars if they are enabled only.
     if( sv_infinite_ammo.value != 0 )
