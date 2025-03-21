@@ -227,12 +227,10 @@ install(TARGETS server
     LIBRARY DESTINATION dlls
 )
 
-configure_file(config/liblist.gam.in liblist.gam @ONLY)
-
-install(FILES 
-    config/network/delta.lst
-    ${CMAKE_BINARY_DIR}/liblist.gam
-    DESTINATION .)
+install(DIRECTORY assets/
+    DESTINATION .
+    FILES_MATCHING PATTERN "*"
+)
 
 # CMake doesn't currently support installing imported libraries of type UNKNOWN.
 # See https://gitlab.kitware.com/cmake/cmake/-/issues/22406
