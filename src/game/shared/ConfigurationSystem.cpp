@@ -53,15 +53,13 @@ static std::string GetConfigSchema()
     "title": "Configuration System",
     "type": "object",
     "$ref": "#/$defs/configValue",
-    "cooperative": {{ "type": "object", "$ref": "#/$defs/configValue" }},
-    "multiplayer": {{ "type": "object", "$ref": "#/$defs/configValue"}},
-    "ctf": {{ "type": "object", "$ref": "#/$defs/configValue" }},
-    "deathmatch": {{ "type": "object", "$ref": "#/$defs/configValue" }},
-    "teamplay": {{ "type": "object", "$ref": "#/$defs/configValue" }},
     "properties": {{
-        "$schema": {{
-            "type": "string"
-        }}
+        "cooperative": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "multiplayer": {{ "type": "object", "$ref": "#/$defs/configValue"}},
+        "ctf": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "deathmatch": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "teamplay": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "$schema": {{ "type": "string" }}
     }},
     "$defs": {{
         "configValue": {{

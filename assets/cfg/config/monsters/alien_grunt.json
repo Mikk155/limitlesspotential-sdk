@@ -1,5 +1,5 @@
 {
-    "$schema": "../../../schemas/server/Config.json",
+    "$schema": "../../../schemas/server/cfg.json",
 
     "agrunt_health1": 60,
     "agrunt_health2": 90,
