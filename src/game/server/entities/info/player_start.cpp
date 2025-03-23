@@ -40,10 +40,10 @@ bool CPlayerSpawnPoint::KeyValue( KeyValueData* pkvd )
 
         char temp[256];
 
-        UTIL_StripToken(pkvd->szKeyName, temp);
+        UTIL_StripToken(pkvd->szKeyName + 1, temp);
         m_iKey[m_cTargets] = ALLOC_STRING(temp);
 
-        UTIL_StripToken(pkvd->szValue, temp);
+        UTIL_StripToken(pkvd->szValue + 1, temp);
         m_iValue[m_cTargets] = ALLOC_STRING(temp);
 
         ++m_cTargets;
