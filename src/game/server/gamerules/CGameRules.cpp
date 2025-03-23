@@ -27,7 +27,6 @@
 #include "CHalfLifeTeamplay.h"
 #include "PersistentInventorySystem.h"
 #include "SpawnInventorySystem.h"
-#include "spawnpoints.h"
 #include "UserMessages.h"
 #include "items/weapons/AmmoTypeSystem.h"
 
@@ -357,18 +356,56 @@ void CGameRules::PlayerSpawn( CBasePlayer* pPlayer )
     pPlayer->m_FireSpawnTarget = true;
 }
 
-CBaseEntity* CGameRules::GetPlayerSpawnSpot( CBasePlayer* pPlayer )
+CPlayerSpawnPoint* CGameRules::GetPlayerSpawnSpot( CBasePlayer* player, bool spawn )
 {
-    CBaseEntity* pSpawnSpot = EntSelectSpawnPoint( pPlayer );
+    CPlayerSpawnPoint* spawn_entity;
+    
+    if( IsMultiplayer() )
+    {
+        if( IsCTF() && player->m_iTeamNum != CTFTeam::None )
+        {
+            if( player->m_iTeamNum == CTFTeam::BlackMesa )
+            {
+                spawn_entity = FindBestPlayerSpawn( player, "ctfs1" );
+            }
+            else
+            {
+                spawn_entity = FindBestPlayerSpawn( player, "ctfs2" );
+            }
 
-    pPlayer->pev->origin = pSpawnSpot->pev->origin + Vector( 0, 0, 1 );
-    pPlayer->pev->v_angle = g_vecZero;
-    pPlayer->pev->velocity = g_vecZero;
-    pPlayer->pev->angles = pSpawnSpot->pev->angles;
-    pPlayer->pev->punchangle = g_vecZero;
-    pPlayer->pev->fixangle = FIXANGLE_ABSOLUTE;
+            if( spawn_entity == nullptr )
+            {
+                spawn_entity = FindBestPlayerSpawn( player, "ctfs0" );
+            }
+        }
+        else
+        {
+            spawn_entity = FindBestPlayerSpawn( player, "info_player_start_mp" );
+        }
+    }
+    else
+    {
+        spawn_entity = FindBestPlayerSpawn( player, "info_player_start" );
+    }
 
-    return pSpawnSpot;
+    if( spawn_entity != nullptr )
+    {
+        if( spawn )
+        {
+            spawn_entity->SpawnPlayer( player );
+        }
+    }
+    else if( !FStringNull( gpGlobals->startspot ) && spawn )
+    {
+        CBaseEntity* startspot = UTIL_FindEntityByTargetname( nullptr, STRING( gpGlobals->startspot ) );
+
+        if( startspot != nullptr )
+        {
+            player->pev->origin = startspot->pev->origin;
+        }
+    }
+
+    return spawn_entity;
 }
 
 void CGameRules::ClientUserInfoChanged( CBasePlayer* pPlayer, char* infobuffer )
@@ -405,15 +442,16 @@ void CGameRules::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )
     // always allow proxies to become a spectator
     if( ( player->pev->flags & FL_PROXY ) != 0 || allow_spectators.value != 0 )
     {
-        CBaseEntity* pSpawnSpot = GetPlayerSpawnSpot( player );
-        player->StartObserver( player->pev->origin, pSpawnSpot->pev->angles );
+        player->StartObserver( player->pev->origin, player->pev->angles );
 
         // notify other clients of player switching to spectator mode
         UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n",
                                                  ( !FStringNull( player->pev->netname ) && STRING( player->pev->netname )[0] != 0 ) ? STRING( player->pev->netname ) : "unconnected" ) );
     }
     else
+    {
         ClientPrint( player, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n" );
+    }
 }
 
 template <typename TGameRules>

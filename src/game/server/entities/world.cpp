@@ -22,7 +22,7 @@
 #include "nodes.h"
 #include "client.h"
 #include "CHalfLifeCTFplay.h"
-#include "spawnpoints.h"
+#include "info/player_start.h"
 #include "world.h"
 #include "ServerLibrary.h"
 #include "ctf/ctf_items.h"

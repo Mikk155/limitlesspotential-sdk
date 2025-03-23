@@ -1,11 +1,11 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "base": [
         "Target",
         "Angles",
         "Master",
-        "CSpawnPoint"
+        "CBasePlayerSpawnPoint"
     ],
     "title": "info_player_start::classname",
     "description": "info_player_start::classname::description"

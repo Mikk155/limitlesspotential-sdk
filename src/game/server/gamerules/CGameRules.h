@@ -21,6 +21,7 @@
 #include <spdlog/logger.h>
 
 #include "ClientCommandRegistry.h"
+#include "info/player_start.h"
 
 class CBaseItem;
 class CBaseMonster;
@@ -194,8 +195,10 @@ public:
 
     /**
      *    @brief Place this player on their spawnspot and face them the proper direction.
+     *    @param spawn whatever to spawn or not this player.
+     *      if the spawnpoint is invalid a message will be print to the client and a error to the server.
      */
-    virtual CBaseEntity* GetPlayerSpawnSpot( CBasePlayer* pPlayer );
+    virtual CPlayerSpawnPoint* GetPlayerSpawnSpot( CBasePlayer* player, bool spawn );
 
     virtual bool AllowAutoTargetCrosshair() { return true; }
 

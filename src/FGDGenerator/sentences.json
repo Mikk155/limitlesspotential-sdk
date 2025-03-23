@@ -551,9 +551,29 @@
 {
 "english": "Path/filename.wav to a sound file"
 },
-"CSpawnPoint::m_flOffSet":
+"CBasePlayerSpawnPoint::m_flOffSet":
 {
-"english": "Random offset if blocked"
+"english": "Random offset if"
+},
+"CBasePlayerSpawnPoint::m_flOffSet::description":
+{
+"english": "if the value is 0 then we'll use the Server's cvar"
+},
+"CBasePlayerSpawnPoint::m_PlayerFilterName":
+{
+"english": "Player targetname filter"
+},
+"CBasePlayerSpawnPoint::m_PlayerFilterType":
+{
+"english": "Player filter type"
+},
+"CBasePlayerSpawnPoint::m_PlayerFilterType::0":
+{
+"english": "Filter named players"
+},
+"CBasePlayerSpawnPoint::m_PlayerFilterType::1":
+{
+"english": "Filter not named players"
 },
 "player_respawn::classname":
 {

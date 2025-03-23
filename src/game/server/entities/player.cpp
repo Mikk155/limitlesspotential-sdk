@@ -32,7 +32,7 @@
 #include "items/CWeaponBox.h"
 #include "military/COFSquadTalkMonster.h"
 #include "shake.h"
-#include "spawnpoints.h"
+#include "info/player_start.h"
 #include "CHalfLifeCTFplay.h"
 #include "ctf/CHUDIconTrigger.h"
 #include "pm_shared.h"
@@ -2790,10 +2790,7 @@ bool CBasePlayer::Spawn()
         pev->iuser1 = OBS_ROAMING;
     }
 
-    if( auto spawnpoint = g_pGameRules->GetPlayerSpawnSpot( this ); spawnpoint != nullptr && !FStringNull( spawnpoint->pev->target ) )
-    {
-        FireTargets( STRING( spawnpoint->pev->target ), this, spawnpoint, USE_TOGGLE );
-    }
+    g_pGameRules->GetPlayerSpawnSpot( this, true );
 
     SetModel( "models/player.mdl" );
     pev->sequence = LookupActivity( ACT_IDLE );
@@ -2836,34 +2833,6 @@ bool CBasePlayer::Spawn()
     m_flNextChatTime = gpGlobals->time;
 
     g_pGameRules->PlayerSpawn( this );
-
-    if( g_pGameRules->IsCTF() && m_iTeamNum == CTFTeam::None )
-    {
-        pev->effects |= EF_NODRAW;
-        pev->iuser1 = OBS_ROAMING;
-        pev->solid = SOLID_NOT;
-        pev->movetype = MOVETYPE_NOCLIP;
-        pev->takedamage = DAMAGE_NO;
-        m_iHideHUD = HIDEHUD_WEAPONS | HIDEHUD_HEALTH;
-        m_afPhysicsFlags |= PFLAG_OBSERVER;
-        pev->flags |= FL_SPECTATOR;
-
-        MESSAGE_BEGIN( MSG_ALL, gmsgSpectator );
-        WRITE_BYTE( entindex() );
-        WRITE_BYTE( 1 );
-        MESSAGE_END();
-
-        MESSAGE_BEGIN( MSG_ONE, gmsgTeamFull, nullptr, this );
-        WRITE_BYTE( 0 );
-        MESSAGE_END();
-
-        m_pGoalEnt = nullptr;
-
-        m_iCurrentMenu = m_iNewTeamNum > CTFTeam::None ? MENU_DEFAULT : MENU_CLASS;
-
-        if( g_pGameRules->IsCTF() )
-            Player_Menu();
-    }
 
     return true;
 }
@@ -2908,11 +2877,7 @@ void CBasePlayer::PostRestore()
     if( 0 == pSaveData->fUseLandmark )
     {
         Logger->debug( "No Landmark:{}", pSaveData->szLandmarkName );
-
-        // default to normal spawn
-        CBaseEntity* pSpawnSpot = EntSelectSpawnPoint( this );
-        pev->origin = pSpawnSpot->pev->origin + Vector( 0, 0, 1 );
-        pev->angles = pSpawnSpot->pev->angles;
+        g_pGameRules->GetPlayerSpawnSpot( this, true );
     }
     pev->v_angle.z = 0; // Clear out roll
     pev->angles = pev->v_angle;
@@ -4889,7 +4854,7 @@ bool CBasePlayer::Menu_Char_Input( int inp )
         pev->solid = SOLID_SLIDEBOX;
         pev->movetype = MOVETYPE_WALK;
 
-        g_pGameRules->GetPlayerSpawnSpot( this );
+        g_pGameRules->GetPlayerSpawnSpot( this, true );
         g_pGameRules->PlayerSpawn( this );
 
         m_bIsSpawning = false;

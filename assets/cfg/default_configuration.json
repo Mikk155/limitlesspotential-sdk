@@ -443,6 +443,9 @@
 
     // PLAYER WEAPONS
 
+    // players will spawn in a random offset in this range of units
+    "plr_spawn_offset": 512,
+
     // Crowbar whack
     "plr_crowbar": 10,
 

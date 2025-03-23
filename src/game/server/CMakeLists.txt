@@ -127,8 +127,6 @@ target_sources(server PRIVATE
     entities/player.cpp
     entities/player.h
     entities/player_entities.cpp
-    entities/spawnpoints.cpp
-    entities/spawnpoints.h
     entities/sound.cpp
     entities/soundent.cpp
     entities/soundent.h
@@ -151,7 +149,10 @@ target_sources(server PRIVATE
     entities/ctf/CTFDetect.h
     entities/ctf/CTFSpawn.cpp
     entities/ctf/CTFSpawn.h
-    
+
+    entities/info/player_start.cpp
+    entities/info/player_start.h
+
     entities/items/airtank.cpp
     entities/items/CAmmoAll.cpp
     entities/items/CAmmoGeneric.cpp

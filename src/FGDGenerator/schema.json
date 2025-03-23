@@ -20,6 +20,13 @@
             "minItems": 2,
             "maxItems": 2
         },
+        "offset": {
+            "type": "array",
+            "description": "Offset of entity",
+            "items": { "type": "number" },
+            "minItems": 3,
+            "maxItems": 3
+        },
         "color": {
             "type": "array",
             "description": "Color of a Point Entity",

@@ -16,7 +16,7 @@
 #include "UserMessages.h"
 
 #ifndef CLIENT_DLL
-#include "spawnpoints.h"
+#include "info/player_start.h"
 #include "rope/CRope.h"
 
 #include "weapons/CDisplacerBall.h"
@@ -348,7 +348,7 @@ void CDisplacer::AltFireThink()
     }
     else
     {
-        pDestination = EntSelectSpawnPoint( m_pPlayer );
+        pDestination = g_pGameRules->GetPlayerSpawnSpot( m_pPlayer, false );
 
         if( !pDestination )
             pDestination = g_pLastSpawn;

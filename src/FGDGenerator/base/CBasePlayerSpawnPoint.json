@@ -1,0 +1,37 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Base",
+    "size": [ [ -16, -16, -36 ], [ 16, 16, 36 ] ],
+    "color": [ 0, 255, 0 ],
+    "offset": [ 0, 0, 36 ],
+    "studio": "models/player.mdl",
+    "data": {
+        "m_flOffSet": {
+            "variable": "integer",
+            "value": 0,
+            "title": "CPlayerSpawnPoint::m_flOffSet",
+            "description": "CPlayerSpawnPoint::m_flOffSet::description"
+        },
+        "m_PlayerFilterName": {
+            "variable": "string",
+            "value": 0,
+            "title": "CPlayerSpawnPoint::m_PlayerFilterName",
+            "description": "CPlayerSpawnPoint::m_PlayerFilterName::description"
+        },
+        "m_PlayerFilterType": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "CPlayerSpawnPoint::m_PlayerFilterType::0",
+                    "description": "CPlayerSpawnPoint::m_PlayerFilterType::0::description"
+                },
+                "1": {
+                    "title": "CPlayerSpawnPoint::m_PlayerFilterType::1",
+                    "description": "CPlayerSpawnPoint::m_PlayerFilterType::1::description"
+                }
+            }
+        }
+    }
+}
+

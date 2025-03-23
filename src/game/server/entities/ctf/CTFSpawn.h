@@ -16,15 +16,17 @@
 #pragma once
 
 #include "CTFDefs.h"
+#include "info/player_start.h"
 
-class CTFSpawn : public CBaseEntity
+class CTFSpawn : public CPlayerSpawnPoint
 {
+    DECLARE_CLASS( CTFSpawn, CPlayerSpawnPoint );
+
 public:
-    bool KeyValue( KeyValueData* pkvd ) override;
-
     bool Spawn() override;
-
-    bool IsTriggered( CBaseEntity* pEntity ) override;
+    bool KeyValue( KeyValueData* pkvd ) override;
+    void SpawnPlayer( CBasePlayer* player ) override;
+    bool CanPlayerSpawn( CBasePlayer* player ) override;
 
     CTFTeam team_no;
     bool m_fState;

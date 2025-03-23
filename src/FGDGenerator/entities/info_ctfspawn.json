@@ -1,31 +1,14 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "base": [
-        "Angles"
+        "Target",
+        "Angles",
+        "CBasePlayerSpawnPoint"
     ],
-    "size": [
-        [
-            -16,
-            -16,
-            -36
-        ],
-        [
-            16,
-            16,
-            36
-        ]
-    ],
-    "color": [
-        0,
-        255,
-        0
-    ],
-    "offset": [
-        0,
-        0,
-        36
-    ],
+    "size": [ [ -16, -16, -36 ], [ 16, 16, 36 ] ],
+    "color": [ 0, 255, 0 ],
+    "offset": [ 0, 0, 36 ],
     "data": {
         "team_no": {
             "variable": "choices",

@@ -194,7 +194,7 @@ void CDisplacerBall::BallTouch( CBaseEntity* pOther )
             }
         }
 
-        auto pSpawnSpot = g_pGameRules->GetPlayerSpawnSpot( pPlayer );
+        auto pSpawnSpot = g_pGameRules->GetPlayerSpawnSpot( pPlayer, true );
 
         Vector vecEnd = pSpawnSpot->pev->origin;
 
