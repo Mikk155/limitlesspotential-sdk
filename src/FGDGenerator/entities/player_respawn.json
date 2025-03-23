@@ -3,18 +3,7 @@
     "Class": "Solid",
     "point": true,
     "base": [],
-    "size": [
-        [
-            -16,
-            -16,
-            -16
-        ],
-        [
-            16,
-            16,
-            16
-        ]
-    ],
+    "size": [ [ -16, -16, -16 ], [ 16, 16, 16 ] ],
     "data": {
         "spawnflags": {
             "choices": {
@@ -25,6 +14,10 @@
                 "2": {
                     "title": "player_respawn::spawnflags::2",
                     "description": "player_respawn::spawnflags::2::description"
+                },
+                "3": {
+                    "title": "player_respawn::spawnflags::3",
+                    "description": "player_respawn::spawnflags::3::description"
                 }
             }
         },

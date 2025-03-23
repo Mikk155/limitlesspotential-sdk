@@ -228,10 +228,6 @@ void CPlayerSetSuitLightType::Use( CBaseEntity* pActivator, CBaseEntity* pCaller
     }
 }
 
-/**/**
- * @brief 
- * 
- */
 class CPlayerSetHealth : public CPointEntity
 {
     DECLARE_CLASS( CPlayerSetHealth, CPointEntity );

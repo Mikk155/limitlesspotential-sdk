@@ -599,6 +599,10 @@
 {
 "english": "Inside players"
 },
+"player_respawn::spawnflags::3":
+{
+"english": "Respawn alive players"
+},
 "player_respawn::message":
 {
 "english": "Turn off spawnpoint"
