@@ -4592,7 +4592,7 @@ CBasePlayerWeapon* CBasePlayer::HasNamedPlayerWeaponPtr( const char* pszItemName
         {
             if( 0 == strcmp( pszItemName, STRING( weapon->pev->classname ) ) )
             {
-                return nullptr;
+                return weapon;
             }
             weapon = weapon->m_pNext;
         }
