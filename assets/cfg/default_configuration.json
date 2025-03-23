@@ -331,6 +331,12 @@
 
     "shocktrooper_rchgspeed": 1,
 
+    // Spores type
+    // 0 = grenade
+    // 1 = rocket
+    // 1 > percent change 1/100 of being a rocket
+    "shocktrooper_sporetype": 0,
+
     // Scientist
     "cleansuit_scientist_health": 20,
 

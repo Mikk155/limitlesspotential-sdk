@@ -782,8 +782,24 @@ void CShockTrooper::HandleAnimEvent( MonsterEvent_t* pEvent )
     case STROOPER_AE_GREN_TOSS:
     {
         UTIL_MakeVectors( pev->angles );
-        // CGrenade::ShootTimed(this, pev->origin + gpGlobals->v_forward * 34 + Vector (0, 0, 32), m_vecTossVelocity, 3.5);
         CSpore::CreateSpore( pev->origin + Vector( 0, 0, 98 ), m_vecTossVelocity, this, CSpore::SporeType::GRENADE, true, false );
+ 
+        int grenade_type = g_cfg.GetValue<int>( "shocktrooper_sporetype"sv, 0, this );
+
+        if( grenade_type > 1 )
+            grenade_type = ( grenade_type >= RANDOM_LONG( 0, 100 ) ? 1 : 0 );
+
+        if( grenade_type == 0 )
+        {
+            CSpore::CreateSpore(pev->origin + Vector(0, 0, 98), m_vecTossVelocity, this, CSpore::SporeType::GRENADE, true, false);
+        }
+        else
+        {
+            if( CSpore* pSpore = CSpore::CreateSpore( pev->origin + Vector(0, 0, 98),
+                m_vecTossVelocity, this, CSpore::SporeType::ROCKET, false, false); pSpore != nullptr ) {
+                    pSpore->pev->velocity = pSpore->pev->velocity + DotProduct(pSpore->pev->velocity, gpGlobals->v_forward) * gpGlobals->v_forward;
+            }
+        }
 
         m_fThrowGrenade = false;
         m_flNextGrenadeCheck = gpGlobals->time + 6; // wait six seconds before even looking again to see if a grenade can be thrown.
