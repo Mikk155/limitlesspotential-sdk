@@ -17,7 +17,7 @@
 #include "spawnpoints.h"
 
 LINK_ENTITY_TO_CLASS( info_player_start, CPointEntity );
-LINK_ENTITY_TO_CLASS( info_player_deathmatch, CBaseDMStart );
+LINK_ENTITY_TO_CLASS( info_player_start_mp, CBaseDMStart );
 
 bool CBaseDMStart::IsTriggered( CBaseEntity* pEntity )
 {
@@ -116,15 +116,15 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
         }
     }
 
-    // choose a info_player_deathmatch point
+    // choose a info_player_start_mp point
     if( g_pGameRules->IsMultiplayer() )
     {
         pSpot = g_pLastSpawn;
         // Randomize the start spot
         for( int i = RANDOM_LONG( 1, 5 ); i > 0; i-- )
-            pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
+            pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_start_mp" );
         if( FNullEnt( pSpot ) ) // skip over the null point
-            pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
+            pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_start_mp" );
 
         CBaseEntity* pFirstSpot = pSpot;
 
@@ -137,7 +137,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
                 {
                     if( pSpot->pev->origin == Vector( 0, 0, 0 ) )
                     {
-                        pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
+                        pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_start_mp" );
                         continue;
                     }
 
@@ -146,7 +146,7 @@ static CBaseEntity* EntTrySelectSpawnPoint( CBasePlayer* pPlayer )
                 }
             }
             // increment pSpot
-            pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_deathmatch" );
+            pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_start_mp" );
         } while( pSpot != pFirstSpot ); // loop if we're not back to the start
 
         // we haven't found a place to spawn yet,  so kill any guy at the first spawn point and spawn there

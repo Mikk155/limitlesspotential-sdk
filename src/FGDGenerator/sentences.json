@@ -3728,9 +3728,9 @@
 {
 "english": "info_null (spotlight target)"
 },
-"info_player_deathmatch::classname":
+"info_player_start_mp::classname":
 {
-"english": "Player deathmatch start"
+"english": "Player start in multi-player"
 },
 "info_player_start::classname":
 {

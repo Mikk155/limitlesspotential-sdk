@@ -336,7 +336,7 @@ void CHudSpectator::SetSpectatorStartPosition()
     else if( UTIL_FindEntityInMap( "info_player_start", m_cameraOrigin, m_cameraAngles ) )
         iJumpSpectator = true;
 
-    else if( UTIL_FindEntityInMap( "info_player_deathmatch", m_cameraOrigin, m_cameraAngles ) )
+    else if( UTIL_FindEntityInMap( "info_player_start_mp", m_cameraOrigin, m_cameraAngles ) )
         iJumpSpectator = true;
 
     else
