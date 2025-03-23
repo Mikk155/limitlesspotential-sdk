@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Solid",
     "point": true,
     "base": [
@@ -72,7 +72,7 @@
             "description": "trigger_entity_zone::m_InUse::description"
         },
         "m_InValue": {
-            "variable": "float",
+            "variable": "integer",
             "title": "trigger_entity_zone::m_InValue",
             "description": "trigger_entity_zone::m_InValue::description"
         },
@@ -135,7 +135,7 @@
             "description": "trigger_entity_zone::m_OutUse::description"
         },
         "m_OutValue": {
-            "variable": "float",
+            "variable": "integer",
             "title": "trigger_entity_zone::m_OutValue",
             "description": "trigger_entity_zone::m_OutValue::description"
         }

@@ -193,7 +193,8 @@ target_sources(server PRIVATE
 
     entities/trigger/entity_condition.cpp
     entities/trigger/entity_iterator.cpp
-    
+    entities/trigger/entity_zone.cpp
+
     entities/NPCs/basemonster.h
     entities/NPCs/combat.cpp
     entities/NPCs/defaultai.cpp
