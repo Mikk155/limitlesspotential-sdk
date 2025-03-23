@@ -1,0 +1,1 @@
+// Sentences are now defined in sentences.json. This file is deliberately empty so the engine doesn't log an error.
