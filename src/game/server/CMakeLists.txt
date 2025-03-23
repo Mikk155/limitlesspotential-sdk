@@ -288,7 +288,9 @@ target_sources(server PRIVATE
     entities/NPCs/zombies/zombie.h
     entities/NPCs/zombies/zombie_barney.cpp
     entities/NPCs/zombies/zombie_soldier.cpp
-    
+
+    entities/player/weaponstrip.cpp
+
     gamerules/CGameRules.cpp
     gamerules/CGameRules.h
     gamerules/CHalfLifeCoopplay.cpp

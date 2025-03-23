@@ -1,21 +1,10 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "base": [
-        "PlayerSelector"
+        "Master"
     ],
-    "size": [
-        [
-            -16,
-            -16,
-            -16
-        ],
-        [
-            16,
-            16,
-            16
-        ]
-    ],
+    "size": [ [ -16, -16, -16 ], [ 16, 16, 16 ] ],
     "data": {
         "spawnflags": {
             "choices": {

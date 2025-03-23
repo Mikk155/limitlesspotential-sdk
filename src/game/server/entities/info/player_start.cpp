@@ -29,7 +29,7 @@ END_DATAMAP();
 
 bool CPlayerSpawnPoint::KeyValue( KeyValueData* pkvd )
 {
-    if( strcmp( pkvd->szKeyName, "-" ) == 0 )
+    if( strncmp( pkvd->szKeyName, "-", 1 ) == 0 )
     {
         if( m_cTargets > MAX_SPAWNPOINT_KEYVALUES )
         {
