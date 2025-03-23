@@ -5033,26 +5033,6 @@
 {
 "english": "If this flag bit is not set, the whole ammo, weapons suit and longjump will be removed"
 },
-"PlayerSelector::0":
-{
-"english": "Don't Filter"
-},
-"PlayerSelector::m_iPlayerSelector_1":
-{
-"english": "Activator Player"
-},
-"PlayerSelector::m_iPlayerSelector_2":
-{
-"english": "Alive Players"
-},
-"PlayerSelector::m_iPlayerSelector_4":
-{
-"english": "Dead Players"
-},
-"PlayerSelector::m_iPlayerSelector_8":
-{
-"english": "All (non-activator) Players"
-},
 "scripted_sentence::classname":
 {
 "english": "Scripted Sentence"
