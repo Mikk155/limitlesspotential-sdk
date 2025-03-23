@@ -158,7 +158,8 @@ BEGIN_DATAMAP_NOBASE(CBaseEntity)
 
     DEFINE_FIELD( m_UseType, FIELD_INTEGER ),
     DEFINE_FIELD( m_UseLockType, FIELD_INTEGER ),
-
+    DEFINE_FIELD( m_UseLocked, FIELD_INTEGER ),
+    
     DEFINE_FIELD( m_CustomHullMin, FIELD_VECTOR ),
     DEFINE_FIELD( m_CustomHullMax, FIELD_VECTOR ),
     DEFINE_FIELD( m_HasCustomHullMin, FIELD_BOOLEAN ),
