@@ -1,4 +1,3 @@
-@@ -0,0 +1,65 @@
 /***
  *
  * Copyright (c) 1996-2001, Valve LLC. All rights reserved.
@@ -22,9 +21,11 @@
 
 class CPlayerRespawn : public CPointEntity
 {
-    public:
-        bool Spawn() override;
-        void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
+    DECLARE_CLASS( CPlayerRespawn, CPointEntity );
+
+public:
+    bool Spawn() override;
+    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 LINK_ENTITY_TO_CLASS( player_respawn, CPlayerRespawn );
@@ -35,11 +36,14 @@ bool CPlayerRespawn::Spawn()
 
     SetModel( STRING( pev->model ) );
 
-    return true;
+    return BaseClass::Spawn();
 }
 
 void CPlayerRespawn::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
+    if( IsLockedByMaster(pActivator) )
+        return;
+
     FireTargets( STRING( pev->message ), nullptr, nullptr, USE_OFF );
     FireTargets( STRING( pev->netname ), nullptr, nullptr, USE_ON );
 
