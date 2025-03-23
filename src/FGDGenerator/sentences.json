@@ -531,6 +531,14 @@
 {
 "english": "Outside Trigger value"
 },
+"trigger_entity_zone::m_iszInCount":
+{
+"english": "Counter for IN entities"
+},
+"trigger_entity_zone::m_iszOutCount":
+{
+"english": "Counter for OUT entities"
+},
 "CustomKeys::model":
 {
 "english": "Model"
@@ -3655,26 +3663,6 @@
 "game_text::channel::4":
 {
 "english": "Channel 4"
-},
-"game_zone_player::classname":
-{
-"english": "Player Zone brush"
-},
-"game_zone_player::intarget":
-{
-"english": "Target for IN players"
-},
-"game_zone_player::outtarget":
-{
-"english": "Target for OUT players"
-},
-"game_zone_player::incount":
-{
-"english": "Counter for IN players"
-},
-"game_zone_player::outcount":
-{
-"english": "Counter for OUT players"
 },
 "gibshooter::classname":
 {

@@ -27,6 +27,8 @@ public:
 
 private:
     string_t m_iszEntity;
+    string_t m_iszOutCount;
+    string_t m_iszInCount;
     USE_TYPE m_InUse = USE_TOGGLE;
     int m_InValue;
     USE_TYPE m_OutUse = USE_TOGGLE;
@@ -39,6 +41,8 @@ BEGIN_DATAMAP( CTriggerZone )
     DEFINE_FIELD( m_OutUse, FIELD_INTEGER ),
     DEFINE_FIELD( m_OutValue, FIELD_INTEGER ),
     DEFINE_FIELD( m_iszEntity, FIELD_STRING ),
+    DEFINE_FIELD( m_iszOutCount, FIELD_STRING ),
+    DEFINE_FIELD( m_iszInCount, FIELD_STRING ),
 END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_zone, CTriggerZone );
@@ -65,6 +69,14 @@ bool CTriggerZone::KeyValue( KeyValueData* pkvd )
     {
         m_OutValue = atoi( pkvd->szValue );
     }
+    else if( FStrEq( pkvd->szKeyName, "m_iszInCount" ) )
+    {
+        m_iszInCount = ALLOC_STRING( pkvd->szValue );
+    }
+    else if( FStrEq( pkvd->szKeyName, "m_iszOutCount" ) )
+    {
+        m_iszOutCount = ALLOC_STRING( pkvd->szValue );
+    }
     else
     {
         return CBaseEntity::KeyValue(pkvd);
@@ -83,15 +95,39 @@ bool CTriggerZone::Spawn()
 
 void CTriggerZone::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
+    if( IsLockedByMaster( pActivator ) )
+        return;
+
+    int in_entities = 0;
+    int out_entities = 0;
+
     if( !FStringNull( m_iszEntity ) )
     {
         CBaseEntity* pEntity = NULL;
 
         while( ( pEntity = UTIL_FindEntityByClassname( pEntity, STRING( m_iszEntity ) ) ) )
         {
-            bool i = Intersects( pEntity );
-            FireTargets( STRING( ( i ? pev->message : pev->netname ) ), pEntity, this, ( i ? m_InUse : m_OutUse ), UseValue( i ? m_InValue : m_OutValue ) );
+            if( Intersects( pEntity ) )
+            {
+                in_entities++;
+                FireTargets( STRING(pev->message), pEntity, this, m_InUse, UseValue(m_InValue) );
+            }
+            else
+            {
+                out_entities++;
+                FireTargets( STRING(pev->netname), pEntity, this, m_OutUse, UseValue(m_OutValue) );
+            }
         }
+    }
+
+    if( !FStringNull( m_iszInCount ) )
+    {
+        FireTargets( STRING( m_iszInCount ), pActivator, this, USE_SET, UseValue(in_entities) );
+    }
+
+    if( !FStringNull( m_iszOutCount ) )
+    {
+        FireTargets( STRING( m_iszOutCount ), pActivator, this, USE_SET, UseValue(out_entities) );
     }
 
     FireTargets( STRING( pev->target ), pActivator, this, USE_TOGGLE );

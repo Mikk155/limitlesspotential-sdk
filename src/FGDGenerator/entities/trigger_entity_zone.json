@@ -21,12 +21,8 @@
         },
         "m_InUse": {
             "variable": "choices",
-            "value": -1,
+            "value": 0,
             "choices": {
-                "-1": {
-                    "title": "Target::m_UseType::-1",
-                    "description": "Target::m_UseType::-1::description"
-                },
                 "0": {
                     "title": "Target::m_UseType::0",
                     "description": "Target::m_UseType::0::description"
@@ -76,6 +72,12 @@
             "title": "trigger_entity_zone::m_InValue",
             "description": "trigger_entity_zone::m_InValue::description"
         },
+        "m_iszInCount": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_zone::m_iszInCount",
+            "description": "trigger_entity_zone::m_iszInCount::description"
+        },
         "netname": {
             "variable": "target_destination",
             "value": "",
@@ -84,12 +86,8 @@
         },
         "m_OutUse": {
             "variable": "choices",
-            "value": -1,
+            "value": 0,
             "choices": {
-                "-1": {
-                    "title": "Target::m_UseType::-1",
-                    "description": "Target::m_UseType::-1::description"
-                },
                 "0": {
                     "title": "Target::m_UseType::0",
                     "description": "Target::m_UseType::0::description"
@@ -138,6 +136,12 @@
             "variable": "integer",
             "title": "trigger_entity_zone::m_OutValue",
             "description": "trigger_entity_zone::m_OutValue::description"
+        },
+        "m_iszOutCount": {
+            "variable": "target_destination",
+            "value": "",
+            "title": "trigger_entity_zone::m_iszOutCount",
+            "description": "trigger_entity_zone::m_iszOutCount::description"
         }
     },
     "title": "trigger_entity_zone::classname",
