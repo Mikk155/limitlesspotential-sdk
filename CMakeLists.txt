@@ -227,11 +227,6 @@ install(TARGETS server
     LIBRARY DESTINATION dlls
 )
 
-install(DIRECTORY assets/
-    DESTINATION .
-    FILES_MATCHING PATTERN "*"
-)
-
 # CMake doesn't currently support installing imported libraries of type UNKNOWN.
 # See https://gitlab.kitware.com/cmake/cmake/-/issues/22406
 #install(IMPORTED_RUNTIME_ARTIFACTS OpenAL::OpenAL
