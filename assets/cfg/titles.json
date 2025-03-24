@@ -1,0 +1,13 @@
+//TITLES FOR HALF-LIFE
+{
+    "$schema": "../schemas/client/titles.json",
+    "effect": 0,
+    "x": -1,
+    "y": 0.7,
+    "color": [ 255, 255, 255, 255 ],
+    "color2": [ 255, 255, 255, 255 ],
+    "fx": 1.25,
+    "fadein": 0.0,
+    "hold": 4.0,
+    "fadeout": 1.0
+}

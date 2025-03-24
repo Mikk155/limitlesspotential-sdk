@@ -424,10 +424,20 @@ class CHudTextMessage : public CHudBase
 {
 public:
     bool Init() override;
+    bool VidInit() override;
     static char* LocaliseTextString( const char* msg, char* dst_buffer, int buffer_size );
     static char* BufferedLocaliseTextString( const char* msg );
     const char* LookupString( const char* msg_name, int* msg_dest = nullptr );
+
     void MsgFunc_TextMsg( const char* pszName, BufferReader& reader );
+    void MsgFunc_CustomTitles( const char* pszName, BufferReader& reader );
+
+    void LoadGameTitles( const char* path_name );
+
+    client_textmessage_t* Getmessage( const char* pName );
+
+    client_textmessage_t pMessage;
+    json m_titles;
 };
 
 //

@@ -20,8 +20,6 @@
 
 #include "hud.h"
 
-// 1 Global client_textmessage_t for custom messages that aren't in the titles.txt
-client_textmessage_t g_pCustomMessage;
 const char* g_pCustomName = "Custom";
 char g_pCustomText[1024];
 
@@ -445,30 +443,33 @@ void CHudMessage::MessageAdd( const char* pName, float time )
 
     // Trim off a leading # if it's there
     if( pName[0] == '#' )
-        tempMessage = TextMessageGet( pName + 1 );
+        tempMessage = gHUD.m_TextMessage.Getmessage( pName + 1 );
     else
-        tempMessage = TextMessageGet( pName );
+        tempMessage = gHUD.m_TextMessage.Getmessage( pName );
 
     // If we couldnt find it in the titles.txt, just create it
     if( !tempMessage )
     {
-        g_pCustomMessage.effect = 2;
-        g_pCustomMessage.r1 = g_pCustomMessage.g1 = g_pCustomMessage.b1 = g_pCustomMessage.a1 = 100;
-        g_pCustomMessage.r2 = 240;
-        g_pCustomMessage.g2 = 110;
-        g_pCustomMessage.b2 = 0;
-        g_pCustomMessage.a2 = 0;
-        g_pCustomMessage.x = -1; // Centered
-        g_pCustomMessage.y = 0.7;
-        g_pCustomMessage.fadein = 0.01;
-        g_pCustomMessage.fadeout = 1.5;
-        g_pCustomMessage.fxtime = 0.25;
-        g_pCustomMessage.holdtime = 5;
-        g_pCustomMessage.pName = g_pCustomName;
+        gHUD.m_TextMessage.pMessage.effect = 2;
+        gHUD.m_TextMessage.pMessage.r1 =
+            gHUD.m_TextMessage.pMessage.g1 =
+                gHUD.m_TextMessage.pMessage.b1 =
+                    gHUD.m_TextMessage.pMessage.a1 = 100;
+        gHUD.m_TextMessage.pMessage.r2 = 240;
+        gHUD.m_TextMessage.pMessage.g2 = 110;
+        gHUD.m_TextMessage.pMessage.b2 = 0;
+        gHUD.m_TextMessage.pMessage.a2 = 0;
+        gHUD.m_TextMessage.pMessage.x = -1; // Centered
+        gHUD.m_TextMessage.pMessage.y = 0.7;
+        gHUD.m_TextMessage.pMessage.fadein = 0.01;
+        gHUD.m_TextMessage.pMessage.fadeout = 1.5;
+        gHUD.m_TextMessage.pMessage.fxtime = 0.25;
+        gHUD.m_TextMessage.pMessage.holdtime = 5;
+        gHUD.m_TextMessage.pMessage.pName = g_pCustomName;
         strcpy( g_pCustomText, pName );
-        g_pCustomMessage.pMessage = g_pCustomText;
+        gHUD.m_TextMessage.pMessage.pMessage = g_pCustomText;
 
-        tempMessage = &g_pCustomMessage;
+        tempMessage = &gHUD.m_TextMessage.pMessage;
     }
 
     for( int i = 0; i < maxHUDMessages; i++ )
@@ -535,12 +536,12 @@ void CHudMessage::MsgFunc_GameTitle( const char* pszName, BufferReader& reader )
 
     titleName += "_GAMETITLE";
 
-    m_pGameTitle = TextMessageGet( titleName.c_str() );
+    m_pGameTitle = gHUD.m_TextMessage.Getmessage( titleName.c_str() );
 
     if( !m_pGameTitle )
     {
         // Fallback.
-        m_pGameTitle = TextMessageGet( "VALVE_GAMETITLE" );
+        m_pGameTitle = gHUD.m_TextMessage.Getmessage( "VALVE_GAMETITLE" );
     }
 
     if( m_pGameTitle != nullptr )
