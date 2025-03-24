@@ -92,6 +92,9 @@ void CPlayerSpawnPoint::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 
 bool CPlayerSpawnPoint::Spawn()
 {
+    if( g_pGameRules->IsMultiplayer() && FStrEq( STRING( pev->classname ), "info_player_start" ) )
+        pev->classname = MAKE_STRING( "info_player_start_mp" );
+
     InitialState = FBitSet( pev->spawnflags, SF_SPAWNPOINT_STARTOFF );
     return true;
 }
