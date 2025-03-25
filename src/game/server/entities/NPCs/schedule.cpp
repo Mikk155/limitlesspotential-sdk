@@ -333,7 +333,7 @@ void CBaseMonster::RunTask( const Task_t* pTask )
     }
     case TASK_WAIT_PVS:
     {
-        if( UTIL_FindClientInPVS( this ) )
+        if( UTIL_FindClientInPVS( this ) || ( m_hTargetEnt && m_hTargetEnt->IsPlayer() ) )
         {
             TaskComplete();
         }
