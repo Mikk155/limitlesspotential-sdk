@@ -105,11 +105,6 @@ bool CBreakable::Spawn()
 {
     Precache();
 
-    if( FBitSet( pev->spawnflags, SF_BREAK_TRIGGER_ONLY ) )
-        pev->takedamage = DAMAGE_NO;
-    else
-        pev->takedamage = DAMAGE_YES;
-
     pev->solid = SOLID_BSP;
     pev->movetype = MOVETYPE_PUSH;
     m_angle = pev->angles.y;
@@ -483,6 +478,9 @@ void CBreakable::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecD
 
 bool CBreakable::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
+    if( FBitSet( pev->spawnflags, SF_BREAK_TRIGGER_ONLY ) )
+        return false;
+
     Vector vecTemp;
 
     // if Attacker == Inflictor, the attack was a melee or other instant-hit attack.
