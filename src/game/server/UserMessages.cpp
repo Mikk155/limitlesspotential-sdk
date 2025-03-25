@@ -91,4 +91,6 @@ void LinkUserMessages()
     gmsgFog = REG_USER_MSG( "Fog", 14 );
 
     gmsgClientGibs = REG_USER_MSG( "ClientGibs", 18 );
+
+    gmsgTitles = REG_USER_MSG( "Titles", -1 );
 }
