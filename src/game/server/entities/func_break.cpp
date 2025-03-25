@@ -519,6 +519,8 @@ bool CBreakable::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, floa
     if( pev->health <= 0 )
     {
         Killed( attacker, GIB_NORMAL );
+        if( attacker != nullptr )
+            pev->owner = attacker->edict();
         Die();
         return false;
     }
