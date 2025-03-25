@@ -843,7 +843,7 @@ bool CBaseMonster::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, fl
     float flTake;
     Vector vecDir;
 
-    if( 0 == pev->takedamage )
+    if( 0 == pev->takedamage || flDamage < 1 )
         return false;
 
     if( !IsAlive() )
@@ -1255,7 +1255,7 @@ void CBaseEntity::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vec
 
 void CBaseMonster::TraceAttack( CBaseEntity* attacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
 {
-    if( 0 != pev->takedamage )
+    if( 0 != pev->takedamage && flDamage >= 1 )
     {
         m_LastHitGroup = ptr->iHitgroup;
 
