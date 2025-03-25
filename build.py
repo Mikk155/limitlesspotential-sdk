@@ -4,12 +4,17 @@ import shutil
 import filecmp
 import subprocess
 
+def exit_freeze( string: str ) -> None:
+    print(string);
+    input( "Press any key to continue" );
+    sys.exit(0);
+
 def CMakeExecutablePath() -> str:
     """
         Find CMake's executable path
     """
 
-    cmake_path = shutil.which( "cmake" )
+    cmake_path: str = shutil.which( "cmake" )
 
     if cmake_path:
 
@@ -21,15 +26,14 @@ def CMakeExecutablePath() -> str:
 
     else:
 
-        print( \
+        exit_freeze( \
         f"Failed to get CMake.exe path. You can try provide the full path yourself.\n"\
         f"> python build.py -path \"$absolute path\"" );
-        sys.exit(1);
 
 def GetBuildDirectory() -> str:
     return os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), "build" );
 
-def CompileProject() -> None:
+def CompileProject() -> subprocess.CompletedProcess:
     """
         Compile the Project solution
     """
@@ -38,33 +42,31 @@ def CompileProject() -> None:
 
     if not os.path.exists(build_dir):
 
-        print( \
+        exit_freeze( \
         f"Can NOT Find \"build\" Directory\n"\
         f"\"{build_dir}\"\n"\
         f"Did you generated the Project solution with CMake?" );
 
-        sys.exit(1)
+    cmake_exe: str = CMakeExecutablePath();
 
-    cmake_exe = CMakeExecutablePath();
-
-    command = [ cmake_exe, "--build", ".", "--config", "Debug", "--target", "INSTALL" ];
+    command: list[str] = [ cmake_exe, "--build", ".", "--config", "Debug", "--target", "INSTALL" ];
 
     try:
 
-        subprocess.run(command, cwd=build_dir, check=True)
+        result = subprocess.run(command, cwd=build_dir, check=True, text=True);
+
+        return result;
 
     except subprocess.CalledProcessError as e:
 
-        print( f"CMake Error: {e}" );
-
-        sys.exit(1)
+        exit_freeze( f"CMake Error: {e}" );
 
 def GetModGameDir() -> str:
     """
         Get the installation path
     """
     with open( os.path.join( GetBuildDirectory(), "CMakeCache.txt" ), "r" ) as cache:
-        lines = cache.readlines();
+        lines: list[str] = cache.readlines();
         for line in lines:
             if line.startswith( "CMAKE_INSTALL_PREFIX" ):
                 return line[ line.find("=") + 1 : ].strip()
@@ -104,8 +106,12 @@ def InstallAssets() -> None:
 
 if __name__ == "__main__":
 
-    CompileProject();
+    result = CompileProject();
 
-    InstallAssets();
+    if result.returncode == 0:
 
-    exit(0)
+        InstallAssets();
+
+    else:
+
+        exit_freeze( f"{result.stderr}" );
