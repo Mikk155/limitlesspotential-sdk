@@ -692,6 +692,10 @@ public:
      *  NOTE: Avoid the use of this for monsters that has a duplicate config. instead load a custom json because they're shared for entitites
      */
     std::vector<ConfigurationSystem::ConfigVariable> m_ConfigVariables;
+
+    // Damage cap per-frame
+    float m_capdmg_time;
+    float m_capdmg_max;
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }

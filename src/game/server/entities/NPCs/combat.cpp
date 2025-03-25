@@ -846,6 +846,22 @@ bool CBaseMonster::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, fl
     if( 0 == pev->takedamage || flDamage < 1 )
         return false;
 
+    if( int cap = g_cfg.GetValue<int>( "frame_dmg_cap"sv, 0, this ); cap > 0 )
+    {
+        if( gpGlobals->time == m_capdmg_time )
+        {
+            m_capdmg_max += flDamage;
+
+            if( m_capdmg_max > cap )
+                return false;
+        }
+        else
+        {
+            m_capdmg_max = 0;
+            m_capdmg_time = gpGlobals->time;
+        }
+    }
+
     if( !IsAlive() )
     {
         return DeadTakeDamage( inflictor, attacker, flDamage, bitsDamageType );

@@ -628,6 +628,11 @@
     // Monster will roam info_nodes as soon as they are idling
     "free_roaming": false,
 
+    // Caps a maximun amount of damage per frame
+    // I.e if this is 200. a monster can only get 200 damage in the same frame
+    // 0 = disabled
+    "frame_dmg_cap": 0,
+
     // Multiplayer-only skill values
     "multiplayer": 
     {
