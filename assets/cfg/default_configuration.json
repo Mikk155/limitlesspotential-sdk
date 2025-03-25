@@ -625,6 +625,9 @@
     "allow_npc_item_dropping": true,
     "allow_player_weapon_dropping": true,
 
+    // Monster will roam info_nodes as soon as they are idling
+    "free_roaming": false,
+
     // Multiplayer-only skill values
     "multiplayer": 
     {
