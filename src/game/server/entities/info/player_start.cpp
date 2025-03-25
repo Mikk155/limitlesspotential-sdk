@@ -118,7 +118,7 @@ void CPlayerSpawnPoint::SetPosition( Vector& origin )
 
 bool CPlayerSpawnPoint::CanPlayerSpawn( CBasePlayer* player )
 {
-    if( player != nullptr && !IsLockedByMaster( player ) && !( pev->spawnflags & 1 ) == 0 )
+    if( player != nullptr && !IsLockedByMaster( player ) && ( pev->spawnflags & 1 ) == 0 )
     {
         if( !FStringNull( m_PlayerFilterName ) )
         {
