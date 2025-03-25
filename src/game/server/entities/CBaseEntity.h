@@ -686,6 +686,12 @@ public:
     bool ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags);
     std::vector<std::string> m_AppearFlagNotIn;
     std::vector<std::string> m_AppearFlagOnlyIn;
+
+    /**
+     *  @brief Custom per-entity config
+     *  NOTE: Avoid the use of this for monsters that has a duplicate config. instead load a custom json because they're shared for entitites
+     */
+    std::vector<ConfigurationSystem::ConfigVariable> m_ConfigVariables;
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }

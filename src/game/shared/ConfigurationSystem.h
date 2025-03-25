@@ -89,6 +89,7 @@ private:
         VarFlag_IsExplicitlyDefined = 1 << 0,
     };
 
+public:
     struct ConfigVariable
     {
         std::string Name;
@@ -101,7 +102,6 @@ private:
         int Flags = 0;
     };
 
-public:
     const char* GetName() const override { return "Configuration"; }
 
     bool Initialize() override;
@@ -124,7 +124,7 @@ public:
     template <typename T>
     T GetValue( std::string_view name, std::optional<T> defaultValue = std::nullopt, CBaseEntity* entity = nullptr ) const;
 
-    void SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value );
+    void SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value, std::optional<CBaseEntity*> target = std::nullopt );
 
 #ifndef CLIENT_DLL
     void SendAllNetworkedConfigVars( CBasePlayer* player );

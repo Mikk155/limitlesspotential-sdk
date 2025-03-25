@@ -380,15 +380,26 @@ T ConfigurationSystem::GetValue(
     std::optional<ConfigVariable> variable;
 
 #ifndef CLIENT_DLL
-    if( entity != nullptr && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
+    if( entity != nullptr )
     {
-        std::vector<ConfigVariable> config_map = m_CustomMaps.at( entity->m_config );
+        std::vector<ConfigVariable>& config_map = entity->m_ConfigVariables;
 
         if( const auto it = std::find_if( config_map.begin(), config_map.end(),
             [&]( const auto& variable )
                 { return variable.Name == name; } );
                     it != config_map.end() )
                         { variable = *it; }
+
+        if( !variable.has_value() && entity->m_config >= 0 && entity->m_config < (int)m_CustomMaps.size() )
+        {
+            config_map = m_CustomMaps.at( entity->m_config );
+
+            if( const auto it = std::find_if( config_map.begin(), config_map.end(),
+                [&]( const auto& variable )
+                    { return variable.Name == name; } );
+                        it != config_map.end() )
+                            { variable = *it; }
+        }
     }
 #endif
 
@@ -429,12 +440,24 @@ template int ConfigurationSystem::GetValue<int>( std::string_view name, std::opt
 template bool ConfigurationSystem::GetValue<bool>( std::string_view name, std::optional<bool> defaultValue, CBaseEntity* entity ) const;
 template std::string ConfigurationSystem::GetValue<std::string>( std::string_view name, std::optional<std::string> defaultValue, CBaseEntity* entity ) const;
 
-void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value )
+void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, int, bool, std::string_view> value, std::optional<CBaseEntity*> target )
 {
-    auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
+    std::vector<ConfigVariable>& m_TargetMap = m_ConfigVariables;
+
+#ifndef CLIENT_DLL
+    if( target.has_value() )
+    {
+        if( auto entity = target.value(); entity != nullptr )
+        {
+            m_TargetMap = entity->m_ConfigVariables;
+        }
+    }
+#endif
+
+    auto it = std::find_if( m_TargetMap.begin(), m_TargetMap.end(), [&]( const auto& variable )
         { return variable.Name == name; } );
 
-    if( it == m_ConfigVariables.end() )
+    if( it == m_TargetMap.end() )
     {
         ConfigVariable variable{
             .Name = std::string{name},
@@ -442,9 +465,9 @@ void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, i
             .InitialValue = 0
         };
 
-        m_ConfigVariables.emplace_back( std::move( variable ) );
+        m_TargetMap.emplace_back( std::move( variable ) );
 
-        it = m_ConfigVariables.end() - 1;
+        it = m_TargetMap.end() - 1;
     }
 
     float fValue;

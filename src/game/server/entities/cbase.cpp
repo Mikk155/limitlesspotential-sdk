@@ -625,6 +625,36 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
         }
         return false;
     }
+    else if( strstr( pkvd->szKeyName, "cfg_" ) != nullptr )
+    {
+        std::string name = std::string( pkvd->szKeyName ).substr(4);
+
+        auto it = std::find_if( m_ConfigVariables.begin(), m_ConfigVariables.end(), [&]( const auto& variable )
+            { return variable.Name == name; } );
+
+        if( it == m_ConfigVariables.end() )
+        {
+            ConfigurationSystem::ConfigVariable variable{
+                .Name = std::string(name),
+                .CurrentValue = 0,
+                .InitialValue = 0
+            };
+            m_ConfigVariables.emplace_back( std::move( variable ) );
+            it = m_ConfigVariables.end() - 1;
+        }
+
+        char *endptr;
+        strtof( pkvd->szValue, &endptr );
+        if( *endptr != '\0' )
+            it->CurrentValue = atof( pkvd->szValue );
+        else
+            it->StringValue = std::string( pkvd->szValue );
+
+        CBaseEntity::Logger->debug( "Config value \"{}\" changed to \"{}\" for {}::{}",
+            pkvd->szKeyName, pkvd->szValue, STRING(pev->classname), STRING(pev->targetname) );
+
+        return false;
+    }
     else if( FStrEq( pkvd->szKeyName, "m_UseType" ) )
     {
         int value = atoi( pkvd->szValue );
