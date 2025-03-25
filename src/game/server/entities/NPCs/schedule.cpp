@@ -753,15 +753,24 @@ void CBaseMonster::StartTask( const Task_t* pTask )
         }
         */
 
-        if( pBestSound && FindCover( pBestSound->m_vecOrigin, g_vecZero, pBestSound->m_iVolume, CoverRadius() ) )
+        if( pBestSound )
         {
-            // then try for plain ole cover
-            m_flMoveWaitFinished = gpGlobals->time + pTask->flData;
-            TaskComplete();
+            if( FindCover( pBestSound->m_vecOrigin, g_vecZero, pBestSound->m_iVolume, CoverRadius() ) )
+            {
+                // then try for plain ole cover
+                m_flMoveWaitFinished = gpGlobals->time + pTask->flData;
+                TaskComplete();
+            }
+            else if( FindRetreat( pBestSound->m_vecOrigin, pBestSound->m_iVolume, CoverRadius() ) )
+            {
+                m_flMoveWaitFinished = gpGlobals->time + pTask->flData;
+                TaskComplete();
+            }
         }
-        else
+
+        // no coverwhatsoever. or no sound in list
+        if( !TaskIsComplete() )
         {
-            // no coverwhatsoever. or no sound in list
             TaskFail();
         }
         break;

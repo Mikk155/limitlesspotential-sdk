@@ -2091,6 +2091,70 @@ bool CBaseMonster::FindCover( Vector vecThreat, Vector vecViewOffset, float flMi
     return false;
 }
 
+bool CBaseMonster::FindRetreat( Vector vecThreat, float flMinDist, float flMaxDist )
+{
+    int i;
+    int iMyHullIndex;
+    int iMyNode;
+    int iThreatNode;
+    float flDist;
+
+    // user didn't supply a MaxDist, so work up a crazy one.
+    if( 0 == flMaxDist )
+        flMaxDist = 784;
+
+    if( flMinDist > 0.5 * flMaxDist )
+        flMinDist = 0.5 * flMaxDist;
+
+    if( 0 == WorldGraph.m_fGraphPresent || 0 == WorldGraph.m_fGraphPointersSet )
+    {
+        AILogger->trace( "Graph not ready for findretreat!");
+        return false;
+    }
+
+    iMyNode = WorldGraph.FindNearestNode( pev->origin, this );
+    iThreatNode = WorldGraph.FindNearestNode( vecThreat, this );
+    iMyHullIndex = WorldGraph.HullIndex(this);
+
+    if( iMyNode == NO_NODE )
+    {
+        AILogger->trace( "FindRetreat() - {} has no nearest node!", STRING(pev->classname) );
+        return false;
+    }
+    if (iThreatNode == NO_NODE)
+    {
+        iThreatNode = iMyNode;
+    }
+
+    // we'll do a rough sample to find nodes that are relatively nearby
+    for( i = 0; i < WorldGraph.m_cNodes; i++ )
+    {
+        int nodeNumber = ( i + WorldGraph.m_iLastCoverSearch ) % WorldGraph.m_cNodes;
+
+        CNode& node = WorldGraph.Node(nodeNumber);
+
+        // could use an optimization here!!
+        flDist = ( pev->origin - node.m_vecOrigin ).Length();
+
+        if( flDist >= flMinDist && flDist < flMaxDist )
+        {
+            // node is also closer to me than the threat, or the same distance from myself and the threat the node is good.
+            if( ( iMyNode == iThreatNode )
+                || WorldGraph.PathLength( iMyNode, nodeNumber, iMyHullIndex, m_afCapability )
+                    <= WorldGraph.PathLength(iThreatNode, nodeNumber, iMyHullIndex, m_afCapability ) )
+            {
+                if( FValidateCover(node.m_vecOrigin) && MoveToLocation( ACT_RUN, 0, node.m_vecOrigin ) )
+                {
+                    // next monster that searches for cover node will start where we left off here.
+                    WorldGraph.m_iLastCoverSearch = nodeNumber + 1;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool CBaseMonster::BuildNearestRoute( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist )
 {
     int i;
