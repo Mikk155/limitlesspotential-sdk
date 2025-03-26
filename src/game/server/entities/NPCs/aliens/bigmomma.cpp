@@ -1100,11 +1100,14 @@ CBMortar* CBMortar::Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVeloci
     CBMortar* pSpit = g_EntityDictionary->Create<CBMortar>( "bmortar" );
     pSpit->Spawn();
 
-    
+    if( owner != nullptr )
+    {
+        pSpit->m_config = owner->m_config;
+        pSpit->SetOwner( owner );
+    }
 
     pSpit->SetOrigin( vecStart );
     pSpit->pev->velocity = vecVelocity;
-    pSpit->SetOwner( owner );
     pSpit->pev->scale = 2.5;
     pSpit->SetThink( &CBMortar::Animate );
     pSpit->pev->nextthink = gpGlobals->time + 0.1;
