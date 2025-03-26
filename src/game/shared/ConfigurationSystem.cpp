@@ -748,7 +748,7 @@ int ConfigurationSystem::CustomConfigurationFile( const char* filename )
     int map_index = (int)m_CustomMaps.size();
     m_Logger->trace( "Loading custom configuration \"{}\" at index {}", filename, map_index );
 
-    if( const auto result = g_JSON.ParseJSONFile( filename,
+    if( const auto result = g_JSON.ParseJSONFile( fmt::format( "cfg/{}.json", filename ).c_str(),
             {.SchemaName = ConfigSchemaName, .PathID = "GAMECONFIG"},
             [this]( json& input )
             { return ParseConfiguration( input, true ); } );
