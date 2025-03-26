@@ -48,6 +48,12 @@
     "apache_health2": 250,
     "apache_health3": 400,
 
+    // Barnacle
+    "barnacle_health": 25,
+    "barnacle_speed": 8,
+    "barnacle_tongue_size": 8,
+    "barnacle_melee_instakill": true,
+
     // Barney
     "barney_health": 35,
 

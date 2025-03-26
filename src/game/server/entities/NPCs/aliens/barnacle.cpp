@@ -16,9 +16,6 @@
 #include "cbase.h"
 
 #define BARNACLE_BODY_HEIGHT 44 //!< how 'tall' the barnacle's model is.
-#define BARNACLE_PULL_SPEED 8
-#define BARNACLE_KILL_VICTIM_DELAY 5 //!< how many seconds after pulling prey in to gib them.
-
 #define BARNACLE_AE_PUKEGIB 2
 
 /**
@@ -70,7 +67,6 @@ void CBarnacle::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 25;
     pev->model = MAKE_STRING( "models/barnacle.mdl" );
 
     SetClassification( "alien_monster" );
@@ -93,6 +89,8 @@ void CBarnacle::HandleAnimEvent( MonsterEvent_t* pEvent )
 bool CBarnacle::Spawn()
 {
     Precache();
+
+    pev->health = g_cfg.GetValue<float>( "barnacle_health"sv, 25, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -16, -16, -32 ), Vector( 16, 16, 0 ) );
@@ -123,7 +121,7 @@ bool CBarnacle::Spawn()
 
 bool CBarnacle::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )
 {
-    if( ( bitsDamageType & DMG_CLUB ) != 0 )
+    if( ( bitsDamageType & DMG_CLUB ) != 0 && g_cfg.GetValue<bool>( "barnacle_melee_instakill"sv, true, this ) )
     {
         flDamage = pev->health;
     }
@@ -172,8 +170,9 @@ void CBarnacle::BarnacleThink()
             vecNewEnemyOrigin.x -= 6 * cos( m_hEnemy->pev->angles.y * PI / 180.0 );
             vecNewEnemyOrigin.y -= 6 * sin( m_hEnemy->pev->angles.y * PI / 180.0 );
 
-            m_flAltitude -= BARNACLE_PULL_SPEED;
-            vecNewEnemyOrigin.z += BARNACLE_PULL_SPEED;
+            int pull_speed = g_cfg.GetValue<int>( "barnacle_speed"sv, 8, this );
+            m_flAltitude -= pull_speed;
+            vecNewEnemyOrigin.z += pull_speed;
 
             if( fabs( pev->origin.z - ( vecNewEnemyOrigin.z + m_hEnemy->pev->view_ofs.z - 8 ) ) < BARNACLE_BODY_HEIGHT )
             {
@@ -300,7 +299,7 @@ void CBarnacle::BarnacleThink()
             if( m_flAltitude < flLength )
             {
                 // if tongue is higher than is should be, lower it kind of slowly.
-                m_flAltitude += BARNACLE_PULL_SPEED;
+                m_flAltitude += g_cfg.GetValue<int>( "barnacle_speed"sv, 8, this );
                 m_fTongueExtended = false;
             }
             else
@@ -387,7 +386,6 @@ void CBarnacle::Precache()
     PrecacheSound( "barnacle/bcl_die3.wav" );
 }
 
-#define BARNACLE_CHECK_SPACING 8
 CBaseEntity* CBarnacle::TongueTouchEnt( float& flLength )
 {
     TraceResult tr;
@@ -397,7 +395,8 @@ CBaseEntity* CBarnacle::TongueTouchEnt( float& flLength )
     const float length = fabs( pev->origin.z - tr.vecEndPos.z );
     flLength = length;
 
-    Vector delta = Vector( BARNACLE_CHECK_SPACING, BARNACLE_CHECK_SPACING, 0 );
+    float tongue_size = g_cfg.GetValue<float>( "barnacle_tongue_size"sv, 8, this );
+    Vector delta = Vector( tongue_size, tongue_size, 0 );
     Vector mins = pev->origin - delta;
     Vector maxs = pev->origin + delta;
     maxs.z = pev->origin.z;
