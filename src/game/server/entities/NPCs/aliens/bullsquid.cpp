@@ -16,8 +16,6 @@
 #include "cbase.h"
 #include "nodes.h"
 
-#define SQUID_SPRINT_DIST 256 // how close the squid has to get before starting to sprint and refusing to swerve
-
 int iSquidSpitSprite;
 
 enum
@@ -301,7 +299,7 @@ bool CBullsquid::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, floa
     {
         flDist = ( pev->origin - m_hEnemy->pev->origin ).Length2D();
 
-        if( flDist > SQUID_SPRINT_DIST )
+        if( flDist > g_cfg.GetValue<float>( "bullsquid_sprint_dist"sv, 256, this ) )
         {
             flDist = ( pev->origin - m_Route[m_iRouteIndex].vecLocation ).Length2D(); // reusing flDist.
 
@@ -746,145 +744,150 @@ void CBullsquid::RunAI()
     if( m_hEnemy != nullptr && m_Activity == ACT_RUN )
     {
         // chasing enemy. Sprint for last bit
-        if( ( pev->origin - m_hEnemy->pev->origin ).Length2D() < SQUID_SPRINT_DIST )
+        if( ( pev->origin - m_hEnemy->pev->origin ).Length2D() < g_cfg.GetValue<float>( "bullsquid_sprint_dist"sv, 256, this ) )
         {
-            pev->framerate = 1.25;
+            pev->framerate = g_cfg.GetValue<float>( "bullsquid_sprint_speed"sv, 1.25, this );
         }
     }
 }
 
 Task_t tlSquidRangeAttack1[] =
-    {
-        {TASK_STOP_MOVING, 0},
-        {TASK_FACE_IDEAL, (float)0},
-        {TASK_RANGE_ATTACK1, (float)0},
-        {TASK_SET_ACTIVITY, (float)ACT_IDLE},
+{
+    {TASK_STOP_MOVING, 0},
+    {TASK_FACE_IDEAL, (float)0},
+    {TASK_RANGE_ATTACK1, (float)0},
+    {TASK_SET_ACTIVITY, (float)ACT_IDLE},
 };
 
 Schedule_t slSquidRangeAttack1[] =
-    {
-        {tlSquidRangeAttack1,
-            std::size( tlSquidRangeAttack1 ),
-            bits_COND_NEW_ENEMY |
-                bits_COND_ENEMY_DEAD |
-                bits_COND_HEAVY_DAMAGE |
-                bits_COND_ENEMY_OCCLUDED |
-                bits_COND_NO_AMMO_LOADED,
-            0,
-            "Squid Range Attack1"},
+{
+    {tlSquidRangeAttack1,
+        std::size( tlSquidRangeAttack1 ),
+        bits_COND_NEW_ENEMY |
+            bits_COND_ENEMY_DEAD |
+            bits_COND_HEAVY_DAMAGE |
+            bits_COND_ENEMY_OCCLUDED |
+            bits_COND_NO_AMMO_LOADED,
+        0,
+        "Squid Range Attack1"},
 };
 
 Task_t tlSquidChaseEnemy1[] =
-    {
-        {TASK_SET_FAIL_SCHEDULE, (float)SCHED_RANGE_ATTACK1}, // !!!OEM - this will stop nasty squid oscillation.
-        {TASK_GET_PATH_TO_ENEMY, (float)0},
-        {TASK_RUN_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
+{
+    {TASK_SET_FAIL_SCHEDULE, (float)SCHED_RANGE_ATTACK1}, // !!!OEM - this will stop nasty squid oscillation.
+    {TASK_GET_PATH_TO_ENEMY, (float)0},
+    {TASK_RUN_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
 };
 
 Schedule_t slSquidChaseEnemy[] =
-    {
-        {tlSquidChaseEnemy1,
-            std::size( tlSquidChaseEnemy1 ),
-            bits_COND_NEW_ENEMY |
-                bits_COND_ENEMY_DEAD |
-                bits_COND_SMELL_FOOD |
-                bits_COND_CAN_RANGE_ATTACK1 |
-                bits_COND_CAN_MELEE_ATTACK1 |
-                bits_COND_CAN_MELEE_ATTACK2 |
-                bits_COND_TASK_FAILED |
-                bits_COND_HEAR_SOUND,
+{
+    {tlSquidChaseEnemy1,
+        std::size( tlSquidChaseEnemy1 ),
+        bits_COND_NEW_ENEMY |
+            bits_COND_ENEMY_DEAD |
+            bits_COND_SMELL_FOOD |
+            bits_COND_CAN_RANGE_ATTACK1 |
+            bits_COND_CAN_MELEE_ATTACK1 |
+            bits_COND_CAN_MELEE_ATTACK2 |
+            bits_COND_TASK_FAILED |
+            bits_COND_HEAR_SOUND,
 
-            bits_SOUND_DANGER |
-                bits_SOUND_MEAT,
-            "Squid Chase Enemy"},
+        bits_SOUND_DANGER |
+            bits_SOUND_MEAT,
+        "Squid Chase Enemy"},
 };
 
 Task_t tlSquidHurtHop[] =
-    {
-        {TASK_STOP_MOVING, (float)0},
-        {TASK_SOUND_WAKE, (float)0},
-        {TASK_SQUID_HOPTURN, (float)0},
-        {TASK_FACE_ENEMY, (float)0}, // in case squid didn't turn all the way in the air.
+{
+    {TASK_STOP_MOVING, (float)0},
+    {TASK_SOUND_WAKE, (float)0},
+    {TASK_SQUID_HOPTURN, (float)0},
+    {TASK_FACE_ENEMY, (float)0}, // in case squid didn't turn all the way in the air.
 };
 
 Schedule_t slSquidHurtHop[] =
+{
     {
-        {tlSquidHurtHop,
-            std::size( tlSquidHurtHop ),
-            0,
-            0,
-            "SquidHurtHop"}};
+        tlSquidHurtHop,
+        std::size( tlSquidHurtHop ),
+        0,
+        0,
+        "SquidHurtHop"
+    }
+};
 
 Task_t tlSquidSeeCrab[] =
-    {
-        {TASK_STOP_MOVING, (float)0},
-        {TASK_SOUND_WAKE, (float)0},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EXCITED},
-        {TASK_FACE_ENEMY, (float)0},
+{
+    {TASK_STOP_MOVING, (float)0},
+    {TASK_SOUND_WAKE, (float)0},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EXCITED},
+    {TASK_FACE_ENEMY, (float)0},
 };
 
 Schedule_t slSquidSeeCrab[] =
+{
     {
-        {tlSquidSeeCrab,
-            std::size( tlSquidSeeCrab ),
-            bits_COND_LIGHT_DAMAGE |
-                bits_COND_HEAVY_DAMAGE,
-            0,
-            "SquidSeeCrab"}};
+        tlSquidSeeCrab,
+        std::size( tlSquidSeeCrab ),
+        bits_COND_LIGHT_DAMAGE |
+            bits_COND_HEAVY_DAMAGE,
+        0,
+        "SquidSeeCrab"
+    }
+};
 
 Task_t tlSquidEat[] =
-    {
-        {TASK_STOP_MOVING, (float)0},
-        {TASK_EAT, (float)10}, // this is in case the squid can't get to the food
-        {TASK_STORE_LASTPOSITION, (float)0},
-        {TASK_GET_PATH_TO_BESTSCENT, (float)0},
-        {TASK_WALK_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
-        {TASK_EAT, (float)50},
-        {TASK_GET_PATH_TO_LASTPOSITION, (float)0},
-        {TASK_WALK_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
-        {TASK_CLEAR_LASTPOSITION, (float)0},
+{
+    {TASK_STOP_MOVING, (float)0},
+    {TASK_EAT, (float)10}, // this is in case the squid can't get to the food
+    {TASK_STORE_LASTPOSITION, (float)0},
+    {TASK_GET_PATH_TO_BESTSCENT, (float)0},
+    {TASK_WALK_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
+    {TASK_EAT, (float)50},
+    {TASK_GET_PATH_TO_LASTPOSITION, (float)0},
+    {TASK_WALK_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
+    {TASK_CLEAR_LASTPOSITION, (float)0},
 };
 
 /**
  *    @brief squid walks to something tasty and eats it.
  */
 Schedule_t slSquidEat[] =
+{
     {
-        {tlSquidEat,
-            std::size( tlSquidEat ),
-            bits_COND_LIGHT_DAMAGE |
-                bits_COND_HEAVY_DAMAGE |
-                bits_COND_NEW_ENEMY,
-
-            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-            // here or the monster won't detect these sounds at ALL while running this schedule.
-            bits_SOUND_MEAT |
-                bits_SOUND_CARCASS,
-            "SquidEat"}};
+        tlSquidEat,
+        std::size( tlSquidEat ),
+        bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE | bits_COND_NEW_ENEMY,
+        // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+        // here or the monster won't detect these sounds at ALL while running this schedule.
+        bits_SOUND_MEAT | bits_SOUND_CARCASS,
+        "SquidEat"
+    }
+};
 
 Task_t tlSquidSniffAndEat[] =
-    {
-        {TASK_STOP_MOVING, (float)0},
-        {TASK_EAT, (float)10}, // this is in case the squid can't get to the food
-        {TASK_PLAY_SEQUENCE, (float)ACT_DETECT_SCENT},
-        {TASK_STORE_LASTPOSITION, (float)0},
-        {TASK_GET_PATH_TO_BESTSCENT, (float)0},
-        {TASK_WALK_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
-        {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
-        {TASK_EAT, (float)50},
-        {TASK_GET_PATH_TO_LASTPOSITION, (float)0},
-        {TASK_WALK_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
-        {TASK_CLEAR_LASTPOSITION, (float)0},
+{
+    {TASK_STOP_MOVING, (float)0},
+    {TASK_EAT, (float)10}, // this is in case the squid can't get to the food
+    {TASK_PLAY_SEQUENCE, (float)ACT_DETECT_SCENT},
+    {TASK_STORE_LASTPOSITION, (float)0},
+    {TASK_GET_PATH_TO_BESTSCENT, (float)0},
+    {TASK_WALK_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
+    {TASK_PLAY_SEQUENCE, (float)ACT_EAT},
+    {TASK_EAT, (float)50},
+    {TASK_GET_PATH_TO_LASTPOSITION, (float)0},
+    {TASK_WALK_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
+    {TASK_CLEAR_LASTPOSITION, (float)0},
 };
 
 /**
@@ -893,61 +896,63 @@ Task_t tlSquidSniffAndEat[] =
  *    This schedule plays a sniff animation before going to the source of food.
  */
 Schedule_t slSquidSniffAndEat[] =
+{
     {
-        {tlSquidSniffAndEat,
-            std::size( tlSquidSniffAndEat ),
-            bits_COND_LIGHT_DAMAGE |
-                bits_COND_HEAVY_DAMAGE |
-                bits_COND_NEW_ENEMY,
+        tlSquidSniffAndEat,
+        std::size( tlSquidSniffAndEat ),
+        bits_COND_LIGHT_DAMAGE |
+            bits_COND_HEAVY_DAMAGE |
+            bits_COND_NEW_ENEMY,
 
-            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-            // here or the monster won't detect these sounds at ALL while running this schedule.
-            bits_SOUND_MEAT |
-                bits_SOUND_CARCASS,
-            "SquidSniffAndEat"}};
+        // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+        // here or the monster won't detect these sounds at ALL while running this schedule.
+        bits_SOUND_MEAT |
+            bits_SOUND_CARCASS,
+        "SquidSniffAndEat"
+    }
+};
 
 Task_t tlSquidWallow[] =
-    {
-        {TASK_STOP_MOVING, (float)0},
-        {TASK_EAT, (float)10}, // this is in case the squid can't get to the stinkiness
-        {TASK_STORE_LASTPOSITION, (float)0},
-        {TASK_GET_PATH_TO_BESTSCENT, (float)0},
-        {TASK_WALK_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
-        {TASK_PLAY_SEQUENCE, (float)ACT_INSPECT_FLOOR},
-        {TASK_EAT, (float)50}, // keeps squid from eating or sniffing anything else for a while.
-        {TASK_GET_PATH_TO_LASTPOSITION, (float)0},
-        {TASK_WALK_PATH, (float)0},
-        {TASK_WAIT_FOR_MOVEMENT, (float)0},
-        {TASK_CLEAR_LASTPOSITION, (float)0},
+{
+    {TASK_STOP_MOVING, (float)0},
+    {TASK_EAT, (float)10}, // this is in case the squid can't get to the stinkiness
+    {TASK_STORE_LASTPOSITION, (float)0},
+    {TASK_GET_PATH_TO_BESTSCENT, (float)0},
+    {TASK_WALK_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
+    {TASK_PLAY_SEQUENCE, (float)ACT_INSPECT_FLOOR},
+    {TASK_EAT, (float)50}, // keeps squid from eating or sniffing anything else for a while.
+    {TASK_GET_PATH_TO_LASTPOSITION, (float)0},
+    {TASK_WALK_PATH, (float)0},
+    {TASK_WAIT_FOR_MOVEMENT, (float)0},
+    {TASK_CLEAR_LASTPOSITION, (float)0},
 };
 
 /**
  *    @brief squid does this to stinky things.
  */
 Schedule_t slSquidWallow[] =
+{
     {
-        {tlSquidWallow,
-            std::size( tlSquidWallow ),
-            bits_COND_LIGHT_DAMAGE |
-                bits_COND_HEAVY_DAMAGE |
-                bits_COND_NEW_ENEMY,
-
-            // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
-            // here or the monster won't detect these sounds at ALL while running this schedule.
-            bits_SOUND_GARBAGE,
-
-            "SquidWallow"}};
+        tlSquidWallow,
+        std::size( tlSquidWallow ),
+        bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE | bits_COND_NEW_ENEMY,
+        // even though HEAR_SOUND/SMELL FOOD doesn't break this schedule, we need this mask
+        // here or the monster won't detect these sounds at ALL while running this schedule.
+        bits_SOUND_GARBAGE,
+        "SquidWallow"
+    }
+};
 
 BEGIN_CUSTOM_SCHEDULES( CBullsquid )
-slSquidRangeAttack1,
+    slSquidRangeAttack1,
     slSquidChaseEnemy,
     slSquidHurtHop,
     slSquidSeeCrab,
     slSquidEat,
     slSquidSniffAndEat,
     slSquidWallow
-    END_CUSTOM_SCHEDULES();
+END_CUSTOM_SCHEDULES();
 
 const Schedule_t* CBullsquid::GetSchedule()
 {

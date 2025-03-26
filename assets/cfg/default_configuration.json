@@ -74,6 +74,10 @@
     "bullsquid_dmg_spit2": 10,
     "bullsquid_dmg_spit3": 15,
 
+    // how close the squid has to get before starting to sprint and refusing to swerve
+    "bullsquid_sprint_dist": 256,
+    "bullsquid_sprint_speed": 1.25,
+
     // Big momma
     "bigmomma_health_factor1": 1.0,
     "bigmomma_health_factor2": 1.5,
