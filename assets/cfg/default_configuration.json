@@ -91,6 +91,8 @@
     "bigmomma_radius_blast2": 250,
     "bigmomma_radius_blast3": 275,
 
+    "bigmomma_child": "monster_babycrab",
+
     // Gargantua
     "gargantua_health1": 800,
     "gargantua_health2": 800,

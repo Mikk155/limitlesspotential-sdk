@@ -144,8 +144,6 @@ int gSpitSprite, gSpitDebrisSprite;
 Vector VecCheckSplatToss( CBaseEntity* entity, const Vector& vecSpot1, Vector vecSpot2, float maxHeight );
 void MortarSpray( const Vector& position, const Vector& direction, int spriteModel, int count );
 
-#define BIG_CHILDCLASS "monster_babycrab"
-
 class CBigMomma : public CBaseMonster
 {
     DECLARE_CLASS( CBigMomma, CBaseMonster );
@@ -558,7 +556,8 @@ bool CBigMomma::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float
 
 void CBigMomma::LayHeadcrab()
 {
-    CBaseEntity* pChild = CBaseEntity::Create( BIG_CHILDCLASS, pev->origin, pev->angles, this, false );
+    std::string childname = g_cfg.GetValue<std::string>( "bigmomma_child"sv, "monster_babycrab", this );
+    CBaseEntity* pChild = CBaseEntity::Create( childname.c_str(), pev->origin, pev->angles, this, false );
 
     MaybeSetChildClassification( pChild );
 
@@ -645,7 +644,8 @@ void CBigMomma::Precache()
     PRECACHE_SOUND_ARRAY( pPainSounds );
     PRECACHE_SOUND_ARRAY( pFootSounds );
 
-    UTIL_PrecacheOther( BIG_CHILDCLASS );
+    std::string childname = g_cfg.GetValue<std::string>( "bigmomma_child"sv, "monster_babycrab", this );
+    UTIL_PrecacheOther( childname.c_str() );
 
     // TEMP: Squid
     PrecacheModel( "sprites/mommaspit.spr" );                   // spit projectile.
@@ -1099,6 +1099,8 @@ CBMortar* CBMortar::Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVeloci
 {
     CBMortar* pSpit = g_EntityDictionary->Create<CBMortar>( "bmortar" );
     pSpit->Spawn();
+
+    
 
     pSpit->SetOrigin( vecStart );
     pSpit->pev->velocity = vecVelocity;
