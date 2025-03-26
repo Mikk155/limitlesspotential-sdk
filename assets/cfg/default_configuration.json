@@ -402,19 +402,6 @@
     "geneworm_dmg_hit2": 30,
     "geneworm_dmg_hit3": 40,
 
-    // Zombie Barney
-    "zombie_barney_health1": 50,
-    "zombie_barney_health2": 50,
-    "zombie_barney_health3": 100,
-
-    "zombie_barney_dmg_one_slash1": 10,
-    "zombie_barney_dmg_one_slash2": 20,
-    "zombie_barney_dmg_one_slash3": 20,
-
-    "zombie_barney_dmg_both_slash1": 25,
-    "zombie_barney_dmg_both_slash2": 40,
-    "zombie_barney_dmg_both_slash3": 40,
-
     // Zombie Soldier
     "zombie_soldier_health1": 60,
     "zombie_soldier_health2": 60,

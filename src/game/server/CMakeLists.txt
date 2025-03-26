@@ -286,7 +286,6 @@ target_sources(server PRIVATE
     entities/NPCs/zombies/gonome.cpp
     entities/NPCs/zombies/zombie.cpp
     entities/NPCs/zombies/zombie.h
-    entities/NPCs/zombies/zombie_barney.cpp
     entities/NPCs/zombies/zombie_soldier.cpp
 
     entities/player/respawn.cpp

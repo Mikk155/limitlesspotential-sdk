@@ -61,7 +61,6 @@ const char* const grapple_medium[] =
         "monster_pitdrone",
         "monster_scientist",
         "monster_zombie",
-        "monster_zombie_barney",
         "monster_zombie_soldier"};
 
 const char* const grapple_large[] =
