@@ -335,7 +335,8 @@ bool COFPitWormUp::Spawn()
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
-    pev->health = g_cfg.GetValue<float>( "pitworm_health"sv, 100, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "pitworm_health"sv, 100, this );
     SetModel( STRING( pev->model ) );
 
     SetSize( {-32, -32, 0}, {32, 32, 64} );

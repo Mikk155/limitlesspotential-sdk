@@ -311,7 +311,8 @@ bool CTurret::Spawn()
 
     CBaseTurret::Spawn();
 
-    pev->health = g_cfg.GetValue<float>( "turret_health"sv, 60, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "turret_health"sv, 60, this );
 
     m_iRetractHeight = 16;
     m_iDeployHeight = 32;
@@ -352,7 +353,8 @@ bool CMiniTurret::Spawn()
     pev->view_ofs.z = 12.75;
 
     CBaseTurret::Spawn();
-    pev->health = g_cfg.GetValue<float>( "miniturret_health"sv, 50, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "miniturret_health"sv, 50, this );
     m_iRetractHeight = 16;
     m_iDeployHeight = 32;
     m_iMinPitch = -15;
@@ -1196,7 +1198,8 @@ bool CSentry::Spawn()
     m_flMaxSpin = 1E6;
 
     CBaseTurret::Spawn();
-    pev->health = g_cfg.GetValue<float>( "sentry_health"sv, 50, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "sentry_health"sv, 50, this );
     m_iRetractHeight = 64;
     m_iDeployHeight = 64;
     m_iMinPitch = -60;

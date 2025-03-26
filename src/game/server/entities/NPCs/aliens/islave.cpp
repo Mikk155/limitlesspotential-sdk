@@ -477,7 +477,8 @@ bool CISlave::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "islave_health"sv, 60, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "islave_health"sv, 60, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
@@ -811,7 +812,7 @@ void CDeadISlave::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // g_cfg.GetValue<float>( "islave_health"sv, 60, this );
+    pev->health = 8;
     pev->model = MAKE_STRING( "models/islave.mdl" );
 
     SetClassification( "alien_passive" );

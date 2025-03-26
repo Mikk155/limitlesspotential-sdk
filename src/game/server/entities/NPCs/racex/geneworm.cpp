@@ -767,7 +767,8 @@ bool COFGeneWorm::Spawn()
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_NOT;
 
-    pev->health = g_cfg.GetValue<float>( "geneworm_health"sv, 100, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "geneworm_health"sv, 100, this );
     SetModel( STRING( pev->model ) );
 
     SetSize( {-436.67, -720.49, -331.74}, {425.29, 164.85, 355.68} );

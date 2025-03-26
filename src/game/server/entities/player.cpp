@@ -2731,7 +2731,6 @@ bool CBasePlayer::Spawn()
             m_bIsSpawning = false;
         }};
 
-    pev->health = 100;
     pev->takedamage = DAMAGE_AIM;
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_WALK;

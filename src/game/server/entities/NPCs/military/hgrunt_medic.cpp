@@ -292,7 +292,8 @@ bool COFMedicAlly::Spawn()
 {
     SpawnCore();
 
-    pev->health = g_cfg.GetValue<float>( "medic_ally_health"sv, 50, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "medic_ally_health"sv, 50, this );
 
     m_flLastUseTime = 0;
     m_iHealCharge = g_cfg.GetValue<float>( "medic_ally_heal"sv, 75, this );

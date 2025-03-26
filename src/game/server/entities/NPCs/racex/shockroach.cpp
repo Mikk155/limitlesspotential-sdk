@@ -261,7 +261,8 @@ bool COFShockRoach::Spawn()
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -12, -12, 0 ), Vector( 12, 12, 4 ) );
 
-    pev->health = g_cfg.GetValue<float>( "shockroach_health"sv, 20, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "shockroach_health"sv, 20, this );
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_FLY;
     m_bloodColor = BLOOD_COLOR_GREEN;

@@ -295,7 +295,9 @@ bool CNihilanth::Spawn()
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
-    pev->max_health = pev->health = g_cfg.GetValue<float>( "nihilanth_health"sv, 1000, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "nihilanth_health"sv, 1000, this );
+    pev->max_health = pev->health;
 
     SetModel( STRING( pev->model ) );
     // SetSize(Vector( -300, -300, 0), Vector(300, 300, 512));

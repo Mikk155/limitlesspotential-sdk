@@ -530,7 +530,8 @@ bool COFVoltigore::Spawn()
 {
     SpawnCore( {-80, -80, 0}, {80, 80, 90} );
 
-    pev->health = g_cfg.GetValue<float>( "voltigore_health"sv, 450, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "voltigore_health"sv, 450, this );
     return true;
 }
 

@@ -303,7 +303,8 @@ bool CMOFAssassin::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "massassin_health"sv, 80, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "massassin_health"sv, 80, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );

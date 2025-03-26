@@ -205,7 +205,8 @@ bool COFBabyVoltigore::Spawn()
 {
     SpawnCore( {-16, -16, 0}, {16, 16, 32} );
 
-    pev->health = g_cfg.GetValue<float>( "babyvoltigore_health"sv, 120, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "babyvoltigore_health"sv, 120, this );
     return true;
 }
 

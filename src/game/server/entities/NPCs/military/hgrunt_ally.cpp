@@ -322,7 +322,8 @@ bool CHGruntAlly::Spawn()
 {
     SpawnCore();
 
-    pev->health = g_cfg.GetValue<float>( "hgrunt_ally_health"sv, 50, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "hgrunt_ally_health"sv, 50, this );
 
     // TODO: make torso customizable
     m_iGruntTorso = HGruntAllyTorso::Normal;

@@ -296,7 +296,8 @@ bool CHoundeye::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "houndeye_health"sv, 30, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "houndeye_health"sv, 30, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -16, -16, 0 ), Vector( 16, 16, 36 ) );

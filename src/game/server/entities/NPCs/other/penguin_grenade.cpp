@@ -224,7 +224,8 @@ bool CPenguinGrenade::Spawn()
     pev->movetype = MOVETYPE_BOUNCE;
     pev->solid = SOLID_BBOX;
 
-    pev->health = g_cfg.GetValue<float>( "snark_health"sv, 2, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "snark_health"sv, 2, this );
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -4, -4, 0 ), Vector( 4, 4, 8 ) );
     SetOrigin( pev->origin );

@@ -611,7 +611,8 @@ bool CPitdrone::Spawn()
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -16, -16, 0 ), Vector( 16, 16, 48 ) );
 
-    pev->health = g_cfg.GetValue<float>( "pitdrone_health"sv, 110, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "pitdrone_health"sv, 110, this );
     pev->solid = SOLID_SLIDEBOX;
     pev->movetype = MOVETYPE_STEP;
     m_bloodColor = BLOOD_COLOR_GREEN;

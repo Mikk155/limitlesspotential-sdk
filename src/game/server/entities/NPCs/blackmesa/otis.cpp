@@ -157,7 +157,8 @@ bool COtis::Spawn()
 {
     CBarney::Spawn();
 
-    pev->health = g_cfg.GetValue<float>( "otis_health"sv, 35, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "otis_health"sv, 35, this );
 
     if( pev->skin == OtisSkin::Random )
     {

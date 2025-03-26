@@ -292,7 +292,8 @@ bool CBarney::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
@@ -668,7 +669,7 @@ void CDeadBarney::OnCreate()
     CBaseMonster::OnCreate();
 
     // Corpses have less health
-    pev->health = 8; // g_cfg.GetValue<float>( "barney_health"sv, 35, this );
+    pev->health = 8;
     pev->model = MAKE_STRING( "models/barney.mdl" );
 
     SetClassification( "player_ally" );

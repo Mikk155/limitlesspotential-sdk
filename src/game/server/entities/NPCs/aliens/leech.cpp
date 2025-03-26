@@ -161,7 +161,8 @@ bool CLeech::Spawn()
     Precache();
     SetModel( STRING( pev->model ) );
 
-    pev->health = g_cfg.GetValue<float>( "leech_health"sv, 2, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "leech_health"sv, 2, this );
 
     // Don't push the minz down too much or the water check will fail because this entity is really point-sized
     SetSize( Vector( -1, -1, 0 ), Vector( 1, 1, 2 ) );

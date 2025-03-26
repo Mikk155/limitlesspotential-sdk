@@ -359,7 +359,8 @@ void CIchthyosaur::BecomeDead()
     pev->takedamage = DAMAGE_YES; // don't let autoaim aim at corpses.
 
     // give the corpse half of the monster's original maximum health.
-    pev->health = pev->max_health / 2;
+    if( pev->health < 1 )
+        pev->health = pev->max_health / 2;
     pev->max_health = 5; // max_health now becomes a counter for how many blood decals the corpse can place.
 }
 
@@ -421,7 +422,8 @@ bool CIchthyosaur::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "ichthyosaur_health"sv, 400, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "ichthyosaur_health"sv, 400, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, -32 ), Vector( 32, 32, 32 ) );

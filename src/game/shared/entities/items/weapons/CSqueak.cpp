@@ -78,7 +78,6 @@ void CSqueakGrenade::OnCreate()
 {
     CGrenade::OnCreate();
 
-    pev->health = g_cfg.GetValue<float>( "snark_health"sv, 2 );
     pev->model = MAKE_STRING( "models/w_squeak.mdl" );
 
     SetClassification( "alien_bioweapon" );
@@ -90,6 +89,9 @@ bool CSqueakGrenade::Spawn()
     // motor
     pev->movetype = MOVETYPE_BOUNCE;
     pev->solid = SOLID_BBOX;
+
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "snark_health"sv, 2 );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -4, -4, 0 ), Vector( 4, 4, 8 ) );

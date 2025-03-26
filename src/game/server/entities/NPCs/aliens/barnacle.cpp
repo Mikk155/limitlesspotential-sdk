@@ -90,7 +90,8 @@ bool CBarnacle::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "barnacle_health"sv, 25, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "barnacle_health"sv, 25, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -16, -16, -32 ), Vector( 16, 16, 0 ) );

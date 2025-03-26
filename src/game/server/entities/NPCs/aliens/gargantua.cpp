@@ -730,7 +730,8 @@ bool CGargantua::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "gargantua_health"sv, 1000, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "gargantua_health"sv, 1000, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );

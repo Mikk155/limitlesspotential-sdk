@@ -58,7 +58,8 @@ bool CHornet::Spawn()
     pev->solid = SOLID_BBOX;
     pev->takedamage = DAMAGE_YES;
     pev->flags |= FL_MONSTER;
-    pev->health = g_cfg.GetValue<float>( "hornet_health"sv, 1, this ); // weak!
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "hornet_health"sv, 1, this ); // weak!
 
     m_flStopAttack = gpGlobals->time + g_cfg.GetValue<float>( "hornet_lifetime"sv, 3.5, this );
 

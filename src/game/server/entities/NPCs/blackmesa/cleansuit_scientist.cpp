@@ -107,7 +107,8 @@ bool CDeadCleansuitScientist::Spawn()
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
 
-    pev->health = g_cfg.GetValue<float>( "cleansuit_scientist_health"sv, 20, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "cleansuit_scientist_health"sv, 20, this );
 
     pev->effects = 0;
     pev->sequence = 0;

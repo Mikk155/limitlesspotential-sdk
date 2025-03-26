@@ -460,7 +460,8 @@ bool COFGonome::Spawn()
     m_pGonomeGuts = nullptr;
     m_PlayerLocked = nullptr;
 
-    pev->health = g_cfg.GetValue<float>( "gonome_health"sv, 160, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "gonome_health"sv, 160, this );
     return CZombie::Spawn();
 }
 

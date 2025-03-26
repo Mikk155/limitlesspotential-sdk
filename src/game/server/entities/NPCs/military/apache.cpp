@@ -61,7 +61,8 @@ bool CApache::Spawn()
     pev->movetype = MOVETYPE_FLY;
     pev->solid = SOLID_BBOX;
 
-    pev->health = g_cfg.GetValue<float>( "apache_health"sv, 400, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "apache_health"sv, 400, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -32, -32, -64 ), Vector( 32, 32, 0 ) );

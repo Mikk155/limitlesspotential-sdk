@@ -63,7 +63,9 @@ void COsprey::OnCreate()
 {
     CBaseMonster::OnCreate();
 
-    pev->health = 400;
+    if( pev->health < 1 )
+        pev->health = 400;
+
     pev->model = MAKE_STRING( "models/osprey.mdl" );
 
     SetClassification( "machine" );

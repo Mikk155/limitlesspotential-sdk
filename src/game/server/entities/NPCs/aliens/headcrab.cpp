@@ -265,7 +265,8 @@ bool CHeadCrab::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "headcrab_health"sv, 20, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "headcrab_health"sv, 20, this );
 
     SetModel( STRING( pev->model ) );
     SetSize( Vector( -12, -12, 0 ), Vector( 12, 12, 24 ) );
@@ -465,7 +466,8 @@ bool CBabyCrab::Spawn()
 {
     CHeadCrab::Spawn();
 
-    pev->health = g_cfg.GetValue<float>( "baby_headcrab_dmg_bite"sv, 20, this ); // less health than full grown
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "baby_headcrab_dmg_bite"sv, 20, this ); // less health than full grown
 
     SetSize( Vector( -12, -12, 0 ), Vector( 12, 12, 24 ) );
 

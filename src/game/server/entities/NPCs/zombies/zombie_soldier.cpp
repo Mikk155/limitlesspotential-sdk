@@ -31,7 +31,9 @@ public:
         if( !CZombie::Spawn() )
             return false;
 
-        pev->health = g_cfg.GetValue<float>( "zombie_soldier_health"sv, 120, this );
+        if( pev->health < 1 )
+            pev->health = g_cfg.GetValue<float>( "zombie_soldier_health"sv, 120, this );
+
         return true;
     }
 protected:

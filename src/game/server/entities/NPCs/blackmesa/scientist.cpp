@@ -524,7 +524,8 @@ bool CScientist::Spawn()
 {
     Precache();
 
-    pev->health = g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
+    if( pev->health < 1 )
+        pev->health = g_cfg.GetValue<float>( "scientist_health"sv, 20, this );
 
     SetModel( STRING( pev->model ) );
 

@@ -49,7 +49,6 @@ public:
     bool Spawn() override
     {
         CBarney::Spawn();
-        pev->health = g_cfg.GetValue<float>( "barney_health"sv, 35, this );
         return true;
     }
 
