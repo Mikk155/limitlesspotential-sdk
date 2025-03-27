@@ -154,7 +154,7 @@ void CHudTextMessage::LoadGameTitles( const char* path_name )
             // Append new messages.
             m_titles.update( new_titles );
         }
-        g_GameLogger->error( "Loaded \"{}\"", filename );
+        g_GameLogger->debug( "Loaded \"{}\"", filename );
     }
     else
     {
