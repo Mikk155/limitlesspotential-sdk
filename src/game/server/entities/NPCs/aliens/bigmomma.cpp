@@ -559,6 +559,8 @@ void CBigMomma::LayHeadcrab()
     std::string childname = g_cfg.GetValue<std::string>( "bigmomma_child"sv, "monster_babycrab", this );
     CBaseEntity* pChild = CBaseEntity::Create( childname.c_str(), pev->origin, pev->angles, this, false );
 
+    pChild->m_config = m_config;
+
     MaybeSetChildClassification( pChild );
 
     DispatchSpawn( pChild->edict() );
