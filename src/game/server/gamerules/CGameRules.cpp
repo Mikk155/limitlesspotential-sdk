@@ -356,58 +356,6 @@ void CGameRules::PlayerSpawn( CBasePlayer* pPlayer )
     pPlayer->m_FireSpawnTarget = true;
 }
 
-CPlayerSpawnPoint* CGameRules::GetPlayerSpawnSpot( CBasePlayer* player, bool spawn )
-{
-    CPlayerSpawnPoint* spawn_entity;
-    
-    if( IsMultiplayer() )
-    {
-        if( IsCTF() && player->m_iTeamNum != CTFTeam::None )
-        {
-            if( player->m_iTeamNum == CTFTeam::BlackMesa )
-            {
-                spawn_entity = FindBestPlayerSpawn( player, "ctfs1" );
-            }
-            else
-            {
-                spawn_entity = FindBestPlayerSpawn( player, "ctfs2" );
-            }
-
-            if( spawn_entity == nullptr )
-            {
-                spawn_entity = FindBestPlayerSpawn( player, "ctfs0" );
-            }
-        }
-        else
-        {
-            spawn_entity = FindBestPlayerSpawn( player, "info_player_start_mp" );
-        }
-    }
-    else
-    {
-        spawn_entity = FindBestPlayerSpawn( player, "info_player_start" );
-    }
-
-    if( spawn_entity != nullptr )
-    {
-        if( spawn )
-        {
-            spawn_entity->SpawnPlayer( player );
-        }
-    }
-    else if( !FStringNull( gpGlobals->startspot ) && spawn )
-    {
-        CBaseEntity* startspot = UTIL_FindEntityByTargetname( nullptr, STRING( gpGlobals->startspot ) );
-
-        if( startspot != nullptr )
-        {
-            player->pev->origin = startspot->pev->origin;
-        }
-    }
-
-    return spawn_entity;
-}
-
 void CGameRules::ClientUserInfoChanged( CBasePlayer* pPlayer, char* infobuffer )
 {
     pPlayer->SetPrefsFromUserinfo( infobuffer );

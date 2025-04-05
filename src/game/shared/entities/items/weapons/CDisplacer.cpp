@@ -348,20 +348,21 @@ void CDisplacer::AltFireThink()
     }
     else
     {
-        pDestination = g_pGameRules->GetPlayerSpawnSpot( m_pPlayer, false );
+        if( pDestination = g_pGameRules->GetPlayerSpawnSpot( m_pPlayer, false ); pDestination != nullptr )
+        {
+            Vector vecEnd = pDestination->pev->origin;
 
-        if( !pDestination )
-            pDestination = g_pLastSpawn;
+            vecEnd.z -= 100;
 
-        Vector vecEnd = pDestination->pev->origin;
+            TraceResult tr;
 
-        vecEnd.z -= 100;
+            UTIL_TraceLine( pDestination->pev->origin, vecEnd, ignore_monsters, edict(), &tr );
 
-        TraceResult tr;
-
-        UTIL_TraceLine( pDestination->pev->origin, vecEnd, ignore_monsters, edict(), &tr );
-
-        m_pPlayer->SetOrigin( tr.vecEndPos + Vector( 0, 0, 37 ) );
+            m_pPlayer->SetOrigin( tr.vecEndPos + Vector( 0, 0, 37 ) );
+        }
+        else
+        {
+        }
     }
 
     if( !FNullEnt( pDestination ) )

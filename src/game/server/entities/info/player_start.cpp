@@ -92,52 +92,57 @@ void CPlayerSpawnPoint::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 
 bool CPlayerSpawnPoint::Spawn()
 {
-    if( g_pGameRules->IsMultiplayer() && FStrEq( STRING( pev->classname ), "info_player_start" ) )
-        pev->classname = MAKE_STRING( "info_player_start_mp" );
-
     InitialState = FBitSet( pev->spawnflags, SF_SPAWNPOINT_STARTOFF );
     return true;
 }
 
-void CPlayerSpawnPoint::SetPosition( Vector& origin )
-{
-    int offset = ( m_flOffSet > 0 ? m_flOffSet : g_cfg.GetValue<int>( "plr_spawn_offset"sv, 512 ) );
-
-    if( offset <= 32 )
-    {
-        origin = pev->origin + Vector( 0, 0, 1 );
-    }
-    else
-    {
-        TraceResult tr;
-        UTIL_MakeVectors( Vector( 0, RANDOM_FLOAT( 0.0f, 360.0f ), 0 ) );
-        UTIL_TraceLine( origin, origin + gpGlobals->v_forward * offset, ignore_monsters, edict(), &tr );
-        origin = tr.vecEndPos + Vector( 0, 0, 1 );
-    }
-}
-
 bool CPlayerSpawnPoint::CanPlayerSpawn( CBasePlayer* player )
 {
-    if( player != nullptr && !IsLockedByMaster( player ) && ( pev->spawnflags & 1 ) == 0 )
-    {
-        if( !FStringNull( m_PlayerFilterName ) )
-        {
-            bool is_named_eq = FStrEq( STRING( m_PlayerFilterName ), STRING( player->pev->targetname ) );
+    if( player == nullptr )
+        return false;
 
-            if( ( m_PlayerFilterType == 0 && is_named_eq ) || ( m_PlayerFilterType == 1 && !is_named_eq ) )
-                return false;
-        }
-        return true;
+    if( IsLockedByMaster( player ) )
+        return false;
+
+    if( ( pev->spawnflags & SF_SPAWNPOINT_STARTOFF ) != 0 )
+        return false;
+
+    if( !FStringNull( m_PlayerFilterName ) )
+    {
+        if( m_PlayerFilterType == 0 && FStrEq( STRING( m_PlayerFilterName ), STRING( player->pev->targetname ) ) )
+            return false;
+
+        if( m_PlayerFilterType == 1 && !FStrEq( STRING( m_PlayerFilterName ), STRING( player->pev->targetname ) ) )
+            return false;
     }
 
-    return false;
+    return true;
 }
 
 void CPlayerSpawnPoint::SpawnPlayer( CBasePlayer* player )
 {
     if( player != nullptr )
     {
-        SetPosition( player->pev->origin );
+        int offset = ( m_flOffSet > 0 ? m_flOffSet : g_cfg.GetValue<int>( "plr_spawn_offset"sv, 512 ) );
+
+        if( offset <= 32 )
+        {
+            player->SetOrigin( pev->origin + Vector( 0, 0, 1 ) );
+        }
+        else
+        {
+            TraceResult tr;
+
+            // Random angle from position
+            UTIL_MakeVectors( Vector( 0, RANDOM_FLOAT( 0.0f, 360.0f ), 0 ) );
+
+            // Get a valid hull in a random offset
+            UTIL_TraceHull( pev->origin, pev->origin + gpGlobals->v_forward * RANDOM_FLOAT( 32, offset ),
+                ignore_monsters, human_hull, edict(), &tr );
+
+            player->SetOrigin( ( ( tr.fStartSolid == 0 && tr.fAllSolid == 0 && tr.flFraction >= 1.0f ) ?
+                tr.vecEndPos : pev->origin ) + Vector( 0, 0, 1 ) ); // pev->origin if not a valid Hull
+        }
 
         player->pev->v_angle = g_vecZero;
         player->pev->velocity = g_vecZero;
@@ -198,6 +203,63 @@ CPlayerSpawnPoint* FindBestPlayerSpawn( CBasePlayer* player, const char* spawn_n
     }
 
     CBaseEntity::Logger->error( "No active {} entity on level", spawn_name );
+
+    return nullptr;
+}
+
+CPlayerSpawnPoint* EntSelectSpawnPoint( CBasePlayer* pPlayer, bool spawn )
+{
+    CPlayerSpawnPoint* spawn_entity = nullptr;
+
+    if( g_pGameRules->IsMultiplayer() )
+    {
+        if( g_pGameRules->IsCTF() && pPlayer->m_iTeamNum != CTFTeam::None )
+        {
+            spawn_entity = FindBestPlayerSpawn( pPlayer, ( pPlayer->m_iTeamNum == CTFTeam::BlackMesa ? "ctfs1" : "ctfs2" ) );
+
+            if( spawn_entity == nullptr )
+                spawn_entity = FindBestPlayerSpawn( pPlayer, "ctfs0" );
+        }
+
+        if( spawn_entity == nullptr )
+            spawn_entity = FindBestPlayerSpawn( pPlayer, "info_player_start_mp" );
+    }
+    else
+    {
+        spawn_entity = FindBestPlayerSpawn( pPlayer, "info_player_start" );
+    }
+
+    if( spawn_entity == nullptr ) // Fallback if not found any MP entity
+        spawn_entity = FindBestPlayerSpawn( pPlayer, "info_player_start" );
+
+    if( spawn_entity != nullptr )
+    {
+        if( spawn )
+            spawn_entity->SpawnPlayer( pPlayer );
+
+        return spawn_entity;
+    }
+    else if( !spawn )
+    {
+        // No spawn. we just wanted to get a entity.
+    }
+    else if( !FStringNull( gpGlobals->startspot ) )
+    {
+        CBaseEntity* startspot = UTIL_FindEntityByTargetname( nullptr, STRING( gpGlobals->startspot ) );
+
+        if( startspot != nullptr )
+        {
+            pPlayer->pev->origin = startspot->pev->origin;
+            return nullptr;
+        }
+    }
+    else
+    {
+        pPlayer->pev->origin = CBaseEntity::World->pev->origin;
+    }
+
+    CBaseEntity::Logger->error( "No active spawnpoint in the map!\n" );
+    ClientPrint( pPlayer, HUD_PRINTTALK, "> No active spawnpoint in the map!\n" );
 
     return nullptr;
 }

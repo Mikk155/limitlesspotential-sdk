@@ -251,8 +251,6 @@ void CWorld::Precache()
 
     g_GameLogger->trace( "Initializing world" );
 
-    g_pLastSpawn = nullptr;
-
 #if 1
     CVAR_SET_STRING( "sv_gravity", "800" ); // 67ft/sec
     CVAR_SET_STRING( "sv_stepsize", "18" );

@@ -194,11 +194,13 @@ public:
     virtual float FlPlayerSpawnTime( CBasePlayer* pPlayer ) = 0;
 
     /**
-     *    @brief Place this player on their spawnspot and face them the proper direction.
+     *    @brief Get a valid spawnpoint based on the current gamemode.
      *    @param spawn whatever to spawn or not this player.
-     *      if the spawnpoint is invalid a message will be print to the client and a error to the server.
+     *    NOTE: if the spawnpoint is invalid a message will be print to the client and a error to the server. The returned entity will be nullptr. Same for startspot.
      */
-    virtual CPlayerSpawnPoint* GetPlayerSpawnSpot( CBasePlayer* player, bool spawn );
+    virtual CPlayerSpawnPoint* GetPlayerSpawnSpot( CBasePlayer* player, bool spawn ){
+        return EntSelectSpawnPoint( player, spawn );
+    };
 
     virtual bool AllowAutoTargetCrosshair() { return true; }
 

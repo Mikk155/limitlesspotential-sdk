@@ -30,7 +30,6 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
-    void SetPosition( Vector& origin );
     virtual bool CanPlayerSpawn( CBasePlayer* player );
     virtual void SpawnPlayer( CBasePlayer* player );
 
@@ -44,6 +43,5 @@ private:
     string_t m_iValue[MAX_SPAWNPOINT_KEYVALUES];
 };
 
-inline CBaseEntity* g_pLastSpawn = nullptr;
-
+CPlayerSpawnPoint* EntSelectSpawnPoint( CBasePlayer* pPlayer, bool spawn );
 CPlayerSpawnPoint* FindBestPlayerSpawn( CBasePlayer* player, const char* spawn_name );
