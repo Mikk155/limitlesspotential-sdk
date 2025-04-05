@@ -470,7 +470,7 @@ void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, i
         it = m_TargetMap.end() - 1;
     }
 
-    float fValue;
+    float fValue = 0;
 
     if( std::holds_alternative<float>(value) )
     {
