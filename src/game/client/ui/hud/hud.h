@@ -151,7 +151,11 @@ private:
 
     float m_fFade;
     RGBA m_rgba;
+
+public:
     WEAPON* m_pWeapon;
+
+private:
     int m_HUD_selection;
 
     std::array<int, MAX_WEAPON_SLOTS> m_BucketSprites;

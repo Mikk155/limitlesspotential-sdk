@@ -520,11 +520,42 @@ void WeaponsResource::SelectSlot( int iSlot, bool fAdvance, int iDirection )
         if( p && fastSwitch ) // check for fast weapon switch mode
         {
             // if fast weapon switch is on, then weapons can be selected in a single keypress
-            // but only if there is only one item in the bucket
-            WEAPON* p2 = GetNextActivePos( p->Info->Slot, p->Info->Position );
-            if( !p2 )
-            { // only one active item in bucket, so change directly to weapon
+            WEAPON* currentWeapon = gHUD.m_Ammo.m_pWeapon;
+
+            // try to figure out if there's your current weapon in selected slot group
+            WEAPON* potential = p;
+            while(true)
+            {
+                // weapon has been found
+                if( currentWeapon == potential && currentWeapon != 0 )
+                    break;
+
+                // go to the next weapon
+                if( potential )
+                    potential = GetNextActivePos( potential->Info->Slot, potential->Info->Position );
+                // no weapons left in the group
+                else
+                    break;
+            }
+
+            // Select next weapon in the current slot group after current weapon
+            if( potential != nullptr )
+            {
+                WEAPON* p2 = GetNextActivePos( potential->Info->Slot, potential->Info->Position );
+
+                // Go back to the first weapon in the slot group if this is the last weapon
+                if( !p2 )
+                    p2 = GetFirstPos(iSlot);
+
+                SendWeaponSelectCommand( p2->Info->Name.c_str() );
+                g_weaponselect = p2->Info->Id;
+                return;
+            }
+            // From the OTHER slot group - just select the first weapon
+            else
+            {
                 SendWeaponSelectCommand( p->Info->Name.c_str() );
+                g_weaponselect = p->Info->Id;
                 return;
             }
         }
