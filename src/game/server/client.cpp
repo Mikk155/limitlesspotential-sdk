@@ -707,8 +707,12 @@ void SV_CreateClientCommands()
         {.Flags = ClientCommandFlag::Cheat} );
 
     g_ClientCommands.Create( "cheat_respawn", []( CBasePlayer* player, const CommandArgs& args )
-        { g_pGameRules->GetPlayerSpawnSpot( player, true ); },
-        {.Flags = ClientCommandFlag::Cheat} );
+        {
+            if( player->IsAlive() ) {
+                g_pGameRules->GetPlayerSpawnSpot( player, true ); }
+            else {
+                player->Spawn(); }
+        },{.Flags = ClientCommandFlag::Cheat} );
 
     g_ClientCommands.Create( "cheat_infiniteair", []( CBasePlayer* player, const CommandArgs& args )
         { player->ToggleCheat( Cheat::InfiniteAir ); },
