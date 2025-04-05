@@ -4,6 +4,9 @@
 #
 #   * Arguments:
 #
+#       -norun
+#           + Prevents the script from running the mod.
+# 
 #       -path (path to cmake.exe)
 #           + Alternative if the script fails on getting the path automatically.
 # 
@@ -161,6 +164,32 @@ def InstallAssets() -> None:
 
 #                print( f"Up-to-date: \"{dst_file}\"" );
 
+def RunMod() -> None:
+
+    '''
+        Run the mod with the given parameters
+    '''
+
+    mod_directory = GetModGameDir();
+
+    halflife_directory = os.path.dirname( mod_directory );
+
+    mod_name = os.path.basename( mod_directory );
+
+    old_directory = os.path.dirname( __file__ );
+
+    os.chdir( halflife_directory );
+
+    subprocess.Popen( [
+            "hl.exe",
+            "-game", mod_name,
+            "-dev",
+            "+sv_cheats", "1"
+        ]
+    );
+
+    os.chdir( old_directory );
+
 if __name__ == "__main__":
 
     CloseHalfLifeProgram();
@@ -174,3 +203,7 @@ if __name__ == "__main__":
     else:
 
         exit_freeze( f"{result.stderr}" );
+
+    if not "-norun" in sys.argv:
+
+        RunMod();
