@@ -1,3 +1,14 @@
+#================================================================
+#
+#   This Python script will make use of CMake to compile the project
+#
+#   * Arguments:
+#
+#       -path (path to cmake.exe)
+#           + Alternative if the script fails on getting the path automatically.
+# 
+#================================================================
+
 import os
 import sys
 import shutil
@@ -5,12 +16,23 @@ import psutil
 import filecmp
 import subprocess
 
-def exit_freeze( string: str ) -> None:
-    print(string);
+def exit_freeze( message: str ) -> None:
+
+    '''
+        Pause and then exit the program
+    '''
+
+    print( message );
+
     input( "Press any key to continue" );
+
     sys.exit(0);
 
 def CloseHalfLifeProgram() -> None:
+
+    '''
+        Kill hl.exe if it's running
+    '''
 
     for proc in psutil.process_iter( [ 'pid', 'name' ] ):
 
@@ -29,6 +51,7 @@ def CloseHalfLifeProgram() -> None:
             pass;
 
 def CMakeExecutablePath() -> str:
+
     """
         Find CMake's executable path
     """
@@ -50,11 +73,17 @@ def CMakeExecutablePath() -> str:
         f"> python build.py -path \"$absolute path\"" );
 
 def GetBuildDirectory() -> str:
+
+    '''
+        Get the build directory (Just here in the master folder)
+    '''
+
     return os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), "build" );
 
 def CompileProject() -> subprocess.CompletedProcess:
+
     """
-        Compile the Project solution
+        Compile the Project solution with CMake
     """
 
     build_dir = GetBuildDirectory();
@@ -81,16 +110,23 @@ def CompileProject() -> subprocess.CompletedProcess:
         exit_freeze( f"CMake Error: {e}" );
 
 def GetModGameDir() -> str:
+
     """
         Get the installation path
     """
+
     with open( os.path.join( GetBuildDirectory(), "CMakeCache.txt" ), "r" ) as cache:
+
         lines: list[str] = cache.readlines();
+
         for line in lines:
+
             if line.startswith( "CMAKE_INSTALL_PREFIX" ):
+
                 return line[ line.find("=") + 1 : ].strip()
 
 def InstallAssets() -> None:
+
     """
         Install game assets
     """
@@ -100,8 +136,10 @@ def InstallAssets() -> None:
     destination = GetModGameDir();
 
     for root, dirs, files in os.walk( assets ):
-        relative_path = os.path.relpath( root, assets )
-        dst_path = os.path.join( destination, relative_path )
+
+        relative_path = os.path.relpath( root, assets );
+
+        dst_path = os.path.join( destination, relative_path );
 
         if not os.path.exists( dst_path ):
 
