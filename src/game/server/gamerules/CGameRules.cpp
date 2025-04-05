@@ -456,42 +456,27 @@ void CGameRules::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )
 
 bool CGameRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon )
 {
-    if( !pWeapon->CanDeploy() )
-    {
-        // that weapon can't deploy anyway.
+    // that weapon can't deploy anyway.
+    if( !pWeapon || !pWeapon->CanDeploy() )
         return false;
-    }
 
+    // player doesn't have an active item!
     if( !pPlayer->m_pActiveWeapon )
-    {
-        // player doesn't have an active item!
         return true;
-    }
 
+    // can't put away the active item.
     if( !pPlayer->m_pActiveWeapon->CanHolster() )
-    {
-        // can't put away the active item.
         return false;
-    }
 
     // Never switch
     if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never )
-    {
         return false;
-    }
 
     // Only switch if not attacking
     if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::IfBetter && ( pPlayer->m_afButtonLast & ( IN_ATTACK | IN_ATTACK2 ) ) != 0 )
-    {
         return false;
-    }
 
-    if( pWeapon->iWeight() > pPlayer->m_pActiveWeapon->iWeight() )
-    {
-        return true;
-    }
-
-    return false;
+    return ( pWeapon->iWeight() > pPlayer->m_pActiveWeapon->iWeight() );
 }
 
 template <typename TGameRules>
