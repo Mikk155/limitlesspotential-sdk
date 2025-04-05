@@ -1050,7 +1050,7 @@ const char* UseValue::print_data()
         message += fmt::format( "double({:.2f}), ", m_double );
 
     if( m_Vector != g_vecZero )
-        message += fmt::format( "Vector({}, {}, {}), ", m_Vector[0], m_Vector[1], m_Vector[2] );
+        message += fmt::format( "Vector({}), ", m_Vector.MakeString() );
 
     if( message.empty() )
         return "null";

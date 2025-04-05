@@ -183,7 +183,7 @@ bool CTFGoalBase::Spawn()
 
     if( 0 == g_engfuncs.pfnDropToFloor( edict() ) )
     {
-        CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin );
+        CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
         return false;
     }
 
@@ -442,7 +442,7 @@ bool CTFGoalFlag::Spawn()
 
         if( 0 == g_engfuncs.pfnDropToFloor( edict() ) )
         {
-            CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin );
+            CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
             return false;
         }
 

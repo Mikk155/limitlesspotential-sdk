@@ -194,7 +194,7 @@ bool CAmbientGeneric::Spawn()
 
     if( FStringNull( pev->message ) || strlen( szSoundFile ) < 1 )
     {
-        Logger->error( "EMPTY AMBIENT AT: {}", pev->origin );
+        Logger->error( "EMPTY AMBIENT AT: {}", pev->origin.MakeString() );
         pev->nextthink = gpGlobals->time + 0.1;
         SetThink( &CAmbientGeneric::SUB_Remove );
         return true;
@@ -1417,7 +1417,7 @@ bool CSpeaker::Spawn()
 
     if( 0 == m_preset && ( FStringNull( pev->message ) || strlen( szSoundFile ) < 1 ) )
     {
-        Logger->error( "SPEAKER with no Level/Sentence! at: {}", pev->origin );
+        Logger->error( "SPEAKER with no Level/Sentence! at: {}", pev->origin.MakeString() );
         pev->nextthink = gpGlobals->time + 0.1;
         SetThink( &CSpeaker::SUB_Remove );
         return true;

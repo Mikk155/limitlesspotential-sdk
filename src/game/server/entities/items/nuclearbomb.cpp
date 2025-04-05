@@ -56,7 +56,7 @@ bool COFNuclearBombButton::Spawn()
 
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
-        CBaseEntity::Logger->error( "Nuclear Bomb Button fell out of level at {}", pev->origin );
+        CBaseEntity::Logger->error( "Nuclear Bomb Button fell out of level at {}", pev->origin.MakeString() );
         return false;
     }
     else
@@ -127,7 +127,7 @@ bool COFNuclearBombTimer::Spawn()
 
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
-        CBaseEntity::Logger->error( "Nuclear Bomb Timer fell out of level at {}", pev->origin );
+        CBaseEntity::Logger->error( "Nuclear Bomb Timer fell out of level at {}", pev->origin.MakeString() );
         UTIL_Remove( this );
     }
     else
@@ -281,7 +281,7 @@ bool COFNuclearBomb::Spawn()
     }
     else
     {
-        CBaseEntity::Logger->error( "Nuclear Bomb fell out of level at {}", pev->origin );
+        CBaseEntity::Logger->error( "Nuclear Bomb fell out of level at {}", pev->origin.MakeString() );
         return false;
     }
     return true;

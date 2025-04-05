@@ -1860,7 +1860,7 @@ void CBaseMonster::StartMonster()
         // Try to move the monster to make sure it's not stuck in a brush.
         if( !WALK_MOVE( edict(), 0, 0, WALKMOVE_NORMAL ) )
         {
-            AILogger->error( "Monster {} stuck in wall--level design error", STRING( pev->classname ) );
+            AILogger->error( "Monster {} stuck in wall--level design error at {}", STRING( pev->classname ), pev->origin.MakeString(0) );
             pev->effects = EF_BRIGHTFIELD;
         }
     }

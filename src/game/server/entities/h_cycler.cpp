@@ -71,7 +71,7 @@ bool CCycler::Spawn()
 
     if( !szModel || '\0' == *szModel )
     {
-        CBaseEntity::Logger->error( "cycler at {:.0f} missing modelname", pev->origin );
+        CBaseEntity::Logger->error( "cycler at {} missing modelname", pev->origin.MakeString() );
         REMOVE_ENTITY( edict() );
         return false;
     }

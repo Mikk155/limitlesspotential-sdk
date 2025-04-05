@@ -63,7 +63,7 @@ bool CItemCTF::Spawn()
 
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
-        CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin );
+        CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
         return false;
     }
 
@@ -211,7 +211,7 @@ void CItemCTF::DropThink()
 
     if( g_engfuncs.pfnDropToFloor( edict() ) == 0 )
     {
-        Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin );
+        Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
         UTIL_Remove( this );
     }
 }

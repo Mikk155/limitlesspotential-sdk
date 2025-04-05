@@ -178,7 +178,7 @@ void CTripmineGrenade::PowerupThink()
             StopSound( CHAN_BODY, "weapons/mine_charge.wav" );
             SetThink( &CTripmineGrenade::SUB_Remove );
             pev->nextthink = gpGlobals->time + 0.1;
-            AILogger->debug( "WARNING:Tripmine at {:.0f} removed\n", pev->origin );
+            AILogger->debug( "WARNING:Tripmine at {} removed\n", pev->origin.MakeString() );
             KillBeam();
             return;
         }
