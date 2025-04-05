@@ -1543,9 +1543,9 @@ bool CNodeEnt::Spawn()
     pev->movetype = MOVETYPE_NONE;
     pev->solid = SOLID_NOT; // always solid_not
 
+    // graph loaded from disk, so discard all these node ents as soon as they spawn
     if( 0 != WorldGraph.m_fGraphPresent )
-    { // graph loaded from disk, so discard all these node ents as soon as they spawn
-        REMOVE_ENTITY( edict() );
+    {
         return false;
     }
 
@@ -3473,7 +3473,6 @@ bool CNodeViewer::Spawn()
         CGraph::Logger->error( "Graph not ready!" );
         return false;
     }
-
 
     if( ClassnameIs( "node_viewer_fly" ) )
     {

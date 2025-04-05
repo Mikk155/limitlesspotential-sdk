@@ -65,8 +65,7 @@ bool CLight::KeyValue( KeyValueData* pkvd )
 bool CLight::Spawn()
 {
     if( FStringNull( pev->targetname ) )
-    { // inert light
-        REMOVE_ENTITY( edict() );
+    {
         return false;
     }
 

@@ -66,15 +66,14 @@ bool CCycler::Spawn()
 {
     const char* szModel = STRING( pev->model );
 
-    const Vector vecMin( -16, -16, 0 );
-    const Vector vecMax( 16, 16, 72 );
-
     if( !szModel || '\0' == *szModel )
     {
         CBaseEntity::Logger->error( "cycler at {} missing modelname", pev->origin.MakeString() );
-        REMOVE_ENTITY( edict() );
         return false;
     }
+
+    const Vector vecMin( -16, -16, 0 );
+    const Vector vecMax( 16, 16, 72 );
 
     PrecacheModel( szModel );
     SetModel( szModel );

@@ -77,9 +77,9 @@ bool CEnvGlobal::Spawn()
 {
     if( FStringNull( m_globalstate ) )
     {
-        REMOVE_ENTITY( edict() );
         return false;
     }
+
     if( FBitSet( pev->spawnflags, SF_GLOBAL_SET ) )
     {
         if( !gGlobalState.EntityInTable( m_globalstate ) )

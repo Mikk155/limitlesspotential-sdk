@@ -478,7 +478,6 @@ bool CTriggerSave::Spawn()
 {
     if( g_pGameRules->IsMultiplayer() )
     {
-        REMOVE_ENTITY( edict() );
         return false;
     }
 
@@ -542,7 +541,6 @@ bool CTriggerEndSection::Spawn()
 {
     if( g_pGameRules->IsMultiplayer() )
     {
-        REMOVE_ENTITY( edict() );
         return false;
     }
 

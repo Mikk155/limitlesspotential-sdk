@@ -42,12 +42,7 @@ int DispatchSpawn( edict_t* pent )
 
         if( !entity->Spawn() )
         {
-            // If the entity didn't deleted itself we'll do it here.
-            if( entity = (CBaseEntity*)GET_PRIVATE( pent ); entity != nullptr )
-            {
-                UTIL_Remove(entity);
-            }
-
+            REMOVE_ENTITY( pent );
             return -1;
         }
 
@@ -346,7 +341,10 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
         if( ( pEntity->ObjectCaps() & FCAP_MUST_SPAWN ) != 0 )
         {
             if( !pEntity->Spawn() )
+            {
+                REMOVE_ENTITY( pent );
                 return -1;
+            }
         }
 
         pEntity->Precache();

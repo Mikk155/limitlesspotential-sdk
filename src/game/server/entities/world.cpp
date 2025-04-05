@@ -105,12 +105,12 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 
+// -TODO On client connect find decals and use them if active
 // UNDONE:  These won't get sent to joining players in multi-player
 bool CDecal::Spawn()
 {
     if( pev->skin < 0 || ( g_pGameRules->IsMultiplayer() && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH ) ) )
     {
-        REMOVE_ENTITY( edict() );
         return false;
     }
 
