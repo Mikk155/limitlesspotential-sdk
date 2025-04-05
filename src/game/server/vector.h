@@ -15,6 +15,9 @@
 
 #pragma once
 
+#include <string.h>
+#include <fmt/core.h>
+
 //=========================================================
 // 2DVector - used for many pathfinding and many other
 // operations that are treated as planar rather than 3d.
@@ -116,6 +119,23 @@ public:
     }
 
     [[nodiscard]] float Length2D() const { return static_cast<float>( sqrt( x * x + y * y ) ); }
+
+    /**
+     *    @brief Creates a string from the Vector members
+     *    @param Digits How many digits to print. 0 = to integer, -1 = whole float
+     */
+    [[nodiscard]] std::string MakeString( int Digits = -1 ) const
+    {
+        switch( Digits )
+        {
+            case -1:
+                return fmt::format( "{} {} {}", x, y, z );
+            case 0:
+                return fmt::format( "{} {} {}", static_cast<int>(x), static_cast<int>(y), static_cast<int>(z) );
+            default:
+                return fmt::format( fmt::format( "{{:.{}f}} {{:.{}f}} {{:.{}f}}", Digits, Digits, Digits ), x, y, z );
+        }
+    }
 
     // Members
     vec_t x = 0, y = 0, z = 0;
