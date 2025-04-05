@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import psutil
 import filecmp
 import subprocess
 
@@ -8,6 +9,24 @@ def exit_freeze( string: str ) -> None:
     print(string);
     input( "Press any key to continue" );
     sys.exit(0);
+
+def CloseHalfLifeProgram() -> None:
+
+    for proc in psutil.process_iter( [ 'pid', 'name' ] ):
+
+        try:
+
+            if proc.info[ 'name' ] == "hl.exe":
+
+                print( f"Program hl.exe is running. Force closing..." );
+
+                proc.terminate();
+
+                proc.wait( timeout=5 );
+
+        except ( psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess ):
+
+            pass;
 
 def CMakeExecutablePath() -> str:
     """
@@ -105,6 +124,8 @@ def InstallAssets() -> None:
 #                print( f"Up-to-date: \"{dst_file}\"" );
 
 if __name__ == "__main__":
+
+    CloseHalfLifeProgram();
 
     result = CompileProject();
 
