@@ -29,28 +29,6 @@ void CHalfLifeRules::Think()
 {
 }
 
-bool CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon )
-{
-    if( !pPlayer->m_pActiveWeapon )
-    {
-        // player doesn't have an active item!
-        return true;
-    }
-
-    if( !pPlayer->m_pActiveWeapon->CanHolster() )
-    {
-        return false;
-    }
-
-    // Never switch
-    if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never )
-    {
-        return false;
-    }
-
-    return true;
-}
-
 bool CHalfLifeRules::GetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch )
 {
     // If this is an exhaustible weapon and it's out of ammo, always try to switch even in singleplayer.

@@ -33,8 +33,6 @@ public:
     void Think() override;
     bool IsAllowedToSpawn( CBaseEntity* pEntity ) override;
 
-    bool FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon ) override;
-
     bool IsMultiplayer() override { return true; }
     bool IsDeathmatch() override { return true; }
     bool IsCoOp() override { return false; }

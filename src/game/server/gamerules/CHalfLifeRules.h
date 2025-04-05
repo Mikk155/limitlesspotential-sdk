@@ -32,7 +32,6 @@ public:
     void Think() override;
     bool IsAllowedToSpawn( CBaseEntity* pEntity ) override;
 
-    bool FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon ) override;
     bool GetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch = false ) override;
 
     bool IsMultiplayer() override { return false; }

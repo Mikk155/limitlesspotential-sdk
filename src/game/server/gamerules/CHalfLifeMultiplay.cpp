@@ -158,46 +158,6 @@ void CHalfLifeMultiplay::Think()
     last_time = time_remaining;
 }
 
-bool CHalfLifeMultiplay::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon )
-{
-    if( !pWeapon->CanDeploy() )
-    {
-        // that weapon can't deploy anyway.
-        return false;
-    }
-
-    if( !pPlayer->m_pActiveWeapon )
-    {
-        // player doesn't have an active item!
-        return true;
-    }
-
-    if( !pPlayer->m_pActiveWeapon->CanHolster() )
-    {
-        // can't put away the active item.
-        return false;
-    }
-
-    // Never switch
-    if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::Never )
-    {
-        return false;
-    }
-
-    // Only switch if not attacking
-    if( pPlayer->m_AutoWepSwitch == WeaponSwitchMode::IfBetter && ( pPlayer->m_afButtonLast & ( IN_ATTACK | IN_ATTACK2 ) ) != 0 )
-    {
-        return false;
-    }
-
-    if( pWeapon->iWeight() > pPlayer->m_pActiveWeapon->iWeight() )
-    {
-        return true;
-    }
-
-    return false;
-}
-
 bool CHalfLifeMultiplay::ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] )
 {
     g_VoiceGameMgr.ClientConnected( pEntity );

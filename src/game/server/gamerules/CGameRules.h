@@ -92,7 +92,7 @@ public:
     /**
      *    @brief should the player switch to this weapon?
      */
-    virtual bool FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon ) = 0;
+    virtual bool FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon );
 
     /**
      *    @brief I can't use this weapon anymore, get me the next best one.
