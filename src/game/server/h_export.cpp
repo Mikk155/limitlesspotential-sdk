@@ -33,74 +33,75 @@ void DummySpectatorFunction( edict_t* )
 }
 
 static DLL_FUNCTIONS gFunctionTable =
-    {
-        GameDLLInit,               // pfnGameInit
-        DispatchSpawn,               // pfnSpawn
-        DispatchThink,               // pfnThink
-        DispatchUse,               // pfnUse
-        DispatchTouch,               // pfnTouch
-        DispatchBlocked,           // pfnBlocked
-        DispatchKeyValue,           // pfnKeyValue
-        DispatchSave,               // pfnSave
-        DispatchRestore,           // pfnRestore
-        DispatchObjectCollsionBox, // pfnAbsBox
+{
+    GameDLLInit,               // pfnGameInit
+    DispatchSpawn,               // pfnSpawn
+    DispatchThink,               // pfnThink
+    DispatchUse,               // pfnUse
+    DispatchTouch,               // pfnTouch
+    DispatchBlocked,           // pfnBlocked
+    DispatchKeyValue,           // pfnKeyValue
+    DispatchSave,               // pfnSave
+    DispatchRestore,           // pfnRestore
+    DispatchObjectCollsionBox, // pfnAbsBox
 
-        SaveWriteFields, // pfnSaveWriteFields
-        SaveReadFields,     // pfnSaveReadFields
+    SaveWriteFields, // pfnSaveWriteFields
+    SaveReadFields,     // pfnSaveReadFields
 
-        SaveGlobalState,    // pfnSaveGlobalState
-        RestoreGlobalState, // pfnRestoreGlobalState
-        ResetGlobalState,    // pfnResetGlobalState
+    SaveGlobalState,    // pfnSaveGlobalState
+    RestoreGlobalState, // pfnRestoreGlobalState
+    ResetGlobalState,    // pfnResetGlobalState
 
-        ClientConnect,           // pfnClientConnect
-        ClientDisconnect,       // pfnClientDisconnect
-        ClientKill,               // pfnClientKill
-        ClientPutInServer,       // pfnClientPutInServer
-        ExecuteClientCommand,  // pfnClientCommand
-        ClientUserInfoChanged, // pfnClientUserInfoChanged
-        ServerActivate,           // pfnServerActivate
-        ServerDeactivate,       // pfnServerDeactivate
+    ClientConnect,           // pfnClientConnect
+    ClientDisconnect,       // pfnClientDisconnect
+    ClientKill,               // pfnClientKill
+    ClientPutInServer,       // pfnClientPutInServer
+    ExecuteClientCommand,  // pfnClientCommand
+    ClientUserInfoChanged, // pfnClientUserInfoChanged
+    ServerActivate,           // pfnServerActivate
+    ServerDeactivate,       // pfnServerDeactivate
 
-        PlayerPreThink,     // pfnPlayerPreThink
-        PlayerPostThink, // pfnPlayerPostThink
+    PlayerPreThink,     // pfnPlayerPreThink
+    PlayerPostThink, // pfnPlayerPostThink
 
-        StartFrame,          // pfnStartFrame
-        ParmsNewLevel,      // pfnParmsNewLevel
-        ParmsChangeLevel, // pfnParmsChangeLevel
+    StartFrame,          // pfnStartFrame
+    ParmsNewLevel,      // pfnParmsNewLevel
+    ParmsChangeLevel, // pfnParmsChangeLevel
 
-        GetGameDescription,     // pfnGetGameDescription    Returns string describing current .dll game.
-        PlayerCustomization, // pfnPlayerCustomization   Notifies .dll of new customization for player.
+    GetGameDescription,     // pfnGetGameDescription    Returns string describing current .dll game.
+    PlayerCustomization, // pfnPlayerCustomization   Notifies .dll of new customization for player.
 
-        DummySpectatorFunction, // pfnSpectatorConnect      Called when spectator joins server
-        DummySpectatorFunction, // pfnSpectatorDisconnect   Called when spectator leaves the server
-        DummySpectatorFunction, // pfnSpectatorThink        Called when spectator sends a command packet (usercmd_t)
+    DummySpectatorFunction, // pfnSpectatorConnect      Called when spectator joins server
+    DummySpectatorFunction, // pfnSpectatorDisconnect   Called when spectator leaves the server
+    DummySpectatorFunction, // pfnSpectatorThink        Called when spectator sends a command packet (usercmd_t)
 
-        Sys_Error, // pfnSys_Error                Called when engine has encountered an error
+    Sys_Error, // pfnSys_Error                Called when engine has encountered an error
 
-        PM_Move, // pfnPM_Move
-        PM_Init, // pfnPM_Init                Server version of player movement initialization
-        []( const char* name )
-        { return g_MaterialSystem.FindTextureType( name ); }, // pfnPM_FindTextureType
+    PM_Move, // pfnPM_Move
+    PM_Init, // pfnPM_Init                Server version of player movement initialization
+    []( const char* name )
+    { return g_MaterialSystem.FindTextureType( name ); }, // pfnPM_FindTextureType
 
-        SetupVisibility,          // pfnSetupVisibility        Set up PVS and PAS for networking for this client
-        UpdateClientData,          // pfnUpdateClientData       Set up data sent only to specific client
-        AddToFullPack,              // pfnAddToFullPack
-        CreateBaseline,              // pfnCreateBaseline            Tweak entity baseline for network encoding, allows setup of player baselines, too.
-        RegisterEncoders,          // pfnRegisterEncoders        Callbacks for network encoding
-        GetWeaponData,              // pfnGetWeaponData
-        CmdStart,                  // pfnCmdStart
-        CmdEnd,                      // pfnCmdEnd
-        ConnectionlessPacket,      // pfnConnectionlessPacket
-        GetHullBounds,              // pfnGetHullBounds
-        CreateInstancedBaselines, // pfnCreateInstancedBaselines
-        InconsistentFile,          // pfnInconsistentFile
-        AllowLagCompensation,      // pfnAllowLagCompensation
+    SetupVisibility,          // pfnSetupVisibility        Set up PVS and PAS for networking for this client
+    UpdateClientData,          // pfnUpdateClientData       Set up data sent only to specific client
+    AddToFullPack,              // pfnAddToFullPack
+    CreateBaseline,              // pfnCreateBaseline            Tweak entity baseline for network encoding, allows setup of player baselines, too.
+    RegisterEncoders,          // pfnRegisterEncoders        Callbacks for network encoding
+    GetWeaponData,              // pfnGetWeaponData
+    CmdStart,                  // pfnCmdStart
+    CmdEnd,                      // pfnCmdEnd
+    ConnectionlessPacket,      // pfnConnectionlessPacket
+    GetHullBounds,              // pfnGetHullBounds
+    CreateInstancedBaselines, // pfnCreateInstancedBaselines
+    InconsistentFile,          // pfnInconsistentFile
+    AllowLagCompensation,      // pfnAllowLagCompensation
 };
 
 NEW_DLL_FUNCTIONS gNewDLLFunctions =
-    {
-        OnFreeEntPrivateData, // pfnOnFreeEntPrivateData
-        GameDLLShutdown,
+{
+    OnFreeEntPrivateData,       //pfnOnFreeEntPrivateData
+    GameDLLShutdown,            //pfnGameShutdown
+    ShouldCollide,              //pfnShouldCollide
 };
 
 extern "C" {

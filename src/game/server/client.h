@@ -64,3 +64,5 @@ void CreateInstancedBaselines();
 int InconsistentFile( const edict_t* player, const char* filename, char* disconnect_message );
 
 int AllowLagCompensation();
+
+int ShouldCollide( edict_t *pentTouched, edict_t *pentOther );

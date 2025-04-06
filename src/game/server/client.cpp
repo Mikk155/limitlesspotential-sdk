@@ -2247,3 +2247,17 @@ int AllowLagCompensation()
 {
     return 1;
 }
+
+/*
+================================
+ShouldCollide
+
+  Called when the engine believes two entities are about to collide. Return 0 if you
+  want the two entities to just pass through each other without colliding or calling the
+  touch function.
+================================
+*/
+int ShouldCollide( edict_t *pentTouched, edict_t *pentOther )
+{
+    return 1;
+}
