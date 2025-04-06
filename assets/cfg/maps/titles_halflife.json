@@ -1,0 +1,941 @@
+//TITLES FOR BLUE-SHIFT
+{
+    "$schema": "../schemas/client/titles.json",
+
+    //INTRO CREDITS
+    "VALVE_CR27": {
+        "english": "Black Mesa Research Facility\nBlack Mesa, New Mexico",
+        "y": -1,
+        "effect": 2,
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR1": {
+        "english": "Ted Backman",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR2": {
+        "english": "TK Backman",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR3": {
+        "english": "Kelly Bailey",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR4": {
+        "english": "Yahn Bernier",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR5": {
+        "english": "Ken Birdwell",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR6": {
+        "english": "Steve Bond",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR7": {
+        "english": "Dario Casali",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR8": {
+        "english": "John Cook",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR9": {
+        "english": "Greg Coomer",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR10": {
+        "english": "Wes Cumberland",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR11": {
+        "english": "John Guthrie",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR12": {
+        "english": "Mona Lisa Guthrie",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR13": {
+        "english": "Mike Harrington",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR14": {
+        "english": "Monica Harrington",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR15": {
+        "english": "Brett Johnson",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR16": {
+        "english": "Chuck Jones",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR17": {
+        "english": "Marc Laidlaw",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR18": {
+        "english": "Karen Laur",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR19": {
+        "english": "Randy Lundeen",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR20": {
+        "english": "Yatsze Mark",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR21": {
+        "english": "Lisa Mennet",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR22": {
+        "english": "Gabe Newell",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR23": {
+        "english": "Dave Riller",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR24": {
+        "english": "Aaron Stackpole",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR25": {
+        "english": "Jay Stelly",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR26": {
+        "english": "Harry Teasley ",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR35": {
+        "english": "Steve Theodore",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR36": {
+        "english": "Bill Van Buren",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR37": {
+        "english": "Robin Walker",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "VALVE_CR38": {
+        "english": "Douglas R. Wood",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+
+    //END CREDITS   
+    "VALVEIS": {
+        "english": "Valve is:",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 5.0,
+        "hold": 4.0,
+        "fadeout": 5.0
+    },
+    "VALVE_END1": {
+        "english": "Ted Backman\nTK Backman\nKelly Bailey\nYahn Bernier\nKen Birdwell\nSteve Bond\nDario Casali\nJohn Cook\nGreg Coomer\nWes Cumberland",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 5.0,
+        "hold": 4.0,
+        "fadeout": 5.0
+    },
+    "VALVE_END2": {
+        "english": "John Guthrie\nMona Lisa Guthrie\nMike Harrington\nMonica Harrington\nBrett Johnson\nChuck Jones\nMarc Laidlaw\nKaren Laur\nRandy Lundeen\nYatsze Mark",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 5.0,
+        "hold": 4.0,
+        "fadeout": 5.0
+    },
+    "VALVE_END3": {
+        "english": "Lisa Mennet\nGabe Newell\nDave Riller\nAaron Stackpole\nJay Stelly\nHarry Teasley\nSteve Theodore\nBill Van Buren\nRobin Walker\nDouglas R. Wood",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 5.0,
+        "hold": 4.0,
+        "fadeout": 5.0
+    },
+    //INTRO TITLES
+    "VALVE_CR28": {
+        "english": "SUBJECT:\nGordon Freeman\nMale, age 27",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR29": {
+        "english": "EDUCATION:\nPh.D., MIT, Theoretical Physics",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR30": {
+        "english": "POSITION:\nResearch Associate",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR31": {
+        "english": "ASSIGNMENT:\nAnomalous Materials Laboratory",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR32": {
+        "english": "CLEARANCE:\nLevel 3",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR33": {
+        "english": "ADMINISTRATIVE SPONSOR:\nClassified",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_CR34": {
+        "english": "DISASTER RESPONSE PRIORITY:\nDiscretionary",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_GAMEOVER": {
+        "english": "SUBJECT:  FREEMAN\nSTATUS:  EVALUATION TERMINATED\nPOSTMORTEM:\nSubject failed to effectively utilize\nhuman assets in achievement of goal.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 15.0
+    },
+    "VALVE_TRAITOR": {
+        "english": "SUBJECT:  FREEMAN\nSTATUS:  HIRED\nAWAITING ASSIGNMENT",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 15.0
+    },
+    "VALVE_LOSER": {
+        "english": "SUBJECT:  FREEMAN\nSTATUS:  OBSERVATION TERMINATED\nPOSTMORTEM:\nSubject declined offer of employment.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 15.0
+    },
+    //CHAPTER TITLES
+    "VALVE_T0A0TITLE": {
+        "english": "HAZARD COURSE",
+        "y": 4.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C0A0TITLE": {
+        "english": "BLACK MESA INBOUND",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "OPENTITLE3": {
+        "english": "",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "OPENTITLE4": {
+        "english": "",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C0A1TITLE": {
+        "english": "ANOMALOUS MATERIALS",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C1A1TITLE": {
+        "english": "UNFORESEEN CONSEQUENCES",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C1A2TITLE": {
+        "english": "OFFICE COMPLEX",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C1A3TITLE": {
+        "english": "\"WE'VE GOT HOSTILES\"",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C1A4TITLE": {
+        "english": "BLAST PIT",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C2A1TITLE": {
+        "english": "POWER UP",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C2A2TITLE": {
+        "english": "ON A RAIL",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C2A3TITLE": {
+        "english": "APPREHENSION",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C2A4TITLE1": {
+        "english": "RESIDUE PROCESSING",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C2A4TITLE2": {
+        "english": "QUESTIONABLE ETHICS",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C2A5TITLE": {
+        "english": "SURFACE TENSION",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C3A1TITLE": {
+        "english": "\"FORGET ABOUT FREEMAN!\"",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C3A2TITLE": {
+        "english": "LAMBDA CORE",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A1TITLE": {
+        "english": "XEN",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A1ATITLE": {
+        "english": "INTERLOPER",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A1BTITLE": {
+        "english": "",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A1CTITLE": {
+        "english": "",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A1ETITLE": {
+        "english": "",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A1FTITLE": {
+        "english": "",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A2TITLE": {
+        "english": "GONARCH'S LAIR",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C4A3TITLE": {
+        "english": "NIHILANTH",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "C5TITLE": {
+        "english": "ENDGAME",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    // Game title
+    "VALVE_GAMETITLE": {
+        "english": "Half-Life",
+        "y": -1,
+        "effect": 0,
+        "color": [ 180, 180, 180, 255 ],
+        "fadein": 10.0,
+        "hold": 30.0,
+        "fadeout": 15.0
+    },
+    //HAZARD COURSE TEXT
+    "VALVE_HZBUTTON1": {
+        "english": "PRESS YOUR USE KEY TO PUSH A BUTTON",
+        "y": 3.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZWEAPONSTRIP": {
+        "english": "ENTERING CIVILIAN AREA\nREMOVING WEAPONS NOW",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZBUTTON2": {
+        "english": "PRESS YOUR USE KEY TO PUSH A BUTTON",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZMOVE": {
+        "english": "MOVE FORWARD BY PRESSING FORWARD KEY\nMOVE BACKWARD BY PRESSING BACKWARD KEY\nMOVE LEFT BY PRESSING MOVELEFT\nMOVE RIGHT BY PRESSING MOVERIGHT",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZJUMP": {
+        "english": "PRESS FORWARD KEY TO RUN FORWARD\nPRESS JUMP KEY TO JUMP",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZDUCK": {
+        "english": "PRESS FORWARD KEY TO RUN FORWARD\nPRESS DUCK KEY TO DUCK\nPRESS FORWARD + DUCK KEYS TOGETHER \nTO MOVE IN STEALTH MODE",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZCOMBO": {
+        "english": "PRESS FORWARD KEY TO RUN FORWARD\nPRESS JUMP KEY TO JUMP\nPRESS DUCK KEY TO DUCK\nPRESS JUMP KEY TO JUMP",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZDUCKJUMP": {
+        "english": "PRESS FORWARD + JUMP TOGETHER,\nTHEN THE DUCK KEY",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZLADDER": {
+        "english": "PRESS FORWARD KEY TO MOVE UP LADDERS\nPRESS BACKWARD KEY TO MOVE DOWN LADDERS",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZLJUMP": {
+        "english": "WHILE MOVING FORWARD,\nHOLD DOWN DUCK KEY--\nTHEN PRESS JUMP",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZLMOD": {
+        "english": "BE SURE YOU PICKED UP THE LONG-JUMP MODULE\nAT THE BEGINNING OF THE OBSTACLE",
+        "y": 3.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZMEDKIT": {
+        "english": "USE MED-KITS BY HOLDING DOWN THE USE KEY\nHOLD DOWN USE KEY UNTIL HEALTH IS\nAT 100 OR KIT IS DEPLETED",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZMOMENT": {
+        "english": "ACTIVATE WHEELS AND DIALS \nBY HOLDING DOWN THE USE KEY\nHOLD USE KEY UNTIL BRIDGE IS IN POSITION",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZPUSH": {
+        "english": "PRESS FORWARD KEY TO MOVE AGAINST BOX\nKEEP PRESSING FORWARD TO PUSH BOX",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZPULL": {
+        "english": "PRESS USE + BACKWARD KEYS TOGETHER\nTO PULL BOX BACKWARD",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZCROWBAR": {
+        "english": "MOVE UP TO CROWBAR\nPRESS ATTACK1 KEY TO BREAK OBJECTS",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZLITEON": {
+        "english": "PRESS FLASHLIGHT KEY \nTO TURN FLASHLIGHT ON",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZLITEOFF": {
+        "english": "PRESS FLASHLIGHT KEY AGAIN \nTO TURN FLASHLIGHT OFF",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZWEAPON": {
+        "english": "MOVE UP TO WEAPON TO PICK IT UP",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZFIREWEAP": {
+        "english": "PRESS ATTACK1 KEY FOR PRIMARY ATTACK\nPRESS ATTACK2 KEY FOR ALTERNATE ATTACK\nPRESS RELOAD KEY TO RELOAD AT WILL",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZARMOR": {
+        "english": "PRESS AND HOLD YOUR USE KEY\nHOLD DOWN UNTIL SUIT ARMOR IS CHARGED\nOR CHARGER IS DEPLETED",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZSWIM": {
+        "english": "PRESS YOUR FORWARD KEY\nAIM WITH THE MOUSE AS YOU SWIM\nFIND AIR IF YOU BEGIN TO LOSE HEALTH\nWAIT IN THE AIR UNTIL HEALTH \nRETURNS TO FORMER LEVEL",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZDAMAGE": {
+        "english": "CERTAIN TYPES OF DAMAGE WILL REGISTER \nON YOUR HEADS-UP DISPLAY.\nDIRECTION OF DAMAGE IS INDICATED BY RED \nFLASHES IN THE CENTER OF YOUR SCREEN",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZHAZARD": {
+        "english": "RADIATION HAZARDS \nACTIVATE A GEIGER COUNTER",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZSCIENTIST": {
+        "english": "APPROACH SCIENTIST\nPRESS USE KEY TO RECEIVE HEALTH FROM SCIENTIST",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "VALVE_HZBARNEY": {
+        "english": "APPROACH SECURITY GUARD\nPRESS YOUR USE KEY TO GET HIS HELP\nWALK TOWARD DOOR AND GUARD\nWILL ACTIVATE BUTTONS",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZTRAIN": {
+        "english": "PRESS USE KEY TO ENGAGE TRAIN\nPRESS FORWARD KEY TO ACCELERATE\nPRESS BACKWARD KEY TO DECELERATE\nPRESS USE KEY AGAIN TO DISENGAGE",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "HZDONE": {
+        "english": "CONGRATULATIONS!\nYOU HAVE COMPLETED \nTHE BLACK MESA HAZARD COURSE.\nCOME BACK ANY TIME.",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    }
+}

@@ -1,0 +1,469 @@
+//TITLES FOR BLUE-SHIFT
+{
+    "$schema": "../schemas/client/titles.json",
+
+    "BSTITLE": {
+        "english": "Half-Life: Blue Shift",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "ENDCHEAT": {
+        "english": "THE END",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 20.0,
+        "fadeout": 1.0
+    },
+    "INTRO1": {
+        "english": "SUBJECT:\nB. Calhoun",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR29": {
+        "english": "EDUCATION:\n2 years Martinson College\nUndecided Major",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR30": {
+        "english": "EMPLOYER:\nBlack Mesa Research Facility",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR31": {
+        "english": "POSITION:\nSecurity Officer",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR32": {
+        "english": "ASSIGNMENT:\nArea 3 Security",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR33": {
+        "english": "CLEARANCE:\nLevel 3",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR34": {
+        "english": "DISASTER RESPONSE PRIORITY:\nPreservation of facility \nequipment and materials.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR35": {
+        "english": "SECONDARY PRIORITY:\nWelfare of research personnel.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_CR36": {
+        "english": "LOW PRIORITY:\nPersonal safety.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_GAMEOVER": {
+        "english": "SUBJECT:  CALHOUN\nSTATUS:  EMPLOYMENT TERMINATED\nREASON FOR TERMINATION:\nImproper handling of a firearm\nin the facility.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 13.0
+    },
+    "XEN1FAILURE": {
+        "english": "SUBJECT:  CALHOUN\nSTATUS:  UNKNOWN\nEmployee is assumed to have perished with\nremaining personnel during Lambda incident.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 13.0
+    },
+    "BSGAMEEND": {
+        "english": "SUBJECT:  CALHOUN\nSTATUS:  OUT OF RANGE\nNO FURTHER COMMENT",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_TRAITOR": {
+        "english": "SUBJECT:  FREEMAN\nSTATUS:  HIRED\nAWAITING ASSIGNMENT",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_LOSER": {
+        "english": "SUBJECT:  FREEMAN\nSTATUS:  OBSERVATION TERMINATED\nPOSTMORTEM:\nSubject declined offer of employment.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 3.0,
+        "hold": 9.0,
+        "fadeout": 13.0
+    },
+    "ROSENDEAD": {
+        "english": "SUBJECT:  CALHOUN\nSTATUS:  UNKNOWN\nEmployee is assumed to have perished with\nremaining personnel during Lambda incident.",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 2.0,
+        "hold": 9.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_T0A0TITLE": {
+        "english": "HAZARD COURSE",
+        "y": 4.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_TRAMTITLE": {
+        "english": "LIVING QUARTERS OUTBOUND",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_SECURITYTITLE": {
+        "english": "INSECURITY",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_CANALSTITLE": {
+        "english": "DUTY CALLS",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_YARDTITLE": {
+        "english": "CAPTIVE FREIGHT",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_XENTITLE": {
+        "english": "FOCAL POINT",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_POWERTITLE": {
+        "english": "POWER STRUGGLE",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BA_TELEPORTTITLE": {
+        "english": "A LEAP OF FAITH",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 4.0,
+        "fadeout": 13.0
+    },
+    "BSHIFT_GAMETITLE": {
+        "english": "Half-Life",
+        "y": -1,
+        "effect": 0,
+        "color": [ 180, 180, 180, 255 ],
+        "fadein": 10.0,
+        "hold": 30.0,
+        "fadeout": 15.0
+    },
+    "BSHIFT_HZBUTTON1": {
+        "english": "PRESS YOUR USE KEY TO PUSH A BUTTON",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "BSHIFT_HZBARNEY": {
+        "english": "APPROACH SCIENTIST\nPRESS YOUR USE KEY TO GET HIS HELP\nWALK TOWARD DOOR AND SCIENTIST\nWILL ACTIVATE THE RETINAL SCANNER",
+        "y": 65.0,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 5.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "BSHIFT_CR27": {
+        "english": "Black Mesa Research Facility\nBlack Mesa, New Mexico",
+        "y": -1,
+        "effect": 2,
+        "color": [ 100, 100, 100, 255 ],
+        "fadein": 1.0,
+        "hold": 35.0,
+        "fadeout": 15.0
+    },
+    "BSHIFT_CR1": {
+        "english": "Matt Armstrong",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR2": {
+        "english": "Stephen Bahl",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR3": {
+        "english": "Sean Cavanaugh",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR4": {
+        "english": "Patrick Deupree",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR5": {
+        "english": "Rob Heironimus",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR6": {
+        "english": "Steve Jones",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR7": {
+        "english": "Brian Martel",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR8": {
+        "english": "David Mertz",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR9": {
+        "english": "Landon Montgomery",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR10": {
+        "english": "Stephen Palmer",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR11": {
+        "english": "Randy Pitchford",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR12": {
+        "english": "Sean Reardon",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR13": {
+        "english": "Matthew VanDolen",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_CR14": {
+        "english": "Mike Wardwell",
+        "x": 1.0,
+        "y": 8.0,
+        "effect": 1,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 15.0,
+        "hold": 12.0,
+        "fadeout": 5.0
+    },
+    "BSHIFT_END1": {
+        "english": "Matt Armstrong\nStephen Bahl\nSean Cavanaugh\nPatrick Deupree\nRob Heironimus",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "BSHIFT_END2": {
+        "english": "Steve Jones\nBrian Martel\nChris McArthur\nDavid Mertz\nLandon Montgomery",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "BSHIFT_END3": {
+        "english": "Stephen Palmer\nRandy Pitchford\nSean Reardon\nMatthew VanDolen\nMike Wardwell",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "SPTHANKS": {
+        "english": "Special thanks to:",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "THANKS1": {
+        "english": "Brian Hess\nJon St. John\nKristy Junio\nJoe Kennebec\nKathy Levin",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "THANKS2": {
+        "english": "Eli Luna\nHarry S. Robins\nRob Selitto\nMike Shapiro",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    },
+    "THANKS3": {
+        "english": "Blue Spark Studios\nCaptivation Digital Laboratories\nValve Software\nSierra Studios\nSega of America",
+        "y": -1,
+        "effect": 0,
+        "color": [ 128, 128, 128, 255 ],
+        "fadein": 1.0,
+        "hold": 8.0,
+        "fadeout": 1.0
+    }
+}
