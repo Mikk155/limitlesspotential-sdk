@@ -392,8 +392,7 @@ void Host_Say( CBasePlayer* player, bool teamonly )
     strcat( text, "\n" );
 
 
-    // TODO: clamp cvar value so it can't be negative
-    player->m_flNextChatTime = gpGlobals->time + spamdelay.value;
+    player->m_flNextChatTime = gpGlobals->time + std::min( 0.1f, spamdelay.value );
 
     // loop through all players
     // Start with the first player.
