@@ -127,6 +127,7 @@ void CHud::Init()
     m_SayText.Init();
     m_Spectator.Init();
     m_Geiger.Init();
+    m_Speedometer.Init();
     m_Train.Init();
     m_Flash.Init();
     m_Message.Init();

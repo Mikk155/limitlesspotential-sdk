@@ -193,6 +193,26 @@ private:
 //
 //-----------------------------------------------------
 //
+class CHudSpeedometer : public CHudBase
+{
+public:
+    bool Init() override;
+    bool VidInit() override;
+    bool Draw( float flTime ) override;
+
+    void SetSpeed( float SpeedLength );
+
+private:
+
+    uint16_t speed;
+
+    cvar_t* m_pSpeedometerHeight = nullptr;
+    cvar_t* m_pSpeedometerWidth = nullptr;
+};
+
+//
+//-----------------------------------------------------
+//
 class CHudTrain : public CHudBase
 {
 public:
@@ -814,6 +834,7 @@ public:
     CHudHealth m_Health;
     CHudSpectator m_Spectator;
     CHudGeiger m_Geiger;
+    CHudSpeedometer m_Speedometer;
     CHudTrain m_Train;
     CHudFlashlight m_Flash;
     CHudMessage m_Message;
@@ -869,7 +890,6 @@ public:
     int m_HUD_number_0 = 0;
 
     std::array<int, 10> m_HudNumbers{};
-
 
     void AddHudElem( CHudBase* p );
 

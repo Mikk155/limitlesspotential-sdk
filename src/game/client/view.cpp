@@ -1632,6 +1632,8 @@ void DLLEXPORT V_CalcRefdef( ref_params_t* pparams )
         V_CalcNormalRefdef( pparams );
     }
 
+    gHUD.m_Speedometer.SetSpeed( pparams->simvel.Length2D() );
+
     g_ViewEntity = pparams->viewentity;
 
     /*

@@ -192,6 +192,7 @@ target_sources(client PRIVATE
     ui/hud/hud_redraw.cpp
     ui/hud/hud_spectator.cpp
     ui/hud/hud_spectator.h
+    ui/hud/hud_speedometer.cpp
     ui/hud/hud_update.cpp
     ui/hud/HudSpriteConfigSystem.cpp
     ui/hud/HudSpriteConfigSystem.h
