@@ -37,6 +37,22 @@ struct RGB24
         return {r, g, b};
     }
 
+    /**
+     *    @brief Returns a copy of this color scaled to the given RGB24 and amount
+     *    @param amount Scale, expressed as a value in the range [0, 255]
+     *    @param target Target color
+     */
+    constexpr RGB24 ScaleColor( const RGB24& target, std::uint8_t amount ) const noexcept
+    {
+        const float t = amount / 255.f;
+    
+        const auto r = static_cast<std::uint8_t>( Red + ( target.Red - Red ) * t );
+        const auto g = static_cast<std::uint8_t>( Green + ( target.Green - Green ) * t );
+        const auto b = static_cast<std::uint8_t>( Blue + ( target.Blue - Blue ) * t );
+
+        return {r, g, b};
+    }
+
     constexpr int ToInteger() const
     {
         return Red | ( Green << 8 ) | ( Blue << 16 );
