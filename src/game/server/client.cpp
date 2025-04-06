@@ -1575,12 +1575,6 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
     state->skin = ent->v.skin;
     state->effects = ent->v.effects;
 
-    // Remove the night vision illumination effect so other players don't see it
-    if( 0 != player && host != ent )
-    {
-        state->effects &= ~EF_BRIGHTLIGHT;
-    }
-
     // This non-player entity is being moved by the game .dll and not the physics simulation system
     //  make sure that we interpolate it's position on the client if it moves
     /*
@@ -1671,6 +1665,25 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
         //
         state->usehull = ( ent->v.flags & FL_DUCKING ) != 0 ? 1 : 0;
         state->health = ent->v.health;
+
+        auto pHost = static_cast<CBasePlayer*>( CBaseEntity::Instance( host ) );
+
+        if( host != ent )
+        {
+            // Remove the night vision illumination effect so other players don't see it
+            state->effects &= ~EF_BRIGHTLIGHT;
+
+            // Set nocliping if players touching each others
+            if( !g_cfg.GetValue<bool>( "player_collision", true )
+            && entity->IsPlayer()
+            && pHost->IsAlive()
+            && pHost->Intersects( entity )
+            && host->v.absmin.z < ent->v.absmax.z /* Allow to "Boost" */
+            ) {
+                state->solid = SOLID_NOT;
+                // -TODO Check for relationship and perphabs allow monsters too?
+            }
+        }
     }
 
     return 1;
@@ -2259,5 +2272,35 @@ ShouldCollide
 */
 int ShouldCollide( edict_t *pentTouched, edict_t *pentOther )
 {
+#if 0
+    if( !FNullEnt( pentTouched ) && !FNullEnt( pentOther ) )
+    {
+        auto touched = CBaseEntity::Instance( pentTouched );
+        auto toucher = CBaseEntity::Instance( pentOther );
+
+        if( touched != nullptr && toucher != nullptr )
+        {
+//-TODO Need to check both players are efectivelly allies
+            if( !g_cfg.GetValue<bool>( "player_collision", true ) )
+            {
+                auto IsPlayerWithProjectile = []( CBaseEntity* a, CBaseEntity* b ) -> bool
+                {
+                    if( a->IsPlayer() && !FNullEnt( b->pev->owner ) )
+                    {
+                        if( auto c = CBaseEntity::Instance( b->pev->owner ); c != nullptr )
+                        {
+                            return ( c->IsPlayer() );
+                        }
+                    }
+                    return false;
+                };
+    
+                if( IsPlayerWithProjectile( touched, toucher ) || IsPlayerWithProjectile( toucher, touched ) )
+                    return 0;
+            }
+        }
+    }
+#endif
+
     return 1;
 }

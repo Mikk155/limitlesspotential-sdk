@@ -2910,6 +2910,21 @@ void PM_PlayerMove( qboolean server )
         return;
     }
 
+    if( !g_cfg.GetValue<bool>( "player_collision", true ) && pmove->dead == 0 && pmove->deadflag == DEAD_NO )
+    {
+        int numphysent = -1;
+
+        for( int j = numphysent; j < pmove->numphysent; j++ )
+        {
+            if( auto pPhyEnt = pmove->physents[j]; pPhyEnt.player == 0 )
+            {
+                pmove->physents[numphysent++] = pPhyEnt;
+            }
+        }
+
+        pmove->numphysent = numphysent;
+    }
+
     // Always try and unstick us unless we are in NOCLIP mode
     if( pmove->movetype != MOVETYPE_NOCLIP && pmove->movetype != MOVETYPE_NONE )
     {
