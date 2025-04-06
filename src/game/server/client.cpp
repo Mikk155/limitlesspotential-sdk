@@ -583,6 +583,8 @@ void SV_CreateClientCommands()
     g_ClientCommands.Create( "say", []( CBasePlayer* player, const auto& args )
         { Host_Say( player, false ); } );
 
+    g_ClientCommands.Create( "gibme", []( CBasePlayer* player, const auto& args )
+        { player->pev->health = 0; player->Killed( player, GIB_ALWAYS); } );
 
     g_ClientCommands.Create( "say_team", []( CBasePlayer* player, const auto& args )
         { Host_Say( player, true ); } );
