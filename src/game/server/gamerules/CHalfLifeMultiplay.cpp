@@ -305,6 +305,41 @@ bool CHalfLifeMultiplay::FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity
 
 void CHalfLifeMultiplay::PlayerThink( CBasePlayer* pPlayer )
 {
+#if 0
+    if( !pPlayer->IsObserver() )
+    {
+        if( pPlayer->pev->button == pPlayer->pev->oldbuttons )
+        {
+            pPlayer->m_iAFKTime = 0;
+        }
+        else if( gpGlobals->time > pPlayer->m_flAFKNextThink )
+        {
+            pPlayer->m_iAFKTime++;
+            pPlayer->m_flAFKNextThink = gpGlobals->time + 1.0f;
+
+            if( pPlayer->m_iAFKTime > g_cfg.GetValue<int>( "max_afk_time"sv, 300 ) )
+            {
+                pPlayer->m_bIsAFK = true;
+                pPlayer->m_iAFKTime = 0;
+            }
+        }
+    }
+    else if( pPlayer->m_bIsAFK && gpGlobals->time > pPlayer->m_flAFKNextThink )
+    {
+        if( ( pPlayer->pev->button & IN_USE ) != 0 )
+        {
+            // -Move out of spectator
+            pPlayer->m_bIsAFK = false;
+        }
+        else
+        {
+            ClientPrint( pPlayer, HUD_PRINTTALK, "Press +Use to exit AFK mode\n" );
+        }
+
+        pPlayer->m_flAFKNextThink = gpGlobals->time + 1.0f;
+    }
+#endif
+
     if( ( pPlayer->m_iItems & CTFItem::PortableHEV ) != 0 )
     {
         if( pPlayer->m_flNextHEVCharge <= gpGlobals->time )

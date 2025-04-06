@@ -646,6 +646,12 @@ public:
     void SendScoreInfoAll();
 
     void ToggleCheat( Cheat cheat );
+
+#if 0
+    int m_iAFKTime = 0;
+    float m_flAFKNextThink;
+    bool m_bIsAFK;
+#endif
 };
 
 inline void CBasePlayer::SetWeaponBit( int id )
