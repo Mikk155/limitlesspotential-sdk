@@ -1467,10 +1467,24 @@ void CBasePlayer::PlayerUse()
     }
     pObject = pClosest;
 
-    // Found an object
-    if( pObject )
+    auto CanUseEntityLoS = [this]( CBaseEntity* pObjectCap ) -> bool
     {
-        //!!!UNDONE: traceline here to prevent USEing buttons through walls
+        if( !pObjectCap )
+            return false;
+
+        if( !pObjectCap->m_uselos )
+            return true;
+
+        TraceResult tr;
+        Vector VecSrc = pev->origin + pev->view_ofs;
+        UTIL_TraceLine( VecSrc, VecSrc + gpGlobals->v_forward * PLAYER_SEARCH_RADIUS, dont_ignore_monsters, dont_ignore_glass, edict(), &tr );
+
+        return ( tr.pHit == pObjectCap->edict() );
+    };
+
+    // Found an object
+    if( CanUseEntityLoS( pObject ) )
+    {
         int caps = pObject->ObjectCaps();
 
         if( ( m_afButtonPressed & IN_USE ) != 0 )

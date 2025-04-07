@@ -666,6 +666,10 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
     {
         m_UseLockType = atoi( pkvd->szValue );
     }
+    else if( FStrEq( pkvd->szKeyName, "m_uselos" ) )
+    {
+        m_uselos = atoi( pkvd->szValue ) == 1;
+    }
     else return false;
     return true;
 }

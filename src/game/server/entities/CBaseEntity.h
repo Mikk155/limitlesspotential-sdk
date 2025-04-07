@@ -697,6 +697,8 @@ public:
     // Damage cap per-frame
     float m_capdmg_time;
     float m_capdmg_max;
+
+    bool m_uselos = false;
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }
