@@ -478,7 +478,6 @@ void CBaseButton::ButtonUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     if( m_toggle_state == TS_GOING_UP || m_toggle_state == TS_GOING_DOWN )
         return;
 
-    m_hActivator = pActivator;
     if( m_toggle_state == TS_AT_TOP )
     {
         if( !m_fStayPushed && FBitSet( pev->spawnflags, SF_BUTTON_TOGGLE ) )

@@ -222,6 +222,8 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
             continue; // Do this check in here instead so if USE_UNLOCK is sent we catch it
         }
 
+        entity->m_hActivator = activator;
+
         switch( use_type )
         {
             case USE_ON:
@@ -425,7 +427,7 @@ void CBaseDelay::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, UseV
         pTemp->SetThink( &CBaseDelay::DelayThink );
 
         // Save the useType
-        pTemp->pev->button = (int)useType;
+        pTemp->pev->button = static_cast<int>( useType );
         pTemp->m_iszKillTarget = m_iszKillTarget;
         pTemp->m_flDelay = 0; // prevent "recursion"
         pTemp->pev->target = pev->target;

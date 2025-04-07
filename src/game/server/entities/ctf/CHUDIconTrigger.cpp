@@ -36,8 +36,6 @@ void CHUDIconTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
         if( !FStringNull( pev->noise ) )
             EmitSound( CHAN_VOICE, STRING( pev->noise ), VOL_NORM, ATTN_NORM );
 
-        m_hActivator = pActivator;
-
         SUB_UseTargets( m_hActivator, USE_TOGGLE );
 
         if( !FStringNull( pev->message ) )

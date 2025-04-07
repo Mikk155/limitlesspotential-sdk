@@ -378,7 +378,6 @@ void CMultiManager::ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, U
         return;
     }
 
-    m_hActivator = pActivator;
     m_index = 0;
     m_startTime = gpGlobals->time;
 
@@ -882,7 +881,6 @@ bool CTriggerCounter::Spawn()
 void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
     m_cTriggersLeft--;
-    m_hActivator = pActivator;
 
     if( m_cTriggersLeft < 0 )
         return;
