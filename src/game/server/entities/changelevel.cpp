@@ -214,7 +214,14 @@ static void QueueChangelevel( const char* mapName, const char* landmarkName, boo
 
 void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
 {
-    ASSERT( !FStrEq( m_szMapName, "" ) );
+    if( FStrEq( m_szMapName, "" ) )
+    {
+        if( g_pGameRules->IsMultiplayer() )
+            g_pGameRules->EndMultiplayerGame( true );
+        else
+            g_engfuncs.pfnEndSection( "_oem_end_logo" );
+        return;
+    }
 
     // Some people are firing these multiple times in a frame, disable
     if( gpGlobals->time == pev->dmgtime )
