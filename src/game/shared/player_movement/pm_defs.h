@@ -71,19 +71,18 @@ struct physent_t
     int team;
     int classnumber;
 
-    // For mods
-    int iuser1;
-    int iuser2;
-    int iuser3;
-    int iuser4;
-    float fuser1;
-    float fuser2;
-    float fuser3;
+    int iuser1; // ON USE! for CBasePlayer
+    int iuser2; // ON USE! for CBasePlayer
+    int iuser3; // ON USE! for CBasePlayer
+    int iuser4; // ON USE! for CBasePlayer
+    float fuser1; // ON USE! for CBasePlayer
+    float fuser2; // ON USE! for CBasePlayer
+    float fuser3; // ON USE! for CBasePlayer
     float fuser4;
-    Vector vuser1;
-    Vector vuser2;
-    Vector vuser3;
-    Vector vuser4;
+    Vector vuser1; // ON USE! for CBasePlayer
+    Vector vuser2; // ON USE! for CBasePlayer
+    Vector vuser3; // ON USE! for CBasePlayer
+    Vector vuser4; // ON USE! for CBasePlayer
 };
 
 
@@ -145,19 +144,18 @@ struct playermove_t
     float maxspeed;
     float clientmaxspeed; // Player specific maxspeed
 
-    // For mods
-    int iuser1;
-    int iuser2;
-    int iuser3;
-    int iuser4;
-    float fuser1;
-    float fuser2;
-    float fuser3;
+    int iuser1; // ON USE! for CBasePlayer
+    int iuser2; // ON USE! for CBasePlayer
+    int iuser3; // ON USE! for CBasePlayer
+    int iuser4; // ON USE! for CBasePlayer
+    float fuser1; // ON USE! for CBasePlayer
+    float fuser2; // ON USE! for CBasePlayer
+    float fuser3; // ON USE! for CBasePlayer
     float fuser4;
-    Vector vuser1;
-    Vector vuser2;
-    Vector vuser3;
-    Vector vuser4;
+    Vector vuser1; // ON USE! for CBasePlayer
+    Vector vuser2; // ON USE! for CBasePlayer
+    Vector vuser3; // ON USE! for CBasePlayer
+    Vector vuser4; // ON USE! for CBasePlayer
     // world state
     // Number of entities to clip against.
     int numphysent;
