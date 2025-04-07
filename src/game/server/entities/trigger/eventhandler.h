@@ -22,8 +22,12 @@
 enum class TriggerEventType
 {
     None = 0,
+    PlayerDie,
+    PlayerLeftServer,
     PlayerKilled,
-    PlayerDie
+    PlayerActivate,
+    PlayerJoin,
+    PlayerSpawn
 };
 
 struct trigger_event_t

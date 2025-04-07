@@ -92,7 +92,10 @@ namespace MapUpgrader.Upgrades.Common
                 music.SetInteger(TargetSelectorKey, (int)AmbientMusicTargetSelector.AllPlayers);
                 music.SetInteger(RemoveOnFireKey, 1);
 
-                music.SetTargetName("game_playeractivate");
+                Entity EventHandler = context.Map.Entities.CreateNewEntity( "trigger_eventhandler" );
+                EventHandler.SetInteger( "event_type", 4 );
+                EventHandler.SetTarget( "game_playeractivate_music" );
+                music.SetTargetName( EventHandler.GetTarget() );
             }
         }
 

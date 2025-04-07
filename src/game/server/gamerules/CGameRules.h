@@ -22,6 +22,7 @@
 
 #include "ClientCommandRegistry.h"
 #include "info/player_start.h"
+#include "trigger/eventhandler.h"
 
 class CBaseItem;
 class CBaseMonster;

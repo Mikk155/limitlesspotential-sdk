@@ -12,6 +12,8 @@ namespace MapUpgrader.Upgrades.Common
 
         protected override void ApplyCore(MapUpgradeContext context)
         {
+            bool HasEventHandler = false;
+
             foreach (var entity in context.Map.Entities
                 .OfClass("game_player_equip")
                 .Where(e => string.IsNullOrEmpty(e.GetTargetName())))
@@ -24,9 +26,17 @@ namespace MapUpgrader.Upgrades.Common
                     continue;
                 }
 
-                entity.SetTargetName("game_playerspawn");
+                entity.SetTargetName("GPE_PlayerSpawn");
+                HasEventHandler = true;
 
                 entity.SetSpawnFlags(spawnFlags | UseOnlyFlag);
+            }
+
+            if( HasEventHandler )
+            {
+                Entity EventHandler = context.Map.Entities.CreateNewEntity( "trigger_eventhandler" );
+                EventHandler.SetInteger( "event_type", 6 );
+                EventHandler.SetTarget( "GPE_PlayerSpawn" );
             }
         }
     }

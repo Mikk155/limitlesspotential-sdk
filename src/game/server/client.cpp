@@ -90,6 +90,8 @@ void ClientDisconnect( edict_t* pEntity )
 
     auto pPlayer = ToBasePlayer( pEntity );
 
+    TriggerEvent( TriggerEventType::PlayerLeftServer, pPlayer, pPlayer );
+
     if( pPlayer )
     {
         pPlayer->m_Connected = false;
@@ -105,7 +107,6 @@ void ClientDisconnect( edict_t* pEntity )
 
     g_pGameRules->ClientDisconnected( pEntity );
 }
-
 
 /**
  *    @brief called by ClientKill and DeadThink

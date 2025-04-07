@@ -755,6 +755,11 @@ void CBasePlayer::Killed( CBaseEntity* attacker, int iGib )
     if( m_pActiveWeapon )
         m_pActiveWeapon->Holster();
 
+    TriggerEvent( TriggerEventType::PlayerDie, this );
+
+    if( attacker )
+        TriggerEvent( TriggerEventType::PlayerKilled, attacker, this );
+
     g_pGameRules->PlayerKilled( this, attacker, g_pevLastInflictor );
 
     if( m_pTank != nullptr )
@@ -3812,7 +3817,7 @@ void CBasePlayer::UpdateClientData()
     {
         m_HasActivated = true;
         g_Server.PlayerActivating( this );
-        FireTargets( "game_playeractivate", this, this, USE_TOGGLE );
+        TriggerEvent( TriggerEventType::PlayerActivate, this, this );
     }
 
     if( m_fInitHUD )
@@ -3834,10 +3839,7 @@ void CBasePlayer::UpdateClientData()
 
             m_iObserverLastMode = OBS_ROAMING;
 
-            if( g_pGameRules->IsMultiplayer() )
-            {
-                FireTargets( "game_playerjoin", this, this, USE_TOGGLE );
-            }
+            TriggerEvent( TriggerEventType::PlayerJoin, this, this );
         }
 
         if( g_pGameRules->IsMultiplayer() )
@@ -3858,7 +3860,7 @@ void CBasePlayer::UpdateClientData()
 
         // This counts as spawning, it suppresses weapon pickup notifications.
         m_bIsSpawning = true;
-        FireTargets( "game_playerspawn", this, this, USE_TOGGLE );
+        TriggerEvent( TriggerEventType::PlayerSpawn, this, this );
         m_bIsSpawning = false;
 
         m_AutoWepSwitch = savedAutoWepSwitch;

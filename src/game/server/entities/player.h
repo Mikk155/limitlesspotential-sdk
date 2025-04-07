@@ -591,7 +591,7 @@ public:
     // True if the player is currently spawning.
     bool m_bIsSpawning = false;
 
-    // Whether to fire game_playerspawn next time we check for updates.
+    // Whether to fire trigger_eventhandler next time we check for updates.
     bool m_FireSpawnTarget = false;
 
     bool IsOnRope() const { return ( m_afPhysicsFlags & PFLAG_ONROPE ) != 0; }

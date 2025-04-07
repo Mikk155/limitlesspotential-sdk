@@ -265,7 +265,7 @@ void CHalfLifeMultiplay::ClientDisconnected( edict_t* pClient )
             if( !g_fGameOver && ( pPlayer->m_iItems & CTFItem::ItemsMask ) != 0 )
                 ScatterPlayerCTFPowerups( pPlayer );
 
-            FireTargets( "game_playerleave", pPlayer, pPlayer, USE_TOGGLE );
+            TriggerEvent( TriggerEventType::PlayerLeftServer, pPlayer, pPlayer );
 
             Logger->trace( "{} disconnected", PlayerLogInfo{*pPlayer} );
 
@@ -473,7 +473,6 @@ void CHalfLifeMultiplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKille
 
     pVictim->m_iDeaths += 1;
 
-    FireTargets( "game_playerdie", pVictim, pVictim, USE_TOGGLE );
     CBasePlayer* peKiller = ToBasePlayer( pKiller );
 
     if( pVictim == pKiller )
@@ -484,8 +483,6 @@ void CHalfLifeMultiplay::PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKille
     {
         // if a player dies in a deathmatch game and the killer is a client, award the killer some points
         pKiller->pev->frags += IPointsForKill( peKiller, pVictim );
-
-        FireTargets( "game_playerkill", peKiller, peKiller, USE_TOGGLE );
     }
     else
     { // killed by the world

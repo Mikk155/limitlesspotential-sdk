@@ -193,7 +193,7 @@ float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
 void CGameRules::SetupPlayerInventory( CBasePlayer* player )
 {
     // Originally game_player_equip entities were triggered in PlayerSpawn to set up the player's inventory.
-    // This is now handled by naming them game_playerspawn (see CBasePlayer::UpdateClientData).
+    // This is now handled by trigger_eventhandler (see CBasePlayer::UpdateClientData).
     // Handling it there avoids edge cases where this function is called during ClientPutInServer.
     // It is not possible to send messages to clients during that function so ammo change messages are ignored.
 

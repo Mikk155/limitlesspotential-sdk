@@ -7319,19 +7319,27 @@
 },
 "trigger_eventhandler::event_type::3":
 {
-"english": "Player has been kiled (not suicide)"
+"english": "Player has died"
+},
+"trigger_eventhandler::event_type::3::description":
+{
+"english": "victim is the caller, the attacker is the activator. this only fires if the attacker is valid."
 },
 "trigger_eventhandler::event_type::4":
 {
-"english": "Player has joined (game_playeractivate)"
+"english": "Player has fully joined"
+},
+"trigger_eventhandler::event_type::4::description":
+{
+"english": "Fired when the player activates (finished joining the server/loading save game and finished initializing)"
 },
 "trigger_eventhandler::event_type::5":
 {
-"english": "Player has joined (game_playerjoin)"
+"english": "Player is joining"
 },
 "trigger_eventhandler::event_type::6":
 {
-"english": "Player has joined (game_playerspawn)"
+"english": "Player has spawned"
 },
 "EOF": true
 }

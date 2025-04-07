@@ -745,7 +745,6 @@ void CHalfLifeCTFplay::ClientDisconnected( edict_t* pClient )
             }
             v2->m_iTeamNum = CTFTeam::None;
             v2->m_iNewTeamNum = CTFTeam::None;
-            FireTargets( "game_playerleave", v2, v2, USE_TOGGLE );
 
             Logger->trace( "{} disconnected", PlayerLogInfo{*v2} );
 
