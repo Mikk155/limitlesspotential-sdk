@@ -111,6 +111,10 @@ bool CSpore::Spawn()
 
     m_flSoundDelay = gpGlobals->time;
 
+    pev->renderfx = kRenderFxDLightColor;
+    pev->renderamt = 25;
+    pev->rendercolor = Vector( 0, 255, 200 );
+
     return true;
 }
 

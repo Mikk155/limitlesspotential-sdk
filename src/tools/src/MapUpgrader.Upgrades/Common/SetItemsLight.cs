@@ -26,7 +26,7 @@ namespace MapUpgrader.Upgrades.Common
                     if( entity.ClassName == "ammo_spore" )
                     {
                         if( entity.GetInteger( "renderamt" ) == 0 )
-                            entity.SetInteger( "renderamt", 10 );
+                            entity.SetInteger( "renderamt", 15 );
 
                         if( entity.GetRenderColor() == System.Numerics.Vector3.Zero )
                             entity.SetVector3( "rendercolor", new Vector3( 0, 255, 200 ) );
@@ -34,7 +34,7 @@ namespace MapUpgrader.Upgrades.Common
                     else if( entity.ClassName == "item_battery" )
                     {
                         if( entity.GetInteger( "renderamt" ) == 0 )
-                            entity.SetInteger( "renderamt", 10 );
+                            entity.SetInteger( "renderamt", 15 );
 
                         if( entity.GetRenderColor() == System.Numerics.Vector3.Zero )
                             entity.SetVector3( "rendercolor", new Vector3( 0, 90, 70 ) );
