@@ -31,11 +31,11 @@ bool CTriggerEventHandler::Spawn()
 
     if( m_EventType == TriggerEventType::None )
     {
-        CBaseEntity::Logger->error( "Unexpecified event type in trigger_event at {}", pev->origin.MakeString() );
+        CBaseEntity::Logger->error( "Unexpecified event type in trigger_eventhandler at {}", pev->origin.MakeString() );
         return false;
     }
 
-    CBaseEntity::Logger->debug( "trigger_event Registering event type {} for {}", static_cast<int>(m_EventType), STRING( pev->target ) );
+    CBaseEntity::Logger->debug( "trigger_eventhandler Registering event type {} for {}", static_cast<int>(m_EventType), STRING( pev->target ) );
 
     trigger_event_t event{ m_EventType, entindex() };
 

@@ -47,10 +47,10 @@ public:
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     string_t m_Caller;
+    TriggerEventType m_EventType = TriggerEventType::None;
 
 private:
     bool InitialState;
-    TriggerEventType m_EventType = TriggerEventType::None;
 };
 
 void TriggerEvent( TriggerEventType event, CBaseEntity* activator, CBaseEntity* caller = nullptr, UseValue value = {} );

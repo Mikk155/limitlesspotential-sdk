@@ -407,14 +407,26 @@ void CWorld::Precache()
     if( !FStringNull( pev->netname ) )
     {
         Logger->debug( "Chapter title: {}", GetNetname() );
-        CBaseEntity* pEntity = CBaseEntity::Create( "env_message", g_vecZero, g_vecZero, nullptr );
-        if( pEntity )
+
+        if( CBaseEntity* pEntity = CBaseEntity::Create( "env_message", g_vecZero, g_vecZero, nullptr ); pEntity != nullptr )
         {
-            pEntity->SetThink( &CBaseEntity::SUB_CallUseToggle );
             pEntity->pev->message = pev->netname;
             pev->netname = string_t::Null;
-            pEntity->pev->nextthink = gpGlobals->time + 0.3;
-            pEntity->pev->spawnflags = SF_MESSAGE_ONCE;
+
+            if( g_pGameRules->IsMultiplayer() )
+            {
+                if( CTriggerEventHandler* event = g_EntityDictionary->Create<CTriggerEventHandler>( "trigger_eventhandler" ); event != nullptr )
+                {
+                    event->m_EventType = TriggerEventType::PlayerActivate;
+                    pEntity->pev->targetname = event->pev->target = MAKE_STRING( "EVM_ChapterTitle" );
+                }
+            }
+            else
+            {
+                pEntity->SetThink( &CBaseEntity::SUB_CallUseToggle );
+                pEntity->pev->spawnflags = ( SF_MESSAGE_ONCE | SF_MESSAGE_ALL );
+                pEntity->pev->nextthink = gpGlobals->time + 0.3;
+            }
         }
     }
 
