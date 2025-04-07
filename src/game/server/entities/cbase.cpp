@@ -726,7 +726,18 @@ int CBaseEntity::PrecacheSound( const char* s )
 
 void CBaseEntity::SetSize( const Vector& min, const Vector& max )
 {
-    g_engfuncs.pfnSetSize( edict(), m_HasCustomHullMin ? m_CustomHullMin : min, m_HasCustomHullMax ? m_CustomHullMax : max );
+    // If it's a studiomodel and has a scale let's scale the bbox too
+    if( strstr( STRING( pev->model ), ".mdl" ) != nullptr && pev->scale != 0.0 && pev->scale != 1.0 )
+    {
+        g_engfuncs.pfnSetSize( edict(),
+            m_HasCustomHullMin ? m_CustomHullMin * pev->scale : min * pev->scale,
+            m_HasCustomHullMax ? m_CustomHullMax * pev->scale : max * pev->scale
+    ); }
+    else {
+        g_engfuncs.pfnSetSize( edict(),
+            m_HasCustomHullMin ? m_CustomHullMin : min,
+            m_HasCustomHullMax ? m_CustomHullMax : max
+    ); }
 }
 
 bool CBaseEntity::GiveHealth( float flHealth, int bitsDamageType )
