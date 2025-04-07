@@ -1472,7 +1472,7 @@ void CBasePlayer::PlayerUse()
         if( !pObjectCap )
             return false;
 
-        if( !pObjectCap->m_uselos )
+        if( !pObjectCap->m_uselos && !g_cfg.GetValue<bool>( "plr_uselos"sv, false, this ) )
             return true;
 
         TraceResult tr;

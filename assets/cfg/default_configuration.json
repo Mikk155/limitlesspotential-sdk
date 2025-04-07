@@ -451,6 +451,9 @@
     // players will spawn in a random offset in this range of units
     "plr_spawn_offset": 512,
 
+    // Player can only Use entities on direct line of sight. if this is true, entities whose m_uselos is false wil require LoS anyways.
+    "plr_uselos": false,
+
     // Crowbar whack
     "plr_crowbar": 10,
 
