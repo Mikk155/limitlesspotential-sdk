@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *  Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *  This product contains software technology licensed from Id
+ *  Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *  All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -27,33 +27,33 @@ struct particle_t;
 #define FBEAM_SHADEIN 0x00000040
 #define FBEAM_SHADEOUT 0x00000080
 #define FBEAM_STARTVISIBLE 0x10000000 // Has this client actually seen this beam's start entity yet?
-#define FBEAM_ENDVISIBLE 0x20000000	  // Has this client actually seen this beam's end entity yet?
+#define FBEAM_ENDVISIBLE 0x20000000   // Has this client actually seen this beam's end entity yet?
 #define FBEAM_ISACTIVE 0x40000000
 #define FBEAM_FOREVER 0x80000000
 
 struct BEAM
 {
-	BEAM* next;
-	int type;
-	int flags;
-	Vector source;
-	Vector target;
-	Vector delta;
-	float t; // 0 .. 1 over lifetime of beam
-	float freq;
-	float die;
-	float width;
-	float amplitude;
-	float r, g, b;
-	float brightness;
-	float speed;
-	float frameRate;
-	float frame;
-	int segments;
-	int startEntity;
-	int endEntity;
-	int modelIndex;
-	int frameCount;
-	model_t* pFollowModel;
-	particle_t* particles;
+    BEAM* next;
+    int type;
+    int flags;
+    Vector source;
+    Vector target;
+    Vector delta;
+    float t; // 0 .. 1 over lifetime of beam
+    float freq;
+    float die;
+    float width;
+    float amplitude;
+    float r, g, b;
+    float brightness;
+    float speed;
+    float frameRate;
+    float frame;
+    int segments;
+    int startEntity;
+    int endEntity;
+    int modelIndex;
+    int frameCount;
+    model_t* pFollowModel;
+    particle_t* particles;
 };

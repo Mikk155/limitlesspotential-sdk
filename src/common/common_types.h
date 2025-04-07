@@ -8,23 +8,23 @@
 #pragma once
 
 /**
- *	@file
+ *  @file
  *
- *	Common data types
+ *  Common data types
  */
 
 struct Point
 {
-	int x = 0;
-	int y = 0;
+    int x = 0;
+    int y = 0;
 };
 
 struct Rect
 {
-	int left = 0;
-	int right = 0;
-	int top = 0;
-	int bottom = 0;
+    int left = 0;
+    int right = 0;
+    int top = 0;
+    int bottom = 0;
 };
 
 constexpr Rect EmptyRect{};

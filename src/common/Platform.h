@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *  Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *  This product contains software technology licensed from Id
+ *  Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *  All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -16,9 +16,9 @@
 #pragma once
 
 /**
- *	@file
+ *  @file
  *
- *	Platform abstractions, common header includes
+ *  Platform abstractions, common header includes
  */
 
 // Allow "DEBUG" in addition to default "_DEBUG"
@@ -61,24 +61,24 @@ using qboolean = int;
 
 enum class string_t_value : unsigned int
 {
-	Null = 0
+    Null = 0
 };
 
 struct string_t
 {
-	static const string_t Null;
+    static const string_t Null;
 
-	constexpr string_t() = default;
+    constexpr string_t() = default;
 
-	explicit constexpr string_t(unsigned int value)
-		: m_Value(static_cast<string_t_value>(value))
-	{
-	}
+    explicit constexpr string_t(unsigned int value)
+        : m_Value(static_cast<string_t_value>(value))
+    {
+    }
 
-	constexpr auto operator<=>(const string_t&) const = default;
+    constexpr auto operator<=>(const string_t&) const = default;
 
-	// Never write to this yourself.
-	string_t_value m_Value = string_t_value::Null;
+    // Never write to this yourself.
+    string_t_value m_Value = string_t_value::Null;
 };
 
 constexpr inline string_t string_t::Null{};
@@ -118,11 +118,11 @@ constexpr std::size_t MAX_QPATH = 64; // Must match value in quakedefs.h
 constexpr std::size_t MaxUserMessageLength = 192;
 
 /**
- *	@brief Type to efficiently store an absolute filename. Stores the string in a buffer with automatic lifetime if possible.
+ *  @brief Type to efficiently store an absolute filename. Stores the string in a buffer with automatic lifetime if possible.
  */
 using Filename = eastl::fixed_string<char, MAX_PATH_LENGTH>;
 
 /**
- *	@brief Type to efficiently store a relative filename. Stores the string in a buffer with automatic lifetime if possible.
+ *  @brief Type to efficiently store a relative filename. Stores the string in a buffer with automatic lifetime if possible.
  */
 using RelativeFilename = eastl::fixed_string<char, MAX_QPATH>;

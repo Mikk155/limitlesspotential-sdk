@@ -1,10 +1,10 @@
 #pragma once
 
 /**
- *	@file
+ *  @file
  *
- *	Header to include core platform-specific headers (e.g. Windows.h) without conflicting with SDK code
- *	Include this header *after* Platform.h
+ *  Header to include core platform-specific headers (e.g. Windows.h) without conflicting with SDK code
+ *  Include this header *after* Platform.h
  */
 
 #ifdef WIN32
