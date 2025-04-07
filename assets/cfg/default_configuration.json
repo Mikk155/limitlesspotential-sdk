@@ -491,6 +491,8 @@
 
     // Satchel Charge
     "plr_satchel": 150,
+    // Explode satchels if a player is killed
+    "plr_killed_satchel_explode": true,
 
     // Tripmine
     "plr_tripmine": 150,
@@ -691,6 +693,7 @@
     // Skill values for the Co-op gamemode
     "cooperative":
     {
+        "plr_killed_satchel_explode": false,
         "player_collision": false,
         "allow_monsters": true,
         "fall_damage": 0.22522522522,
