@@ -1658,6 +1658,12 @@ bool PM_CheckStuck()
     //  if we can't "unstick" them forceably.
     if( ( pmove->cmd.buttons & ( IN_JUMP | IN_DUCK | IN_ATTACK ) ) != 0 && ( pmove->physents[hitent].player != 0 ) )
     {
+#ifndef CLIENT_DLL
+        if( !UTIL_GetNearestHull(pmove->origin, pmove->origin, human_hull, 128, 128 ) )
+        {
+            return false;
+        }
+#endif
         if( !PM_TryToUnstuck( base ) )
         {
             return false;

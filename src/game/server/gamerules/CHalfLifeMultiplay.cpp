@@ -340,6 +340,22 @@ void CHalfLifeMultiplay::PlayerThink( CBasePlayer* pPlayer )
     }
 #endif
 
+    // If it's time. trace a hull to have a valid free space if the client uses "unstuck" command
+    if( pPlayer->m_flLastFreePositionTrack < gpGlobals->time )
+    {
+        ClientPrint( pPlayer, HUD_PRINTTALK, "Time to trace position\n" );
+        TraceResult tr;
+        UTIL_TraceHull( pPlayer->pev->origin, pPlayer->pev->origin, dont_ignore_monsters, human_hull, nullptr, &tr );
+
+        if( tr.fStartSolid != 0 || tr.fAllSolid != 0 )
+        {
+            ClientPrint( pPlayer, HUD_PRINTTALK, "Traced.\n" );
+            pPlayer->m_VecLastFreePosition = tr.vecEndPos;
+        }
+
+        pPlayer->m_flLastFreePositionTrack = gpGlobals->time + 20.0f;
+    }
+
     if( ( pPlayer->m_iItems & CTFItem::PortableHEV ) != 0 )
     {
         if( pPlayer->m_flNextHEVCharge <= gpGlobals->time )

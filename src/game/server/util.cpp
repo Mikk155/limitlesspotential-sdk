@@ -1505,3 +1505,35 @@ const char* UTIL_GetBestEntityName( CBaseEntity* entity, bool generic )
 
     return "nullptr";
 }
+
+bool UTIL_GetNearestHull( Vector& VecDestination, Vector VecStart, int hull_number, float radius, float height, float stepsize )
+{
+    const int MaxSteps = static_cast<int>( radius / stepsize );
+
+    for( int step = 1; step <= MaxSteps; ++step )
+    {
+        for( int x = -step; x <= step; ++x )
+        {
+            for( int y = -step; y <= step; ++y )
+            {
+                for( int z = -step; z <= step; ++z )
+                {
+                    if( x != 0 && y != 0 && z != 0 )
+                    {
+                        Vector test_point = VecStart + Vector( x * stepsize, y * stepsize, z * stepsize );
+
+                        TraceResult tr;
+                        UTIL_TraceHull( test_point, test_point + Vector( 0, 0, height ), dont_ignore_monsters, hull_number, nullptr, &tr );
+
+                        if( tr.fStartSolid == 0 && tr.fAllSolid == 0 )
+                        {
+                            VecDestination = test_point;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}

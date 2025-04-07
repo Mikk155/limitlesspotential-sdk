@@ -585,6 +585,24 @@ void SV_CreateClientCommands()
     g_ClientCommands.Create( "gibme", []( CBasePlayer* player, const auto& args )
         { player->pev->health = 0; player->Killed( player, GIB_ALWAYS); } );
 
+    g_ClientCommands.Create( "unstuck", []( CBasePlayer* player, const auto& args )
+        {
+            if( player->m_VecLastFreePosition != g_vecZero )
+            {
+                player->pev->origin = player->m_VecLastFreePosition;
+            }
+            else
+            {
+                TraceResult tr;
+                UTIL_TraceHull( player->pev->origin, player->pev->origin, dont_ignore_monsters, human_hull, nullptr, &tr );
+
+                if( tr.fStartSolid != 0 || tr.fAllSolid != 0 )
+                {
+                    UTIL_GetNearestHull( player->pev->origin, player->pev->origin, human_hull, 128, 128 );
+                }
+            }
+        } );
+
     g_ClientCommands.Create( "say_team", []( CBasePlayer* player, const auto& args )
         { Host_Say( player, true ); } );
 

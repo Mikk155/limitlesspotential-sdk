@@ -769,3 +769,15 @@ struct CallOnDestroy
         Function();
     }
 };
+
+/**
+ *  @brief Gets the nearest hull from VecStart around radius. Searches in spiral
+ *  @param VecDestination Your Vector. if the function fails on getting a valid hull the function will return false.
+ *  @param VecStart Origin to start from
+ *  @param hull_number Hull size to Trace
+ *  @param radius Range
+ *  @param height [Optional] Height for the TraceHull
+ *  @param stepsize [Optional] Size between every TraceHull
+ *  NOTE: This method is bad and should be reworked at some point.
+ */
+bool UTIL_GetNearestHull( Vector& VecDestination, Vector VecStart, int hull_number, float radius, float height = 0, float stepsize = 16.0f );

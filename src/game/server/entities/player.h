@@ -652,6 +652,10 @@ public:
     float m_flAFKNextThink;
     bool m_bIsAFK;
 #endif
+
+    // unstuck command
+    float m_flLastFreePositionTrack;
+    Vector m_VecLastFreePosition;
 };
 
 inline void CBasePlayer::SetWeaponBit( int id )
