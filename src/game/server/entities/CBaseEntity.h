@@ -85,7 +85,8 @@ class UseValue
         const char* m_char;
         CBaseEntity* m_entity;
 
-        USE_TYPE m_usetype = USE_UNSET; // This is only used by FireTargets for allowing custom USE_TYPEs in the target's string
+        // Should the caller's m_UseType be overrided with this?
+        USE_TYPE m_usetype = USE_UNSET;
 
         const char* print_data();
 

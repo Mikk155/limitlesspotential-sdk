@@ -318,6 +318,9 @@ void ServerLibrary::NewMapStarted( bool loadGame )
     // Reset sky name to its default value. If the map specifies its own sky
     // it will be set in CWorld::KeyValue or restored by the engine on save game load.
     CVAR_SET_STRING( "sv_skyname", DefaultSkyName );
+
+    // Clear trigger_event's events on new maps
+    m_events.clear();
 }
 
 void ServerLibrary::PreMapActivate()

@@ -21,6 +21,8 @@
 
 #include "GameLibrary.h"
 
+#include "trigger/eventhandler.h"
+
 class CBasePlayer;
 struct cvar_t;
 class MapState;
@@ -140,6 +142,9 @@ private:
     std::unique_ptr<MapState> m_MapState;
 
     std::vector<std::string> m_MapsToLoad;
+
+public:
+    std::vector<trigger_event_t> m_events;
 };
 
 inline ServerLibrary g_Server;

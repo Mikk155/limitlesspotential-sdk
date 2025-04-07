@@ -1,26 +1,20 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "base": [
         "Target",
-        "CBaseDelay",
         "AllocNewActivator"
     ],
     "data": {
         "m_Caller": {
             "variable": "target_destination",
-            "value": "!this",
             "title": "trigger_eventhandler::m_Caller",
             "description": "trigger_eventhandler::m_Caller::description"
         },
         "event_type": {
             "variable": "choices",
-            "value": "0",
+            "value": "1",
             "choices": {
-                "0": {
-                    "title": "trigger_eventhandler::event_type::0",
-                    "description": "trigger_eventhandler::event_type::0::description"
-                },
                 "1": {
                     "title": "trigger_eventhandler::event_type::1",
                     "description": "trigger_eventhandler::event_type::1::description"
