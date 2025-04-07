@@ -382,7 +382,7 @@ public:
         }
 
         pev->body = SPOREAMMOBODY_EMPTY;
-        if( m_bIsLighting ){ pev->renderfx == kRenderFxNone; }
+        if( m_bIsLighting ){ pev->renderfx = kRenderFxNone; }
 
         pev->sequence = SPOREAMMO_SNATCHDN;
 
@@ -438,7 +438,7 @@ public:
         case SPOREAMMO_IDLE:
         {
             pev->body = SPOREAMMOBODY_FULL;
-            if( m_bIsLighting ){ pev->renderfx == kRenderFxDLightColor; }
+            if( m_bIsLighting ){ pev->renderfx = kRenderFxDLightColor; }
             pev->sequence = SPOREAMMO_SPAWNDN;
             pev->animtime = gpGlobals->time;
             pev->frame = 0;
@@ -461,7 +461,7 @@ public:
         if( AddAmmo( player ) )
         {
             pev->body = SPOREAMMOBODY_EMPTY;
-            if( m_bIsLighting ){ pev->renderfx == kRenderFxNone; }
+            if( m_bIsLighting ){ pev->renderfx = kRenderFxNone; }
 
             pev->sequence = SPOREAMMO_SNATCHDN;
 
