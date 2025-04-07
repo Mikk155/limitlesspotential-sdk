@@ -1,10 +1,10 @@
 /***
  *
- *	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+ *  Copyright (c) 1996-2002, Valve LLC. All rights reserved.
  *
- *	This product contains software technology licensed from Id
- *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
- *	All Rights Reserved.
+ *  This product contains software technology licensed from Id
+ *  Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
+ *  All Rights Reserved.
  *
  *   Use, distribution, and modification of this source code and/or resulting
  *   object code is restricted to non-commercial enhancements to products from
@@ -23,7 +23,7 @@ struct edict_t;
 // Most came from server.h
 
 // edict->flags
-#define FL_FLY (1 << 0)	 // Changes the SV_Movestep() behavior to not need to be on ground
+#define FL_FLY (1 << 0)  // Changes the SV_Movestep() behavior to not need to be on ground
 #define FL_SWIM (1 << 1) // Changes the SV_Movestep() behavior to not need to be on ground (but stay in water)
 #define FL_CONVEYOR (1 << 2)
 #define FL_CLIENT (1 << 3)
@@ -32,30 +32,30 @@ struct edict_t;
 #define FL_GODMODE (1 << 6)
 #define FL_NOTARGET (1 << 7)
 #define FL_SKIPLOCALHOST (1 << 8)  // Don't send entity to local host, it's predicting this entity itself
-#define FL_ONGROUND (1 << 9)	   // At rest / on the ground
+#define FL_ONGROUND (1 << 9)       // At rest / on the ground
 #define FL_PARTIALGROUND (1 << 10) // not all corners are valid
-#define FL_WATERJUMP (1 << 11)	   // player jumping out of water
-#define FL_FROZEN (1 << 12)		   // Player is frozen for 3rd person camera
-#define FL_FAKECLIENT (1 << 13)	   // JAC: fake client, simulated server side; don't send network messages to them
-#define FL_DUCKING (1 << 14)	   // Player flag -- Player is fully crouched
-#define FL_FLOAT (1 << 15)		   // Apply floating force to this entity when in water
-#define FL_GRAPHED (1 << 16)	   // worldgraph has this ent listed as something that blocks a connection
+#define FL_WATERJUMP (1 << 11)     // player jumping out of water
+#define FL_FROZEN (1 << 12)        // Player is frozen for 3rd person camera
+#define FL_FAKECLIENT (1 << 13)    // JAC: fake client, simulated server side; don't send network messages to them
+#define FL_DUCKING (1 << 14)       // Player flag -- Player is fully crouched
+#define FL_FLOAT (1 << 15)         // Apply floating force to this entity when in water
+#define FL_GRAPHED (1 << 16)       // worldgraph has this ent listed as something that blocks a connection
 
 // UNDONE: Do we need these?
 #define FL_IMMUNE_WATER (1 << 17)
 #define FL_IMMUNE_SLIME (1 << 18)
 #define FL_IMMUNE_LAVA (1 << 19)
 
-#define FL_PROXY (1 << 20)		  // This is a spectator proxy
+#define FL_PROXY (1 << 20)        // This is a spectator proxy
 #define FL_ALWAYSTHINK (1 << 21)  // Brush model flag -- call think every frame regardless of nextthink - ltime (for constantly changing velocity/path)
 #define FL_BASEVELOCITY (1 << 22) // Base velocity has been applied this frame (used to convert base velocity into momentum)
 #define FL_MONSTERCLIP (1 << 23)  // Only collide in with monsters who have FL_MONSTERCLIP set
-#define FL_ONTRAIN (1 << 24)	  // Player is _controlling_ a train, so movement commands should be ignored on client during prediction.
-#define FL_WORLDBRUSH (1 << 25)	  // Not moveable/removeable brush entity (really part of the world, but represented as an entity for transparency or something)
-#define FL_SPECTATOR (1 << 26)	  // This client is a spectator, don't run touch functions, etc.
+#define FL_ONTRAIN (1 << 24)      // Player is _controlling_ a train, so movement commands should be ignored on client during prediction.
+#define FL_WORLDBRUSH (1 << 25)   // Not moveable/removeable brush entity (really part of the world, but represented as an entity for transparency or something)
+#define FL_SPECTATOR (1 << 26)    // This client is a spectator, don't run touch functions, etc.
 #define FL_CUSTOMENTITY (1 << 29) // This is a custom entity
-#define FL_KILLME (1 << 30)		  // This entity is marked for death -- This allows the engine to kill ents at the appropriate time
-#define FL_DORMANT (1 << 31)	  // Entity is dormant, no updates to client
+#define FL_KILLME (1 << 30)       // This entity is marked for death -- This allows the engine to kill ents at the appropriate time
+#define FL_DORMANT (1 << 31)      // Entity is dormant, no updates to client
 
 
 // Goes into globalvars_t.trace_flags
@@ -63,39 +63,39 @@ struct edict_t;
 
 
 // walkmove modes
-#define WALKMOVE_NORMAL 0	 // normal walkmove
+#define WALKMOVE_NORMAL 0    // normal walkmove
 #define WALKMOVE_WORLDONLY 1 // doesn't hit ANY entities, no matter what the solid type
 #define WALKMOVE_CHECKONLY 2 // move, but don't touch triggers
 
 // edict->movetype values
 #define MOVETYPE_NONE 0 // never moves
-// #define	MOVETYPE_ANGLENOCLIP	1
-// #define	MOVETYPE_ANGLECLIP		2
-#define MOVETYPE_WALK 3			  // Player only - moving on the ground
-#define MOVETYPE_STEP 4			  // gravity, special edge handling -- monsters use this
-#define MOVETYPE_FLY 5			  // No gravity, but still collides with stuff
-#define MOVETYPE_TOSS 6			  // gravity/collisions
-#define MOVETYPE_PUSH 7			  // no clip to world, push and crush
-#define MOVETYPE_NOCLIP 8		  // No gravity, no collisions, still do velocity/avelocity
-#define MOVETYPE_FLYMISSILE 9	  // extra size to monsters
-#define MOVETYPE_BOUNCE 10		  // Just like Toss, but reflect velocity when contacting surfaces
+// #define  MOVETYPE_ANGLENOCLIP    1
+// #define  MOVETYPE_ANGLECLIP      2
+#define MOVETYPE_WALK 3           // Player only - moving on the ground
+#define MOVETYPE_STEP 4           // gravity, special edge handling -- monsters use this
+#define MOVETYPE_FLY 5            // No gravity, but still collides with stuff
+#define MOVETYPE_TOSS 6           // gravity/collisions
+#define MOVETYPE_PUSH 7           // no clip to world, push and crush
+#define MOVETYPE_NOCLIP 8         // No gravity, no collisions, still do velocity/avelocity
+#define MOVETYPE_FLYMISSILE 9     // extra size to monsters
+#define MOVETYPE_BOUNCE 10        // Just like Toss, but reflect velocity when contacting surfaces
 #define MOVETYPE_BOUNCEMISSILE 11 // bounce w/o gravity
-#define MOVETYPE_FOLLOW 12		  // track movement of aiment
-#define MOVETYPE_PUSHSTEP 13	  // BSP model that needs physics/world collisions (uses nearest hull for world collision)
+#define MOVETYPE_FOLLOW 12        // track movement of aiment
+#define MOVETYPE_PUSHSTEP 13      // BSP model that needs physics/world collisions (uses nearest hull for world collision)
 
 // edict->solid values
 // NOTE: Some movetypes will cause collisions independent of SOLID_NOT/SOLID_TRIGGER when the entity moves
 // SOLID only effects OTHER entities colliding with this one when they move - UGH!
-#define SOLID_NOT 0		 // no interaction with other objects
-#define SOLID_TRIGGER 1	 // touch on edge, but not blocking
-#define SOLID_BBOX 2	 // touch on edge, block
+#define SOLID_NOT 0      // no interaction with other objects
+#define SOLID_TRIGGER 1  // touch on edge, but not blocking
+#define SOLID_BBOX 2     // touch on edge, block
 #define SOLID_SLIDEBOX 3 // touch on edge, but not an onground
-#define SOLID_BSP 4		 // bsp clip, touch on edge, block
+#define SOLID_BSP 4      // bsp clip, touch on edge, block
 
 // edict->deadflag values
-#define DEAD_NO 0	 // alive
+#define DEAD_NO 0    // alive
 #define DEAD_DYING 1 // playing death animation or still falling off of a ledge waiting to hit ground
-#define DEAD_DEAD 2	 // dead. lying still.
+#define DEAD_DEAD 2  // dead. lying still.
 #define DEAD_RESPAWNABLE 3
 #define DEAD_DISCARDBODY 4
 
@@ -104,16 +104,16 @@ struct edict_t;
 #define DAMAGE_AIM 2
 
 // entity effects
-#define EF_BRIGHTFIELD 1	// swirling cloud of particles
-#define EF_MUZZLEFLASH 2	// single frame ELIGHT on entity attachment 0
-#define EF_BRIGHTLIGHT 4	// DLIGHT centered at entity origin
-#define EF_DIMLIGHT 8		// player flashlight
-#define EF_INVLIGHT 16		// get lighting from ceiling
-#define EF_NOINTERP 32		// don't interpolate the next frame
-#define EF_LIGHT 64			// rocket flare glow sprite
-#define EF_NODRAW 128		// don't draw entity
-#define EF_NIGHTVISION 256	// player nightvision
-#define EF_SNIPERLASER 512	// sniper laser effect
+#define EF_BRIGHTFIELD 1    // swirling cloud of particles
+#define EF_MUZZLEFLASH 2    // single frame ELIGHT on entity attachment 0
+#define EF_BRIGHTLIGHT 4    // DLIGHT centered at entity origin
+#define EF_DIMLIGHT 8       // player flashlight
+#define EF_INVLIGHT 16      // get lighting from ceiling
+#define EF_NOINTERP 32      // don't interpolate the next frame
+#define EF_LIGHT 64         // rocket flare glow sprite
+#define EF_NODRAW 128       // don't draw entity
+#define EF_NIGHTVISION 256  // player nightvision
+#define EF_SNIPERLASER 512  // sniper laser effect
 #define EF_FIBERCAMERA 1024 // fiber camera
 
 
@@ -150,15 +150,15 @@ struct edict_t;
 // byte (scroll speed in 0.1's)
 
 /**
- *	@brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
- *	particle effect plus ricochet sound
+ *  @brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
+ *  particle effect plus ricochet sound
  */
 #define TE_GUNSHOT 2
 // coord coord coord (position)
 
 /**
- *	@brief Use UTIL_ExplosionEffect instead.
- *	additive sprite, 2 dynamic lights, flickering particles, explosion sound, move vertically 8 pps
+ *  @brief Use UTIL_ExplosionEffect instead.
+ *  additive sprite, 2 dynamic lights, flickering particles, explosion sound, move vertically 8 pps
  */
 #define TE_EXPLOSION 3
 // coord coord coord (position)
@@ -168,16 +168,16 @@ struct edict_t;
 // byte (flags)
 //
 // The Explosion effect has some flags to control performance/aesthetic features:
-#define TE_EXPLFLAG_NONE 0		  // all flags clear makes default Half-Life explosion
+#define TE_EXPLFLAG_NONE 0        // all flags clear makes default Half-Life explosion
 #define TE_EXPLFLAG_NOADDITIVE 1  // sprite will be drawn opaque (ensure that the sprite you send is a non-additive sprite)
-#define TE_EXPLFLAG_NODLIGHTS 2	  // do not render dynamic lights
-#define TE_EXPLFLAG_NOSOUND 4	  // do not play client explosion sound
+#define TE_EXPLFLAG_NODLIGHTS 2   // do not render dynamic lights
+#define TE_EXPLFLAG_NOSOUND 4     // do not play client explosion sound
 #define TE_EXPLFLAG_NOPARTICLES 8 // do not draw particles
 
 
 /**
- *	@brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
- *	Quake1 "tarbaby" explosion with sound
+ *  @brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
+ *  Quake1 "tarbaby" explosion with sound
  */
 #define TE_TAREXPLOSION 4
 // coord coord coord (position)
@@ -223,8 +223,8 @@ struct edict_t;
 // coord coord coord (position)
 
 /**
- *	@brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
- *	Quake1 colormaped (base palette) particle explosion with sound
+ *  @brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
+ *  Quake1 colormaped (base palette) particle explosion with sound
  */
 #define TE_EXPLOSION2 12
 // coord coord coord (position)
@@ -363,22 +363,22 @@ struct edict_t;
 // 1 is flickery credits
 // 2 is write out (training room)
 
-// 4 bytes r,g,b,a color1	(text color)
-// 4 bytes r,g,b,a color2	(effect color)
+// 4 bytes r,g,b,a color1   (text color)
+// 4 bytes r,g,b,a color2   (effect color)
 // ushort 8.8 fadein time
 // ushort 8.8  fadeout time
 // ushort 8.8 hold time
-// optional ushort 8.8 fxtime	(time the highlight lags behing the leading text in effect 2)
-// string text message		(512 chars max sz string)
+// optional ushort 8.8 fxtime   (time the highlight lags behing the leading text in effect 2)
+// string text message      (512 chars max sz string)
 #define TE_LINE 30
-// coord, coord, coord		startpos
-// coord, coord, coord		endpos
+// coord, coord, coord      startpos
+// coord, coord, coord      endpos
 // short life in 0.1 s
 // 3 bytes r, g, b
 
 #define TE_BOX 31
-// coord, coord, coord		boxmins
-// coord, coord, coord		boxmaxs
+// coord, coord, coord      boxmins
+// coord, coord, coord      boxmaxs
 // short life in 0.1 s
 // 3 bytes r, g, b
 
@@ -442,8 +442,8 @@ struct edict_t;
 // byte (flags)
 
 /**
- *	@brief Use UTIL_GunshotDecalTrace instead.
- *	decal and ricochet sound
+ *  @brief Use UTIL_GunshotDecalTrace instead.
+ *  decal and ricochet sound
  */
 #define TE_GUNSHOTDECAL 109
 // coord, coord, coord (position)
@@ -459,8 +459,8 @@ struct edict_t;
 // byte (noise)
 
 /**
- *	@brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
- *	quick spark sprite, client ricochet sound.
+ *  @brief Send using gmsgTempEntity instead of SVC_TEMPENTITY.
+ *  quick spark sprite, client ricochet sound.
  */
 #define TE_ARMOR_RICOCHET 111
 // coord, coord, coord (position)
@@ -546,11 +546,11 @@ struct edict_t;
 // byte (duration (in seconds) * 10) (will be randomized a bit)
 //
 // to keep network traffic low, this message has associated flags that fit into a byte:
-#define TEFIRE_FLAG_ALLFLOAT 1	// all sprites will drift upwards as they animate
+#define TEFIRE_FLAG_ALLFLOAT 1  // all sprites will drift upwards as they animate
 #define TEFIRE_FLAG_SOMEFLOAT 2 // some of the sprites will drift upwards. (50% chance)
-#define TEFIRE_FLAG_LOOP 4		// if set, sprite plays at 15 fps, otherwise plays at whatever rate stretches the animation over the sprite's duration.
-#define TEFIRE_FLAG_ALPHA 8		// if set, sprite is rendered alpha blended at 50% else, opaque
-#define TEFIRE_FLAG_PLANAR 16	// if set, all fire sprites have same initial Z instead of randomly filling a cube.
+#define TEFIRE_FLAG_LOOP 4      // if set, sprite plays at 15 fps, otherwise plays at whatever rate stretches the animation over the sprite's duration.
+#define TEFIRE_FLAG_ALPHA 8     // if set, sprite is rendered alpha blended at 50% else, opaque
+#define TEFIRE_FLAG_PLANAR 16   // if set, all fire sprites have same initial Z instead of randomly filling a cube.
 #define TEFIRE_FLAG_ADDITIVE 32 // if set, sprite is rendered non-opaque with additive
 
 #define TE_PLAYERATTACHMENT 124 // attaches a TENT to a player (this is a high-priority tent)
@@ -563,8 +563,8 @@ struct edict_t;
 // byte (entity index of player)
 
 /**
- *	@brief Do not use, plays sounds using the engine's sound system.
- *	Obsolete, replaced by client side weapon prediction.
+ *  @brief Do not use, plays sounds using the engine's sound system.
+ *  Obsolete, replaced by client side weapon prediction.
  */
 #define TE_MULTIGUNSHOT 126 // much more compact shotgun message
 // This message is used to make a client approximate a 'spray' of gunfire.
@@ -572,7 +572,7 @@ struct edict_t;
 // a good candidate for MULTIGUNSHOT use. (shotguns)
 //
 // NOTE: This effect makes the client do traces for each bullet, these client traces ignore
-//		 entities that have studio models.Traces are 4096 long.
+//       entities that have studio models.Traces are 4096 long.
 //
 // coord (origin)
 // coord (origin)
@@ -598,16 +598,16 @@ struct edict_t;
 
 
 
-#define MSG_BROADCAST 0		 // unreliable to all
-#define MSG_ONE 1			 // reliable to one (msg_entity)
-#define MSG_ALL 2			 // reliable to all
-#define MSG_INIT 3			 // write to the init string
-#define MSG_PVS 4			 // Ents in PVS of org
-#define MSG_PAS 5			 // Ents in PAS of org
-#define MSG_PVS_R 6			 // Reliable to PVS
-#define MSG_PAS_R 7			 // Reliable to PAS
+#define MSG_BROADCAST 0      // unreliable to all
+#define MSG_ONE 1            // reliable to one (msg_entity)
+#define MSG_ALL 2            // reliable to all
+#define MSG_INIT 3           // write to the init string
+#define MSG_PVS 4            // Ents in PVS of org
+#define MSG_PAS 5            // Ents in PAS of org
+#define MSG_PVS_R 6          // Reliable to PVS
+#define MSG_PAS_R 7          // Reliable to PAS
 #define MSG_ONE_UNRELIABLE 8 // Send to one client, but don't put in reliable stream, put in unreliable datagram ( could be dropped )
-#define MSG_SPEC 9			 // Sends to all spectator proxies
+#define MSG_SPEC 9           // Sends to all spectator proxies
 
 // contents of a spot in the world
 #define CONTENTS_EMPTY -1
@@ -640,19 +640,19 @@ struct edict_t;
 #define CHAN_VOICE 2
 #define CHAN_ITEM 3
 #define CHAN_BODY 4
-#define CHAN_STREAM 5			  // allocate stream channel from the static or dynamic area
-#define CHAN_STATIC 6			  // allocate channel from the static area
+#define CHAN_STREAM 5             // allocate stream channel from the static or dynamic area
+#define CHAN_STATIC 6             // allocate channel from the static area
 #define CHAN_NETWORKVOICE_BASE 7  // voice data coming across the network
 #define CHAN_NETWORKVOICE_END 500 // network voice data reserves slots (CHAN_NETWORKVOICE_BASE through CHAN_NETWORKVOICE_END).
-#define CHAN_BOT 501			  // channel used for bot chatter.
+#define CHAN_BOT 501              // channel used for bot chatter.
 
 /**
- *	@brief Unique channel index used only for HUD sounds.
+ *  @brief Unique channel index used only for HUD sounds.
  */
 constexpr int CHAN_HUD_SOUND = 601;
 
 /**
- *	@brief Unique channel index used only for the geiger counter.
+ *  @brief Unique channel index used only for the geiger counter.
  */
 constexpr int CHAN_GEIGER = 602;
 
@@ -720,96 +720,96 @@ constexpr int FIXANGLE_RELATIVE = 2; //!< Add avelocity yaw to view angles
 // Rendering constants
 enum
 {
-	kRenderNormal,		 // src
-	kRenderTransColor,	 // c*a+dest*(1-a)
-	kRenderTransTexture, // src*a+dest*(1-a)
-	kRenderGlow,		 // src*a+dest -- No Z buffer checks
-	kRenderTransAlpha,	 // src*srca+dest*(1-srca)
-	kRenderTransAdd,	 // src*a+dest
+    kRenderNormal,       // src
+    kRenderTransColor,   // c*a+dest*(1-a)
+    kRenderTransTexture, // src*a+dest*(1-a)
+    kRenderGlow,         // src*a+dest -- No Z buffer checks
+    kRenderTransAlpha,   // src*srca+dest*(1-srca)
+    kRenderTransAdd,     // src*a+dest
 };
 
 enum
 {
-	kRenderFxNone = 0,
-	kRenderFxPulseSlow,
-	kRenderFxPulseFast,
-	kRenderFxPulseSlowWide,
-	kRenderFxPulseFastWide,
-	kRenderFxFadeSlow,
-	kRenderFxFadeFast,
-	kRenderFxSolidSlow,
-	kRenderFxSolidFast,
-	kRenderFxStrobeSlow,
-	kRenderFxStrobeFast,
-	kRenderFxStrobeFaster,
-	kRenderFxFlickerSlow,
-	kRenderFxFlickerFast,
-	kRenderFxNoDissipation,
-	kRenderFxDistort,		  // Distort/scale/translate flicker
-	kRenderFxHologram,		  // kRenderFxDistort + distance fade
-	kRenderFxDeadPlayer,	  // kRenderAmt is the player index
-	kRenderFxExplode,		  // Scale up really big!
-	kRenderFxGlowShell,		  // Glowing Shell
-	kRenderFxClampMinScale,	  // Keep this sprite from getting very small (SPRITES only!)
-	kRenderFxLightMultiplier, // CTM !!!CZERO added to tell the studiorender that the value in iuser2 is a lightmultiplier
+    kRenderFxNone = 0,
+    kRenderFxPulseSlow,
+    kRenderFxPulseFast,
+    kRenderFxPulseSlowWide,
+    kRenderFxPulseFastWide,
+    kRenderFxFadeSlow,
+    kRenderFxFadeFast,
+    kRenderFxSolidSlow,
+    kRenderFxSolidFast,
+    kRenderFxStrobeSlow,
+    kRenderFxStrobeFast,
+    kRenderFxStrobeFaster,
+    kRenderFxFlickerSlow,
+    kRenderFxFlickerFast,
+    kRenderFxNoDissipation,
+    kRenderFxDistort,         // Distort/scale/translate flicker
+    kRenderFxHologram,        // kRenderFxDistort + distance fade
+    kRenderFxDeadPlayer,      // kRenderAmt is the player index
+    kRenderFxExplode,         // Scale up really big!
+    kRenderFxGlowShell,       // Glowing Shell
+    kRenderFxClampMinScale,   // Keep this sprite from getting very small (SPRITES only!)
+    kRenderFxLightMultiplier, // CTM !!!CZERO added to tell the studiorender that the value in iuser2 is a lightmultiplier
 };
 
 struct color24
 {
-	byte r, g, b;
+    byte r, g, b;
 };
 
 struct colorVec
 {
-	unsigned r, g, b, a;
+    unsigned r, g, b, a;
 };
 
 struct link_t
 {
-	link_t *prev, *next;
+    link_t *prev, *next;
 };
 
 struct plane_t
 {
-	Vector normal;
-	float dist;
+    Vector normal;
+    float dist;
 };
 
 struct trace_t
 {
-	qboolean allsolid;	 // if true, plane is not valid
-	qboolean startsolid; // if true, the initial point was in a solid area
-	qboolean inopen, inwater;
-	float fraction; // time completed, 1.0 = didn't hit anything
-	Vector endpos;	// final position
-	plane_t plane;	// surface normal at impact
-	edict_t* ent;	// entity the surface is on
-	int hitgroup;	// 0 == generic, non zero is specific body part
+    qboolean allsolid;   // if true, plane is not valid
+    qboolean startsolid; // if true, the initial point was in a solid area
+    qboolean inopen, inwater;
+    float fraction; // time completed, 1.0 = didn't hit anything
+    Vector endpos;  // final position
+    plane_t plane;  // surface normal at impact
+    edict_t* ent;   // entity the surface is on
+    int hitgroup;   // 0 == generic, non zero is specific body part
 };
 
 /**
- *	@brief Constants for entvars_t::waterlevel
- *	@see entvars_t::waterlevel
+ *  @brief Constants for entvars_t::waterlevel
+ *  @see entvars_t::waterlevel
  */
 enum class WaterLevel : int
 {
-	/**
-	 *	Not in water at all
-	 */
-	Dry = 0,
+    /**
+     *  Not in water at all
+     */
+    Dry = 0,
 
-	/**
-	 *	Standing in water, feet only
-	 */
-	Feet = 1,
+    /**
+     *  Standing in water, feet only
+     */
+    Feet = 1,
 
-	/**
-	 *	Halfway submerged
-	 */
-	Waist = 2,
+    /**
+     *  Halfway submerged
+     */
+    Waist = 2,
 
-	/**
-	 *	Submerged up to eyes or more
-	 */
-	Head = 3
+    /**
+     *  Submerged up to eyes or more
+     */
+    Head = 3
 };
