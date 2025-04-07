@@ -632,6 +632,9 @@
     // 0 = disabled
     "frame_dmg_cap": 0,
 
+    // False = Prevent players colliding with each other only if they're allies
+    "player_collision": true,
+
     // Multiplayer-only skill values
     "multiplayer": 
     {
@@ -688,7 +691,6 @@
     // Skill values for the Co-op gamemode
     "cooperative":
     {
-        // Prevent players colliding with each other only if they're allies
         "player_collision": false,
         "allow_monsters": true,
         "fall_damage": 0.22522522522,
