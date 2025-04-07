@@ -36,6 +36,12 @@ namespace MapUpgrader.Upgrades.Common
                     case "game_playerjoin":
                     case "game_playerleave":
                     {
+                        // The game used to pass the attacker as both caller and activator
+                        if( entity.GetTargetName() == "game_playerkill" )
+                        {
+                            EventHandler.SetString( "m_Caller", "!activator" );
+                        }
+
                         EventHandler.SetInteger( "appearflag_multiplayer", -1 );
                         break;
                     }
