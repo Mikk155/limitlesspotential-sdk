@@ -382,6 +382,7 @@ public:
         }
 
         pev->body = SPOREAMMOBODY_EMPTY;
+        if( m_bIsLighting ){ pev->renderfx == kRenderFxNone; }
 
         pev->sequence = SPOREAMMO_SNATCHDN;
 
@@ -437,6 +438,7 @@ public:
         case SPOREAMMO_IDLE:
         {
             pev->body = SPOREAMMOBODY_FULL;
+            if( m_bIsLighting ){ pev->renderfx == kRenderFxDLightColor; }
             pev->sequence = SPOREAMMO_SPAWNDN;
             pev->animtime = gpGlobals->time;
             pev->frame = 0;
@@ -459,6 +461,7 @@ public:
         if( AddAmmo( player ) )
         {
             pev->body = SPOREAMMOBODY_EMPTY;
+            if( m_bIsLighting ){ pev->renderfx == kRenderFxNone; }
 
             pev->sequence = SPOREAMMO_SNATCHDN;
 
@@ -467,6 +470,9 @@ public:
             pev->nextthink = gpGlobals->time + 0.66;
         }
     }
+
+private:
+    bool m_bIsLighting;
 };
 
 bool CSporeAmmo::Spawn()
@@ -502,6 +508,8 @@ bool CSporeAmmo::Spawn()
 
     pev->solid = SOLID_BBOX;
 
+    m_bIsLighting = ( pev->renderfx == kRenderFxDLightColor );
+
     SetTouch( &CSporeAmmo::SporeTouch );
     SetThink( &CSporeAmmo::Idling );
 
@@ -509,6 +517,7 @@ bool CSporeAmmo::Spawn()
 }
 
 BEGIN_DATAMAP( CSporeAmmo )
+    DEFINE_FIELD( m_bIsLighting, FIELD_BOOLEAN ),
     DEFINE_FUNCTION( Idling ),
     DEFINE_FUNCTION( SporeTouch ),
 END_DATAMAP();
