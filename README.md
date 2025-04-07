@@ -1,3 +1,8 @@
+# This fork
+Whatever i feel to. not planning on doing something specific but get fun learning and writing random shit. ideally i'd like to make this like the upstream repository but extended and have cooperative support but it's a lot of work for a single person so i do not like to get big hopes on it.
+
+You are free to do whatever you want with my changes as long as you credit the list of contributors.
+
 # Half-Life Unified SDK
 
 The [Half-Life Unified SDK](docs/README.md#developer-resources) is a project that provides an updated version of the Half-Life SDK, with full support for the expansion packs Opposing Force and Blue Shift as well as new features.
