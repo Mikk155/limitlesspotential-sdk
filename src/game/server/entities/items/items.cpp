@@ -209,6 +209,22 @@ public:
     {
         CItem::Spawn();
         m_ArmorAmount = g_cfg.GetValue<float>( "battery"sv, 10, this );
+
+        if( pev->renderfx == kRenderFxNone && pev->rendermode == kRenderNormal )
+        {
+            pev->renderfx = kRenderFxDLightColor;
+
+            if( pev->renderamt < 1 )
+            {
+                pev->renderamt = 22.0f;
+            }
+
+            if( pev->rendercolor == g_vecZero )
+            {
+                pev->rendercolor = Vector( 0, 90, 70 );
+            }
+        }
+
         return true;
     }
 

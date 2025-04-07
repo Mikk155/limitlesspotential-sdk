@@ -45,7 +45,6 @@ namespace MapUpgrader.Upgrades
             builder.AddUpgrade(new UpdateSpawnpoints());
             builder.AddUpgrade(new ConvertGameZonePlayer());
             builder.AddUpgrade(new ConvertZombieBarney());
-            builder.AddUpgrade(new SetItemsLight());
             return builder;
         }
 

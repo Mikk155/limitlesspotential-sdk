@@ -508,6 +508,21 @@ bool CSporeAmmo::Spawn()
 
     pev->solid = SOLID_BBOX;
 
+    if( pev->renderfx == kRenderFxNone && pev->rendermode == kRenderNormal )
+    {
+        pev->renderfx = kRenderFxDLightColor;
+
+        if( pev->renderamt < 1 )
+        {
+            pev->renderamt = 42.0f;
+        }
+
+        if( pev->rendercolor == g_vecZero )
+        {
+            pev->rendercolor = Vector( 50, 255, 50 );
+        }
+    }
+
     m_bIsLighting = ( pev->renderfx == kRenderFxDLightColor );
 
     SetTouch( &CSporeAmmo::SporeTouch );
