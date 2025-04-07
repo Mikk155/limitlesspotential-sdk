@@ -73,19 +73,44 @@ void CTriggerEntityCondition :: Use( CBaseEntity* pActivator, CBaseEntity* pCall
     {
         switch( m_Condition )
         {
-            case 0: {
+            case 0:
+            {
                 bCondition = pActivator->IsPlayer();
                 break;
             }
-            case 1: {
+            case 1:
+            {
                 bCondition = pActivator->IsPlayer() && ToBasePlayer( pActivator )->HasSuit();
                 break;
             }
-            case 2: {
-                if( !FStringNull( m_Arg1 ) )
-                    bCondition = pActivator->IsPlayer() && ToBasePlayer( pActivator )->HasNamedPlayerWeapon( STRING( m_Arg1 ) );
-                else
-                    bCondition = pActivator->IsPlayer() && ToBasePlayer( pActivator )->HasWeapons();
+            case 2:
+            {
+                if( CBasePlayer* player = ToBasePlayer( pActivator ); player != nullptr )
+                {
+                    if( !FStringNull( m_Arg1 ) )
+                    {
+                        if( FStrEq( STRING( m_Arg1 ), "item_longjump" ) ) {
+                            bCondition = player->HasLongJump();
+                        }
+                        else {
+                            bCondition =  player->HasNamedPlayerWeapon( STRING( m_Arg1 ) );
+                        }
+                    }
+                    else
+                    {
+                        bCondition = player->HasWeapons();
+                    }
+                }
+                break;
+            }
+            case 3:
+            {
+                bCondition = pActivator->IsMonster();
+                break;
+            }
+            case 4:
+            {
+                bCondition = pActivator->IsAlive();
                 break;
             }
         }
