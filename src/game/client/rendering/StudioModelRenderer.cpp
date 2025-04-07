@@ -685,6 +685,21 @@ Studio_FxTransform
 */
 void CStudioModelRenderer::StudioFxTransform( cl_entity_t* ent, float transform[3][4] )
 {
+    if (ent->curstate.renderfx != kRenderFxExplode && ent->curstate.scale > 0)
+    {
+        transform[0][0] *= ent->curstate.scale;
+        transform[1][0] *= ent->curstate.scale;
+        transform[2][0] *= ent->curstate.scale;
+
+        transform[0][1] *= ent->curstate.scale;
+        transform[1][1] *= ent->curstate.scale;
+        transform[2][1] *= ent->curstate.scale;
+
+        transform[0][2] *= ent->curstate.scale;
+        transform[1][2] *= ent->curstate.scale;
+        transform[2][2] *= ent->curstate.scale;
+    }
+
     switch ( ent->curstate.renderfx )
     {
     case kRenderFxDistort:
@@ -1241,7 +1256,7 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
                 light->origin = m_pCurrentEntity->curstate.origin;
                 light->radius = m_pCurrentEntity->curstate.renderamt;
                 light->color = m_pCurrentEntity->curstate.rendercolor;
-                light->die = gHUD.m_flTimeDelta + gHUD.m_flTime + 0.2f;
+                light->die = gHUD.m_flTimeDelta + gHUD.m_flTime + 0.2f; // -TODO Can we get the client's fps? this kind of flickers a lot when i get low fps
             }
         }
     }
