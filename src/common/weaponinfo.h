@@ -36,12 +36,12 @@ struct weapon_data_t
     int m_fInZoom;
     int m_iWeaponState;
 
-    int iuser1;
-    int iuser2;
-    int iuser3;
-    int iuser4;
-    float fuser1;
-    float fuser2;
-    float fuser3;
+    int iuser1; // ON USE! for CBasePlayer
+    int iuser2; // ON USE! for CBasePlayer
+    int iuser3; // ON USE! for CBasePlayer
+    int iuser4; // ON USE! for CBasePlayer
+    float fuser1; // ON USE! for CBasePlayer
+    float fuser2; // ON USE! for CBasePlayer
+    float fuser3; // ON USE! for CBasePlayer
     float fuser4;
 };

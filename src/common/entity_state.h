@@ -102,19 +102,18 @@ struct entity_state_t
     float impacttime;
     float starttime;
 
-    // For mods
-    int iuser1;
-    int iuser2;
-    int iuser3;
-    int iuser4;
-    float fuser1;
-    float fuser2;
-    float fuser3;
+    int iuser1; // ON USE! for CBasePlayer
+    int iuser2; // ON USE! for CBasePlayer
+    int iuser3; // ON USE! for CBasePlayer
+    int iuser4; // ON USE! for CBasePlayer
+    float fuser1; // ON USE! for CBasePlayer
+    float fuser2; // ON USE! for CBasePlayer
+    float fuser3; // ON USE! for CBasePlayer
     float fuser4;
-    Vector vuser1;
-    Vector vuser2;
-    Vector vuser3;
-    Vector vuser4;
+    Vector vuser1; // ON USE! for CBasePlayer
+    Vector vuser2; // ON USE! for CBasePlayer
+    Vector vuser3; // ON USE! for CBasePlayer
+    Vector vuser4; // ON USE! for CBasePlayer
 };
 
 #include "pm_info.h"
@@ -161,19 +160,18 @@ struct clientdata_t
 
     char physinfo[MAX_PHYSINFO_STRING];
 
-    // For mods
-    int iuser1;
-    int iuser2;
-    int iuser3;
-    int iuser4;
-    float fuser1;
-    float fuser2;
-    float fuser3;
+    int iuser1; // ON USE! for CBasePlayer
+    int iuser2; // ON USE! for CBasePlayer
+    int iuser3; // ON USE! for CBasePlayer
+    int iuser4; // ON USE! for CBasePlayer
+    float fuser1; // ON USE! for CBasePlayer
+    float fuser2; // ON USE! for CBasePlayer
+    float fuser3; // ON USE! for CBasePlayer
     float fuser4;
-    Vector vuser1;
-    Vector vuser2;
-    Vector vuser3;
-    Vector vuser4;
+    Vector vuser1; // ON USE! for CBasePlayer
+    Vector vuser2; // ON USE! for CBasePlayer
+    Vector vuser3; // ON USE! for CBasePlayer
+    Vector vuser4; // ON USE! for CBasePlayer
 };
 
 #include "weaponinfo.h"
