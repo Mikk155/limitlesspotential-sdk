@@ -25,6 +25,7 @@ BEGIN_DATAMAP( CPlayerSpawnPoint )
     DEFINE_FIELD( m_cTargets, FIELD_INTEGER ),
     DEFINE_ARRAY( m_iKey, FIELD_STRING, 16 ),
     DEFINE_ARRAY( m_iValue, FIELD_STRING, 16 ),
+    DEFINE_FIELD( InitialState, FIELD_BOOLEAN ),
 END_DATAMAP();
 
 bool CPlayerSpawnPoint::KeyValue( KeyValueData* pkvd )
