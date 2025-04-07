@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Base",
     "data": {
         "renderfx": {
@@ -73,6 +73,10 @@
                 "16": {
                     "title": "RenderFxChoices::renderfx::16",
                     "description": "RenderFxChoices::renderfx::16::description"
+                },
+                "22": {
+                    "title": "RenderFxChoices::renderfx::22",
+                    "description": "RenderFxChoices::renderfx::22::description"
                 }
             },
             "title": "RenderFxChoices::renderfx",

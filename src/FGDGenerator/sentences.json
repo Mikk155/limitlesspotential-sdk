@@ -1360,6 +1360,10 @@
 {
 "english": "Hologram (Distort + fade)"
 },
+"RenderFxChoices::renderfx::22":
+{
+"english": "Dynamic Light (rendercolor + renderamt radius)"
+},
 "RenderFields::rendermode":
 {
 "english": "Render Mode"

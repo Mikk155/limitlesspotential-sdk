@@ -62,6 +62,7 @@ void CStudioModelRenderer::Init()
     m_pCvarHiModels = IEngineStudio.GetCvar( "cl_himodels" );
     m_pCvarDeveloper = IEngineStudio.GetCvar( "developer" );
     m_pCvarDrawEntities = IEngineStudio.GetCvar( "r_drawentities" );
+    m_pCvarDrawDLightModels = gEngfuncs.pfnRegisterVariable ( "cl_itemslight", "1", FCVAR_ARCHIVE );
 
     m_pChromeSprite = IEngineStudio.GetChromeSprite();
 
@@ -1227,10 +1228,22 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
         m_nTopColor = m_pCurrentEntity->curstate.colormap & 0xFF;
         m_nBottomColor = ( m_pCurrentEntity->curstate.colormap & 0xFF00 ) >> 8;
 
-
         IEngineStudio.StudioSetRemapColors( m_nTopColor, m_nBottomColor );
 
         StudioRenderModel();
+
+        if( m_pCurrentEntity->curstate.renderfx == kRenderFxDLightColor
+        && m_pCurrentEntity->curstate.renderamt > 0
+        && m_pCvarDrawDLightModels->value != 0 )
+        {
+            if( dlight_t* light = gEngfuncs.pEfxAPI->CL_AllocDlight(0); light != nullptr )
+            {
+                light->origin = m_pCurrentEntity->curstate.origin;
+                light->radius = m_pCurrentEntity->curstate.renderamt;
+                light->color = m_pCurrentEntity->curstate.rendercolor;
+                light->die = gHUD.m_flTimeDelta + gHUD.m_flTime + 0.2f;
+            }
+        }
     }
 
     return true;
