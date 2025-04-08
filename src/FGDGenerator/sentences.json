@@ -7157,62 +7157,6 @@
 {
 "english": "Dr. Rosenberg"
 },
-"trigger_usecheck::classname":
-{
-"english": "Test a Use value"
-},
-"trigger_usecheck::classname::description":
-{
-"english": "Fire true o false whatever the value received is the one specified"
-},
-"trigger_usecheck::is_value":
-{
-"english": "Value to read (undefined don't read)"
-},
-"trigger_usecheck::is_usetype":
-{
-"english": "Use Type to read (-1 don't read)"
-},
-"trigger_usecheck::value_int":
-{
-"english": "Value conversion"
-},
-"trigger_usecheck::value_int::0":
-{
-"english": "integer"
-},
-"trigger_usecheck::value_int::0::description":
-{
-"english": "Both values are converted into integer before the comparision"
-},
-"trigger_usecheck::value_int::1":
-{
-"english": "float"
-},
-"trigger_usecheck::value_int::1::description":
-{
-"english": "Both values are converted into float before the comparision"
-},
-"trigger_usecheck::value_comparator":
-{
-"english": "Value comparision"
-},
-"trigger_usecheck::m_iSetType::7":
-{
-"english": "Logical AND ( (source & target) != 0 )"
-},
-"trigger_usecheck::usetype_comparator":
-{
-"english": "Use Type comparision"
-},
-"trigger_usecheck::message":
-{
-"english": "Trigger on true"
-},
-"trigger_usecheck::netname":
-{
-"english": "Trigger on false"
-},
 "trigger_entity_iterator::classname":
 {
 "english": "Entity Iterator"
