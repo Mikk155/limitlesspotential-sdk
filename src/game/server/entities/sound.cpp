@@ -141,7 +141,7 @@ public:
     bool m_fActive;     // only true when the entity is playing a looping sound
     bool m_fLooping; // true when the sound played will loop
 
-    Vector& PlayFromEntity( CBaseEntity* pActivator, CBaseEntity* pCaller );
+    const Vector& PlayFromEntity( CBaseEntity* pActivator = nullptr, CBaseEntity* pCaller = nullptr );
     string_t m_PlayFromEntity = string_t::Null;
 };
 
@@ -228,7 +228,7 @@ bool CAmbientGeneric::Spawn()
     return true;
 }
 
-Vector& CAmbientGeneric::PlayFromEntity( CBaseEntity* pActivator, CBaseEntity* pCaller )
+const Vector& CAmbientGeneric::PlayFromEntity( CBaseEntity* pActivator, CBaseEntity* pCaller )
 {
     if( !FStringNull( m_PlayFromEntity ) )
     {
