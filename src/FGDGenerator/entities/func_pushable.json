@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Solid",
     "base": [
         "Breakable",
@@ -27,10 +27,6 @@
                 "3": {
                     "title": "func_pushable::size::3",
                     "description": "func_pushable::size::3::description"
-                },
-                "4": {
-                    "title": "func_pushable::size::4",
-                    "description": "func_pushable::size::4::description"
                 }
             },
             "title": "func_pushable::size",
