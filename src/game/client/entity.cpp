@@ -304,11 +304,9 @@ void DLLEXPORT HUD_CreateEntities()
  */
 void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* entity )
 {
-    bool iMuzzleFlash = gHUD.m_pDlightWeaponMuzzle->value != 0;
-
-    auto DrawMuzzleLight = []( float *origin ) -> void
+    auto DrawMuzzleLight = []( float* origin ) -> void
     {
-        if( dlight_t* light = gEngfuncs.pEfxAPI->CL_AllocDlight (0); light != nullptr )
+        if( dlight_t* light = gHUD.m_Dlight.AllocDLight( Muzzleflash ); light != nullptr )
         {
             light->origin.x = origin[0];
             light->origin.y = origin[1];
@@ -317,7 +315,7 @@ void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* 
             light->color.r = 180;
             light->color.g = 160;
             light->color.b = 120;
-            light->die = gEngfuncs.GetClientTime() + 0.1;
+            light->die += 0.1f;
         }
     };
 
@@ -325,38 +323,26 @@ void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* 
     {
         case 5001:
         {
-            if( iMuzzleFlash )
-            {
-                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[0], atoi( event->options ) );
-                DrawMuzzleLight( (float*)&entity->attachment[0] );
-            }
+            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[0], atoi( event->options ) );
+            DrawMuzzleLight( (float*)&entity->attachment[0] );
             break;
         }
         case 5011:
         {
-            if( iMuzzleFlash )
-            {
-                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[1], atoi( event->options ) );
-                DrawMuzzleLight( (float*)&entity->attachment[1] );
-            }
+            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[1], atoi( event->options ) );
+            DrawMuzzleLight( (float*)&entity->attachment[1] );
             break;
         }
         case 5021:
         {
-            if( iMuzzleFlash )
-            {
-                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[2], atoi( event->options ) );
-                DrawMuzzleLight( (float*)&entity->attachment[2] );
-            }
+            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[2], atoi( event->options ) );
+            DrawMuzzleLight( (float*)&entity->attachment[2] );
             break;
         }
         case 5031:
         {
-            if( iMuzzleFlash )
-            {
-                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[3], atoi( event->options ) );
-                DrawMuzzleLight( (float*)&entity->attachment[3] );
-            }
+            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[3], atoi( event->options ) );
+            DrawMuzzleLight( (float*)&entity->attachment[3] );
             break;
         }
         case 5002:
@@ -817,15 +803,12 @@ static void CL_ParseExplosion2( BufferReader& reader )
 
     gEngfuncs.pEfxAPI->R_ParticleExplosion2( pos, colorStart, colorLength );
 
-    if( gHUD.m_pDlightExplosions->value != 0 )
+    if( dlight_t* light = gHUD.m_Dlight.AllocDLight( Explosions ); light != nullptr )
     {
-        if( dlight_t* light = gEngfuncs.pEfxAPI->CL_AllocDlight( 0 ); light != nullptr )
-        {
-            light->origin = pos;
-            light->radius = 350;
-            light->die = gEngfuncs.GetClientTime() + 0.5;
-            light->decay = 300;
-        }
+        light->origin = pos;
+        light->radius = 350;
+        light->die = gEngfuncs.GetClientTime() + 0.5;
+        light->decay = 300;
     }
 
     CL_StartSound( -1, CHAN_AUTO, "weapons/explode3.wav", pos, VOL_NORM, 0.6f, PITCH_NORM, 0 );

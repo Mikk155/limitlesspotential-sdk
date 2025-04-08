@@ -15,6 +15,14 @@
 
 #pragma once
 
+// Enumeration used for "Light type" so we get the correct client cvar to display or not.
+enum DynamicLightType
+{
+    Muzzleflash = 1,
+    StudioModelRendering,
+    Explosions
+};
+
 struct dlight_t
 {
     Vector origin;

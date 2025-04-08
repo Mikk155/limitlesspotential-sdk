@@ -213,6 +213,30 @@ private:
 //
 //-----------------------------------------------------
 //
+
+class CHudDlight : public CHudBase
+{
+public:
+    bool Init() override;
+    bool VidInit() override;
+    bool Draw( float flTime ) override;
+
+    bool ShouldDisplay( const DynamicLightType type );
+
+    // Create a dlight_t if the client cvars for the given type allows it. otherwise returns nullptr
+    dlight_t* AllocDLight( const DynamicLightType type );
+
+    void MsgFunc_DrawLight( const char* pszName, BufferReader& reader );
+
+private:
+    cvar_t* m_Muzzleflash = nullptr;
+    cvar_t* m_Explosions = nullptr;
+    cvar_t* m_StudioModelRendering = nullptr;
+};
+
+//
+//-----------------------------------------------------
+//
 class CHudTrain : public CHudBase
 {
 public:
@@ -773,9 +797,6 @@ public:
     cvar_t* m_pCvarStealMouse = nullptr;
     cvar_t* m_pCvarDraw = nullptr;
     cvar_t* m_pCvarCrosshair = nullptr;
-    cvar_t* m_pDlightStudioModels = nullptr;
-    cvar_t* m_pDlightExplosions = nullptr;
-    cvar_t* m_pDlightWeaponMuzzle = nullptr;
 
     RGB24 m_HudColor = RGB_HUD_COLOR;
 
@@ -855,6 +876,7 @@ public:
     CHudProjectInfo m_ProjectInfo;
     CHudDebugInfo m_DebugInfo;
     CHudEntityInfo m_EntityInfo;
+    CHudDlight m_Dlight;
 
     void Init();
     void Shutdown();

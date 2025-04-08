@@ -186,6 +186,7 @@ target_sources(client PRIVATE
     ui/hud/hud_debuginfo.cpp
     ui/hud/hud_entityinfo.cpp
     ui/hud/hud_flagicons.cpp
+    ui/hud/hud_light.cpp
     ui/hud/hud_msg.cpp
     ui/hud/hud_playerbrowse.cpp
     ui/hud/hud_projectinfo.cpp

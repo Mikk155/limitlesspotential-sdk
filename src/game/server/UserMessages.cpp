@@ -93,4 +93,6 @@ void LinkUserMessages()
     gmsgClientGibs = REG_USER_MSG( "ClientGibs", 18 );
 
     gmsgTitles = REG_USER_MSG( "Titles", -1 );
+
+    gmsgDLight = REG_USER_MSG( "TempLight", 18 );
 }

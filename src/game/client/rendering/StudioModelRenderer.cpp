@@ -1247,15 +1247,14 @@ bool CStudioModelRenderer::StudioDrawModel( int flags )
         StudioRenderModel();
 
         if( m_pCurrentEntity->curstate.renderfx == kRenderFxDLightColor
-        && m_pCurrentEntity->curstate.renderamt > 0
-        && gHUD.m_pDlightStudioModels->value != 0 )
+        && m_pCurrentEntity->curstate.renderamt > 0 )
         {
-            if( dlight_t* light = gEngfuncs.pEfxAPI->CL_AllocDlight(0); light != nullptr )
+            if( dlight_t* light = gHUD.m_Dlight.AllocDLight( StudioModelRendering ); light != nullptr )
             {
                 light->origin = m_pCurrentEntity->curstate.origin;
                 light->radius = m_pCurrentEntity->curstate.renderamt;
                 light->color = m_pCurrentEntity->curstate.rendercolor;
-                light->die = gEngfuncs.GetClientTime() + 0.1f; // -TODO Can we get the client's fps? this kind of flickers a lot when i get low fps
+                light->die += 0.1f;
             }
         }
     }

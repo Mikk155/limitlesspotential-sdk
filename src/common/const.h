@@ -340,6 +340,7 @@ struct edict_t;
 
 #define TE_BEAMHOSE 26 // obsolete
 
+// Deprecated. Use gmsgDLight
 #define TE_DLIGHT 27 // dynamic light, effect world, minor entity effect
 // coord, coord, coord (pos)
 // byte (radius in 10's)

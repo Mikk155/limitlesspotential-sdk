@@ -119,11 +119,6 @@ void CHud::Init()
     cl_rollspeed = CVAR_CREATE( "cl_rollspeed", "200", FCVAR_ARCHIVE );
     cl_bobtilt = CVAR_CREATE( "cl_bobtilt", "0", FCVAR_ARCHIVE );
 
-    // Dynamic Light stuff
-    m_pDlightStudioModels = gEngfuncs.pfnRegisterVariable( "cl_dlight_studiomodels", "1", FCVAR_ARCHIVE );
-    m_pDlightExplosions = gEngfuncs.pfnRegisterVariable( "cl_dlight_explosions", "1", FCVAR_ARCHIVE );
-    m_pDlightWeaponMuzzle = gEngfuncs.pfnRegisterVariable( "cl_dlight_weapons", "1", FCVAR_ARCHIVE );
-
     // Clear any old HUD list
     m_HudList.clear();
 
@@ -146,6 +141,7 @@ void CHud::Init()
     m_ProjectInfo.Init();
     m_DebugInfo.Init();
     m_EntityInfo.Init();
+    m_Dlight.Init();
     GetClientVoiceMgr()->Init( &g_VoiceStatusHelper, ( vgui::Panel** )&gViewPort );
 
     m_Menu.Init();

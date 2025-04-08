@@ -328,6 +328,7 @@ target_sources(server PRIVATE
     ../../common/const.h
     ../../common/cvardef.h
     ../../common/director_cmds.h
+    ../../common/dlight.h
     ../../common/entity_state.h
     ../../common/entity_types.h
     ../../common/event_flags.h

@@ -48,10 +48,8 @@ inline int gmsgSetFOV = 0;
 inline int gmsgShowMenu = 0;
 inline int gmsgGeigerRange = 0;
 inline int gmsgTeamNames = 0;
-
 inline int gmsgStatusText = 0;
 inline int gmsgStatusValue = 0;
-
 inline int gmsgSpectator = 0;
 inline int gmsgStatusIcon = 0;
 inline int gmsgPlayerBrowse = 0;
@@ -69,23 +67,17 @@ inline int gmsgStatsPlayer = 0;
 inline int gmsgTeamFull = 0;
 inline int gmsgCustomIcon = 0;
 inline int gmsgWeapons = 0;
-
 inline int gmsgEntityInfo = 0;
-
 inline int gmsgEmitSound = 0;
-
 inline int gmsgTempEntity = 0;
-
 inline int gmsgConfigVars = 0;
-
 inline int gmsgCampaignSelect = 0;
-
 inline int gmsgTgtLaser = 0;
-
 inline int gmsgFog = 0;
-
 inline int gmsgClientGibs = 0;
-
 inline int gmsgTitles = 0;
+
+#include "dlight.h"
+inline int gmsgDLight = 0;
 
 void LinkUserMessages();

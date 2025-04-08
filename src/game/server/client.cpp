@@ -580,6 +580,27 @@ static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className,
 
 void SV_CreateClientCommands()
 {
+    g_ClientCommands.Create( "test_light", []( CBasePlayer* player, const auto& args )
+    {
+        TraceResult tr;
+        Vector VecSrc = player->pev->origin + player->pev->view_ofs;
+        UTIL_TraceLine( VecSrc, VecSrc + gpGlobals->v_forward * 512, ignore_monsters, player->edict(), &tr );
+
+        tr.vecEndPos.z += 1;
+
+        MESSAGE_BEGIN( MSG_PVS, gmsgDLight, tr.vecEndPos );
+            WRITE_BYTE( DynamicLightType::Explosions );
+            WRITE_COORD_VECTOR( tr.vecEndPos );
+            WRITE_BYTE( 55 ); // Radius
+            WRITE_BYTE( 255 ); // Red
+            WRITE_BYTE( 180 ); // Green
+            WRITE_BYTE( 96 ); // Blue
+            WRITE_COORD( 0.5 ); // Life
+            WRITE_LONG( 800 ); // Decay
+            WRITE_BYTE( 0 ); // Dark
+        MESSAGE_END();
+    } );
+
     g_ClientCommands.Create( "say", []( CBasePlayer* player, const auto& args )
         { Host_Say( player, false ); } );
 
