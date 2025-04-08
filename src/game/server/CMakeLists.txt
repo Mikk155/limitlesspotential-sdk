@@ -150,6 +150,8 @@ target_sources(server PRIVATE
     entities/ctf/CTFSpawn.cpp
     entities/ctf/CTFSpawn.h
 
+    entities/game/precache.cpp
+
     entities/info/player_start.cpp
     entities/info/player_start.h
 
