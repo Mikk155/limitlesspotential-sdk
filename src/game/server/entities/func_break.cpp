@@ -82,6 +82,15 @@ bool CBreakable::KeyValue( KeyValueData* pkvd )
         UTIL_StringToVector( m_VecDirection, pkvd->szValue );
         return true;
     }
+    else if( FStrEq( pkvd->szKeyName, "direction_speed" ) )
+    {
+        m_DirectionSpeed = atoi( pkvd->szValue );
+
+        if( m_DirectionSpeed < 10 )
+            m_DirectionSpeed = 10;
+
+        return true;
+    }
     else if( FStrEq( pkvd->szKeyName, "lip" ) )
         return true;
 
@@ -93,18 +102,13 @@ LINK_ENTITY_TO_CLASS( func_breakable, CBreakable );
 BEGIN_DATAMAP( CBreakable )
     DEFINE_FIELD( m_Material, FIELD_INTEGER ),
     DEFINE_FIELD( m_Explosion, FIELD_INTEGER ),
-
-    // Don't need to save/restore these because we precache after restore
-    //    DEFINE_FIELD(m_idShard, FIELD_INTEGER),
-
     DEFINE_FIELD( m_angle, FIELD_FLOAT ),
     DEFINE_FIELD( m_iszGibModel, FIELD_STRING ),
     DEFINE_FIELD( m_iszSpawnObject, FIELD_STRING ),
     DEFINE_FIELD( m_VecDirection, FIELD_VECTOR ),
+    DEFINE_FIELD( m_DirectionSpeed, FIELD_FLOAT ),
     DEFINE_FUNCTION( BreakTouch ),
     DEFINE_FUNCTION( Die ),
-
-    // Explosion magnitude is stored in pev->impulse
 END_DATAMAP();
 
 bool CBreakable::Spawn()
@@ -643,9 +647,9 @@ void CBreakable::Die()
 
 
     if( m_Explosion == expDirected )
-        vecVelocity = -g_vecAttackDir * 200;
+        vecVelocity = -g_vecAttackDir * m_DirectionSpeed;
     else if (m_Explosion == expSpecific)
-        vecVelocity = m_VecDirection * 200;
+        vecVelocity = m_VecDirection * m_DirectionSpeed;
     else
     {
         vecVelocity.x = 0;
