@@ -140,6 +140,9 @@ public:
 
     bool m_fActive;     // only true when the entity is playing a looping sound
     bool m_fLooping; // true when the sound played will loop
+
+    Vector& PlayFromEntity( CBaseEntity* pActivator, CBaseEntity* pCaller );
+    string_t m_PlayFromEntity = string_t::Null;
 };
 
 LINK_ENTITY_TO_CLASS( ambient_generic, CAmbientGeneric );
@@ -148,6 +151,7 @@ BEGIN_DATAMAP( CAmbientGeneric )
     DEFINE_FIELD( m_flAttenuation, FIELD_FLOAT ),
     DEFINE_FIELD( m_fActive, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_fLooping, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_PlayFromEntity, FIELD_STRING ),
 
     // HACKHACK - This is not really in the spirit of the save/restore design, but save this
     // out as a binary data block.  If the dynpitchvol_t is changed, old saved games will NOT
@@ -224,6 +228,20 @@ bool CAmbientGeneric::Spawn()
     return true;
 }
 
+Vector& CAmbientGeneric::PlayFromEntity( CBaseEntity* pActivator, CBaseEntity* pCaller )
+{
+    if( !FStringNull( m_PlayFromEntity ) )
+    {
+        if( auto entity = UTIL_FindEntityByTargetname( nullptr, STRING( m_PlayFromEntity ), pActivator, pCaller ); entity != nullptr )
+        {
+            return ( entity->pev->origin != g_vecZero ? entity->pev->origin : entity->Center() );
+        }
+        CBaseEntity::Logger->warn( "ambient_generic failed to get a entity to play from \"{}\" Playing sound at {}", STRING( pev->targetname ), pev->origin );
+    }
+
+    return pev->origin;
+}
+
 void CAmbientGeneric::Precache()
 {
     const char* szSoundFile = STRING( pev->message );
@@ -244,7 +262,7 @@ void CAmbientGeneric::Precache()
     }
     if( m_fActive )
     {
-        EmitAmbientSound( pev->origin, szSoundFile,
+        EmitAmbientSound( PlayFromEntity(), szSoundFile,
             ( m_dpv.vol * 0.01 ), m_flAttenuation, SND_SPAWNING, m_dpv.pitch );
 
         pev->nextthink = gpGlobals->time + 0.1;
@@ -289,7 +307,7 @@ void CAmbientGeneric::RampThink()
             m_dpv.spindown = 0; // done with ramp down
 
             // shut sound off
-            EmitAmbientSound( pev->origin, szSoundFile,
+            EmitAmbientSound( PlayFromEntity(), szSoundFile,
                 0, 0, SND_STOP, 0 );
 
             // return without setting nextthink
@@ -333,7 +351,7 @@ void CAmbientGeneric::RampThink()
             m_dpv.fadeout = 0; // done with ramp down
 
             // shut sound off
-            EmitAmbientSound( pev->origin, szSoundFile,
+            EmitAmbientSound( PlayFromEntity(), szSoundFile,
                 0, 0, SND_STOP, 0 );
 
             // return without setting nextthink
@@ -439,8 +457,8 @@ void CAmbientGeneric::RampThink()
         if( pitch == PITCH_NORM )
             pitch = PITCH_NORM + 1; // don't send 'no pitch' !
 
-        EmitAmbientSound( pev->origin, szSoundFile,
-            ( vol * 0.01 ), m_flAttenuation, flags, pitch );
+            EmitAmbientSound( PlayFromEntity(), szSoundFile,
+                ( vol * 0.01 ), m_flAttenuation, flags, pitch );
     }
 
     // update ramps at 5hz
@@ -551,8 +569,7 @@ void CAmbientGeneric::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, 
 
         m_dpv.pitch = fraction * 255;
 
-        EmitAmbientSound( pev->origin, szSoundFile,
-            0, 0, SND_CHANGE_PITCH, m_dpv.pitch );
+        EmitAmbientSound( PlayFromEntity( pActivator, pCaller ), szSoundFile, 0, 0, SND_CHANGE_PITCH, m_dpv.pitch );
 
         return;
     }
@@ -606,7 +623,7 @@ void CAmbientGeneric::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, 
                 pev->nextthink = gpGlobals->time + 0.1;
             }
             else
-                EmitAmbientSound( pev->origin, szSoundFile,
+                EmitAmbientSound( PlayFromEntity( pActivator, pCaller ), szSoundFile,
                     0, 0, SND_STOP, 0 );
         }
     }
@@ -620,16 +637,14 @@ void CAmbientGeneric::ToggleUse( CBaseEntity* pActivator, CBaseEntity* pCaller, 
 
         if( m_fLooping )
             m_fActive = true;
-        else
-            // shut sound off now - may be interrupting a long non-looping sound
-            EmitAmbientSound( pev->origin, szSoundFile,
-                0, 0, SND_STOP, 0 );
+        else // shut sound off now - may be interrupting a long non-looping sound
+            EmitAmbientSound( PlayFromEntity( pActivator, pCaller ), szSoundFile, 0, 0, SND_STOP, 0 );
 
         // init all ramp params for startup
 
         InitModulationParms();
 
-        EmitAmbientSound( pev->origin, szSoundFile,
+        EmitAmbientSound( PlayFromEntity( pActivator, pCaller ), szSoundFile,
             ( m_dpv.vol * 0.01 ), m_flAttenuation, 0, m_dpv.pitch );
 
         pev->nextthink = gpGlobals->time + 0.1;
@@ -641,8 +656,12 @@ bool CAmbientGeneric::KeyValue( KeyValueData* pkvd )
     // NOTE: changing any of the modifiers in this code
     // NOTE: also requires changing InitModulationParms code.
 
-    // preset
-    if( FStrEq( pkvd->szKeyName, "preset" ) )
+    if( FStrEq( pkvd->szKeyName, "playfrom" ) )
+    {
+        m_PlayFromEntity = ALLOC_STRING(pkvd->szValue);
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "preset" ) )
     {
         m_dpv.preset = atoi( pkvd->szValue );
         return true;
