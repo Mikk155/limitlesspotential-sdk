@@ -730,6 +730,9 @@ int CBaseEntity::PrecacheSound( const char* s )
 
 void CBaseEntity::SetSize( const Vector& min, const Vector& max )
 {
+    if( m_HasZeroOrigin ) // Set g_vecZero to mark as absolute size in the world
+        SetOrigin( g_vecZero );
+
     // If it's a studiomodel and has a scale let's scale the bbox too
     if( strstr( STRING( pev->model ), ".mdl" ) != nullptr && pev->scale != 0.0 && pev->scale != 1.0 )
     {

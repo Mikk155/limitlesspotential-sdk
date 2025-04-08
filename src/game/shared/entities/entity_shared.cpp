@@ -165,6 +165,7 @@ BEGIN_DATAMAP_NOBASE(CBaseEntity)
     DEFINE_FIELD( m_CustomHullMax, FIELD_VECTOR ),
     DEFINE_FIELD( m_HasCustomHullMin, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_HasCustomHullMax, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_HasZeroOrigin, FIELD_BOOLEAN ),
 
     DEFINE_FUNCTION( SUB_Remove ),
     DEFINE_FUNCTION( SUB_StartFadeOut ),

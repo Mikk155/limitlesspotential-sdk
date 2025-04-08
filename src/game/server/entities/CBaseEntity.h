@@ -651,6 +651,7 @@ public:
     Vector m_CustomHullMax{vec3_origin};
     bool m_HasCustomHullMin{false};
     bool m_HasCustomHullMax{false};
+    bool m_HasZeroOrigin{false};
 
     /**
      *    @brief If not a zero vector, the entity's origin will be offset by this much when performing PAS checks.
