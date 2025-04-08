@@ -773,6 +773,9 @@ public:
     cvar_t* m_pCvarStealMouse = nullptr;
     cvar_t* m_pCvarDraw = nullptr;
     cvar_t* m_pCvarCrosshair = nullptr;
+    cvar_t* m_pDlightStudioModels = nullptr;
+    cvar_t* m_pDlightExplosions = nullptr;
+    cvar_t* m_pDlightWeaponMuzzle = nullptr;
 
     RGB24 m_HudColor = RGB_HUD_COLOR;
 

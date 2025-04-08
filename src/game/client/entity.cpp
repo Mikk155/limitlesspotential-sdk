@@ -304,39 +304,77 @@ void DLLEXPORT HUD_CreateEntities()
  */
 void DLLEXPORT HUD_StudioEvent( const mstudioevent_t* event, const cl_entity_t* entity )
 {
-    bool iMuzzleFlash = true;
+    bool iMuzzleFlash = gHUD.m_pDlightWeaponMuzzle->value != 0;
 
+    auto DrawMuzzleLight = []( float *origin ) -> void
+    {
+        if( dlight_t* light = gEngfuncs.pEfxAPI->CL_AllocDlight (0); light != nullptr )
+        {
+            light->origin.x = origin[0];
+            light->origin.y = origin[1];
+            light->origin.z = origin[2];
+            light->radius = 128;
+            light->color.r = 180;
+            light->color.g = 160;
+            light->color.b = 120;
+            light->die = gEngfuncs.GetClientTime() + 0.1;
+        }
+    };
 
     switch ( event->event )
     {
-    case 5001:
-        if( iMuzzleFlash )
-            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[0], atoi( event->options ) );
-        break;
-    case 5011:
-        if( iMuzzleFlash )
-            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[1], atoi( event->options ) );
-        break;
-    case 5021:
-        if( iMuzzleFlash )
-            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[2], atoi( event->options ) );
-        break;
-    case 5031:
-        if( iMuzzleFlash )
-            gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[3], atoi( event->options ) );
-        break;
-    case 5002:
-        gEngfuncs.pEfxAPI->R_SparkEffect( entity->attachment[0], atoi( event->options ), -100, 100 );
-        break;
+        case 5001:
+        {
+            if( iMuzzleFlash )
+            {
+                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[0], atoi( event->options ) );
+                DrawMuzzleLight( (float*)&entity->attachment[0] );
+            }
+            break;
+        }
+        case 5011:
+        {
+            if( iMuzzleFlash )
+            {
+                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[1], atoi( event->options ) );
+                DrawMuzzleLight( (float*)&entity->attachment[1] );
+            }
+            break;
+        }
+        case 5021:
+        {
+            if( iMuzzleFlash )
+            {
+                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[2], atoi( event->options ) );
+                DrawMuzzleLight( (float*)&entity->attachment[2] );
+            }
+            break;
+        }
+        case 5031:
+        {
+            if( iMuzzleFlash )
+            {
+                gEngfuncs.pEfxAPI->R_MuzzleFlash( entity->attachment[3], atoi( event->options ) );
+                DrawMuzzleLight( (float*)&entity->attachment[3] );
+            }
+            break;
+        }
+        case 5002:
+        {
+            gEngfuncs.pEfxAPI->R_SparkEffect( entity->attachment[0], atoi( event->options ), -100, 100 );
+            break;
+        }
         // Client side sound
-    case 5004:
-    {
-        auto sample = sound::g_ClientSoundReplacement.Lookup( event->options );
-        PlaySoundByNameAtLocation( sample, 1.0, entity->attachment[0] );
-        break;
-    }
-    default:
-        break;
+        case 5004:
+        {
+            auto sample = sound::g_ClientSoundReplacement.Lookup( event->options );
+            PlaySoundByNameAtLocation( sample, 1.0, entity->attachment[0] );
+            break;
+        }
+        default:
+        {
+            break;
+        }
     }
 }
 
@@ -779,11 +817,16 @@ static void CL_ParseExplosion2( BufferReader& reader )
 
     gEngfuncs.pEfxAPI->R_ParticleExplosion2( pos, colorStart, colorLength );
 
-    auto light = gEngfuncs.pEfxAPI->CL_AllocDlight( 0 );
-    light->origin = pos;
-    light->radius = 350;
-    light->die = gEngfuncs.GetClientTime() + 0.5;
-    light->decay = 300;
+    if( gHUD.m_pDlightExplosions->value != 0 )
+    {
+        if( dlight_t* light = gEngfuncs.pEfxAPI->CL_AllocDlight( 0 ); light != nullptr )
+        {
+            light->origin = pos;
+            light->radius = 350;
+            light->die = gEngfuncs.GetClientTime() + 0.5;
+            light->decay = 300;
+        }
+    }
 
     CL_StartSound( -1, CHAN_AUTO, "weapons/explode3.wav", pos, VOL_NORM, 0.6f, PITCH_NORM, 0 );
 }

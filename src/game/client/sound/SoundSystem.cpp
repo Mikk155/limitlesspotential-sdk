@@ -406,33 +406,38 @@ void R_Explosion( const Vector& pos, int model, float scale, float framerate, in
 
         if( ( flags & TE_EXPLFLAG_NODLIGHTS ) == 0 )
         {
-            auto yellowLight = gEngfuncs.pEfxAPI->CL_AllocDlight( 0 );
+            if( gHUD.m_pDlightExplosions->value != 0 )
+            {
+                if( dlight_t* yellowLight = gEngfuncs.pEfxAPI->CL_AllocDlight(0); yellowLight != nullptr )
+                {
+                    yellowLight->origin = pos;
 
-            yellowLight->origin = pos;
+                    yellowLight->radius = 200;
 
-            yellowLight->radius = 200;
+                    yellowLight->color.r = 250;
+                    yellowLight->color.g = 250;
+                    yellowLight->color.b = 150;
 
-            yellowLight->color.r = 250;
-            yellowLight->color.g = 250;
-            yellowLight->color.b = 150;
+                    yellowLight->die = gEngfuncs.GetClientTime() + 0.01;
 
-            yellowLight->die = gEngfuncs.GetClientTime() + 0.01;
+                    yellowLight->decay = 800;
+                }
 
-            yellowLight->decay = 800;
+                if( dlight_t* orangeLight = gEngfuncs.pEfxAPI->CL_AllocDlight(0); orangeLight != nullptr )
+                {
+                    orangeLight->origin = pos;
 
-            auto orangeLight = gEngfuncs.pEfxAPI->CL_AllocDlight( 0 );
+                    orangeLight->radius = 150;
 
-            orangeLight->origin = pos;
+                    orangeLight->color.r = 255;
+                    orangeLight->color.g = 190;
+                    orangeLight->color.b = 40;
 
-            orangeLight->radius = 150;
+                    orangeLight->die = gEngfuncs.GetClientTime() + 1;
 
-            orangeLight->color.r = 255;
-            orangeLight->color.g = 190;
-            orangeLight->color.b = 40;
-
-            orangeLight->die = gEngfuncs.GetClientTime() + 1;
-
-            orangeLight->decay = 200;
+                    orangeLight->decay = 200;
+                }
+            }
         }
     }
 
