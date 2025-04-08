@@ -16,11 +16,11 @@
 #include "cbase.h"
 #include "CCorpse.h"
 
-LINK_ENTITY_TO_CLASS( bodyque, CCorpse );
+LINK_ENTITY_TO_CLASS( deadplayer, CCorpse );
 
 void InitBodyQue()
 {
-    const std::string_view className{"bodyque"sv};
+    const std::string_view className{"deadplayer"sv};
 
     g_pBodyQueueHead = g_EntityDictionary->Create( className );
     auto body = g_pBodyQueueHead;

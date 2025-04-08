@@ -615,7 +615,7 @@ private:
     float m_loadTime;
 };
 
-LINK_ENTITY_TO_CLASS( player_loadsaved, CRevertSaved );
+LINK_ENTITY_TO_CLASS( game_loadsaved, CRevertSaved );
 
 BEGIN_DATAMAP( CRevertSaved )
     DEFINE_FIELD( m_messageTime, FIELD_FLOAT ), // These are not actual times, but durations, so save as floats

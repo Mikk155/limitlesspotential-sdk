@@ -1,0 +1,62 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "size": [
+        [
+            -16,
+            -16,
+            -16
+        ],
+        [
+            16,
+            16,
+            16
+        ]
+    ],
+    "data": {
+        "duration": {
+            "variable": "string",
+            "value": "2",
+            "title": "game_loadsaved::duration",
+            "description": "game_loadsaved::duration::description"
+        },
+        "holdtime": {
+            "variable": "string",
+            "value": "0",
+            "title": "game_loadsaved::holdtime",
+            "description": "game_loadsaved::holdtime::description"
+        },
+        "renderamt": {
+            "variable": "integer",
+            "value": "255",
+            "title": "game_loadsaved::renderamt",
+            "description": "game_loadsaved::renderamt::description"
+        },
+        "rendercolor": {
+            "variable": "color255",
+            "value": "0 0 0",
+            "title": "game_loadsaved::rendercolor",
+            "description": "game_loadsaved::rendercolor::description"
+        },
+        "messagetime": {
+            "variable": "string",
+            "value": "0",
+            "title": "game_loadsaved::messagetime",
+            "description": "game_loadsaved::messagetime::description"
+        },
+        "message": {
+            "variable": "string",
+            "value": "",
+            "title": "game_loadsaved::message",
+            "description": "game_loadsaved::message::description"
+        },
+        "loadtime": {
+            "variable": "string",
+            "value": "0",
+            "title": "game_loadsaved::loadtime",
+            "description": "game_loadsaved::loadtime::description"
+        }
+    },
+    "title": "game_loadsaved::classname",
+    "description": "game_loadsaved::classname::description"
+}

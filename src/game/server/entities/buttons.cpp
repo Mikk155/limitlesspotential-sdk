@@ -651,8 +651,8 @@ void CBaseButton::ButtonBackHome()
         SetTouch( &CBaseButton::ButtonTouch );
 
     // reset think for a sparking button
-    // func_rot_button's X Axis spawnflag overlaps with this one so don't use it here.
-    if( !ClassnameIs( "func_rot_button" ) && FBitSet( pev->spawnflags, SF_BUTTON_SPARK_IF_OFF ) )
+    // func_button_rotating's X Axis spawnflag overlaps with this one so don't use it here.
+    if( !ClassnameIs( "func_button_rotating" ) && FBitSet( pev->spawnflags, SF_BUTTON_SPARK_IF_OFF ) )
     {
         SetThink( &CBaseButton::ButtonSpark );
         pev->nextthink = pev->ltime + 0.5; // no hurry.
@@ -668,7 +668,7 @@ public:
     bool Spawn() override;
 };
 
-LINK_ENTITY_TO_CLASS( func_rot_button, CRotButton );
+LINK_ENTITY_TO_CLASS( func_button_rotating, CRotButton );
 
 bool CRotButton::Spawn()
 {
@@ -784,7 +784,7 @@ BEGIN_DATAMAP( CMomentaryRotButton )
     DEFINE_FUNCTION( Return ),
 END_DATAMAP();
 
-LINK_ENTITY_TO_CLASS( momentary_rot_button, CMomentaryRotButton );
+LINK_ENTITY_TO_CLASS( func_button_momentary, CMomentaryRotButton );
 
 bool CMomentaryRotButton::Spawn()
 {
@@ -868,7 +868,7 @@ void CMomentaryRotButton::UpdateAllButtons( float value, bool start )
     // Update all rot buttons attached to the same target
     for( auto target : UTIL_FindEntitiesByTarget( STRING( pev->target ) ) )
     {
-        if( target->ClassnameIs( "momentary_rot_button" ) )
+        if( target->ClassnameIs( "func_button_momentary" ) )
         {
             auto pEntity = static_cast<CMomentaryRotButton*>( target );
             if( start )
@@ -1075,7 +1075,7 @@ public:
     int ObjectCaps() override;
 };
 
-LINK_ENTITY_TO_CLASS( button_target, CButtonTarget );
+LINK_ENTITY_TO_CLASS( func_button_target, CButtonTarget );
 
 bool CButtonTarget::Spawn()
 {

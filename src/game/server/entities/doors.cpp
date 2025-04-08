@@ -670,7 +670,7 @@ public:
     string_t m_StopSound;
 };
 
-LINK_ENTITY_TO_CLASS( momentary_door, CMomentaryDoor );
+LINK_ENTITY_TO_CLASS( func_door_momentary, CMomentaryDoor );
 
 BEGIN_DATAMAP( CMomentaryDoor )
     DEFINE_FIELD( m_MoveSound, FIELD_SOUNDNAME ),

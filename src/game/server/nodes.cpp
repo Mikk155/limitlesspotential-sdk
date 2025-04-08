@@ -155,7 +155,7 @@ entvars_t* CGraph::LinkEntForLink( CLink* pLink, CNode* pNode )
         // find the button or trigger
         for( auto trigger : UTIL_FindEntitiesByTarget( entity->GetTargetname() ) )
         {
-            if( trigger->ClassnameIs( "func_button" ) || trigger->ClassnameIs( "func_rot_button" ) )
+            if( trigger->ClassnameIs( "func_button" ) || trigger->ClassnameIs( "func_button_rotating" ) )
             { // only buttons are handled right now.
 
                 // trace from the node to the trigger, make sure it's one we can see from the node.

@@ -19,6 +19,7 @@ namespace MapUpgrader.Upgrades
         public static MapUpgradeCollectionBuilder AddSharedUpgrades(this MapUpgradeCollectionBuilder builder)
         {
             //Must come before any other upgrades.
+            builder.AddUpgrade(new RenameRedundantEntities());
             builder.AddUpgrade(new ConvertAngleToAnglesUpgrade());
             builder.AddUpgrade(new RenameEntityClassNamesUpgrade());
             // Must come before any upgrades that deal with the resulting entities!

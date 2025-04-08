@@ -15,7 +15,7 @@ namespace MapUpgrader.Upgrades.Common
 
         private static readonly ImmutableArray<string> ClassNames = ImmutableArray.Create(
             "env_message",
-            "player_loadsaved"
+            "game_loadsaved"
             );
 
         private static readonly ImmutableList<Regex> Patterns = ImmutableList.Create(

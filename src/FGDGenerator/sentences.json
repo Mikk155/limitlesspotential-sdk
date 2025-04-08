@@ -2964,7 +2964,7 @@
 {
 "english": "Ladder"
 },
-"func_monsterclip::classname":
+"func_clip::classname":
 {
 "english": "Monster clip brush"
 },
@@ -3136,67 +3136,67 @@
 {
 "english": "Battery recharger"
 },
-"func_rot_button::classname":
+"func_button_rotating::classname":
 {
 "english": "RotatingButton"
 },
-"func_rot_button::changetarget":
+"func_button_rotating::changetarget":
 {
 "english": "ChangeTarget Name"
 },
-"func_rot_button::speed":
+"func_button_rotating::speed":
 {
 "english": "Speed"
 },
-"func_rot_button::health":
+"func_button_rotating::health":
 {
 "english": "Health (shootable if > 0)"
 },
-"func_rot_button::sounds":
+"func_button_rotating::sounds":
 {
 "english": "Sounds"
 },
-"func_rot_button::wait":
+"func_button_rotating::wait":
 {
 "english": "Delay before reset"
 },
-"func_rot_button::wait::-1":
+"func_button_rotating::wait::-1":
 {
 "english": "Stays pressed"
 },
-"func_rot_button::delay":
+"func_button_rotating::delay":
 {
 "english": "Delay before trigger"
 },
-"func_rot_button::distance":
+"func_button_rotating::distance":
 {
 "english": "Distance (deg)"
 },
-"func_rot_button::spawnflags::1":
+"func_button_rotating::spawnflags::1":
 {
 "english": "Not solid"
 },
-"func_rot_button::spawnflags::2":
+"func_button_rotating::spawnflags::2":
 {
 "english": "Reverse Dir"
 },
-"func_rot_button::spawnflags::32":
+"func_button_rotating::spawnflags::32":
 {
 "english": "Toggle"
 },
-"func_rot_button::spawnflags::64":
+"func_button_rotating::spawnflags::64":
 {
 "english": "X Axis"
 },
-"func_rot_button::spawnflags::128":
+"func_button_rotating::spawnflags::128":
 {
 "english": "Y Axis"
 },
-"func_rot_button::spawnflags::256":
+"func_button_rotating::spawnflags::256":
 {
 "english": "Touch Activates"
 },
-"func_rot_button::_minlight":
+"func_button_rotating::_minlight":
 {
 "english": "_minlight"
 },
@@ -4036,47 +4036,47 @@
 {
 "english": "Starts Open"
 },
-"func_button_rotating::classname":
+"func_button_momentary::classname":
 {
 "english": "Direct wheel control"
 },
-"func_button_rotating::speed":
+"func_button_momentary::speed":
 {
 "english": "Speed"
 },
-"func_button_rotating::sounds":
+"func_button_momentary::sounds":
 {
 "english": "Sounds"
 },
-"func_button_rotating::distance":
+"func_button_momentary::distance":
 {
 "english": "Distance (deg)"
 },
-"func_button_rotating::returnspeed":
+"func_button_momentary::returnspeed":
 {
 "english": "Auto-return speed"
 },
-"func_button_rotating::spawnflags::1":
+"func_button_momentary::spawnflags::1":
 {
 "english": "Door Hack"
 },
-"func_button_rotating::spawnflags::2":
+"func_button_momentary::spawnflags::2":
 {
 "english": "Not useable"
 },
-"func_button_rotating::spawnflags::16":
+"func_button_momentary::spawnflags::16":
 {
 "english": "Auto Return"
 },
-"func_button_rotating::spawnflags::64":
+"func_button_momentary::spawnflags::64":
 {
 "english": "X Axis"
 },
-"func_button_rotating::spawnflags::128":
+"func_button_momentary::spawnflags::128":
 {
 "english": "Y Axis"
 },
-"func_button_rotating::_minlight":
+"func_button_momentary::_minlight":
 {
 "english": "_minlight"
 },
@@ -4852,35 +4852,35 @@
 {
 "english": "Argument 1"
 },
-"player_loadsaved::classname":
+"game_loadsaved::classname":
 {
 "english": "Load Auto-Saved game"
 },
-"player_loadsaved::duration":
+"game_loadsaved::duration":
 {
 "english": "Fade Duration (seconds)"
 },
-"player_loadsaved::holdtime":
+"game_loadsaved::holdtime":
 {
 "english": "Hold Fade (seconds)"
 },
-"player_loadsaved::renderamt":
+"game_loadsaved::renderamt":
 {
 "english": "Fade Alpha"
 },
-"player_loadsaved::rendercolor":
+"game_loadsaved::rendercolor":
 {
 "english": "Fade Color (R G B)"
 },
-"player_loadsaved::messagetime":
+"game_loadsaved::messagetime":
 {
 "english": "Show Message delay"
 },
-"player_loadsaved::message":
+"game_loadsaved::message":
 {
 "english": "Message To Display"
 },
-"player_loadsaved::loadtime":
+"game_loadsaved::loadtime":
 {
 "english": "Reload delay"
 },

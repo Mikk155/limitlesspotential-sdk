@@ -186,7 +186,7 @@ namespace MapUpgrader.Upgrades.Common
                 ["func_door"] = DoorData,
                 ["func_water"] = DoorData,
                 ["func_door_rotating"] = DoorData,
-                ["momentary_door"] = ImmutableArray.Create(new KeyData("movesnd", DefaultSound, MomentaryDoorMoveSounds)),
+                ["func_door_momentary"] = ImmutableArray.Create(new KeyData("movesnd", DefaultSound, MomentaryDoorMoveSounds)),
                 ["func_rotating"] = ImmutableArray.Create(new KeyData("sounds", DefaultSound, RotatingMoveSounds, entity =>
                 {
                     // Use original game parsing behavior.
@@ -202,8 +202,8 @@ namespace MapUpgrader.Upgrades.Common
                     return value;
                 })),
                 ["func_button"] = ButtonData,
-                ["func_rot_button"] = ButtonData,
-                ["momentary_rot_button"] = ImmutableArray.Create(new KeyData("sounds", DefaultMomentaryButtonSound, ButtonSounds)),
+                ["func_button_rotating"] = ButtonData,
+                ["func_button_momentary"] = ImmutableArray.Create(new KeyData("sounds", DefaultMomentaryButtonSound, ButtonSounds)),
                 ["func_train"] = PlatData,
                 ["func_plat"] = PlatData,
                 ["func_platrot"] = PlatData,
