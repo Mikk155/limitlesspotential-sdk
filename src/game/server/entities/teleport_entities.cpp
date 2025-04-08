@@ -16,6 +16,9 @@
 #include "cbase.h"
 #include "CBaseTrigger.h"
 
+#define SF_TELEPORT_KEEP_ANGLES 256
+#define SF_TELEPORT_KEEP_VELOCITY 512
+
 static void UTIL_TeleportToTarget( CBaseEntity* teleportee, Vector targetPosition, const Vector& targetAngles )
 {
     if( teleportee->IsPlayer() )
@@ -118,7 +121,16 @@ void CTriggerTeleport::TeleportTouch( CBaseEntity* pOther )
     if( FNullEnt( target ) )
         return;
 
-    UTIL_TeleportToTarget( pOther, target->pev->origin, target->pev->angles );
+    Vector VecVelocity = pOther->pev->velocity;
+
+    UTIL_TeleportToTarget( pOther, target->pev->origin,
+        ( FBitSet( pev->spawnflags & SF_TELEPORT_KEEP_ANGLES ) ? pOther->pev->angles : target->pev->angles )
+    );
+
+    if( FBitSet( pev->spawnflags & SF_TELEPORT_KEEP_VELOCITY ) )
+    {
+        pOther->pev->velocity = pOther->pev->basevelocity = VecVelocity;
+    }
 
     if( !FStringNull( m_FireOnTeleportTarget ) )
     {
