@@ -1379,8 +1379,6 @@ void CBasePlayer::StartObserver( Vector vecPosition, Vector vecViewAngle )
     Observer_SetMode( m_iObserverLastMode );
 }
 
-#define PLAYER_SEARCH_RADIUS (float)64
-
 void CBasePlayer::PlayerUse()
 {
     if( IsObserver() )
@@ -1433,12 +1431,14 @@ void CBasePlayer::PlayerUse()
 
     UTIL_MakeVectors( pev->v_angle ); // so we know which way we are facing
 
-    while( ( pObject = UTIL_FindEntityInSphere( pObject, pev->origin, PLAYER_SEARCH_RADIUS ) ) != nullptr )
+    const float search_radius = g_cfg.GetValue<float>( "plr_usedist"sv, 64, this );
+
+    while( ( pObject = UTIL_FindEntityInSphere( pObject, pev->origin, search_radius ) ) != nullptr )
     {
         // Special behavior for ropes: check if the player is close enough to the rope segment origin
         if( pObject->ClassnameIs( "rope_segment" ) )
         {
-            if( ( pev->origin - pObject->pev->origin ).Length() > PLAYER_SEARCH_RADIUS )
+            if( ( pev->origin - pObject->pev->origin ).Length() > search_radius )
             {
                 continue;
             }
@@ -1447,7 +1447,7 @@ void CBasePlayer::PlayerUse()
         if( ( pObject->ObjectCaps() & ( FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE ) ) != 0 )
         {
             // !!!PERFORMANCE- should this check be done on a per case basis AFTER we've determined that
-            // this object is actually usable? This dot is being done for every object within PLAYER_SEARCH_RADIUS
+            // this object is actually usable? This dot is being done for every object within search_radius
             // when player hits the use key. How many objects can be in that area, anyway? (sjb)
             vecLOS = ( VecBModelOrigin( pObject ) - ( pev->origin + pev->view_ofs ) );
 
@@ -1467,7 +1467,7 @@ void CBasePlayer::PlayerUse()
     }
     pObject = pClosest;
 
-    auto CanUseEntityLoS = [this]( CBaseEntity* pObjectCap ) -> bool
+    auto CanUseEntityLoS = [this]( CBaseEntity* pObjectCap, const float search_radius ) -> bool
     {
         if( !pObjectCap )
             return false;
@@ -1477,13 +1477,13 @@ void CBasePlayer::PlayerUse()
 
         TraceResult tr;
         Vector VecSrc = pev->origin + pev->view_ofs;
-        UTIL_TraceLine( VecSrc, VecSrc + gpGlobals->v_forward * PLAYER_SEARCH_RADIUS, dont_ignore_monsters, dont_ignore_glass, edict(), &tr );
+        UTIL_TraceLine( VecSrc, VecSrc + gpGlobals->v_forward * search_radius, dont_ignore_monsters, dont_ignore_glass, edict(), &tr );
 
         return ( tr.pHit == pObjectCap->edict() );
     };
 
     // Found an object
-    if( CanUseEntityLoS( pObject ) )
+    if( CanUseEntityLoS( pObject, search_radius ) )
     {
         int caps = pObject->ObjectCaps();
 

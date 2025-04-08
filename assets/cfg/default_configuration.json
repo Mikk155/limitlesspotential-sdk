@@ -454,6 +454,9 @@
     // Player can only Use entities on direct line of sight. if this is true, entities whose m_uselos is false wil require LoS anyways.
     "plr_uselos": false,
 
+    // Player Use distance
+    "plr_usedist": 64,
+
     // Crowbar whack
     "plr_crowbar": 10,
 
