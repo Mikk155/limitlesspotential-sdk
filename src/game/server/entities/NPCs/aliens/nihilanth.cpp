@@ -1661,6 +1661,9 @@ void CNihilanthHVR::TeleportTouch( CBaseEntity* pOther )
 {
     CBaseEntity* pEnemy = m_hEnemy;
 
+    if( FStrEq( pOther->GetClassificationName(), "alien_bioweapon" ) )
+        return;
+
     if( pOther == pEnemy )
     {
         if( m_hTargetEnt != nullptr )
