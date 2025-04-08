@@ -3988,42 +3988,6 @@
 {
 "english": "Target to fire for Hard"
 },
-"logic_setskill::classname":
-{
-"english": "Set skill level to specified value Some variables require a map change to take effect"
-},
-"logic_setskill::classname::description":
-{
-"english": "Changes the skill level setting. Due to how the skill system works some changes will only take effect after a map change.This entity is the equivalent of Quake 1's `trigger_setskill` but is a point entity that needs to be triggered. Its intended purpose is to be used in a campaign selection map."
-},
-"logic_setskill::skill_level":
-{
-"english": "Skill level to set"
-},
-"logic_setskill::skill_level::1":
-{
-"english": "Easy"
-},
-"logic_setskill::skill_level::2":
-{
-"english": "Medium"
-},
-"logic_setskill::skill_level::3":
-{
-"english": "Hard"
-},
-"logic_setskillvar::classname":
-{
-"english": "Set skill variables to a provided value"
-},
-"logic_setskillvar::var_name":
-{
-"english": "Variable name"
-},
-"logic_setskillvar::var_value":
-{
-"english": "Value (number)"
-},
 "func_door_momentary::classname":
 {
 "english": "Momentary/Continuous door"

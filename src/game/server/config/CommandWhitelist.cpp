@@ -30,7 +30,7 @@ static std::string GetCommandWhitelistSchema()
 {{
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Command Whitelist",
-    "description": "List of console commands that map configs and logic_setcvar can execute",
+    "description": "List of console commands that map configs and game_variable can execute",
     "type": "array",
     "items": {{
         "title": "Command Name",
