@@ -20,9 +20,13 @@
 
 LINK_ENTITY_TO_CLASS( monster_zombie, CZombie );
 
+BEGIN_DATAMAP( CZombie )
+    DEFINE_FIELD( m_flHeadcrabDamaged, FIELD_FLOAT ),
+END_DATAMAP();
+
 void CZombie::OnCreate()
 {
-    CBaseMonster::OnCreate();
+    BaseClass::OnCreate();
 
     pev->model = MAKE_STRING( "models/zombie.mdl" );
 
@@ -58,7 +62,7 @@ bool CZombie::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float f
     // HACK HACK -- until we fix this.
     if( IsAlive() )
         PainSound();
-    return CBaseMonster::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
+    return BaseClass::TakeDamage( inflictor, attacker, flDamage, bitsDamageType );
 }
 
 void CZombie::PainSound()
@@ -141,7 +145,7 @@ void CZombie::HandleAnimEvent( MonsterEvent_t* pEvent )
         break;
 
     default:
-        CBaseMonster::HandleAnimEvent( pEvent );
+        BaseClass::HandleAnimEvent( pEvent );
         break;
     }
 }
@@ -171,6 +175,8 @@ bool CZombie::Spawn()
 
 void CZombie::Precache()
 {
+    UTIL_PrecacheOther( "monster_headcrab" );
+
     PrecacheModel( STRING( pev->model ) );
 
     PRECACHE_SOUND_ARRAY( pAttackHitSounds );
@@ -183,7 +189,7 @@ void CZombie::Precache()
 
 int CZombie::IgnoreConditions()
 {
-    int iIgnore = CBaseMonster::IgnoreConditions();
+    int iIgnore = BaseClass::IgnoreConditions();
 
     if( m_Activity == ACT_MELEE_ATTACK1 )
     {
@@ -203,4 +209,40 @@ int CZombie::IgnoreConditions()
     }
 
     return iIgnore;
+}
+
+void CZombie::TraceAttack( CBaseEntity* pAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType )
+{
+    if( g_cfg.GetValue<bool>( "zombie_headcrab_jump"sv, false, this ) )
+    {
+        // It was a hit on the headcrab
+        if( ptr->iHitgroup == 1 )
+        {
+            m_bloodColor = BLOOD_COLOR_GREEN;
+            m_flHeadcrabDamaged += flDamage;
+        }
+        else
+        {
+            m_bloodColor = BLOOD_COLOR_RED;
+        }
+    }
+
+    BaseClass::TraceAttack( pAttacker, flDamage, vecDir, ptr, bitsDamageType );
+}
+
+void CZombie::Killed(CBaseEntity* pAttacker, int iGib)
+{
+    // Check if the stored received damage is less than a headcrab's HP
+    if( g_cfg.GetValue<bool>( "zombie_headcrab_jump"sv, false, this ) )
+    {
+        if( float chp = g_cfg.GetValue<float>( "headcrab_health"sv, false ) - m_flHeadcrabDamaged; chp > 0 )
+        {
+            if( CBaseEntity* crab = Create( "monster_headcrab", pev->origin + Vector( 0,0,72 ), pev->angles, this ); crab != nullptr )
+            {
+                SetBodygroup( 1, 1 );
+                crab->pev->health = chp;
+            }
+        }
+    }
+    BaseClass::Killed( pAttacker, iGib );
 }

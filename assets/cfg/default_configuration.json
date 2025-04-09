@@ -243,6 +243,9 @@
     "zombie_dmg_both_slash2": 40,
     "zombie_dmg_both_slash3": 40,
 
+    // If true. killing the zombie will make the headcrab jump if it wasn't damaged enough (headcrab_health)
+    "zombie_headcrab_jump": false,
+
     //Turret
     "turret_health1": 50,
     "turret_health2": 50,

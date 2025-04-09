@@ -23,6 +23,9 @@
 
 class CZombie : public CBaseMonster
 {
+    DECLARE_CLASS( CZombie, CBaseMonster );
+    DECLARE_DATAMAP();
+
 public:
     void OnCreate() override;
     bool Spawn() override;
@@ -84,6 +87,8 @@ public:
     bool CheckRangeAttack1( float flDot, float flDist ) override { return false; }
     bool CheckRangeAttack2( float flDot, float flDist ) override { return false; }
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
+    void TraceAttack( CBaseEntity* pAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType ) override;
+    void Killed( CBaseEntity* pAttacker, int iGib ) override;
 
 protected:
     virtual float GetOneSlashDamage();
@@ -93,4 +98,7 @@ protected:
 
     // Take 30% damage from bullets by default
     virtual float GetBulletDamageFraction() const { return 0.3f; }
+
+private:
+    float m_flHeadcrabDamaged = 0;
 };
