@@ -55,9 +55,6 @@ public:
 
     GM_Base() = default;
 
-    virtual const char* GetName() const { return "default"; }
-    virtual const char* GetBaseName() const { return "default"; }
-
     /**
      * @brief Return whatever the current gamemode is @c GameModeName
     */
@@ -71,6 +68,11 @@ public:
     bool IsBaseGamemode( std::string_view GameModeName ) {
         return ( GameModeName == std::string_view( GetBaseName() ) );
     }
+
+    void _UpdateClientGameMode_( CBasePlayer* player );
+
+    virtual const char* GetName() const { return "default"; }
+    virtual const char* GetBaseName() const { return "default"; }
 
     /**
      * @brief Return whatever players can form teams in this gamemode
@@ -124,8 +126,6 @@ public:
      * CLIENT: Called when the client receives the new gamemode
      */
     virtual void OnClientInit( CBasePlayer* player );
-
-    void _UpdateClientGameMode_( CBasePlayer* player );
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

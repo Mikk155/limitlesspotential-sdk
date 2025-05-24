@@ -153,9 +153,16 @@ GM_Base* CGameModes::operator->()
     if( gamemode != nullptr )
     {
 #ifndef CLIENT_DLL
-        if( GameModeAutoUpdate ) // This should only happen in the server
+        // -TODO Move out gamemode cvars once gamerules are striped out
+        if( GameModeAutoUpdate )
         {
-            UpdateGameMode(gamemode_name);
+            if( const char* gamemode_changed = CVAR_GET_STRING( "mp_gamemode" ); gamemode_changed )
+            {
+                if( strcmp( gamemode_name.c_str(), gamemode_changed ) != 0 )
+                {
+                    UpdateGameMode( gamemode_changed );
+                }
+            }
         }
 #endif
         return gamemode;
