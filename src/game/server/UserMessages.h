@@ -34,7 +34,7 @@ inline int gmsgDeathMsg = 0;
 inline int gmsgScoreInfo = 0;
 inline int gmsgTeamInfo = 0;
 inline int gmsgTeamScore = 0;
-inline int gmsgGameMode = 0;
+inline int gmsgGameMode_old = 0;
 inline int gmsgMOTD = 0;
 inline int gmsgServerName = 0;
 inline int gmsgAmmoPickup = 0;
@@ -76,6 +76,7 @@ inline int gmsgTgtLaser = 0;
 inline int gmsgFog = 0;
 inline int gmsgClientGibs = 0;
 inline int gmsgTitles = 0;
+inline int gmsgGameMode = 0;
 
 #include "dlight.h"
 inline int gmsgDLight = 0;

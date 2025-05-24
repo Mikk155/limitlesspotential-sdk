@@ -141,7 +141,7 @@ void CHalfLifeTeamplay::Think()
 
 void CHalfLifeTeamplay::UpdateGameMode( CBasePlayer* pPlayer )
 {
-    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, pPlayer );
+    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );
     WRITE_BYTE( 1 ); // game mode teamplay
     MESSAGE_END();
 }

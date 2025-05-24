@@ -116,11 +116,6 @@ bool ServerLibrary::Initialize()
     g_engfuncs.pfnCVarRegister( &sv_infinite_ammo );
     g_engfuncs.pfnCVarRegister( &sv_bottomless_magazines );
 
-    g_ConCommands.CreateCommand( 
-        "mp_list_gamemodes", []( const auto& )
-        { PrintMultiplayerGameModes(); },
-        CommandLibraryPrefix::No );
-
     g_ConCommands.CreateCommand( "load_all_maps", [this]( const auto& args )
         { LoadAllMaps( args ); } );
 
@@ -572,6 +567,11 @@ map_cfg_is_loaded:
 
     assert( g_pGameRules );
 
+#ifdef ANGELSCRIPT
+    g_GameMode->RegisterCustomGameModes();
+#endif
+    g_GameMode.UpdateGameMode( gameModeConfig.GameMode );
+
     ServerConfigContext context{.State = *m_MapState};
 
     // Initialize file lists to their defaults.
@@ -633,6 +633,8 @@ map_cfg_is_loaded:
 
     g_GameLogger->trace( "Server configurations loaded in {}ms",
         std::chrono::duration_cast<std::chrono::milliseconds>( timeElapsed ).count() );
+
+    g_GameMode->MapInit();
 }
 
 void ServerLibrary::SendFogMessage( CBasePlayer* player )

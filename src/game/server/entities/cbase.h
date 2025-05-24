@@ -50,6 +50,7 @@ CBaseEntity
 #include "ConfigurationSystem.h"
 #include "game.h"
 #include "CGameRules.h"
+#include "gamemodes/GameMode.h"
 #include "CGlobalState.h"
 
 #include "basemonster.h"

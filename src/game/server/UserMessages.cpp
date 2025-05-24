@@ -44,7 +44,7 @@ void LinkUserMessages()
     gmsgScoreInfo = REG_USER_MSG( "ScoreInfo", 9 );
     gmsgTeamInfo = REG_USER_MSG( "TeamInfo", -1 );   // sets the name of a player's team
     gmsgTeamScore = REG_USER_MSG( "TeamScore", -1 ); // sets the score of a team on the scoreboard
-    gmsgGameMode = REG_USER_MSG( "GameMode", 1 );
+    gmsgGameMode_old = REG_USER_MSG( "GameModeold", 1 );
     gmsgMOTD = REG_USER_MSG( "MOTD", -1 );
     gmsgServerName = REG_USER_MSG( "ServerName", -1 );
     gmsgAmmoPickup = REG_USER_MSG( "AmmoPickup", 2 );
@@ -83,6 +83,7 @@ void LinkUserMessages()
     gmsgEmitSound = REG_USER_MSG( "EmitSound", -1 );
     gmsgTempEntity = REG_USER_MSG( "TempEntity", -1 );
     gmsgConfigVars = REG_USER_MSG( "ConfigVars", -1 );
+    gmsgGameMode = REG_USER_MSG( "GameMode", -1 );
 
     gmsgCampaignSelect = REG_USER_MSG( "CmpgnSlct", 0 );
 

@@ -3849,6 +3849,8 @@ void CBasePlayer::UpdateClientData()
             MESSAGE_END();
 
             g_pGameRules->InitHUD( this );
+            g_GameMode->_UpdateClientGameMode_( this );
+            g_GameMode->OnClientInit( this );
             m_fGameHUDInitialized = true;
 
             m_iObserverLastMode = OBS_ROAMING;

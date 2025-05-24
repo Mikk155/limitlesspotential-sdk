@@ -208,7 +208,7 @@ bool CHalfLifeMultiplay::ClientConnected( edict_t* pEntity, const char* pszName,
 
 void CHalfLifeMultiplay::UpdateGameMode( CBasePlayer* pPlayer )
 {
-    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, pPlayer );
+    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );
     WRITE_BYTE( 0 ); // game mode none
     MESSAGE_END();
 }

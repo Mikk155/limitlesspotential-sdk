@@ -103,6 +103,7 @@ void GameLibrary::AddGameSystems()
     g_GameSystems.Add( &g_WeaponData );
     g_GameSystems.Add( &g_AmmoTypes );
     g_GameSystems.Add( &g_cfg );
+    g_GameSystems.Add( &g_GameMode );
     g_GameSystems.Add( &g_HudReplacements );
     g_GameSystems.Add( &g_EntityClassifications );
 }

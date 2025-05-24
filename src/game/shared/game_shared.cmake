@@ -77,10 +77,27 @@ function(add_game_shared_sources target)
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/items/weapons/weapons.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/items/weapons/WeaponDataSystem.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/items/weapons/WeaponDataSystem.h
+
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GameMode.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GameMode.h
+
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Multiplayer.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Multiplayer.h
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Singleplayer.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Singleplayer.h
             
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_CaptureTheFlag.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_CaptureTheFlag.h
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Cooperative.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Cooperative.h
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Deathmatch.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_Deathmatch.h
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_TeamDeathmatch.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/gamemodes/GM_TeamDeathmatch.h
+
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/models/BspLoader.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/models/BspLoader.h
-            
+
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/networking/NetworkDataSystem.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/networking/NetworkDataSystem.h
             
