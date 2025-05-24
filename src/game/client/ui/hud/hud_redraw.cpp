@@ -20,6 +20,8 @@
 #include "vgui_TeamFortressViewport.h"
 #include "vgui_StatsMenuPanel.h"
 
+#include "gamemodes/GameMode.h"
+
 #define MAX_LOGO_FRAMES 56
 
 int grgLogoFrame[MAX_LOGO_FRAMES] =
@@ -52,6 +54,7 @@ void CHud::Think()
     }
 
     newfov = HUD_GetFOV();
+
     if( newfov == 0 )
     {
         m_iFOV = default_fov->value;
@@ -85,6 +88,8 @@ void CHud::Think()
     {
         m_iFOV = gHUD.m_Spectator.GetFOV(); // default_fov->value;
     }
+
+    g_GameMode->Think();
 }
 
 // Redraw
@@ -92,6 +97,8 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw( float flTime, bool intermission )
 {
+    g_GameMode->PlayerPreThink(nullptr, flTime);
+
     m_fOldTime = m_flTime; // save time of previous redraw
     m_flTime = flTime;
     m_flTimeDelta = (double)m_flTime - m_fOldTime;
@@ -204,6 +211,8 @@ bool CHud::Redraw( float flTime, bool intermission )
         SPR_DrawAdditive( 0, mx, my, nullptr );
     }
     */
+
+    g_GameMode->PlayerPostThink(nullptr, flTime);
 
     return true;
 }

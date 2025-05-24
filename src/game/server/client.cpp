@@ -1255,6 +1255,8 @@ void StartFrame()
     if( g_pGameRules )
         g_pGameRules->Think();
 
+    g_GameMode->Think();
+
     if( g_fGameOver )
         return;
 

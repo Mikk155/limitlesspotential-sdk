@@ -1823,6 +1823,7 @@ void CBasePlayer::PreThink()
     m_afButtonReleased = buttonsChanged & ( ~pev->button ); // The ones not down are "released"
 
     g_pGameRules->PlayerThink( this );
+    g_GameMode->PlayerPreThink(this, 0);
 
     if( g_fGameOver )
         return; // intermission or finale
@@ -2737,6 +2738,8 @@ pt_end:
 
     // Track button info so we can detect 'pressed' and 'released' buttons next frame
     m_afButtonLast = pev->button;
+
+    g_GameMode->PlayerPostThink(this, 0);
 }
 
 bool CBasePlayer::Spawn()

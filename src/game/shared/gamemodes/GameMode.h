@@ -83,6 +83,27 @@ public:
     virtual bool IsMultiplayer() { return false; };
 
     /**
+     * @brief Called every frame
+     * SERVER: In StartFrame()
+     * CLIENT: After everything in CHud::Think()
+    */
+    virtual void Think() {};
+
+    /**
+     * @brief Called every time a player thinks
+     * SERVER: called from CBasePlayer::PreThink before anything else. @c time is zero
+     * CLIENT: called from CHud::Redraw before anything else. @c player is nullptr
+    */
+    virtual void PlayerPreThink( CBasePlayer* player, float time ) {};
+
+    /**
+     * @brief Called every time a player thinks
+     * SERVER: called from CBasePlayer::PostThink at the end. @c time is zero
+     * CLIENT: called from CHud::Redraw at the end. @c player is nullptr
+    */
+    virtual void PlayerPostThink( CBasePlayer* player, float time ) {};
+
+    /**
      * @brief Called when a map starts, this is called at the bottom of ServerLibrary::LoadServerConfigFiles
      * CLIENT: No effect.
      */
