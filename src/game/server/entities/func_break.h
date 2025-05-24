@@ -15,9 +15,10 @@
 
 #pragma once
 
-enum Explosions
+
+enum Explosion
 {
-    expRandom,
+    expRandom = 0,
     expDirected,
     expSpecific
 };
@@ -92,7 +93,7 @@ public:
     static const char* pSpawnObjects[];
 
     Materials m_Material;
-    Explosions m_Explosion;
+    Explosion m_Explosion;
     int m_idShard;
     float m_angle;
     string_t m_iszGibModel;

@@ -14,6 +14,9 @@
             "windowsSdkVersion": "10.0.19041.0",
             "compilerPath": "cl.exe",
             "cStandard": "c17",
+            "forcedInclude": [
+                "${workspaceFolder}/stuff/stupid_intellsense.h"
+            ],
             "cppStandard": "c++17"
         }
     ],

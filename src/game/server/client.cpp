@@ -1197,6 +1197,7 @@ void ServerActivate( edict_t* pEdictList, int edictCount, int clientMax )
         // Activate this entity if it's got a class & isn't dormant
         if( pClass && ( pClass->pev->flags & FL_DORMANT ) == 0 )
         {
+            //-TODO Should we call Precache in here?
             pClass->Activate();
         }
         else
