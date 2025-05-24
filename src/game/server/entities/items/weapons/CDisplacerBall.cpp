@@ -234,7 +234,7 @@ void CDisplacerBall::BallTouch( CBaseEntity* pOther )
 
     SetThink( &CDisplacerBall::KillThink );
 
-    pev->nextthink = gpGlobals->time + ( g_pGameRules->IsMultiplayer() ? 0.2 : 0.5 );
+    pev->nextthink = gpGlobals->time + ( g_GameMode->IsMultiplayer() ? 0.2 : 0.5 );
 }
 
 void CDisplacerBall::FlyThink()

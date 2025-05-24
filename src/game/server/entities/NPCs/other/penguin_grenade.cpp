@@ -124,7 +124,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
 
         bool hurtTarget = true;
 
-        if( g_pGameRules->IsMultiplayer() )
+        if( g_GameMode->IsMultiplayer() )
         {
             // TODO: set to null earlier on, so this can never be valid
             auto owner = ToBasePlayer( pev->owner );
@@ -185,7 +185,7 @@ void CPenguinGrenade::SuperBounceTouch( CBaseEntity* pOther )
     m_flNextHit = gpGlobals->time + 0.1;
     m_flNextHunt = gpGlobals->time;
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         // in multiplayer, we limit how often snarks can make their bounce sounds to prevent overflows.
         if( gpGlobals->time < m_flNextBounceSoundTime )

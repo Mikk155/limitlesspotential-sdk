@@ -109,7 +109,7 @@ LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 // UNDONE:  These won't get sent to joining players in multi-player
 bool CDecal::Spawn()
 {
-    if( pev->skin < 0 || ( g_pGameRules->IsMultiplayer() && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH ) ) )
+    if( pev->skin < 0 || ( g_GameMode->IsMultiplayer() && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH ) ) )
     {
         return false;
     }
@@ -413,7 +413,7 @@ void CWorld::Precache()
             pEntity->pev->message = pev->netname;
             pev->netname = string_t::Null;
 
-            if( g_pGameRules->IsMultiplayer() )
+            if( g_GameMode->IsMultiplayer() )
             {
                 if( CTriggerEventHandler* event = g_EntityDictionary->Create<CTriggerEventHandler>( "trigger_eventhandler" ); event != nullptr )
                 {

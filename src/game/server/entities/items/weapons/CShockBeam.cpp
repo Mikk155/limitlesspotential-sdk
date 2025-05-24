@@ -81,7 +81,7 @@ bool CShockBeam::Spawn()
 
         m_pBeam1->SetScrollRate( 10 );
 
-        if( g_pGameRules->IsMultiplayer() )
+        if( g_GameMode->IsMultiplayer() )
         {
             pev->nextthink = gpGlobals->time + 0.01;
             return true;

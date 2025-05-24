@@ -606,11 +606,11 @@ bool ConfigurationSystem::ParseConfiguration( json& input, const bool CustomMap 
 
     // Parse gamerule blocks and override outside's variables
     std::unordered_map<std::string_view, bool> gamemodes;
-    gamemodes[ "multiplayer" ] = g_pGameRules->IsMultiplayer();
-    gamemodes[ "cooperative" ] = g_pGameRules->IsCoOp();
+    gamemodes[ "multiplayer" ] = g_GameMode->IsMultiplayer();
+    gamemodes[ "cooperative" ] = g_GameMode->IsGamemode( "coop"sv );
     gamemodes[ "ctf" ] = g_pGameRules->IsCTF();
-    gamemodes[ "deathmatch" ] = g_pGameRules->IsDeathmatch();
-    gamemodes[ "teamplay" ] = ( g_pGameRules->IsTeamplayDeathmatch() );
+    gamemodes[ "deathmatch" ] = g_GameMode->IsGamemode( "deathmatch"sv );
+    gamemodes[ "teamplay" ] = ( g_GameMode->IsGamemode( "teamplay"sv ) );
 
     for( const auto& gamemode :  gamemodes )
     {

@@ -262,7 +262,7 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
                 MESSAGE_BEGIN( MSG_PAS, gmsgEmitSound, origin );
             }
         }
-        else if( !g_pGameRules->IsMultiplayer() )
+        else if( !g_GameMode->IsMultiplayer() )
         {
             MESSAGE_BEGIN( MSG_BROADCAST, gmsgEmitSound );
         }

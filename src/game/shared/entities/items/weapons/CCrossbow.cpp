@@ -123,7 +123,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity* pOther )
             break;
         }
 
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
         {
             Killed( this, GIB_NEVER );
         }

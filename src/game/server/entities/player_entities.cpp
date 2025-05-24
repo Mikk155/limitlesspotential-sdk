@@ -216,7 +216,7 @@ void CPlayerSetSuitLightType::Use( CBaseEntity* pActivator, CBaseEntity* pCaller
     {
         CBasePlayer* player = ToBasePlayer( pActivator );
 
-        if( !player && !g_pGameRules->IsMultiplayer() )
+        if( !player && !g_GameMode->IsMultiplayer() )
         {
             player = UTIL_GetLocalPlayer();
         }
@@ -340,7 +340,7 @@ void CPlayerSetHealth::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     {
         CBasePlayer* player = ToBasePlayer( pActivator );
 
-        if( !player && !g_pGameRules->IsMultiplayer() )
+        if( !player && !g_GameMode->IsMultiplayer() )
         {
             player = UTIL_GetLocalPlayer();
         }

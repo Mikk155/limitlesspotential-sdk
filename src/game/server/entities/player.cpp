@@ -319,7 +319,7 @@ bool CBasePlayer::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
     flBonus = ARMOR_BONUS;
     flRatio = ARMOR_RATIO;
 
-    if( ( bitsDamageType & DMG_BLAST ) != 0 && g_pGameRules->IsMultiplayer() )
+    if( ( bitsDamageType & DMG_BLAST ) != 0 && g_GameMode->IsMultiplayer() )
     {
         // blasts damage armor more.
         flBonus *= 2;
@@ -1232,7 +1232,7 @@ void CBasePlayer::PlayerDeathThink()
     // if the player has been dead for one second longer than allowed by forcerespawn,
     // forcerespawn isn't on. Send the player off to an intermission camera until they
     // choose to respawn.
-    if( g_pGameRules->IsMultiplayer() && ( gpGlobals->time > ( m_fDeadTime + 6 ) ) && ( m_afPhysicsFlags & PFLAG_OBSERVER ) == 0 )
+    if( g_GameMode->IsMultiplayer() && ( gpGlobals->time > ( m_fDeadTime + 6 ) ) && ( m_afPhysicsFlags & PFLAG_OBSERVER ) == 0 )
     {
         // go to dead camera.
         StartDeathCam();
@@ -1242,7 +1242,7 @@ void CBasePlayer::PlayerDeathThink()
         return;
 
     // wait for any button down,  or mp_forcerespawn is set and the respawn time is up
-    if( !fAnyButtonDown && !( g_pGameRules->IsMultiplayer() && forcerespawn.value > 0 && ( gpGlobals->time > ( m_fDeadTime + 5 ) ) ) )
+    if( !fAnyButtonDown && !( g_GameMode->IsMultiplayer() && forcerespawn.value > 0 && ( gpGlobals->time > ( m_fDeadTime + 5 ) ) ) )
         return;
 
     pev->button = 0;
@@ -2341,7 +2341,7 @@ void CBasePlayer::CheckSuitUpdate()
     // if in range of radiation source, ping geiger counter
     UpdateGeigerCounter();
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         // don't bother updating HEV voice in multiplayer.
         return;
@@ -2394,7 +2394,7 @@ void CBasePlayer::SetSuitUpdate( const char* name, int iNoRepeatTime )
     if( !HasSuit() )
         return;
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         // due to static channel design, etc. We don't play HEV sounds in multiplayer right now.
         return;
@@ -2650,7 +2650,7 @@ void CBasePlayer::PostThink()
 
     if( FBitSet( pev->flags, FL_ONGROUND ) )
     {
-        if( m_flFallVelocity > 64 && !g_pGameRules->IsMultiplayer() )
+        if( m_flFallVelocity > 64 && !g_GameMode->IsMultiplayer() )
         {
             CSoundEnt::InsertSound( bits_SOUND_PLAYER, pev->origin, m_flFallVelocity, 0.2 );
             // Logger->debug("fall {}", m_flFallVelocity);
@@ -3858,7 +3858,7 @@ void CBasePlayer::UpdateClientData()
             TriggerEvent( TriggerEventType::PlayerJoin, this, this );
         }
 
-        if( g_pGameRules->IsMultiplayer() )
+        if( g_GameMode->IsMultiplayer() )
         {
             RefreshCustomHUD( this );
         }
@@ -4433,7 +4433,7 @@ Vector CBasePlayer::AutoaimDeflection( const Vector& vecSrc, float flDist, float
         // don't shoot at friends
         if( IRelationship( pEntity ) < Relationship::None )
         {
-            if( !pEntity->IsPlayer() && !g_pGameRules->IsMultiplayer() )
+            if( !pEntity->IsPlayer() && !g_GameMode->IsMultiplayer() )
                 // Logger->debug("friend");
                 continue;
         }
@@ -4911,7 +4911,7 @@ void CBasePlayer::SetPrefsFromUserinfo( char* infobuffer )
 {
     const char* value = g_engfuncs.pfnInfoKeyValue( infobuffer, "cl_autowepswitch" );
 
-    if( g_pGameRules->IsMultiplayer() && '\0' != *value )
+    if( g_GameMode->IsMultiplayer() && '\0' != *value )
     {
         m_AutoWepSwitch = std::clamp( static_cast<WeaponSwitchMode>( atoi( value ) ),
             WeaponSwitchMode::Never,

@@ -969,7 +969,7 @@ void UTIL_BloodDrips( const Vector& origin, const Vector& direction, int color, 
     if( g_Language == LANGUAGE_GERMAN && color == BLOOD_COLOR_RED )
         color = 0;
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         // scale up blood effect in multiplayer for better visibility
         amount *= 2;
@@ -1172,7 +1172,7 @@ void UTIL_Ricochet( const Vector& position, float scale )
 bool UTIL_TeamsMatch( const char* pTeamName1, const char* pTeamName2 )
 {
     // Everyone matches unless it's teamplay
-    if( !g_pGameRules->IsTeamplay() )
+    if( !g_GameMode->IsTeamPlay() )
         return true;
 
     // Both on a team?
@@ -1478,7 +1478,7 @@ Vector VecBModelOrigin( CBaseEntity* bModel )
 bool UTIL_IsMultiplayer()
 {
     // Can be null during weapon registration.
-    return g_pGameRules != nullptr && g_pGameRules->IsMultiplayer();
+    return g_GameMode->IsMultiplayer();
 }
 
 const char* UTIL_GetBestEntityName( CBaseEntity* entity, bool generic )

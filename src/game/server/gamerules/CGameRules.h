@@ -103,29 +103,9 @@ public:
     // Functions to verify the single/multiplayer status of a game
 
     /**
-     *    @brief is this a multiplayer game? (either coop or deathmatch)
-     */
-    virtual bool IsMultiplayer() = 0;
-
-    /**
-     *    @brief is this a deathmatch game?
-     */
-    virtual bool IsDeathmatch() = 0;
-
-    /**
      *    @brief is this a game being played with teams?
      */
     virtual bool IsTeamplay() { return false; }
-
-    /**
-     *    @brief is this deathmatch game being played with team rules?
-     */
-    virtual bool IsTeamplayDeathmatch() { return false; }
-
-    /**
-     *    @brief is this a coop game?
-     */
-    virtual bool IsCoOp() = 0;
 
     /**
      *    @brief is this a ctf game?

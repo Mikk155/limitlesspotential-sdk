@@ -58,7 +58,7 @@ void CHgun::Precache()
 void CHgun::AddToPlayer( CBasePlayer* pPlayer )
 {
 #ifndef CLIENT_DLL
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         // in multiplayer, all hivehands come full.
         m_iDefaultAmmo = HORNET_MAX_CARRY;

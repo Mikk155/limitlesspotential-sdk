@@ -241,7 +241,7 @@ void W_Precache()
     UTIL_PrecacheSound( "weapons/spore_hit2.wav" );
     UTIL_PrecacheSound( "weapons/spore_hit3.wav" );
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         UTIL_PrecacheOther( "weaponbox" ); // container for dropped deathmatch weapons
     }

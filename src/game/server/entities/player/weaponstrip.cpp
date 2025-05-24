@@ -81,7 +81,7 @@ void CStripWeapons::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 
     if( player == nullptr )
     {
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
             player = UTIL_GetLocalPlayer();
         else
             return;

@@ -342,7 +342,7 @@ void CDisplacer::AltFireThink()
 #ifndef CLIENT_DLL
     CBaseEntity* pDestination;
 
-    if( !g_pGameRules->IsMultiplayer() || g_pGameRules->IsCoOp() )
+    if( !g_GameMode->IsMultiplayer() || g_GameMode->IsGamemode( "coop"sv ) )
     {
         pDestination = UTIL_FindEntityByClassname( nullptr, "info_displacer_xen_target" );
     }
@@ -371,7 +371,7 @@ void CDisplacer::AltFireThink()
 
         Vector vecNewOrigin = pDestination->pev->origin;
 
-        if( !g_pGameRules->IsMultiplayer() || g_pGameRules->IsCoOp() )
+        if( !g_GameMode->IsMultiplayer() || g_GameMode->IsGamemode( "coop"sv ) )
         {
             vecNewOrigin.z += 37;
         }
@@ -414,7 +414,7 @@ void CDisplacer::AltFireThink()
 
         m_flTimeWeaponIdle = UTIL_WeaponTimeBase();
 
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
             m_pPlayer->pev->gravity = 0.6;
     }
     else

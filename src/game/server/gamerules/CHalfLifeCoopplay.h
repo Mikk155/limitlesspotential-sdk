@@ -26,10 +26,7 @@ public:
 
     const char* GetGameModeName() const override { return GameModeName; }
 
-    bool IsCoOp() override { return true; }
     bool IsTeamplay() override { return true; }
-    bool IsDeathmatch() override { return false; }
-    bool IsTeamplayDeathmatch() override { return false; }
 
     void UpdateGameMode( CBasePlayer* pPlayer ) override;
 

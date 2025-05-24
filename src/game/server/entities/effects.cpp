@@ -1625,7 +1625,7 @@ Vector CBlood::BloodPosition( CBaseEntity* pActivator )
     {
         CBasePlayer* pPlayer = ToBasePlayer( pActivator );
 
-        if( !pPlayer && !g_pGameRules->IsMultiplayer() )
+        if( !pPlayer && !g_GameMode->IsMultiplayer() )
         {
             pPlayer = UTIL_GetLocalPlayer();
         }
@@ -1895,7 +1895,7 @@ void CMessage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
     else
     {
         CBasePlayer* pPlayer = ToBasePlayer( pActivator );
-        if( !pPlayer && !g_pGameRules->IsMultiplayer() )
+        if( !pPlayer && !g_GameMode->IsMultiplayer() )
         {
             pPlayer = UTIL_GetLocalPlayer();
         }

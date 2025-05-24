@@ -62,8 +62,25 @@ public:
      * @brief Return whatever the current gamemode is @c GameModeName
     */
     bool IsGamemode( std::string_view GameModeName ) {
-        return ( GameModeName == GetName() );
+        return ( GameModeName == std::string_view( GetName() ) );
     }
+
+    /**
+     * @brief Return whatever the current gamemode's baseclass is @c GameModeName
+    */
+    bool IsBaseGamemode( std::string_view GameModeName ) {
+        return ( GameModeName == std::string_view( GetBaseName() ) );
+    }
+
+    /**
+     * @brief Return whatever players can form teams in this gamemode
+    */
+    virtual bool IsTeamPlay() { return false; }
+
+    /**
+     * @brief Return whatever this gamemode inherits from GM_Multiplayer
+    */
+    virtual bool IsMultiplayer() { return false; };
 
     /**
      * @brief Called when a map starts, this is called at the bottom of ServerLibrary::LoadServerConfigFiles

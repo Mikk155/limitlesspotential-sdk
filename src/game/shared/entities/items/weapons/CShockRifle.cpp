@@ -211,7 +211,7 @@ void CShockRifle::PrimaryAttack()
 
     pBeam->m_pBeam1->SetOrigin( pBeam->pev->origin );
 
-    if( !g_pGameRules->IsMultiplayer() )
+    if( !g_GameMode->IsMultiplayer() )
     {
         pBeam->m_pBeam2->SetOrigin( pBeam->pev->origin );
     }

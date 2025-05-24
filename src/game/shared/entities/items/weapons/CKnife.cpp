@@ -224,7 +224,7 @@ bool CKnife::Swing( const bool bFirst )
         {
             float fvolbar = TEXTURETYPE_PlaySound( &tr, vecSrc, vecSrc + ( vecEnd - vecSrc ) * 2, BULLET_PLAYER_CROWBAR );
 
-            if( g_pGameRules->IsMultiplayer() )
+            if( g_GameMode->IsMultiplayer() )
             {
                 // override the volume here, cause we don't play texture sounds in multiplayer,
                 // and fvolbar is going to be 0 from the above call.

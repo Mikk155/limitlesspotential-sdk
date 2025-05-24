@@ -113,7 +113,7 @@ void ClientDisconnect( edict_t* pEntity )
  */
 void respawn( CBasePlayer* player, bool fCopyCorpse )
 {
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         if( fCopyCorpse )
         {
@@ -335,7 +335,7 @@ void Host_Say( CBasePlayer* player, bool teamonly )
 
     // Only limit chat in multiplayer.
     // Not yet.
-    if( g_pGameRules->IsMultiplayer() && player->m_flNextChatTime > gpGlobals->time )
+    if( g_GameMode->IsMultiplayer() && player->m_flNextChatTime > gpGlobals->time )
         return;
 
     if( !stricmp( pcmd, cpSay ) || !stricmp( pcmd, cpSayTeam ) )
@@ -1142,7 +1142,7 @@ void ClientUserInfoChanged( edict_t* pEntity, char* infobuffer )
         // Set the name
         g_engfuncs.pfnSetClientKeyValue( player->entindex(), infobuffer, "name", sName );
 
-        if( g_pGameRules->IsMultiplayer() )
+        if( g_GameMode->IsMultiplayer() )
         {
             char text[256];
             sprintf( text, "* %s changed name to %s\n", STRING( pEntity->v.netname ), g_engfuncs.pfnInfoKeyValue( infobuffer, "name" ) );

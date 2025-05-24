@@ -1082,13 +1082,13 @@ bool CBaseEntity::ShouldAppearByFlags( std::vector<std::string>& keynames, appea
 {
     // You can add more rules here
     std::unordered_map<std::string_view, bool> condition_flags = {
-        { "appearflag_multiplayer"sv, g_pGameRules->IsMultiplayer() },
-        { "appearflag_cooperative"sv, g_pGameRules->IsCoOp() },
+        { "appearflag_multiplayer"sv, g_GameMode->IsMultiplayer() },
+        { "appearflag_cooperative"sv, g_GameMode->IsGamemode( "coop"sv ) },
         { "appearflag_skilleasy"sv, g_cfg.GetSkillLevel() == SkillLevel::Easy },
         { "appearflag_skillmedium"sv, g_cfg.GetSkillLevel() == SkillLevel::Medium },
         { "appearflag_skillhard"sv, g_cfg.GetSkillLevel() == SkillLevel::Hard },
-        { "appearflag_deathmatch"sv, g_pGameRules->IsDeathmatch() },
-        { "appearflag_teamplay"sv, g_pGameRules->IsTeamplayDeathmatch() },
+        { "appearflag_deathmatch"sv, g_GameMode->IsGamemode( "deathmatch"sv ) },
+        { "appearflag_teamplay"sv, g_GameMode->IsGamemode( "teamplay"sv ) },
         { "appearflag_ctf"sv, g_pGameRules->IsCTF() },
         { "appearflag_dedicated"sv, IS_DEDICATED_SERVER() }
     };

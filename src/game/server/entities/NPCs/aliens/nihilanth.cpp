@@ -1213,7 +1213,7 @@ void CNihilanth::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
         // In multiplayer/coop level designers should script a setup that
         // accounts for all players being dead or the server being empty.
         // Player teleportation should not be a critical step in ending the map or game.
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
         {
             CBaseEntity* pTouch = UTIL_FindEntityByTargetname( nullptr, m_szDeadTouch );
 

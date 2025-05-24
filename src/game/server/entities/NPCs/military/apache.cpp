@@ -668,7 +668,7 @@ void CApache::Flight()
     {
         int pitch = 110;
 
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
         {
             CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
             // UNDONE: this needs to send different sounds to every player for multiplayer.

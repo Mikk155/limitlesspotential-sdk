@@ -143,7 +143,7 @@ bool CChangeLevel::Spawn()
     if( m_UsePersistentLevelChange && FStrEq( m_szLandmarkName, "" ) )
         Logger->warn( "Persistent trigger_changelevel to {} doesn't have a landmark", m_szMapName );
 
-    if( g_pGameRules->IsMultiplayer() && !FStrEq( m_szLandmarkName, "" ) )
+    if( g_GameMode->IsMultiplayer() && !FStrEq( m_szLandmarkName, "" ) )
     {
         Logger->warn( "trigger_changelevel doesn't support landmarks in multiplayer" );
     }
@@ -202,7 +202,7 @@ static void QueueChangelevel( const char* mapName, const char* landmarkName, boo
     lastSpawnCount = g_Server.GetSpawnCount();
 
     // Persistent level changes only work in singleplayer.
-    if( usePersistentLevelChange && !g_pGameRules->IsMultiplayer() )
+    if( usePersistentLevelChange && !g_GameMode->IsMultiplayer() )
     {
         SERVER_COMMAND( fmt::format( "changelevel2 {} {}\n", mapName, landmarkName ).c_str() );
     }
@@ -216,7 +216,7 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
 {
     if( FStrEq( m_szMapName, "" ) )
     {
-        if( g_pGameRules->IsMultiplayer() )
+        if( g_GameMode->IsMultiplayer() )
             g_pGameRules->EndMultiplayerGame( true );
         else
             g_engfuncs.pfnEndSection( "_oem_end_logo" );
@@ -230,7 +230,7 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
     pev->dmgtime = gpGlobals->time;
 
     // This only works as intended in singleplayer.
-    if( !g_pGameRules->IsMultiplayer() )
+    if( !g_GameMode->IsMultiplayer() )
     {
         CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
         if( !InTransitionVolume( pPlayer, m_szLandmarkName ) )
@@ -261,7 +261,7 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity* pActivator )
     // Init landmark to empty string
     const char* landmarkNameInNextMap = "";
 
-    if( !g_pGameRules->IsMultiplayer() )
+    if( !g_GameMode->IsMultiplayer() )
     {
         // look for a landmark entity
         auto landmark = FindLandmark( m_szLandmarkName );
@@ -483,7 +483,7 @@ LINK_ENTITY_TO_CLASS( trigger_autosave, CTriggerSave );
 
 bool CTriggerSave::Spawn()
 {
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         return false;
     }
@@ -546,7 +546,7 @@ void CTriggerEndSection::EndSectionUse( CBaseEntity* pActivator, CBaseEntity* pC
 
 bool CTriggerEndSection::Spawn()
 {
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         return false;
     }
@@ -672,7 +672,7 @@ void CRevertSaved::MessageThink()
 
 void CRevertSaved::LoadThink()
 {
-    if( !g_pGameRules->IsMultiplayer() )
+    if( !g_GameMode->IsMultiplayer() )
     {
         SERVER_COMMAND( "reload\n" );
     }

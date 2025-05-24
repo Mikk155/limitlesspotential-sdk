@@ -24,9 +24,9 @@ struct globalvars_t
     float force_retouch;
     string_t mapname;
     string_t startspot;
-    [[deprecated("Use g_pGameRules->IsDeathmatch() instead")]] float deathmatch;
-    [[deprecated("Use g_pGameRules->IsCoOp() instead")]] float coop;
-    [[deprecated("Use g_pGameRules->IsTeamPlay() instead")]] float teamplay;
+    [[deprecated("Use g_GameMode->IsGamemode( \"deathmatch\"sv ) instead")]] float deathmatch;
+    [[deprecated("Use g_GameMode->IsGamemode( \"coop\"sv ) instead")]] float coop;
+    [[deprecated("Use g_GameMode->IsTeamPlay() instead")]] float teamplay;
     float serverflags;
     float found_secrets;
     Vector v_forward;

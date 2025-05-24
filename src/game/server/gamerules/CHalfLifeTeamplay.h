@@ -35,7 +35,6 @@ public:
 
     void ClientUserInfoChanged( CBasePlayer* pPlayer, char* infobuffer ) override;
     bool IsTeamplay() override { return true; }
-    bool IsTeamplayDeathmatch() override { return true; }
     bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
     int PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget ) override;
     const char* GetTeamID( CBaseEntity* pEntity ) override;

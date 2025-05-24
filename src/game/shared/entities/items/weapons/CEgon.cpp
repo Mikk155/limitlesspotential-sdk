@@ -235,7 +235,7 @@ void CEgon::Fire( const Vector& vecOrigSrc, const Vector& vecDir )
     if( pEntity == nullptr )
         return;
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         if( m_pSprite && 0 != pEntity->pev->takedamage )
         {

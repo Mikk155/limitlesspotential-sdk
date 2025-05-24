@@ -540,7 +540,7 @@ void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
     // HACKHACK -- In multiplayer, players touch this based on packet receipt.
     // So the players who send packets later aren't always hurt.  Keep track of
     // how much time has passed and whether or not you've touched that player
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         if( pev->dmgtime > gpGlobals->time )
         {
@@ -1229,7 +1229,7 @@ void CTriggerCamera::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     }
     if( !pActivator || !pActivator->IsPlayer() )
     {
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
         {
             pActivator = UTIL_GetLocalPlayer();
         }
@@ -1484,7 +1484,7 @@ void CTriggerPlayerFreeze::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, U
     {
         CBasePlayer* player = ToBasePlayer( pActivator );
 
-        if( !player && !g_pGameRules->IsMultiplayer() )
+        if( !player && !g_GameMode->IsMultiplayer() )
         {
             player = UTIL_GetLocalPlayer();
         }
@@ -1697,7 +1697,7 @@ void COFTriggerGeneWormHit::GeneWormHitTouch( CBaseEntity* pOther )
 
         if( ( pev->spawnflags & SF_GENEWORM_HIT_NO_CLIENTS ) == 0 || !pOther->IsPlayer() )
         {
-            if( !g_pGameRules->IsMultiplayer() )
+            if( !g_GameMode->IsMultiplayer() )
             {
                 if( pev->dmgtime > gpGlobals->time && gpGlobals->time != pev->pain_finished )
                     return;

@@ -48,8 +48,7 @@ namespace
 {
 static bool GetMultiplayer()
 {
-    assert( g_pGameRules );
-    return g_pGameRules->IsMultiplayer();
+    return g_GameMode->IsMultiplayer();
 }
 
 static bool GetSingleplayer()

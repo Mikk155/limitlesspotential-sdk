@@ -25,7 +25,7 @@ void PersistentInventorySystem::NewMapStarted()
     const bool wasInitialized = m_InitializedInventories;
     m_InitializedInventories = false;
 
-    if( !wasInitialized || !g_pGameRules->IsCoOp() || m_ExpectedSpawnCount != g_Server.GetSpawnCount() )
+    if( !wasInitialized || !g_GameMode->IsGamemode( "coop"sv ) || m_ExpectedSpawnCount != g_Server.GetSpawnCount() )
     {
         // Persistent inventory is only used by co-op.
         std::fill( m_Inventories.begin(), m_Inventories.end(), PersistentPlayerInventory{} );
@@ -35,7 +35,7 @@ void PersistentInventorySystem::NewMapStarted()
 
 void PersistentInventorySystem::InitializeFromPlayers()
 {
-    if( !g_pGameRules->IsCoOp() )
+    if( !g_GameMode->IsGamemode( "coop"sv ) )
     {
         return;
     }
@@ -65,7 +65,7 @@ void PersistentInventorySystem::InitializeFromPlayers()
 
 bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
 {
-    if( !g_pGameRules->IsCoOp() )
+    if( !g_GameMode->IsGamemode( "coop"sv ) )
     {
         return false;
     }

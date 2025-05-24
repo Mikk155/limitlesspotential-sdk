@@ -66,8 +66,6 @@ public:
 
     bool IsCTF() override { return true; }
     bool IsTeamplay() override { return true; }
-    bool IsDeathmatch() override { return false; }
-    bool IsTeamplayDeathmatch() override { return false; }
 
     const char* GetGameDescription() override { return "OpFor CTF"; }
 

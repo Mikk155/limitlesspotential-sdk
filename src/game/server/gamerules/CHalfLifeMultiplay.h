@@ -33,9 +33,6 @@ public:
     void Think() override;
     bool IsAllowedToSpawn( CBaseEntity* pEntity ) override;
 
-    bool IsMultiplayer() override { return true; }
-    bool IsDeathmatch() override { return true; }
-    bool IsCoOp() override { return false; }
     bool IsCTF() override { return false; }
 
     bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] ) override;

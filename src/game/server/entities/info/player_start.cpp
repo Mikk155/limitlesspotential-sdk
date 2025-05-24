@@ -212,7 +212,7 @@ CPlayerSpawnPoint* EntSelectSpawnPoint( CBasePlayer* pPlayer, bool spawn )
 {
     CPlayerSpawnPoint* spawn_entity = nullptr;
 
-    if( g_pGameRules->IsMultiplayer() )
+    if( g_GameMode->IsMultiplayer() )
     {
         if( g_pGameRules->IsCTF() && pPlayer->m_iTeamNum != CTFTeam::None )
         {

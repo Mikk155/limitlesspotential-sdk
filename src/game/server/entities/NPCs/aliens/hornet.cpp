@@ -316,7 +316,7 @@ void CHornet::TrackTarget()
 
     // if hornet is close to the enemy, jet in a straight line for a half second.
     // (only in the single player game)
-    if( m_hEnemy != nullptr && !g_pGameRules->IsMultiplayer() )
+    if( m_hEnemy != nullptr && !g_GameMode->IsMultiplayer() )
     {
         if( flDelta >= 0.4 && ( pev->origin - m_vecEnemyLKP ).Length() <= 300 )
         {

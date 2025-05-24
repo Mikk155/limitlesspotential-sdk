@@ -1144,7 +1144,7 @@ void COFGeneWorm::DyingThink()
 
     if( gpGlobals->time - m_flDeathStart >= 15 )
     {
-        if( g_pGameRules->IsMultiplayer() )
+        if( g_GameMode->IsMultiplayer() )
         {
             // Fire this so level designers can respond to this at the right time.
             FireTargets( "GeneWormTeleport", this, this, USE_ON, UseValue(1) );

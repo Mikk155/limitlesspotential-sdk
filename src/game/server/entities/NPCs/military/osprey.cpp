@@ -432,7 +432,7 @@ void COsprey::Flight()
     {
         int pitch = 110;
 
-        if( !g_pGameRules->IsMultiplayer() )
+        if( !g_GameMode->IsMultiplayer() )
         {
             CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
             // UNDONE: this needs to send different sounds to every player for multiplayer.
@@ -450,7 +450,7 @@ void COsprey::Flight()
         }
 
         // Always update sound in multiplayer so new players can hear it.
-        if( g_pGameRules->IsMultiplayer() || pitch != m_iPitch )
+        if( g_GameMode->IsMultiplayer() || pitch != m_iPitch )
         {
             m_iPitch = pitch;
             EmitSoundDyn( CHAN_STATIC, "apache/ap_rotor4.wav", 1.0, 0.15, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch );

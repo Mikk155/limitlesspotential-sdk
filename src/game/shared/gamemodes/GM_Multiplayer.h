@@ -27,4 +27,6 @@ public:
     static constexpr char GameModeName[] = "multiplayer";
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
+
+    bool IsMultiplayer() override { return true; }
 };
