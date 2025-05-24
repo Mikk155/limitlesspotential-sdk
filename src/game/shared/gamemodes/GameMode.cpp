@@ -43,6 +43,29 @@ void GM_Base::OnClientInit( CBasePlayer* player )
     g_GameMode.Logger->trace( "Called OnClientInit in {}", GM_LIB );
 }
 
+float GM_Base::PlayerFallDamage( CBasePlayer* player, float fall_velocity )
+{
+    float flDamage = g_cfg.GetValue<float>( "fall_damage"sv, 0.22522522522f, player );
+
+    if( flDamage == 0 )
+        goto done;
+
+    if( flDamage < 0 )
+    {
+        flDamage *= -1.0f; // Invert to get a fixed value
+        goto done;
+    }
+
+    // subtract off the speed at which a player is allowed to fall without being hurt,
+    // so damage will be based on speed beyond that, not the entire fall
+    flDamage = ( fall_velocity - PLAYER_MAX_SAFE_FALL_SPEED ) * flDamage;
+    // -TODO PLAYER_MAX_SAFE_FALL_SPEED cfg?
+
+done:
+
+    return flDamage;
+}
+
 void GM_Base::_UpdateClientGameMode_( CBasePlayer* player )
 {
 #ifndef CLIENT_DLL

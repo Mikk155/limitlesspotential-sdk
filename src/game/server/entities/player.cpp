@@ -2628,7 +2628,7 @@ void CBasePlayer::PostThink()
         else if( m_flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED )
         { // after this point, we start doing damage
 
-            float flFallDamage = g_pGameRules->FlPlayerFallDamage( this );
+            float flFallDamage = g_GameMode->PlayerFallDamage( this, m_flFallVelocity );
 
             if( flFallDamage > pev->health )
             { // splat

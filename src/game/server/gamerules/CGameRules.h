@@ -140,12 +140,6 @@ public:
      */
     virtual void UpdateGameMode( CBasePlayer* pPlayer ) {}
 
-    // Client damage rules
-    /**
-     *    @brief this client just hit the ground after a fall. How much damage?
-     */
-    float FlPlayerFallDamage( CBasePlayer* pPlayer );
-
     /**
      *    @brief can this player take damage from this attacker?
      */

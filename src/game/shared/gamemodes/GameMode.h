@@ -126,6 +126,13 @@ public:
      * CLIENT: Called when the client receives the new gamemode
      */
     virtual void OnClientInit( CBasePlayer* player );
+
+    /**
+     * @brief This player just hit the ground after a fall. How much damage?
+     * 
+     * `CLIENT:` @c player is nullptr
+     */
+    virtual float PlayerFallDamage( CBasePlayer* player, float fall_velocity );
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

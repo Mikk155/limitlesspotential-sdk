@@ -32,6 +32,8 @@
 #include "utils/ReplacementMaps.h"
 #endif
 
+#include "gamemodes/GameMode.h"
+
 #ifdef CLIENT_DLL
 // Spectator Mode
 bool iJumpSpectator;
@@ -2633,8 +2635,9 @@ void PM_CheckFalling()
     {
         float fvol = 0.5;
 
-        if( pmove->waterlevel > 0 )
+        if( pmove->waterlevel > 0 || (int)g_GameMode->PlayerFallDamage(nullptr, pmove->flFallVelocity) == 0 )
         {
+            // -TODO Check some water level head plus reduce speed tracing down?
         }
         else if( pmove->flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED )
         {

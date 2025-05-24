@@ -612,7 +612,7 @@
     "allow_monsters": true,
 
     // 0 == No damage
-    // 1 == progressive, longer distance * fall_damage
+    // 1 >= progressive, longer distance * fall_damage
     // Negative values is a fixed damage value.
     "fall_damage": 0.22522522522,
 

@@ -174,22 +174,6 @@ CGameRules::CGameRules()
                 player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) ); } );
 }
 
-float CGameRules::FlPlayerFallDamage( CBasePlayer* pPlayer )
-{
-    if( int damage = g_cfg.GetValue<int>( "fall_damage"sv, 1, pPlayer ); damage <= 0 )
-    {
-        if( damage < 0 ) // Invert the damage
-            damage *= -1.0f;
-        return damage;
-    }
-    
-    // subtract off the speed at which a player is allowed to fall without being hurt,
-    // so damage will be based on speed beyond that, not the entire fall
-    pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
-
-    return pPlayer->m_flFallVelocity * g_cfg.GetValue<float>( "fall_damage"sv, 0.22522522522f );
-}
-
 void CGameRules::SetupPlayerInventory( CBasePlayer* player )
 {
     // Originally game_player_equip entities were triggered in PlayerSpawn to set up the player's inventory.
