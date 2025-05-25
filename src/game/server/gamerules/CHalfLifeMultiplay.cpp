@@ -26,14 +26,6 @@
 #include "items/CBaseItem.h"
 #include "items/weapons/CSatchelCharge.h"
 
-CHalfLifeMultiplay::CHalfLifeMultiplay()
-{
-}
-
-CHalfLifeMultiplay::~CHalfLifeMultiplay()
-{
-}
-
 // longest the intermission can last, in seconds
 constexpr int MAX_INTERMISSION_TIME = 120;
 

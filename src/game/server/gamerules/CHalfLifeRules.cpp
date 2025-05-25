@@ -19,12 +19,6 @@
 #include "UserMessages.h"
 #include "items/CBaseItem.h"
 
-CHalfLifeRules::CHalfLifeRules()
-{
-    // Define this as a dummy command to silence console errors.
-    m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", []( auto, const auto& ) {} );
-}
-
 void CHalfLifeRules::Think()
 {
 }

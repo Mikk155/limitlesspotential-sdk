@@ -14,3 +14,24 @@
  ****/
 
 #include "GM_Singleplayer.h"
+
+void GM_Singleplayer::OnRegister()
+{
+#ifdef CLIENT_DLL
+#else
+    // Define this as a dummy command to silence console errors.
+    m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", []( auto, const auto& ) {} );
+#endif
+
+    BaseClass::OnRegister();
+}
+
+void GM_Singleplayer::OnUnRegister()
+{
+#ifdef CLIENT_DLL
+#else
+    m_VModEnableCommand.Remove();
+#endif
+
+    BaseClass::OnUnRegister();
+}

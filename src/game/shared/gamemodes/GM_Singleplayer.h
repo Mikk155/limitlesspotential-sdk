@@ -28,5 +28,11 @@ public:
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
 
+    void OnRegister() override;
+    void OnUnRegister() override;
+
     bool IsMultiplayer() override { return false; }
+
+private:
+    ScopedClientCommand m_VModEnableCommand;
 };

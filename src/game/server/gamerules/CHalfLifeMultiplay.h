@@ -25,8 +25,8 @@ class CHalfLifeMultiplay : public CGameRules
 public:
     static constexpr char GameModeName[] = "deathmatch";
 
-    CHalfLifeMultiplay();
-    ~CHalfLifeMultiplay() override;
+    CHalfLifeMultiplay() = default;
+    ~CHalfLifeMultiplay() = default;
 
     const char* GetGameModeName() const override { return GameModeName; }
 

@@ -25,7 +25,7 @@ class CHalfLifeRules : public CGameRules
 public:
     static constexpr char GameModeName[] = "singleplayer";
 
-    CHalfLifeRules();
+    CHalfLifeRules() = default;
 
     const char* GetGameModeName() const override { return GameModeName; }
 
@@ -57,7 +57,4 @@ public:
 
     const char* GetTeamID( CBaseEntity* pEntity ) override { return ""; }
     int PlayerRelationship( CBasePlayer* pPlayer, CBaseEntity* pTarget ) override;
-
-private:
-    ScopedClientCommand m_VModEnableCommand;
 };
