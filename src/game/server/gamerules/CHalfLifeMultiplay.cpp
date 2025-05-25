@@ -223,33 +223,8 @@ void CHalfLifeMultiplay::ClientDisconnected( edict_t* pClient )
 
             TriggerEvent( TriggerEventType::PlayerLeftServer, pPlayer, pPlayer );
 
-            Logger->trace( "{} disconnected", PlayerLogInfo{*pPlayer} );
-
-            const int playerIndex = pPlayer->entindex();
-
-            free( pszPlayerIPs[playerIndex] );
-            pszPlayerIPs[playerIndex] = nullptr;
-
             if( pPlayer->HasNamedPlayerWeapon( "weapon_satchel" ) )
                 DeactivateSatchels(pPlayer, true);
-
-            pPlayer->RemoveAllItems( true ); // destroy all of the players weapons and items
-
-            MESSAGE_BEGIN( MSG_ALL, gmsgSpectator );
-            g_engfuncs.pfnWriteByte( pPlayer->entindex() );
-            g_engfuncs.pfnWriteByte( 0 );
-            g_engfuncs.pfnMessageEnd();
-
-            for( auto entity : UTIL_FindPlayers() )
-            {
-                if( entity->pev && entity != pPlayer && entity->m_hObserverTarget == pPlayer )
-                {
-                    const int savedIUser1 = entity->pev->iuser1;
-                    entity->pev->iuser1 = 0;
-                    entity->m_hObserverTarget = nullptr;
-                    entity->Observer_SetMode( savedIUser1 );
-                }
-            }
         }
     }
 }

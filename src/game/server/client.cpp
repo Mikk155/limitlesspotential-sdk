@@ -49,7 +49,7 @@ unsigned int g_ulFrameCount;
  */
 qboolean ClientConnect( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] )
 {
-    return static_cast<qboolean>( g_pGameRules->ClientConnected( pEntity, pszName, pszAddress, szRejectReason ) );
+    return static_cast<qboolean>( g_Server.CanPlayerConnect( pEntity, pszName, pszAddress, szRejectReason ) );
 
     // a client connecting during an intermission can cause problems
     //    if (intermission_running)

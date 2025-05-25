@@ -752,3 +752,16 @@ void ServerLibrary::LoadNextMap()
 
     SERVER_COMMAND(fmt::format("map \"{}\"\n", mapName).c_str());
 }
+
+bool ServerLibrary::CanPlayerConnect( edict_t* ent, const char* name, const char* address, char reason[128] )
+{
+    g_pGameRules->ClientConnected(ent, name, address, reason);
+
+    if( ent )
+    {
+        int index = g_engfuncs.pfnIndexOfEdict( ent );
+        g_GameMode->OnClientConnect(index);
+    }
+
+    return true;
+}

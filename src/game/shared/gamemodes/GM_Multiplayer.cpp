@@ -46,6 +46,8 @@ public:
 
 static CMultiplayGameMgrHelper g_GameMgrHelper;
 
+extern char* pszPlayerIPs[MAX_PLAYERS * 2];
+
 #endif
 
 void GM_Multiplayer::OnRegister()
@@ -99,14 +101,87 @@ void GM_Multiplayer::OnClientInit( CBasePlayer* player )
     BaseClass::OnClientInit(player);
 }
 
-void GM_Multiplayer::OnClientConnect( edict_t* ent )
+void GM_Multiplayer::OnClientConnect( int index )
 {
 #ifdef CLIENT_DLL
+/*
+    if( cl_entity_t* ent = gEngfuncs.GetEntityByIndex( index ); ent )
+    {
+    }
+*/
 #else
-    g_VoiceGameMgr.ClientConnected(ent);
+
+    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt(ent) )
+    {
+        g_VoiceGameMgr.ClientConnected(ent);
+    }
+
 #endif
 
-    BaseClass::OnClientConnect(ent);
+    BaseClass::OnClientConnect(index);
+}
+
+void GM_Multiplayer::OnClientDisconnect( int index )
+{
+#ifdef CLIENT_DLL
+/*
+    if( cl_entity_t* ent = gEngfuncs.GetEntityByIndex( index ); ent )
+    {
+    }
+*/
+#else
+
+    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt(ent) )
+    {
+        MESSAGE_BEGIN( MSG_ALL, gmsgSayText );
+        {
+            WRITE_BYTE( index );
+
+            if( !FStringNull( ent->v.netname ) )
+            {
+                char text[256] = "";
+                snprintf( text, sizeof( text ), "- %s has left the game\n", STRING( ent->v.netname ) );
+                text[sizeof( text ) - 1] = 0;
+                WRITE_STRING( text );
+            }
+            else
+            {
+                WRITE_STRING( "- A player left the game\n" );
+            }
+        }
+        MESSAGE_END();
+
+        if( CBasePlayer* player = ToBasePlayer( ent ); player != nullptr )
+        {
+            g_GameMode.Logger->trace( "{} disconnected", PlayerLogInfo{*player} );
+
+            player->RemoveAllItems( true ); // destroy all of the players weapons and items
+
+            const int playerIndex = player->entindex();
+
+            free( pszPlayerIPs[playerIndex] );
+            pszPlayerIPs[playerIndex] = nullptr;
+
+            MESSAGE_BEGIN( MSG_ALL, gmsgSpectator );
+                WRITE_BYTE( player->entindex() );
+                WRITE_BYTE( 0 );
+            MESSAGE_END();
+
+            for( auto entity : UTIL_FindPlayers() )
+            {
+                if( entity->pev && entity != player && entity->m_hObserverTarget == player )
+                {
+                    const int savedIUser1 = entity->pev->iuser1;
+                    entity->pev->iuser1 = 0;
+                    entity->m_hObserverTarget = nullptr;
+                    entity->Observer_SetMode( savedIUser1 );
+                }
+            }
+        }
+    }
+#endif
+
+    BaseClass::OnClientDisconnect(index);
 }
 
 void GM_Multiplayer::OnPlayerPreThink( CBasePlayer* player, float time )

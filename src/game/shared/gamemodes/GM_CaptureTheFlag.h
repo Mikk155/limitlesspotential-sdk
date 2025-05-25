@@ -32,4 +32,5 @@ public:
 
     void OnPlayerPreThink( CBasePlayer* player, float time ) override;
     void OnClientInit( CBasePlayer* player ) override;
+    void OnClientDisconnect( int index ) override;
 };

@@ -66,6 +66,29 @@ done:
     return flDamage;
 }
 
+void GM_Base::OnClientConnect( int index )
+{
+#ifdef CLIENT_DLL
+#else
+    MESSAGE_BEGIN( MSG_ALL, gmsgGameMode );
+        WRITE_BYTE( static_cast<int>( ClientGameModeNetwork::fnOnClientConnect ) );
+        WRITE_BYTE( index );
+    MESSAGE_END();
+#endif
+}
+
+void GM_Base::OnClientDisconnect( int index )
+{
+#ifdef CLIENT_DLL
+#else
+    MESSAGE_BEGIN( MSG_ALL, gmsgGameMode );
+        WRITE_BYTE( static_cast<int>( ClientGameModeNetwork::fnOnClientDisconnect ) );
+        WRITE_BYTE( index );
+    MESSAGE_END();
+#endif
+}
+
+
 void GM_Base::OnPlayerPreThink( CBasePlayer* player, float time )
 {
 #ifdef CLIENT_DLL
@@ -81,9 +104,7 @@ void GM_Base::_UpdateClientGameMode_( CBasePlayer* player )
         WRITE_STRING( g_GameMode->GetName() );
         WRITE_STRING( g_GameMode->GetBaseName() );
     MESSAGE_END();
-
-    g_GameMode.Logger->trace( "Client {} is ready for gamemode {} in {}",
-        ( player != nullptr ? STRING(player->pev->netname) : "Local" ), GetName(), GM_LIB );
+#else
 #endif
 }
 
@@ -305,6 +326,16 @@ void CGameModes::MsgFunc_UpdateGameMode( BufferReader& reader )
         case ClientGameModeNetwork::fnOnClientInit:
         {
             g_GameMode->OnClientInit(nullptr);
+            break;
+        }
+        case ClientGameModeNetwork::fnOnClientConnect:
+        {
+            g_GameMode->OnClientConnect( reader.ReadByte() );
+            break;
+        }
+        case ClientGameModeNetwork::fnOnClientDisconnect:
+        {
+            g_GameMode->OnClientDisconnect( reader.ReadByte() );
             break;
         }
     }

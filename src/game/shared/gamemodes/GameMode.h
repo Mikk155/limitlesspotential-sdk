@@ -37,12 +37,16 @@
 class CBaseItem;
 class CBaseMonster;
 class CBasePlayer;
+class cl_entity_t;
+class BufferReader;
 class CBasePlayerWeapon;
 
 enum ClientGameModeNetwork
 {
     fnGameModeUpdate = 0,
-    fnOnClientInit
+    fnOnClientInit,
+    fnOnClientConnect,
+    fnOnClientDisconnect
 };
 
 /**
@@ -138,9 +142,16 @@ public:
     /**
      * @brief A client is connecting to the server
      * 
-     * CLIENT: No effect
+     * CLIENT: Called on all connected players
      */
-    virtual void OnClientConnect( edict_t* ent ) {};
+    virtual void OnClientConnect( int index );
+
+    /**
+     * @brief A client disconnected from the server
+     * 
+     * CLIENT: Called on all connected players
+     */
+    virtual void OnClientDisconnect( int index );
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

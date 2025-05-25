@@ -96,6 +96,8 @@ public:
      */
     void PlayerActivating( CBasePlayer* player );
 
+    bool CanPlayerConnect( edict_t* ent, const char* name, const char* address, char reason[128] );
+
 protected:
     void AddGameSystems() override;
 

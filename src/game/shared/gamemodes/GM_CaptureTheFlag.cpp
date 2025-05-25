@@ -15,6 +15,32 @@
 
 #include "GM_CaptureTheFlag.h"
 
+#ifdef CLIENT_DLL
+#else
+char* pszPlayerIPs[MAX_PLAYERS * 2];
+#endif
+
+void GM_CaptureTheFlag::OnClientDisconnect( int index )
+{
+    BaseClass::OnClientDisconnect(index);
+#ifdef CLIENT_DLL
+/*
+    if( cl_entity_t* ent = gEngfuncs.GetEntityByIndex( index ); ent )
+    {
+    }
+*/
+#else
+/*
+    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt(ent) )
+    {
+        if( CBasePlayer* player = ToBasePlayer( ent ); player != nullptr )
+        {
+        }
+    }
+*/
+#endif
+}
+
 void GM_CaptureTheFlag::OnClientInit( CBasePlayer* player )
 {
 #ifdef CLIENT_DLL

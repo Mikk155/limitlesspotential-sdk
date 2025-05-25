@@ -34,7 +34,8 @@ public:
     void OnThink() override;
     bool IsMultiplayer() override { return true; }
     void OnPlayerPreThink( CBasePlayer* player, float time ) override;
-    void OnClientConnect( edict_t* ent ) override;
+    void OnClientConnect( int index ) override;
+    void OnClientDisconnect( int index ) override;
     void OnClientInit( CBasePlayer* player ) override;
 
 protected:
