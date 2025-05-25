@@ -331,7 +331,7 @@ void CDisplacer::AltFireThink()
     m_pPlayer->m_DisplacerSndRoomtype = m_pPlayer->m_SndRoomtype;
 
 #ifndef CLIENT_DLL
-    if( g_pGameRules->IsCTF() && m_pPlayer->m_pFlag )
+    if( g_GameMode->IsGamemode( "ctf"sv ) && m_pPlayer->m_pFlag )
     {
         CTFGoalFlag* pFlag = m_pPlayer->m_pFlag;
 

@@ -214,7 +214,7 @@ CPlayerSpawnPoint* EntSelectSpawnPoint( CBasePlayer* pPlayer, bool spawn )
 
     if( g_GameMode->IsMultiplayer() )
     {
-        if( g_pGameRules->IsCTF() && pPlayer->m_iTeamNum != CTFTeam::None )
+        if( g_GameMode->IsGamemode( "ctf"sv ) && pPlayer->m_iTeamNum != CTFTeam::None )
         {
             spawn_entity = FindBestPlayerSpawn( pPlayer, ( pPlayer->m_iTeamNum == CTFTeam::BlackMesa ? "ctfs1" : "ctfs2" ) );
 

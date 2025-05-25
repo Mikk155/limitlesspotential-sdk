@@ -2802,10 +2802,10 @@ bool CBasePlayer::Spawn()
     // dont let uninitialized value here hurt the player
     m_flFallVelocity = 0;
 
-    if( !g_pGameRules->IsCTF() )
+    if( !g_GameMode->IsGamemode( "ctf"sv ) )
         g_pGameRules->SetDefaultPlayerTeam( this );
 
-    if( g_pGameRules->IsCTF() && m_iTeamNum == CTFTeam::None )
+    if( g_GameMode->IsGamemode( "ctf"sv ) && m_iTeamNum == CTFTeam::None )
     {
         pev->iuser1 = OBS_ROAMING;
     }
@@ -4647,7 +4647,7 @@ bool CBasePlayer::SwitchWeapon( CBasePlayerWeapon* weapon )
 
 void CBasePlayer::Player_Menu()
 {
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
     {
         if( m_iCurrentMenu == MENU_TEAM )
         {
@@ -4705,7 +4705,7 @@ void CBasePlayer::ResetMenu()
         return;
     }
 
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
         Player_Menu();
 }
 
@@ -4811,7 +4811,7 @@ bool CBasePlayer::Menu_Team_Input( int inp )
 
     m_iCurrentMenu = MENU_TEAM;
 
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
         Player_Menu();
 
     return false;
@@ -4954,7 +4954,7 @@ static void SendScoreInfoMessage( CBasePlayer* owner )
     WRITE_SHORT( owner->m_iDeaths );
 
     // To properly emulate Opposing Force's behavior we need to write -1 for these 2 in CTF.
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
     {
         WRITE_SHORT( -1 );
         WRITE_SHORT( -1 );

@@ -34,8 +34,6 @@ public:
 
     bool GetNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon, bool alwaysSearch = false ) override;
 
-    bool IsCTF() override { return false; }
-
     bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] ) override;
     void InitHUD( CBasePlayer* pl ) override;
     void ClientDisconnected( edict_t* pClient ) override;

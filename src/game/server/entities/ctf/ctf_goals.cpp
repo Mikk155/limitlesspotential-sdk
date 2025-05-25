@@ -239,7 +239,7 @@ void CTFGoalBase::TurnOnLight( CBasePlayer* pPlayer )
 
 void DumpCTFFlagInfo( CBasePlayer* pPlayer )
 {
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
     {
         for( auto entity : UTIL_FindEntitiesByClassname<CTFGoalFlag>( "item_ctfflag" ) )
         {

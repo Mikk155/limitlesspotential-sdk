@@ -107,11 +107,6 @@ public:
      */
     virtual bool IsTeamplay() { return false; }
 
-    /**
-     *    @brief is this a ctf game?
-     */
-    virtual bool IsCTF() = 0;
-
     // Client connection/disconnection
     /**
      *    @brief a client just connected to the server (player hasn't spawned yet)

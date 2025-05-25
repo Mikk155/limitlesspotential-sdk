@@ -64,7 +64,6 @@ public:
 
     void Think() override;
 
-    bool IsCTF() override { return true; }
     bool IsTeamplay() override { return true; }
 
     bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char* szRejectReason ) override;

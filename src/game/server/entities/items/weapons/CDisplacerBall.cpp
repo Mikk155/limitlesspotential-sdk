@@ -165,7 +165,7 @@ void CDisplacerBall::BallTouch( CBaseEntity* pOther )
         pPlayer->pev->flags |= FL_CLIENT;
         pPlayer->m_flFallVelocity = 0;
 
-        if( g_pGameRules->IsCTF() && pPlayer->m_pFlag )
+        if( g_GameMode->IsGamemode( "ctf"sv ) && pPlayer->m_pFlag )
         {
             pPlayer->m_pFlag->DropFlag( pPlayer );
 

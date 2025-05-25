@@ -608,7 +608,7 @@ bool ConfigurationSystem::ParseConfiguration( json& input, const bool CustomMap 
     std::unordered_map<std::string_view, bool> gamemodes;
     gamemodes[ "multiplayer" ] = g_GameMode->IsMultiplayer();
     gamemodes[ "cooperative" ] = g_GameMode->IsGamemode( "coop"sv );
-    gamemodes[ "ctf" ] = g_pGameRules->IsCTF();
+    gamemodes[ "ctf" ] = g_GameMode->IsGamemode( "ctf"sv );
     gamemodes[ "deathmatch" ] = g_GameMode->IsGamemode( "deathmatch"sv );
     gamemodes[ "teamplay" ] = ( g_GameMode->IsGamemode( "teamplay"sv ) );
 

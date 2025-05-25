@@ -140,7 +140,7 @@ void ClientKill( edict_t* pEntity )
     assert( pl );
 
     // Only check for teams in CTF gamemode
-    if( ( pl->pev->flags & FL_SPECTATOR ) != 0 || ( g_pGameRules->IsCTF() && pl->m_iTeamNum == CTFTeam::None ) )
+    if( ( pl->pev->flags & FL_SPECTATOR ) != 0 || ( g_GameMode->IsGamemode( "ctf"sv ) && pl->m_iTeamNum == CTFTeam::None ) )
     {
         return;
     }

@@ -79,7 +79,7 @@ int ToTeamIndex( const CTFTeam team )
 
 const char* GetTeamName( CBasePlayer* pEntity )
 {
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
     {
         if( pEntity->m_iTeamNum == CTFTeam::None )
         {

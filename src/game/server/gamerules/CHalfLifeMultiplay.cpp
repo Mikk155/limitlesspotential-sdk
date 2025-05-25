@@ -185,7 +185,7 @@ void CHalfLifeMultiplay::InitHUD( CBasePlayer* pl )
 
     SendMOTDToClient( pl );
 
-    if( IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
     {
         pl->m_iCurrentMenu = MENU_TEAM;
         pl->Player_Menu();

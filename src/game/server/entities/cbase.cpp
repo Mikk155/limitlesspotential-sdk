@@ -1089,7 +1089,7 @@ bool CBaseEntity::ShouldAppearByFlags( std::vector<std::string>& keynames, appea
         { "appearflag_skillhard"sv, g_cfg.GetSkillLevel() == SkillLevel::Hard },
         { "appearflag_deathmatch"sv, g_GameMode->IsGamemode( "deathmatch"sv ) },
         { "appearflag_teamplay"sv, g_GameMode->IsGamemode( "teamplay"sv ) },
-        { "appearflag_ctf"sv, g_pGameRules->IsCTF() },
+        { "appearflag_ctf"sv, g_GameMode->IsGamemode( "ctf"sv ) },
         { "appearflag_dedicated"sv, IS_DEDICATED_SERVER() }
     };
 

@@ -232,7 +232,7 @@ bool CWorld::Spawn()
     Precache();
     CItemCTF::m_pLastSpawn = nullptr;
 
-    if( g_pGameRules->IsCTF() )
+    if( g_GameMode->IsGamemode( "ctf"sv ) )
     {
         ResetTeamScores();
     }
