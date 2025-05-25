@@ -52,7 +52,6 @@ bool CVoiceGameMgr::Init(
 {
     m_pHelper = pHelper;
     m_nMaxPlayers = MAX_PLAYERS < maxClients ? MAX_PLAYERS : maxClients;
-    UTIL_PrecacheModelDirect( "sprites/voiceicon.spr" );
 
     m_msgPlayerVoiceMask = REG_USER_MSG( "VoiceMask", VOICE_MAX_PLAYERS_DW * 4 * 2 );
     m_msgRequestState = REG_USER_MSG( "ReqState", 0 );

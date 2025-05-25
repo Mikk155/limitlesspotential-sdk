@@ -1425,6 +1425,8 @@ void ClientPrecache()
 
     if( giPrecacheGrunt )
         UTIL_PrecacheOther( "monster_human_grunt" );
+
+    UTIL_PrecacheModelDirect( "sprites/voiceicon.spr" );
 }
 
 /**
