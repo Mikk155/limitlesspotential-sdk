@@ -34,7 +34,6 @@ inline int gmsgDeathMsg = 0;
 inline int gmsgScoreInfo = 0;
 inline int gmsgTeamInfo = 0;
 inline int gmsgTeamScore = 0;
-inline int gmsgGameMode_old = 0;
 inline int gmsgMOTD = 0;
 inline int gmsgServerName = 0;
 inline int gmsgAmmoPickup = 0;

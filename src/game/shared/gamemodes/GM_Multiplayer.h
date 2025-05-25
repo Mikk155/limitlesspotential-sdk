@@ -35,8 +35,12 @@ public:
     bool IsMultiplayer() override { return true; }
     void OnPlayerPreThink( CBasePlayer* player, float time ) override;
     void OnClientConnect( edict_t* ent ) override;
+    void OnClientInit( CBasePlayer* player ) override;
 
 protected:
+
+    // 0 = none
+    int m_gamemode_teams = 0;
 
     bool m_iEndIntermissionButtonHit;
 };

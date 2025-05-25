@@ -75,8 +75,6 @@ public:
 
     void ClientDisconnected( edict_t* pClient ) override;
 
-    void UpdateGameMode( CBasePlayer* pPlayer ) override;
-
     bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
 
     bool ShouldAutoAim( CBasePlayer* pPlayer, CBaseEntity* target ) override;

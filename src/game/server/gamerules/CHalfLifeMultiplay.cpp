@@ -179,13 +179,6 @@ bool CHalfLifeMultiplay::ClientConnected( edict_t* pEntity, const char* pszName,
     return true;
 }
 
-void CHalfLifeMultiplay::UpdateGameMode( CBasePlayer* pPlayer )
-{
-    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );
-    WRITE_BYTE( 0 ); // game mode none
-    MESSAGE_END();
-}
-
 void CHalfLifeMultiplay::InitHUD( CBasePlayer* pl )
 {
     // notify other clients of player joining the game
@@ -193,8 +186,6 @@ void CHalfLifeMultiplay::InitHUD( CBasePlayer* pl )
                                              ( !FStringNull( pl->pev->netname ) && STRING( pl->pev->netname )[0] != 0 ) ? STRING( pl->pev->netname ) : "unconnected" ) );
 
     Logger->trace( "{} entered the game", PlayerLogInfo{*pl} );
-
-    UpdateGameMode( pl );
 
     // sending just one score makes the hud scoreboard active;  otherwise
     // it is just disabled for single play

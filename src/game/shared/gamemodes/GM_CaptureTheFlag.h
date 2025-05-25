@@ -30,4 +30,5 @@ public:
     const char* GetBaseName() const override { return BaseClass::GetName(); }
 
     void OnPlayerPreThink( CBasePlayer* player, float time ) override;
+    void OnClientInit( CBasePlayer* player ) override;
 };

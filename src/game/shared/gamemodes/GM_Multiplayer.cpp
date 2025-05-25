@@ -16,7 +16,14 @@
 #include "GM_Multiplayer.h"
 
 #ifdef CLIENT_DLL
+
+#include "ui/hud/hud.h"
+#include "vgui_TeamFortressViewport.h"
+#include "vgui_ScorePanel.h"
+extern int giTeamplay;
+
 #else
+
 #include "voice_gamemgr.h"
 
 CVoiceGameMgr g_VoiceGameMgr;
@@ -38,6 +45,7 @@ public:
 };
 
 static CMultiplayGameMgrHelper g_GameMgrHelper;
+
 #endif
 
 void GM_Multiplayer::OnRegister()
@@ -68,6 +76,27 @@ void GM_Multiplayer::OnThink()
 #endif
 
     BaseClass::OnThink();
+}
+
+void GM_Multiplayer::OnClientInit( CBasePlayer* player )
+{
+#ifdef CLIENT_DLL
+    gHUD.m_Teamplay = giTeamplay = m_gamemode_teams;
+
+    if( gViewPort && !gViewPort->m_pScoreBoard )
+    {
+        gViewPort->CreateScoreBoard();
+        gViewPort->m_pScoreBoard->Initialize();
+
+        if( !gHUD.m_iIntermission )
+        {
+            gViewPort->HideScoreBoard();
+        }
+    }
+#else
+#endif
+
+    BaseClass::OnClientInit(player);
 }
 
 void GM_Multiplayer::OnClientConnect( edict_t* ent )

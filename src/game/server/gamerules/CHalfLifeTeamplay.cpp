@@ -124,13 +124,6 @@ void CHalfLifeTeamplay::Think()
     last_time = time_remaining;
 }
 
-void CHalfLifeTeamplay::UpdateGameMode( CBasePlayer* pPlayer )
-{
-    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );
-    WRITE_BYTE( 1 ); // game mode teamplay
-    MESSAGE_END();
-}
-
 const char* CHalfLifeTeamplay::SetDefaultPlayerTeam( CBasePlayer* pPlayer )
 {
     // copy out the team name from the model

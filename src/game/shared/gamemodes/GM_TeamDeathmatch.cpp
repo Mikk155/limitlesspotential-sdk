@@ -14,3 +14,13 @@
  ****/
 
 #include "GM_TeamDeathmatch.h"
+
+void GM_TeamDeathmatch::OnClientInit( CBasePlayer* player )
+{
+#ifdef CLIENT_DLL
+    m_gamemode_teams = 1;
+#else
+#endif
+
+    BaseClass::OnClientInit(player);
+}

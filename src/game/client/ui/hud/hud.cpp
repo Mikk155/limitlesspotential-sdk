@@ -97,7 +97,6 @@ void CHud::Init()
     g_ClientUserMessages.RegisterHandler( "CrsshrClr", &CHud::MsgFunc_CrosshairColor, this );
     g_ClientUserMessages.RegisterHandler( "Logo", &CHud::MsgFunc_Logo, this );
     g_ClientUserMessages.RegisterHandler( "ResetHUD", &CHud::MsgFunc_ResetHUD, this );
-    g_ClientUserMessages.RegisterHandler( "GameModeold", &CHud::MsgFunc_GameMode, this );
     g_ClientUserMessages.RegisterHandler( "InitHUD", &CHud::MsgFunc_InitHUD, this );
     g_ClientUserMessages.RegisterHandler( "ViewMode", &CHud::MsgFunc_ViewMode, this );
     g_ClientUserMessages.RegisterHandler( "SetFOV", &CHud::MsgFunc_SetFOV, this );

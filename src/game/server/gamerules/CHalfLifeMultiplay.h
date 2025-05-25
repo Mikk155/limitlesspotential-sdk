@@ -38,7 +38,6 @@ public:
     bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] ) override;
     void InitHUD( CBasePlayer* pl ) override;
     void ClientDisconnected( edict_t* pClient ) override;
-    void UpdateGameMode( CBasePlayer* pPlayer ) override;
 
     bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
 

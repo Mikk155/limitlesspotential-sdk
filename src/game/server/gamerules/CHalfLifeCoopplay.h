@@ -22,13 +22,11 @@ class CHalfLifeCoopplay : public CHalfLifeMultiplay
 public:
     static constexpr char GameModeName[] = "coop";
 
-    CHalfLifeCoopplay();
+    CHalfLifeCoopplay() = default;
 
     const char* GetGameModeName() const override { return GameModeName; }
 
     bool IsTeamplay() override { return true; }
-
-    void UpdateGameMode( CBasePlayer* pPlayer ) override;
 
     void DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override {}
 

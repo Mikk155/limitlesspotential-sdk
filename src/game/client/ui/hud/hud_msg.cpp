@@ -27,12 +27,9 @@
 #include "tri.h"
 #include "triangleapi.h"
 
-extern int giTeamplay;
-
 extern BEAM* pBeam;
 extern BEAM* pBeam2;
 extern TEMPENTITY* pFlare; // Vit_amiN
-
 
 /// USER-DEFINED SERVER MESSAGE HANDLERS
 
@@ -79,24 +76,6 @@ void CHud::MsgFunc_InitHUD( const char* pszName, BufferReader& reader )
     pBeam = pBeam2 = nullptr;
     pFlare = nullptr; // Vit_amiN: clear egon's beam flare
 }
-
-
-void CHud::MsgFunc_GameMode( const char* pszName, BufferReader& reader )
-{
-    m_Teamplay = giTeamplay = reader.ReadByte();
-
-    if( gViewPort && !gViewPort->m_pScoreBoard )
-    {
-        gViewPort->CreateScoreBoard();
-        gViewPort->m_pScoreBoard->Initialize();
-
-        if( !gHUD.m_iIntermission )
-        {
-            gViewPort->HideScoreBoard();
-        }
-    }
-}
-
 
 void CHud::MsgFunc_Damage( const char* pszName, BufferReader& reader )
 {

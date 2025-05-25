@@ -783,13 +783,6 @@ void CHalfLifeCTFplay::ClientDisconnected( edict_t* pClient )
     }
 }
 
-void CHalfLifeCTFplay::UpdateGameMode( CBasePlayer* pPlayer )
-{
-    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );
-    g_engfuncs.pfnWriteByte( 2 );
-    g_engfuncs.pfnMessageEnd();
-}
-
 bool CHalfLifeCTFplay::FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker )
 {
     if( pAttacker && PlayerRelationship( pPlayer, pAttacker ) == GR_TEAMMATE && pAttacker != pPlayer && friendlyfire.value == 0 )

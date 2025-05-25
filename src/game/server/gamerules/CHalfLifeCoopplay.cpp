@@ -19,13 +19,6 @@
 #include "UserMessages.h"
 #include "items/CBaseItem.h"
 
-void CHalfLifeCoopplay::UpdateGameMode( CBasePlayer* pPlayer )
-{
-    MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );
-    g_engfuncs.pfnWriteByte( 1 );
-    g_engfuncs.pfnMessageEnd();
-}
-
 void CHalfLifeCoopplay::MonsterKilled( CBaseMonster* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor )
 {
     auto killer = ToBasePlayer( pKiller );

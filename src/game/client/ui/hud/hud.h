@@ -891,7 +891,6 @@ public:
 
     // user messages
     void MsgFunc_Damage( const char* pszName, BufferReader& reader );
-    void MsgFunc_GameMode( const char* pszName, BufferReader& reader );
     void MsgFunc_HudColor( const char* pszName, BufferReader& reader );
     void MsgFunc_CrosshairColor( const char* pszName, BufferReader& reader );
     void MsgFunc_Logo( const char* pszName, BufferReader& reader );

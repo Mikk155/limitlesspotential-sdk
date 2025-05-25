@@ -15,6 +15,16 @@
 
 #include "GM_CaptureTheFlag.h"
 
+void GM_CaptureTheFlag::OnClientInit( CBasePlayer* player )
+{
+#ifdef CLIENT_DLL
+    m_gamemode_teams = 2;
+#else
+#endif
+
+    BaseClass::OnClientInit(player);
+}
+
 void GM_CaptureTheFlag::OnPlayerPreThink( CBasePlayer* player, float time )
 {
 #ifdef CLIENT_DLL

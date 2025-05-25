@@ -136,11 +136,6 @@ public:
     virtual void ClientDisconnected( edict_t* pClient ) = 0;
 
     /**
-     *    @brief the client needs to be informed of the current game mode
-     */
-    virtual void UpdateGameMode( CBasePlayer* pPlayer ) {}
-
-    /**
      *    @brief can this player take damage from this attacker?
      */
     virtual bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) { return true; }

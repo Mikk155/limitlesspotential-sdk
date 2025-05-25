@@ -14,3 +14,13 @@
  ****/
 
 #include "GM_Cooperative.h"
+
+void GM_Cooperative::OnClientInit( CBasePlayer* player )
+{
+#ifdef CLIENT_DLL
+    m_gamemode_teams = 1;
+#else
+#endif
+
+    BaseClass::OnClientInit(player);
+}
