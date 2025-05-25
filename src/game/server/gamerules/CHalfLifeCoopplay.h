@@ -52,8 +52,6 @@ public:
 
     bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
 
-    const char* GetGameDescription() override { return "HL Coopplay"; }
-
 private:
     bool m_DisableDeathMessages = false;
     bool m_DisableDeathPenalty = false;

@@ -28,6 +28,7 @@ public:
     static constexpr char GameModeName[] = "deathmatch";
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
+    const char* GetGameDescription() const override { return "Death-Match"; }
 
     void OnClientInit( CBasePlayer* player ) override;
 };

@@ -42,7 +42,6 @@ public:
     int IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled ) override;
     void InitHUD( CBasePlayer* pl ) override;
     void DeathNotice( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
-    const char* GetGameDescription() override { return "HL Teamplay"; } // this is the game name that gets seen in the server browser
     void PlayerKilled( CBasePlayer* pVictim, CBaseEntity* pKiller, CBaseEntity* inflictor ) override;
     void Think() override;
     int GetTeamIndex( const char* pTeamName ) override;

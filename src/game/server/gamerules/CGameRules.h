@@ -112,11 +112,6 @@ public:
      */
     virtual bool IsCTF() = 0;
 
-    /**
-     *    @brief this is the game name that gets seen in the server browser
-     */
-    virtual const char* GetGameDescription() { return "Half-Life: Limitless Potential"; }
-
     // Client connection/disconnection
     /**
      *    @brief a client just connected to the server (player hasn't spawned yet)

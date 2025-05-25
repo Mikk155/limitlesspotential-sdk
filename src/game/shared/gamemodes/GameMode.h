@@ -73,6 +73,7 @@ public:
 
     virtual const char* GetName() const { return "default"; }
     virtual const char* GetBaseName() const { return "default"; }
+    virtual const char* GetGameDescription() const { return "Half-Life: Limitless Potential"; }
 
     /**
      * @brief Return whatever players can form teams in this gamemode

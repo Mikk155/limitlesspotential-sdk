@@ -28,6 +28,7 @@ public:
     static constexpr char GameModeName[] = "ctf";
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
+    const char* GetGameDescription() const override { return "Capture The Flag"; }
 
     void OnPlayerPreThink( CBasePlayer* player, float time ) override;
     void OnClientInit( CBasePlayer* player ) override;

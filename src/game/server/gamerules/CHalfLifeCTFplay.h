@@ -67,8 +67,6 @@ public:
     bool IsCTF() override { return true; }
     bool IsTeamplay() override { return true; }
 
-    const char* GetGameDescription() override { return "OpFor CTF"; }
-
     bool ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char* szRejectReason ) override;
 
     void InitHUD( CBasePlayer* pPlayer ) override;

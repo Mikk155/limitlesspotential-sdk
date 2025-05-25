@@ -28,6 +28,7 @@ public:
     static constexpr char GameModeName[] = "coop";
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
+    const char* GetGameDescription() const override { return "Co-Operative"; }
 
     void OnClientInit( CBasePlayer* player ) override;
 };
