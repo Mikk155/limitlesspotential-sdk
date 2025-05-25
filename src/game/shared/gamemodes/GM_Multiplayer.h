@@ -37,5 +37,6 @@ public:
     void OnClientConnect( edict_t* ent ) override;
 
 protected:
+
     bool m_iEndIntermissionButtonHit;
 };

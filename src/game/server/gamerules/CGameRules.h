@@ -75,7 +75,7 @@ class CGameRules
 public:
     static inline std::shared_ptr<spdlog::logger> Logger;
 
-    CGameRules();
+    CGameRules() = default;
     virtual ~CGameRules() = default;
 
     virtual const char* GetGameModeName() const = 0;
@@ -301,12 +301,6 @@ protected:
     float GetRespawnDelay( CBaseItem* item );
 
     CBasePlayerWeapon* FindNextBestWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pCurrentWeapon );
-
-    virtual void BecomeSpectator( CBasePlayer* player, const CommandArgs& args );
-
-private:
-    ScopedClientCommand m_SpectateCommand;
-    ScopedClientCommand m_SpecModeCommand;
 };
 
 /**

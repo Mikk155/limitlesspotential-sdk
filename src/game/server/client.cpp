@@ -601,6 +601,40 @@ void SV_CreateClientCommands()
         MESSAGE_END();
     } );
 
+    g_ClientCommands.Create( "spectate", []( CBasePlayer* player, const auto& args )
+        {
+            // clients wants to become a spectator
+            if( g_GameMode->IsGamemode( "ctf"sv ) )
+            {
+                // CTF game mode: make sure player has gamemode settings applied properly.
+                player->Menu_Team_Input( -1 );
+            }
+            // always allow proxies to become a spectator
+            else if( ( player->pev->flags & FL_PROXY ) != 0 || allow_spectators.value != 0 )
+            {
+                player->StartObserver( player->pev->origin, player->pev->angles );
+
+                // notify other clients of player switching to spectator mode
+                UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n",
+                                                        ( !FStringNull( player->pev->netname ) && STRING( player->pev->netname )[0] != 0 ) ? STRING( player->pev->netname ) : "unconnected" ) );
+            }
+            else
+            {
+                ClientPrint( player, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n" );
+            }
+        }
+    );
+
+    g_ClientCommands.Create( "specmode", []( CBasePlayer* player, const auto& args )
+        {
+            // new spectator mode
+            if( player->IsObserver() )
+            {
+                player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) );
+            }
+        }
+    );
+
     g_ClientCommands.Create( "say", []( CBasePlayer* player, const auto& args )
         { Host_Say( player, false ); } );
 

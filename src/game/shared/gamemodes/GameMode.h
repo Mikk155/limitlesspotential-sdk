@@ -140,7 +140,6 @@ public:
      * CLIENT: No effect
      */
     virtual void OnClientConnect( edict_t* ent ) {};
-
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

@@ -115,9 +115,6 @@ public:
 
     void GoToIntermission() override;
 
-protected:
-    void BecomeSpectator( CBasePlayer* player, const CommandArgs& args ) override;
-
 private:
     void SendTeamStatInfo( CTFTeam iTeamNum );
     void SendPlayerStatInfo( CBasePlayer* pPlayer );

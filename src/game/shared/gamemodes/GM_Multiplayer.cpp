@@ -46,6 +46,8 @@ void GM_Multiplayer::OnRegister()
 #else
     g_VoiceGameMgr.Init( &g_GameMgrHelper, gpGlobals->maxClients );
 #endif
+
+    BaseClass::OnRegister();
 }
 
 void GM_Multiplayer::OnUnRegister()
@@ -54,6 +56,8 @@ void GM_Multiplayer::OnUnRegister()
 #else
     g_VoiceGameMgr.Shutdown();
 #endif
+
+    BaseClass::OnUnRegister();
 }
 
 void GM_Multiplayer::OnThink()
@@ -62,6 +66,8 @@ void GM_Multiplayer::OnThink()
 #else
     g_VoiceGameMgr.Update( gpGlobals->frametime );
 #endif
+
+    BaseClass::OnThink();
 }
 
 void GM_Multiplayer::OnClientConnect( edict_t* ent )
@@ -70,6 +76,8 @@ void GM_Multiplayer::OnClientConnect( edict_t* ent )
 #else
     g_VoiceGameMgr.ClientConnected(ent);
 #endif
+
+    BaseClass::OnClientConnect(ent);
 }
 
 void GM_Multiplayer::OnPlayerPreThink( CBasePlayer* player, float time )

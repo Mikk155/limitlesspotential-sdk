@@ -1712,9 +1712,3 @@ void CHalfLifeCTFplay::RecountTeams()
         }
     }
 }
-
-void CHalfLifeCTFplay::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )
-{
-    // CTF game mode: make sure player has gamemode settings applied properly.
-    player->Menu_Team_Input( -1 );
-}

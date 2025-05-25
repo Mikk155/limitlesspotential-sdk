@@ -160,20 +160,6 @@ public:
     bool CanHaveItem = true;
 };
 
-CGameRules::CGameRules()
-{
-    m_SpectateCommand = g_ClientCommands.CreateScoped( "spectate", [this]( CBasePlayer* player, const auto& args )
-        {
-            // clients wants to become a spectator
-            BecomeSpectator( player, args ); } );
-
-    m_SpecModeCommand = g_ClientCommands.CreateScoped( "specmode", [this]( CBasePlayer* player, const auto& args )
-        {
-            // new spectator mode
-            if( player->IsObserver() )
-                player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) ); } );
-}
-
 void CGameRules::SetupPlayerInventory( CBasePlayer* player )
 {
     // Originally game_player_equip entities were triggered in PlayerSpawn to set up the player's inventory.
@@ -365,25 +351,6 @@ int CGameRules::HEVChargerRechargeTime()
 bool CGameRules::FAllowMonsters()
 {
     return g_cfg.GetValue<bool>( "allow_monsters"sv, true );
-}
-
-void CGameRules::BecomeSpectator( CBasePlayer* player, const CommandArgs& args )
-{
-    // Default implementation: applies to all game modes, even singleplayer.
-
-    // always allow proxies to become a spectator
-    if( ( player->pev->flags & FL_PROXY ) != 0 || allow_spectators.value != 0 )
-    {
-        player->StartObserver( player->pev->origin, player->pev->angles );
-
-        // notify other clients of player switching to spectator mode
-        UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n",
-                                                 ( !FStringNull( player->pev->netname ) && STRING( player->pev->netname )[0] != 0 ) ? STRING( player->pev->netname ) : "unconnected" ) );
-    }
-    else
-    {
-        ClientPrint( player, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n" );
-    }
 }
 
 bool CGameRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon )
