@@ -154,11 +154,6 @@ public:
     virtual void PlayerSpawn( CBasePlayer* pPlayer );
 
     /**
-     *    @brief called by CBasePlayer::PreThink every frame, before physics are run and after keys are accepted
-     */
-    virtual void PlayerThink( CBasePlayer* pPlayer ) = 0;
-
-    /**
      *    @brief is this player allowed to respawn now?
      */
     virtual bool FPlayerCanRespawn( CBasePlayer* pPlayer ) = 0;

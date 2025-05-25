@@ -83,8 +83,6 @@ public:
 
     void PlayerSpawn( CBasePlayer* pPlayer ) override;
 
-    void PlayerThink( CBasePlayer* pPlayer ) override;
-
     void ClientUserInfoChanged( CBasePlayer* pPlayer, char* infobuffer ) override;
 
     int IPointsForKill( CBasePlayer* pAttacker, CBasePlayer* pKilled ) override;

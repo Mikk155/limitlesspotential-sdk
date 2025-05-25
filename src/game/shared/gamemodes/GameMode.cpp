@@ -66,6 +66,13 @@ done:
     return flDamage;
 }
 
+void GM_Base::PlayerPreThink( CBasePlayer* player, float time )
+{
+#ifdef CLIENT_DLL
+#else
+#endif
+}
+
 void GM_Base::_UpdateClientGameMode_( CBasePlayer* player )
 {
 #ifndef CLIENT_DLL

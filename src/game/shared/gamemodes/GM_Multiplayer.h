@@ -29,4 +29,8 @@ public:
     const char* GetBaseName() const override { return BaseClass::GetName(); }
 
     bool IsMultiplayer() override { return true; }
+    void PlayerPreThink( CBasePlayer* player, float time ) override;
+
+protected:
+    bool m_iEndIntermissionButtonHit;
 };

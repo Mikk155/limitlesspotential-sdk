@@ -43,7 +43,6 @@ public:
     bool FPlayerCanTakeDamage( CBasePlayer* pPlayer, CBaseEntity* pAttacker ) override;
 
     void PlayerSpawn( CBasePlayer* pPlayer ) override;
-    void PlayerThink( CBasePlayer* pPlayer ) override;
     bool FPlayerCanRespawn( CBasePlayer* pPlayer ) override;
     float FlPlayerSpawnTime( CBasePlayer* pPlayer ) override;
 

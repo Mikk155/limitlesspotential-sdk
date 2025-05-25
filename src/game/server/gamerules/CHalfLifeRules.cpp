@@ -60,10 +60,6 @@ bool CHalfLifeRules::AllowAutoTargetCrosshair()
     return ( g_cfg.GetSkillLevel() == SkillLevel::Easy );
 }
 
-void CHalfLifeRules::PlayerThink( CBasePlayer* pPlayer )
-{
-}
-
 bool CHalfLifeRules::FPlayerCanRespawn( CBasePlayer* pPlayer )
 {
     return true;

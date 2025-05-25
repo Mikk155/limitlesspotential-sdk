@@ -40,7 +40,6 @@ public:
     void InitHUD( CBasePlayer* pl ) override;
     void ClientDisconnected( edict_t* pClient ) override;
 
-    void PlayerThink( CBasePlayer* pPlayer ) override;
     bool FPlayerCanRespawn( CBasePlayer* pPlayer ) override;
     float FlPlayerSpawnTime( CBasePlayer* pPlayer ) override;
 

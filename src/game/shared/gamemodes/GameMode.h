@@ -96,7 +96,7 @@ public:
      * SERVER: called from CBasePlayer::PreThink before anything else. @c time is zero
      * CLIENT: called from CHud::Redraw before anything else. @c player is nullptr
     */
-    virtual void PlayerPreThink( CBasePlayer* player, float time ) {};
+    virtual void PlayerPreThink( CBasePlayer* player, float time );
 
     /**
      * @brief Called every time a player thinks

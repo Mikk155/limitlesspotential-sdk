@@ -1822,7 +1822,6 @@ void CBasePlayer::PreThink()
     m_afButtonPressed = buttonsChanged & pev->button;      // The changed ones still down are "pressed"
     m_afButtonReleased = buttonsChanged & ( ~pev->button ); // The ones not down are "released"
 
-    g_pGameRules->PlayerThink( this );
     g_GameMode->PlayerPreThink(this, 0);
 
     if( g_fGameOver )
