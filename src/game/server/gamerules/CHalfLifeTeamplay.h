@@ -60,6 +60,4 @@ private:
     bool m_DisableDeathPenalty;
     bool m_teamLimit; // This means the server set only some teams as valid
     char m_szTeamList[TEAMPLAY_TEAMLISTLENGTH];
-
-    ScopedClientCommand m_MenuSelectCommand;
 };

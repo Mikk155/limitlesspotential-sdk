@@ -19,19 +19,6 @@
 #include "UserMessages.h"
 #include "items/CBaseItem.h"
 
-CHalfLifeCoopplay::CHalfLifeCoopplay()
-{
-    m_MenuSelectCommand = g_ClientCommands.CreateScoped( "menuselect", []( CBasePlayer* player, const auto& args )
-        {
-            if( args.Count() < 2 )
-                return;
-
-            // int slot = atoi(args.Argument(1));
-
-            // select the item from the current menu
-        } );
-}
-
 void CHalfLifeCoopplay::UpdateGameMode( CBasePlayer* pPlayer )
 {
     MESSAGE_BEGIN( MSG_ONE, gmsgGameMode_old, nullptr, pPlayer );

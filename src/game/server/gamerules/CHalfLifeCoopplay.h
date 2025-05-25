@@ -59,6 +59,4 @@ public:
 private:
     bool m_DisableDeathMessages = false;
     bool m_DisableDeathPenalty = false;
-
-    ScopedClientCommand m_MenuSelectCommand;
 };

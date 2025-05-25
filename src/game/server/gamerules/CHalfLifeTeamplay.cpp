@@ -31,16 +31,6 @@ CHalfLifeTeamplay::CHalfLifeTeamplay()
     memset( team_scores, 0, sizeof( team_scores ) );
     num_teams = 0;
 
-    m_MenuSelectCommand = g_ClientCommands.CreateScoped( "menuselect", []( CBasePlayer* player, const auto& args )
-        {
-            if( args.Count() < 2 )
-                return;
-
-            // int slot = atoi(args.Argument(1));
-
-            // select the item from the current menu
-        } );
-
     // Copy over the team from the server config
     m_szTeamList[0] = 0;
 
