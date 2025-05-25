@@ -1434,7 +1434,10 @@ void ClientPrecache()
  */
 const char* GetGameDescription()
 {
-    return g_GameMode->GetGameDescription();
+    if( g_GameMode.gamemode ) // this function may be called before the world has spawned, and the game rules initialized
+        return g_GameMode->GetGameDescription();
+    else
+        return "Half-Life: Limitless Potential";
 }
 
 /**

@@ -160,15 +160,15 @@ class CGameModes final : public IGameSystem
 {
 private:
 
-    std::string gamemode_name;
-
-    GM_Base* gamemode;
-
     int GameModeFactorySize;
 
     bool GameModeAutoUpdate = false;
 
 public:
+
+    std::string gamemode_name;
+
+    GM_Base* gamemode;
 
     const char* GetName() const override {
         return "GameMode";
