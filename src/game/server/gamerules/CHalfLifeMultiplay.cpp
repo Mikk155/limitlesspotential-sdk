@@ -17,7 +17,6 @@
 #include "CHalfLifeMultiplay.h"
 
 #include "items.h"
-#include "voice_gamemgr.h"
 #include "hltv.h"
 #include "UserMessages.h"
 
@@ -27,34 +26,12 @@
 #include "items/CBaseItem.h"
 #include "items/weapons/CSatchelCharge.h"
 
-CVoiceGameMgr g_VoiceGameMgr;
-
-class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
-{
-public:
-    bool CanPlayerHearPlayer( CBasePlayer* pListener, CBasePlayer* pTalker ) override
-    {
-        if( g_pGameRules->IsTeamplay() )
-        {
-            if( g_pGameRules->PlayerRelationship( pListener, pTalker ) != GR_TEAMMATE )
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-};
-static CMultiplayGameMgrHelper g_GameMgrHelper;
-
 CHalfLifeMultiplay::CHalfLifeMultiplay()
 {
-    g_VoiceGameMgr.Init( &g_GameMgrHelper, gpGlobals->maxClients );
 }
 
 CHalfLifeMultiplay::~CHalfLifeMultiplay()
 {
-    g_VoiceGameMgr.Shutdown();
 }
 
 // longest the intermission can last, in seconds
@@ -77,8 +54,6 @@ static int GetChatTime()
 
 void CHalfLifeMultiplay::Think()
 {
-    g_VoiceGameMgr.Update( gpGlobals->frametime );
-
     ///// Check game rules /////
     if( g_fGameOver ) // someone else quit the game already
     {
@@ -160,8 +135,6 @@ void CHalfLifeMultiplay::Think()
 
 bool CHalfLifeMultiplay::ClientConnected( edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128] )
 {
-    g_VoiceGameMgr.ClientConnected( pEntity );
-
     int playersInTeamsCount = 0;
 
     for( int iPlayer = 1; iPlayer <= gpGlobals->maxClients; ++iPlayer )

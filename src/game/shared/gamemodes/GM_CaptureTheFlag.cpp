@@ -15,7 +15,7 @@
 
 #include "GM_CaptureTheFlag.h"
 
-void GM_CaptureTheFlag::PlayerPreThink( CBasePlayer* player, float time )
+void GM_CaptureTheFlag::OnPlayerPreThink( CBasePlayer* player, float time )
 {
 #ifdef CLIENT_DLL
 #else
@@ -66,5 +66,5 @@ void GM_CaptureTheFlag::PlayerPreThink( CBasePlayer* player, float time )
     }
 #endif
 
-    BaseClass::PlayerPreThink(player, time);
+    BaseClass::OnPlayerPreThink(player, time);
 }

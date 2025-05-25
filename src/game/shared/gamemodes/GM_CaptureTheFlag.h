@@ -29,5 +29,5 @@ public:
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
 
-    void PlayerPreThink( CBasePlayer* player, float time ) override;
+    void OnPlayerPreThink( CBasePlayer* player, float time ) override;
 };

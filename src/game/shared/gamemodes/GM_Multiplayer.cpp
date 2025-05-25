@@ -13,9 +13,66 @@
  *
  ****/
 
-#include "GM_Deathmatch.h"
+#include "GM_Multiplayer.h"
 
-void GM_Multiplayer::PlayerPreThink( CBasePlayer* player, float time )
+#ifdef CLIENT_DLL
+#else
+#include "voice_gamemgr.h"
+
+CVoiceGameMgr g_VoiceGameMgr;
+
+class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
+{
+public:
+    bool CanPlayerHearPlayer( CBasePlayer* pListener, CBasePlayer* pTalker ) override
+    {
+        if( g_GameMode->IsTeamPlay() )
+        {
+            if( g_pGameRules->PlayerRelationship( pListener, pTalker ) != GR_TEAMMATE )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+static CMultiplayGameMgrHelper g_GameMgrHelper;
+#endif
+
+void GM_Multiplayer::OnRegister()
+{
+#ifdef CLIENT_DLL
+#else
+    g_VoiceGameMgr.Init( &g_GameMgrHelper, gpGlobals->maxClients );
+#endif
+}
+
+void GM_Multiplayer::OnUnRegister()
+{
+#ifdef CLIENT_DLL
+#else
+    g_VoiceGameMgr.Shutdown();
+#endif
+}
+
+void GM_Multiplayer::OnThink()
+{
+#ifdef CLIENT_DLL
+#else
+    g_VoiceGameMgr.Update( gpGlobals->frametime );
+#endif
+}
+
+void GM_Multiplayer::OnClientConnect( edict_t* ent )
+{
+#ifdef CLIENT_DLL
+#else
+    g_VoiceGameMgr.ClientConnected(ent);
+#endif
+}
+
+void GM_Multiplayer::OnPlayerPreThink( CBasePlayer* player, float time )
 {
 #ifdef CLIENT_DLL
 #else
@@ -154,5 +211,5 @@ void GM_Multiplayer::PlayerPreThink( CBasePlayer* player, float time )
     }
 #endif
 
-    BaseClass::PlayerPreThink(player, time);
+    BaseClass::OnPlayerPreThink(player, time);
 }

@@ -43,7 +43,7 @@ void GM_Base::OnClientInit( CBasePlayer* player )
     g_GameMode.Logger->trace( "Called OnClientInit in {}", GM_LIB );
 }
 
-float GM_Base::PlayerFallDamage( CBasePlayer* player, float fall_velocity )
+float GM_Base::OnPlayerFallDamage( CBasePlayer* player, float fall_velocity )
 {
     float flDamage = g_cfg.GetValue<float>( "fall_damage"sv, 0.22522522522f, player );
 
@@ -66,7 +66,7 @@ done:
     return flDamage;
 }
 
-void GM_Base::PlayerPreThink( CBasePlayer* player, float time )
+void GM_Base::OnPlayerPreThink( CBasePlayer* player, float time )
 {
 #ifdef CLIENT_DLL
 #else

@@ -2635,7 +2635,7 @@ void PM_CheckFalling()
     {
         float fvol = 0.5;
 
-        if( pmove->waterlevel > 0 || (int)g_GameMode->PlayerFallDamage(nullptr, pmove->flFallVelocity) == 0 )
+        if( pmove->waterlevel > 0 || (int)g_GameMode->OnPlayerFallDamage(nullptr, pmove->flFallVelocity) == 0 )
         {
             // -TODO Check some water level head plus reduce speed tracing down?
         }

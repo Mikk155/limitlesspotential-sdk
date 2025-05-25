@@ -13,4 +13,4 @@
  *
  ****/
 
-#include "GM_Cooperative.h"
+#include "GM_Deathmatch.h"

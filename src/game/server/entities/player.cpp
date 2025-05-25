@@ -1822,7 +1822,7 @@ void CBasePlayer::PreThink()
     m_afButtonPressed = buttonsChanged & pev->button;      // The changed ones still down are "pressed"
     m_afButtonReleased = buttonsChanged & ( ~pev->button ); // The ones not down are "released"
 
-    g_GameMode->PlayerPreThink(this, 0);
+    g_GameMode->OnPlayerPreThink(this, 0);
 
     if( g_fGameOver )
         return; // intermission or finale
@@ -2627,7 +2627,7 @@ void CBasePlayer::PostThink()
         else if( m_flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED )
         { // after this point, we start doing damage
 
-            float flFallDamage = g_GameMode->PlayerFallDamage( this, m_flFallVelocity );
+            float flFallDamage = g_GameMode->OnPlayerFallDamage( this, m_flFallVelocity );
 
             if( flFallDamage > pev->health )
             { // splat
@@ -2738,7 +2738,7 @@ pt_end:
     // Track button info so we can detect 'pressed' and 'released' buttons next frame
     m_afButtonLast = pev->button;
 
-    g_GameMode->PlayerPostThink(this, 0);
+    g_GameMode->OnPlayerPostThink(this, 0);
 }
 
 bool CBasePlayer::Spawn()

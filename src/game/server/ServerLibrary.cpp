@@ -634,7 +634,7 @@ map_cfg_is_loaded:
     g_GameLogger->trace( "Server configurations loaded in {}ms",
         std::chrono::duration_cast<std::chrono::milliseconds>( timeElapsed ).count() );
 
-    g_GameMode->MapInit();
+    g_GameMode->OnMapInit();
 }
 
 void ServerLibrary::SendFogMessage( CBasePlayer* player )

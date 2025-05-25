@@ -67,15 +67,10 @@ CHalfLifeTeamplay::CHalfLifeTeamplay()
     RecountTeams();
 }
 
-#include "voice_gamemgr.h"
-extern CVoiceGameMgr g_VoiceGameMgr;
-
 void CHalfLifeTeamplay::Think()
 {
     // TODO: a lot of this is duplicated from multiplay gamerules
     ///// Check game rules /////
-    g_VoiceGameMgr.Update( gpGlobals->frametime );
-
     if( g_fGameOver ) // someone else quit the game already
     {
         CHalfLifeMultiplay::Think();

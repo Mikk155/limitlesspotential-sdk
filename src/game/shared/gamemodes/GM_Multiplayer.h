@@ -28,8 +28,13 @@ public:
     const char* GetName() const override { return GameModeName; }
     const char* GetBaseName() const override { return BaseClass::GetName(); }
 
+    void OnRegister() override;
+    void OnUnRegister() override;
+
+    void OnThink() override;
     bool IsMultiplayer() override { return true; }
-    void PlayerPreThink( CBasePlayer* player, float time ) override;
+    void OnPlayerPreThink( CBasePlayer* player, float time ) override;
+    void OnClientConnect( edict_t* ent ) override;
 
 protected:
     bool m_iEndIntermissionButtonHit;

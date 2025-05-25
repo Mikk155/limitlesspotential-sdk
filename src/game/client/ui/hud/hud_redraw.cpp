@@ -89,7 +89,7 @@ void CHud::Think()
         m_iFOV = gHUD.m_Spectator.GetFOV(); // default_fov->value;
     }
 
-    g_GameMode->Think();
+    g_GameMode->OnThink();
 }
 
 // Redraw
@@ -97,7 +97,7 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw( float flTime, bool intermission )
 {
-    g_GameMode->PlayerPreThink(nullptr, flTime);
+    g_GameMode->OnPlayerPreThink(nullptr, flTime);
 
     m_fOldTime = m_flTime; // save time of previous redraw
     m_flTime = flTime;
@@ -212,7 +212,7 @@ bool CHud::Redraw( float flTime, bool intermission )
     }
     */
 
-    g_GameMode->PlayerPostThink(nullptr, flTime);
+    g_GameMode->OnPlayerPostThink(nullptr, flTime);
 
     return true;
 }
