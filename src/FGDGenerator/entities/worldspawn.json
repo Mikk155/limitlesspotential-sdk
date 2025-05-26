@@ -52,13 +52,15 @@
         {
             "variable": "vector",
             "value": "-4096 -4096 -4096",
-            "title": "minhullsize"
+            "title": "worldspawn::minhullsize",
+            "description": "worldspawn::minhullsize::description"
         },
         "maxhullsize":
         {
             "variable": "vector",
             "value": "4096 4096 4096",
-            "title": "maxhullsize"
+            "title": "worldspawn::maxhullsize",
+            "description": "worldspawn::maxhullsize::description"
         },
 
         "chaptertitle":

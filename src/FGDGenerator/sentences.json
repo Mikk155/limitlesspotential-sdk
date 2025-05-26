@@ -335,7 +335,22 @@
 {
 "english": "The json file defined for configuration, the path is within cfg/maps/ no need to specify .json, if not defined is maps/mapname.json"
 },
-
+"worldspawn::minhullsize":
+{
+"english": "World minimun size"
+},
+"worldspawn::maxhullsize":
+{
+"english": "World minimun size"
+},
+"worldspawn::minhullsize::description":
+{
+"english": "This is used for IsInWorld() checks"
+},
+"worldspawn::maxhullsize::description":
+{
+"english": "This is used for IsInWorld() checks"
+},
 "Mandatory::spawnflags::2048":
 {
 "english": "Only in SinglePlayer"
