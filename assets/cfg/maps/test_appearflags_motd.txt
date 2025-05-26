@@ -1,5 +1,0 @@
-# appearflags keyvalues
-
-There are some piles of two blocks. one red and one green. based on the appearance flag set some blocks will or will not appear.
-
-Stand by near the blocks to get a message of which flag is been set for them.
