@@ -38,7 +38,7 @@ BEGIN_DATAMAP( CSoundMark )
 END_DATAMAP();
 
 
-LINK_ENTITY_TO_CLASS( env_soundmark, CSoundMark );
+LINK_ENTITY_TO_CLASS( ambient_soundmark, CSoundMark );
 
 bool CSoundMark :: KeyValue( KeyValueData* pkvd )
 {

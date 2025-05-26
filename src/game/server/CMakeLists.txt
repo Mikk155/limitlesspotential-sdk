@@ -150,7 +150,7 @@ target_sources(server PRIVATE
     entities/ctf/CTFSpawn.cpp
     entities/ctf/CTFSpawn.h
 
-    entities/env/soundmark.cpp
+    entities/ambient/soundmark.cpp
 
     entities/game/precache.cpp
 
