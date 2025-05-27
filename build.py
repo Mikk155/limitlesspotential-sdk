@@ -140,6 +140,10 @@ def InstallAssets() -> None:
 
     for root, dirs, files in os.walk( assets ):
 
+        if '.git' in root or 'cl_dlls' in root or 'dlls' in root:
+
+            continue;
+
         relative_path = os.path.relpath( root, assets );
 
         dst_path = os.path.join( destination, relative_path );
