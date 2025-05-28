@@ -33,6 +33,7 @@ struct CampaignInfo
 
     std::string CampaignMap;
     std::string TrainingMap;
+    std::string Target;
 };
 
 class CampaignSelectSystem final : public IGameSystem
@@ -46,7 +47,7 @@ public:
 
     void Shutdown() override;
 
-    std::vector<CampaignInfo> LoadCampaigns();
+    std::vector<CampaignInfo> LoadCampaigns( const char* foldername );
 
 private:
     CampaignInfo ParseCampaign( std::string&& fileName, const json& input );

@@ -511,7 +511,9 @@ private:
     void CreateStatsMenu();
 
     void CreateCampaignSelectMenu();
+public:
     void ShowCampaignSelectMenu();
+private:
 
     // Scheme handler
     CSchemeManager m_SchemeManager;
@@ -622,7 +624,6 @@ public:
     void MsgFunc_SetMenuTeam( const char* pszName, BufferReader& reader );
     void MsgFunc_StatsInfo( const char* pszName, BufferReader& reader );
     void MsgFunc_StatsPlayer( const char* pszName, BufferReader& reader );
-    void MsgFunc_CmpgnSlct( BufferReader& reader );
 
     // Input
     bool SlotInput( int iSlot );

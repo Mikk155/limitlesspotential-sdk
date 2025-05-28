@@ -32,7 +32,9 @@ public:
     void OnUnRegister() override;
 
     bool IsMultiplayer() override { return false; }
+    void OnClientInit( CBasePlayer* player ) override;
 
 private:
     ScopedClientCommand m_VModEnableCommand;
+    ScopedClientCommand m_MapSelectionTrigger;
 };

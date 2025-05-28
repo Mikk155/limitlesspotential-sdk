@@ -42,6 +42,10 @@ static std::string GetCampaignSelectSchema()
         "TrainingMap": {
             "type": "string",
             "pattern": "^.+$"
+        },
+        "Target": {
+            "type": "string",
+            "pattern": "^.+$"
         }
     },
     "required": [
@@ -63,13 +67,13 @@ void CampaignSelectSystem::Shutdown()
     m_Logger.reset();
 }
 
-std::vector<CampaignInfo> CampaignSelectSystem::LoadCampaigns()
+std::vector<CampaignInfo> CampaignSelectSystem::LoadCampaigns( const char* foldername )
 {
     std::vector<CampaignInfo> campaigns;
 
     FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
 
-    if (auto fileName = g_pFileSystem->FindFirst("campaigns/*.json", &handle); fileName)
+    if (auto fileName = g_pFileSystem->FindFirst( fmt::format( "{}/*.json", foldername ).c_str(), &handle); fileName)
     {
         do
         {
@@ -81,7 +85,7 @@ std::vector<CampaignInfo> CampaignSelectSystem::LoadCampaigns()
                 continue;
             }
 
-            auto campaign = g_JSON.ParseJSONFile(fmt::format("campaigns/{}", fileName).c_str(),
+            auto campaign = g_JSON.ParseJSONFile(fmt::format( "{}/{}", foldername, fileName).c_str(),
                 {.SchemaName = CampaignSchemaName}, [=, this](const auto& input)
                 { return ParseCampaign(fileName, input); });
 
@@ -123,6 +127,7 @@ CampaignInfo CampaignSelectSystem::ParseCampaign(std::string&& fileName, const j
     info.Description = input.value("Description", "No description provided.");
     info.CampaignMap = Trim(input.value("CampaignMap", ""));
     info.TrainingMap = Trim(input.value("TrainingMap", ""));
+    info.Target = Trim(input.value("Target", ""));
 
     return info;
 }

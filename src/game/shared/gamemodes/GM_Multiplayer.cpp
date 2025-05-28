@@ -17,9 +17,9 @@
 
 #ifdef CLIENT_DLL
 
-#include "ui/hud/hud.h"
 #include "vgui_TeamFortressViewport.h"
 #include "vgui_ScorePanel.h"
+
 extern int giTeamplay;
 
 #else

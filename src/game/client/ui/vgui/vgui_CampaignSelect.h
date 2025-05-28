@@ -49,6 +49,9 @@ private:
     ScrollPanel* m_pScrollPanel;
     TextPanel* m_Description;
 
+    std::string m_Target;
+    int selected_index = -1;
+
     Button* m_StartButton;
 
     int m_TextHeight = 0;
@@ -58,7 +61,7 @@ private:
 public:
     CCampaignSelectPanel( int iTrans, int x, int y, int wide, int tall );
 
-    virtual void Open();
+    virtual void Open( const char* foldername );
     virtual void Update();
     virtual void Initialize();
 

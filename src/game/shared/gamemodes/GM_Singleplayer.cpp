@@ -15,12 +15,28 @@
 
 #include "GM_Singleplayer.h"
 
+#ifdef CLIENT_DLL
+
+#include "vgui_TeamFortressViewport.h"
+#include "vgui_ScorePanel.h"
+
+#else
+
+#endif
+
 void GM_Singleplayer::OnRegister()
 {
 #ifdef CLIENT_DLL
 #else
     // Define this as a dummy command to silence console errors.
     m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", []( auto, const auto& ) {} );
+    m_MapSelectionTrigger = g_ClientCommands.CreateScoped( "client_fire", []( CBasePlayer* player, const auto& args )
+    {
+        if( args.Count() != 1 )
+        {
+            FireTargets( args.Argument(1), player, player, ( args.Count() != 2 ? static_cast<USE_TYPE>( atoi( args.Argument(2) ) ) : USE_TOGGLE ) );
+        }
+    } );
 #endif
 
     BaseClass::OnRegister();
@@ -31,7 +47,19 @@ void GM_Singleplayer::OnUnRegister()
 #ifdef CLIENT_DLL
 #else
     m_VModEnableCommand.Remove();
+    m_MapSelectionTrigger.Remove();
 #endif
 
     BaseClass::OnUnRegister();
+}
+
+void GM_Singleplayer::OnClientInit( CBasePlayer* player )
+{
+#ifdef CLIENT_DLL
+    if( gViewPort )
+        gViewPort->ShowCampaignSelectMenu();
+#else
+#endif
+
+    BaseClass::OnClientInit(player);
 }

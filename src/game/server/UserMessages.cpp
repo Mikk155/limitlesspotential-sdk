@@ -84,8 +84,6 @@ void LinkUserMessages()
     gmsgConfigVars = REG_USER_MSG( "ConfigVars", -1 );
     gmsgGameMode = REG_USER_MSG( "GameMode", -1 );
 
-    gmsgCampaignSelect = REG_USER_MSG( "CmpgnSlct", 0 );
-
     gmsgTgtLaser = REG_USER_MSG( "TgtLaser", -1 );
 
     gmsgFog = REG_USER_MSG( "Fog", 14 );

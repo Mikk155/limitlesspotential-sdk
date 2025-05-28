@@ -25,13 +25,20 @@
 #include "utils/shared_utils.h"
 
 #ifdef CLIENT_DLL
+
 #define GM_LIB "Client DLL"
+
+#include "ui/hud/hud.h"
 #include "networking/ClientUserMessages.h"
+
 #else
+
 #define GM_LIB "Server DLL"
+
 #include "UserMessages.h"
 #include "ConCommandSystem.h"
 #include "player.h"
+
 #endif
 
 class CBaseItem;

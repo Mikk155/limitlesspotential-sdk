@@ -70,7 +70,6 @@ inline int gmsgEntityInfo = 0;
 inline int gmsgEmitSound = 0;
 inline int gmsgTempEntity = 0;
 inline int gmsgConfigVars = 0;
-inline int gmsgCampaignSelect = 0;
 inline int gmsgTgtLaser = 0;
 inline int gmsgFog = 0;
 inline int gmsgClientGibs = 0;

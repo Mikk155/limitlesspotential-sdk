@@ -256,7 +256,7 @@ void CCampaignSelectPanel::Update()
     m_pScrollPanel->validate();
 }
 
-void CCampaignSelectPanel::Open()
+void CCampaignSelectPanel::Open( const char* foldername )
 {
     bool needsInit = false;
 
@@ -264,7 +264,7 @@ void CCampaignSelectPanel::Open()
     {
         needsInit = true;
 
-        m_Campaigns = g_CampaignSelect.LoadCampaigns();
+        m_Campaigns = g_CampaignSelect.LoadCampaigns(foldername);
 
         for( const auto& campaign : m_Campaigns )
         {
@@ -365,10 +365,21 @@ void CCampaignSelectPanel::SetCampaignByIndex( int index )
         return;
     }
 
+    // Do not repeat calls if this is the last or first input
+    if( selected_index == index )
+        return;
+
+    selected_index = index;
+
+    if( !m_Target.empty() )
+        gEngfuncs.pfnClientCmd( fmt::format( "client_fire {} {}\n", m_Target, "0" ).c_str() );
+
     const auto& campaign = m_Campaigns[index];
 
     m_MissionButton->setVisible( !campaign.CampaignMap.empty() );
     m_TrainingButton->setVisible( !campaign.TrainingMap.empty() );
+
+    m_Target = campaign.Target;
 
     if( !campaign.CampaignMap.empty() )
     {
@@ -393,4 +404,7 @@ void CCampaignSelectPanel::SetCampaignByIndex( int index )
     m_pScrollPanel->validate();
 
     m_StartButton->setVisible( true );
+
+    if( !m_Target.empty() )
+        gEngfuncs.pfnClientCmd( fmt::format( "client_fire {} {}\n", m_Target, "1" ).c_str() );
 }

@@ -16,25 +16,6 @@
 #include "cbase.h"
 #include "UserMessages.h"
 
-class CLogicCampaignSelect : public CPointEntity
-{
-    DECLARE_CLASS( CLogicCampaignSelect, CPointEntity );
-
-public:
-    void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
-};
-
-LINK_ENTITY_TO_CLASS( logic_campaignselect, CLogicCampaignSelect );
-
-void CLogicCampaignSelect::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
-{
-    if( auto player = ToBasePlayer( pActivator ); player )
-    {
-        MESSAGE_BEGIN( MSG_ONE, gmsgCampaignSelect, nullptr, player );
-        MESSAGE_END();
-    }
-}
-
 constexpr int MaxRandomTargets = 16;
 constexpr std::string_view TargetKeyValuePrefix{"target"sv};
 

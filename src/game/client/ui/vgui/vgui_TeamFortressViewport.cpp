@@ -542,8 +542,6 @@ TeamFortressViewport::TeamFortressViewport( int x, int y, int wide, int tall )
     g_ClientUserMessages.RegisterHandler( "StatsInfo", &TeamFortressViewport::MsgFunc_StatsInfo, this );
     g_ClientUserMessages.RegisterHandler( "StatsPlayer", &TeamFortressViewport::MsgFunc_StatsPlayer, this );
 
-    g_ClientUserMessages.RegisterHandler( "CmpgnSlct", &TeamFortressViewport::MsgFunc_CmpgnSlct, this );
-
     g_ClientUserMessages.RegisterHandler( "SpecFade", &TeamFortressViewport::MsgFunc_SpecFade, this );
     g_ClientUserMessages.RegisterHandler( "ResetFade", &TeamFortressViewport::MsgFunc_ResetFade, this );
     g_ClientUserMessages.RegisterHandler( "TeamFull", &TeamFortressViewport::MsgFunc_TeamFull, this );
@@ -1824,18 +1822,18 @@ void TeamFortressViewport::ShowCampaignSelectMenu()
 
     auto levelName = gEngfuncs.pfnGetLevelName();
 
-    // Only allow this menu to open on the campaign selection map.
-    if( !levelName || 0 != strcmp( levelName, "maps/hlu_campaignselect.bsp" ) )
-    {
+    if( !levelName )
         return;
-    }
 
-    // Pause game but don't show the paused text.
-    gEngfuncs.Cvar_SetValue( "showpause", 0 );
-    gEngfuncs.pfnClientCmd( "setpause\n" );
+    std::string map_name = std::string( levelName ).substr(5,-1);
+    map_name = map_name.substr( 0, map_name.size() - 4 );
+    std::string folder_name = fmt::format( "cfg/client/map_selection/{}", map_name );
+
+    if( !g_pFileSystem->IsDirectory( folder_name.c_str() ) )
+        return;
 
     m_CampaignSelectMenu->Reset();
-    m_CampaignSelectMenu->Open();
+    m_CampaignSelectMenu->Open( folder_name.c_str() );
     UpdateCursorState();
 }
 
@@ -2327,9 +2325,4 @@ void TeamFortressViewport::MsgFunc_StatsInfo( const char* pszName, BufferReader&
 void TeamFortressViewport::MsgFunc_StatsPlayer( const char* pszName, BufferReader& reader )
 {
     return m_pStatsMenu->MsgFunc_StatsPlayer( pszName, reader );
-}
-
-void TeamFortressViewport::MsgFunc_CmpgnSlct( BufferReader& reader )
-{
-    ShowCampaignSelectMenu();
 }
