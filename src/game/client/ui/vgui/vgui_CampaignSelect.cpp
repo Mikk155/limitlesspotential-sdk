@@ -371,15 +371,10 @@ void CCampaignSelectPanel::SetCampaignByIndex( int index )
 
     selected_index = index;
 
-    if( !m_Target.empty() )
-        gEngfuncs.pfnClientCmd( fmt::format( "client_fire {} {}\n", m_Target, "0" ).c_str() );
-
     const auto& campaign = m_Campaigns[index];
 
     m_MissionButton->setVisible( !campaign.CampaignMap.empty() );
     m_TrainingButton->setVisible( !campaign.TrainingMap.empty() );
-
-    m_Target = campaign.Target;
 
     if( !campaign.CampaignMap.empty() )
     {
@@ -406,5 +401,10 @@ void CCampaignSelectPanel::SetCampaignByIndex( int index )
     m_StartButton->setVisible( true );
 
     if( !m_Target.empty() )
-        gEngfuncs.pfnClientCmd( fmt::format( "client_fire {} {}\n", m_Target, "1" ).c_str() );
+        gEngfuncs.pfnClientCmd( fmt::format( "client_fire {} 0\n", m_Target ).c_str() );
+
+    m_Target = campaign.Target;
+
+    if( !m_Target.empty() )
+        gEngfuncs.pfnClientCmd( fmt::format( "client_fire {} 1\n", m_Target ).c_str() );
 }
