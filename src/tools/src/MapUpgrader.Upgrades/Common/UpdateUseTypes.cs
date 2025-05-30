@@ -1,6 +1,7 @@
 ﻿using Utilities.Entities;
 using Utilities.Tools.UpgradeTool;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace MapUpgrader.Upgrades.Common
 {
@@ -13,8 +14,7 @@ namespace MapUpgrader.Upgrades.Common
             "trigger_relay",
             "trigger_auto",
             "trigger_ctfgeneric",
-            "game_team_master",
-            "trigger_entity_iterator"
+            "game_team_master"
         );
 
         protected override void ApplyCore( MapUpgradeContext context )
@@ -31,8 +31,6 @@ namespace MapUpgrader.Upgrades.Common
                     0 => 0, // Off
                     1 => 1, // On
                     2 => 3, // TOGGLE
-                    3 => 2, // Sven coop's USE_SET
-                    4 => 4, // Sven coop's USE_KILL
                     _ => 1 // On (Default in the game's code)
                 };
 
