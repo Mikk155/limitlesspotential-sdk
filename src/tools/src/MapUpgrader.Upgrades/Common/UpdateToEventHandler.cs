@@ -1,6 +1,7 @@
 ﻿using Utilities.Entities;
 using Utilities.Tools.UpgradeTool;
 using System.Collections.Immutable;
+using System.Collections.Generic;
 
 namespace MapUpgrader.Upgrades.Common
 {
@@ -9,7 +10,7 @@ namespace MapUpgrader.Upgrades.Common
     /// </summary>
     internal sealed class UpdateToEventHandler : MapUpgrade
     {
-        private static Dictionary<string, int> Targetnames = new()
+        private static readonly Dictionary<string, int> Targetnames = new()
         {
             [ "game_playerdie" ] = 1,
             [ "game_playerleave" ] = 2,
@@ -21,33 +22,37 @@ namespace MapUpgrader.Upgrades.Common
 
         protected override void ApplyCore( MapUpgradeContext context )
         {
-            foreach( Entity entity in context.Map.Entities.Where( ent => Targetnames.ContainsKey( ent.GetTargetName() ) ) )
+            foreach( KeyValuePair<string, int> pair_name in Targetnames )
             {
-                Entity EventHandler = context.Map.Entities.CreateNewEntity( "trigger_eventhandler" );
-                EventHandler.SetInteger( "event_type", Targetnames[ entity.GetTargetName() ] );
-                EventHandler.SetTarget( entity.GetTargetName() );
+                Entity? entity = context.Map.Entities.Find( pair_name.Key );
 
-                // Some things were MP only in the game code
-                // So let's allow SP mods to use them now w/o breaking legacy maps.
-                switch( entity.GetTargetName() )
+                if( entity is not null )
                 {
-                    case "game_playerkill":
-                    case "game_playerdie":
-                    case "game_playerjoin":
-                    case "game_playerleave":
-                    {
-                        // The game used to pass the attacker as both caller and activator
-                        if( entity.GetTargetName() == "game_playerkill" )
-                        {
-                            EventHandler.SetString( "m_Caller", "!activator" );
-                        }
+                    Entity EventHandler = context.Map.Entities.CreateNewEntity( "trigger_eventhandler" );
+                    EventHandler.SetInteger( "event_type", pair_name.Value );
+                    EventHandler.SetTarget( pair_name.Key );
 
-                        EventHandler.SetInteger( "appearflag_multiplayer", -1 );
-                        break;
+                    // Some things were MP only in the game code
+                    // So let's allow SP mods to use them now w/o breaking legacy maps.
+                    switch( pair_name.Key )
+                    {
+                        case "game_playerkill":
+                        case "game_playerdie":
+                        case "game_playerjoin":
+                        case "game_playerleave":
+                        {
+                            // They don't work in SP
+                            EventHandler.SetInteger( "appearflag_multiplayer", -1 );
+                            break;
+                        }
+                    }
+
+                    // The game used to pass the attacker as both caller and activator
+                    if( pair_name.Key == "game_playerkill" )
+                    {
+                        EventHandler.SetString( "m_Caller", "!activator" );
                     }
                 }
-
-                Targetnames.Remove( entity.GetTargetName() );
             }
         }
     }
