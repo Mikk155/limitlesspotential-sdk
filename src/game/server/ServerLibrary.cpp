@@ -68,7 +68,7 @@
 
 #include "ui/hud/HudReplacementSystem.h"
 
-constexpr char DefaultMapConfigFileName[] = "cfg/DefaultMapConfig.json";
+constexpr char DefaultMapConfigFileName[] = "cfg/server/default_map_config.json";
 
 cvar_t servercfgfile = {"sv_servercfgfile", "cfg/server/server.json", FCVAR_NOEXTRAWHITEPACE | FCVAR_ISPATH};
 cvar_t mp_gamemode = {"mp_gamemode", "", FCVAR_SERVER};
@@ -303,13 +303,6 @@ void ServerLibrary::NewMapStarted( bool loadGame )
         ShutdownServer( "Shutting down server due to error loading BSP data" );
     }
 
-    // Load the config files, which will initialize the map state as needed
-    LoadServerConfigFiles();
-
-    g_PersistentInventory.NewMapStarted();
-
-    sentences::g_Sentences.NewMapStarted();
-
     // Reset sky name to its default value. If the map specifies its own sky
     // it will be set in CWorld::KeyValue or restored by the engine on save game load.
     CVAR_SET_STRING( "sv_skyname", DefaultSkyName );
@@ -490,37 +483,60 @@ void ServerLibrary::DefineConfigVariables()
     g_cfg.DefineVariable( "shockrifle_fast", 0, {.Networked = true} );
 }
 
+extern Vector MapVersion;
+extern std::string MapConfig;
+
 void ServerLibrary::LoadServerConfigFiles()
 {
     const auto start = std::chrono::high_resolution_clock::now();
 
     std::string mapConfigFileName;
 
-    if( CWorld* pWorld = static_cast<CWorld*>( CBaseEntity::World ); pWorld != nullptr && !FStringNull( pWorld->m_mapcfg ) )
+    Vector Version( 1, 0, 0 );
+
+    for( int i = 0; i < 3; i++ )
     {
-        if( auto mapCfgFileName = fmt::format( "cfg/maps/{}.json", STRING( pWorld->m_mapcfg ) ); g_pFileSystem->FileExists( mapCfgFileName.c_str() ) )
+        if( MapVersion[i] < Version[i] )
         {
-            mapConfigFileName = std::move( mapCfgFileName );
-            goto map_cfg_is_loaded;
-        }
-        else
-        {
-            g_GameLogger->debug( "Failed to open map cfg file \"{}\"", mapCfgFileName );
+            g_GameLogger->error( "Map \"{}\" is older than this game version.\n" \
+                "Please run the MapUpgrader tool to update from {} to {} and avoid problems.",
+                    STRING( gpGlobals->mapname ), MapVersion.MakeString(0), Version.MakeString(0) );
+            break;
         }
     }
 
-    // Use the map-specific cfg if it exists.
-    if( auto mapCfgFileName = fmt::format( "cfg/maps/{}.json", STRING( gpGlobals->mapname ) ); g_pFileSystem->FileExists( mapCfgFileName.c_str() ) )
+    MapVersion = g_vecZero;
+
+    auto GetConfigFile = []( const std::string& name ) -> std::pair<std::string, bool>
     {
-        mapConfigFileName = std::move( mapCfgFileName );
+        std::string filename = fmt::format( "cfg/maps/{}.json", name );
+
+        if( g_pFileSystem->FileExists( filename.c_str() ) )
+        {
+            return { filename, true };
+        }
+        else
+        {
+            g_GameLogger->debug( "Failed to open map cfg file \"{}\"", filename );
+        }
+
+        return { name, false };
+    };
+
+    if( std::pair<std::string, bool> cfg = GetConfigFile( MapConfig ); cfg.second ) {
+        mapConfigFileName = std::move( cfg.first );
     }
-    else
+    else if( std::pair<std::string, bool> cfg = GetConfigFile( STRING( gpGlobals->mapname ) ); cfg.second ) {
+        mapConfigFileName = std::move( cfg.first );
+    }
+
+    MapConfig.clear();
+
+    if( mapConfigFileName.empty() )
     {
         g_GameLogger->debug( "Using default map config file \"{}\"", DefaultMapConfigFileName );
         mapConfigFileName = DefaultMapConfigFileName;
     }
-
-map_cfg_is_loaded:
 
     g_GameLogger->trace( "Loading map config file" );
     const std::optional<GameConfig<ServerConfigContext>> mapConfig = m_MapConfigDefinition->TryLoad( mapConfigFileName.c_str() );
@@ -629,12 +645,16 @@ map_cfg_is_loaded:
     g_HudReplacements.HudReplacementFileName = std::move( context.HudReplacementFile );
     g_HudReplacements.SetWeaponHudReplacementFiles( std::move( context.WeaponHudReplacementFiles ) );
 
+    g_PersistentInventory.MapInit();
+
+    sentences::g_Sentences.MapInit();
+
+    g_GameMode->OnMapInit();
+
     const auto timeElapsed = std::chrono::high_resolution_clock::now() - start;
 
     g_GameLogger->trace( "Server configurations loaded in {}ms",
         std::chrono::duration_cast<std::chrono::milliseconds>( timeElapsed ).count() );
-
-    g_GameMode->OnMapInit();
 }
 
 void ServerLibrary::SendFogMessage( CBasePlayer* player )

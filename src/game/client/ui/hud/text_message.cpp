@@ -112,7 +112,6 @@ return fmt::format( R"(
 bool CHudTextMessage::Init()
 {
     g_ClientUserMessages.RegisterHandler( "TextMsg", &CHudTextMessage::MsgFunc_TextMsg, this );
-    g_ClientUserMessages.RegisterHandler( "Titles", &CHudTextMessage::MsgFunc_CustomTitles, this );
 
     g_JSON.RegisterSchema( GameTextTitlesSchemaName, &GameTextTitlesSchema );
 
@@ -123,20 +122,22 @@ bool CHudTextMessage::Init()
     return true;
 }
 
-void CHudTextMessage::LoadGameTitles( const char* path_name )
+void CHudTextMessage::LoadGameTitles( const char* path_name, bool restore )
 {
     std::string filename;
 
-    bool is_custom = ( path_name != nullptr );
-
-    if( !is_custom )
+    if( restore )
     {
         m_titles.clear();
         filename = "cfg/titles.json";
     }
-    else
+    else if( path_name != nullptr )
     {
         filename = fmt::format( "cfg/maps/{}.json", path_name );
+    }
+    else
+    {
+        g_GameLogger->error( "Null path given for custom titles" );
     }
 
     std::optional<json> json_opt = g_JSON.LoadJSONFile( filename.c_str() );
@@ -145,14 +146,15 @@ void CHudTextMessage::LoadGameTitles( const char* path_name )
     {
         const json& new_titles = json_opt.value();
 
-        if( !is_custom )
+        if( restore )
         {
+            m_titles.clear();
             m_titles = new_titles;
         }
         else
         {
             // Append new messages.
-            m_titles.update( new_titles );
+            m_titles.update( new_titles, true );
         }
         g_GameLogger->debug( "Loaded \"{}\"", filename );
     }
@@ -164,14 +166,7 @@ void CHudTextMessage::LoadGameTitles( const char* path_name )
 
 bool CHudTextMessage::VidInit()
 {
-    // Null pointer means to clear and load the default titles.
-    LoadGameTitles(nullptr);
     return true;
-}
-
-void CHudTextMessage::MsgFunc_CustomTitles(const char* pszName, BufferReader& reader)
-{
-    LoadGameTitles( reader.ReadString() );
 }
 
 constexpr int NUM_BUFFERS = 4;

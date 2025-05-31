@@ -117,7 +117,9 @@ private:
 
     void DefineConfigVariables();
 
+public:
     void LoadServerConfigFiles();
+private:
 
     void SendFogMessage( CBasePlayer* player );
 

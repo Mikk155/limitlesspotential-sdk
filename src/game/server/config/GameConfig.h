@@ -378,7 +378,7 @@ inline std::string GameConfigDefinition<DataContext>::GetSchema() const
     // A configuration is structured like this:
     /*
     {
-        "Includes": [
+        "include": [
             "some_filename.json"
         ],
         "SectionGroups": [
@@ -442,7 +442,7 @@ inline std::string GameConfigDefinition<DataContext>::GetSchema() const
     "title": "{} Game Configuration",
     "type": "object",
     "properties": {{
-        "Includes": {{
+        "include": {{
             "title": "Included Files",
             "description": "List of JSON files to include before this file.",
             "type": "array",
@@ -533,7 +533,7 @@ bool GameConfigDefinition<DataContext>::TryLoadCore( LoadContext& loadContext, c
 template <typename DataContext>
 void GameConfigDefinition<DataContext>::ParseIncludedFiles( LoadContext& loadContext, const json& input ) const
 {
-    if( auto includes = input.find( "Includes" ); includes != input.end() )
+    if( auto includes = input.find( "include" ); includes != input.end() )
     {
         if( !includes->is_array() )
         {
@@ -553,30 +553,30 @@ void GameConfigDefinition<DataContext>::ParseIncludedFiles( LoadContext& loadCon
 
             switch ( loadContext.IncludeStack.Add( includeFileName.c_str() ) )
             {
-            case IncludeAddResult::Success:
-            {
-                m_Logger->trace( "Including file \"{}\"", includeFileName );
+                case IncludeAddResult::Success:
+                {
+                    m_Logger->trace( "Including file \"{}\"", includeFileName );
 
-                ++loadContext.Depth;
+                    ++loadContext.Depth;
 
-                TryLoadCore( loadContext, includeFileName.c_str() );
+                    TryLoadCore( loadContext, includeFileName.c_str() );
 
-                --loadContext.Depth;
-                break;
-            }
+                    --loadContext.Depth;
+                    break;
+                }
 
-            case IncludeAddResult::AlreadyIncluded:
-            {
-                m_Logger->debug( "Included file \"{}\" already included before", includeFileName );
-                break;
-            }
+                case IncludeAddResult::AlreadyIncluded:
+                {
+                    m_Logger->debug( "Included file \"{}\" already included before", includeFileName );
+                    break;
+                }
 
 
-            case IncludeAddResult::CouldNotResolvePath:
-            {
-                m_Logger->error( "Couldn't resolve path for included configuration file \"{}\"", includeFileName );
-                break;
-            }
+                case IncludeAddResult::CouldNotResolvePath:
+                {
+                    m_Logger->error( "Couldn't resolve path for included configuration file \"{}\"", includeFileName );
+                    break;
+                }
             }
         }
     }

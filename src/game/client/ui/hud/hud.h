@@ -478,9 +478,8 @@ public:
     const char* LookupString( const char* msg_name, int* msg_dest = nullptr );
 
     void MsgFunc_TextMsg( const char* pszName, BufferReader& reader );
-    void MsgFunc_CustomTitles( const char* pszName, BufferReader& reader );
 
-    void LoadGameTitles( const char* path_name );
+    void LoadGameTitles( const char* path_name, bool restore = false );
 
     client_textmessage_t* Getmessage( const char* pName );
 

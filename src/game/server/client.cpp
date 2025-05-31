@@ -182,16 +182,6 @@ void ClientPutInServer( edict_t* pEntity )
     pPlayer->m_ConnectTime = gpGlobals->time;
 
     g_LastPlayerJoinTime = gpGlobals->time;
-
-// -TODO Reimplement when a simplified configuration system is made
-#if 0
-    if( map has custom titles )
-    {
-        MESSAGE_BEGIN(MSG_ONE, gmsgTitles, nullptr, pPlayer );
-            WRITE_STRING( custom titles );
-        MESSAGE_END();
-    }
-#endif
 }
 
 #include "voice_gamemgr.h"

@@ -219,7 +219,7 @@ void SentencesSystem::LoadSentences( std::span<const std::string> fileNames )
     }
 }
 
-void SentencesSystem::NewMapStarted()
+void SentencesSystem::MapInit()
 {
     // Check if the replacement map has any bad data.
     if( m_Logger->should_log( spdlog::level::debug ) )

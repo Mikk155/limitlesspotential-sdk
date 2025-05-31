@@ -48,7 +48,7 @@ public:
 
     void LoadSentences( std::span<const std::string> fileNames );
 
-    void NewMapStarted();
+    void MapInit();
 
     void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 

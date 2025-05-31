@@ -271,6 +271,8 @@ void ConfigurationSystem::LoadConfigurationFiles()
 {
     std::vector<std::string> fileNames;
     fileNames.push_back( "cfg/default_configuration.json" );
+
+    // -TODO Get this from the map context
     fileNames.push_back( fmt::format( "cfg/maps/{}_cfg.json", STRING( gpGlobals->mapname ) ) );
 
     // Refresh skill level setting first.

@@ -95,6 +95,12 @@ void GM_Multiplayer::OnClientInit( CBasePlayer* player )
             gViewPort->HideScoreBoard();
         }
     }
+
+    // Re-read default titles
+    gHUD.m_TextMessage.LoadGameTitles(nullptr, true);
+
+// -TODO Transfer the titles this map uses
+//    gHUD.m_TextMessage.LoadGameTitles( custom title (or iteration for multiple append-replace) );
 #else
 #endif
 

@@ -54,7 +54,7 @@ namespace MapCfgGenerator
 
                         writer.WriteStartObject();
 
-                        writer.WritePropertyName("Includes");
+                        writer.WritePropertyName("include");
 
                         writer.WriteStartArray();
                         writer.WriteValue(gameConfig);

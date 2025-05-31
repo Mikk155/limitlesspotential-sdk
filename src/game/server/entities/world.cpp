@@ -12,7 +12,7 @@
  *   without written permission from Valve LLC.
  *
  ****/
-/**
+ /**
  *    @file
  *    precaches and defs for entities and other data that must always be available.
  */
@@ -191,7 +191,8 @@ bool CDecal::KeyValue( KeyValueData* pkvd )
 }
 
 BEGIN_DATAMAP( CWorld )
-    DEFINE_FIELD( m_mapcfg, FIELD_STRING ),
+// This is cleared post read, do not save
+//    DEFINE_FIELD( m_mapcfg, FIELD_STRING ),
 END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
@@ -248,6 +249,9 @@ void CWorld::Precache()
         UTIL_Remove( this );
         return;
     }
+
+    // Load the config files, which will initialize the map state as needed
+    g_Server.LoadServerConfigFiles();
 
     g_GameLogger->trace( "Initializing world" );
 
@@ -510,7 +514,12 @@ bool CWorld::KeyValue( KeyValueData* pkvd )
     }
     else if( FStrEq( pkvd->szKeyName, "mapcfg" ) )
     {
-        m_mapcfg = ALLOC_STRING( pkvd->szValue );
+        MapConfig = std::move( std::string( pkvd->szValue ) );
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "version" ) )
+    {
+        MapVersion.FromString( pkvd->szValue, "." );
         return true;
     }
 

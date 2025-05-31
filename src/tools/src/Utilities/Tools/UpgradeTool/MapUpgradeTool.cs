@@ -15,12 +15,12 @@ namespace Utilities.Tools.UpgradeTool
     /// <example>
     /// A map made for version <c>1.0.0</c> upgraded to version <c>3.0.0</c> will have upgrades applied for versions
     /// starting from the version after <c>1.0.0</c> up to and including <c>3.0.0</c>.
-    /// The map will have a keyvalue <c>UpgradeToolVersion</c> added containing the version it was upgraded to.
+    /// The map will have a keyvalue <c>version</c> added containing the version it was upgraded to.
     /// </example>
     public sealed class MapUpgradeTool
     {
         /// <summary>Worldspawn keyvalue used to track which version of a game a map is made for.</summary>
-        public const string DefaultGameVersionKey = "UpgradeToolVersion";
+        public const string DefaultGameVersionKey = "version";
 
         /// <summary>The first version that any map can be.</summary>
         public static readonly SemVersion FirstVersion = new(0, 0, 0);
@@ -77,7 +77,7 @@ namespace Utilities.Tools.UpgradeTool
         /// <returns>The version the map was upgraded from and the version the map was upgraded to.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="command"/> or <c>command.Map</c> are <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
-        /// If the map contains a <c>UpgradeToolVersion</c> value that is not a valid semantic version string.
+        /// If the map contains a <c>version</c> value that is not a valid semantic version string.
         /// </exception>
         /// <exception cref="MapUpgradeException">
         /// If the version to upgrade from is older than the map version

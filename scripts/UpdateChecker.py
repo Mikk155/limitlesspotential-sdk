@@ -3,7 +3,7 @@
 #   This Python script will use GIT to download game assets and http request to get dlls
 #
 #   * Requirements:
-#       - GitPython>= 3.1.43
+#       - GitPython >= 3.1.43
 #
 #   * Arguments:
 #

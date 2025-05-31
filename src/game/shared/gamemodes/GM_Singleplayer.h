@@ -35,6 +35,8 @@ public:
     void OnClientInit( CBasePlayer* player ) override;
 
 private:
+#ifndef CLIENT_DLL
     ScopedClientCommand m_VModEnableCommand;
     ScopedClientCommand m_MapSelectionTrigger;
+#endif
 };

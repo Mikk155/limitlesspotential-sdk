@@ -73,7 +73,6 @@ inline int gmsgConfigVars = 0;
 inline int gmsgTgtLaser = 0;
 inline int gmsgFog = 0;
 inline int gmsgClientGibs = 0;
-inline int gmsgTitles = 0;
 inline int gmsgGameMode = 0;
 
 #include "dlight.h"

@@ -6,10 +6,12 @@
 #
 #       -norun
 #           + Prevents the script from running the mod.
-# 
+#
 #       -path (path to cmake.exe)
 #           + Alternative if the script fails on getting the path automatically.
-# 
+#
+#       -full
+#           + Compile all projects asynchronously
 #================================================================
 
 import os

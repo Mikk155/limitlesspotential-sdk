@@ -19,7 +19,7 @@
 #include "PersistentInventorySystem.h"
 #include "ServerLibrary.h"
 
-void PersistentInventorySystem::NewMapStarted()
+void PersistentInventorySystem::MapInit()
 {
     // Make sure we forget the previous map's inventories if this level change was not initiated by the map itself.
     const bool wasInitialized = m_InitializedInventories;

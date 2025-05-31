@@ -33,7 +33,7 @@ private:
     };
 
 public:
-    void NewMapStarted();
+    void MapInit();
 
     void InitializeFromPlayers();
 
