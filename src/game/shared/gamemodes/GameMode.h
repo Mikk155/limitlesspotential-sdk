@@ -47,6 +47,7 @@ class CBasePlayer;
 class cl_entity_t;
 class BufferReader;
 class CBasePlayerWeapon;
+class ScopedClientCommand;
 
 enum ClientGameModeNetwork
 {
