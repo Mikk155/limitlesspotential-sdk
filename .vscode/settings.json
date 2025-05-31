@@ -1,7 +1,11 @@
 {
     "[csharp]":
     {
-        "editor.codeLens": false
+        "editor.codeLens": false,
+        "editor.defaultFormatter": null,
+        "editor.formatOnSave": false,
+        "editor.formatOnPaste": false,
+        "editor.formatOnType": false
     },
 
     "files.exclude":
