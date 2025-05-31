@@ -137,6 +137,49 @@ public:
         }
     }
 
+    /**
+     * @brief Update this vector with the given @c str string
+     * @param delimiter Delimiter on the string to split numbers
+     * @return number of occurences (X, Y, Z) 3 or 0 if completely failed.
+     */
+    int FromString( std::string_view str, std::string_view delimiter = " " )
+    {
+        x = y = z = 0;
+
+        int parsed = 0;
+        size_t start = 0, end;
+        std::vector<std::string_view> tokens;
+
+        while( ( end = str.find(delimiter, start ) ) != std::string_view::npos )
+        {
+            if( end != start )
+            {
+                tokens.emplace_back( str.substr( start, end - start ) );
+            }
+
+            start = end + delimiter.length();
+        }
+
+        if( start < str.size() )
+        {
+            tokens.emplace_back( str.substr( start ) );
+        }
+
+        vec_t* components[3] = { &x, &y, &z };
+
+        for( size_t i = 0; i < tokens.size() && i < 3; ++i )
+        {
+            try
+            {
+                *components[i] = std::stof( std::string( tokens[i] ) );
+                ++parsed;
+            }
+            catch (...) { }
+        }
+
+        return parsed;
+    }
+
     // Members
     vec_t x = 0, y = 0, z = 0;
 };
