@@ -165,35 +165,6 @@ END_DATAMAP();
 
 bool CAmbientGeneric::Spawn()
 {
-    /*
-            -1 : "Default"
-            0  : "Everywhere"
-            200 : "Small Radius"
-            125 : "Medium Radius"
-            80  : "Large Radius"
-    */
-
-    if( FBitSet( pev->spawnflags, AMBIENT_SOUND_EVERYWHERE ) )
-    {
-        m_flAttenuation = ATTN_NONE;
-    }
-    else if( FBitSet( pev->spawnflags, AMBIENT_SOUND_SMALLRADIUS ) )
-    {
-        m_flAttenuation = ATTN_IDLE;
-    }
-    else if( FBitSet( pev->spawnflags, AMBIENT_SOUND_MEDIUMRADIUS ) )
-    {
-        m_flAttenuation = ATTN_STATIC;
-    }
-    else if( FBitSet( pev->spawnflags, AMBIENT_SOUND_LARGERADIUS ) )
-    {
-        m_flAttenuation = ATTN_NORM;
-    }
-    else
-    { // if the designer didn't set a sound attenuation, default to one.
-        m_flAttenuation = ATTN_STATIC;
-    }
-
     const char* szSoundFile = STRING( pev->message );
 
     if( FStringNull( pev->message ) || strlen( szSoundFile ) < 1 )
@@ -659,6 +630,11 @@ bool CAmbientGeneric::KeyValue( KeyValueData* pkvd )
     if( FStrEq( pkvd->szKeyName, "playfrom" ) )
     {
         m_PlayFromEntity = ALLOC_STRING(pkvd->szValue);
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "m_flAttenuation" ) )
+    {
+        m_flAttenuation = atof(pkvd->szValue);
         return true;
     }
     else if( FStrEq( pkvd->szKeyName, "preset" ) )

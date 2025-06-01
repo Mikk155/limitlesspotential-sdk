@@ -26,6 +26,7 @@ namespace MapUpgrader.Upgrades
             builder.AddUpgrade(new ConvertWorldItemsToItemUpgrade());
 
             builder.AddUpgrade(new AdjustShotgunAnglesUpgrade());
+            builder.AddUpgrade(new AmbientGenericAttenuation());
             builder.AddUpgrade(new ConvertOtisModelUpgrade());
             builder.AddUpgrade(new RenameMessagesUpgrade());
             builder.AddUpgrade(new ReworkMusicPlaybackUpgrade());

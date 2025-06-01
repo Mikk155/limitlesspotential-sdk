@@ -650,6 +650,14 @@
 {
 "english": "Plays the sound on this entity's origin, if it's a brush model it is played on the center of the brush unless it has an origin texture"
 },
+"ambient_generic::m_flAttenuation":
+{
+"english": "Attenuation"
+},
+"ambient_generic::m_flAttenuation::description":
+{
+"english": "lower value greater the range, From the old spawnflag system: 0 = everywhere, 2 = small radius, 1.25 = medium radius, 0.8 = large radius"
+},
 "ambient_generic::preset":
 {
 "english": "Dynamic Presets"
@@ -813,22 +821,6 @@
 "ambient_generic::cspinup":
 {
 "english": "Incremental spinup count"
-},
-"ambient_generic::spawnflags::1":
-{
-"english": "Play Everywhere"
-},
-"ambient_generic::spawnflags::2":
-{
-"english": "Small Radius"
-},
-"ambient_generic::spawnflags::4":
-{
-"english": "Medium Radius"
-},
-"ambient_generic::spawnflags::8":
-{
-"english": "Large Radius"
 },
 "ambient_generic::spawnflags::16":
 {

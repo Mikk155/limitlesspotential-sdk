@@ -1,5 +1,5 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
     "color": [
         220,
@@ -23,6 +23,12 @@
             "value": "",
             "title": "ambient_generic::playfrom",
             "description": "ambient_generic::playfrom::description"
+        },
+        "m_flAttenuation": {
+            "variable": "float",
+            "value": "",
+            "title": "ambient_generic::m_flAttenuation",
+            "description": "ambient_generic::m_flAttenuation::description"
         },
         "preset": {
             "variable": "choices",
@@ -219,22 +225,6 @@
         "spawnflags": {
             "value": "",
             "choices": {
-                "1": {
-                    "title": "ambient_generic::spawnflags::1",
-                    "description": "ambient_generic::spawnflags::1::description"
-                },
-                "2": {
-                    "title": "ambient_generic::spawnflags::2",
-                    "description": "ambient_generic::spawnflags::2::description"
-                },
-                "4": {
-                    "title": "ambient_generic::spawnflags::4",
-                    "description": "ambient_generic::spawnflags::4::description"
-                },
-                "8": {
-                    "title": "ambient_generic::spawnflags::8",
-                    "description": "ambient_generic::spawnflags::8::description"
-                },
                 "16": {
                     "title": "ambient_generic::spawnflags::16",
                     "description": "ambient_generic::spawnflags::16::description"

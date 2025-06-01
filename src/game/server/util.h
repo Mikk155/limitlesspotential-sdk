@@ -298,11 +298,6 @@ Vector VecBModelOrigin( CBaseEntity* bModel );
 
 inline int g_Language;
 
-#define AMBIENT_SOUND_STATIC 0 // medium radius attenuation
-#define AMBIENT_SOUND_EVERYWHERE 1
-#define AMBIENT_SOUND_SMALLRADIUS 2
-#define AMBIENT_SOUND_MEDIUMRADIUS 4
-#define AMBIENT_SOUND_LARGERADIUS 8
 #define AMBIENT_SOUND_START_SILENT 16
 #define AMBIENT_SOUND_NOT_LOOPING 32
 
