@@ -918,7 +918,7 @@ bool CBaseEntity::IsLockedByMaster( CBaseEntity* pActivator )
     if( ( master->ObjectCaps() & FCAP_MASTER ) == 0 )
         return false;
 
-    if( !master->IsTriggered( ( pActivator != nullptr ? pActivator : m_hActivator.Get() ) ) )
+    if( master->IsTriggered( ( pActivator != nullptr ? pActivator : m_hActivator.Get() ) ) )
         return false;
 
     return true;
