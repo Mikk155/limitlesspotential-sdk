@@ -191,8 +191,8 @@ bool CDecal::KeyValue( KeyValueData* pkvd )
 }
 
 BEGIN_DATAMAP( CWorld )
-// This is cleared post read, do not save
-//    DEFINE_FIELD( m_mapcfg, FIELD_STRING ),
+    DEFINE_FIELD( m_MapVersion, FIELD_VECTOR ),
+    DEFINE_FIELD( m_MapConfig, FIELD_STRING ),
 END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
@@ -241,6 +241,11 @@ bool CWorld::Spawn()
     return true;
 }
 
+void CWorld::PostRestore()
+{
+    g_Server.LoadServerConfigFiles( m_MapConfig, m_MapVersion );
+}
+
 void CWorld::Precache()
 {
     // Flag this entity for removal if it's not the actual world entity.
@@ -251,7 +256,7 @@ void CWorld::Precache()
     }
 
     // Load the config files, which will initialize the map state as needed
-    g_Server.LoadServerConfigFiles();
+    g_Server.LoadServerConfigFiles( m_MapConfig, m_MapVersion );
 
     g_GameLogger->trace( "Initializing world" );
 
@@ -514,12 +519,12 @@ bool CWorld::KeyValue( KeyValueData* pkvd )
     }
     else if( FStrEq( pkvd->szKeyName, "mapcfg" ) )
     {
-        MapConfig = std::move( std::string( pkvd->szValue ) );
+        m_MapConfig = ALLOC_STRING( pkvd->szValue );
         return true;
     }
     else if( FStrEq( pkvd->szKeyName, "version" ) )
     {
-        MapVersion.FromString( pkvd->szValue, "." );
+        m_MapVersion.FromString( pkvd->szValue, "." );
         return true;
     }
 

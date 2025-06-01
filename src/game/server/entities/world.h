@@ -20,9 +20,6 @@
 #define SF_WORLD_DARK 0x0001      // Fade from black at startup
 #define SF_WORLD_FORCETEAM 0x0004 // Force teams
 
-inline Vector MapVersion;
-inline std::string MapConfig;
-
 // this moved here from world.cpp, to allow classes to be derived from it
 /**
  *    @brief This spawns first when each level begins.
@@ -39,4 +36,10 @@ public:
     bool Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
+
+    void PostRestore() override;
+
+    private:
+        Vector m_MapVersion;
+        string_t m_MapConfig;
 };

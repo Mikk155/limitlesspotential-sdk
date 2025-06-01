@@ -483,10 +483,7 @@ void ServerLibrary::DefineConfigVariables()
     g_cfg.DefineVariable( "shockrifle_fast", 0, {.Networked = true} );
 }
 
-extern Vector MapVersion;
-extern std::string MapConfig;
-
-void ServerLibrary::LoadServerConfigFiles()
+void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion )
 {
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -505,8 +502,6 @@ void ServerLibrary::LoadServerConfigFiles()
         }
     }
 
-    MapVersion = g_vecZero;
-
     auto GetConfigFile = []( const std::string& name ) -> std::pair<std::string, bool>
     {
         std::string filename = fmt::format( "cfg/maps/{}.json", name );
@@ -523,14 +518,21 @@ void ServerLibrary::LoadServerConfigFiles()
         return { name, false };
     };
 
-    if( std::pair<std::string, bool> cfg = GetConfigFile( MapConfig ); cfg.second ) {
-        mapConfigFileName = std::move( cfg.first );
-    }
-    else if( std::pair<std::string, bool> cfg = GetConfigFile( STRING( gpGlobals->mapname ) ); cfg.second ) {
-        mapConfigFileName = std::move( cfg.first );
+    if( !FStringNull( MapConfig ) )
+    {
+        if( std::pair<std::string, bool> cfg = GetConfigFile( STRING( MapConfig ) ); cfg.second )
+        {
+            mapConfigFileName = std::move( cfg.first );
+        }
     }
 
-    MapConfig.clear();
+    if( mapConfigFileName.empty() )
+    {
+        if( std::pair<std::string, bool> cfg = GetConfigFile( STRING( gpGlobals->mapname ) ); cfg.second )
+        {
+            mapConfigFileName = std::move( cfg.first );
+        }
+    }
 
     if( mapConfigFileName.empty() )
     {

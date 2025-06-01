@@ -118,7 +118,7 @@ private:
     void DefineConfigVariables();
 
 public:
-    void LoadServerConfigFiles();
+    void LoadServerConfigFiles( string_t MapConfig, Vector MapVersion );
 private:
 
     void SendFogMessage( CBasePlayer* player );
