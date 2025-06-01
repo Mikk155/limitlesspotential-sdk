@@ -1015,7 +1015,7 @@ void CBaseEntity::StopSound( int channel, const char* sample )
     sound::g_ServerSound.EmitSound( this, channel, sample, 0, 0, SND_STOP, PITCH_NORM );
 }
 
-CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget )
+CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget, CBaseEntity* failback )
 {
     if( !FStringNull( szNewTarget ) )
     {
@@ -1041,7 +1041,7 @@ CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntit
         }
     }
 
-    return pActivator;
+    return failback;
 }
 
 const char* UseValue::print_data()
