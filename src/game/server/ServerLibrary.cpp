@@ -307,8 +307,11 @@ void ServerLibrary::NewMapStarted( bool loadGame )
     // it will be set in CWorld::KeyValue or restored by the engine on save game load.
     CVAR_SET_STRING( "sv_skyname", DefaultSkyName );
 
-    // Clear trigger_event's events on new maps
-    m_events.clear();
+    if( !m_IsCurrentMapLoadedFromSaveGame )
+    {
+        // Clear trigger_event's events on new maps
+        m_events.clear();
+    }
 }
 
 void ServerLibrary::PreMapActivate()
