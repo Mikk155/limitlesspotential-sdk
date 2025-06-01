@@ -40,7 +40,6 @@ public:
     bool TryApplyToPlayer( CBasePlayer* player );
 
 private:
-    static std::string GetPlayerId( CBasePlayer* player );
 
 private:
     std::array<PersistentPlayerInventory, MAX_PLAYERS> m_Inventories;

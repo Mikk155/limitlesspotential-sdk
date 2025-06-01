@@ -58,7 +58,7 @@ void PersistentInventorySystem::InitializeFromPlayers()
 
         auto& inventory = m_Inventories[i - 1];
 
-        inventory.PlayerId = GetPlayerId( player );
+        inventory.PlayerId = player->SteamID();
         inventory.Inventory = PlayerInventory::CreateFromPlayer( player );
     }
 }
@@ -78,7 +78,7 @@ bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
         return false;
     }
 
-    const std::string playerId = GetPlayerId( player );
+    const std::string playerId = player->SteamID();
 
     for( const auto& inventory : m_Inventories )
     {
@@ -90,11 +90,4 @@ bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
     }
 
     return false;
-}
-
-std::string PersistentInventorySystem::GetPlayerId( CBasePlayer* player )
-{
-    // This gets the Steam Id even if sv_lan is 1.
-    // Format is signed 64 bit integer in string form.
-    return g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( player->edict() ), "*sid" );
 }
