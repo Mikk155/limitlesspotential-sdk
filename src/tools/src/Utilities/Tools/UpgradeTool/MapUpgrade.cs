@@ -24,7 +24,8 @@
         /// <returns><see langword="true"/> if the upgrade should be applied, <see langword="false"/> otherwise.</returns>
         protected virtual bool Filter(MapUpgradeContext context)
         {
-            return true;
+            // Default apply if this map has never been updated. Otherwise ask Upgrades that overrides this.
+            return context.FromVersion == MapUpgradeTool.FirstVersion;
         }
 
         /// <summary>
