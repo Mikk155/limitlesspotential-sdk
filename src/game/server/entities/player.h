@@ -657,13 +657,17 @@ public:
     float m_flLastFreePositionTrack;
     Vector m_VecLastFreePosition;
 
-    /**
+/**
      *    @brief This gets the Steam Id even if sv_lan is 1.
      *    @details Format is signed 64 bit integer in string form.
      */
-    static std::string SteamID() {
+    const char* SteamID() {
         return g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( edict() ), "*sid" );
     }
+ 
+    // Entities listed as "used" See ambient_music/dsp
+    std::vector<int> m_listed_entities;
+    // -TODO Need saverestore
 };
 
 inline void CBasePlayer::SetWeaponBit( int id )
