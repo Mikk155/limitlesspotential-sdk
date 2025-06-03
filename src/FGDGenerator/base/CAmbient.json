@@ -1,0 +1,21 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Base",
+    "data":
+    {
+        "spawnflags": {
+            "choices": {
+                "2": {
+                    "title": "DontRemoveOnFire"
+                }
+            }
+        },
+        "m_sPlayFrom":
+        {
+            "variable": "target_destination",
+            "value": "!this",
+            "title": "CAmbient::m_sPlayFrom",
+            "description": "CAmbient::m_sPlayFrom::description"
+        }
+    }
+}

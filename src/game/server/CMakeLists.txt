@@ -125,9 +125,10 @@ target_sources(server PRIVATE
     entities/pathcorner.cpp
     entities/plats.cpp
     entities/player.cpp
-    entities/player.h
     entities/player_entities.cpp
-    entities/sound.cpp
+    entities/player.h
+    entities/PlayerList.cpp
+    entities/PlayerList.h
     entities/soundent.cpp
     entities/soundent.h
     entities/subs.cpp
@@ -137,7 +138,18 @@ target_sources(server PRIVATE
     entities/world.cpp
     entities/world.h
     entities/xen.cpp
-    
+
+    entities/ambient/CAmbient.cpp
+    entities/ambient/CAmbient.h
+    entities/ambient/dsp_auto.cpp
+    entities/ambient/dsp.cpp
+    entities/ambient/dsp.h
+    entities/ambient/generic.cpp
+    entities/ambient/hint.cpp
+    entities/ambient/music.cpp
+    entities/ambient/sound.cpp
+    entities/ambient/speaker.cpp
+
     entities/ctf/CHUDIconTrigger.cpp
     entities/ctf/CHUDIconTrigger.h
     entities/ctf/ctf_goals.cpp
@@ -149,8 +161,6 @@ target_sources(server PRIVATE
     entities/ctf/CTFDetect.h
     entities/ctf/CTFSpawn.cpp
     entities/ctf/CTFSpawn.h
-
-    entities/ambient/soundmark.cpp
 
     entities/game/precache.cpp
 

@@ -7,28 +7,59 @@
         220
     ],
     "iconsprite": "sprites/editor/speaker.spr",
+    "base": [
+        "CAmbient"
+    ],
     "data": {
-        "message": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "ActivatorOnly"
+                }
+            }
+        },
+        "m_sPlaySound":
+        {
             "variable": "sound",
-            "title": "Sound"
+            "title": "SoundFile"
+        },
+        "m_fLooping": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "No"
+                },
+                "1": {
+                    "title": "Yes"
+                }
+            },
+            "title": "Loop"
+        },
+        "m_bStartsOff": {
+            "variable": "choices",
+            "choices": {
+                "0": {
+                    "title": "No"
+                },
+                "1": {
+                    "title": "Yes"
+                }
+            },
+            "title": "StartOff",
+            "description": "StartOff"
         },
         "health": {
             "variable": "integer",
             "value": "10",
-            "title": "ambient_generic::health",
-            "description": "ambient_generic::health::description"
-        },
-        "playfrom": {
-            "variable": "target_destination",
-            "value": "",
-            "title": "ambient_generic::playfrom",
-            "description": "ambient_generic::playfrom::description"
+            "title": "Volume10Loudest",
+            "description": "Volume10Loudest"
         },
         "m_flAttenuation": {
             "variable": "float",
             "value": "",
-            "title": "ambient_generic::m_flAttenuation",
-            "description": "ambient_generic::m_flAttenuation::description"
+            "title": "Attenuation",
+            "description": "Attenuation::description"
         },
         "preset": {
             "variable": "choices",
@@ -221,19 +252,6 @@
             "value": "0",
             "title": "ambient_generic::cspinup",
             "description": "ambient_generic::cspinup::description"
-        },
-        "spawnflags": {
-            "value": "",
-            "choices": {
-                "16": {
-                    "title": "ambient_generic::spawnflags::16",
-                    "description": "ambient_generic::spawnflags::16::description"
-                },
-                "32": {
-                    "title": "ambient_generic::spawnflags::32",
-                    "description": "ambient_generic::spawnflags::32::description"
-                }
-            }
         }
     },
     "title": "ambient_generic::classname",

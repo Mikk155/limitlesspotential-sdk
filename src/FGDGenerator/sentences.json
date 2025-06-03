@@ -1,8 +1,11 @@
 {
+// Supported languages. Each one will generate a unique FGD
 "languages":
 [
     "english"
 ],
+
+// Commonly used
 "No":
 {
 "english": "No"
@@ -15,6 +18,676 @@
 {
 "english": "Default"
 },
+"minhullsize":
+{
+"english": "Custom Hull Minimum"
+},
+"maxhullsize":
+{
+"english": "Custom Hull Maximum"
+},
+"SoundFile":
+{
+"english": "Sound File"
+},
+"ActivatorOnly":
+{
+"english": "Activator Only"
+},
+"DontRemoveOnFire":
+{
+"english": "Don't remove on fire"
+},
+"StartOff":
+{
+"english": "Start Off"
+},
+"Attenuation":
+{
+"english": "Attenuation"
+},
+"Attenuation::description":
+{
+"english": "lower value greater the range, From the old spawnflag system: 0 = everywhere, 2 = small radius, 1.25 = medium radius, 0.8 = large radius"
+},
+"Pitch":
+{
+"english": "Pitch"
+},
+"Pitch::description":
+{
+"english": ""
+},
+"Loop":
+{
+"english": "Loop"
+},
+"Volume10Loudest":
+{
+"english": "Volume (10 = loudest)"
+},
+
+// Worldspawn entity
+"worldspawn::classname":
+{
+"english": "World entity"
+},
+"worldspawn::classname::description":
+{
+},
+"worldspawn::message":
+{
+"english": "Map Description / Title"
+},
+"worldspawn::message::description":
+{
+},
+"worldspawn::skyname":
+{
+"english": "environment map (cl_skyname)"
+},
+"worldspawn::skyname::description":
+{
+},
+"worldspawn::light":
+{
+"english": "Default light level"
+},
+"worldspawn::light::description":
+{
+},
+"worldspawn::WaveHeight":
+{
+"english": "Default Wave Height"
+},
+"worldspawn::WaveHeight::description":
+{
+},
+"worldspawn::MaxRange":
+{
+"english": "Max viewable distance"
+},
+"worldspawn::MaxRange::description":
+{
+},
+"worldspawn::chaptertitle":
+{
+"english": "Chapter Title Message"
+},
+"worldspawn::chaptertitle::description":
+{
+"english": "This message is displayed when a client joins the server and is fully initialized"
+},
+"worldspawn::startdark":
+{
+"english": "Level Fade In"
+},
+"worldspawn::startdark::description":
+{
+},
+"worldspawn::gametitle":
+{
+"english": "Game whose title to display"
+},
+"worldspawn::gametitle::description":
+{
+},
+"worldspawn::newunit":
+{
+"english": "Clear global states"
+},
+"worldspawn::newunit::description":
+{
+},
+"worldspawn::mapteams":
+{
+"english": "Map Team List"
+},
+"worldspawn::mapteams::description":
+{
+},
+"worldspawn::defaultteam":
+{
+"english": "Default Team"
+},
+"worldspawn::defaultteam::description":
+{
+},
+"worldspawn::defaultteam::0":
+{
+"english": "Fewest Players"
+},
+"worldspawn::defaultteam::0::description":
+{
+},
+"worldspawn::defaultteam::1":
+{
+"english": "First Team"
+},
+"worldspawn::defaultteam::1::description":
+{
+},
+"worldspawn::freeroam":
+{
+"english": "Monster roaming"
+},
+"worldspawn::freeroam::description":
+{
+},
+"worldspawn::freeroam::-1":
+{
+"english": "Not defined (server operator)"
+},
+"worldspawn::freeroam::-1::description":
+{
+},
+"worldspawn::freeroam::0":
+{
+"english": "Disabled"
+},
+"worldspawn::freeroam::0::description":
+{
+},
+"worldspawn::freeroam::1":
+{
+"english": "Enabled"
+},
+"worldspawn::freeroam::1::description":
+{
+},
+"worldspawn::mapcfg":
+{
+"english": "Custom map cfg"
+},
+"worldspawn::mapcfg::description":
+{
+"english": "The json file defined for configuration, the path is within cfg/maps/ no need to specify .json, if not defined is the map name"
+},
+"worldspawn::hullsize::description":
+{
+"english": "This is used for IsInWorld() checks"
+},
+"worldspawn::version":
+{
+"english": "Game version. Do not modify!"
+},
+"worldspawn::version::description":
+{
+"english": "This is used by the MapUpgrader tool to apply upgrades based on the version of the game this map was made."
+},
+
+// aiscripted_sequence
+"aiscripted_sequence::classname":
+{
+"english": "AI Scripted Sequence"
+},
+
+// ambient_dsp_auto
+"ambient_dsp_auto::classname":
+{
+"english": "DSP Sound automatic"
+},
+"ambient_dsp_auto::classname::description":
+{
+"english": "A sound entity that will set player roomtype when player moves in range and sight.\nA client that is visible and in range of a sound entity will have its room_type set by that sound entity.If two or more sound entities are contending for a client,\nthen the nearest sound entity to the client will set the client's room_type.\n A client's room_type will remain set to its prior value until a new in-range,\nvisible sound entity resets a new room_type."
+},
+"ambient_dsp_auto::radius":
+{
+"english": "Radius"
+},
+
+// ambient_dsp
+"ambient_dsp::classname":
+{
+"english": "DSP Sound"
+},
+"ambient_dsp::m_bKeepState::description":
+{
+"english": "the Room type will be kept until a new ambient_dsp updates it, or in false the Room type will be reseted when leaving the radius"
+},
+"ambient_dsp::roomtype":
+{
+"english": "Room Type"
+},
+"ambient_dsp::roomtype::0":
+{
+"english": "Normal (off)"
+},
+"ambient_dsp::roomtype::1":
+{
+"english": "Generic"
+},
+"ambient_dsp::roomtype::2":
+{
+"english": "Metal Small"
+},
+"ambient_dsp::roomtype::3":
+{
+"english": "Metal Medium"
+},
+"ambient_dsp::roomtype::4":
+{
+"english": "Metal Large"
+},
+"ambient_dsp::roomtype::5":
+{
+"english": "Tunnel Small"
+},
+"ambient_dsp::roomtype::6":
+{
+"english": "Tunnel Medium"
+},
+"ambient_dsp::roomtype::7":
+{
+"english": "Tunnel Large"
+},
+"ambient_dsp::roomtype::8":
+{
+"english": "Chamber Small"
+},
+"ambient_dsp::roomtype::9":
+{
+"english": "Chamber Medium"
+},
+"ambient_dsp::roomtype::10":
+{
+"english": "Chamber Large"
+},
+"ambient_dsp::roomtype::11":
+{
+"english": "Bright Small"
+},
+"ambient_dsp::roomtype::12":
+{
+"english": "Bright Medium"
+},
+"ambient_dsp::roomtype::13":
+{
+"english": "Bright Large"
+},
+"ambient_dsp::roomtype::14":
+{
+"english": "Water 1"
+},
+"ambient_dsp::roomtype::15":
+{
+"english": "Water 2"
+},
+"ambient_dsp::roomtype::16":
+{
+"english": "Water 3"
+},
+"ambient_dsp::roomtype::17":
+{
+"english": "Concrete Small"
+},
+"ambient_dsp::roomtype::18":
+{
+"english": "Concrete Medium"
+},
+"ambient_dsp::roomtype::19":
+{
+"english": "Concrete Large"
+},
+"ambient_dsp::roomtype::20":
+{
+"english": "Big 1"
+},
+"ambient_dsp::roomtype::21":
+{
+"english": "Big 2"
+},
+"ambient_dsp::roomtype::22":
+{
+"english": "Big 3"
+},
+"ambient_dsp::roomtype::23":
+{
+"english": "Cavern Small"
+},
+"ambient_dsp::roomtype::24":
+{
+"english": "Cavern Medium"
+},
+"ambient_dsp::roomtype::25":
+{
+"english": "Cavern Large"
+},
+"ambient_dsp::roomtype::26":
+{
+"english": "Weirdo 1"
+},
+"ambient_dsp::roomtype::27":
+{
+"english": "Weirdo 2"
+},
+"ambient_dsp::roomtype::28":
+{
+"english": "Weirdo 3"
+},
+
+// ambient_generic
+"ambient_generic::classname":
+{
+"english": "Universal Ambient"
+},
+"ambient_generic::preset":
+{
+"english": "Dynamic Presets"
+},
+"ambient_generic::preset::0":
+{
+"english": "None"
+},
+"ambient_generic::preset::1":
+{
+"english": "Huge Machine"
+},
+"ambient_generic::preset::2":
+{
+"english": "Big Machine"
+},
+"ambient_generic::preset::3":
+{
+"english": "Machine"
+},
+"ambient_generic::preset::4":
+{
+"english": "Slow Fade in"
+},
+"ambient_generic::preset::5":
+{
+"english": "Fade in"
+},
+"ambient_generic::preset::6":
+{
+"english": "Quick Fade in"
+},
+"ambient_generic::preset::7":
+{
+"english": "Slow Pulse"
+},
+"ambient_generic::preset::8":
+{
+"english": "Pulse"
+},
+"ambient_generic::preset::9":
+{
+"english": "Quick pulse"
+},
+"ambient_generic::preset::10":
+{
+"english": "Slow Oscillator"
+},
+"ambient_generic::preset::11":
+{
+"english": "Oscillator"
+},
+"ambient_generic::preset::12":
+{
+"english": "Quick Oscillator"
+},
+"ambient_generic::preset::13":
+{
+"english": "Grunge pitch"
+},
+"ambient_generic::preset::14":
+{
+"english": "Very low pitch"
+},
+"ambient_generic::preset::15":
+{
+"english": "Low pitch"
+},
+"ambient_generic::preset::16":
+{
+"english": "High pitch"
+},
+"ambient_generic::preset::17":
+{
+"english": "Very high pitch"
+},
+"ambient_generic::preset::18":
+{
+"english": "Screaming pitch"
+},
+"ambient_generic::preset::19":
+{
+"english": "Oscillate spinup/down"
+},
+"ambient_generic::preset::20":
+{
+"english": "Pulse spinup/down"
+},
+"ambient_generic::preset::21":
+{
+"english": "Random pitch"
+},
+"ambient_generic::preset::22":
+{
+"english": "Random pitch fast"
+},
+"ambient_generic::preset::23":
+{
+"english": "Incremental Spinup"
+},
+"ambient_generic::preset::24":
+{
+"english": "Alien"
+},
+"ambient_generic::preset::25":
+{
+"english": "Bizzare"
+},
+"ambient_generic::preset::26":
+{
+"english": "Planet X"
+},
+"ambient_generic::preset::27":
+{
+"english": "Haunted"
+},
+"ambient_generic::volstart":
+{
+"english": "Start Volume"
+},
+"ambient_generic::fadein":
+{
+"english": "Fade in time (0-100)"
+},
+"ambient_generic::fadeout":
+{
+"english": "Fade out time (0-100)"
+},
+"ambient_generic::pitch":
+{
+"english": "Pitch (> 100 = higher)"
+},
+"ambient_generic::pitchstart":
+{
+"english": "Start Pitch"
+},
+"ambient_generic::spinup":
+{
+"english": "Spin up time (0-100)"
+},
+"ambient_generic::spindown":
+{
+"english": "Spin down time (0-100)"
+},
+"ambient_generic::lfotype":
+{
+"english": "LFO type 0)off 1)sqr 2)tri 3)rnd"
+},
+"ambient_generic::lforate":
+{
+"english": "LFO rate (0-1000)"
+},
+"ambient_generic::lfomodpitch":
+{
+"english": "LFO mod pitch (0-100)"
+},
+"ambient_generic::lfomodvol":
+{
+"english": "LFO mod vol (0-100)"
+},
+"ambient_generic::cspinup":
+{
+"english": "Incremental spinup count"
+},
+
+// ambient_hint
+"CAmbient::m_sPlayFrom":
+{
+"english": "Entity to play from"
+},
+"CAmbient::m_sPlayFrom::description":
+{
+"english": "Plays the sound on this entity's origin, if it's a brush model it is played on the center of the brush unless it has an origin texture"
+},
+"ambient_hint::classname":
+{
+"english": "Sound Ent"
+},
+"ambient_hint::classname::description":
+{
+"english": "Sound Ent is what monsters hears in the world, it doesn't emit any sound really"
+},
+"ambient_hint::m_iSoundBits":
+{
+"english": "Sound bits"
+},
+"ambient_hint::m_iSoundBits::description":
+{
+"english": "You can combine the values to get multiple sound bits"
+},
+"ambient_hint::m_iSoundBits::1":
+{
+"english": "Gunshot, Explosions (COMBAT)"
+},
+"ambient_hint::m_iSoundBits::2":
+{
+"english": "Door open/close, Class break (WORLD)"
+},
+"ambient_hint::m_iSoundBits::4":
+{
+"english": "Walk, Fall, Splash, Shoot (PLAYER)"
+},
+"ambient_hint::m_iSoundBits::8":
+{
+"english": "Dead body (CARCASS)"
+},
+"ambient_hint::m_iSoundBits::16":
+{
+"english": "Gib or pork chop (MEAT)"
+},
+"ambient_hint::m_iSoundBits::32":
+{
+"english": "Iminent danger (DANGER)"
+},
+"ambient_hint::m_iSoundBits::64":
+{
+"english": "Trash cans, banana peels (GARBAGE)"
+},
+"ambient_hint::m_fDuration":
+{
+"english": "Duration"
+},
+"ambient_hint::m_iVolume":
+{
+"english": "Volume (in units)"
+},
+
+// ambient_music
+"ambient_music::classname":
+{
+"english": "Plays music"
+},
+"ambient_music::m_Command":
+{
+"english": "Command"
+},
+"ambient_music::m_Command::0":
+{
+"english": "Play"
+},
+"ambient_music::m_Command::1":
+{
+"english": "Play looping"
+},
+"ambient_music::m_Command::2":
+{
+"english": "Fadeout"
+},
+"ambient_music::m_Command::3":
+{
+"english": "Stop"
+},
+"ambient_music::m_Command::4":
+{
+"english": "Toggle (per player)"
+},
+"ambient_music::m_Command::5":
+{
+"english": "Toggle Fadeout (per player)"
+},
+"ambient_music::m_Command::6":
+{
+"english": "Toggle Loop (per player)"
+},
+
+// ambient_sound
+"ambient_sound::classname":
+{
+"english": "Simple EmitAmbientSound"
+},
+
+// ambient_speaker
+"ambient_speaker::classname":
+{
+"english": "Announcement Speaker"
+},
+"ambient_speaker::message":
+{
+"english": "Sentence Group Name"
+},
+"ambient_speaker::m_iMin":
+{
+"english": "Minimun cooldown next announce"
+},
+"ambient_speaker::m_iMax":
+{
+"english": "Maximun cooldown next announce"
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 "UseLineOfSight::m_uselos":
 {
 "english": "Use only in line of sight"
@@ -187,170 +860,6 @@
 {
 "english": "Skip A"
 },
-"worldspawn::classname":
-{
-"english": "World entity"
-},
-"worldspawn::classname::description":
-{
-},
-"worldspawn::message":
-{
-"english": "Map Description / Title"
-},
-"worldspawn::message::description":
-{
-},
-"worldspawn::skyname":
-{
-"english": "environment map (cl_skyname)"
-},
-"worldspawn::skyname::description":
-{
-},
-"worldspawn::light":
-{
-"english": "Default light level"
-},
-"worldspawn::light::description":
-{
-},
-"worldspawn::WaveHeight":
-{
-"english": "Default Wave Height"
-},
-"worldspawn::WaveHeight::description":
-{
-},
-"worldspawn::MaxRange":
-{
-"english": "Max viewable distance"
-},
-"worldspawn::MaxRange::description":
-{
-},
-"worldspawn::chaptertitle":
-{
-"english": "Chapter Title Message"
-},
-"worldspawn::chaptertitle::description":
-{
-},
-"worldspawn::startdark":
-{
-"english": "Level Fade In"
-},
-"worldspawn::startdark::description":
-{
-},
-"worldspawn::gametitle":
-{
-"english": "Game whose title to display"
-},
-"worldspawn::gametitle::description":
-{
-},
-"worldspawn::newunit":
-{
-"english": "New Level Unit"
-},
-"worldspawn::newunit::description":
-{
-},
-"worldspawn::newunit::0":
-{
-"english": "No, keep current"
-},
-"worldspawn::newunit::0::description":
-{
-},
-"worldspawn::newunit::1":
-{
-"english": "Yes, clear previous levels"
-},
-"worldspawn::newunit::1::description":
-{
-},
-"worldspawn::mapteams":
-{
-"english": "Map Team List"
-},
-"worldspawn::mapteams::description":
-{
-},
-"worldspawn::defaultteam":
-{
-"english": "Default Team"
-},
-"worldspawn::defaultteam::description":
-{
-},
-"worldspawn::defaultteam::0":
-{
-"english": "Fewest Players"
-},
-"worldspawn::defaultteam::0::description":
-{
-},
-"worldspawn::defaultteam::1":
-{
-"english": "First Team"
-},
-"worldspawn::defaultteam::1::description":
-{
-},
-"worldspawn::freeroam":
-{
-"english": "Monster roaming"
-},
-"worldspawn::freeroam::description":
-{
-},
-"worldspawn::freeroam::-1":
-{
-"english": "Not defined (server operator)"
-},
-"worldspawn::freeroam::-1::description":
-{
-},
-"worldspawn::freeroam::0":
-{
-"english": "Disabled"
-},
-"worldspawn::freeroam::0::description":
-{
-},
-"worldspawn::freeroam::1":
-{
-"english": "Enabled"
-},
-"worldspawn::freeroam::1::description":
-{
-},
-"worldspawn::mapcfg":
-{
-"english": "Custom map cfg"
-},
-"worldspawn::mapcfg::description":
-{
-"english": "The json file defined for configuration, the path is within cfg/maps/ no need to specify .json, if not defined is maps/mapname.json"
-},
-"worldspawn::minhullsize":
-{
-"english": "World minimun size"
-},
-"worldspawn::maxhullsize":
-{
-"english": "World minimun size"
-},
-"worldspawn::minhullsize::description":
-{
-"english": "This is used for IsInWorld() checks"
-},
-"worldspawn::maxhullsize::description":
-{
-"english": "This is used for IsInWorld() checks"
-},
 "Mandatory::spawnflags::2048":
 {
 "english": "Only in SinglePlayer"
@@ -419,14 +928,6 @@
 {
 "english": "Minimum light level"
 },
-"minhullsize":
-{
-"english": "Custom Hull Minimum"
-},
-"maxhullsize":
-{
-"english": "Custom Hull Maximum"
-},
 "originhullsize":
 {
 "english": "Custom Hull Box"
@@ -494,10 +995,6 @@
 "AllocNewActivator::m_Activator::description":
 {
 "english": "A targetname of a entity or either a special name !activator = current activator !caller = current caller !this = current entity !player = Nearest player"
-},
-"aiscripted_sequence::classname":
-{
-"english": "AI Scripted Sequence"
 },
 "spawnflags":
 {
@@ -634,202 +1131,6 @@
 {
 "english": "Fire this target for each not-respawned players and pass them as activator"
 },
-"ambient_generic::classname":
-{
-"english": "Universal Ambient"
-},
-"ambient_generic::health":
-{
-"english": "Volume (10 = loudest)"
-},
-"ambient_generic::playfrom":
-{
-"english": "Entity to play from"
-},
-"ambient_generic::playfrom::description":
-{
-"english": "Plays the sound on this entity's origin, if it's a brush model it is played on the center of the brush unless it has an origin texture"
-},
-"ambient_generic::m_flAttenuation":
-{
-"english": "Attenuation"
-},
-"ambient_generic::m_flAttenuation::description":
-{
-"english": "lower value greater the range, From the old spawnflag system: 0 = everywhere, 2 = small radius, 1.25 = medium radius, 0.8 = large radius"
-},
-"ambient_generic::preset":
-{
-"english": "Dynamic Presets"
-},
-"ambient_generic::preset::0":
-{
-"english": "None"
-},
-"ambient_generic::preset::1":
-{
-"english": "Huge Machine"
-},
-"ambient_generic::preset::2":
-{
-"english": "Big Machine"
-},
-"ambient_generic::preset::3":
-{
-"english": "Machine"
-},
-"ambient_generic::preset::4":
-{
-"english": "Slow Fade in"
-},
-"ambient_generic::preset::5":
-{
-"english": "Fade in"
-},
-"ambient_generic::preset::6":
-{
-"english": "Quick Fade in"
-},
-"ambient_generic::preset::7":
-{
-"english": "Slow Pulse"
-},
-"ambient_generic::preset::8":
-{
-"english": "Pulse"
-},
-"ambient_generic::preset::9":
-{
-"english": "Quick pulse"
-},
-"ambient_generic::preset::10":
-{
-"english": "Slow Oscillator"
-},
-"ambient_generic::preset::11":
-{
-"english": "Oscillator"
-},
-"ambient_generic::preset::12":
-{
-"english": "Quick Oscillator"
-},
-"ambient_generic::preset::13":
-{
-"english": "Grunge pitch"
-},
-"ambient_generic::preset::14":
-{
-"english": "Very low pitch"
-},
-"ambient_generic::preset::15":
-{
-"english": "Low pitch"
-},
-"ambient_generic::preset::16":
-{
-"english": "High pitch"
-},
-"ambient_generic::preset::17":
-{
-"english": "Very high pitch"
-},
-"ambient_generic::preset::18":
-{
-"english": "Screaming pitch"
-},
-"ambient_generic::preset::19":
-{
-"english": "Oscillate spinup/down"
-},
-"ambient_generic::preset::20":
-{
-"english": "Pulse spinup/down"
-},
-"ambient_generic::preset::21":
-{
-"english": "Random pitch"
-},
-"ambient_generic::preset::22":
-{
-"english": "Random pitch fast"
-},
-"ambient_generic::preset::23":
-{
-"english": "Incremental Spinup"
-},
-"ambient_generic::preset::24":
-{
-"english": "Alien"
-},
-"ambient_generic::preset::25":
-{
-"english": "Bizzare"
-},
-"ambient_generic::preset::26":
-{
-"english": "Planet X"
-},
-"ambient_generic::preset::27":
-{
-"english": "Haunted"
-},
-"ambient_generic::volstart":
-{
-"english": "Start Volume"
-},
-"ambient_generic::fadein":
-{
-"english": "Fade in time (0-100)"
-},
-"ambient_generic::fadeout":
-{
-"english": "Fade out time (0-100)"
-},
-"ambient_generic::pitch":
-{
-"english": "Pitch (> 100 = higher)"
-},
-"ambient_generic::pitchstart":
-{
-"english": "Start Pitch"
-},
-"ambient_generic::spinup":
-{
-"english": "Spin up time (0-100)"
-},
-"ambient_generic::spindown":
-{
-"english": "Spin down time (0-100)"
-},
-"ambient_generic::lfotype":
-{
-"english": "LFO type 0)off 1)sqr 2)tri 3)rnd"
-},
-"ambient_generic::lforate":
-{
-"english": "LFO rate (0-1000)"
-},
-"ambient_generic::lfomodpitch":
-{
-"english": "LFO mod pitch (0-100)"
-},
-"ambient_generic::lfomodvol":
-{
-"english": "LFO mod vol (0-100)"
-},
-"ambient_generic::cspinup":
-{
-"english": "Incremental spinup count"
-},
-"ambient_generic::spawnflags::16":
-{
-"english": "Start Silent"
-},
-"ambient_generic::spawnflags::32":
-{
-"english": "Is NOT Looped"
-},
 "ammo_generic::classname":
 {
 "english": "Generic Ammo Item"
@@ -901,10 +1202,6 @@
 "func_button_target::spawnflags::1":
 {
 "english": "Use Activates"
-},
-"StartOff":
-{
-"english": "Start Off"
 },
 "StartOn":
 {
@@ -2183,62 +2480,6 @@
 {
 "english": "Leave Corpse"
 },
-"ambient_music::classname":
-{
-"english": "Plays music"
-},
-"ambient_music::command":
-{
-"english": "Command"
-},
-"ambient_music::command::0":
-{
-"english": "Play"
-},
-"ambient_music::command::1":
-{
-"english": "Play looping"
-},
-"ambient_music::command::2":
-{
-"english": "Fadeout"
-},
-"ambient_music::command::3":
-{
-"english": "Stop"
-},
-"ambient_music::target_selector":
-{
-"english": "Target selector"
-},
-"ambient_music::target_selector::0":
-{
-"english": "All Players"
-},
-"ambient_music::target_selector::1":
-{
-"english": "Activator"
-},
-"ambient_music::target_selector::2":
-{
-"english": "Radius"
-},
-"ambient_music::radius":
-{
-"english": "Player radius (for Radius target selector)"
-},
-"ambient_music::remove_on_fire":
-{
-"english": "Remove on fire"
-},
-"ambient_music::remove_on_fire::0":
-{
-"english": "No"
-},
-"ambient_music::remove_on_fire::1":
-{
-"english": "Yes"
-},
 "env_beverage::skin::6":
 {
 "english": "Random"
@@ -2582,182 +2823,6 @@
 "env_shooter::skin":
 {
 "english": "Gib Skin"
-},
-"ambient_soundmark::classname":
-{
-"english": "Sound Ent"
-},
-"ambient_soundmark::classname::description":
-{
-"english": "Sound Ent is what monsters hears in the world, it doesn't emit any sound really"
-},
-"ambient_soundmark::spawnflags::1":
-{
-"english": "Gunshot, Explosions (COMBAT)"
-},
-"ambient_soundmark::spawnflags::2":
-{
-"english": "Door open/close, Class break (WORLD)"
-},
-"ambient_soundmark::spawnflags::4":
-{
-"english": "Walk, Fall, Splash, Shoot (PLAYER)"
-},
-"ambient_soundmark::spawnflags::8":
-{
-"english": "Dead body (CARCASS)"
-},
-"ambient_soundmark::spawnflags::16":
-{
-"english": "Gib or pork chop (MEAT)"
-},
-"ambient_soundmark::spawnflags::32":
-{
-"english": "Iminent danger (DANGER)"
-},
-"ambient_soundmark::spawnflags::64":
-{
-"english": "Trash cans, banana peels (GARBAGE)"
-},
-"ambient_soundmark::sound_origin":
-{
-"english": "Entity to play from"
-},
-"ambient_soundmark::sound_volume":
-{
-"english": "Volume"
-},
-"ambient_soundmark::sound_duration":
-{
-"english": "Duration"
-},
-"env_sound::classname":
-{
-"english": "DSP Sound"
-},
-"env_sound::radius":
-{
-"english": "Radius"
-},
-"env_sound::roomtype":
-{
-"english": "Room Type"
-},
-"env_sound::roomtype::0":
-{
-"english": "Normal (off)"
-},
-"env_sound::roomtype::1":
-{
-"english": "Generic"
-},
-"env_sound::roomtype::2":
-{
-"english": "Metal Small"
-},
-"env_sound::roomtype::3":
-{
-"english": "Metal Medium"
-},
-"env_sound::roomtype::4":
-{
-"english": "Metal Large"
-},
-"env_sound::roomtype::5":
-{
-"english": "Tunnel Small"
-},
-"env_sound::roomtype::6":
-{
-"english": "Tunnel Medium"
-},
-"env_sound::roomtype::7":
-{
-"english": "Tunnel Large"
-},
-"env_sound::roomtype::8":
-{
-"english": "Chamber Small"
-},
-"env_sound::roomtype::9":
-{
-"english": "Chamber Medium"
-},
-"env_sound::roomtype::10":
-{
-"english": "Chamber Large"
-},
-"env_sound::roomtype::11":
-{
-"english": "Bright Small"
-},
-"env_sound::roomtype::12":
-{
-"english": "Bright Medium"
-},
-"env_sound::roomtype::13":
-{
-"english": "Bright Large"
-},
-"env_sound::roomtype::14":
-{
-"english": "Water 1"
-},
-"env_sound::roomtype::15":
-{
-"english": "Water 2"
-},
-"env_sound::roomtype::16":
-{
-"english": "Water 3"
-},
-"env_sound::roomtype::17":
-{
-"english": "Concrete Small"
-},
-"env_sound::roomtype::18":
-{
-"english": "Concrete Medium"
-},
-"env_sound::roomtype::19":
-{
-"english": "Concrete Large"
-},
-"env_sound::roomtype::20":
-{
-"english": "Big 1"
-},
-"env_sound::roomtype::21":
-{
-"english": "Big 2"
-},
-"env_sound::roomtype::22":
-{
-"english": "Big 3"
-},
-"env_sound::roomtype::23":
-{
-"english": "Cavern Small"
-},
-"env_sound::roomtype::24":
-{
-"english": "Cavern Medium"
-},
-"env_sound::roomtype::25":
-{
-"english": "Cavern Large"
-},
-"env_sound::roomtype::26":
-{
-"english": "Weirdo 1"
-},
-"env_sound::roomtype::27":
-{
-"english": "Weirdo 2"
-},
-"env_sound::roomtype::28":
-{
-"english": "Weirdo 3"
 },
 "env_spark::classname":
 {
@@ -5099,70 +5164,6 @@
 "scripted_sequence::spawnflags::256":
 {
 "english": "No Reset Entity"
-},
-"speaker::classname":
-{
-"english": "Announcement Speaker"
-},
-"speaker::preset":
-{
-"english": "Announcement Presets"
-},
-"speaker::preset::0":
-{
-"english": "None"
-},
-"speaker::preset::1":
-{
-"english": "C1A0 Announcer"
-},
-"speaker::preset::2":
-{
-"english": "C1A1 Announcer"
-},
-"speaker::preset::3":
-{
-"english": "C1A2 Announcer"
-},
-"speaker::preset::4":
-{
-"english": "C1A3 Announcer"
-},
-"speaker::preset::5":
-{
-"english": "C1A4 Announcer"
-},
-"speaker::preset::6":
-{
-"english": "C2A1 Announcer"
-},
-"speaker::preset::7":
-{
-"english": "C2A2 Announcer"
-},
-"speaker::preset::9":
-{
-"english": "C2A4 Announcer"
-},
-"speaker::preset::11":
-{
-"english": "C3A1 Announcer"
-},
-"speaker::preset::12":
-{
-"english": "C3A2 Announcer"
-},
-"speaker::message":
-{
-"english": "Sentence Group Name"
-},
-"speaker::health":
-{
-"english": "Volume (10 = loudest)"
-},
-"speaker::spawnflags::1":
-{
-"english": "Start Silent"
 },
 "trigger_auto::classname":
 {

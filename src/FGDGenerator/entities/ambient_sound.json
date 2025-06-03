@@ -1,0 +1,43 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CAmbient"
+    ],
+    "color": [ 220, 220, 220 ],
+    "iconsprite": "sprites/editor/speaker.spr",
+    "data":
+    {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "ActivatorOnly"
+                }
+            }
+        },
+        "m_sPlaySound":
+        {
+            "variable": "string",
+            "title": "SoundFile"
+        },
+        "m_fVolume":
+        {
+            "variable": "integer",
+            "title": "SoVolume10LoudestundFile"
+        },
+        "m_flAttenuation": {
+            "variable": "float",
+            "value": "",
+            "title": "Attenuation",
+            "description": "Attenuation::description"
+        },
+        "m_iPitch": {
+            "variable": "integer",
+            "value": 100,
+            "title": "Pitch",
+            "description": "Pitch::description"
+        }
+    },
+    "title": "ambient_sound::classname",
+    "description": "ambient_sound::classname::description"
+}

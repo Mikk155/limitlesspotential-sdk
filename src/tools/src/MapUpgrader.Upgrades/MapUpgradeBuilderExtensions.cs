@@ -26,7 +26,6 @@ namespace MapUpgrader.Upgrades
             builder.AddUpgrade(new ConvertWorldItemsToItemUpgrade());
 
             builder.AddUpgrade(new AdjustShotgunAnglesUpgrade());
-            builder.AddUpgrade(new AmbientGenericAttenuation());
             builder.AddUpgrade(new ConvertOtisModelUpgrade());
             builder.AddUpgrade(new RenameMessagesUpgrade());
             builder.AddUpgrade(new ReworkMusicPlaybackUpgrade());
@@ -49,6 +48,9 @@ namespace MapUpgrader.Upgrades
             builder.AddUpgrade(new ConvertZombieBarney());
             builder.AddUpgrade(new UpdateToEventHandler());
             builder.AddUpgrade(new Setmapcfg());
+            builder.AddUpgrade(new ConvertSpeaker());
+            builder.AddUpgrade(new ConvertEnvSound());
+            builder.AddUpgrade(new ConvertAmbientGeneric());
             return builder;
         }
 

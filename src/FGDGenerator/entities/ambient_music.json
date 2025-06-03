@@ -1,83 +1,69 @@
 {
-	"$schema": "../schema.json",
+    "$schema": "../schema.json",
     "Class": "Point",
-    "color": [
-        220,
-        220,
-        220
+    "base": [
+        "CAmbient"
     ],
+    "color": [ 220, 220, 220 ],
     "iconsprite": "sprites/editor/speaker.spr",
-    "data": {
-        "filename": {
+    "data":
+    {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "ActivatorOnly"
+                }
+            }
+        },
+        "m_sPlaySound":
+        {
             "variable": "string",
-            "value": "",
-            "title": "Sound"
+            "title": "SoundFile"
         },
-        "command": {
+        "command":
+        {
             "variable": "choices",
             "value": "0",
-            "choices": {
-                "0": {
-                    "title": "ambient_music::command::0",
-                    "description": "ambient_music::command::0::description"
+            "choices":
+            {
+                "0":
+                {
+                    "title": "ambient_music::m_Command::0",
+                    "description": "ambient_music::m_Command::0::description"
                 },
-                "1": {
-                    "title": "ambient_music::command::1",
-                    "description": "ambient_music::command::1::description"
+                "1":
+                {
+                    "title": "ambient_music::m_Command::1",
+                    "description": "ambient_music::m_Command::1::description"
                 },
-                "2": {
-                    "title": "ambient_music::command::2",
-                    "description": "ambient_music::command::2::description"
+                "2":
+                {
+                    "title": "ambient_music::m_Command::2",
+                    "description": "ambient_music::m_Command::2::description"
                 },
-                "3": {
-                    "title": "ambient_music::command::3",
-                    "description": "ambient_music::command::3::description"
+                "3":
+                {
+                    "title": "ambient_music::m_Command::3",
+                    "description": "ambient_music::m_Command::3::description"
+                },
+                "4":
+                {
+                    "title": "ambient_music::m_Command::4",
+                    "description": "ambient_music::m_Command::4::description"
+                },
+                "5":
+                {
+                    "title": "ambient_music::m_Command::5",
+                    "description": "ambient_music::m_Command::5::description"
+                },
+                "6":
+                {
+                    "title": "ambient_music::m_Command::6",
+                    "description": "ambient_music::m_Command::6::description"
                 }
             },
-            "title": "ambient_music::command",
-            "description": "ambient_music::command::description"
-        },
-        "target_selector": {
-            "variable": "choices",
-            "value": "0",
-            "choices": {
-                "0": {
-                    "title": "ambient_music::target_selector::0",
-                    "description": "ambient_music::target_selector::0::description"
-                },
-                "1": {
-                    "title": "ambient_music::target_selector::1",
-                    "description": "ambient_music::target_selector::1::description"
-                },
-                "2": {
-                    "title": "ambient_music::target_selector::2",
-                    "description": "ambient_music::target_selector::2::description"
-                }
-            },
-            "title": "ambient_music::target_selector",
-            "description": "ambient_music::target_selector::description"
-        },
-        "radius": {
-            "variable": "string",
-            "value": "",
-            "title": "ambient_music::radius",
-            "description": "ambient_music::radius::description"
-        },
-        "remove_on_fire": {
-            "variable": "choices",
-            "value": "0",
-            "choices": {
-                "0": {
-                    "title": "ambient_music::remove_on_fire::0",
-                    "description": "ambient_music::remove_on_fire::0::description"
-                },
-                "1": {
-                    "title": "ambient_music::remove_on_fire::1",
-                    "description": "ambient_music::remove_on_fire::1::description"
-                }
-            },
-            "title": "ambient_music::remove_on_fire",
-            "description": "ambient_music::remove_on_fire::description"
+            "title": "ambient_music::m_Command",
+            "description": "ambient_music::com_Commandmmand::description"
         }
     },
     "title": "ambient_music::classname",

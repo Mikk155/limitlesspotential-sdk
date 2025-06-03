@@ -25,6 +25,7 @@
 #include "cbase.h"
 #include "shake.h"
 #include "UserMessages.h"
+#include "sound/MaterialSystem.h"
 
 float UTIL_WeaponTimeBase()
 {
@@ -1536,4 +1537,189 @@ bool UTIL_GetNearestHull( Vector& VecDestination, Vector VecStart, int hull_numb
         }
     }
     return false;
+}
+
+// ===================== MATERIAL TYPE DETECTION, MAIN ROUTINES ========================
+
+/**
+ *    @brief play a strike sound based on the texture that was hit by the attack traceline.
+ *    VecSrc/VecEnd are the original traceline endpoints used by the attacker
+ *    @param iBulletType the type of bullet that hit the texture.
+ *    @return volume of strike instrument (crowbar) to play
+ */
+float TEXTURETYPE_PlaySound( TraceResult* ptr, Vector vecSrc, Vector vecEnd, int iBulletType )
+{
+    // hit the world, try to play sound based on texture material type
+
+    char chTextureType;
+    float fvol;
+    float fvolbar;
+    const char* pTextureName;
+    const char* rgsz[4];
+    int cnt;
+    float fattn = ATTN_NORM;
+
+    if( !g_pGameRules->PlayTextureSounds() )
+        return 0.0;
+
+    CBaseEntity* pEntity = CBaseEntity::Instance( ptr->pHit );
+
+    chTextureType = 0;
+
+    if( pEntity && pEntity->Classify() != ENTCLASS_NONE && !pEntity->IsMachine() )
+        // hit body
+        chTextureType = CHAR_TEX_FLESH;
+    else
+    {
+        // hit world
+
+        // find texture under strike, get material type
+
+        // get texture from entity or world (world is ent(0))
+        if( pEntity )
+            pTextureName = TRACE_TEXTURE( pEntity->edict(), vecSrc, vecEnd );
+        else
+            pTextureName = TRACE_TEXTURE( CBaseEntity::World->edict(), vecSrc, vecEnd );
+
+        if( pTextureName )
+        {
+            pTextureName = g_MaterialSystem.StripTexturePrefix( pTextureName );
+
+            // Logger->debug("texture hit: {}", pTextureName);
+
+            // get texture type
+            chTextureType = g_MaterialSystem.FindTextureType( pTextureName );
+        }
+    }
+
+    switch ( chTextureType )
+    {
+    default:
+    case CHAR_TEX_CONCRETE:
+        fvol = 0.9;
+        fvolbar = 0.6;
+        rgsz[0] = "player/pl_step1.wav";
+        rgsz[1] = "player/pl_step2.wav";
+        cnt = 2;
+        break;
+    case CHAR_TEX_METAL:
+        fvol = 0.9;
+        fvolbar = 0.3;
+        rgsz[0] = "player/pl_metal1.wav";
+        rgsz[1] = "player/pl_metal2.wav";
+        cnt = 2;
+        break;
+    case CHAR_TEX_DIRT:
+        fvol = 0.9;
+        fvolbar = 0.1;
+        rgsz[0] = "player/pl_dirt1.wav";
+        rgsz[1] = "player/pl_dirt2.wav";
+        rgsz[2] = "player/pl_dirt3.wav";
+        cnt = 3;
+        break;
+    case CHAR_TEX_VENT:
+        fvol = 0.5;
+        fvolbar = 0.3;
+        rgsz[0] = "player/pl_duct1.wav";
+        rgsz[1] = "player/pl_duct1.wav";
+        cnt = 2;
+        break;
+    case CHAR_TEX_GRATE:
+        fvol = 0.9;
+        fvolbar = 0.5;
+        rgsz[0] = "player/pl_grate1.wav";
+        rgsz[1] = "player/pl_grate4.wav";
+        cnt = 2;
+        break;
+    case CHAR_TEX_TILE:
+        fvol = 0.8;
+        fvolbar = 0.2;
+        rgsz[0] = "player/pl_tile1.wav";
+        rgsz[1] = "player/pl_tile3.wav";
+        rgsz[2] = "player/pl_tile2.wav";
+        rgsz[3] = "player/pl_tile4.wav";
+        cnt = 4;
+        break;
+    case CHAR_TEX_SLOSH:
+        fvol = 0.9;
+        fvolbar = 0.0;
+        rgsz[0] = "player/pl_slosh1.wav";
+        rgsz[1] = "player/pl_slosh3.wav";
+        rgsz[2] = "player/pl_slosh2.wav";
+        rgsz[3] = "player/pl_slosh4.wav";
+        cnt = 4;
+        break;
+    case CHAR_TEX_WOOD:
+        fvol = 0.9;
+        fvolbar = 0.2;
+        rgsz[0] = "debris/wood1.wav";
+        rgsz[1] = "debris/wood2.wav";
+        rgsz[2] = "debris/wood3.wav";
+        cnt = 3;
+        break;
+    case CHAR_TEX_GLASS:
+    case CHAR_TEX_COMPUTER:
+        fvol = 0.8;
+        fvolbar = 0.2;
+        rgsz[0] = "debris/glass1.wav";
+        rgsz[1] = "debris/glass2.wav";
+        rgsz[2] = "debris/glass3.wav";
+        cnt = 3;
+        break;
+    case CHAR_TEX_FLESH:
+        if( iBulletType == BULLET_PLAYER_CROWBAR )
+            return 0.0; // crowbar already makes this sound
+        fvol = 1.0;
+        fvolbar = 0.2;
+        rgsz[0] = "weapons/bullet_hit1.wav";
+        rgsz[1] = "weapons/bullet_hit2.wav";
+        fattn = 1.0;
+        cnt = 2;
+        break;
+    case CHAR_TEX_SNOW:
+        fvol = 0.9;
+        fvolbar = 0.1;
+        rgsz[0] = "player/pl_snow1.wav";
+        rgsz[1] = "player/pl_snow2.wav";
+        rgsz[2] = "player/pl_snow3.wav";
+        cnt = 3;
+        break;
+    }
+
+    // did we hit a breakable?
+
+    if( pEntity && pEntity->ClassnameIs( "func_breakable" ) )
+    {
+        // drop volumes, the object will already play a damaged sound
+        fvol /= 1.5;
+        fvolbar /= 2.0;
+    }
+    else if( chTextureType == CHAR_TEX_COMPUTER )
+    {
+        // play random spark if computer
+
+        if( ptr->flFraction != 1.0 && RANDOM_LONG( 0, 1 ) )
+        {
+            UTIL_Sparks( ptr->vecEndPos );
+
+            float flVolume = RANDOM_FLOAT( 0.7, 1.0 ); // random volume range
+            switch ( RANDOM_LONG( 0, 1 ) )
+            {
+            case 0:
+                CBaseEntity::World->EmitAmbientSound( ptr->vecEndPos, "buttons/spark5.wav", flVolume, ATTN_NORM, 0, 100 );
+                break;
+            case 1:
+                CBaseEntity::World->EmitAmbientSound( ptr->vecEndPos, "buttons/spark6.wav", flVolume, ATTN_NORM, 0, 100 );
+                break;
+                // case 0: EmitSound(CHAN_VOICE, "buttons/spark5.wav", flVolume, ATTN_NORM);    break;
+                // case 1: EmitSound(CHAN_VOICE, "buttons/spark6.wav", flVolume, ATTN_NORM);    break;
+            }
+        }
+    }
+
+    // play material hit sound
+    CBaseEntity::World->EmitAmbientSound( ptr->vecEndPos, rgsz[RANDOM_LONG( 0, cnt - 1 )], fvol, fattn, 0, 96 + RANDOM_LONG( 0, 0xf ) );
+    // m_pPlayer->EmitSoundDyn(CHAN_WEAPON, rgsz[RANDOM_LONG(0,cnt-1)], fvol, ATTN_NORM, 0, 96 + RANDOM_LONG(0,0xf));
+
+    return fvolbar;
 }

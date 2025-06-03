@@ -227,7 +227,47 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
         flags |= SND_LARGE_INDEX;
     }
 
-    if( ( flags & SND_NOTHOST ) == 0 )
+    auto IsPlayerHost = [&](int index, int bit, const std::string& flag ) -> std::pair<bool, CBasePlayer*>
+    {
+        if( index > 0 && index <= gpGlobals->maxClients )
+        {
+            if( auto player = UTIL_PlayerByIndex( index ); player->IsConnected() && player->IsNetClient() )
+            {
+                return { true, player };
+            }
+        }
+        else
+        {
+            m_Logger->error("EmitSound: Entity is not a player, cannot use flag {} ({})", bit, flag );
+        }
+        return { false, nullptr };
+    };
+
+    if( ( flags & SND_ONLYHOST ) != 0 )
+    {
+        if( auto host = IsPlayerHost( entityIndex, SND_ONLYHOST, "SND_ONLYHOST" ); host.first )
+        {
+            MESSAGE_BEGIN( MSG_ONE_UNRELIABLE, gmsgEmitSound, nullptr, host.second );
+            BuildSoundMessage(entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin);
+            MESSAGE_END();
+        }
+    }
+    else if( ( flags & SND_NOTHOST ) != 0 )
+    {
+        if( auto host = IsPlayerHost( entityIndex, SND_NOTHOST, "SND_NOTHOST" ); host.first )
+        {
+            for( auto player : UTIL_FindPlayers() )
+            {
+                if( player->IsConnected() && player->IsNetClient() && player != entity )
+                {
+                    MESSAGE_BEGIN( MSG_ONE_UNRELIABLE, gmsgEmitSound, nullptr, player );
+                    BuildSoundMessage( entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin );
+                    MESSAGE_END();
+                }
+            }
+        }
+    }
+    else
     {
         if( ( flags & SND_SPAWNING ) != 0 )
         {
@@ -273,38 +313,6 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
 
         BuildSoundMessage( entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin );
 
-        MESSAGE_END();
-        return;
-    }
-
-    if( entityIndex <= 0 || entityIndex > gpGlobals->maxClients )
-    {
-        m_Logger->error("EmitSound: Entity is not a player, cannot use SND_NOTHOST / SND_ONLYHOST");
-        return;
-    }
-
-    if( ( flags & SND_ONLYHOST ) != 0 )
-    {
-        auto player = ToBasePlayer( entity );
-        if( player->IsConnected() && player->IsNetClient() )
-        {
-            MESSAGE_BEGIN(MSG_ONE_UNRELIABLE, gmsgEmitSound, nullptr, player);
-            BuildSoundMessage(entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin);
-            MESSAGE_END();
-        }
-        return;
-    }
-
-    // These messages are used by player physics code only.
-    for( auto player : UTIL_FindPlayers() )
-    {
-        if( player == entity || !player->IsConnected() || !player->IsNetClient() )
-        {
-            continue;
-        }
-
-        MESSAGE_BEGIN( MSG_ONE_UNRELIABLE, gmsgEmitSound, nullptr, player );
-        BuildSoundMessage( entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin );
         MESSAGE_END();
     }
 }

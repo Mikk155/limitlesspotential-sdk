@@ -112,9 +112,8 @@ BEGIN_DATAMAP(CBasePlayer)
     DEFINE_FIELD( m_iFOV, FIELD_INTEGER ),
 
     DEFINE_FIELD( m_SndRoomtype, FIELD_INTEGER ),
-    // Don't save these. Let the game recalculate the closest env_sound, and continue to use the last room type like it always has.
-    // DEFINE_FIELD(m_SndLast, FIELD_EHANDLE),
-    // DEFINE_FIELD(m_flSndRange, FIELD_FLOAT),
+    DEFINE_FIELD( m_SndLast, FIELD_EHANDLE ),
+    DEFINE_FIELD( m_flSndRange, FIELD_FLOAT ),
 
     DEFINE_FIELD( m_flStartCharge, FIELD_TIME ),
 
@@ -2907,7 +2906,7 @@ void CBasePlayer::PostRestore()
     m_ClientSndRoomtype = -1;
 
     // Reset room type on level change.
-    if( !FStrEq( pSaveData->szCurrentMapName, STRING( gpGlobals->mapname ) ) )
+    if( !FStrEq( pSaveData->szCurrentMapName, STRING( gpGlobals->mapname ) ) && m_SndLast )
     {
         m_SndRoomtype = 0;
     }

@@ -1,0 +1,18 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "iconsprite": "sprites/speaker.spr",
+    "base": [
+        "CAmbientDSP"
+    ],
+    "data": {
+        "radius": {
+            "variable": "integer",
+            "value": "128",
+            "title": "ambient_dsp_auto::radius",
+            "description": "ambient_dsp_auto::radius::description"
+        }
+    },
+    "title": "ambient_dsp::classname",
+    "description": "ambient_dsp::classname::description"
+}

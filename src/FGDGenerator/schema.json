@@ -8,6 +8,10 @@
             "enum": ["Solid", "Point", "Base"],
             "description": "Class type, in the FGD this is what goes in @{var}Class"
         },
+        "point": {
+            "type": "boolean",
+            "description": "If set to true, this entity is also a Point for entities using Class on Solid."
+        },
         "size": {
             "type": "array",
             "description": "Size of a Point Entity",

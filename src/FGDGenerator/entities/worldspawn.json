@@ -52,15 +52,15 @@
         {
             "variable": "vector",
             "value": "-4096 -4096 -4096",
-            "title": "worldspawn::minhullsize",
-            "description": "worldspawn::minhullsize::description"
+            "title": "minhullsize",
+            "description": "worldspawn::hullsize::description"
         },
         "maxhullsize":
         {
             "variable": "vector",
             "value": "4096 4096 4096",
-            "title": "worldspawn::maxhullsize",
-            "description": "worldspawn::maxhullsize::description"
+            "title": "maxhullsize",
+            "description": "worldspawn::hullsize::description"
         },
 
         "chaptertitle":
@@ -107,13 +107,11 @@
             {
                 "0":
                 {
-                    "title": "worldspawn::newunit::0",
-                    "description": "worldspawn::newunit::0::description"
+                    "title": "No"
                 },
                 "1":
                 {
-                    "title": "worldspawn::newunit::1",
-                    "description": "worldspawn::newunit::1::description"
+                    "title": "Yes"
                 }
             },
 
@@ -185,6 +183,14 @@
 
             "title": "worldspawn::mapcfg",
             "description": "worldspawn::mapcfg::description"
+        },
+
+        "version":
+        {
+            "variable": "string",
+            "value": "1.0.0",
+            "title": "worldspawn::version",
+            "description": "worldspawn::version::description"
         }
     }
 }

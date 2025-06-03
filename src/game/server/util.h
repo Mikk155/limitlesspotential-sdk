@@ -298,11 +298,6 @@ Vector VecBModelOrigin( CBaseEntity* bModel );
 
 inline int g_Language;
 
-#define AMBIENT_SOUND_START_SILENT 16
-#define AMBIENT_SOUND_NOT_LOOPING 32
-
-#define SPEAKER_START_SILENT 1 // wait for trigger 'on' to start announcements
-
 // Only the first 8 flags are sent from the server to the client.
 constexpr int SND_VOLUME = 1 << 0;             // Volume is not 255
 constexpr int SND_ATTENUATION = 1 << 1;         // Attenuation is not 1
@@ -316,10 +311,6 @@ constexpr int SND_SPAWNING = 1 << 8;         // duplicated in protocol.h we're s
 constexpr int SND_PLAY_WHEN_PAUSED = 1 << 9; // For client side use only: start playing sound even when paused.
 constexpr int SND_NOTHOST = 1 << 10;         // Don't send sound message to host ( only for sounds emitted by players ).
 constexpr int SND_ONLYHOST = 1 << 11;         // Don't send sound message to non-host ( only for sounds emitted by players ).
-
-#define LFO_SQUARE 1
-#define LFO_TRIANGLE 2
-#define LFO_RANDOM 3
 
 // func_rotating
 #define SF_BRUSH_ROTATE_Y_AXIS 0

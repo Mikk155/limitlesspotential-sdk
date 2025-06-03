@@ -179,7 +179,7 @@ public:
     int m_afButtonReleased;
 
     EHANDLE m_SndLast;       // last sound entity to modify player room type
-    int m_SndRoomtype = 0; // last roomtype set by sound entity. Defaults to 0 on new maps to disable it by default.
+    int m_SndRoomtype = 0; // last roomtype set by sound entity. Defaults to 0 on new maps to disable it by default, only for dsp_auto
     int m_ClientSndRoomtype;
     float m_flSndRange; // dist from player to sound entity
 

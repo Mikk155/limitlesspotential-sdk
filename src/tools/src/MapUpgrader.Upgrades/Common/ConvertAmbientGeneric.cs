@@ -9,9 +9,9 @@ using System.CommandLine.IO;
 namespace MapUpgrader.Upgrades.Common
 {
     /// <summary>
-    /// Update ambient_generic spawnflags to a more flexible keyvalue
+    /// Update ambient_generic
     /// </summary>
-    internal sealed class AmbientGenericAttenuation : MapUpgrade
+    internal sealed class ConvertAmbientGeneric : MapUpgrade
     {
         private static readonly double ATTN_NONE = 0;
         private static readonly double ATTN_NORM = 0.8;
@@ -23,6 +23,8 @@ namespace MapUpgrader.Upgrades.Common
         private static readonly int AMBIENT_SOUND_SMALLRADIUS = 2;
         private static readonly int AMBIENT_SOUND_MEDIUMRADIUS = 4;
         private static readonly int AMBIENT_SOUND_LARGERADIUS = 8;
+        private static readonly int AMBIENT_SOUND_START_SILENT = 16;
+        private static readonly int AMBIENT_SOUND_NOT_LOOPING = 32;
 
         protected override void ApplyCore( MapUpgradeContext context )
         {
@@ -30,7 +32,7 @@ namespace MapUpgrader.Upgrades.Common
             {
                 int flags = entity.GetSpawnFlags();
 
-                if( !entity.ContainsKey( "m_flAttenuation" ) && flags != 0 )
+                if( flags != 0 )
                 {
                     if( ( flags & AMBIENT_SOUND_EVERYWHERE ) != 0 )
                     {
@@ -54,17 +56,43 @@ namespace MapUpgrader.Upgrades.Common
                         entity.SetDouble( "m_flAttenuation", ATTN_STATIC );
                     }
 
-                    if ( ( flags & AMBIENT_SOUND_EVERYWHERE ) != 0 )
-                        flags &= ~AMBIENT_SOUND_EVERYWHERE;
-                    if ( ( flags & AMBIENT_SOUND_SMALLRADIUS ) != 0 )
-                        flags &= ~AMBIENT_SOUND_SMALLRADIUS;
-                    if ( ( flags & AMBIENT_SOUND_MEDIUMRADIUS ) != 0 )
-                        flags &= ~AMBIENT_SOUND_MEDIUMRADIUS;
-                    if ( ( flags & AMBIENT_SOUND_LARGERADIUS ) != 0 )
-                        flags &= ~AMBIENT_SOUND_LARGERADIUS;
+                    if( ( flags & AMBIENT_SOUND_NOT_LOOPING ) == 0 )
+                    {
+                        entity.SetBool( "m_fLooping", 1 ); // Entity not marked as not looped
+                    }
 
-                    entity.SetSpawnFlags( flags );
+                    if( ( flags & AMBIENT_SOUND_START_SILENT ) != 1 )
+                    {
+                        entity.SetBool( "m_bStartOff", 1 );
+                    }
+
+                    List<int> RemoveFlags = new(){
+                        AMBIENT_SOUND_EVERYWHERE,
+                        AMBIENT_SOUND_SMALLRADIUS,
+                        AMBIENT_SOUND_MEDIUMRADIUS,
+                        AMBIENT_SOUND_LARGERADIUS,
+                        AMBIENT_SOUND_START_SILENT,
+                        AMBIENT_SOUND_NOT_LOOPING
+                    };
+
+                    foreach( int flag in RemoveFlags )
+                    {
+                        if( ( flags & flag ) != 0 )
+                        {
+                            flags &= ~flag;
+                        }
+                    }
                 }
+
+                if( entity.ContainsKey( "message" ) )
+                {
+                    entity.SetString( "m_sPlaySound", entity.GetString( "message" ) );
+                    entity.Remove( "message" );
+                }
+
+                flags |= 2; // Don't remove on fire
+
+                entity.SetSpawnFlags( flags );
             }
         }
     }

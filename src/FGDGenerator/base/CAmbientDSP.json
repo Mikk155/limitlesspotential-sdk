@@ -1,0 +1,131 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Base",
+    "data":
+    {
+        "roomtype": {
+            "variable": "choices",
+            "value": "0",
+            "choices": {
+                "0": {
+                    "title": "ambient_dsp::roomtype::0",
+                    "description": "ambient_dsp::roomtype::0::description"
+                },
+                "1": {
+                    "title": "ambient_dsp::roomtype::1",
+                    "description": "ambient_dsp::roomtype::1::description"
+                },
+                "2": {
+                    "title": "ambient_dsp::roomtype::2",
+                    "description": "ambient_dsp::roomtype::2::description"
+                },
+                "3": {
+                    "title": "ambient_dsp::roomtype::3",
+                    "description": "ambient_dsp::roomtype::3::description"
+                },
+                "4": {
+                    "title": "ambient_dsp::roomtype::4",
+                    "description": "ambient_dsp::roomtype::4::description"
+                },
+                "5": {
+                    "title": "ambient_dsp::roomtype::5",
+                    "description": "ambient_dsp::roomtype::5::description"
+                },
+                "6": {
+                    "title": "ambient_dsp::roomtype::6",
+                    "description": "ambient_dsp::roomtype::6::description"
+                },
+                "7": {
+                    "title": "ambient_dsp::roomtype::7",
+                    "description": "ambient_dsp::roomtype::7::description"
+                },
+                "8": {
+                    "title": "ambient_dsp::roomtype::8",
+                    "description": "ambient_dsp::roomtype::8::description"
+                },
+                "9": {
+                    "title": "ambient_dsp::roomtype::9",
+                    "description": "ambient_dsp::roomtype::9::description"
+                },
+                "10": {
+                    "title": "ambient_dsp::roomtype::10",
+                    "description": "ambient_dsp::roomtype::10::description"
+                },
+                "11": {
+                    "title": "ambient_dsp::roomtype::11",
+                    "description": "ambient_dsp::roomtype::11::description"
+                },
+                "12": {
+                    "title": "ambient_dsp::roomtype::12",
+                    "description": "ambient_dsp::roomtype::12::description"
+                },
+                "13": {
+                    "title": "ambient_dsp::roomtype::13",
+                    "description": "ambient_dsp::roomtype::13::description"
+                },
+                "14": {
+                    "title": "ambient_dsp::roomtype::14",
+                    "description": "ambient_dsp::roomtype::14::description"
+                },
+                "15": {
+                    "title": "ambient_dsp::roomtype::15",
+                    "description": "ambient_dsp::roomtype::15::description"
+                },
+                "16": {
+                    "title": "ambient_dsp::roomtype::16",
+                    "description": "ambient_dsp::roomtype::16::description"
+                },
+                "17": {
+                    "title": "ambient_dsp::roomtype::17",
+                    "description": "ambient_dsp::roomtype::17::description"
+                },
+                "18": {
+                    "title": "ambient_dsp::roomtype::18",
+                    "description": "ambient_dsp::roomtype::18::description"
+                },
+                "19": {
+                    "title": "ambient_dsp::roomtype::19",
+                    "description": "ambient_dsp::roomtype::19::description"
+                },
+                "20": {
+                    "title": "ambient_dsp::roomtype::20",
+                    "description": "ambient_dsp::roomtype::20::description"
+                },
+                "21": {
+                    "title": "ambient_dsp::roomtype::21",
+                    "description": "ambient_dsp::roomtype::21::description"
+                },
+                "22": {
+                    "title": "ambient_dsp::roomtype::22",
+                    "description": "ambient_dsp::roomtype::22::description"
+                },
+                "23": {
+                    "title": "ambient_dsp::roomtype::23",
+                    "description": "ambient_dsp::roomtype::23::description"
+                },
+                "24": {
+                    "title": "ambient_dsp::roomtype::24",
+                    "description": "ambient_dsp::roomtype::24::description"
+                },
+                "25": {
+                    "title": "ambient_dsp::roomtype::25",
+                    "description": "ambient_dsp::roomtype::25::description"
+                },
+                "26": {
+                    "title": "ambient_dsp::roomtype::26",
+                    "description": "ambient_dsp::roomtype::26::description"
+                },
+                "27": {
+                    "title": "ambient_dsp::roomtype::27",
+                    "description": "ambient_dsp::roomtype::27::description"
+                },
+                "28": {
+                    "title": "ambient_dsp::roomtype::28",
+                    "description": "ambient_dsp::roomtype::28::description"
+                }
+            },
+            "title": "ambient_dsp::roomtype",
+            "description": "ambient_dsp::roomtype::description"
+        }
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Point",
+    "base": [
+        "CAmbient"
+    ],
+    "sprite": "sprites/ambient_speaker.spr",
+    "iconsprite": "sprites/ambient_speaker.spr",
+    "data": {
+        "message": {
+            "variable": "string",
+            "value": "",
+            "title": "ambient_speaker::message",
+            "description": "ambient_speaker::message::description"
+        },
+        "health": {
+            "variable": "integer",
+            "value": "5",
+            "title": "Volume10Loudest",
+            "description": "Volume10Loudest::description"
+        },
+        "m_bStartsOff": {
+            "variable": "choices",
+            "choices": {
+                "0": {
+                    "title": "No"
+                },
+                "1": {
+                    "title": "Yes"
+                }
+            },
+            "title": "StartOff",
+            "description": "StartOff"
+        },
+        "m_iMin": {
+            "variable": "integer",
+            "value": 15,
+            "title": "ambient_speaker::m_iMin",
+            "description": "ambient_speaker::m_iMin::description"
+        },
+        "m_iMax": {
+            "variable": "integer",
+            "value": 15,
+            "title": "ambient_speaker::m_iMax",
+            "description": "ambient_speaker::m_iMax::description"
+        },
+        "m_iAttenuation": {
+            "variable": "float",
+            "value": 0.3,
+            "title": "Attenuation",
+            "description": "Attenuation::description"
+        },
+        "m_iPitch": {
+            "variable": "integer",
+            "value": 100,
+            "title": "Pitch",
+            "description": "Pitch::description"
+        }
+    },
+    "title": "ambient_speaker::classname",
+    "description": "ambient_speaker::classname::description"
+}

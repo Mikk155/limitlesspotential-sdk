@@ -1,0 +1,23 @@
+{
+    "$schema": "../schema.json",
+    "Class": "Solid",
+    "point": true,
+    "iconsprite": "sprites/speaker.spr",
+    "base": [
+        "CAmbientDSP"
+    ],
+    "data": {
+        "spawnflags": {
+            "choices": {
+                "1": {
+                    "title": "ActivatorOnly"
+                },
+                "2": {
+                    "title": "DontRemoveOnFire"
+                }
+            }
+        }
+    },
+    "title": "ambient_dsp::classname",
+    "description": "ambient_dsp::classname::description"
+}
