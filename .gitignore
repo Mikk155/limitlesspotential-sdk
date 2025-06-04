@@ -16,9 +16,6 @@ src/FGDGenerator/FGD/*
 src/mapsrc/*.*
 !src/mapsrc/*.map
 
-# json schemas (The game generates them)
-assets/schemas/*
-
 #==========================
 # CSharp:
 #==========================
