@@ -64,7 +64,7 @@ class Program
     {
         string workspace = Program.WorkSpace();
 
-        string fgd_folder = Path.Combine( workspace, $"FGD" );
+        string fgd_folder = Path.Combine( workspace, $"../../assets/tools/FGD" );
         string fgd_language = Path.Combine( fgd_folder, Program.language );
 
         if( !Directory.Exists( fgd_language ) )
