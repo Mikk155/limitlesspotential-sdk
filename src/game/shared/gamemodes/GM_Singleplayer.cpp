@@ -61,7 +61,7 @@ void GM_Singleplayer::OnClientInit( CBasePlayer* player )
         gViewPort->ShowCampaignSelectMenu();
     }
 #else
-    if( gpGlobals->maxClients > 1 && (int)CVAR_GET_FLOAT( "deathmatch" ) == 1 )
+    if( gpGlobals->maxClients > 1 || (int)CVAR_GET_FLOAT( "deathmatch" ) == 1 )
     {
         m_IsMultiplayer = true;
     }
