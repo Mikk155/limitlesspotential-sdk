@@ -13,7 +13,22 @@ namespace MapUpgrader.Upgrades.Common
             }
             else if( ValveGames.HalfLife1.IsMap( context.Map.BaseName ) || ValveGames.HalfLifeUplink.IsMap( context.Map.BaseName ) )
             {
-                context.Map.Entities.Worldspawn.SetString( "mapcfg", "globals/halflife/main" );
+                string? config;
+
+                switch( context.Map.BaseName )
+                {
+                    case "c1a0c":
+                        config = "c1a0c";
+                    break;
+
+                    // -TODO Enumerate chapters and give arsenal on their config
+
+                    default:
+                        config = "main";
+                    break;
+                }
+
+                context.Map.Entities.Worldspawn.SetString( "mapcfg", $"globals/halflife/{config}" );
             }
             else if( ValveGames.OpposingForce.IsMap( context.Map.BaseName ) )
             {
