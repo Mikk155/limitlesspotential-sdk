@@ -41,13 +41,11 @@ void CAchievements::PreMapActivate()
 
 void CAchievements::Save()
 {
-    if( m_flNextThink < gpGlobals->time )
+    if( m_bShouldSave && m_flNextThink < gpGlobals->time )
     {
-        const std::string output = m_achievements.dump();
-
-        FileSystem_WriteTextToFile( "cfg/server/achievements.json", output.c_str(), "GAMECONFIG" );
-
+        FileSystem_WriteTextToFile( "cfg/server/achievements.json",  m_achievements.dump().c_str(), "GAMECONFIG" );
         m_flNextThink = gpGlobals->time + 30.0;
+        m_bShouldSave = false;
     }
 }
 
@@ -76,6 +74,8 @@ void CAchievements::Achieve( CBasePlayer* player, const std::string& name, const
             if( entry == ID )
                 return;
         }
+
+        m_bShouldSave = true;
 
         players.push_back( ID );
 

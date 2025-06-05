@@ -45,6 +45,7 @@ class CAchievements final : public IGameSystem
 
     private:
 
+        bool m_bShouldSave;
         float m_flNextThink;
         json m_achievements;
 };
