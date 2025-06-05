@@ -24,7 +24,7 @@ bool CAchievements::Initialize()
     if( !json_opt.has_value() || !json_opt.value().is_object() )
     {
         FileSystem_WriteTextToFile( "cfg/server/achievements.json", "{}", "GAMECONFIG" );
-        m_achievements = {};
+        m_achievements = json::object();
     }
     else
     {
@@ -49,11 +49,11 @@ void CAchievements::Save()
     }
 }
 
-void CAchievements::Achieve( CBasePlayer* player, const std::string& name, const std::string& description )
+void CAchievements::Achieve( CBasePlayer* player, const std::string& label, const std::string& name, const std::string& description )
 {
     if( player != nullptr )
     {
-        json& achievement = m_achievements[ name ];
+        json& achievement = m_achievements[ label ];
 
         if( !achievement.is_object() )
         {
@@ -81,16 +81,17 @@ void CAchievements::Achieve( CBasePlayer* player, const std::string& name, const
 
         achievement[ "players" ] = players;
 
-        m_achievements[ name ] = achievement;
+        m_achievements[ label ] = achievement;
 
-        UTIL_ClientPrintAll( HUD_PRINTTALK, "- %s got the achievement \"%s\"\n", STRING( player->pev->netname ), description.c_str() );
+        UTIL_ClientPrintAll( HUD_PRINTTALK, "- %s got the achievement \"%s\"\n", STRING( player->pev->netname ), name.c_str() );
+        UTIL_ClientPrintAll( HUD_PRINTTALK, "(%s)\n", description.c_str() );
     }
 }
 
-void CAchievements::Achieve( const std::string& name, const std::string& description )
+void CAchievements::Achieve( const std::string& label, const std::string& name, const std::string& description )
 {
     for( auto player : UTIL_FindPlayers() )
     {
-        Achieve( player, name, description );
+        Achieve( player, label, name, description );
     }
 }

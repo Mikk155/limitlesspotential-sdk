@@ -67,6 +67,7 @@ namespace MapUpgrader.Upgrades
             builder.AddUpgrade(new C3a2FixLoadSavedUpgrade());
             builder.AddUpgrade(new C4a2FixNihilanthDialogueUpgrade());
             builder.AddUpgrade(new C2a5FixCrateGlobalNameUpgrade());
+            builder.AddUpgrade(new AddAchievementsHL());
             return builder;
         }
 

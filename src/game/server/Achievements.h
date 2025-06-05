@@ -40,8 +40,8 @@ class CAchievements final : public IGameSystem
         void PreMapActivate();
         void Save();
 
-        void Achieve( CBasePlayer* player, const std::string& name, const std::string& description );
-        void Achieve( const std::string& name, const std::string& description );
+        void Achieve( CBasePlayer* player, const std::string& label, const std::string& name, const std::string& description );
+        void Achieve( const std::string& label, const std::string& name, const std::string& description );
 
     private:
 
