@@ -1280,6 +1280,7 @@ void StartFrame()
         g_pGameRules->Think();
 
     g_GameMode->OnThink();
+    g_Achievement.Save();
 
     if( g_fGameOver )
         return;

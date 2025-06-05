@@ -24,6 +24,8 @@ target_compile_definitions(server PRIVATE
     VALVE_DLL)
 
 target_sources(server PRIVATE
+    Achievements.cpp
+    Achievements.h
     activity.h
     activitymap.h
     cdll_dll.h

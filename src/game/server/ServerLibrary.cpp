@@ -316,6 +316,7 @@ void ServerLibrary::NewMapStarted( bool loadGame )
 
 void ServerLibrary::PreMapActivate()
 {
+    g_Achievement.PreMapActivate();
 }
 
 void ServerLibrary::PostMapActivate()

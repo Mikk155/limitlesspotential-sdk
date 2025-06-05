@@ -21,6 +21,8 @@
 
 #include "GameLibrary.h"
 
+#include "Achievements.h"
+
 #include "trigger/eventhandler.h"
 
 class CBasePlayer;
