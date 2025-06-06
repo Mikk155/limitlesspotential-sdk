@@ -584,7 +584,11 @@ void CAmbientGeneric::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 
 bool CAmbientGeneric::KeyValue( KeyValueData* pkvd )
 {
-    if( FStrEq( pkvd->szKeyName, "m_flAttenuation" ) )
+    if( FStrEq( pkvd->szKeyName, "m_sPlaySound" ) )
+    {
+        m_sPlaySound = ALLOC_STRING(pkvd->szValue);
+    }
+    else if( FStrEq( pkvd->szKeyName, "m_flAttenuation" ) )
     {
         m_flAttenuation = atof(pkvd->szValue);
     }
