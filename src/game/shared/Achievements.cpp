@@ -15,7 +15,30 @@
 
 #include "Achievements.h"
 
+#include "GameLibrary.h"
+
 #include <JSONSystem.h>
+
+#ifdef CLIENT_DLL
+
+bool CAchievements::IsActive()
+{
+    return false;
+}
+
+bool CAchievements::Initialize()
+{
+    return true;
+}
+
+#else
+
+cvar_t sv_achievements = { "sv_achievements", "1", FCVAR_SERVER };
+
+bool CAchievements::IsActive()
+{
+    return ( static_cast<int>( sv_achievements.value ) == 1 );
+}
 
 bool CAchievements::Initialize()
 {
@@ -30,6 +53,15 @@ bool CAchievements::Initialize()
     {
         m_achievements = json_opt.value();
     }
+
+    m_achievement_restore = g_ClientCommands.CreateScoped( "sv_achievement_restore", [this]( auto, const auto& )
+    {
+        FileSystem_WriteTextToFile( "cfg/server/achievements.json", "{}", "GAMECONFIG" );
+        m_achievements = json::object();
+        g_GameLogger->warn( "All achievements has been removed and restarted." );
+    } );
+
+    g_engfuncs.pfnCVarRegister( &sv_achievements );
 
     return true;
 }
@@ -51,7 +83,7 @@ void CAchievements::Save()
 
 void CAchievements::Achieve( CBasePlayer* player, const std::string& label, const std::string& name, const std::string& description )
 {
-    if( player != nullptr )
+    if( IsActive() && player != nullptr )
     {
         json& achievement = m_achievements[ label ];
 
@@ -90,8 +122,12 @@ void CAchievements::Achieve( CBasePlayer* player, const std::string& label, cons
 
 void CAchievements::Achieve( const std::string& label, const std::string& name, const std::string& description )
 {
-    for( auto player : UTIL_FindPlayers() )
+    if( IsActive() )
     {
-        Achieve( player, label, name, description );
+        for( auto player : UTIL_FindPlayers() )
+        {
+            Achieve( player, label, name, description );
+        }
     }
 }
+#endif

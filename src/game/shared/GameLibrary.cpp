@@ -35,6 +35,7 @@
 #include "utils/GameSystem.h"
 #include "utils/JSONSystem.h"
 #include "utils/ReplacementMaps.h"
+#include "Achievements.h"
 
 bool GameLibrary::Initialize()
 {
@@ -106,6 +107,7 @@ void GameLibrary::AddGameSystems()
     g_GameSystems.Add( &g_GameMode );
     g_GameSystems.Add( &g_HudReplacements );
     g_GameSystems.Add( &g_EntityClassifications );
+    g_GameSystems.Add( &g_Achievement );
 }
 
 void GameLibrary::SetEntLogLevels( spdlog::level::level_enum level )

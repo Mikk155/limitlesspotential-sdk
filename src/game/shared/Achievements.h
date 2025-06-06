@@ -25,7 +25,13 @@
 
 #include "utils/GameSystem.h"
 
+#ifdef CLIENT_DLL
+#else
 #include "player.h"
+#include "ConCommandSystem.h"
+#endif
+
+class CBasePlayer;
 
 class CAchievements final : public IGameSystem
 {
@@ -37,17 +43,26 @@ class CAchievements final : public IGameSystem
         void PostInitialize() override {}
         void Shutdown() override {};
 
-        void PreMapActivate();
-        void Save();
+        bool IsActive();
 
+    private:
+
+        json m_achievements;
+
+#ifdef CLIENT_DLL
+
+#else
+    public:
+        void Save();
+        void PreMapActivate();
         void Achieve( CBasePlayer* player, const std::string& label, const std::string& name, const std::string& description );
         void Achieve( const std::string& label, const std::string& name, const std::string& description );
 
     private:
-
         bool m_bShouldSave;
         float m_flNextThink;
-        json m_achievements;
+        ScopedClientCommand m_achievement_restore;
+#endif
 };
 
 inline CAchievements g_Achievement;
