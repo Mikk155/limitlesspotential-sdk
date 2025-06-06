@@ -1,4 +1,5 @@
-﻿using Utilities.Entities;
+﻿using System.Collections.Generic;
+using Utilities.Entities;
 using Utilities.Tools.UpgradeTool;
 
 namespace MapUpgrader.Upgrades.HalfLife
@@ -16,12 +17,14 @@ namespace MapUpgrader.Upgrades.HalfLife
                     a1.SetString( "m_label", "hl_suit" );
                     a1.SetString( "m_name", "Suit up" );
                     a1.SetString( "m_description", "Get the H.E.V suit" );
+                    a1.SetInteger( "spawnflags", 1 );
 
                     Entity a2 = context.Map.Entities.CreateNewEntity( "game_achievement" );
                     a2.SetString( "targetname", "microwavepopmm1" );
                     a2.SetString( "m_label", "hl_microwave" );
                     a2.SetString( "m_name", "What is that smell?" );
                     a2.SetString( "m_description", "Burn out magnusom's food in the microwave" );
+                    a2.SetInteger( "spawnflags", 1 );
                     break;
                 }
                 case "c1a3":
