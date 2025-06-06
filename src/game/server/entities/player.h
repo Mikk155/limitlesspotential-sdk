@@ -657,7 +657,7 @@ public:
     float m_flLastFreePositionTrack;
     Vector m_VecLastFreePosition;
 
-/**
+    /**
      *    @brief This gets the Steam Id even if sv_lan is 1.
      *    @details Format is signed 64 bit integer in string form.
      */
