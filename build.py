@@ -15,9 +15,13 @@ colorama.init();
 Options: dict[ str, list[ bool, str ] ] = {
     "CompileGameTools": [ False, "Compile CSharp tool kit" ],
     "CompileGameForgeGameData": [ False, "Generate game FGD file" ],
-    "CompileGameSDK": [ False, "Compile game libraries" ],
-    "RunGame": [ False, "Install and run game" ]
+    "CompileGameSDK": [ True, "Compile game libraries" ],
+    "InstallAssets": [ True, "Install assets" ],
+    "InstallContent": [ False, "Execute ContentInstaller" ],
+    "RunGame": [ True, "Run game" ]
 };
+
+old_directory = os.path.dirname( __file__ );
 
 OptionIndexes: tuple[str] = tuple( Options.keys() );
 
@@ -207,23 +211,25 @@ if Options[ "CompileGameSDK" ][0]:
 
                 ErrorNumbers += 1;
 
-if Options[ "RunGame" ][0] and ErrorNumbers == 0:
+def GetModDirectory() -> str:
+
+    cache = open( os.path.join( os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), "build" ), "CMakeCache.txt" ), "r" );
+
+    lines: list[str] = cache.readlines();
+
+    for line in lines:
+
+        if line.startswith( "CMAKE_INSTALL_PREFIX" ):
+
+            return line[ line.find("=") + 1 : ].strip();
+
+mod_directory = GetModDirectory();
+
+if Options[ "InstallAssets" ][0]:
 
     print( f"{colorama.Fore.LIGHTMAGENTA_EX}Start assets installation...{colorama.Fore.WHITE}" );
 
     assets =  os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), "assets" );
-
-    mod_directory = None;
-
-    with open( os.path.join( os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), "build" ), "CMakeCache.txt" ), "r" ) as cache:
-
-        lines: list[str] = cache.readlines();
-
-        for line in lines:
-
-            if line.startswith( "CMAKE_INSTALL_PREFIX" ):
-
-                mod_directory = line[ line.find("=") + 1 : ].strip()
 
     for root, dirs, files in os.walk( assets ):
 
@@ -255,11 +261,23 @@ if Options[ "RunGame" ][0] and ErrorNumbers == 0:
 
 #                print( f"Up-to-date: \"{dst_file}\"" );
 
+if Options[ "InstallContent" ][0] and ErrorNumbers == 0:
+
+    print( f"{colorama.Fore.LIGHTMAGENTA_EX}Start content installation...{colorama.Fore.WHITE}" );
+
+    tools_directory = os.path.join( mod_directory, "tools" );
+
+    command: list[str] = [ os.path.join( tools_directory, "ContentInstaller.exe"), "--mod-directory", mod_directory ];
+
+    if subprocess.run(command, cwd=mod_directory, check=True, text=True).returncode != 0:
+
+        ErrorNumbers += 1;
+
+if Options[ "RunGame" ][0] and ErrorNumbers == 0:
+
     halflife_directory = os.path.dirname( mod_directory );
 
     mod_name = os.path.basename( mod_directory );
-
-    old_directory = os.path.dirname( __file__ );
 
     os.chdir( halflife_directory );
 
