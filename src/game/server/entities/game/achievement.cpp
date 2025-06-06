@@ -74,4 +74,6 @@ void CGameAchievement::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
     {
         g_Achievement.Achieve( STRING(m_label), STRING(m_name), STRING(m_description) );
     }
+
+    UTIL_Remove(this);
 }
