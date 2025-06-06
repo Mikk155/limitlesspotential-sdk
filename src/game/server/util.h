@@ -767,3 +767,5 @@ struct CallOnDestroy
  *  NOTE: This method is bad and should be reworked at some point.
  */
 bool UTIL_GetNearestHull( Vector& VecDestination, Vector VecStart, int hull_number, float radius, float height = 0, float stepsize = 16.0f );
+
+bool UTIL_IsClassicMode();

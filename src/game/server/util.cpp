@@ -1723,3 +1723,8 @@ float TEXTURETYPE_PlaySound( TraceResult* ptr, Vector vecSrc, Vector vecEnd, int
 
     return fvolbar;
 }
+
+bool UTIL_IsClassicMode()
+{
+    return ( static_cast<int>( mp_classic_mode.value ) == 1 );
+}
