@@ -225,7 +225,7 @@ def GetModDirectory() -> str:
 
 mod_directory = GetModDirectory();
 
-if Options[ "InstallAssets" ][0]:
+if Options[ "InstallAssets" ][0] and ErrorNumbers == 0:
 
     print( f"{colorama.Fore.LIGHTMAGENTA_EX}Start assets installation...{colorama.Fore.WHITE}" );
 
@@ -289,4 +289,5 @@ if Options[ "RunGame" ][0] and ErrorNumbers == 0:
         ]
     );
 
-input( f"All done. {ErrorNumbers} errors" );
+input( f"{colorama.Fore.LIGHTMAGENTA_EX}All done. {colorama.Fore.WHITE if ErrorNumbers == 0 else colorama.Fore.RED} {ErrorNumbers} {colorama.Fore.LIGHTMAGENTA_EX}errors" );
+print( f"{colorama.Fore.WHITE}Press enter to exit." );
