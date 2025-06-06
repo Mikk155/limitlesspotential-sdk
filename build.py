@@ -289,5 +289,5 @@ if Options[ "RunGame" ][0] and ErrorNumbers == 0:
         ]
     );
 
-input( f"{colorama.Fore.LIGHTMAGENTA_EX}All done. {colorama.Fore.WHITE if ErrorNumbers == 0 else colorama.Fore.RED} {ErrorNumbers} {colorama.Fore.LIGHTMAGENTA_EX}errors" );
-print( f"{colorama.Fore.WHITE}Press enter to exit." );
+print( f"{colorama.Fore.LIGHTMAGENTA_EX}All done. {colorama.Fore.WHITE if ErrorNumbers == 0 else colorama.Fore.RED} {ErrorNumbers} {colorama.Fore.LIGHTMAGENTA_EX}errors" );
+input( f"{colorama.Fore.WHITE}Press enter to exit." );
