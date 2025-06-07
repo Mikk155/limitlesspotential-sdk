@@ -56,6 +56,7 @@ bool CAchievements::Initialize()
 
     m_achievement_restore = g_ClientCommands.CreateScoped( "sv_achievement_restore", [this]( auto, const auto& )
     {
+        // -TODO add a confirmation
         FileSystem_WriteTextToFile( "cfg/server/achievements.json", "{}", "GAMECONFIG" );
         m_achievements = json::object();
         g_GameLogger->warn( "All achievements has been removed and restarted." );

@@ -22,6 +22,30 @@
 #include "GM_Cooperative.h"
 #include "GM_CaptureTheFlag.h"
 
+#ifndef CLIENT_DLL
+#include "voice_gamemgr.h"
+CVoiceGameMgr g_VoiceGameMgr;
+
+class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
+{
+public:
+    bool CanPlayerHearPlayer( CBasePlayer* pListener, CBasePlayer* pTalker ) override
+    {
+        if( g_GameMode->IsTeamPlay() )
+        {
+            if( g_pGameRules->PlayerRelationship( pListener, pTalker ) != GR_TEAMMATE )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+static CMultiplayGameMgrHelper g_GameMgrHelper;
+
+#endif
+
 void GM_Base::OnRegister()
 {
     g_GameMode.Logger->trace( "Registered gamemode \"{}\" in {}", GetName(), GM_LIB );
@@ -122,6 +146,10 @@ void CGameModes::Shutdown()
     {
         delete gamemode;
     }
+
+#ifndef CLIENT_DLL
+    g_VoiceGameMgr.Shutdown();
+#endif
 }
 
 template <typename TGameMode>
@@ -192,6 +220,8 @@ bool CGameModes::Initialize()
         Con_Printf( "Set gamemode to update %s.\n", ( GameModeAutoUpdate ? "automatically" : "when the level changes" ) );
     },
     CommandLibraryPrefix::No );
+
+    g_VoiceGameMgr.Init( &g_GameMgrHelper, gpGlobals->maxClients );
 #else
     g_ClientUserMessages.RegisterHandler( "GameMode", &CGameModes::MsgFunc_UpdateGameMode, this );
 #endif

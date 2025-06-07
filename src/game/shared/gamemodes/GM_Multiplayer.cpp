@@ -26,25 +26,7 @@ extern int giTeamplay;
 
 #include "voice_gamemgr.h"
 
-CVoiceGameMgr g_VoiceGameMgr;
-
-class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
-{
-public:
-    bool CanPlayerHearPlayer( CBasePlayer* pListener, CBasePlayer* pTalker ) override
-    {
-        if( g_GameMode->IsTeamPlay() )
-        {
-            if( g_pGameRules->PlayerRelationship( pListener, pTalker ) != GR_TEAMMATE )
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-};
-
-static CMultiplayGameMgrHelper g_GameMgrHelper;
+extern CVoiceGameMgr g_VoiceGameMgr;
 
 extern char* pszPlayerIPs[MAX_PLAYERS * 2];
 
@@ -54,7 +36,6 @@ void GM_Multiplayer::OnRegister()
 {
 #ifdef CLIENT_DLL
 #else
-    g_VoiceGameMgr.Init( &g_GameMgrHelper, gpGlobals->maxClients );
 #endif
 
     BaseClass::OnRegister();
@@ -64,7 +45,6 @@ void GM_Multiplayer::OnUnRegister()
 {
 #ifdef CLIENT_DLL
 #else
-    g_VoiceGameMgr.Shutdown();
 #endif
 
     BaseClass::OnUnRegister();
