@@ -68,6 +68,8 @@
 
 #include "ui/hud/HudReplacementSystem.h"
 
+#include "AdminInterface.h"
+
 constexpr char DefaultMapConfigFileName[] = "cfg/server/default_map_config.json";
 
 cvar_t servercfgfile = {"sv_servercfgfile", "cfg/server/server.json", FCVAR_NOEXTRAWHITEPACE | FCVAR_ISPATH};
@@ -656,6 +658,8 @@ void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion
     sentences::g_Sentences.MapInit();
 
     g_GameMode->OnMapInit();
+
+    g_AdminInterface.OnMapInit();
 
     const auto timeElapsed = std::chrono::high_resolution_clock::now() - start;
 
