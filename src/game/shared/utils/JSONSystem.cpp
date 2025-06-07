@@ -256,6 +256,9 @@ std::optional<json> JSONSystem::LoadJSONFile( const char* fileName, const JSONLo
                 }
             }
 
+            if( data.find( "$schema" ) != data.end() )
+                data.erase( "$schema" );
+
             return data;
         }
         catch ( const json::exception& e )
