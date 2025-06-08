@@ -17,21 +17,40 @@ namespace MapUpgrader.Upgrades.Common
             "game_team_master"
         );
 
+        private int GetDefault( Entity entity )
+        {
+            switch( entity.ClassName )
+            {
+                case "trigger_auto":
+                case "trigger_ctfgeneric":
+                case "game_team_master":
+                {
+                    return 1; // They return USE_ON on default case
+                }
+                case "trigger_relay":
+                default:
+                {
+                    return 0; // This one returns USE_OFF
+                }
+            }
+        }
+
         protected override void ApplyCore( MapUpgradeContext context )
         {
             foreach( var entity in context.Map.Entities.Where( e => ClassNames.Contains( e.ClassName ) ) )
             {
                 if( !entity.ContainsKey( "triggerstate" ) )
                 {
+                    entity.SetInteger( "m_UseType", 0 ); // Fall to USE_OFF for uninitialized types
                     continue;
                 }
 
-                var trigger_type = entity.GetInteger( "triggerstate" ) switch
+                int trigger_type = entity.GetInteger( "triggerstate" ) switch
                 {
                     0 => 0, // Off
                     1 => 1, // On
                     2 => 3, // TOGGLE
-                    _ => 1 // On (Default in the game's code)
+                    _ => GetDefault(entity)
                 };
 
                 entity.Remove( "triggerstate" );
