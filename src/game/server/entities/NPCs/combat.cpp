@@ -850,7 +850,7 @@ bool CBaseMonster::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, fl
     {
         if( gpGlobals->time == m_capdmg_time )
         {
-            m_capdmg_max += flDamage;
+            m_capdmg_max++;
 
             if( m_capdmg_max > cap )
                 return false;

@@ -683,7 +683,7 @@ public:
 
     // Damage cap per-frame
     float m_capdmg_time;
-    float m_capdmg_max;
+    int m_capdmg_max;
 
     bool m_uselos = false;
 };
