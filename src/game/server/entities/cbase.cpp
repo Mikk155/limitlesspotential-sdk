@@ -51,6 +51,11 @@ int DispatchSpawn( edict_t* pent )
             return -1; // return that this entity should be deleted
         }
 
+        entity = (CBaseEntity*)GET_PRIVATE( pent );
+
+        if( !entity )
+            return -1;
+
         if( ( entity->pev->flags & FL_KILLME ) != 0 )
         {
             return -1;
