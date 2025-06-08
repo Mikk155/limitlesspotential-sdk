@@ -796,6 +796,8 @@ public:
     cvar_t* m_pCvarStealMouse = nullptr;
     cvar_t* m_pCvarDraw = nullptr;
     cvar_t* m_pCvarCrosshair = nullptr;
+    cvar_t* m_pCvarCrosshairBlock = nullptr;
+    cvar_t* m_pCvarCrosshairColor = nullptr;
 
     RGB24 m_HudColor = RGB_HUD_COLOR;
 
@@ -891,7 +893,6 @@ public:
     // user messages
     void MsgFunc_Damage( const char* pszName, BufferReader& reader );
     void MsgFunc_HudColor( const char* pszName, BufferReader& reader );
-    void MsgFunc_CrosshairColor( const char* pszName, BufferReader& reader );
     void MsgFunc_Logo( const char* pszName, BufferReader& reader );
     void MsgFunc_ResetHUD( const char* pszName, BufferReader& reader );
     void MsgFunc_InitHUD( const char* pszName, BufferReader& reader );

@@ -21,17 +21,6 @@ bool CHudDlight::Init()
 
     g_ClientUserMessages.RegisterHandler( "TempLight", &CHudDlight::MsgFunc_DrawLight, this );
 
-#if 0
-    auto RegisterDlightCvar = [this]( std::string name, cvar_t* cvar ) -> void
-    {
-        cvar = gEngfuncs.pfnRegisterVariable( fmt::format( "cl_dlight_{}", name ).c_str(), "1", FCVAR_ARCHIVE );
-    };
-
-    RegisterDlightCvar( "weapons", m_Muzzleflash );
-    RegisterDlightCvar( "studiomodels", m_StudioModelRendering );
-    RegisterDlightCvar( "explosions", m_Explosions );
-#endif
-
     m_Muzzleflash = gEngfuncs.pfnRegisterVariable( "cl_dlight_weapons", "1", FCVAR_ARCHIVE );
     m_StudioModelRendering = gEngfuncs.pfnRegisterVariable( "cl_dlight_studiomodels", "1", FCVAR_ARCHIVE );
     m_Explosions = gEngfuncs.pfnRegisterVariable( "cl_dlight_explosions", "1", FCVAR_ARCHIVE );

@@ -5005,26 +5005,6 @@
 {
 "english": "Reset color"
 },
-"player_setcrosshaircolor::classname":
-{
-"english": "Set or reset player crosshair color"
-},
-"player_setcrosshaircolor::crosshair_color":
-{
-"english": "Crosshair Color (R G B)"
-},
-"player_setcrosshaircolor::action":
-{
-"english": "Action To Take"
-},
-"player_setcrosshaircolor::action::0":
-{
-"english": "Set color"
-},
-"player_setcrosshaircolor::action::1":
-{
-"english": "Reset color"
-},
 "player_setsuitlighttype::classname":
 {
 "english": "Set player's suit light type"

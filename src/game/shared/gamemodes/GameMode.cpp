@@ -120,6 +120,60 @@ void GM_Base::OnPlayerPreThink( CBasePlayer* player, float time )
 #endif
 }
 
+void GM_Base::SetCrosshairColor( RGB24 color, int index )
+{
+#ifdef CLIENT_DLL
+    if( gHUD.m_pCvarCrosshairBlock == nullptr || gHUD.m_pCvarCrosshairBlock->value != 1 )
+    {
+        if( index == 0 )
+        {
+            if( gHUD.m_pCvarCrosshairColor != nullptr
+            && gHUD.m_pCvarCrosshairColor->string != nullptr
+            && gHUD.m_pCvarCrosshairColor->string[0] != '\0' )
+            {
+                Vector default_color;
+
+                if( int result = default_color.FromString( gHUD.m_pCvarCrosshairColor->string ); result == 3 )
+                {
+                    gHUD.m_CrosshairColor = {
+                        static_cast<std::uint8_t>( default_color.x ),
+                        static_cast<std::uint8_t>( default_color.y ),
+                        static_cast<std::uint8_t>( default_color.z )
+                    };
+                    return;
+                }
+            }
+        }
+
+        gHUD.m_CrosshairColor = color;
+    }
+#else
+    auto executor = [&]( CBasePlayer* player )
+    {
+        if( player != nullptr )
+        {
+            player->m_CrosshairColor = color.ToInteger();
+
+            MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, player );
+                WRITE_BYTE( static_cast<int>( ClientGameModeNetwork::fnSetCrosshairColor ) );
+                WRITE_BYTE( color.Red );
+                WRITE_BYTE( color.Green );
+                WRITE_BYTE( color.Blue );
+            MESSAGE_END();
+        }
+    };
+
+    if( index == 0 ) {
+        for( CBasePlayer* player : UTIL_FindPlayers() ) {
+            executor(player);
+        }
+    }
+    else {
+        executor( UTIL_PlayerByIndex(index) );
+    }
+#endif
+}
+
 void GM_Base::_UpdateClientGameMode_( CBasePlayer* player )
 {
 #ifndef CLIENT_DLL
@@ -366,6 +420,19 @@ void CGameModes::MsgFunc_UpdateGameMode( BufferReader& reader )
         case ClientGameModeNetwork::fnOnClientDisconnect:
         {
             g_GameMode->OnClientDisconnect( reader.ReadByte() );
+            break;
+        }
+        case ClientGameModeNetwork::fnSetCrosshairColor:
+        {
+            RGB24 color{
+                static_cast<std::uint8_t>( reader.ReadByte() ),
+                static_cast<std::uint8_t>( reader.ReadByte() ),
+                static_cast<std::uint8_t>( reader.ReadByte() )
+            };
+
+            g_GameMode->SetCrosshairColor( color, ( ( color.Red == RGB_CROSSHAIR_COLOR.Red
+                && color.Green == RGB_CROSSHAIR_COLOR.Green
+                    && color.Blue == RGB_CROSSHAIR_COLOR.Blue ) ? 1 : 0 ) );
             break;
         }
     }

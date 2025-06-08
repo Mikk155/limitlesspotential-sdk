@@ -701,13 +701,20 @@ void SV_CreateClientCommands()
                 Vector color{255, 255, 255};
                 UTIL_StringToVector( color, CMD_ARGS() );
 
-                player->SetCrosshairColor( {static_cast<std::uint8_t>( color.x ),
+                g_GameMode->SetCrosshairColor( {
+                    static_cast<std::uint8_t>( color.x ),
                     static_cast<std::uint8_t>( color.y ),
-                    static_cast<std::uint8_t>( color.z )} );
+                    static_cast<std::uint8_t>( color.z )
+                }, player->entindex() );
+            }
+            else if( args.Count() == 2 && atoi( args.Argument( 1 ) ) == 0 )
+            {
+                g_GameMode->SetCrosshairColor( RGB_CROSSHAIR_COLOR, player->entindex() );
             }
             else
             {
                 UTIL_ConsolePrint( player, "Usage: set_crosshair_color <r> <g> <b> (values in range 0-255)\n" );
+                UTIL_ConsolePrint( player, "or set_crosshair_color 0 to restore the default color\n" );
             } },
         {.Flags = ClientCommandFlag::Cheat} );
 

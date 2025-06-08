@@ -94,7 +94,6 @@ void __CmdFunc_OpenCommandMenu()
 void CHud::Init()
 {
     g_ClientUserMessages.RegisterHandler( "HudColor", &CHud::MsgFunc_HudColor, this );
-    g_ClientUserMessages.RegisterHandler( "CrsshrClr", &CHud::MsgFunc_CrosshairColor, this );
     g_ClientUserMessages.RegisterHandler( "Logo", &CHud::MsgFunc_Logo, this );
     g_ClientUserMessages.RegisterHandler( "ResetHUD", &CHud::MsgFunc_ResetHUD, this );
     g_ClientUserMessages.RegisterHandler( "InitHUD", &CHud::MsgFunc_InitHUD, this );
@@ -113,6 +112,8 @@ void CHud::Init()
     m_pCvarStealMouse = CVAR_CREATE( "hud_capturemouse", "1", FCVAR_ARCHIVE );
     m_pCvarDraw = CVAR_CREATE( "hud_draw", "1", FCVAR_ARCHIVE );
     m_pCvarCrosshair = gEngfuncs.pfnGetCvarPointer( "crosshair" );
+    m_pCvarCrosshairBlock = CVAR_CREATE( "crosshair_block", "0", FCVAR_ARCHIVE );
+    m_pCvarCrosshairColor = CVAR_CREATE( "crosshair_color", "255 160 0", FCVAR_ARCHIVE );
     cl_lw = gEngfuncs.pfnGetCvarPointer( "cl_lw" );
     cl_rollangle = CVAR_CREATE( "cl_rollangle", "2.0", FCVAR_ARCHIVE );
     cl_rollspeed = CVAR_CREATE( "cl_rollspeed", "200", FCVAR_ARCHIVE );
@@ -224,7 +225,7 @@ void CHud::VidInit()
     // Reset to default on new map load
     m_HudColor = RGB_HUD_COLOR;
     m_HudItemColor = RGB_HUD_COLOR;
-    m_CrosshairColor = RGB_CROSSHAIR_COLOR;
+    g_GameMode->SetCrosshairColor( RGB_CROSSHAIR_COLOR, 0 );
 
     for( auto hudElement : m_HudList )
     {
@@ -243,13 +244,6 @@ void CHud::MsgFunc_HudColor( const char* pszName, BufferReader& reader )
     {
         m_HudItemColor = m_HudColor;
     }
-}
-
-void CHud::MsgFunc_CrosshairColor( const char* pszName, BufferReader& reader )
-{
-    m_CrosshairColor.Red = reader.ReadByte();
-    m_CrosshairColor.Green = reader.ReadByte();
-    m_CrosshairColor.Blue = reader.ReadByte();
 }
 
 void CHud::MsgFunc_Logo( const char* pszName, BufferReader& reader )

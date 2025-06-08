@@ -365,7 +365,7 @@ void ServerLibrary::PlayerActivating( CBasePlayer* player )
     // Override the crosshair color.
     if( m_MapState->m_CrosshairColor )
     {
-        player->SetCrosshairColor( *m_MapState->m_CrosshairColor );
+        g_GameMode->SetCrosshairColor( *m_MapState->m_CrosshairColor, player->entindex() );
     }
 
     // Override the light type.

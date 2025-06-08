@@ -54,7 +54,8 @@ enum ClientGameModeNetwork
     fnGameModeUpdate = 0,
     fnOnClientInit,
     fnOnClientConnect,
-    fnOnClientDisconnect
+    fnOnClientDisconnect,
+    fnSetCrosshairColor
 };
 
 /**
@@ -160,6 +161,16 @@ public:
      * CLIENT: Called on all connected players
      */
     virtual void OnClientDisconnect( int index );
+
+    /**
+     * @brief Sets the player's crosshair color
+     * 
+     * SERVER: Call to update the client's croshair colors. if @c index is 0 set to all players else is the player index
+     * 
+     * CLIENT: Called when the server wants to update the crosshair color. if @c index is 0 the color has been reseted
+     */
+    void SetCrosshairColor( RGB24 color, int index );
+
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

@@ -4000,7 +4000,7 @@ void CBasePlayer::UpdateClientData()
     {
         // Reinitialize hud color to saved off value.
         SetHudColor( RGB24::FromInteger( m_HudColor ) );
-        SetCrosshairColor( RGB24::FromInteger( m_CrosshairColor ) );
+        g_GameMode->SetCrosshairColor( RGB24::FromInteger( m_CrosshairColor ), entindex() );
     }
 
     // Update Flashlight
@@ -4929,17 +4929,6 @@ void CBasePlayer::SetHudColor( RGB24 color )
     m_HudColor = color.ToInteger();
 
     MESSAGE_BEGIN( MSG_ONE, gmsgHudColor, nullptr, this );
-    g_engfuncs.pfnWriteByte( color.Red );
-    g_engfuncs.pfnWriteByte( color.Green );
-    g_engfuncs.pfnWriteByte( color.Blue );
-    g_engfuncs.pfnMessageEnd();
-}
-
-void CBasePlayer::SetCrosshairColor( RGB24 color )
-{
-    m_CrosshairColor = color.ToInteger();
-
-    MESSAGE_BEGIN( MSG_ONE, gmsgCrosshairColor, nullptr, this );
     g_engfuncs.pfnWriteByte( color.Red );
     g_engfuncs.pfnWriteByte( color.Green );
     g_engfuncs.pfnWriteByte( color.Blue );
