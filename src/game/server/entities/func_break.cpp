@@ -115,6 +115,8 @@ bool CBreakable::Spawn()
 {
     Precache();
 
+    pev->takedamage = ( FBitSet( pev->spawnflags, SF_BREAK_TRIGGER_ONLY ) ? DAMAGE_NO : DAMAGE_YES );
+
     pev->solid = SOLID_BSP;
     pev->movetype = MOVETYPE_PUSH;
     m_angle = pev->angles.y;
