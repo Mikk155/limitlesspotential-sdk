@@ -351,7 +351,7 @@ void CGameTeamMaster::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 
     if( useType == USE_SET )
     {
-        if( value.m_int < 0 )
+        if( value.Float.has_value() && value.Float.value() < 0 )
         {
             m_teamIndex = -1;
         }
@@ -421,7 +421,7 @@ void CGameTeamSet::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 
     if( ShouldClearTeam() )
     {
-        SUB_UseTargets( pActivator, USE_SET, UseValue(-1) );
+        SUB_UseTargets( pActivator, USE_SET, { .Float = -1 } );
     }
     else
     {
@@ -527,7 +527,7 @@ void CGameCounter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
         break;
 
     case USE_SET:
-        SetCountValue( value.m_int );
+        SetCountValue( value.Float.has_value() ? *value.Float : 0 );
         break;
     }
 
@@ -568,7 +568,7 @@ void CGameCounterSet::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
     if( !CanFireForActivator( pActivator ) )
         return;
 
-    SUB_UseTargets( pActivator, USE_SET, UseValue(pev->frags) );
+    SUB_UseTargets( pActivator, USE_SET, { .Float = pev->frags } );
 
     if( RemoveOnFire() )
     {

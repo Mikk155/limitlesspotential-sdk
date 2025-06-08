@@ -1147,7 +1147,7 @@ void COFGeneWorm::DyingThink()
         if( g_GameMode->IsMultiplayer() )
         {
             // Fire this so level designers can respond to this at the right time.
-            FireTargets( "GeneWormTeleport", this, this, USE_ON, UseValue(1) );
+            FireTargets( "GeneWormTeleport", this, this, USE_ON, { .Float = 1 } );
         }
         else
         {
@@ -1163,7 +1163,7 @@ void COFGeneWorm::DyingThink()
                     AILogger->debug( "Touching Target GeneWormTeleport" );
                 }
 
-                FireTargets( "GeneWormTeleport", pPlayer, pPlayer, USE_ON, UseValue(1) );
+                FireTargets( "GeneWormTeleport", pPlayer, pPlayer, USE_ON, { .Float = 1 } );
             }
         }
 

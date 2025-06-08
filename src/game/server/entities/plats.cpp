@@ -1200,7 +1200,7 @@ void CFuncTrackTrain::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
     }
     else
     {
-        float delta = value.m_float;
+        float delta = ( value.Float.has_value() ? value.Float.value() : 0 );
 
         delta = ( (int)( pev->speed * 4 ) / (int)m_speed ) * 0.25 + 0.25 * delta;
         if( delta > 1 )

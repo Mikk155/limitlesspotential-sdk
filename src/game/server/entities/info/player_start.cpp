@@ -155,7 +155,7 @@ void CPlayerSpawnPoint::SpawnPlayer( CBasePlayer* player )
 
         if( !FStringNull( pev->target ) )
         {
-            FireTargets( STRING( pev->target ), player, this, USE_TOGGLE, UseValue( player->pev->origin ) );
+            FireTargets( STRING( pev->target ), player, this, USE_TOGGLE, { .Vector3D = player->pev->origin } );
         }
     }
 }

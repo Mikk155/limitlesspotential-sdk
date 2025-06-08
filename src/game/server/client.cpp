@@ -853,13 +853,14 @@ void SV_CreateClientCommands()
                     useType = std::clamp( static_cast<USE_TYPE>( atoi( args.Argument( 2 ) ) ), USE_OFF, USE_TOGGLE );
                 }
 
-                float value = 0.f;
                 if( args.Count() > 3 )
                 {
-                    value = atof( args.Argument( 3 ) );
+                    FireTargets( args.Argument( 1 ), player, player, useType, { .Float = atof( args.Argument( 3 ) ) } );
                 }
-
-                FireTargets( args.Argument( 1 ), player, player, useType, UseValue(value) );
+                else
+                {
+                    FireTargets( args.Argument( 1 ), player, player, useType );
+                }
             }
             else
             {

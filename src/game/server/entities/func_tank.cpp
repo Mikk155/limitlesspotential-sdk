@@ -496,7 +496,7 @@ void CFuncTank::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
         if( !player )
             return;
 
-        if( value.m_int == 2 && useType == USE_SET )
+        if( value.Float.has_value() && (int)value.Float.value() == 2 && useType == USE_SET )
         {
             ControllerPostFrame();
         }

@@ -1044,40 +1044,6 @@ CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntit
     return failback;
 }
 
-const char* UseValue::print_data()
-{
-    static std::string message;
-
-    message.clear();
-
-    if( m_char )
-        message += fmt::format( "string({}), ", m_char );
-
-    if( m_entity != nullptr )
-        message += fmt::format( "entity({}), ", UTIL_GetBestEntityName( m_entity ) );
-
-    if( m_int )
-        message += fmt::format( "int({}), ", m_int );
-
-    if( m_float != 0.0f )
-        message += fmt::format( "float({:.2f}), ", m_float );
-
-    if( m_double != 0.0 )
-        message += fmt::format( "double({:.2f}), ", m_double );
-
-    if( m_Vector != g_vecZero )
-        message += fmt::format( "Vector({}), ", m_Vector.MakeString() );
-
-    if( message.empty() )
-        return "null";
-
-    // Remove last coma and space
-    message.pop_back(); 
-    message.pop_back();
-
-    return message.c_str();
-}
-
 bool CBaseEntity::ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags )
 {
     // You can add more rules here

@@ -75,29 +75,15 @@ enum USE_TYPE : int
 #define USE_VALUE_MASTER ( 1 << 2 )
 #define USE_VALUE_THINK ( 1 << 3 )
 
-class UseValue
+struct UseValue
 {
-    public:
-        int m_int;
-        float m_float;
-        double m_double;
-        Vector m_Vector;
-        const char* m_char;
-        CBaseEntity* m_entity;
+    std::optional<float> Float;
+    std::optional<std::string> String;
+    std::optional<Vector> Vector3D;
+    std::optional<EHANDLE> EntityHandle;
 
-        // Should the caller's m_UseType be overrided with this?
-        USE_TYPE m_usetype = USE_UNSET;
-
-        const char* print_data();
-
-    UseValue() = default;
-
-    explicit UseValue( Vector value ) : m_Vector( value ) { }
-    explicit UseValue( const char* value ) : m_char( value ) { }
-    explicit UseValue( CBaseEntity* value ) : m_entity( value ) { }
-    explicit UseValue( int value ) : m_int( value ), m_float( static_cast<float>( value ) ), m_double(static_cast<double>( value ) ) { }
-    explicit UseValue( float value) : m_int( static_cast<int>( std::round( value ) ) ), m_float( value ), m_double( static_cast<double>( value ) ) { }
-    explicit UseValue( double value ) : m_int( static_cast<int>( std::round( value ) ) ), m_float( static_cast<float>( value ) ), m_double( value ) { }
+    // Should the caller's m_UseType be overrided with this?
+    std::optional<USE_TYPE> UseType;
 };
 
 enum appearflags : int
@@ -443,7 +429,7 @@ public:
      */
     void SUB_StartFadeOut();
     void SUB_FadeOut();
-    void SUB_CallUseToggle() { this->Use( this, this, USE_TOGGLE, UseValue(0) ); }
+    void SUB_CallUseToggle() { this->Use( this, this, USE_TOGGLE, { .Float = 0 } ); }
     bool ShouldToggle( USE_TYPE useType, bool currentState );
 
     /**

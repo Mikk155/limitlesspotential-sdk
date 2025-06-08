@@ -106,7 +106,7 @@ void TriggerEvent( TriggerEventType event, CBaseEntity* activator, CBaseEntity* 
                         STRING( handler->pev->target ),
                         handler->AllocNewActivator( activator, MyNewCaller, handler->m_sNewActivator, activator ),
                         handler->AllocNewActivator( activator, MyNewCaller, handler->m_Caller, MyNewCaller ),
-                        ( value.m_usetype != USE_UNSET ? value.m_usetype : USE_TOGGLE ),
+                        USE_TOGGLE,
                         value
                     );
                 }

@@ -159,19 +159,21 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
         }
         else
         {
-            value.m_usetype = static_cast<USE_TYPE>(use_value);
+            // Momentarly override USE_TYPE
+            value.UseType = static_cast<USE_TYPE>(use_value);
         }
 
         FireTargets( target_copy.substr( 0, hash_index ).c_str(), activator, caller, use_type, value );
 
-        value.m_usetype = USE_UNSET;
+        value.UseType = std::nullopt;
 
         return;
     }
 
-    if( value.m_usetype != USE_UNSET )
+    // Should we override the USE_TYPE?
+    if( value.UseType.has_value() && value.UseType != USE_UNSET )
     {
-        use_type = value.m_usetype;
+        use_type = *value.UseType;
     }
 
     CBaseEntity::IOLogger->debug( "[FireTargets] Firing: ({})", target );
@@ -209,6 +211,35 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
 
     CBaseEntity* entity = nullptr;
 
+    auto PrintUseValueData = [&]( UseValue value ) -> std::string
+    {
+        std::ostringstream oss;
+
+        if( value.Float.has_value() ) {
+            oss << "Float(" << value.Float.value() << ") ";
+        }
+
+        if ( value.String.has_value() ) {
+            oss << "String(\"" << value.String.value() << "\") ";
+        }
+
+        if ( value.Vector3D.has_value() ) {
+            oss << "Vector(" << value.Vector3D.value().MakeString() << ") ";
+        }
+
+        if ( value.EntityHandle.has_value() ) {
+            if( auto ent = value.EntityHandle.value().Get(); ent != nullptr ) {
+                oss << "Entity(" << UTIL_GetBestEntityName( ent ) << ") ";
+            }
+        }
+
+        if( value.UseType.has_value()) {
+            oss << "UseType(" << lUseType( value.UseType.value() ) << ") ";
+        }
+
+        return oss.str();
+    };
+
     while( ( entity = UTIL_FindEntityByTargetname( entity, target, activator, caller ) ) != nullptr )
     {
         if( !entity || FBitSet( entity->pev->flags, FL_KILLME ) )
@@ -239,7 +270,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
                     UTIL_GetBestEntityName( activator, false ),
                     UTIL_GetBestEntityName( caller, false ),
                     lUseType( use_type ),
-                    value.print_data()
+                    PrintUseValueData( value )
                 );
 
                 entity->Use( activator, caller, use_type, value );
@@ -275,7 +306,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
                     UTIL_GetBestEntityName( caller, false ),
                     lUseType( USE_SAME ),
                     lUseType( entity->m_UseTypeLast ),
-                    value.print_data()
+                    PrintUseValueData( value )
                 );
 
                 entity->Use( activator, caller, entity->m_UseTypeLast, value );
@@ -319,7 +350,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
                     UTIL_GetBestEntityName( caller, false ),
                     lUseType( USE_OPPOSITE ),
                     lUseType( entity->m_UseTypeLast ),
-                    value.print_data()
+                    PrintUseValueData( value )
                 );
 
                 entity->Use( activator, caller, entity->m_UseTypeLast );

@@ -110,24 +110,24 @@ void CTriggerZone::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
             if( Intersects( pEntity ) )
             {
                 in_entities++;
-                FireTargets( STRING(pev->message), pEntity, this, m_InUse, UseValue(m_InValue) );
+                FireTargets( STRING(pev->message), pEntity, this, m_InUse, { .Float = m_InValue } );
             }
             else
             {
                 out_entities++;
-                FireTargets( STRING(pev->netname), pEntity, this, m_OutUse, UseValue(m_OutValue) );
+                FireTargets( STRING(pev->netname), pEntity, this, m_OutUse, { .Float = m_OutValue } );
             }
         }
     }
 
     if( !FStringNull( m_iszInCount ) )
     {
-        FireTargets( STRING( m_iszInCount ), pActivator, this, USE_SET, UseValue(in_entities) );
+        FireTargets( STRING( m_iszInCount ), pActivator, this, USE_SET, { .Float = in_entities } );
     }
 
     if( !FStringNull( m_iszOutCount ) )
     {
-        FireTargets( STRING( m_iszOutCount ), pActivator, this, USE_SET, UseValue(out_entities) );
+        FireTargets( STRING( m_iszOutCount ), pActivator, this, USE_SET, { .Float = out_entities } );
     }
 
     FireTargets( STRING( pev->target ), pActivator, this, USE_TOGGLE );

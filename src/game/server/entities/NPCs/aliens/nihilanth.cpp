@@ -478,7 +478,7 @@ void CNihilanth::DyingThink()
         if( fabs( pev->origin.z - m_flMaxZ ) < 16 )
         {
             pev->velocity = Vector( 0, 0, 0 );
-            FireTargets( m_szDeadUse, this, this, USE_ON, UseValue(1.0) );
+            FireTargets( m_szDeadUse, this, this, USE_ON, { .Float = 1.0 } );
             pev->deadflag = DEAD_DEAD;
         }
     }
@@ -792,7 +792,7 @@ void CNihilanth::NextActivity()
                 char szText[128];
 
                 sprintf( szText, "%s%d", m_szDrawUse, m_iLevel );
-                FireTargets( szText, this, this, USE_ON, UseValue(1.0) );
+                FireTargets( szText, this, this, USE_ON, { .Float = 1.0 } );
 
                 AILogger->debug( "fireing {}", szText );
             }
@@ -1607,7 +1607,7 @@ void CNihilanthHVR::TeleportThink()
         UTIL_Remove( this );
 
         if( m_hTargetEnt != nullptr )
-            m_hTargetEnt->Use( m_hEnemy, m_hEnemy, USE_ON, UseValue(1.0) );
+            m_hTargetEnt->Use( m_hEnemy, m_hEnemy, USE_ON, { .Float = 1.0 } );
 
         if( m_hTouch != nullptr && m_hEnemy != nullptr )
             m_hTouch->Touch( m_hEnemy );
@@ -1667,7 +1667,7 @@ void CNihilanthHVR::TeleportTouch( CBaseEntity* pOther )
     if( pOther == pEnemy )
     {
         if( m_hTargetEnt != nullptr )
-            m_hTargetEnt->Use( pEnemy, pEnemy, USE_ON, UseValue(1.0) );
+            m_hTargetEnt->Use( pEnemy, pEnemy, USE_ON, { .Float = 1.0 } );
 
         if( m_hTouch != nullptr && pEnemy != nullptr )
             m_hTouch->Touch( pEnemy );

@@ -923,7 +923,7 @@ void CMomentaryRotButton::UpdateTarget( float value )
     {
         for( auto target : UTIL_FindEntitiesByTargetname( STRING( pev->target ) ) )
         {
-            target->Use( this, this, USE_SET, UseValue(value) );
+            target->Use( this, this, USE_SET, { .Float = value } );
         }
     }
 }

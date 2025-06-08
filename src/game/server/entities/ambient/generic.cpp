@@ -489,12 +489,7 @@ void CAmbientGeneric::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 
     if( useType == USE_SET && m_fActive ) // Momentary buttons will pass down a float in here
     {
-        fraction = value.m_float;
-
-        if( fraction > 1.0 )
-            fraction = 1.0;
-        if( fraction < 0.0 )
-            fraction = 0.01;
+        fraction = ( value.Float.has_value() ? std::clamp( 0.01f, 1.0f, *value.Float ) : 1.0f );
 
         m_dpv.pitch = fraction * 255;
 

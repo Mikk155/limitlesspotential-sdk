@@ -1495,7 +1495,7 @@ void CBasePlayer::PlayerUse()
             if( ( caps & FCAP_CONTINUOUS_USE ) != 0 )
                 m_afPhysicsFlags |= PFLAG_USING;
 
-            pObject->Use( this, this, USE_SET, UseValue(1) );
+            pObject->Use( this, this, USE_SET, { .Float = 1 } );
         }
         // UNDONE: Send different USE codes for ON/OFF.  Cache last ONOFF_USE object to send 'off' if you turn away
         else if( ( m_afButtonReleased & IN_USE ) != 0 && ( pObject->ObjectCaps() & FCAP_ONOFF_USE ) != 0 ) // BUGBUG This is an "off" use
@@ -2064,12 +2064,12 @@ void CBasePlayer::PreThink()
         if( ( m_afButtonPressed & IN_FORWARD ) != 0 )
         {
             vel = 1;
-            pTrain->Use( this, this, USE_SET, UseValue(vel) );
+            pTrain->Use( this, this, USE_SET, { .Float = vel } );
         }
         else if( ( m_afButtonPressed & IN_BACK ) != 0 )
         {
             vel = -1;
-            pTrain->Use( this, this, USE_SET, UseValue(vel) );
+            pTrain->Use( this, this, USE_SET, { .Float = vel } );
         }
 
         if( 0 != vel )
@@ -2593,7 +2593,7 @@ void CBasePlayer::PostThink()
     { // if they've moved too far from the gun,  or selected a weapon, unuse the gun
         if( m_pTank->OnControls( this ) && FStringNull( pev->weaponmodel ) )
         {
-            m_pTank->Use( this, this, USE_SET, UseValue(2) ); // try fire the gun
+            m_pTank->Use( this, this, USE_SET, { .Float = 2 } ); // try fire the gun
         }
         else
         { // they've moved off the platform

@@ -753,12 +753,7 @@ void CMomentaryDoor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
     if( useType != USE_SET ) // Momentary buttons will pass down a float in here
         return;
 
-    if( value.m_float > 1.0 )
-        value.m_float = 1.0;
-    if( value.m_float < 0.0 )
-        value.m_float = 0.0;
-
-    Vector move = m_vecPosition1 + ( value.m_float * ( m_vecPosition2 - m_vecPosition1 ) );
+    Vector move = m_vecPosition1 + ( value.Float.has_value() ? std::clamp( 0.0f, 1.0f, *value.Float ) : 1.0f ) * ( m_vecPosition2 - m_vecPosition1 );
 
     Vector delta = move - pev->origin;
     // float speed = delta.Length() * 10;
