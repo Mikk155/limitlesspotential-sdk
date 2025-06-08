@@ -63,6 +63,7 @@ namespace MapUpgrader.Upgrades
         {
             builder.AddUpgrade(new C2a5FixBarrelPushTriggersUpgrade());
             builder.AddUpgrade(new C4a3FixFlareSpritesUpgrade());
+            builder.AddUpgrade(new C4a3FixTeleportending());
             builder.AddUpgrade(new C3a2bFixWaterValvesUpgrade());
             builder.AddUpgrade(new C3a2FixLoadSavedUpgrade());
             builder.AddUpgrade(new C4a2FixNihilanthDialogueUpgrade());

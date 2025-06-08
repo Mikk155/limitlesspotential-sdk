@@ -1210,30 +1210,7 @@ void CNihilanth::CommandUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     {
     case USE_OFF:
     {
-        // In multiplayer/coop level designers should script a setup that
-        // accounts for all players being dead or the server being empty.
-        // Player teleportation should not be a critical step in ending the map or game.
-        if( !g_GameMode->IsMultiplayer() )
-        {
-            CBaseEntity* pTouch = UTIL_FindEntityByTargetname( nullptr, m_szDeadTouch );
-
-            if( pTouch )
-            {
-                if( m_hEnemy != nullptr )
-                {
-                    pTouch->Touch( m_hEnemy );
-                }
-                // if the player is using "notarget", the ending sequence won't fire unless we catch it here
-                else
-                {
-                    CBaseEntity* pEntity = UTIL_GetLocalPlayer();
-                    if( pEntity != nullptr && pEntity->IsAlive() )
-                    {
-                        pTouch->Touch( pEntity );
-                    }
-                }
-            }
-        }
+        FireTargets( m_szDeadTouch, ( g_GameMode->IsMultiplayer() ? m_hEnemy : UTIL_GetLocalPlayer() ), this, USE_TOGGLE );
     }
     break;
     case USE_ON:
