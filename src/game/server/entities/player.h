@@ -621,23 +621,17 @@ private:
     float m_flLastClimbTime = 0;
     bool m_bIsClimbing = false;
 
-    // For saving and level changes.
-    int m_HudColor = RGB_HUD_COLOR.ToInteger();
 public:
-    int m_CrosshairColor = RGB_CROSSHAIR_COLOR.ToInteger();
-private:
+    // For saving and level changes.
+    int m_HudColor;
+    int m_CrosshairColor;
 
+private:
     bool m_bInfiniteAir;
     bool m_bInfiniteArmor;
     bool m_JetpackEnabled = false;
 
 public:
-    /**
-     *    @brief Sets the player's hud color
-     *    @details The player must be fully connected and ready to receive user messages for this to work
-     */
-    void SetHudColor( RGB24 color );
-
     void SendScoreInfo( CBasePlayer* destination );
     void SendScoreInfoAll();
 

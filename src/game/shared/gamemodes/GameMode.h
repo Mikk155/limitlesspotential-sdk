@@ -55,7 +55,15 @@ enum ClientGameModeNetwork
     fnOnClientInit,
     fnOnClientConnect,
     fnOnClientDisconnect,
-    fnSetCrosshairColor
+    fnSetClientHUDColor
+};
+
+// These are bits except "None" which if sent a zero value it'll update every hud element's color.
+enum HUDElements
+{
+    All = 0,
+    Uncategorized = 1,
+    Crosshair = 2
 };
 
 /**
@@ -163,14 +171,20 @@ public:
     virtual void OnClientDisconnect( int index );
 
     /**
-     * @brief Sets the player's crosshair color
+     * @brief Sets the player's HUD color
+     *
+     * SERVER: Call to update the client's HUD Color.
+     *
+     * CLIENT: Called when the server wants to update the HUD Color.
+     *
+     * @param elements HUD Element to update see enum HUDElements.
+     *
+     * @param index Target player index. if 0 = all players.
+     *
+     * @param color RGB Color, if not set then restore to client's default.
      * 
-     * SERVER: Call to update the client's croshair colors. if @c index is 0 set to all players else is the player index
-     * 
-     * CLIENT: Called when the server wants to update the crosshair color. if @c index is 0 the color has been reseted
      */
-    void SetCrosshairColor( RGB24 color, int index );
-
+    void SetClientHUDColor( int elements = HUDElements::All, int index = 0, std::optional<RGB24> color = std::nullopt );
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

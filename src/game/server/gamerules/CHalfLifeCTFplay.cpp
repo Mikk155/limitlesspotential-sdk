@@ -835,7 +835,7 @@ void CHalfLifeCTFplay::PlayerSpawn( CBasePlayer* pPlayer )
                 break;
             }
 
-            pPlayer->SetHudColor( color );
+            g_GameMode->SetClientHUDColor( HUDElements::Uncategorized, pPlayer->entindex(), color );
 
             InitItemsForPlayer( pPlayer );
             DisplayTeamFlags( pPlayer );

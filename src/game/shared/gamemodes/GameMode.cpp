@@ -120,45 +120,86 @@ void GM_Base::OnPlayerPreThink( CBasePlayer* player, float time )
 #endif
 }
 
-void GM_Base::SetCrosshairColor( RGB24 color, int index )
+void GM_Base::SetClientHUDColor( int elements, int index, std::optional<RGB24> color )
 {
-#ifdef CLIENT_DLL
-    if( gHUD.m_pCvarCrosshairBlock == nullptr || gHUD.m_pCvarCrosshairBlock->value != 1 )
+    auto UpdateElement = []( int elements, int element ) -> bool
     {
-        if( index == 0 )
+        if( elements == HUDElements::All )
         {
-            if( gHUD.m_pCvarCrosshairColor != nullptr
-            && gHUD.m_pCvarCrosshairColor->string != nullptr
-            && gHUD.m_pCvarCrosshairColor->string[0] != '\0' )
-            {
-                Vector default_color;
+            return true;
+        }
+        else if( ( elements & element ) != 0 )
+        {
+            return true;
+        }
+        return false;
+    };
 
-                if( int result = default_color.FromString( gHUD.m_pCvarCrosshairColor->string ); result == 3 )
-                {
-                    gHUD.m_CrosshairColor = {
-                        static_cast<std::uint8_t>( default_color.x ),
-                        static_cast<std::uint8_t>( default_color.y ),
-                        static_cast<std::uint8_t>( default_color.z )
-                    };
-                    return;
-                }
+#ifdef CLIENT_DLL
+    // The client don't want his HUD color to be changed.
+    if( gHUD.m_pCvarAllowColorUpdate != nullptr && gHUD.m_pCvarAllowColorUpdate->value == 0 ) {
+        return;
+    }
+
+    auto executor = [&]( std::optional<RGB24> optColor, cvar_t* pCvar ) -> RGB24
+    {
+        if( optColor.has_value() )
+        {
+            return optColor.value();
+        }
+        else if( pCvar != nullptr && pCvar->string != nullptr && pCvar->string[0] != '\0' )
+        {
+            Vector DefaultColor;
+
+            if( int result = DefaultColor.FromString( pCvar->string ); result == 3 )
+            {
+                return RGB24::FromVector(DefaultColor);
             }
         }
 
-        gHUD.m_CrosshairColor = color;
+        return {255, 255, 255};
+    };
+
+    if( UpdateElement( elements, HUDElements::Uncategorized ) )
+    {
+        gHUD.m_HudColor = executor( color, gHUD.m_pCvarHUDColor );
+
+        // Sync item color up if we're not in NVG mode
+        if( !gHUD.IsNightVisionOn() ) {
+            gHUD.m_HudItemColor = gHUD.m_HudColor;
+        }
     }
+
+    if( UpdateElement( elements, HUDElements::Crosshair ) )
+    {
+        gHUD.m_CrosshairColor = executor( color, gHUD.m_pCvarCrosshairColor );
+    }
+
 #else
+
+    int rgb = 0;
+
+    if( color.has_value() )
+    {
+        rgb = color.value().ToInteger();
+    }
+
     auto executor = [&]( CBasePlayer* player )
     {
         if( player != nullptr )
         {
-            player->m_CrosshairColor = color.ToInteger();
+            // These are for SaveRestore.
+            if( UpdateElement( elements, HUDElements::Crosshair ) ) {
+                player->m_CrosshairColor = rgb;
+            }
+            if( UpdateElement( elements, HUDElements::Uncategorized ) ) {
+                player->m_HudColor = rgb;
+            }
 
             MESSAGE_BEGIN( MSG_ONE, gmsgGameMode, nullptr, player );
-                WRITE_BYTE( static_cast<int>( ClientGameModeNetwork::fnSetCrosshairColor ) );
-                WRITE_BYTE( color.Red );
-                WRITE_BYTE( color.Green );
-                WRITE_BYTE( color.Blue );
+                WRITE_BYTE( static_cast<int>( ClientGameModeNetwork::fnSetClientHUDColor ) );
+                WRITE_BYTE( elements );
+                WRITE_LONG( rgb );
             MESSAGE_END();
         }
     };
@@ -422,17 +463,12 @@ void CGameModes::MsgFunc_UpdateGameMode( BufferReader& reader )
             g_GameMode->OnClientDisconnect( reader.ReadByte() );
             break;
         }
-        case ClientGameModeNetwork::fnSetCrosshairColor:
+        case ClientGameModeNetwork::fnSetClientHUDColor:
         {
-            RGB24 color{
-                static_cast<std::uint8_t>( reader.ReadByte() ),
-                static_cast<std::uint8_t>( reader.ReadByte() ),
-                static_cast<std::uint8_t>( reader.ReadByte() )
-            };
-
-            g_GameMode->SetCrosshairColor( color, ( ( color.Red == RGB_CROSSHAIR_COLOR.Red
-                && color.Green == RGB_CROSSHAIR_COLOR.Green
-                    && color.Blue == RGB_CROSSHAIR_COLOR.Blue ) ? 1 : 0 ) );
+            int elements = reader.ReadByte();
+            int color = reader.ReadLong();
+            if( color == 0 ) { g_GameMode->SetClientHUDColor( elements ); }
+            else { g_GameMode->SetClientHUDColor( elements, 0, RGB24::FromInteger(color) ); }
             break;
         }
     }

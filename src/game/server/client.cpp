@@ -570,25 +570,27 @@ static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className,
 
 void SV_CreateClientCommands()
 {
-    g_ClientCommands.Create( "test_light", []( CBasePlayer* player, const auto& args )
+    g_ClientCommands.Create( "set_hud_color", []( CBasePlayer* player, const auto& args )
     {
-        TraceResult tr;
-        Vector VecSrc = player->pev->origin + player->pev->view_ofs;
-        UTIL_TraceLine( VecSrc, VecSrc + gpGlobals->v_forward * 512, ignore_monsters, player->edict(), &tr );
+        if( args.Count() == 3 && atoi( args.Argument( 2 ) ) == -1 )
+        {
+            g_GameMode->SetClientHUDColor( atoi( args.Argument( 1 ) ), player->entindex() );
+        }
+        else if( args.Count() > 2 )
+        {
+            Vector color{255, 255, 255};
 
-        tr.vecEndPos.z += 1;
-
-        MESSAGE_BEGIN( MSG_PVS, gmsgDLight, tr.vecEndPos );
-            WRITE_BYTE( DynamicLightType::Explosions );
-            WRITE_COORD_VECTOR( tr.vecEndPos );
-            WRITE_BYTE( 55 ); // Radius
-            WRITE_BYTE( 255 ); // Red
-            WRITE_BYTE( 180 ); // Green
-            WRITE_BYTE( 96 ); // Blue
-            WRITE_COORD( 0.5 ); // Life
-            WRITE_LONG( 800 ); // Decay
-            WRITE_BYTE( 0 ); // Dark
-        MESSAGE_END();
+            for( int i = 0; i < std::min( 3, args.Count() - 2 ); i ++ ) {
+                color[i] = atoi( args.Argument( i + 2 ) );
+            }
+            g_GameMode->SetClientHUDColor( atoi( args.Argument( 1 ) ), player->entindex(), RGB24::FromVector(color) );
+        }
+        else
+        {
+            UTIL_ConsolePrint( player, "Usage: set_hud_color <elements> <r> <g> <b> (values in range 0-255)\n" );
+            UTIL_ConsolePrint( player, "or set_hud_color <elements> to restore the default color\n" );
+            UTIL_ConsolePrint( player, "elements:\nAll = 0\nUncategorized = 1\nCrosshair = 2\n" );
+        }
     } );
 
     g_ClientCommands.Create( "spectate", []( CBasePlayer* player, const auto& args )
@@ -676,47 +678,6 @@ void SV_CreateClientCommands()
             {
                 UTIL_ConsolePrint( player, "\"fov\" is \"{}\"\n", player->m_iFOV );
             } } );
-
-    g_ClientCommands.Create( "set_hud_color", []( CBasePlayer* player, const auto& args )
-        {
-            if( args.Count() >= 4 )
-            {
-                Vector color{255, 255, 255};
-                UTIL_StringToVector( color, CMD_ARGS() );
-
-                player->SetHudColor( {static_cast<std::uint8_t>( color.x ),
-                    static_cast<std::uint8_t>( color.y ),
-                    static_cast<std::uint8_t>( color.z )} );
-            }
-            else
-            {
-                UTIL_ConsolePrint( player, "Usage: set_hud_color <r> <g> <b> (values in range 0-255)\n" );
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
-
-    g_ClientCommands.Create( "set_crosshair_color", []( CBasePlayer* player, const auto& args )
-        {
-            if( args.Count() >= 4 )
-            {
-                Vector color{255, 255, 255};
-                UTIL_StringToVector( color, CMD_ARGS() );
-
-                g_GameMode->SetCrosshairColor( {
-                    static_cast<std::uint8_t>( color.x ),
-                    static_cast<std::uint8_t>( color.y ),
-                    static_cast<std::uint8_t>( color.z )
-                }, player->entindex() );
-            }
-            else if( args.Count() == 2 && atoi( args.Argument( 1 ) ) == 0 )
-            {
-                g_GameMode->SetCrosshairColor( RGB_CROSSHAIR_COLOR, player->entindex() );
-            }
-            else
-            {
-                UTIL_ConsolePrint( player, "Usage: set_crosshair_color <r> <g> <b> (values in range 0-255)\n" );
-                UTIL_ConsolePrint( player, "or set_crosshair_color 0 to restore the default color\n" );
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
 
     g_ClientCommands.Create( "set_suit_light_type", []( CBasePlayer* player, const auto& args )
         {

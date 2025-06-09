@@ -3999,8 +3999,16 @@ void CBasePlayer::UpdateClientData()
     if( m_bRestored )
     {
         // Reinitialize hud color to saved off value.
-        SetHudColor( RGB24::FromInteger( m_HudColor ) );
-        g_GameMode->SetCrosshairColor( RGB24::FromInteger( m_CrosshairColor ), entindex() );
+        if( m_HudColor != 0 ) {
+            g_GameMode->SetClientHUDColor( HUDElements::Uncategorized, entindex(), RGB24::FromInteger( m_HudColor ) );
+        } else {
+            g_GameMode->SetClientHUDColor( HUDElements::Uncategorized, entindex() );
+        }
+        if( m_CrosshairColor != 0 ) {
+            g_GameMode->SetClientHUDColor( HUDElements::Crosshair, entindex(), RGB24::FromInteger( m_CrosshairColor ) );
+        } else {
+            g_GameMode->SetClientHUDColor( HUDElements::Crosshair, entindex() );
+        }
     }
 
     // Update Flashlight
@@ -4922,17 +4930,6 @@ void CBasePlayer::SetPrefsFromUserinfo( char* infobuffer )
     {
         m_AutoWepSwitch = WeaponSwitchMode::IfBetter;
     }
-}
-
-void CBasePlayer::SetHudColor( RGB24 color )
-{
-    m_HudColor = color.ToInteger();
-
-    MESSAGE_BEGIN( MSG_ONE, gmsgHudColor, nullptr, this );
-    g_engfuncs.pfnWriteByte( color.Red );
-    g_engfuncs.pfnWriteByte( color.Green );
-    g_engfuncs.pfnWriteByte( color.Blue );
-    g_engfuncs.pfnMessageEnd();
 }
 
 static void SendScoreInfoMessage( CBasePlayer* owner )

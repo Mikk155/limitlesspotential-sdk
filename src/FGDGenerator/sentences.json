@@ -4985,26 +4985,6 @@
 "english": "",
 "spanish": "Amount to set the player's armor to. Must be in the range **[0, 100]**"
 },
-"player_sethudcolor::classname":
-{
-"english": "Set or reset player hud color"
-},
-"player_sethudcolor::hud_color":
-{
-"english": "Hud Color (R G B)"
-},
-"player_sethudcolor::action":
-{
-"english": "Action To Take"
-},
-"player_sethudcolor::action::0":
-{
-"english": "Set color"
-},
-"player_sethudcolor::action::1":
-{
-"english": "Reset color"
-},
 "player_setsuitlighttype::classname":
 {
 "english": "Set player's suit light type"

@@ -359,13 +359,13 @@ void ServerLibrary::PlayerActivating( CBasePlayer* player )
     // Override the hud color.
     if( m_MapState->m_HudColor )
     {
-        player->SetHudColor( *m_MapState->m_HudColor );
+        g_GameMode->SetClientHUDColor( HUDElements::Uncategorized, player->entindex(), *m_MapState->m_HudColor );
     }
 
     // Override the crosshair color.
     if( m_MapState->m_CrosshairColor )
     {
-        g_GameMode->SetCrosshairColor( *m_MapState->m_CrosshairColor, player->entindex() );
+        g_GameMode->SetClientHUDColor( HUDElements::Crosshair, player->entindex(), *m_MapState->m_CrosshairColor );
     }
 
     // Override the light type.

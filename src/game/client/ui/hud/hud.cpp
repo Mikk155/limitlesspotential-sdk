@@ -93,7 +93,6 @@ void __CmdFunc_OpenCommandMenu()
 // This is called every time the DLL is loaded
 void CHud::Init()
 {
-    g_ClientUserMessages.RegisterHandler( "HudColor", &CHud::MsgFunc_HudColor, this );
     g_ClientUserMessages.RegisterHandler( "Logo", &CHud::MsgFunc_Logo, this );
     g_ClientUserMessages.RegisterHandler( "ResetHUD", &CHud::MsgFunc_ResetHUD, this );
     g_ClientUserMessages.RegisterHandler( "InitHUD", &CHud::MsgFunc_InitHUD, this );
@@ -105,6 +104,9 @@ void CHud::Init()
 
     CVAR_CREATE( "hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO ); // controls whether or not to suicide immediately on TF class switch
     CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );                       // controls whether or not to automatically take screenshots at the end of a round
+    m_pCvarAllowColorUpdate = CVAR_CREATE( "hud_color_update_allow", "1", FCVAR_ARCHIVE ); // Allow the server to update the hud
+    // -TODO How to update this on demand if the value changed?
+    m_pCvarHUDColor = CVAR_CREATE( "hud_color", "255 160 0", FCVAR_ARCHIVE );
 
     CVAR_CREATE( "zoom_sensitivity_ratio", "1.2", 0 );
     CVAR_CREATE( "cl_autowepswitch", "1", FCVAR_ARCHIVE | FCVAR_USERINFO );
@@ -112,7 +114,6 @@ void CHud::Init()
     m_pCvarStealMouse = CVAR_CREATE( "hud_capturemouse", "1", FCVAR_ARCHIVE );
     m_pCvarDraw = CVAR_CREATE( "hud_draw", "1", FCVAR_ARCHIVE );
     m_pCvarCrosshair = gEngfuncs.pfnGetCvarPointer( "crosshair" );
-    m_pCvarCrosshairBlock = CVAR_CREATE( "crosshair_block", "0", FCVAR_ARCHIVE );
     m_pCvarCrosshairColor = CVAR_CREATE( "crosshair_color", "255 160 0", FCVAR_ARCHIVE );
     cl_lw = gEngfuncs.pfnGetCvarPointer( "cl_lw" );
     cl_rollangle = CVAR_CREATE( "cl_rollangle", "2.0", FCVAR_ARCHIVE );
@@ -223,26 +224,11 @@ void CHud::VidInit()
     }
 
     // Reset to default on new map load
-    m_HudColor = RGB_HUD_COLOR;
-    m_HudItemColor = RGB_HUD_COLOR;
-    g_GameMode->SetCrosshairColor( RGB_CROSSHAIR_COLOR, 0 );
+    g_GameMode->SetClientHUDColor( HUDElements::All );
 
     for( auto hudElement : m_HudList )
     {
         hudElement->VidInit();
-    }
-}
-
-void CHud::MsgFunc_HudColor( const char* pszName, BufferReader& reader )
-{
-    m_HudColor.Red = reader.ReadByte();
-    m_HudColor.Green = reader.ReadByte();
-    m_HudColor.Blue = reader.ReadByte();
-
-    // Sync item color up if we're not in NVG mode
-    if( !m_NightVisionState )
-    {
-        m_HudItemColor = m_HudColor;
     }
 }
 
