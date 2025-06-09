@@ -16,6 +16,7 @@
 #pragma once
 
 #include "Platform.h"
+#include "vector.h"
 
 struct RGB24
 {
@@ -63,6 +64,16 @@ struct RGB24
         return {
             static_cast<std::uint8_t>( color & 0xFF ),
             static_cast<std::uint8_t>( ( color & 0xFF00 ) >> 8 ),
-            static_cast<std::uint8_t>( ( color & 0XFF0000 ) >> 16 )};
+            static_cast<std::uint8_t>( ( color & 0XFF0000 ) >> 16 )
+        };
+    }
+
+    static constexpr RGB24 FromVector( Vector color )
+    {
+        return {
+            static_cast<std::uint8_t>( color.x ),
+            static_cast<std::uint8_t>( color.y ),
+            static_cast<std::uint8_t>( color.z )
+        };
     }
 };
