@@ -39,6 +39,7 @@
 #include "UserMessages.h"
 #include "ClientCommandRegistry.h"
 #include "ServerLibrary.h"
+#include "AdminInterface.h"
 
 #include "ctf/ctf_goals.h"
 
@@ -570,6 +571,8 @@ static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className,
 
 void SV_CreateClientCommands()
 {
+    g_AdminInterface.RegisterCommands();
+
     g_ClientCommands.Create( "set_hud_color", []( CBasePlayer* player, const auto& args )
     {
         if( args.Count() == 3 && atoi( args.Argument( 2 ) ) == -1 )
@@ -656,12 +659,6 @@ void SV_CreateClientCommands()
 
     g_ClientCommands.Create( "fullupdate", []( CBasePlayer* player, const auto& args )
         { player->ForceClientDllUpdate(); } );
-
-    g_ClientCommands.Create( "give", []( CBasePlayer* player, const auto& args )
-        {
-            string_t iszItem = ALLOC_STRING( args.Argument( 1 ) ); // Make a copy of the classname
-            player->GiveNamedItem( STRING( iszItem ) ); },
-        {.Flags = ClientCommandFlag::Cheat} );
 
     g_ClientCommands.Create( "drop", []( CBasePlayer* player, const auto& args )
         {
@@ -1056,17 +1053,6 @@ void SV_CreateClientCommands()
         {.Flags = ClientCommandFlag::Cheat} );
 }
 
-bool UTIL_CheatsAllowed( CBasePlayer* player, std::string_view name )
-{
-    if( 0 == g_psv_cheats->value )
-    {
-        UTIL_ConsolePrint( player, "The command \"{}\" can only be used when cheats are enabled\n", name );
-        return false;
-    }
-
-    return true;
-}
-
 /**
  *    @brief called each time a player uses a @c "cmd" command
  *    @details Use CMD_ARGV, CMD_ARGV, and CMD_ARGC to get pointers the character string command.
@@ -1080,9 +1066,20 @@ void ExecuteClientCommand( edict_t* pEntity )
     const char* pcmd = CMD_ARGV( 0 );
     auto player = ToBasePlayer( pEntity );
 
+    if( !player )
+        return;
+
     if( auto clientCommand = g_ClientCommands.Find( pcmd ); clientCommand )
     {
-        if( ( clientCommand->Flags & ClientCommandFlag::Cheat ) == 0 || UTIL_CheatsAllowed( player, clientCommand->Name ) )
+        if( ( clientCommand->Flags & ClientCommandFlag::AdminInterface ) != 0 && !g_AdminInterface.HasAccess( player, clientCommand->Name ) )
+        {
+            UTIL_ConsolePrint( player, "The command \"{}\" can only be used by explicit access\n", clientCommand->Name );
+        }
+        else if( ( clientCommand->Flags & ClientCommandFlag::Cheat ) != 0 && g_psv_cheats->value != 1 )
+        {
+            UTIL_ConsolePrint( player, "The command \"{}\" can only be used when cheats are enabled\n", clientCommand->Name );
+        }
+        else
         {
             clientCommand->Function( player, CommandArgs{} );
         }

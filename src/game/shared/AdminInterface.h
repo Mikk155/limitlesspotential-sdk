@@ -52,21 +52,13 @@ class CAdminInterface final : public IGameSystem
         void Shutdown() override;
 
         /**
-         * @brief Returns a pointer to the @c command name string if it exists. nullptr otherwise
-         */
-        StringPtr GetCommand( const std::string& command );
-
-        /**
          * @brief Returns whatever this @c player can use the given @c command
          */ 
         bool HasAccess( CBasePlayer* player, std::string_view command );
 
-    private:
+        void RegisterCommands();
 
-        /**
-         * @brief Allocs a command string in the string pool, only commands should use this during creation
-         */ 
-        void CreateCommand( const std::string& command );
+    private:
 
         // String pool containing all available commands
         StringPoolMap m_CommandsPool;

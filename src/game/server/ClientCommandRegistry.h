@@ -24,6 +24,8 @@ enum ClientCommandFlag
      *    @brief Only allow this command to execute if cheats are enabled.
      */
     Cheat = 1 << 0,
+
+    AdminInterface = 1 << 1,
 };
 }
 

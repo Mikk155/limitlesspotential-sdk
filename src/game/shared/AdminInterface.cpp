@@ -125,7 +125,7 @@ void CAdminInterface::OnMapInit()
     m_CommandsPool.clear();
     m_ParsedAdmins.clear();
 
-    m_Logger->info( "Reading \"cfg/server/admin/admins.json\"" );
+    m_Logger->info( "Reading \"cfg/server/admin/roles.json\"" );
 
     AdminRoleMap ParsedRoles;
 
@@ -152,9 +152,29 @@ void CAdminInterface::OnMapInit()
 
                 if( std::string value = cmd.get<std::string>(); !value.empty() )
                 {
-                    if( auto command_ptr = GetCommand( value ); command_ptr != nullptr )
+                    if( auto clientCommand = g_ClientCommands.Find( value ); clientCommand )
                     {
-                        role_ccmmands.push_back( command_ptr );
+                        if( ( clientCommand->Flags & ClientCommandFlag::AdminInterface ) == 0 )
+                        {
+                            m_Logger->warn( "Failed to add command \"{}\" is not marked with struct flags ClientCommandFlag::AdminInterface in the SDK.", value );
+                            continue;
+                        }
+                        else if( auto it = m_CommandsPool.find( value ); it == m_CommandsPool.end() )
+                        {
+                            StringPtr interned = std::make_shared<std::string>( value );
+
+                            if( auto it2 = m_CommandsPool.emplace( *interned, std::move( interned ) ); it2.second )
+                            {
+                                role_ccmmands.push_back( it2.first->second );
+                            }
+                            else
+                            {
+                                m_Logger->warn( "Failed to register command \"{}\"", value );
+                                continue;
+                            }
+                        }
+
+                        m_Logger->debug( "Added command \"{}\" to role \"{}\"", value, role );
                     }
                     else
                     {
@@ -163,8 +183,11 @@ void CAdminInterface::OnMapInit()
                 }
             }
 
-            m_Logger->debug( "Registered role \"{}\"", role );
-            ParsedRoles.emplace( role, std::move( role_ccmmands ) );
+            if( role_ccmmands.size() > 0 )
+            {
+                m_Logger->debug( "Registered role \"{}\"", role );
+                ParsedRoles.emplace( role, std::move( role_ccmmands ) );
+            }
         }
     }
     else
@@ -191,7 +214,7 @@ void CAdminInterface::OnMapInit()
 
             StringPoolList admin_commands;
 
-            for( const json& role : roles )
+            for( const auto& role : roles )
             {
                 if( !role.is_string() )
                     continue;
@@ -210,6 +233,15 @@ void CAdminInterface::OnMapInit()
                                 admin_commands.push_back( command );
                             }
                         }
+
+                        if( admin == "default" )
+                        {
+                            m_Logger->debug( "Added role \"{}\" to default permissions.", value );
+                        }
+                        else
+                        {
+                            m_Logger->debug( "Added role \"{}\" to admin \"{}\"", value, admin );
+                        }
                     }
                     else
                     {
@@ -219,7 +251,18 @@ void CAdminInterface::OnMapInit()
             }
 
             if( admin_commands.size() > 0 )
+            {
+                if( admin == "default" )
+                {
+                    m_Logger->warn( "Registered default permissions" );
+                }
+                else
+                {
+                    m_Logger->warn( "Registered administrator \"{}\"", admin ); // -TODO Should we add nicknames to json?
+                }
+
                 m_ParsedAdmins.emplace( admin, std::move( admin_commands ) );
+            }
         }
     }
     else
@@ -229,31 +272,6 @@ void CAdminInterface::OnMapInit()
     }
 }
 #endif
-
-CAdminInterface::StringPtr CAdminInterface::GetCommand( const std::string& command )
-{
-    if( auto it = m_CommandsPool.find( command ); it != m_CommandsPool.end() )
-    {
-        return it->second;
-    }
-
-    return nullptr;
-}
-
-void CAdminInterface::CreateCommand( const std::string& command )
-{
-    auto it = m_CommandsPool.find( command );
-
-    if( it != m_CommandsPool.end() )
-    {
-        m_Logger->warn( "Failed to register \"{}\" command already exists!", command );
-        return;
-    }
-
-    StringPtr interned = std::make_shared<std::string>( command );
-
-    m_CommandsPool.emplace( *interned, std::move( interned ) );
-}
 
 bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 {
@@ -266,6 +284,12 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 
     if( player != nullptr )
     {
+        // Host player has full permisions in a listen server or singleplayer
+        if( ( !IS_DEDICATED_SERVER() && UTIL_GetLocalPlayer() == player ) || !g_GameMode->IsMultiplayer() )
+        {
+            return true;
+        }
+
         auto HasAccessByRole = [&]( const std::string& JsonLabel ) -> bool
         {
             if( auto it = m_ParsedAdmins.find( JsonLabel ); it != m_ParsedAdmins.end() )
@@ -286,4 +310,25 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
     }
 #endif
     return false;
+}
+
+void CAdminInterface::RegisterCommands()
+{
+    CClientCommandCreateArguments fCheats{ .Flags = ( ClientCommandFlag::Cheat | ClientCommandFlag::AdminInterface ) };
+    CClientCommandCreateArguments fDefault{ .Flags = ( ClientCommandFlag::AdminInterface ) };
+
+    g_ClientCommands.Create( "give"sv, []( CBasePlayer* player, const auto& args )
+    {
+        if( args.Count() > 1 )
+        {
+            string_t iszItem = ALLOC_STRING( args.Argument( 1 ) ); // Make a copy of the classname
+            player->GiveNamedItem( STRING( iszItem ) );
+        }
+        else
+        {
+            UTIL_ConsolePrint( player, "Usage: give <classname>\n" );
+// This needs a utility method
+//            UTIL_ConsolePrint( player, "or give <classname> \"{ \"<key>\": \"<value>\", \"<key2>\": \"<value2>\" }\"\n" );
+        }
+    }, fCheats );
 }
