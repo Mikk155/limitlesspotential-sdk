@@ -231,7 +231,7 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
     {
         if( index > 0 && index <= gpGlobals->maxClients )
         {
-            if( auto player = UTIL_PlayerByIndex( index ); player->IsConnected() && player->IsNetClient() )
+            if( auto player = UTIL_PlayerByIndex( index ); player != nullptr && player->IsConnected() && player->IsNetClient() )
             {
                 return { true, player };
             }
