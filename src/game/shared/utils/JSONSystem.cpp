@@ -236,6 +236,9 @@ std::optional<json> JSONSystem::LoadJSONFile( const char* fileName, const JSONLo
 
             auto data = json::parse( text, text + file.size(), nullptr, true, true );
 
+            if( data.find( "$schema" ) != data.end() )
+                data.erase( "$schema" );
+
             m_Logger->trace( "Successfully loaded JSON file" );
 
             if( validator )
@@ -255,9 +258,6 @@ std::optional<json> JSONSystem::LoadJSONFile( const char* fileName, const JSONLo
                     m_Logger->trace( "JSON file passed validation" );
                 }
             }
-
-            if( data.find( "$schema" ) != data.end() )
-                data.erase( "$schema" );
 
             return data;
         }

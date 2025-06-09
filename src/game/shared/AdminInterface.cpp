@@ -20,12 +20,86 @@
 #include <JSONSystem.h>
 #include <algorithm>
 
+#ifdef CLIENT_DLL
+#else
+
+constexpr std::string_view AdminsSchemaName{"admin_admins"sv};
+constexpr std::string_view RolesSchemaName{"admin_roles"sv};
+
+enum SchemaType
+{
+    Admins = 0,
+    Roles
+};
+
+static std::string GetAdminRolesSchema( SchemaType type )
+{
+    std::string_view RegexItems = "^[a-z_]+$";
+    std::string_view RegexType;
+    std::string_view ArrayDescription;
+    std::string_view ItemsDescription;
+    std::string_view ArrayTitle;
+
+    switch( type )
+    {
+        case SchemaType::Admins:
+        {
+            ArrayTitle = "Player's Steam ID";
+            ArrayDescription = "The key must be the Steam ID of a player";
+            ItemsDescription = "These items must be role names listened in roles.json";
+            RegexType = "^([a-zA-Z_:][a-zA-Z0-9_:]*)([123]?)$";
+            break;
+        }
+        case SchemaType::Roles:
+        default:
+        {
+            ArrayDescription = "The key must be the role name usable in admins.json";
+            ItemsDescription = "These items must be command names for this role to have permissions";
+            RegexType = RegexItems;
+            break;
+        }
+    }
+
+    return fmt::format( R"(
+{{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Admin Interface Access Permissions",
+    "type": "object",
+    "properties": {{
+        "$schema": {{ "type": "string" }}
+    }},
+    "patternProperties": {{
+        "{}": {{
+            "type": "array",
+            "title": "{}",
+            "description": "{}",
+            "items": {{
+                "type": "string",
+                "description": "{}",
+                "pattern": "{}"
+            }},
+            "uniqueItems": true,
+            "minItems": 1
+        }}
+    }},
+    "additionalProperties": false
+}}
+)",
+    RegexType, ArrayTitle, ArrayDescription, ItemsDescription, RegexItems );
+}
+static std::string GetAdminSchema() { return GetAdminRolesSchema( SchemaType::Admins ); }
+static std::string GetRolesSchema() { return GetAdminRolesSchema( SchemaType::Roles ); }
+#endif
+
 bool CAdminInterface::Initialize()
 {
     m_Logger = g_Logging.CreateLogger( "admin" );
 
 #ifdef CLIENT_DLL
 #else
+    g_JSON.RegisterSchema( AdminsSchemaName, &GetAdminSchema );
+    g_JSON.RegisterSchema( RolesSchemaName, &GetRolesSchema );
+
     m_ScopedAdminMenu = g_ClientCommands.CreateScoped( "admin_menu", [this]( auto, const auto& )
     {
         // -Open a menu with available commands
@@ -55,7 +129,9 @@ void CAdminInterface::OnMapInit()
 
     AdminRoleMap ParsedRoles;
 
-    if( std::optional<json> json_opt = g_JSON.LoadJSONFile( "cfg/server/admin/roles.json" ); json_opt.has_value() && json_opt.value().is_object() )
+    if( std::optional<json> json_opt = g_JSON.LoadJSONFile( "cfg/server/admin/roles.json",
+        { .SchemaName = RolesSchemaName, .PathID = "GAMECONFIG" } );
+            json_opt.has_value() && json_opt.value().is_object() )
     {
         const json& roles_json = json_opt.value();
 
@@ -99,7 +175,9 @@ void CAdminInterface::OnMapInit()
 
     m_Logger->info( "Reading \"cfg/server/admin/admins.json\"" );
 
-    if( std::optional<json> json_opt = g_JSON.LoadJSONFile( "cfg/server/admin/admins.json" ); json_opt.has_value() && json_opt.value().is_object() )
+    if( std::optional<json> json_opt = g_JSON.LoadJSONFile( "cfg/server/admin/admins.json",
+        { .SchemaName = AdminsSchemaName, .PathID = "GAMECONFIG" } );
+            json_opt.has_value() && json_opt.value().is_object() )
     {
         const json& roles_json = json_opt.value();
 
@@ -183,17 +261,25 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 #else
     if( player != nullptr )
     {
-        if( auto it = m_ParsedAdmins.find( player->SteamID() ); it != m_ParsedAdmins.end() )
+        // -TODO Should format to the old steam id format.
+        const std::string& SteamID = player->SteamID();
+
+        auto HasAccessByRole = [&]( const std::string& JsonLabel ) -> bool
         {
-            if( StringPoolList CommandPool = it->second; CommandPool.size() > 0 )
+            if( auto it = m_ParsedAdmins.find( JsonLabel ); it != m_ParsedAdmins.end() )
             {
-                for( const StringPtr& cmd : CommandPool )
+                if( StringPoolList CommandPool = it->second; CommandPool.size() > 0 )
                 {
-                    if( *cmd == command )
-                        return true;
+                    for( const StringPtr& cmd : CommandPool )
+                    {
+                        if( *cmd == command )
+                            return true;
+                    }
                 }
             }
-        }
+        };
+
+        return ( HasAccessByRole( SteamID ) || HasAccessByRole( "default" ) );
     }
 #endif
     return false;
