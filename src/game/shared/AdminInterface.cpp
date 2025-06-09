@@ -259,27 +259,30 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 {
 #ifdef CLIENT_DLL
 #else
+    // This command doesn't exists. Should it log?
+    if( m_CommandsPool.find( command ) == m_CommandsPool.end() ) {
+        return false;
+    }
+
     if( player != nullptr )
     {
-        // -TODO Should format to the old steam id format.
-        const std::string& SteamID = player->SteamID();
-
         auto HasAccessByRole = [&]( const std::string& JsonLabel ) -> bool
         {
             if( auto it = m_ParsedAdmins.find( JsonLabel ); it != m_ParsedAdmins.end() )
             {
-                if( StringPoolList CommandPool = it->second; CommandPool.size() > 0 )
+                if( StringPoolList RolesPool = it->second; RolesPool.size() > 0 )
                 {
-                    for( const StringPtr& cmd : CommandPool )
+                    for( const StringPtr& cmd : RolesPool )
                     {
                         if( *cmd == command )
                             return true;
                     }
                 }
             }
+            return false;
         };
 
-        return ( HasAccessByRole( SteamID ) || HasAccessByRole( "default" ) );
+        return ( HasAccessByRole( player->GetSteamID()->SteamFormat() ) || HasAccessByRole( "default" ) );
     }
 #endif
     return false;

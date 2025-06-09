@@ -17,6 +17,7 @@
 
 #include <optional>
 
+#include <memory.h>
 #include <fmt/core.h>
 
 #include <EASTL/fixed_string.h>
@@ -121,6 +122,48 @@ enum class WeaponSwitchMode
     Never = 0,
     IfBetter,
     IfBetterAndNotAttacking
+};
+
+struct SteamID
+{
+    private:
+        std::string sid;
+        uint64_t ID;
+        std::string Steam;
+
+        bool StringCompare( std::string_view other ) const { return ( ( other == sid ) || ( other == Steam ) ); }
+
+        void AllocSteam() {
+            uint64_t authID = ID - 76561197960265728ULL;
+            Steam = std::move( fmt::format( "STEAM_0:{}:{}", std::to_string( authID % 2 ), std::to_string( static_cast<uint32_t>( authID / 2 ) ) ) );
+        }
+
+    public:
+
+        SteamID( edict_t* edict ) {
+            if( const char* raw = g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( edict ), "*sid" ); raw ) {
+                sid = std::move( raw );
+                ID = std::stoull(sid);
+            }
+        }
+
+        /**
+         *    @brief Get the Steam ID in a uint64 format
+         */
+        const uint64_t Uint64() const { return ID; }
+        /**
+         *    @brief Get the Steam ID in a uint64 format in a string form
+         */
+        const char* Raw() const { return sid.c_str(); }
+        /**
+         *    @brief Get the Steam ID in the old STEAM_:_ form
+         */
+        const std::string& SteamFormat() { if( Steam.empty() ) { AllocSteam(); } return Steam; }
+
+        bool operator==( uint64_t other ) const { return ID == other; }
+        bool operator==( const char* other ) const { return StringCompare(other); }
+        bool operator==( std::string_view other ) const { return StringCompare(other); }
+        bool operator==( const std::string& other ) const { return StringCompare(other); }
 };
 
 class CBasePlayer : public CBaseMonster
@@ -647,14 +690,19 @@ public:
     float m_flLastFreePositionTrack;
     Vector m_VecLastFreePosition;
 
+private:
+    std::shared_ptr<SteamID> m_steamid;
+public:
     /**
-     *    @brief This gets the Steam Id even if sv_lan is 1.
-     *    @details Format is signed 64 bit integer in string form.
+     * @brief This gets the Steam ID even if sv_lan is 1.
      */
-    const char* SteamID() {
-        return g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( edict() ), "*sid" );
+    SteamID* GetSteamID() {
+        if( !m_steamid ) {
+            m_steamid = std::make_shared<SteamID>(edict());
+        }
+        return m_steamid.get();
     }
- 
+
     // Entities listed as "used" See ambient_music/dsp
     std::vector<int> m_listed_entities;
     // -TODO Need saverestore
