@@ -18,12 +18,11 @@
 #include <string>
 #include <string_view>
 #include <vector>
-
 #include <fmt/core.h>
 
 #include "utils/json_fwd.h"
-
 #include "utils/GameSystem.h"
+#include "networking/NetworkDataSystem.h"
 
 #ifdef CLIENT_DLL
 #else
@@ -33,7 +32,7 @@
 
 class CBasePlayer;
 
-class CAdminInterface final : public IGameSystem
+class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandler
 {
     public:
 
@@ -50,15 +49,19 @@ class CAdminInterface final : public IGameSystem
         bool Initialize() override;
         void PostInitialize() override {}
         void Shutdown() override;
+        void HandleNetworkDataBlock( NetworkDataBlock& block ) override;
 
         /**
          * @brief Returns whatever this @c player can use the given @c command
+         * 
+         * @details this always return true for the host player if singleplayer or listen server
          */ 
         bool HasAccess( CBasePlayer* player, std::string_view command );
 
-        void RegisterCommands();
-
     private:
+        bool ParseJsons( const std::string& filename, json& input, AdminRoleMap& ParsedRoles );
+        bool ParseRoles( json& input, AdminRoleMap& ParsedRoles );
+        bool ParseAdmins( json& input, const AdminRoleMap& ParsedRoles );
 
         // String pool containing all available commands
         StringPoolMap m_CommandsPool;
@@ -68,11 +71,10 @@ class CAdminInterface final : public IGameSystem
         std::shared_ptr<spdlog::logger> m_Logger;
 
 #ifdef CLIENT_DLL
-    public:
-//        void OpenCommandMenu();
 #else
     public:
         void OnMapInit();
+        void RegisterCommands();
 
     private:
         ScopedClientCommand m_ScopedAdminMenu;
