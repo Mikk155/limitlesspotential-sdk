@@ -75,6 +75,8 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
     public:
         void OnMapInit();
         void RegisterCommands();
+        bool ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString );
+        std::optional<json> ParseJson( CBasePlayer* player, std::string text );
 
     private:
         ScopedClientCommand m_ScopedAdminMenu;

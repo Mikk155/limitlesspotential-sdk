@@ -333,10 +333,28 @@ void CAdminInterface::OnMapInit()
 
 bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 {
+#ifndef CLIENT_DLL
+    if( !player ) {
+        return false;
+    }
+#endif
+
     // This command doesn't exists. Should it log?
     if( m_CommandsPool.find( command ) == m_CommandsPool.end() ) {
         return false;
     }
+
+    // Have full access on singleplayer
+    if( !g_GameMode->IsMultiplayer() ) {
+        return true;
+    }
+
+#ifndef CLIENT_DLL
+    // Host player has full permisions in a listen server
+    if( !IS_DEDICATED_SERVER() && UTIL_GetLocalPlayer() == player ) {
+        return true;
+    } // -TODO Know if the host is this client
+#endif
 
     auto HasAccessByRole = [&]( const std::string& JsonLabel ) -> bool
     {
@@ -355,22 +373,103 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
     };
 
 #ifdef CLIENT_DLL
-        return ( HasAccessByRole( "-TODO get the client ID here." ) || HasAccessByRole( "default" ) );
+    return ( HasAccessByRole( "-TODO get the client ID here." ) || HasAccessByRole( "default" ) );
 #else
-    if( !player ) {
-        return false;
-    }
-
-    // Host player has full permisions in a listen server or singleplayer
-    if( ( !IS_DEDICATED_SERVER() && UTIL_GetLocalPlayer() == player ) || !g_GameMode->IsMultiplayer() ) {
-        return true;
-    }
-
     return ( HasAccessByRole( player->GetSteamID()->SteamFormat() ) || HasAccessByRole( "default" ) );
 #endif
 }
 
 #ifndef CLIENT_DLL
+std::optional<json> CAdminInterface::ParseJson( CBasePlayer* player, std::string text )
+{
+    if( text.empty() )
+        return std::nullopt;
+
+    // The engine manages quotes so the players must create a object like:
+    // "{ 'key': 'value', 'key2': 'value2' }"
+    std::replace( text.begin(), text.end(), '\'', '"' );
+
+    json JsonObject;
+
+    try
+    {
+        JsonObject = json::parse( text );
+        return JsonObject;
+    }
+    catch( const json::parse_error& e )
+    {
+        UTIL_ConsolePrint( player, "Failed to parse json: {}\n", e.what() );
+    }
+
+    return std::nullopt;
+}
+
+bool CAdminInterface::ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString )
+{
+    if( !entity )
+    {
+        UTIL_ConsolePrint( player, "Failed to parse kevyalues. nullptr entity\n" );
+    }
+    else if( !JsonString )
+    {
+        UTIL_ConsolePrint( player, "Failed to parse kevyalues. nullptr JsonString\n" );
+    }
+    else
+    {
+        auto edict = entity->edict();
+
+        const char* classname = entity->GetClassname();
+
+        KeyValueData kvd{.szClassName = classname};
+
+        if( std::optional<json> ObjParse = ParseJson(player, JsonString); ObjParse.has_value() )
+        {
+            json keyvalues = ObjParse.value();
+
+            if( !keyvalues.is_object() )
+            {
+                UTIL_ConsolePrint( player, "Failed to parse kevyalues. json is not an object\n" );
+            }
+            else
+            {
+                bool AnyInitialized = false;
+
+                for( const auto& [ key, jvalue ] : keyvalues.items() )
+                {
+                    if( !jvalue.is_string() )
+                    {
+                        UTIL_ConsolePrint( player, "Ignoring value of key \"{}\" is not a string!\n", key );
+                        continue;
+                    }
+
+                    if( std::string value = jvalue.get<std::string>(); !value.empty() )
+                    {
+                        // Skip the classname the same way the engine does.
+                        if( key == "classname" )
+                            continue;
+
+                        kvd.szKeyName = key.c_str();
+                        kvd.szValue = value.c_str();
+                        kvd.fHandled = 0;
+
+                        AnyInitialized = true;
+
+                        DispatchKeyValue( edict, &kvd );
+                    }
+                    else
+                    {
+                        UTIL_ConsolePrint( player, "Ignoring value of key \"{}\" is empty!\n", key );
+                    }
+                }
+
+                return AnyInitialized;
+            }
+        }
+    }
+
+    return false;
+}
+
 void CAdminInterface::RegisterCommands()
 {
     CClientCommandCreateArguments fCheats{ .Flags = ( ClientCommandFlag::Cheat | ClientCommandFlag::AdminInterface ) };
@@ -380,8 +479,36 @@ void CAdminInterface::RegisterCommands()
     {
         if( args.Count() > 1 )
         {
-            string_t iszItem = ALLOC_STRING( args.Argument( 1 ) ); // Make a copy of the classname
-            player->GiveNamedItem( STRING( iszItem ) );
+            // Make a copy of the classname
+            string_t iszItem = ALLOC_STRING( args.Argument( 1 ) );
+
+            auto entity = g_ItemDictionary->Create( STRING( iszItem ) );
+
+            if( FNullEnt( entity ) )
+            {
+                UTIL_ConsolePrint( player, "Failed to create. nullptr entity\n" );
+                return;
+            }
+
+            entity->pev->origin = player->pev->origin;
+            entity->m_RespawnDelay = ITEM_NEVER_RESPAWN_DELAY;
+
+            if( args.Count() == 3 )
+            {
+                if( !g_AdminInterface.ParseKeyvalues( player, entity, args.Argument( 2 ) ) )
+                {
+                    g_engfuncs.pfnRemoveEntity( entity->edict() );
+                    return;
+                }
+            }
+
+            DispatchSpawn( entity->edict() );
+
+            if( entity->AddToPlayer( player ) != ItemAddResult::Added )
+            {
+                g_engfuncs.pfnRemoveEntity( entity->edict() );
+                return;
+            }
         }
         else
         {
