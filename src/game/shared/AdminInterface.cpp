@@ -22,72 +22,104 @@
 #ifdef CLIENT_DLL
 #else
 
-constexpr std::string_view AdminsSchemaName{"admin_admins"sv};
-constexpr std::string_view RolesSchemaName{"admin_roles"sv};
+constexpr std::string_view AdminInteraceSchemaName{"admins"sv};
 
-enum SchemaType
+static std::string GetAdminInterfaceSchema()
 {
-    Admins = 0,
-    Roles
-};
+    std::string_view SimplePattern{"^[a-z_]+$"};
+    std::string_view SteamIDPattern{"^([a-zA-Z_:][a-zA-Z0-9_:]*)([123]?)$"};
 
-static std::string GetAdminRolesSchema( SchemaType type )
-{
-    std::string_view RegexItems = "^[a-z_]+$";
-    std::string_view RegexType;
-    std::string_view ArrayDescription;
-    std::string_view ItemsDescription;
-    std::string_view ArrayTitle;
+    // Get all available commands
+    json ValidCommands = json::array();
 
-    switch( type )
+    const ClientCommandsMap& CommandsMap = g_ClientCommands.GetCommandsMap();
+
+    for( const auto& [ name, Command ] : CommandsMap )
     {
-        case SchemaType::Admins:
+        if( const ClientCommand* CommandPtr = Command.get(); CommandPtr != nullptr )
         {
-            ArrayTitle = "Player's Steam ID";
-            ArrayDescription = "The key must be the Steam ID of a player";
-            ItemsDescription = "These items must be role names listened in roles.json";
-            RegexType = "^([a-zA-Z_:][a-zA-Z0-9_:]*)([123]?)$";
-            break;
-        }
-        case SchemaType::Roles:
-        default:
-        {
-            ArrayDescription = "The key must be the role name usable in admins.json";
-            ItemsDescription = "These items must be command names for this role to have permissions";
-            RegexType = RegexItems;
-            break;
+            if( ( CommandPtr->Flags & ClientCommandFlag::AdminInterface ) != 0 )
+            {
+                ValidCommands.push_back( name );
+            }
         }
     }
 
     return fmt::format( R"(
 {{
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Admin Interface Access Permissions",
-    "type": "object",
-    "properties": {{
-        "$schema": {{ "type": "string" }}
-    }},
-    "patternProperties": {{
-        "{}": {{
-            "type": "array",
-            "title": "{}",
-            "description": "{}",
+    "additionalProperties": false,
+    "$defs": {{
+        "ArrayValues": {{
             "items": {{
-                "type": "string",
-                "description": "{}",
-                "pattern": "{}"
+                "description": "These items must be role names listened in the 'roles' label",
+                "pattern": "{}",
+                "type": "string"
             }},
-            "uniqueItems": true,
-            "minItems": 1
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
         }}
     }},
-    "additionalProperties": false
+    "properties": {{
+        "default": {{
+            "$ref": "#/$defs/ArrayValues",
+            "title": "Default permission",
+            "description": "Default permissions for anyone"
+        }},
+        "administrators": {{
+            "title": "Administrators",
+            "type": "object",
+            "patternProperties": {{
+                "{}": {{
+                    "type": "object",
+                    "properties": {{
+                        "roles": {{
+                            "$ref": "#/$defs/ArrayValues",
+                            "title": "Permission roles",
+                            "description": "These items must be role names listened in roles.json"
+                        }},
+                        "name": {{
+                            "type": "string",
+                            "title": "Identifier name",
+                            "description": "This is only used to identify the user. is not required."
+                        }}
+                    }},
+                    "required": [ "roles" ],
+                    "title": "Player's Steam ID",
+                    "description": "The key must be the Steam ID of a player"
+                }}
+            }}
+        }},
+        "roles": {{
+            "title": "Permission roles",
+            "type": "object",
+            "patternProperties": {{
+                "{}": {{
+                    "description": "The key must be the role name usable in the 'administrators' label",
+                    "items": {{
+                        "description": "These items must be command names for this role to have permissions",
+                        "pattern": "{}",
+                        "enum": {},
+                        "type": "string"
+                    }},
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                }}
+            }}
+        }},
+        "$schema": {{
+            "type": "string"
+        }}
+    }},
+    "required": [ "default" ],
+    "title": "Admin Interface Access Permissions",
+    "type": "object"
 }}
 )",
-    RegexType, ArrayTitle, ArrayDescription, ItemsDescription, RegexItems );
+    SimplePattern, SteamIDPattern, SimplePattern, SimplePattern, ValidCommands.dump() );
 }
-static std::string GetAdminSchema() { return GetAdminRolesSchema( SchemaType::Admins ); }
-static std::string GetRolesSchema() { return GetAdminRolesSchema( SchemaType::Roles ); }
 #endif
 
 bool CAdminInterface::Initialize()
@@ -95,17 +127,6 @@ bool CAdminInterface::Initialize()
     m_Logger = g_Logging.CreateLogger( "admin" );
 
     g_NetworkData.RegisterHandler( "AdminInterface", this );
-
-#ifdef CLIENT_DLL
-#else
-    g_JSON.RegisterSchema( AdminsSchemaName, &GetAdminSchema );
-    g_JSON.RegisterSchema( RolesSchemaName, &GetRolesSchema );
-
-    m_ScopedAdminMenu = g_ClientCommands.CreateScoped( "admin_menu", [this]( auto, const auto& )
-    {
-        // -Open a menu with available commands
-    } );
-#endif
 
     return true;
 }
@@ -115,221 +136,199 @@ void CAdminInterface::Shutdown()
     m_Logger.reset();
 }
 
-bool CAdminInterface::ParseRoles( json& input, AdminRoleMap& ParsedRoles )
+CAdminInterface::StringPtr CAdminInterface::ToStringPool( const std::string& str )
 {
-    m_Logger->info( "Reading \"cfg/server/admin/roles.json\"" );
-
-    for( const auto& [ role, commands ] : input.items() )
+    auto it = std::find_if( m_StringPool.begin(), m_StringPool.end(),
+    [&]( const auto& strptr ) { return str == *strptr; } );
+    
+    if( it == m_StringPool.end() )
     {
-        if( !commands.is_array() )
-        {
-            m_Logger->warn( "Ignoring role \"{}\" is not an array", role );
-            continue;
-        }
+        StringPtr StringPointer = std::make_shared<std::string>( str );
 
-        StringPoolList role_ccmmands;
+        m_StringPool.push_back( std::move( StringPointer ) );
 
-        for( const auto& cmd : commands )
-        {
-            if( !cmd.is_string() )
-                continue;
-
-            if( std::string value = cmd.get<std::string>(); !value.empty() )
-            {
-#ifndef CLIENT_DLL // -TODO The client should be aware somehow
-                if( auto clientCommand = g_ClientCommands.Find( value ); clientCommand )
-                {
-                    if( ( clientCommand->Flags & ClientCommandFlag::AdminInterface ) == 0 )
-                    {
-                        m_Logger->warn( "Failed to add command \"{}\" is not marked with struct flags ClientCommandFlag::AdminInterface in the SDK.", value );
-                        continue;
-                    }
-#endif
-                    if( auto it = m_CommandsPool.find( value ); it == m_CommandsPool.end() )
-                    {
-                        StringPtr interned = std::make_shared<std::string>( value );
-
-                        if( auto it2 = m_CommandsPool.emplace( *interned, std::move( interned ) ); it2.second )
-                        {
-                            role_ccmmands.push_back( it2.first->second );
-                        }
-                        else
-                        {
-                            m_Logger->warn( "Failed to register command \"{}\"", value );
-                            continue;
-                        }
-                    }
-
-                    m_Logger->debug( "Added command \"{}\" to role \"{}\"", value, role );
-
-#ifndef CLIENT_DLL
-                }
-                else
-                {
-                    m_Logger->warn( "Unknown command \"{}\"", value );
-                }
-#endif
-            }
-        }
-
-        if( role_ccmmands.size() > 0 )
-        {
-            m_Logger->debug( "Registered role \"{}\"", role );
-            ParsedRoles.emplace( role, std::move( role_ccmmands ) );
-        }
+        it = m_StringPool.end() - 1;
     }
 
-    return ( ParsedRoles.size() > 0 );
+    return *it;
 }
 
-bool CAdminInterface::ParseAdmins( json& input, const AdminRoleMap& ParsedRoles )
+json CAdminInterface::ParsePermissions( json& input )
 {
-    for( const auto& [ admin, roles ] : input.items() )
+    AdminRoleMap ParsedRoles;
+
+    const json& roles_object = input[ "roles" ];
+
+    for( const auto& [ _RoleName, _Commands ] : roles_object.items() )
     {
-        if( !roles.is_array() )
+        StringPtr RoleName;
+        StringPoolList RoleCommands;
+
+        for( const json& _Command : _Commands )
         {
-            m_Logger->warn( "Ignoring admin \"{}\" is not an array", admin );
-            continue;
-        }
-
-        StringPoolList admin_commands;
-
-        for( const auto& role : roles )
-        {
-            if( !role.is_string() )
-                continue;
-
-            if( std::string value = role.get<std::string>(); !value.empty() )
-            {
-                if( auto role_commands = ParsedRoles.find( value ); role_commands != ParsedRoles.end() )
-                {
-                    for( const StringPtr& command : role_commands->second )
-                    {
-                        auto it = std::find_if( admin_commands.begin(), admin_commands.end(), [&]( const StringPtr& var )
-                            { return var == command; } );
-
-                        if( it == admin_commands.end() )
-                        {
-                            admin_commands.push_back( command );
-                        }
-                    }
-
-                    if( admin == "default" )
-                    {
-                        m_Logger->debug( "Added role \"{}\" to default permissions.", value );
-                    }
-                    else
-                    {
-                        m_Logger->debug( "Added role \"{}\" to admin \"{}\"", value, admin );
-                    }
-                }
-                else
-                {
-                    m_Logger->warn( "Unknown role \"{}\"", value );
-                }
+            if( !RoleName ) {
+                StringPtr RoleName = ToStringPool( _RoleName );
             }
-        }
 
-        if( admin_commands.size() > 0 )
-        {
-            if( admin == "default" )
+            std::string _CommandValue = _Command.get<std::string>();
+
+#ifndef CLIENT_DLL
+            if( const ClientCommand* clientCommand = g_ClientCommands.Find( _CommandValue ); clientCommand != nullptr )
             {
-                m_Logger->warn( "Registered default permissions" );
+                if( ( clientCommand->Flags & ClientCommandFlag::AdminInterface ) == 0 )
+                {
+                    m_Logger->warn( "Failed to add command \"{}\" is not marked with struct flags ClientCommandFlag::AdminInterface in the SDK.", _CommandValue );
+                    continue;
+                }
             }
             else
             {
-                m_Logger->warn( "Registered administrator \"{}\"", admin ); // -TODO Should we add nicknames to json?
+                m_Logger->warn( "Can not add command \"{}\" doesn't exists in the SDK", _CommandValue );
+                continue;
             }
+#endif
 
-            m_ParsedAdmins.emplace( admin, std::move( admin_commands ) );
+            StringPtr Command = ToStringPool( _CommandValue );
+            RoleCommands.push_back( Command );
+            m_Logger->info( "Added command \"{}\" to role \"{}\"", _CommandValue, _RoleName );
+        }
+
+        if( RoleCommands.size() > 0 )
+        {
+            m_Logger->info( "Registered role \"{}\"", _RoleName );
+            ParsedRoles.emplace( _RoleName, std::move( RoleCommands ) );
         }
     }
 
-    return true;
+    if( ParsedRoles.size() <= 0 )
+    {
+        m_Logger->warn( "No valid roles parsed!" );
+        return json::object();
+    }
+
+    auto AddCommandToRole = [&, this]( const json& RolesArray, StringPtr LevelName ) -> StringPoolList
+    {
+        StringPoolList CommandPoolList;
+
+        for( const auto& _RoleName : RolesArray )
+        {
+            std::string _RoleNameValue = _RoleName.get<std::string>();
+            StringPtr RoleName = ToStringPool( _RoleNameValue );
+
+            if( auto ParsedRolesIteration = ParsedRoles.find( *RoleName ); ParsedRolesIteration != ParsedRoles.end() )
+            {
+                for( const StringPtr& CommandPtr : ParsedRolesIteration->second )
+                {
+                    if( auto it = std::find_if( CommandPoolList.begin(), CommandPoolList.end(), [&]( const StringPtr& var )
+                    { return var == CommandPtr; } ); it == CommandPoolList.end() )
+                    {
+                        CommandPoolList.push_back( CommandPtr );
+                        m_Logger->info( "Added role \"{}\" to admin \"{}\"", _RoleNameValue, *AdminName( LevelName ) );
+                    }
+                }
+            }
+            else
+            {
+                m_Logger->warn( "Unknown role \"{}\"", _RoleNameValue );
+            }
+        }
+
+        return CommandPoolList;
+    };
+
+    const json& admin_object = input[ "administrators" ];
+
+    for( const auto& [ _SteamID, _AdminSection ] : admin_object.items() )
+    {
+        StringPtr SteamID = ToStringPool( _SteamID );
+
+        if( auto _name = _AdminSection.find( "name" ); _name != _AdminSection.end() )
+        {
+            std::string name = _name.value().get<std::string>();
+            StringPtr AdminName = ToStringPool( name );
+            m_AdminNames.emplace( std::string_view( _SteamID ), AdminName );
+        }
+
+        if( StringPoolList AdminCommands = AddCommandToRole( _AdminSection[ "roles" ], SteamID ); AdminCommands.size() > 0 )
+        {
+            if( StringPtr AdminNick = AdminName( SteamID ); *SteamID != *AdminNick )
+            {
+                m_Logger->info( "Registered administrator \"{}\" ({})", *AdminNick, _SteamID );
+            }
+            else
+            {
+                m_Logger->info( "Registered administrator \"{}\"", _SteamID );
+            }
+            m_ParsedAdmins.emplace( std::string_view( _SteamID ), std::move( AdminCommands ) );
+        }
+    }
+
+    StringPtr DefaultName = ToStringPool( "default" );
+
+    if( StringPoolList DefaultCommands = AddCommandToRole( input[ "default" ], DefaultName ); DefaultCommands.size() > 0 )
+    {
+        m_Logger->info( "Registered default permissions" );
+        m_ParsedAdmins.emplace( "default"sv, std::move( DefaultCommands ) );
+    }
+
+    return ( m_ParsedAdmins.size() > 0 ? input : json::object() );
 }
 
-bool CAdminInterface::ParseJsons( const std::string& filename, json& input, AdminRoleMap& ParsedRoles )
+CAdminInterface::StringPtr CAdminInterface::AdminName( StringPtr SteamID )
 {
-    if( filename == "roles" )
-        return ParseRoles(input, ParsedRoles);
-    return ParseAdmins(input, ParsedRoles);
+    if( auto it = m_AdminNames.find( * SteamID ); it != m_AdminNames.end() )
+    {
+        return it->second;
+    }
+    return SteamID;
 }
 
 void CAdminInterface::HandleNetworkDataBlock( NetworkDataBlock& block )
 {
+    // In singleplayer the system give full access to the host
+    if( !g_GameMode->IsMultiplayer() )
+    {
+        return;
+    }
+
+    m_ParsedAdmins.clear();
+    m_AdminNames.clear();
+
+    // Clear string pool
+    m_StringPool.clear();
+
+    m_Active = false;
+
     if( block.Mode == NetworkDataMode::Serialize )
     {
-        block.Data = json::object();
+#ifndef CLIENT_DLL
+        RegisterCommands();
 
-        auto PackJsonObjects = [&]( const std::string& filename ) -> bool
+        block.Data = m_Active;
+
+        // The server must reformat first with the available commands only.
+        const JSONLoadParameters SchemaParams{ .SchemaName = AdminInteraceSchemaName, .PathID = "GAMECONFIG" };
+
+        if( auto result = g_JSON.ParseJSONFile( "cfg/server/admins.json", SchemaParams,
+        [this]( json& input ) { return ParsePermissions( input ); } ); result.has_value() && result.value().size() > 0 )
         {
-            if( std::optional<json> json_opt = g_JSON.LoadJSONFile( fmt::format( "cfg/server/admin/{}.json", filename ).c_str() );
-            json_opt.has_value() && json_opt.value().is_object() )
-            {
-                block.Data.emplace( filename, std::move( json_opt.value() ) );
-                return true;
-            }
-            return false;
-        };
-
-        if( PackJsonObjects( "roles" ) )
-            PackJsonObjects( "admins" );
+            m_Active = true;
+            block.Data = std::move( result.value() );
+        }
+        else
+        {
+            m_Logger->error( "Failed to open and parse \"cfg/server/admins.json\"" );
+        }
+#endif
     }
     else
     {
-        m_CommandsPool.clear();
-        m_ParsedAdmins.clear();
-
-        AdminRoleMap ParsedRoles;
-
-        if( block.Data.find( "roles" ) != block.Data.end() )
+        if( block.Data.is_object() )
         {
-            ParseRoles( block.Data[ "roles" ], ParsedRoles );
-
-            if( block.Data.find( "admins" ) != block.Data.end() )
-            {
-                ParseAdmins( block.Data[ "admins" ], ParsedRoles );
-            }
+            m_Active = ( ParsePermissions( block.Data ).size() > 0 );
         }
     }
 }
-
-#ifdef CLIENT_DLL
-#else
-void CAdminInterface::OnMapInit()
-{
-    // In singleplayer the system give full access to the host so avoid these readings
-    if( !g_GameMode->IsMultiplayer() )
-        return;
-
-    m_CommandsPool.clear();
-    m_ParsedAdmins.clear();
-
-    AdminRoleMap ParsedRoles;
-
-    auto LoadJsonFile = [&, this]( const std::string& filename, const std::string_view& schema ) -> bool
-    {
-        std::string FilePath =  fmt::format( "cfg/server/admin/{}.json", filename );
-
-        const JSONLoadParameters SchemaParams{ .SchemaName = schema, .PathID = "GAMECONFIG" };
-
-        if( const auto result = g_JSON.ParseJSONFile( FilePath.c_str(), SchemaParams,
-        [&, this]( json& input ) { return ParseJsons( filename, input, ParsedRoles ); } ); !result.value_or( false ) )
-        {
-            m_Logger->error( "Failed to open \"{}\"", FilePath );
-            return false;
-        }
-
-        return true;
-    };
-
-    if( !LoadJsonFile( "roles", RolesSchemaName ) )
-        return;
-
-    if( !LoadJsonFile( "admins", AdminsSchemaName ) )
-        return;
-}
-#endif
 
 bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 {
@@ -338,11 +337,6 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
         return false;
     }
 #endif
-
-    // This command doesn't exists. Should it log?
-    if( m_CommandsPool.find( command ) == m_CommandsPool.end() ) {
-        return false;
-    }
 
     // Have full access on singleplayer
     if( !g_GameMode->IsMultiplayer() ) {
@@ -472,10 +466,15 @@ bool CAdminInterface::ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, 
 
 void CAdminInterface::RegisterCommands()
 {
+    if( m_binitialized )
+        return;
+
+    m_binitialized = true;
+
     CClientCommandCreateArguments fCheats{ .Flags = ( ClientCommandFlag::Cheat | ClientCommandFlag::AdminInterface ) };
     CClientCommandCreateArguments fDefault{ .Flags = ( ClientCommandFlag::AdminInterface ) };
 
-    g_ClientCommands.Create( "give"sv, []( CBasePlayer* player, const auto& args )
+    g_ClientCommands.Create( "give", []( CBasePlayer* player, const auto& args )
     {
         if( args.Count() > 1 )
         {
@@ -517,5 +516,8 @@ void CAdminInterface::RegisterCommands()
 //            UTIL_ConsolePrint( player, "or give <classname> \"{ \"<key>\": \"<value>\", \"<key2>\": \"<value2>\" }\"\n" );
         }
     }, fCheats );
+
+    // Last call since ClientCommands needs to be initialize first
+    g_JSON.RegisterSchema( AdminInteraceSchemaName, &GetAdminInterfaceSchema );
 }
 #endif

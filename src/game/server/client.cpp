@@ -571,8 +571,6 @@ static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className,
 
 void SV_CreateClientCommands()
 {
-    g_AdminInterface.RegisterCommands();
-
     g_ClientCommands.Create( "set_hud_color", []( CBasePlayer* player, const auto& args )
     {
         if( args.Count() == 3 && atoi( args.Argument( 2 ) ) == -1 )

@@ -42,7 +42,7 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
 
         using StringPoolMap = std::unordered_map<std::string_view, StringPtr>;
 
-        using AdminRoleMap = std::unordered_map<std::string, StringPoolList>;
+        using AdminRoleMap = std::unordered_map<std::string_view, StringPoolList>;
 
         const char* GetName() const override { return "Admin Interface"; }
 
@@ -58,28 +58,32 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
          */ 
         bool HasAccess( CBasePlayer* player, std::string_view command );
 
+        StringPtr AdminName( StringPtr SteamID );
+
     private:
-        bool ParseJsons( const std::string& filename, json& input, AdminRoleMap& ParsedRoles );
-        bool ParseRoles( json& input, AdminRoleMap& ParsedRoles );
-        bool ParseAdmins( json& input, const AdminRoleMap& ParsedRoles );
 
-        // String pool containing all available commands
-        StringPoolMap m_CommandsPool;
+        StringPoolList m_StringPool;
+        StringPtr ToStringPool( const std::string& str );
 
+        StringPoolMap m_AdminNames;
         AdminRoleMap m_ParsedAdmins;
+
+        bool m_Active;
+
+        json ParsePermissions( json& input );
 
         std::shared_ptr<spdlog::logger> m_Logger;
 
 #ifdef CLIENT_DLL
 #else
     public:
-        void OnMapInit();
         void RegisterCommands();
         bool ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString );
         std::optional<json> ParseJson( CBasePlayer* player, std::string text );
 
     private:
         ScopedClientCommand m_ScopedAdminMenu;
+        bool m_binitialized{false};
 #endif
 };
 
