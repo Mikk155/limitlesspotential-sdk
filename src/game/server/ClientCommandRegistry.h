@@ -85,6 +85,8 @@ struct CClientCommandCreateArguments
     const ClientCommandFlags Flags = ClientCommandFlag::None;
 };
 
+using ClientCommandsMap = std::unordered_map<std::string_view, std::unique_ptr<const ClientCommand>>;
+
 /**
  *    @brief Manages the set of client commands.
  */
@@ -112,7 +114,12 @@ public:
     void Remove( const ClientCommand* command );
 
 private:
-    std::unordered_map<std::string_view, std::unique_ptr<const ClientCommand>> m_Commands;
+    ClientCommandsMap m_Commands;
+
+public:
+    const ClientCommandsMap& GetCommandsMap() {
+        return m_Commands;
+    };
 };
 
 inline ClientCommandRegistry g_ClientCommands;
