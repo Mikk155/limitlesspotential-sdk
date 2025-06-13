@@ -494,7 +494,14 @@ void MusicSystem::UpdateVolume( bool force )
         needsVolumeUpdate = true;
     }
 
-    if( float setting = m_VolumeCvar->value; setting != m_Volume )
+    float setting = m_Volume;
+
+    if( m_VolumeCvar )
+    {
+        setting = m_VolumeCvar->value;
+    }
+
+    if( setting != m_Volume )
     {
         setting = std::clamp( setting, 0.f, 1.f );
 
