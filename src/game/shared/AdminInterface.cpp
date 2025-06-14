@@ -634,7 +634,7 @@ void CAdminInterface::RegisterCommands()
     CClientCommandCreateArguments fCheats{ .Flags = ( ClientCommandFlag::Cheat | ClientCommandFlag::AdminInterface ) };
     CClientCommandCreateArguments fDefault{ .Flags = ( ClientCommandFlag::AdminInterface ) };
 
-    g_ClientCommands.Create( "give"sv, []( CBasePlayer* player, const auto& args )
+    g_ClientCommands.Create( "give"sv, []( CBasePlayer* player, const CommandArgs& args )
     {
         bool ShowInfo = true;
 
@@ -686,10 +686,76 @@ void CAdminInterface::RegisterCommands()
         }
         else
         {
-            UTIL_ConsolePrint( player, "Usage: give <classname> <target>\n" );
-            UTIL_ConsolePrint( player, "or give <classname> <target> \"{ '<key>': '<value>', '<key2>': '<value2>' }\"\n" );
+            UTIL_ConsolePrint( player, "Usage: give <classname> <target> ?\"{ '<key>': '<value>', '<key2>': '<value2>' }\"\n" );
         }
     }, fCheats );
+
+    g_ClientCommands.Create( "ent_trigger"sv, []( CBasePlayer* player, const CommandArgs& args )
+    {
+        USE_TYPE useType = USE_TOGGLE;
+
+        if( args.Count() > 1 )
+        {
+            useType = static_cast<USE_TYPE>( std::clamp(  atoi( args.Argument( 1 ) ), USE_UNSET + 1, USE_UNKNOWN - 1 ) );
+        }
+
+        UseValue value;
+
+        if( args.Count() > 2 )
+        {
+            value.Float = atof( args.Argument( 2 ) );
+        }
+
+        int FiredEntities = 0;
+
+        if( args.Count() > 3 )
+        {
+            CBaseEntity* entity = nullptr;
+
+            do
+            {
+                entity = UTIL_FindEntityByIdentifier( entity, args.Argument( 3 ) );
+
+                if( entity != nullptr )
+                {
+                    entity->Use( player, player, useType, value );
+                    FiredEntities++;
+                }
+            }
+            while( entity != nullptr );
+        }
+        // Trace forward
+        else
+        {
+            Vector forward;
+            AngleVectors( player->pev->v_angle, &forward, nullptr, nullptr );
+
+            Vector origin = player->pev->origin + forward * MAX_EXTENT;
+
+            TraceResult tr;
+            UTIL_TraceLine( player->pev->origin + player->pev->view_ofs, origin, dont_ignore_monsters, player->edict(), &tr );
+
+            if( !FNullEnt( tr.pHit ) )
+            {
+                if( auto entity =  CBaseEntity::Instance( tr.pHit ); entity != nullptr )
+                {
+                    entity->Use( player, player, useType, value );
+                    FiredEntities++;
+                }
+            }
+        }
+
+        if( FiredEntities == 0 )
+        {
+            UTIL_ConsolePrint( player, "Couldn't find any matching entity\n" );
+            UTIL_ConsolePrint( player, "Usage: ent_trigger ?<use type> ?<use value> ?<targetname or classname>\n" );
+            UTIL_ConsolePrint( player, "if no targetname or classname provided it will attempt to trace forwards\n" );
+        }
+        else
+        {
+            UTIL_ConsolePrint( player, "Fired {} {}\n", FiredEntities, FiredEntities > 1 ? "entities" : "entity" );
+        }
+    }, fDefault );
 
     // Last call since ClientCommands needs to be initialize first
     g_JSON.RegisterSchema( AdminInteraceSchemaName, &GetAdminInterfaceSchema );

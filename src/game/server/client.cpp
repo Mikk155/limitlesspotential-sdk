@@ -501,23 +501,6 @@ void PrintPageSearchResult( CBasePlayer* player, const PageSearchResult& result 
         result.TotalEntityCount, gpGlobals->maxEntities, result.DesiredPage, result.PageCount );
 }
 
-static CBaseEntity* FindNextEntityToRemove( CBasePlayer* player, CBaseEntity* startEntity, const char* needle )
-{
-    for( CBaseEntity* entity = startEntity; ( entity = UTIL_FindEntityByIdentifier( entity, needle ) ) != nullptr; )
-    {
-        if( !UTIL_IsRemovableEntity( entity ) )
-        {
-            UTIL_ConsolePrint( player, "Can't remove \"{}\": not allowed to remove entities of this type\n",
-                STRING( entity->pev->classname ) );
-            continue;
-        }
-
-        return entity;
-    }
-
-    return nullptr;
-}
-
 static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className, const Vector& angles,
     const CommandArgs& args, int firstKeyValue )
 {
@@ -825,172 +808,12 @@ void SV_CreateClientCommands()
             } },
         {.Flags = ClientCommandFlag::Cheat} );
 
-    g_ClientCommands.Create( "ent_fire", []( CBasePlayer* player, const CommandArgs& args )
-        {
-            // TODO - Add "delay" like Source?
-            if( args.Count() > 1 )
-            {
-                USE_TYPE useType = USE_TOGGLE;
-                if( args.Count() > 2 )
-                {
-                    useType = std::clamp( static_cast<USE_TYPE>( atoi( args.Argument( 2 ) ) ), USE_OFF, USE_TOGGLE );
-                }
-
-                if( args.Count() > 3 )
-                {
-                    FireTargets( args.Argument( 1 ), player, player, useType, { .Float = atof( args.Argument( 3 ) ) } );
-                }
-                else
-                {
-                    FireTargets( args.Argument( 1 ), player, player, useType );
-                }
-            }
-            else
-            {
-                UTIL_ConsolePrint( player, "usage: ent_fire <targetname> [usetype] [value]\n" );
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
-
     g_ClientCommands.Create( "ent_list", []( CBasePlayer* player, const CommandArgs& args )
         {
             const auto result = PageBasedEntitySearch( player, args.Count() > 1 ? atoi( args.Argument( 1 ) ) : 1, [&]( auto entity )
                 { return true; } );
 
             PrintPageSearchResult( player, result ); },
-        {.Flags = ClientCommandFlag::Cheat} );
-
-    g_ClientCommands.Create( "ent_remove", []( CBasePlayer* player, const CommandArgs& args )
-        {
-            CBaseEntity* candidate;
-
-            if( args.Count() < 2 )
-            {
-                candidate = UTIL_FindEntityForward( player );
-            }
-            else
-            {
-                candidate = FindNextEntityToRemove( player, nullptr, args.Argument( 1 ) );
-            }
-
-            if( candidate )
-            {
-                UTIL_ConsolePrint( player, "Removed {}:{} ({})\n",
-                    candidate->GetClassname(), candidate->entindex(), candidate->GetTargetname() );
-                UTIL_Remove( candidate );
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
-
-    g_ClientCommands.Create( "ent_remove_all", []( CBasePlayer* player, const CommandArgs& args )
-        {
-            if( args.Count() < 2 )
-            {
-                UTIL_ConsolePrint( player, "Usage: ent_remove_all <classname|targetname>\n" );
-                return;
-            }
-
-            const char* needle = args.Argument( 1 );
-
-            int count = 0;
-
-            for( CBaseEntity* candidate = nullptr; ( candidate = FindNextEntityToRemove( player, candidate, needle ) ) != nullptr; )
-            {
-                if( candidate )
-                {
-                    ++count;
-                    UTIL_Remove( candidate );
-                }
-            }
-
-            UTIL_ConsolePrint( player,"Removed {} entities matching \"{}\"\n", count, needle ); },
-        {.Flags = ClientCommandFlag::Cheat} );
-
-    g_ClientCommands.Create( "ent_setname", []( CBasePlayer* player, const CommandArgs& args )
-        {
-            if( args.Count() < 2 )
-            {
-                UTIL_ConsolePrint( player, "Usage: ent_setname <new targetname> [classname|targetname]\n" );
-                return;
-            }
-
-            CBaseEntity* target;
-
-            if( args.Count() < 3 )
-            {
-                target = UTIL_FindEntityForward( player );
-            }
-            else
-            {
-                target = UTIL_FindEntityByIdentifier( nullptr, args.Argument( 2 ) );
-            }
-
-            if( target )
-            {
-                const char* name = args.Argument( 1 );
-                UTIL_ConsolePrint( player, "Set the name of {} to {}\n", target->GetClassname(), name );
-                target->pev->targetname = ALLOC_STRING( name );
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
-
-    g_ClientCommands.Create( "ent_show_origin", []( CBasePlayer* player, const CommandArgs& args )
-        {
-            if( args.Count() < 2 )
-            {
-                UTIL_ConsolePrint( player, "Usage: ent_show_origin <targetname>\n" );
-                return;
-            }
-
-            CBaseEntity* target = UTIL_FindEntityByTargetname( nullptr, args.Argument( 1 ) );
-
-            if( target )
-            {
-                MESSAGE_BEGIN( MSG_ONE, SVC_TEMPENTITY, nullptr, player );
-                WRITE_BYTE( TE_FIREFIELD );
-                WRITE_COORD_VECTOR( target->pev->origin );
-                WRITE_SHORT( 0 );
-                WRITE_SHORT( g_sModelIndexLaserDot );
-                WRITE_BYTE( 1 );
-                WRITE_BYTE( TEFIRE_FLAG_ADDITIVE );
-                WRITE_BYTE( 100 ); // Stick around for 10 seconds.
-                MESSAGE_END();
-
-                UTIL_ConsolePrint( player, "Origin: {}\n", target->pev->origin );
-            }
-            else
-            {
-                UTIL_ConsolePrint( player, "No entity found\n" );
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
-
-    g_ClientCommands.Create( "ent_show_center", []( CBasePlayer* player, const CommandArgs& args )
-        {
-            if( args.Count() < 2 )
-            {
-                UTIL_ConsolePrint( player, "Usage: ent_show_center <targetname>\n" );
-                return;
-            }
-
-            CBaseEntity* target = UTIL_FindEntityByTargetname( nullptr, args.Argument( 1 ) );
-
-            if( target )
-            {
-                const Vector center = target->Center();
-
-                MESSAGE_BEGIN( MSG_ONE, SVC_TEMPENTITY, nullptr, player );
-                WRITE_BYTE( TE_FIREFIELD );
-                WRITE_COORD_VECTOR( center );
-                WRITE_SHORT( 0 );
-                WRITE_SHORT( g_sModelIndexLaserDot );
-                WRITE_BYTE( 1 );
-                WRITE_BYTE( TEFIRE_FLAG_ADDITIVE );
-                WRITE_BYTE( 100 ); // Stick around for 10 seconds.
-                MESSAGE_END();
-
-                UTIL_ConsolePrint( player, "Center: {}\n", center );
-            }
-            else
-            {
-                UTIL_ConsolePrint( player, "No entity found\n" );
-            } },
         {.Flags = ClientCommandFlag::Cheat} );
 
     g_ClientCommands.Create( "ent_show_bbox", []( CBasePlayer* player, const CommandArgs& args )

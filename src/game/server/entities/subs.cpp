@@ -200,7 +200,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
     auto lUseLock = []( int value ) -> std::string
     {
         return ( value == 0 ? "USE_VALUE_UNKNOWN" : 
-            fmt::format( "( {}{}{}{} )",
+            fmt::format( "( {}{}{}{})",
                 ( FBitSet( value, USE_VALUE_MASTER ) ? "Master " : "" ),
                 ( FBitSet( value, USE_VALUE_TOUCH ) ? "Touch " : "" ),
                 ( FBitSet( value, USE_VALUE_USE ) ? "Use " : "" ),
