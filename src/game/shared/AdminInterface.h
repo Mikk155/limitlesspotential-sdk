@@ -79,7 +79,12 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
         void RegisterCommands();
 
         // Utilities
-        bool ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString );
+        // For multiple iterations run ParseJson yourself first, if is a one-time task use the ParseKeyvalues definition with JsonString
+        bool ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, std::optional<json> KeyValuesOpt = std::nullopt );
+        bool ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString ) {
+            return ParseKeyvalues( player, entity, ParseJson(player, JsonString) );
+        }
+        // Replaces ' -> " and then parses a json object
         std::optional<json> ParseJson( CBasePlayer* player, std::string text );
 
     private:

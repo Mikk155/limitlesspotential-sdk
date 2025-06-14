@@ -380,7 +380,11 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 std::optional<json> CAdminInterface::ParseJson( CBasePlayer* player, std::string text )
 {
     if( text.empty() )
+    {
+        if( player != nullptr )
+            UTIL_ConsolePrint( player, "Failed to parse kevyalues. empty string provided\n" );
         return std::nullopt;
+    }
 
     // The engine manages quotes so the players must create a object like:
     // "{ 'key': 'value', 'key2': 'value2' }"
@@ -391,6 +395,21 @@ std::optional<json> CAdminInterface::ParseJson( CBasePlayer* player, std::string
     try
     {
         JsonObject = json::parse( text );
+
+        if( JsonObject.size() <= 0 )
+        {
+            if( player != nullptr )
+                UTIL_ConsolePrint( player, "Failed to parse kevyalues. json has no valid data\n" );
+            return std::nullopt;
+        }
+
+        if( !JsonObject.is_object() )
+        {
+            if( player != nullptr )
+                UTIL_ConsolePrint( player, "Failed to parse kevyalues. json is not an object\n" );
+            return std::nullopt;
+        }
+
         return JsonObject;
     }
     catch( const json::parse_error& e )
@@ -401,70 +420,58 @@ std::optional<json> CAdminInterface::ParseJson( CBasePlayer* player, std::string
     return std::nullopt;
 }
 
-bool CAdminInterface::ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString )
+bool CAdminInterface::ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, std::optional<json> KeyValuesOpt )
 {
-    if( !entity )
+    if( FNullEnt( entity ) )
     {
         UTIL_ConsolePrint( player, "Failed to parse kevyalues. nullptr entity\n" );
+        return false;
     }
-    else if( !JsonString )
+
+    if( !KeyValuesOpt.has_value() )
     {
-        UTIL_ConsolePrint( player, "Failed to parse kevyalues. nullptr JsonString\n" );
+        return false;
     }
-    else
+
+    json keyvalues = KeyValuesOpt.value();
+
+    auto edict = entity->edict();
+
+    const char* classname = entity->GetClassname();
+
+    bool AnyInitialized = false;
+
+    for( const auto& [ key, jvalue ] : keyvalues.items() )
     {
-        auto edict = entity->edict();
-
-        const char* classname = entity->GetClassname();
-
-        KeyValueData kvd{.szClassName = classname};
-
-        if( std::optional<json> ObjParse = ParseJson(player, JsonString); ObjParse.has_value() )
+        if( !jvalue.is_string() )
         {
-            json keyvalues = ObjParse.value();
+            UTIL_ConsolePrint( player, "Ignoring value of key \"{}\" is not a string!\n", key );
+            continue;
+        }
 
-            if( !keyvalues.is_object() )
-            {
-                UTIL_ConsolePrint( player, "Failed to parse kevyalues. json is not an object\n" );
-            }
-            else
-            {
-                bool AnyInitialized = false;
+        if( std::string value = jvalue.get<std::string>(); !value.empty() )
+        {
+            // Skip the classname the same way the engine does.
+            if( key == "classname" )
+                continue;
 
-                for( const auto& [ key, jvalue ] : keyvalues.items() )
-                {
-                    if( !jvalue.is_string() )
-                    {
-                        UTIL_ConsolePrint( player, "Ignoring value of key \"{}\" is not a string!\n", key );
-                        continue;
-                    }
+            KeyValueData kvd{.szClassName = classname};
 
-                    if( std::string value = jvalue.get<std::string>(); !value.empty() )
-                    {
-                        // Skip the classname the same way the engine does.
-                        if( key == "classname" )
-                            continue;
+            kvd.szKeyName = key.c_str();
+            kvd.szValue = value.c_str();
+            kvd.fHandled = 0;
 
-                        kvd.szKeyName = key.c_str();
-                        kvd.szValue = value.c_str();
-                        kvd.fHandled = 0;
+            AnyInitialized = true;
 
-                        AnyInitialized = true;
-
-                        DispatchKeyValue( edict, &kvd );
-                    }
-                    else
-                    {
-                        UTIL_ConsolePrint( player, "Ignoring value of key \"{}\" is empty!\n", key );
-                    }
-                }
-
-                return AnyInitialized;
-            }
+            DispatchKeyValue( edict, &kvd );
+        }
+        else
+        {
+            UTIL_ConsolePrint( player, "Ignoring value of key \"{}\" is empty!\n", key );
         }
     }
 
-    return false;
+    return AnyInitialized;
 }
 
 // Utility for finding player by command arguments
@@ -636,6 +643,13 @@ void CAdminInterface::RegisterCommands()
             // Make a copy of the classname
             string_t iszItem = ALLOC_STRING( args.Argument( 1 ) );
 
+            std::optional<json> HasAnyKeyvalues = std::nullopt;
+
+            if( args.Count() == 4 )
+            {
+                HasAnyKeyvalues = g_AdminInterface.ParseJson( player, args.Argument( 3 ) );
+            }
+
             for( auto target : TargetPlayerEnumerator( player, args, 2 ) )
             {
                 if( target != nullptr )
@@ -651,13 +665,10 @@ void CAdminInterface::RegisterCommands()
                     entity->pev->origin = target->pev->origin;
                     entity->m_RespawnDelay = ITEM_NEVER_RESPAWN_DELAY;
 
-                    if( args.Count() == 4 )
+                    if( args.Count() == 4 && !g_AdminInterface.ParseKeyvalues( player, entity, HasAnyKeyvalues ) )
                     {
-                        if( !g_AdminInterface.ParseKeyvalues( player, entity, args.Argument( 3 ) ) )
-                        {
-                            g_engfuncs.pfnRemoveEntity( entity->edict() );
-                            break; // Invalid object? Don't flood the console.
-                        }
+                        g_engfuncs.pfnRemoveEntity( entity->edict() );
+                        break; // Invalid object? Don't flood the console.
                     }
 
                     DispatchSpawn( entity->edict() );
