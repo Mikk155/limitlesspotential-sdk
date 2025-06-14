@@ -350,6 +350,9 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
     } // -TODO Know if the host is this client
 #endif
 
+    if( !m_Active ) // Don't bother if we don't have a list.
+        return false;
+
     auto HasAccessByRole = [&]( const std::string& JsonLabel ) -> bool
     {
         if( auto it = m_ParsedAdmins.find( JsonLabel ); it != m_ParsedAdmins.end() )
@@ -464,6 +467,156 @@ bool CAdminInterface::ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, 
     return false;
 }
 
+// Utility for finding player by command arguments
+class TargetPlayerIterator
+{
+    private:
+
+        CBasePlayer* m_pPlayer;
+        int m_iNextIndex;
+        CBasePlayer* m_Admin = nullptr;
+        const char* m_Target = nullptr;
+
+    public:
+
+        static constexpr int FirstPlayerIndex = 1;
+
+        TargetPlayerIterator( const TargetPlayerIterator& ) = default;
+
+        TargetPlayerIterator( CBasePlayer* admin, const char* arg, CBasePlayer* start = nullptr ) :
+        m_Admin( admin ), m_Target( arg ), m_pPlayer( start ), m_iNextIndex( start != nullptr ? start->entindex() + 1 : FirstPlayerIndex ) { }
+
+        TargetPlayerIterator() : m_pPlayer( nullptr ), m_iNextIndex( gpGlobals->maxClients + 1 ) { }
+
+        TargetPlayerIterator& operator=( const TargetPlayerIterator& ) = default;
+
+        const CBasePlayer* operator*() const { return m_pPlayer; }
+
+        CBasePlayer* operator*() { return m_pPlayer; }
+
+        CBasePlayer* operator->() { return m_pPlayer; }
+
+        void operator++()
+        {
+            m_pPlayer = FindNextPlayer( m_Admin, m_Target, m_iNextIndex, &m_iNextIndex );
+        }
+
+        void operator++(int)
+        {
+            ++*this;
+        }
+
+        bool operator==( const TargetPlayerIterator& other ) const
+        {
+            return m_pPlayer == other.m_pPlayer;
+        }
+
+        bool operator!=( const TargetPlayerIterator& other ) const
+        {
+            return !( *this == other );
+        }
+
+        static CBasePlayer* FindNextPlayer( CBasePlayer* admin, const char* arg, int index, int* pOutNextIndex = nullptr )
+        {
+            auto IsValid = [&]( CBasePlayer* player ) -> bool
+            {
+                if( !player || player == nullptr )
+                    return false;
+
+                if( FStrEq( arg, "@all" ) )
+                    return true;
+                if( FStrEq( arg, "@me" ) )
+                    return ( player == admin );
+                if( FStrEq( arg, "@dead" ) )
+                    return ( !player->IsAlive() );
+                if( FStrEq( arg, "@alive" ) )
+                    return ( player->IsAlive() );
+                if( strstr( arg, "STEAM_0:" ) != nullptr )
+                    return ( FStrEq( player->GetSteamID()->SteamFormat().c_str(), arg ) );
+                // Nickname assumed
+                return ( FStrEq( STRING( player->pev->netname ), arg ) );
+            };
+
+            while( index <= gpGlobals->maxClients )
+            {
+                if( !arg || arg == nullptr || arg[0] == '\0' )
+                {
+                    break;
+                }
+
+                if( CBasePlayer* player = UTIL_PlayerByIndex( index ); IsValid( player ) )
+                {
+                    if( pOutNextIndex )
+                    {
+                        *pOutNextIndex = index + 1;
+                    }
+
+                    return player;
+                }
+
+                ++index;
+            }
+
+            if( index > gpGlobals->maxClients )
+            {
+                UTIL_ConsolePrint( admin, "Failed to find a target player!\n" );
+            }
+
+            if( pOutNextIndex )
+            {
+                *pOutNextIndex = gpGlobals->maxClients;
+            }
+
+            return nullptr;
+        }
+};
+
+class TargetPlayerEnumerator
+{
+    private:
+
+        CBasePlayer* m_Start = nullptr;
+        CBasePlayer* m_Admin = nullptr;
+        const char* m_Target = nullptr;
+
+        void ConstructArguments( const CommandArgs& args, int index )
+        {
+            if( args.Count() > index )
+            {
+                m_Target = args.Argument( index );
+            }
+            else
+            {
+                if( m_Admin != nullptr )
+                {
+                    //-TODO Move to titles?
+                    UTIL_ConsolePrint( m_Admin, "No target argument\nUsage:\n@all : All players\n@me : The executor of the command\n@dead : Dead players\n" );
+                    UTIL_ConsolePrint( m_Admin, "@alive Alive players\n\"STEAMID_*\" : SteamID Owner\n\"Player nickname\" : Nickname match\n" );
+                }
+            }
+        }
+
+    public:
+
+        TargetPlayerEnumerator( const TargetPlayerEnumerator& ) = default;
+
+        TargetPlayerEnumerator( CBasePlayer* admin, const CommandArgs& args, int index, CBasePlayer* start = nullptr ) :
+        m_Admin( admin ), m_Start( start )
+        {
+            ConstructArguments( args, index );
+        }
+
+        TargetPlayerIterator begin()
+        {
+            return { m_Admin, m_Target, TargetPlayerIterator::FindNextPlayer( m_Admin, m_Target, TargetPlayerIterator::FirstPlayerIndex ) };
+        }
+
+        TargetPlayerIterator end()
+        {
+            return {};
+        }
+};
+
 void CAdminInterface::RegisterCommands()
 {
     if( m_binitialized )
@@ -474,46 +627,56 @@ void CAdminInterface::RegisterCommands()
     CClientCommandCreateArguments fCheats{ .Flags = ( ClientCommandFlag::Cheat | ClientCommandFlag::AdminInterface ) };
     CClientCommandCreateArguments fDefault{ .Flags = ( ClientCommandFlag::AdminInterface ) };
 
-    g_ClientCommands.Create( "give", []( CBasePlayer* player, const auto& args )
+    g_ClientCommands.Create( "give"sv, []( CBasePlayer* player, const auto& args )
     {
+        bool ShowInfo = true;
+
         if( args.Count() > 1 )
         {
             // Make a copy of the classname
             string_t iszItem = ALLOC_STRING( args.Argument( 1 ) );
 
-            auto entity = g_ItemDictionary->Create( STRING( iszItem ) );
-
-            if( FNullEnt( entity ) )
+            for( auto target : TargetPlayerEnumerator( player, args, 2 ) )
             {
-                UTIL_ConsolePrint( player, "Failed to create. nullptr entity\n" );
-                return;
-            }
-
-            entity->pev->origin = player->pev->origin;
-            entity->m_RespawnDelay = ITEM_NEVER_RESPAWN_DELAY;
-
-            if( args.Count() == 3 )
-            {
-                if( !g_AdminInterface.ParseKeyvalues( player, entity, args.Argument( 2 ) ) )
+                if( target != nullptr )
                 {
-                    g_engfuncs.pfnRemoveEntity( entity->edict() );
-                    return;
+                    auto entity = g_ItemDictionary->Create( STRING( iszItem ) );
+
+                    if( FNullEnt( entity ) )
+                    {
+                        UTIL_ConsolePrint( player, "Failed to create. nullptr entity\n" );
+                        break; // Invalid classname? Don't flood the console.
+                    }
+
+                    entity->pev->origin = target->pev->origin;
+                    entity->m_RespawnDelay = ITEM_NEVER_RESPAWN_DELAY;
+
+                    if( args.Count() == 4 )
+                    {
+                        if( !g_AdminInterface.ParseKeyvalues( player, entity, args.Argument( 3 ) ) )
+                        {
+                            g_engfuncs.pfnRemoveEntity( entity->edict() );
+                            break; // Invalid object? Don't flood the console.
+                        }
+                    }
+
+                    DispatchSpawn( entity->edict() );
+
+                    if( entity->AddToPlayer( target ) != ItemAddResult::Added )
+                    {
+                        g_engfuncs.pfnRemoveEntity( entity->edict() );
+                    }
+                    else
+                    {
+                        UTIL_ConsolePrint( player, "Gave {} a {}\n", UTIL_GetBestEntityName(target), UTIL_GetBestEntityName(entity) );
+                    }
                 }
-            }
-
-            DispatchSpawn( entity->edict() );
-
-            if( entity->AddToPlayer( player ) != ItemAddResult::Added )
-            {
-                g_engfuncs.pfnRemoveEntity( entity->edict() );
-                return;
             }
         }
         else
         {
-            UTIL_ConsolePrint( player, "Usage: give <classname>\n" );
-// This needs a utility method
-//            UTIL_ConsolePrint( player, "or give <classname> \"{ \"<key>\": \"<value>\", \"<key2>\": \"<value2>\" }\"\n" );
+            UTIL_ConsolePrint( player, "Usage: give <classname> <target>\n" );
+            UTIL_ConsolePrint( player, "or give <classname> <target> \"{ '<key>': '<value>', '<key2>': '<value2>' }\"\n" );
         }
     }, fCheats );
 

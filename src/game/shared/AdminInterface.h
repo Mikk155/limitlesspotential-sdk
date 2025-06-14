@@ -25,12 +25,11 @@
 #include "networking/NetworkDataSystem.h"
 
 #ifdef CLIENT_DLL
+class CBasePlayer;
 #else
 #include "player.h"
 #include "ConCommandSystem.h"
 #endif
-
-class CBasePlayer;
 
 class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandler
 {
@@ -78,11 +77,12 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
 #else
     public:
         void RegisterCommands();
+
+        // Utilities
         bool ParseKeyvalues( CBasePlayer* player, CBaseEntity* entity, const char* JsonString );
         std::optional<json> ParseJson( CBasePlayer* player, std::string text );
 
     private:
-        ScopedClientCommand m_ScopedAdminMenu;
         bool m_binitialized{false};
 #endif
 };

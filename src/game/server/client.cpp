@@ -404,7 +404,7 @@ void Host_Say( CBasePlayer* player, bool teamonly )
 
         // can the receiver hear the sender? or has he muted him?
         if( g_VoiceGameMgr.PlayerHasBlockedPlayer( client, player ) )
-            continue;
+            continue; // -TODO Mode to mute only chat, only voice or both
 
         if( !player->IsObserver() && teamonly && g_pGameRules->PlayerRelationship( client, player ) != GR_TEAMMATE )
             continue;
@@ -571,7 +571,7 @@ static CBaseEntity* TryCreateEntity( CBasePlayer* player, const char* className,
 
 void SV_CreateClientCommands()
 {
-    g_ClientCommands.Create( "set_hud_color", []( CBasePlayer* player, const auto& args )
+    g_ClientCommands.Create( "set_hud_color"sv, []( CBasePlayer* player, const auto& args )
     {
         if( args.Count() == 3 && atoi( args.Argument( 2 ) ) == -1 )
         {
@@ -595,128 +595,148 @@ void SV_CreateClientCommands()
     } );
 
     g_ClientCommands.Create( "spectate", []( CBasePlayer* player, const auto& args )
+    {
+        // clients wants to become a spectator
+        if( g_GameMode->IsGamemode( "ctf"sv ) )
         {
-            // clients wants to become a spectator
-            if( g_GameMode->IsGamemode( "ctf"sv ) )
-            {
-                // CTF game mode: make sure player has gamemode settings applied properly.
-                player->Menu_Team_Input( -1 );
-            }
-            // always allow proxies to become a spectator
-            else if( ( player->pev->flags & FL_PROXY ) != 0 || allow_spectators.value != 0 )
-            {
-                player->StartObserver( player->pev->origin, player->pev->angles );
-
-                // notify other clients of player switching to spectator mode
-                UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n",
-                                                        ( !FStringNull( player->pev->netname ) && STRING( player->pev->netname )[0] != 0 ) ? STRING( player->pev->netname ) : "unconnected" ) );
-            }
-            else
-            {
-                ClientPrint( player, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n" );
-            }
+            // CTF game mode: make sure player has gamemode settings applied properly.
+            player->Menu_Team_Input( -1 );
         }
-    );
+        // always allow proxies to become a spectator
+        else if( ( player->pev->flags & FL_PROXY ) != 0 || allow_spectators.value != 0 )
+        {
+            player->StartObserver( player->pev->origin, player->pev->angles );
+
+            // notify other clients of player switching to spectator mode
+            UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n",
+            ( !FStringNull( player->pev->netname ) && STRING( player->pev->netname )[0] != 0 ) ? STRING( player->pev->netname ) : "unconnected" ) );
+        }
+        else
+        {
+            ClientPrint( player, HUD_PRINTCONSOLE, "Spectator mode is disabled.\n" );
+        }
+    } );
 
     g_ClientCommands.Create( "specmode", []( CBasePlayer* player, const auto& args )
+    {
+        // new spectator mode
+        if( player->IsObserver() )
         {
-            // new spectator mode
-            if( player->IsObserver() )
-            {
-                player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) );
-            }
+            player->Observer_SetMode( atoi( CMD_ARGV( 1 ) ) );
         }
-    );
+    } );
 
     g_ClientCommands.Create( "say", []( CBasePlayer* player, const auto& args )
-        { Host_Say( player, false ); } );
-
-    g_ClientCommands.Create( "gibme", []( CBasePlayer* player, const auto& args )
-        { player->pev->health = 0; player->Killed( player, GIB_ALWAYS); } );
-
-    g_ClientCommands.Create( "unstuck", []( CBasePlayer* player, const auto& args )
-        {
-            if( player->m_VecLastFreePosition != g_vecZero )
-            {
-                player->pev->origin = player->m_VecLastFreePosition;
-            }
-            else
-            {
-                TraceResult tr;
-                UTIL_TraceHull( player->pev->origin, player->pev->origin, dont_ignore_monsters, human_hull, nullptr, &tr );
-
-                if( tr.fStartSolid != 0 || tr.fAllSolid != 0 )
-                {
-                    UTIL_GetNearestHull( player->pev->origin, player->pev->origin, human_hull, 128, 128 );
-                }
-            }
-        } );
+    {
+        Host_Say( player, false );
+    } );
 
     g_ClientCommands.Create( "say_team", []( CBasePlayer* player, const auto& args )
-        { Host_Say( player, true ); } );
+    {
+        Host_Say( player, true );
+    } );
+
+    g_ClientCommands.Create( "gibme", []( CBasePlayer* player, const auto& args )
+    {
+        player->pev->health = 0;
+        player->Killed( player, GIB_ALWAYS );
+    } );
+
+    g_ClientCommands.Create( "unstuck", []( CBasePlayer* player, const auto& args )
+    {
+        if( player->m_VecLastFreePosition != g_vecZero )
+        {
+            player->pev->origin = player->m_VecLastFreePosition;
+        }
+        else
+        {
+            // -TODO What's about storing a vector of last known safe hull?
+            TraceResult tr;
+            UTIL_TraceHull( player->pev->origin, player->pev->origin, dont_ignore_monsters, human_hull, nullptr, &tr );
+
+            if( tr.fStartSolid != 0 || tr.fAllSolid != 0 )
+            {
+                UTIL_GetNearestHull( player->pev->origin, player->pev->origin, human_hull, 128, 128 );
+            }
+        }
+    } );
 
     g_ClientCommands.Create( "fullupdate", []( CBasePlayer* player, const auto& args )
-        { player->ForceClientDllUpdate(); } );
+    {
+        player->ForceClientDllUpdate();
+    } );
 
     g_ClientCommands.Create( "drop", []( CBasePlayer* player, const auto& args )
-        {
-            // player is dropping an item.
-            player->DropPlayerWeapon( args.Argument( 1 ) ); } );
+    {
+        // player is dropping an item.
+        player->DropPlayerWeapon( args.Argument( 1 ) );
+    } );
 
     g_ClientCommands.Create( "fov", []( CBasePlayer* player, const auto& args )
+    {
+        if( args.Count() > 1 )
         {
-            if( 0 != g_psv_cheats->value && args.Count() > 1 )
+            player->m_iFOV = atoi( args.Argument( 1 ) );
+        }
+        else
+        {
+            UTIL_ConsolePrint( player, "\"fov\" is \"{}\"\n", player->m_iFOV );
+        }
+    } );
+
+    // -TODO To GameModes
+    g_ClientCommands.Create( "set_suit_light_type", []( CBasePlayer* player, const auto& args )
+    {
+        if( args.Count() > 1 )
+        {
+            const auto type = SuitLightTypeFromString( args.Argument( 1 ) );
+
+            if( type.has_value() )
             {
-                player->m_iFOV = atoi( args.Argument( 1 ) );
+                player->SetSuitLightType( type.value() );
             }
             else
             {
-                UTIL_ConsolePrint( player, "\"fov\" is \"{}\"\n", player->m_iFOV );
-            } } );
-
-    g_ClientCommands.Create( "set_suit_light_type", []( CBasePlayer* player, const auto& args )
-        {
-            if( args.Count() > 1 )
-            {
-                const auto type = SuitLightTypeFromString( args.Argument( 1 ) );
-
-                if( type.has_value() )
-                {
-                    player->SetSuitLightType( type.value() );
-                }
-                else
-                {
-                    UTIL_ConsolePrint( player, "Unknown suit light type \"{}\"\n", args.Argument( 1 ) );
-                }
-            } },
-        {.Flags = ClientCommandFlag::Cheat} );
+                UTIL_ConsolePrint( player, "Unknown suit light type \"{}\"\n", args.Argument( 1 ) );
+            }
+        } },
+    {.Flags = ClientCommandFlag::Cheat} );
 
     g_ClientCommands.Create( "use", []( CBasePlayer* player, const auto& args )
-        { player->SelectItem( args.Argument( 1 ) ); } );
+    {
+            player->SelectItem( args.Argument( 1 ) );
+    } );
 
     g_ClientCommands.Create( "selectweapon", []( CBasePlayer* player, const auto& args )
+    {
+        if( args.Count() > 1 )
         {
-            if( args.Count() > 1 )
-            {
-                player->SelectItem( args.Argument( 1 ) );
-            }
-            else
-            {
-                UTIL_ConsolePrint( player, "usage: selectweapon <weapon name>\n" );
-            } } );
+            player->SelectItem( args.Argument( 1 ) );
+        }
+        else
+        {
+            UTIL_ConsolePrint( player, "usage: selectweapon <weapon name>\n" );
+        }
+    } );
 
     g_ClientCommands.Create( "lastinv", []( CBasePlayer* player, const auto& args )
-        { player->SelectLastItem(); } );
+    {
+        player->SelectLastItem();
+    } );
 
     g_ClientCommands.Create( "closemenus", []( CBasePlayer* player, const auto& args )
-        {
-            /* just ignore it*/ });
+    {
+        /* just ignore it*/
+    } );
 
     g_ClientCommands.Create( "follownext", []( CBasePlayer* player, const auto& args )
+    {
+        // follow next player
+        if( player->IsObserver() )
         {
-            // follow next player
-            if( player->IsObserver() )
-                player->Observer_FindNextPlayer( atoi( args.Argument( 1 ) ) != 0 ); } );
+            player->Observer_FindNextPlayer( atoi( args.Argument( 1 ) ) != 0 );
+        }
+    } );
 
     g_ClientCommands.Create( "cheat_god", []( CBasePlayer* player, const CommandArgs& args )
         { player->ToggleCheat( Cheat::Godmode ); },
