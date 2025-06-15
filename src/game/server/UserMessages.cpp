@@ -89,4 +89,6 @@ void LinkUserMessages()
     gmsgClientGibs = REG_USER_MSG( "ClientGibs", 18 );
 
     gmsgDLight = REG_USER_MSG( "TempLight", 18 );
+
+    gmsgSendSteamID = REG_USER_MSG( "SteamID", 8 );
 }

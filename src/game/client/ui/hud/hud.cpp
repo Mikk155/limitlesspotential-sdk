@@ -101,6 +101,7 @@ void CHud::Init()
     g_ClientUserMessages.RegisterHandler( "Concuss", &CHud::MsgFunc_Concuss, this );
     g_ClientUserMessages.RegisterHandler( "Weapons", &CHud::MsgFunc_Weapons, this );
     g_ClientUserMessages.RegisterHandler( "Fog", &CHud::MsgFunc_Fog, this );
+    g_ClientUserMessages.RegisterHandler( "SteamID", &CHud::MsgFunc_SteamID, this );
 
     CVAR_CREATE( "hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO ); // controls whether or not to suicide immediately on TF class switch
     CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );                       // controls whether or not to automatically take screenshots at the end of a round
@@ -330,6 +331,15 @@ float HUD_GetFOV()
         g_lastFOV = g_demozoom;
     }
     return g_lastFOV;
+}
+
+extern uint64_t ClientSteamIDUint64;
+
+void CHud::MsgFunc_SteamID( const char* pszName, BufferReader& reader )
+{
+    uint32_t low  = reader.ReadLong();
+    uint32_t high = reader.ReadLong();
+    ClientSteamIDUint64 = ( static_cast<uint64_t>( high ) << 32 ) | low;
 }
 
 void CHud::MsgFunc_SetFOV( const char* pszName, BufferReader& reader )

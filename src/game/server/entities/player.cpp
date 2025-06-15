@@ -3851,10 +3851,19 @@ void CBasePlayer::UpdateClientData()
             MESSAGE_BEGIN( MSG_ONE, gmsgInitHUD, nullptr, this );
             MESSAGE_END();
 
+            // Since the client is not aware we must update it
+            if( SteamID* steamid = GetSteamID(); steamid != nullptr )
+            {
+                MESSAGE_BEGIN( MSG_ONE, gmsgSendSteamID, nullptr, this );
+                    WRITE_LONG( static_cast<uint32_t>( steamid->steamID64 & 0xFFFFFFFF ) );
+                    WRITE_LONG( static_cast<uint32_t>( ( steamid->steamID64 >> 32 ) & 0xFFFFFFFF ) );
+                MESSAGE_END();
+            }
+
             g_pGameRules->InitHUD( this );
             g_GameMode->_UpdateClientGameMode_( this );
             g_GameMode->OnClientInit( this );
-            g_AdminInterface.OnClientInit( this );
+
             m_fGameHUDInitialized = true;
 
             m_iObserverLastMode = OBS_ROAMING;

@@ -72,6 +72,7 @@ inline int gmsgTgtLaser = 0;
 inline int gmsgFog = 0;
 inline int gmsgClientGibs = 0;
 inline int gmsgGameMode = 0;
+inline int gmsgSendSteamID = 0;
 
 #include "dlight.h"
 inline int gmsgDLight = 0;

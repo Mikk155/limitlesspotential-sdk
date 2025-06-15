@@ -1,3 +1,5 @@
+#pragma once
+
 struct SteamID
 {
     static constexpr uint64_t steamOffset = 76561197960265728ULL;
@@ -73,10 +75,18 @@ inline std::shared_ptr<SteamID> ClientSteamIDPointer;
 
 inline uint64_t ClientSteamIDUint64;
 
+// Get the steamID on the client side. Note: the client must join a server first or this will be nullptr
 inline SteamID* GetClientSteamID()
 {
+    if( !ClientSteamIDUint64 )
+    {
+        return nullptr;
+    }
+
     if( !ClientSteamIDPointer )
+    {
         ClientSteamIDPointer = std::make_shared<SteamID>( std::to_string( ClientSteamIDUint64 ).c_str() );
+    }
 
     return ClientSteamIDPointer.get();
 }

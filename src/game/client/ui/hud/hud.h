@@ -902,6 +902,7 @@ public:
     void MsgFunc_Concuss( const char* pszName, BufferReader& reader );
     void MsgFunc_Weapons( const char* pszName, BufferReader& reader );
     void MsgFunc_Fog( const char* pszName, BufferReader& reader );
+    void MsgFunc_SteamID( const char* pszName, BufferReader& reader );
 
     // Screen information
     SCREENINFO m_scrinfo;
