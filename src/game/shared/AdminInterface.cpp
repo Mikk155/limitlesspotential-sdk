@@ -692,7 +692,7 @@ void CAdminInterface::RegisterCommands()
 
     g_ClientCommands.Create( "ent_trigger"sv, []( CBasePlayer* player, const CommandArgs& args )
     {
-        USE_TYPE useType = USE_TOGGLE;
+        USE_TYPE useType = ( args.Count() > 1 ? ToUseType( args.Argument( 1 ), USE_TOGGLE ) :  USE_TOGGLE );
 
         if( args.Count() > 1 )
         {

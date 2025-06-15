@@ -113,6 +113,54 @@ void CBaseEntity::SUB_UseTargets( CBaseEntity* pActivator, USE_TYPE useType, Use
     }
 }
 
+USE_TYPE ToUseType( std::variant<int, const char*> from, std::optional<USE_TYPE> default_value )
+{
+    auto itout = [&]( int value ) -> USE_TYPE
+    {
+        if( default_value.has_value() )
+        {
+            if( value >= USE_UNKNOWN || value <= USE_UNSET )
+            {
+                return default_value.value();
+            }
+        }
+
+        return static_cast<USE_TYPE>( std::clamp( value, USE_UNSET + 1, USE_UNKNOWN - 1 ) ) ;
+    };
+
+    if( std::holds_alternative<int>(from) )
+    {
+        return itout( std::get<int>(from) );
+    }
+    else
+    {
+        const char* value = std::get<const char*>(from);
+
+        if( FStrEq( value, "USE_OFF" ) )
+            return USE_OFF;
+        if( FStrEq( value, "USE_SET" ) )
+            return USE_SET;
+        if( FStrEq( value, "USE_TOGGLE" ) )
+            return USE_TOGGLE;
+        if( FStrEq( value, "USE_KILL" ) )
+            return USE_KILL;
+        if( FStrEq( value, "USE_SAME" ) )
+            return USE_SAME;
+        if( FStrEq( value, "USE_OPPOSITE" ) )
+            return USE_OPPOSITE;
+        if( FStrEq( value, "USE_TOUCH" ) )
+            return USE_TOUCH;
+        if( FStrEq( value, "USE_LOCK" ) )
+            return USE_LOCK;
+        if( FStrEq( value, "USE_UNLOCK" ) )
+            return USE_UNLOCK;
+
+        return itout( atoi( value ) );
+    }
+
+    return USE_TOGGLE;
+}
+
 void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* caller, USE_TYPE use_type, UseValue value )
 {
     if( !target )
@@ -151,11 +199,13 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
 
         auto hash_index = target_copy.find( "#" );
 
-        int use_value = atoi( target_copy.substr( hash_index + 1 ).c_str() );
+        const char* pszUseType = target_copy.substr( hash_index + 1 ).c_str();
 
-        if( use_value >= USE_UNKNOWN || use_value <= USE_UNSET )
+        USE_TYPE use_value = ToUseType( pszUseType, USE_UNSET ); // USE_UNSET = do not clamp, return unset if invalid
+
+        if( use_value == USE_UNKNOWN || use_value == USE_UNSET )
         {
-            CBaseEntity::IOLogger->debug( "[FireTargets] Invalid USE_TYPE index #{} at {}. Ignoring custom USE_TYPE...", use_value, target );
+            CBaseEntity::IOLogger->debug( "[FireTargets] Invalid USE_TYPE index #{} at {}. Ignoring custom USE_TYPE...", pszUseType, target );
         }
         else
         {

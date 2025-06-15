@@ -70,6 +70,13 @@ enum USE_TYPE : int
     USE_UNKNOWN
 };
 
+/**
+ * @brief Returns the appropiate USE_TYPE for @c from
+ * @param default_value returned if @c value is out of range.
+ * @param from could be const char* or int
+ */
+[[nodiscard]] USE_TYPE ToUseType( std::variant<int, const char*> from, std::optional<USE_TYPE> default_value = std::nullopt );
+
 #define USE_VALUE_USE ( 1 << 0 )
 #define USE_VALUE_TOUCH ( 1 << 1 )
 #define USE_VALUE_MASTER ( 1 << 2 )
