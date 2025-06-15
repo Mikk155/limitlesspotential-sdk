@@ -54,6 +54,7 @@ Almost all duplicated markdowns have been deleted and this fork will only displa
 * almix
 * sabian
 * solidi
+* Zode
 
 ## Special Thanks
 
