@@ -153,6 +153,7 @@ function(add_game_shared_sources target)
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/ReplacementMaps.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/shared_utils.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/shared_utils.h
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/SteamID.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/string_utils.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/string_utils.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/utils/StringPool.cpp

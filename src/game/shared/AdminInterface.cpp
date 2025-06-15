@@ -128,8 +128,41 @@ bool CAdminInterface::Initialize()
 
     g_NetworkData.RegisterHandler( "AdminInterface", this );
 
+#ifdef CLIENT_DLL
+    g_ClientUserMessages.RegisterHandler( "SteamID", &CAdminInterface::MsgFunc_SteamID, this );
+#else
+    gmsgSendSteamID = REG_USER_MSG( "SteamID", 8 );
+#endif
+
     return true;
 }
+
+#ifdef CLIENT_DLL
+void CAdminInterface::MsgFunc_SteamID( BufferReader& reader )
+{
+    uint32_t low  = reader.ReadLong();
+    uint32_t high = reader.ReadLong();
+    ClientSteamIDUint64 = ( static_cast<uint64_t>( high ) << 32 ) | low;
+}
+#else
+void CAdminInterface::OnClientInit( CBasePlayer* player )
+{
+    if( player != nullptr )
+    {
+        SteamID* steamid = player->GetSteamID();
+
+        if( steamid != nullptr )
+        {
+            uint64_t steamuint64 = steamid->steamID64;
+
+            MESSAGE_BEGIN( MSG_ONE, gmsgSendSteamID, nullptr, player );
+                WRITE_LONG( static_cast<uint32_t>( steamuint64 & 0xFFFFFFFF ) );
+                WRITE_LONG( static_cast<uint32_t>( ( steamuint64 >> 32 ) & 0xFFFFFFFF ) );
+            MESSAGE_END();
+        }
+    }
+}
+#endif
 
 void CAdminInterface::Shutdown()
 {
@@ -369,11 +402,19 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
         return false;
     };
 
+    if( HasAccessByRole( "default" ) )
+        return true;
+
 #ifdef CLIENT_DLL
-    return ( HasAccessByRole( "-TODO get the client ID here." ) || HasAccessByRole( "default" ) );
+    SteamID* steamid = GetClientSteamID();
 #else
-    return ( HasAccessByRole( player->GetSteamID()->SteamFormat() ) || HasAccessByRole( "default" ) );
+    SteamID* steamid = player->GetSteamID();
 #endif
+
+    if( steamid != nullptr )
+        return HasAccessByRole( steamid->steamID );
+
+    return false;
 }
 
 #ifndef CLIENT_DLL
@@ -539,9 +580,9 @@ class TargetPlayerIterator
                 if( FStrEq( arg, "@alive" ) )
                     return ( player->IsAlive() );
                 if( strstr( arg, "STEAM_0:" ) != nullptr )
-                    return ( FStrEq( player->GetSteamID()->SteamFormat().c_str(), arg ) );
+                    return ( player->GetSteamID()->Equals( arg ) );
                 // Nickname assumed
-                return ( FStrEq( STRING( player->pev->netname ), arg ) );
+                return ( FStrEq( STRING( player->pev->netname ), arg ) ); //-TODO Wildcarding as AFBase?
             };
 
             while( index <= gpGlobals->maxClients )

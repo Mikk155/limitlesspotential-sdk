@@ -28,7 +28,7 @@ class PersistentInventorySystem final
 private:
     struct PersistentPlayerInventory
     {
-        std::string PlayerId;
+        uint64_t PlayerId;
         PlayerInventory Inventory;
     };
 

@@ -74,9 +74,13 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
         std::shared_ptr<spdlog::logger> m_Logger;
 
 #ifdef CLIENT_DLL
+    private:
+        void MsgFunc_SteamID( BufferReader& reader );
 #else
     public:
         void RegisterCommands();
+
+        void OnClientInit( CBasePlayer* player );
 
         // Utilities
         // For multiple iterations run ParseJson yourself first, if is a one-time task use the ParseKeyvalues definition with JsonString
@@ -88,6 +92,9 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
         std::optional<json> ParseJson( CBasePlayer* player, std::string text );
 
     private:
+
+        static inline int gmsgSendSteamID = 0;
+
         bool m_binitialized{false};
 #endif
 };

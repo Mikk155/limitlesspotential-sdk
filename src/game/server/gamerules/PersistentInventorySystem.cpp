@@ -58,7 +58,7 @@ void PersistentInventorySystem::InitializeFromPlayers()
 
         auto& inventory = m_Inventories[i - 1];
 
-        inventory.PlayerId = player->GetSteamID()->Raw();
+        inventory.PlayerId = player->GetSteamID()->steamID64;
         inventory.Inventory = PlayerInventory::CreateFromPlayer( player );
     }
 }
@@ -78,7 +78,7 @@ bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
         return false;
     }
 
-    const std::string playerId = player->GetSteamID()->Raw();
+    const uint64_t playerId = player->GetSteamID()->steamID64;
 
     for( const auto& inventory : m_Inventories )
     {

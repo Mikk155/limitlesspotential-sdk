@@ -44,6 +44,8 @@
 #include "ctf/ctf_goals.h"
 #include "rope/CRope.h"
 
+#include "AdminInterface.h"
+
 // #define DUCKFIX
 
 #define TRAIN_ACTIVE 0x80
@@ -3852,6 +3854,7 @@ void CBasePlayer::UpdateClientData()
             g_pGameRules->InitHUD( this );
             g_GameMode->_UpdateClientGameMode_( this );
             g_GameMode->OnClientInit( this );
+            g_AdminInterface.OnClientInit( this );
             m_fGameHUDInitialized = true;
 
             m_iObserverLastMode = OBS_ROAMING;
