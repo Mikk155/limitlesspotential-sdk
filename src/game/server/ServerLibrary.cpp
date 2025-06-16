@@ -487,7 +487,7 @@ void ServerLibrary::DefineConfigVariables()
     g_cfg.DefineVariable( "shockrifle_fast", 0, {.Networked = true} );
 }
 
-void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion )
+void ServerLibrary::LoadServerConfigFiles( const WorldConfig& MapConfiguration )
 {
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -497,11 +497,11 @@ void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion
 
     for( int i = 0; i < 3; i++ )
     {
-        if( MapVersion[i] < Version[i] )
+        if( MapConfiguration.version[i] < Version[i] )
         {
             g_GameLogger->error( "Map \"{}\" is older than this game version.\n" \
                 "Please run the MapUpgrader tool to update from {} to {} and avoid problems.",
-                    STRING( gpGlobals->mapname ), MapVersion.MakeString(0), Version.MakeString(0) );
+                    STRING( gpGlobals->mapname ), MapConfiguration.version.MakeString(0), Version.MakeString(0) );
             break;
         }
     }
@@ -522,9 +522,9 @@ void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion
         return { name, false };
     };
 
-    if( !FStringNull( MapConfig ) )
+    if( !FStringNull( MapConfiguration.cfg ) )
     {
-        if( std::pair<std::string, bool> cfg = GetConfigFile( STRING( MapConfig ) ); cfg.second )
+        if( std::pair<std::string, bool> cfg = GetConfigFile( STRING( MapConfiguration.cfg ) ); cfg.second )
         {
             mapConfigFileName = std::move( cfg.first );
         }
@@ -547,13 +547,6 @@ void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion
     g_GameLogger->trace( "Loading map config file" );
     const std::optional<GameConfig<ServerConfigContext>> mapConfig = m_MapConfigDefinition->TryLoad( mapConfigFileName.c_str() );
 
-    GameModeConfiguration gameModeConfig;
-
-    if( mapConfig )
-    {
-        gameModeConfig = mapConfig->GetGameModeConfiguration();
-    }
-
     // The Create Server dialog only accepts lists with numeric values so we need to remap it to the game mode name.
     if( mp_createserver_gamemode.string[0] != '\0' )
     {
@@ -561,38 +554,31 @@ void ServerLibrary::LoadServerConfigFiles( string_t MapConfig, Vector MapVersion
         g_engfuncs.pfnCvar_DirectSet( &mp_createserver_gamemode, "" );
     }
 
-    if( !gameModeConfig.IsLocked && mp_gamemode.string[0] != '\0' )
-    {
-        if( gameModeConfig.GameMode.empty() )
-        {
-            CGameRules::Logger->trace( "Setting server configured game mode {}", mp_gamemode.string );
-        }
-        else
-        {
-            CGameRules::Logger->trace( "Overriding map configured game mode {} with server configured game mode {}",
-                gameModeConfig.GameMode, mp_gamemode.string );
-        }
+    std::string GameModeName;
 
-        gameModeConfig.GameMode = mp_gamemode.string;
-    }
-    else if( !gameModeConfig.GameMode.empty() )
+    if( !FStringNull( MapConfiguration.gamemode ) )
     {
-        CGameRules::Logger->trace( "Using map configured game mode {}", gameModeConfig.GameMode );
+        GameModeName = STRING( MapConfiguration.gamemode );
+        CGameRules::Logger->trace( "Setting map configured game mode {}", GameModeName );
     }
-    else
+
+    // Gamemode is not locked, the server can update it
+    if( !MapConfiguration.gamemode_lock && mp_gamemode.string[0] != '\0' )
     {
-        CGameRules::Logger->trace( "Using autodetected game mode" );
+        GameModeName = mp_gamemode.string;
+        CGameRules::Logger->trace( "Setting server configured game mode {}", GameModeName );
     }
 
     delete g_pGameRules;
-    g_pGameRules = InstallGameRules( gameModeConfig.GameMode );
+    g_pGameRules = InstallGameRules( GameModeName );
 
     assert( g_pGameRules );
 
 #ifdef ANGELSCRIPT
     g_GameMode->RegisterCustomGameModes();
 #endif
-    g_GameMode.UpdateGameMode( gameModeConfig.GameMode );
+
+    g_GameMode.UpdateGameMode( GameModeName );
 
     ServerConfigContext context{.State = *m_MapState};
 

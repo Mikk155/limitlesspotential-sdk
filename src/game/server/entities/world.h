@@ -42,4 +42,14 @@ public:
     private:
         Vector m_MapVersion;
         string_t m_MapConfig;
+        string_t m_GameMode;
+        bool m_GameModeLock{false};
+};
+
+struct WorldConfig
+{
+    string_t cfg;
+    Vector version;
+    string_t gamemode;
+    bool gamemode_lock;
 };

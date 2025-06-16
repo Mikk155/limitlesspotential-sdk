@@ -185,6 +185,70 @@
             "description": "worldspawn::mapcfg::description"
         },
 
+        "gamemode":
+        {
+            "variable": "choices",
+            "value": "singleplayer",
+            "choices":
+            {
+                /*
+                "default":
+                {
+                    "title": "default"
+                },
+                */
+                "singleplayer":
+                {
+                    "title": "singleplayer"
+                },
+                "coop":
+                {
+                    "title": "Cooperative"
+                },
+                "deathmatch":
+                {
+                    "title": "Deathmatch"
+                },
+                /*
+                "multiplayer":
+                {
+                    "title": "Default multiplayer"
+                },
+                */
+                "teamplay":
+                {
+                    "title": "Team play Deathmatch"
+                },
+                "ctf":
+                {
+                    "title": "OP4 Capture the flag"
+                }
+            },
+
+            "title": "worldspawn::gamemode_lock",
+            "description": "worldspawn::gamemode_lock::description"
+        },
+
+        "gamemode_lock":
+        {
+            "variable": "choices",
+            "value": 0,
+            "choices":
+            {
+                "0":
+                {
+                    "title": "No"
+                },
+                "1":
+                {
+                    "title": "Yes"
+                }
+            },
+
+            "title": "worldspawn::gamemode_lock",
+            "description": "worldspawn::gamemode_lock::description"
+        },
+
         "version":
         {
             "variable": "string",

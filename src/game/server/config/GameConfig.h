@@ -93,12 +93,6 @@ struct GameConfigFileData
     json Data;
 };
 
-struct GameModeConfiguration final
-{
-    std::string GameMode;
-    bool IsLocked{false};
-};
-
 /**
  *    @brief Contains the contents of a loaded game configuration, ready to be parsed.
  */
@@ -114,8 +108,6 @@ public:
           m_Contents( std::move( contents ) )
     {
     }
-
-    GameModeConfiguration GetGameModeConfiguration() const;
 
     void Parse( DataContext& dataContext ) const;
 
@@ -220,31 +212,6 @@ private:
 };
 
 inline GameConfigSystem g_GameConfigSystem;
-
-template <typename DataContext>
-GameModeConfiguration GameConfig<DataContext>::GetGameModeConfiguration() const
-{
-    GameModeConfiguration config;
-
-    for( const auto& data : m_Contents )
-    {
-        try
-        {
-            if( auto gameMode = data.Data.find( "GameMode" ); gameMode != data.Data.end() )
-            {
-                config.GameMode = gameMode->get<std::string>();
-            }
-
-            config.IsLocked = data.Data.value<bool>( "LockGameMode", config.IsLocked );
-        }
-        catch ( const std::exception& e )
-        {
-            m_Logger->error( "Error parsing map configuration: {}", e.what() );
-        }
-    }
-
-    return config;
-}
 
 template <typename DataContext>
 void GameConfig<DataContext>::Parse( DataContext& dataContext ) const

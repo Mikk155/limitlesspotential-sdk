@@ -193,6 +193,8 @@ bool CDecal::KeyValue( KeyValueData* pkvd )
 BEGIN_DATAMAP( CWorld )
     DEFINE_FIELD( m_MapVersion, FIELD_VECTOR ),
     DEFINE_FIELD( m_MapConfig, FIELD_STRING ),
+    DEFINE_FIELD( m_GameMode, FIELD_STRING ),
+    DEFINE_FIELD( m_GameModeLock, FIELD_BOOLEAN ),
 END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
@@ -243,7 +245,13 @@ bool CWorld::Spawn()
 
 void CWorld::PostRestore()
 {
-    g_Server.LoadServerConfigFiles( m_MapConfig, m_MapVersion );
+    WorldConfig MapConfiguration{
+        .cfg = m_MapConfig,
+        .version = m_MapVersion,
+        .gamemode = m_GameMode,
+        .gamemode_lock = m_GameModeLock
+    };
+    g_Server.LoadServerConfigFiles( MapConfiguration );
 }
 
 void CWorld::Precache()
@@ -256,7 +264,13 @@ void CWorld::Precache()
     }
 
     // Load the config files, which will initialize the map state as needed
-    g_Server.LoadServerConfigFiles( m_MapConfig, m_MapVersion );
+    WorldConfig MapConfiguration{
+        .cfg = m_MapConfig,
+        .version = m_MapVersion,
+        .gamemode = m_GameMode,
+        .gamemode_lock = m_GameModeLock
+    };
+    g_Server.LoadServerConfigFiles( MapConfiguration );
 
     g_GameLogger->trace( "Initializing world" );
 
@@ -525,6 +539,16 @@ bool CWorld::KeyValue( KeyValueData* pkvd )
     else if( FStrEq( pkvd->szKeyName, "version" ) )
     {
         m_MapVersion.FromString( pkvd->szValue, "." );
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "gamemode" ) )
+    {
+        m_GameMode = ALLOC_STRING( pkvd->szValue );
+        return true;
+    }
+    else if( FStrEq( pkvd->szKeyName, "gamemode_lock" ) )
+    {
+        m_GameModeLock = ( atoi( pkvd->szValue ) == 1 );
         return true;
     }
 

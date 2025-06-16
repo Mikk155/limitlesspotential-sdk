@@ -203,6 +203,22 @@
 {
 "english": "The json file defined for configuration, the path is within cfg/maps/ no need to specify .json, if not defined is the map name"
 },
+"worldspawn::gamemode_lock":
+{
+"english": "Lock gamemode"
+},
+"worldspawn::gamemode_lock::description":
+{
+"english": "If the gamemode is not locked the server will be able to update it with the mp_gamemode cvar"
+},
+"worldspawn::gamemode":
+{
+"english": "Gamemode name"
+},
+"worldspawn::gamemode::description":
+{
+"english": ""
+},
 "worldspawn::hullsize::description":
 {
 "english": "This is used for IsInWorld() checks"

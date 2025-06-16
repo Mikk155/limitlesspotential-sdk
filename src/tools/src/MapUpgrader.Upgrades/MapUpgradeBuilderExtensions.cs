@@ -47,7 +47,7 @@ namespace MapUpgrader.Upgrades
             builder.AddUpgrade(new ConvertGameZonePlayer());
             builder.AddUpgrade(new ConvertZombieBarney());
             builder.AddUpgrade(new UpdateToEventHandler());
-            builder.AddUpgrade(new Setmapcfg());
+            builder.AddUpgrade(new SetMapConfig());
             builder.AddUpgrade(new ConvertSpeaker());
             builder.AddUpgrade(new ConvertEnvSound());
             builder.AddUpgrade(new ConvertAmbientGeneric());

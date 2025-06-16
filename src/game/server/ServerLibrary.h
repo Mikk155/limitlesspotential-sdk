@@ -120,7 +120,7 @@ private:
     void DefineConfigVariables();
 
 public:
-    void LoadServerConfigFiles( string_t MapConfig, Vector MapVersion );
+    void LoadServerConfigFiles( const WorldConfig& MapConfiguration );
 private:
 
     void SendFogMessage( CBasePlayer* player );
