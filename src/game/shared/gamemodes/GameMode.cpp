@@ -56,6 +56,53 @@ void GM_Base::OnUnRegister()
     g_GameMode.Logger->trace( "Un Registered gamemode \"{}\" in {}", GetName(), GM_LIB );
 }
 
+void GM_Base::OnMapInit()
+{
+#ifndef CLIENT_DLL
+    if( gpGlobals->maxClients > 1 || (int)CVAR_GET_FLOAT( "deathmatch" ) == 1 )
+    {
+        m_IsMultiplayer = true;
+    }
+#endif
+}
+
+#ifndef CLIENT_DLL
+void GM_Base::CheckMultiplayerGame( bool multiplayer )
+{
+    bool ShouldRestart{ ( m_IsMultiplayer != multiplayer ) };
+
+    if( ShouldRestart )
+    {
+        if( (int)m_MultiplayerRestart == 0 )
+        {
+            g_GameMode.Logger->warn( "Running map {} with {} gamemode on a {} server!",
+                STRING( gpGlobals->mapname ), GetName(), m_IsMultiplayer ? "multiplayer" : "singleplayer"
+            );
+
+            if( IS_DEDICATED_SERVER() )
+            {
+                g_GameMode.Logger->warn( "This is a {} map and may not work as expected.\n", GetName() );
+                m_IsMultiplayer = multiplayer;
+                return;
+            }
+
+            g_GameMode.Logger->warn( "This is a {} map. This level will be restarted in 10 seconds.\n", GetName() );
+            m_MultiplayerRestart = gpGlobals->time + 10.0;
+        }
+        else if( m_MultiplayerRestart < gpGlobals->time )
+        {
+            CLIENT_COMMAND( UTIL_GetLocalPlayer()->edict(),
+                fmt::format( "disconnect;deathmatch {};maxplayers {}; map {}\n",
+                    ( multiplayer ? 1 : 0 ),
+                    ( multiplayer ? 32 : 1 ),
+                    STRING( gpGlobals->mapname ) ).c_str()
+                );
+            m_IsMultiplayer = multiplayer;
+        }
+    }
+}
+#endif
+
 void GM_Base::OnClientInit( CBasePlayer* player )
 {
 #ifndef CLIENT_DLL
@@ -363,21 +410,6 @@ bool CGameModes::UpdateGameMode( const std::string& name )
     }
 
     bool GM_Found = false;
-
-#ifndef CLIENT_DLL
-    // If we're in the server library and there's only one max player set singleplayer.
-    if( gpGlobals->maxClients == 1 ) // -TODO GMU Check it's not MP with 1 max player
-    {
-        if( !name.empty() && strcmp( name.c_str(), GM_Singleplayer::GameModeName ) != 0 )
-        {
-            Logger->info( "Ignoring gamemode setting {} in singleplayer", name );
-        }
-
-        gamemode_name = GM_Singleplayer::GameModeName;
-        gamemode = new GM_Singleplayer();
-        GM_Found = true;
-    }
-#endif
 
     if( strcmp( name.c_str(), "default" ) == 0 )
     {

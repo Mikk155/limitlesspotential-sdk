@@ -35,11 +35,6 @@ public:
     void OnClientInit( CBasePlayer* player ) override;
     void OnThink() override;
 
-private:
-    // Used for the gamemode to restart in singleplayer if this is a multiplayer game in a listen server.
-    bool m_IsMultiplayer;
-    float m_MultiplayerRestart;
-
 #ifndef CLIENT_DLL
     ScopedClientCommand m_VModEnableCommand;
     ScopedClientCommand m_MapSelectionTrigger;

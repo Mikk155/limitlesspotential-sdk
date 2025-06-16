@@ -72,6 +72,15 @@ enum HUDElements
  */
 class GM_Base
 {
+#ifndef CLIENT_DLL
+protected:
+    // Used to restart the game based on the inherited gamemode from GM_Singleplayer or GM_Multiplayer
+    void CheckMultiplayerGame( bool multiplayer );
+private:
+    bool m_IsMultiplayer{false};
+    float m_MultiplayerRestart;
+#endif
+
 public:
 
     GM_Base() = default;
@@ -131,7 +140,7 @@ public:
      * @brief Called when a map starts, this is called at the bottom of ServerLibrary::LoadServerConfigFiles
      * CLIENT: No effect.
      */
-    virtual void OnMapInit() {};
+    virtual void OnMapInit();
 
     /**
      * @brief Called when the gamemode has been selected while the map is starting

@@ -61,10 +61,6 @@ void GM_Singleplayer::OnClientInit( CBasePlayer* player )
         gViewPort->ShowCampaignSelectMenu();
     }
 #else
-    if( gpGlobals->maxClients > 1 || (int)CVAR_GET_FLOAT( "deathmatch" ) == 1 )
-    {
-        m_IsMultiplayer = true;
-    }
 #endif
 
     BaseClass::OnClientInit(player);
@@ -74,29 +70,7 @@ void GM_Singleplayer::OnThink()
 {
 #ifdef CLIENT_DLL
 #else
-    if( m_IsMultiplayer )
-    {
-        if( (int)m_MultiplayerRestart == 0 )
-        {
-            g_GameMode.Logger->warn( "Running map {} with GM_Singleplayer gamemode on a multiplayer server!", STRING( gpGlobals->mapname ) );
-
-            if( IS_DEDICATED_SERVER() )
-            {
-                UTIL_ClientPrintAll( HUD_PRINTTALK, "Warning! This is a SinglePlayer map and may not work as expected.\n" );
-                m_IsMultiplayer = false;
-                return;
-            }
-
-            UTIL_ClientPrintAll( HUD_PRINTTALK, "Warning! This is a SinglePlayer map. This level will be restarted in 10 seconds..\n" );
-            m_MultiplayerRestart = gpGlobals->time + 10.0;
-        }
-        else if( m_MultiplayerRestart < gpGlobals->time )
-        {
-            CLIENT_COMMAND( UTIL_GetLocalPlayer()->edict(),
-                fmt::format( "disconnect;deathmatch 0;maxplayers 1; map {}\n", STRING( gpGlobals->mapname ) ).c_str() );
-            m_IsMultiplayer = false;
-        }
-    }
+    CheckMultiplayerGame(false);
 #endif
 
     BaseClass::OnThink();

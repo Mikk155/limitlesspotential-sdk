@@ -55,6 +55,7 @@ void GM_Multiplayer::OnThink()
 #ifdef CLIENT_DLL
 #else
     g_VoiceGameMgr.Update( gpGlobals->frametime );
+    CheckMultiplayerGame(true);
 #endif
 
     BaseClass::OnThink();
