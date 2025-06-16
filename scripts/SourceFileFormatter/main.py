@@ -53,6 +53,7 @@ skips = [
 ]
 
 abs_path = os.path.join( os.path.dirname( __file__ ), ".." );
+abs_path = os.path.join( abs_path, ".." );
 abs_path = os.path.join( abs_path, "src" );
 abs_path = os.path.join( abs_path, "game" );
 
