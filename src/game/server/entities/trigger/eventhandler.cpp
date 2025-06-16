@@ -35,7 +35,7 @@ bool CTriggerEventHandler::Spawn()
         return false;
     }
 
-    CBaseEntity::Logger->debug( "trigger_eventhandler Registering event type {} for {}", static_cast<int>(m_EventType), STRING( pev->target ) );
+    CBaseEntity::Logger->debug( "trigger_eventhandler Registering event type {} for {}", static_cast<int>( m_EventType ), STRING( pev->target ) );
 
     trigger_event_t event{ m_EventType, entindex() };
 
@@ -102,7 +102,7 @@ void TriggerEvent( TriggerEventType event, CBaseEntity* activator, CBaseEntity* 
                         MyNewCaller = handler;
                     }
 
-                    FireTargets(
+                    FireTargets( 
                         STRING( handler->pev->target ),
                         handler->AllocNewActivator( activator, MyNewCaller, handler->m_sNewActivator, activator ),
                         handler->AllocNewActivator( activator, MyNewCaller, handler->m_Caller, MyNewCaller ),

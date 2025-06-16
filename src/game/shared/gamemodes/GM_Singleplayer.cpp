@@ -63,14 +63,14 @@ void GM_Singleplayer::OnClientInit( CBasePlayer* player )
 #else
 #endif
 
-    BaseClass::OnClientInit(player);
+    BaseClass::OnClientInit( player );
 }
 
 void GM_Singleplayer::OnThink()
 {
 #ifdef CLIENT_DLL
 #else
-    CheckMultiplayerGame(false);
+    CheckMultiplayerGame( false );
 #endif
 
     BaseClass::OnThink();

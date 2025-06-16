@@ -41,7 +41,7 @@ BEGIN_DATAMAP( CStripWeapons )
     DEFINE_ARRAY( m_iValue, FIELD_STRING, MAX_WEAPONS ),
 END_DATAMAP();
 
-bool CStripWeapons::KeyValue(KeyValueData* pkvd)
+bool CStripWeapons::KeyValue( KeyValueData* pkvd )
 {
     if( strncmp( pkvd->szKeyName, "weapon_", 7 ) == 0
     ||   strncmp( pkvd->szKeyName, "item_", 5 ) == 0
@@ -50,7 +50,7 @@ bool CStripWeapons::KeyValue(KeyValueData* pkvd)
         char temp[256];
 
         UTIL_StripToken( pkvd->szKeyName, temp );
-        m_iKey[m_cTargets] = ALLOC_STRING(temp );
+        m_iKey[m_cTargets] = ALLOC_STRING( temp );
 
         UTIL_StripToken( pkvd->szValue, temp );
         m_iValue[m_cTargets] = ALLOC_STRING( temp );
@@ -74,10 +74,10 @@ void CStripWeapons::FireItsTarget( CBasePlayer* pActivator, int index, bool bSho
 
 void CStripWeapons::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( IsLockedByMaster(pActivator) )
+    if( IsLockedByMaster( pActivator ) )
         return;
 
-    auto player = ToBasePlayer(pActivator);
+    auto player = ToBasePlayer( pActivator );
 
     if( player == nullptr )
     {

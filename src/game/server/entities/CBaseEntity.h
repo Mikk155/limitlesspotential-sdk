@@ -678,7 +678,7 @@ public:
     /**
      *    @brief Returns whatever a entity is fine to exists by the current rules it has.
      */
-    bool ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags);
+    bool ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags );
     std::vector<std::string> m_AppearFlagNotIn;
     std::vector<std::string> m_AppearFlagOnlyIn;
 

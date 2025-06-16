@@ -173,7 +173,7 @@ bool CAmbientGeneric::Spawn()
     }
     if( m_fActive )
     {
-        EmitAmbientSound( PlayFromEntity(nullptr, nullptr), szSoundFile,
+        EmitAmbientSound( PlayFromEntity( nullptr, nullptr ), szSoundFile,
             ( m_dpv.vol * 0.01 ), m_flAttenuation, SND_SPAWNING, m_dpv.pitch );
 
         pev->nextthink = gpGlobals->time + 0.1;
@@ -231,7 +231,7 @@ void CAmbientGeneric::Think()
             m_dpv.spindown = 0; // done with ramp down
 
             // shut sound off
-            EmitAmbientSound( PlayFromEntity(nullptr, nullptr), szSoundFile,
+            EmitAmbientSound( PlayFromEntity( nullptr, nullptr ), szSoundFile,
                 0, 0, SND_STOP, 0 );
 
             // return without setting nextthink
@@ -275,7 +275,7 @@ void CAmbientGeneric::Think()
             m_dpv.fadeout = 0; // done with ramp down
 
             // shut sound off
-            EmitAmbientSound( PlayFromEntity(nullptr, nullptr), szSoundFile,
+            EmitAmbientSound( PlayFromEntity( nullptr, nullptr ), szSoundFile,
                 0, 0, SND_STOP, 0 );
 
             // return without setting nextthink
@@ -381,7 +381,7 @@ void CAmbientGeneric::Think()
         if( pitch == PITCH_NORM )
             pitch = PITCH_NORM + 1; // don't send 'no pitch' !
 
-            EmitAmbientSound( PlayFromEntity(nullptr, nullptr), szSoundFile,
+            EmitAmbientSound( PlayFromEntity( nullptr, nullptr ), szSoundFile,
                 ( vol * 0.01 ), m_flAttenuation, flags, pitch );
     }
 
@@ -581,11 +581,11 @@ bool CAmbientGeneric::KeyValue( KeyValueData* pkvd )
 {
     if( FStrEq( pkvd->szKeyName, "m_sPlaySound" ) )
     {
-        m_sPlaySound = ALLOC_STRING(pkvd->szValue);
+        m_sPlaySound = ALLOC_STRING( pkvd->szValue );
     }
     else if( FStrEq( pkvd->szKeyName, "m_flAttenuation" ) )
     {
-        m_flAttenuation = atof(pkvd->szValue);
+        m_flAttenuation = atof( pkvd->szValue );
     }
     else if( FStrEq( pkvd->szKeyName, "m_fLooping" ) )
     {
@@ -684,7 +684,7 @@ bool CAmbientGeneric::KeyValue( KeyValueData* pkvd )
     {
         m_dpv.lfotype = atoi( pkvd->szValue );
         if( m_dpv.lfotype > 4 )
-            m_dpv.lfotype = static_cast<int>(LFO::Triangle);
+            m_dpv.lfotype = static_cast<int>( LFO::Triangle );
     }
     else if( FStrEq( pkvd->szKeyName, "lforate" ) )
     {

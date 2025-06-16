@@ -1322,7 +1322,7 @@ void CBaseMonster::StartTask( const Task_t* pTask )
                 CNode &node = WorldGraph.Node( nodeNumber );
 
                 // Don't go to the node if already is close enough
-                if ((node.m_vecOrigin - pev->origin).Length() < 16.0f)
+                if( ( node.m_vecOrigin - pev->origin ).Length() < 16.0f )
                     continue;
 
                 TraceResult tr;

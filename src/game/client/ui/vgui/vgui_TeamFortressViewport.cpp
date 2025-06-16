@@ -1825,7 +1825,7 @@ void TeamFortressViewport::ShowCampaignSelectMenu()
     if( !levelName )
         return;
 
-    std::string map_name = std::string( levelName ).substr(5,-1);
+    std::string map_name = std::string( levelName ).substr( 5,-1 );
     map_name = map_name.substr( 0, map_name.size() - 4 );
     std::string folder_name = fmt::format( "cfg/client/map_selection/{}", map_name );
 

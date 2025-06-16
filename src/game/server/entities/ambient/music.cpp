@@ -94,28 +94,28 @@ void CAmbientMusic::PlayMusic( CBasePlayer* player, AmbientMusicCommand command 
             }
             case AmbientMusicCommand::Toggle:
             {
-                if( g_PlayerList.toggle(player, this) ) {
-                    PlayMusic(player, AmbientMusicCommand::Play);
+                if( g_PlayerList.toggle( player, this ) ) {
+                    PlayMusic( player, AmbientMusicCommand::Play );
                 } else {
-                    PlayMusic(player, AmbientMusicCommand::Stop);
+                    PlayMusic( player, AmbientMusicCommand::Stop );
                 }
                 break;
             }
             case AmbientMusicCommand::ToggleFadeout:
             {
-                if( g_PlayerList.toggle(player, this) ) {
-                    PlayMusic(player, AmbientMusicCommand::Play);
+                if( g_PlayerList.toggle( player, this ) ) {
+                    PlayMusic( player, AmbientMusicCommand::Play );
                 } else {
-                    PlayMusic(player, AmbientMusicCommand::Fadeout);
+                    PlayMusic( player, AmbientMusicCommand::Fadeout );
                 }
                 break;
             }
             case AmbientMusicCommand::ToggleLoop:
             {
-                if( g_PlayerList.toggle(player, this) ) {
-                    PlayMusic(player, AmbientMusicCommand::Loop);
+                if( g_PlayerList.toggle( player, this ) ) {
+                    PlayMusic( player, AmbientMusicCommand::Loop );
                 } else {
-                    PlayMusic(player, AmbientMusicCommand::Stop);
+                    PlayMusic( player, AmbientMusicCommand::Stop );
                 }
                 break;
             }

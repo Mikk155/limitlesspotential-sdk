@@ -13,7 +13,7 @@ struct SteamID
 
         std::string AllocateSteamString( const char* _sid )
         {
-            uint64_t authID = Allocateuint64(_sid) - steamOffset;
+            uint64_t authID = Allocateuint64( _sid ) - steamOffset;
 
             uint32_t authFirst = authID % 2;
 

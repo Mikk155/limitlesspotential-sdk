@@ -220,7 +220,7 @@ void CTriggerEntityIterator :: IteratorFind()
 
 void CTriggerEntityIterator :: IteratorTrigger( CBaseEntity* pTarget )
 {
-    if(( !FStringNull( classname_filter ) && !pTarget->ClassnameIs( STRING( classname_filter ) ) )
+    if( ( !FStringNull( classname_filter ) && !pTarget->ClassnameIs( STRING( classname_filter ) ) )
     || ( !FStringNull( name_filter ) && !FStrEq( STRING( pTarget->pev->targetname ), STRING( name_filter ) ) )
     || ( status_filter == FILTER_STATUS_ONLY_DEAD && pTarget->IsAlive() )
     || ( status_filter == FILTER_STATUS_ONLY_LIVING && !pTarget->IsAlive() )

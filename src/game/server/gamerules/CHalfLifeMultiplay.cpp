@@ -224,7 +224,7 @@ void CHalfLifeMultiplay::ClientDisconnected( edict_t* pClient )
             TriggerEvent( TriggerEventType::PlayerLeftServer, pPlayer, pPlayer );
 
             if( pPlayer->HasNamedPlayerWeapon( "weapon_satchel" ) )
-                DeactivateSatchels(pPlayer, true);
+                DeactivateSatchels( pPlayer, true );
         }
     }
 }

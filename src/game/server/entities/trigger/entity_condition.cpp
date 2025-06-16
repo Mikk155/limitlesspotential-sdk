@@ -60,7 +60,7 @@ bool CTriggerEntityCondition :: KeyValue( KeyValueData* pkvd )
     }
     else
     {
-        return CPointEntity::KeyValue(pkvd);
+        return CPointEntity::KeyValue( pkvd );
     }
     return true;
 }

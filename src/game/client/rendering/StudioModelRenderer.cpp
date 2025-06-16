@@ -684,7 +684,7 @@ Studio_FxTransform
 */
 void CStudioModelRenderer::StudioFxTransform( cl_entity_t* ent, float transform[3][4] )
 {
-    if (ent->curstate.renderfx != kRenderFxExplode && ent->curstate.scale > 0)
+    if( ent->curstate.renderfx != kRenderFxExplode && ent->curstate.scale > 0 )
     {
         transform[0][0] *= ent->curstate.scale;
         transform[1][0] *= ent->curstate.scale;

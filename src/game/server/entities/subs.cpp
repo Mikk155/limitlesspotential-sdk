@@ -128,13 +128,13 @@ USE_TYPE ToUseType( std::variant<int, const char*> from, std::optional<USE_TYPE>
         return static_cast<USE_TYPE>( std::clamp( value, USE_UNSET + 1, USE_UNKNOWN - 1 ) ) ;
     };
 
-    if( std::holds_alternative<int>(from) )
+    if( std::holds_alternative<int>( from ) )
     {
-        return itout( std::get<int>(from) );
+        return itout( std::get<int>( from ) );
     }
     else
     {
-        const char* value = std::get<const char*>(from);
+        const char* value = std::get<const char*>( from );
 
         if( FStrEq( value, "USE_OFF" ) )
             return USE_OFF;
@@ -210,7 +210,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
         else
         {
             // Momentarly override USE_TYPE
-            value.UseType = static_cast<USE_TYPE>(use_value);
+            value.UseType = static_cast<USE_TYPE>( use_value );
         }
 
         FireTargets( target_copy.substr( 0, hash_index ).c_str(), activator, caller, use_type, value );
@@ -269,15 +269,15 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
             oss << "Float(" << value.Float.value() << ") ";
         }
 
-        if ( value.String.has_value() ) {
+        if( value.String.has_value() ) {
             oss << "String(\"" << value.String.value() << "\") ";
         }
 
-        if ( value.Vector3D.has_value() ) {
+        if( value.Vector3D.has_value() ) {
             oss << "Vector(" << value.Vector3D.value().MakeString() << ") ";
         }
 
-        if ( value.EntityHandle.has_value() ) {
+        if( value.EntityHandle.has_value() ) {
             if( auto ent = value.EntityHandle.value().Get(); ent != nullptr ) {
                 oss << "Entity(" << UTIL_GetBestEntityName( ent ) << ") ";
             }
@@ -314,8 +314,8 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
             {
                 entity->m_UseTypeLast = use_type; // Store the last USE_TYPE that we got.
 
-                CBaseEntity::IOLogger->debug(
-                    "{}->Use( {}, {}, {}, {} )",
+                CBaseEntity::IOLogger->debug( 
+                    "{}->Use( {}, {}, {}, {})",
                     UTIL_GetBestEntityName( entity, false ),
                     UTIL_GetBestEntityName( activator, false ),
                     UTIL_GetBestEntityName( caller, false ),
@@ -349,8 +349,8 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
                     entity->m_UseTypeLast = caller->m_UseTypeLast;
                 }
 
-                CBaseEntity::IOLogger->debug(
-                    "{}->Use( {}, {}, {} > {}, {} )",
+                CBaseEntity::IOLogger->debug( 
+                    "{}->Use( {}, {}, {} > {}, {})",
                     UTIL_GetBestEntityName( entity, false ),
                     UTIL_GetBestEntityName( activator, false ),
                     UTIL_GetBestEntityName( caller, false ),
@@ -378,7 +378,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
                 && caller->m_UseTypeLast != USE_LOCK
                 && caller->m_UseTypeLast != USE_UNLOCK )
                 {
-                    CBaseEntity::IOLogger->debug(
+                    CBaseEntity::IOLogger->debug( 
                         "Can't invert USE_TYPE {}. only {}, {}, {} and {} are supported! Skipping.",
                         lUseType( entity->m_UseTypeLast ),
                         lUseType( USE_ON ),
@@ -393,8 +393,8 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
                 entity->m_UseTypeLast = ( caller->m_UseTypeLast == USE_ON ? USE_OFF : caller->m_UseTypeLast == USE_OFF ? USE_ON :
                     caller->m_UseTypeLast == USE_LOCK ? USE_UNLOCK : USE_LOCK );
 
-                CBaseEntity::IOLogger->debug(
-                    "{}->Use( {}, {}, {} > {}, {} )",
+                CBaseEntity::IOLogger->debug( 
+                    "{}->Use( {}, {}, {} > {}, {})",
                     UTIL_GetBestEntityName( entity, false ),
                     UTIL_GetBestEntityName( activator, false ),
                     UTIL_GetBestEntityName( caller, false ),
@@ -410,7 +410,7 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
             {
                 entity->m_UseTypeLast = USE_TOUCH;
 
-                CBaseEntity::IOLogger->debug( "{}->Touch( {} )", UTIL_GetBestEntityName( entity, false ), UTIL_GetBestEntityName( activator, false ) );
+                CBaseEntity::IOLogger->debug( "{}->Touch( {})", UTIL_GetBestEntityName( entity, false ), UTIL_GetBestEntityName( activator, false ) );
 
                 if( FBitSet( entity->m_UseLocked, USE_VALUE_TOUCH ) ) // Entity locked for Touching.
                 {
@@ -469,8 +469,8 @@ void FireTargets( const char* target, CBaseEntity* activator, CBaseEntity* calle
             }
             default:
             {
-                CBaseEntity::IOLogger->debug(
-                    "{}->Use( {}, {}, {} )",
+                CBaseEntity::IOLogger->debug( 
+                    "{}->Use( {}, {}, {})",
                     UTIL_GetBestEntityName( entity, false ),
                     UTIL_GetBestEntityName( activator, false ),
                     UTIL_GetBestEntityName( caller, false ),

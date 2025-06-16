@@ -42,7 +42,7 @@ void CAmbient::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 {
     if( ( pev->spawnflags & AMBIENT_DONT_REMOVE ) == 0 )
     {
-        UTIL_Remove(this);
+        UTIL_Remove( this );
     }
 }
 
@@ -66,7 +66,7 @@ Vector CAmbient::PlayFromEntity( CBaseEntity* activator, CBaseEntity* caller )
         else
         {
             CBaseEntity::Logger->warn( "{} Failed to get \"{}\", Playing at origin {}",
-                STRING(pev->classname), STRING(m_sPlayFrom), STRING(pev->targetname), pev->origin.MakeString(0) );
+                STRING( pev->classname ), STRING( m_sPlayFrom ), STRING( pev->targetname ), pev->origin.MakeString(0) );
         }
     }
 

@@ -150,7 +150,7 @@ public:
         size_t start = 0, end;
         std::vector<std::string_view> tokens;
 
-        while( ( end = str.find(delimiter, start ) ) != std::string_view::npos )
+        while( ( end = str.find( delimiter, start ) ) != std::string_view::npos )
         {
             if( end != start )
             {
@@ -174,7 +174,7 @@ public:
                 *components[i] = std::stof( std::string( tokens[i] ) );
                 ++parsed;
             }
-            catch (...) { }
+            catch ( ... ) { }
         }
 
         return parsed;

@@ -95,19 +95,19 @@ void CGameVariable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
             const auto cvarValue = STRING( useType == USE_OFF ? pev->message : m_sValue );
 
             // Commands should be evaluated on execution in case we've saved and restored and the whitelist has changed.
-            if (!g_CommandWhitelist.contains(cvarName))
+            if( !g_CommandWhitelist.contains( cvarName ) )
             {
-                Logger->error("The console variable \"{} {}\" cannot be changed because it is not listed in the command whitelist", cvarName, cvarValue);
+                Logger->error( "The console variable \"{} {}\" cannot be changed because it is not listed in the command whitelist", cvarName, cvarValue );
                 break;
             }
 
-            if (!m_CVar)
+            if( !m_CVar )
             {
-                m_CVar = CVAR_GET_POINTER(cvarName);
+                m_CVar = CVAR_GET_POINTER( cvarName );
 
-                if (!m_CVar)
+                if( !m_CVar )
                 {
-                    Logger->error("The console variable \"{}\" does not exist");
+                    Logger->error( "The console variable \"{}\" does not exist" );
                     break;
                 }
             }
@@ -117,8 +117,8 @@ void CGameVariable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
             if( FBitSet( pev->spawnflags, SF_GAME_VARIABLE_STORE ) )
                 break;
 
-            Logger->info("Changing cvar \"{}\" from \"{}\" to \"{}\"", cvarName, m_CVar->string, cvarValue);
-            g_engfuncs.pfnCvar_DirectSet(m_CVar, cvarValue);
+            Logger->info( "Changing cvar \"{}\" from \"{}\" to \"{}\"", cvarName, m_CVar->string, cvarValue );
+            g_engfuncs.pfnCvar_DirectSet( m_CVar, cvarValue );
 
             if( FStrEq( cvarName, "skill" ) )
             {
@@ -136,7 +136,7 @@ void CGameVariable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
                 break;
 
             float flvalue = atof( STRING( useType == USE_OFF ? pev->message : m_sValue ) );
-            Logger->info("Changing skill var \"{}\" from \"{}\" to \"{}\"", szvar, g_Skill.GetValue( szvar ), flvalue );
+            Logger->info( "Changing skill var \"{}\" from \"{}\" to \"{}\"", szvar, g_Skill.GetValue( szvar ), flvalue );
             g_Skill.SetValue( szvar, flvalue );
             break;
         }
@@ -152,21 +152,21 @@ void CGameVariable::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
         {
             if( !g_CommandWhitelist.contains( STRING( m_sVariable ) ) )
             {
-                Logger->error("The console command \"{} {}\" cannot be sent because it is not listed in the command whitelist", STRING( m_sVariable ) );
+                Logger->error( "The console command \"{} {}\" cannot be sent because it is not listed in the command whitelist", STRING( m_sVariable ) );
                 break;
             }
 
             if( FBitSet( pev->spawnflags, SF_GAME_VARIABLE_STORE ) )
             {
-                Logger->error("Can not store-only a type of variable which is \"command\"" );
+                Logger->error( "Can not store-only a type of variable which is \"command\"" );
                 break;
             }
 
-            Logger->info("Sending command \"{}\"", STRING( m_sVariable ) );
+            Logger->info( "Sending command \"{}\"", STRING( m_sVariable ) );
             SERVER_COMMAND( STRING( m_sVariable ) );
             break;
         }
     }
 
-    SUB_UseTargets(pActivator, USE_TOGGLE, 0);
+    SUB_UseTargets( pActivator, USE_TOGGLE, 0 );
 }

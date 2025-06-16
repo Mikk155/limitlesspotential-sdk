@@ -524,7 +524,7 @@ void WeaponsResource::SelectSlot( int iSlot, bool fAdvance, int iDirection )
 
             // try to figure out if there's your current weapon in selected slot group
             WEAPON* potential = p;
-            while(true)
+            while( true )
             {
                 // weapon has been found
                 if( currentWeapon == potential && currentWeapon != 0 )
@@ -545,7 +545,7 @@ void WeaponsResource::SelectSlot( int iSlot, bool fAdvance, int iDirection )
 
                 // Go back to the first weapon in the slot group if this is the last weapon
                 if( !p2 )
-                    p2 = GetFirstPos(iSlot);
+                    p2 = GetFirstPos( iSlot );
 
                 SendWeaponSelectCommand( p2->Info->Name.c_str() );
                 g_weaponselect = p2->Info->Id;

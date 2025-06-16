@@ -200,7 +200,7 @@ void GM_Base::SetClientHUDColor( int elements, int index, std::optional<RGB24> c
 
             if( int result = DefaultColor.FromString( pCvar->string ); result == 3 )
             {
-                return RGB24::FromVector(DefaultColor);
+                return RGB24::FromVector( DefaultColor );
             }
         }
 
@@ -253,11 +253,11 @@ void GM_Base::SetClientHUDColor( int elements, int index, std::optional<RGB24> c
 
     if( index == 0 ) {
         for( CBasePlayer* player : UTIL_FindPlayers() ) {
-            executor(player);
+            executor( player );
         }
     }
     else {
-        executor( UTIL_PlayerByIndex(index) );
+        executor( UTIL_PlayerByIndex( index ) );
     }
 #endif
 }
@@ -315,7 +315,7 @@ void CGameModes::NewGameModeEntry()
 #ifdef ANGELSCRIPT
 void CGameModes::RegisterCustomGameModes()
 {
-    GameModeFactory.resize(GameModeFactorySize);
+    GameModeFactory.resize( GameModeFactorySize );
 //    NewGameModeEntry<GM_YourClassName>();
 }
 #endif
@@ -391,7 +391,7 @@ GM_Base* CGameModes::operator->()
         return gamemode;
     }
 
-    UpdateGameMode(gamemode_name);
+    UpdateGameMode( gamemode_name );
 
     return gamemode;
 }
@@ -482,7 +482,7 @@ void CGameModes::MsgFunc_UpdateGameMode( BufferReader& reader )
         }
         case ClientGameModeNetwork::fnOnClientInit:
         {
-            g_GameMode->OnClientInit(nullptr);
+            g_GameMode->OnClientInit( nullptr );
             break;
         }
         case ClientGameModeNetwork::fnOnClientConnect:
@@ -500,7 +500,7 @@ void CGameModes::MsgFunc_UpdateGameMode( BufferReader& reader )
             int elements = reader.ReadByte();
             int color = reader.ReadLong();
             if( color == 0 ) { g_GameMode->SetClientHUDColor( elements ); }
-            else { g_GameMode->SetClientHUDColor( elements, 0, RGB24::FromInteger(color) ); }
+            else { g_GameMode->SetClientHUDColor( elements, 0, RGB24::FromInteger( color ) ); }
             break;
         }
     }

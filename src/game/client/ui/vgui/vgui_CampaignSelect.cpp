@@ -264,7 +264,7 @@ void CCampaignSelectPanel::Open( const char* foldername )
     {
         needsInit = true;
 
-        m_Campaigns = g_CampaignSelect.LoadCampaigns(foldername);
+        m_Campaigns = g_CampaignSelect.LoadCampaigns( foldername );
 
         for( const auto& campaign : m_Campaigns )
         {

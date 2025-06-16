@@ -1661,7 +1661,7 @@ bool PM_CheckStuck()
     if( ( pmove->cmd.buttons & ( IN_JUMP | IN_DUCK | IN_ATTACK ) ) != 0 && ( pmove->physents[hitent].player != 0 ) )
     {
 #ifndef CLIENT_DLL
-        if( !UTIL_GetNearestHull(pmove->origin, pmove->origin, human_hull, 128, 128 ) )
+        if( !UTIL_GetNearestHull( pmove->origin, pmove->origin, human_hull, 128, 128 ) )
         {
             return false;
         }
@@ -2635,7 +2635,7 @@ void PM_CheckFalling()
     {
         float fvol = 0.5;
 
-        if( pmove->waterlevel > 0 || (int)g_GameMode->OnPlayerFallDamage(nullptr, pmove->flFallVelocity) == 0 )
+        if( pmove->waterlevel > 0 || (int)g_GameMode->OnPlayerFallDamage( nullptr, pmove->flFallVelocity ) == 0 )
         {
             // -TODO Check some water level head plus reduce speed tracing down?
         }

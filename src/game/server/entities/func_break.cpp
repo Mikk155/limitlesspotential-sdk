@@ -650,7 +650,7 @@ void CBreakable::Die()
 
     if( m_Explosion == expDirected )
         vecVelocity = -g_vecAttackDir * m_DirectionSpeed;
-    else if (m_Explosion == expSpecific)
+    else if( m_Explosion == expSpecific )
         vecVelocity = m_VecDirection * m_DirectionSpeed;
     else
     {

@@ -30,7 +30,7 @@ int DispatchSpawn( edict_t* pent )
 
     if( entity != nullptr )
     {
-        if(!entity->ShouldAppearByFlags( entity->m_AppearFlagNotIn, appearflags::NotIn )
+        if( !entity->ShouldAppearByFlags( entity->m_AppearFlagNotIn, appearflags::NotIn )
         ||  !entity->ShouldAppearByFlags( entity->m_AppearFlagOnlyIn, appearflags::OnlyIn ) ) {
             UTIL_Remove( entity );
             return -1;
@@ -638,7 +638,7 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
         if( it == m_ConfigVariables.end() )
         {
             ConfigurationSystem::ConfigVariable variable{
-                .Name = std::string(name),
+                .Name = std::string( name ),
                 .CurrentValue = 0,
                 .InitialValue = 0
             };
@@ -654,7 +654,7 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
             it->StringValue = std::string( pkvd->szValue );
 
         CBaseEntity::Logger->debug( "Config value \"{}\" changed to \"{}\" for {}::{}",
-            pkvd->szKeyName, pkvd->szValue, STRING(pev->classname), STRING(pev->targetname) );
+            pkvd->szKeyName, pkvd->szValue, STRING( pev->classname ), STRING( pev->targetname ) );
 
         return false;
     }

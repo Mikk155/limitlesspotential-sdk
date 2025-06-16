@@ -108,7 +108,7 @@ void CAmbientDSP::DSPTouch( CBaseEntity* pOther )
 
     auto executor = [this]( CBasePlayer* player ) -> void
     {
-        if( player != nullptr && player->Intersects(this) )
+        if( player != nullptr && player->Intersects( this ) )
         {
             UpdateRoomType( player, USE_ON );
 

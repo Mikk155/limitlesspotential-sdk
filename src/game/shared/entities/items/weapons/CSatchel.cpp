@@ -174,7 +174,7 @@ void CSatchel::PrimaryAttack()
         SendWeaponAnim( SATCHEL_RADIO_FIRE );
 
 #ifndef CLIENT_DLL
-        DeactivateSatchels(m_pPlayer, true);
+        DeactivateSatchels( m_pPlayer, true );
 #endif
 
         m_chargeReady = 2;

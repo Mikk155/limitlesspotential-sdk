@@ -55,7 +55,7 @@ void GM_Multiplayer::OnThink()
 #ifdef CLIENT_DLL
 #else
     g_VoiceGameMgr.Update( gpGlobals->frametime );
-    CheckMultiplayerGame(true);
+    CheckMultiplayerGame( true );
 #endif
 
     BaseClass::OnThink();
@@ -78,14 +78,14 @@ void GM_Multiplayer::OnClientInit( CBasePlayer* player )
     }
 
     // Re-read default titles
-    gHUD.m_TextMessage.LoadGameTitles(nullptr, true);
+    gHUD.m_TextMessage.LoadGameTitles( nullptr, true );
 
 // -TODO Transfer the titles this map uses
 //    gHUD.m_TextMessage.LoadGameTitles( custom title (or iteration for multiple append-replace) );
 #else
 #endif
 
-    BaseClass::OnClientInit(player);
+    BaseClass::OnClientInit( player );
 }
 
 void GM_Multiplayer::OnClientConnect( int index )
@@ -98,14 +98,14 @@ void GM_Multiplayer::OnClientConnect( int index )
 */
 #else
 
-    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt(ent) )
+    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt( ent ) )
     {
-        g_VoiceGameMgr.ClientConnected(ent);
+        g_VoiceGameMgr.ClientConnected( ent );
     }
 
 #endif
 
-    BaseClass::OnClientConnect(index);
+    BaseClass::OnClientConnect( index );
 }
 
 void GM_Multiplayer::OnClientDisconnect( int index )
@@ -118,7 +118,7 @@ void GM_Multiplayer::OnClientDisconnect( int index )
 */
 #else
 
-    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt(ent) )
+    if( edict_t* ent = g_engfuncs.pfnPEntityOfEntIndex( index ); !FNullEnt( ent ) )
     {
         MESSAGE_BEGIN( MSG_ALL, gmsgSayText );
         {
@@ -168,7 +168,7 @@ void GM_Multiplayer::OnClientDisconnect( int index )
     }
 #endif
 
-    BaseClass::OnClientDisconnect(index);
+    BaseClass::OnClientDisconnect( index );
 }
 
 void GM_Multiplayer::OnPlayerPreThink( CBasePlayer* player, float time )
@@ -310,5 +310,5 @@ void GM_Multiplayer::OnPlayerPreThink( CBasePlayer* player, float time )
     }
 #endif
 
-    BaseClass::OnPlayerPreThink(player, time);
+    BaseClass::OnPlayerPreThink( player, time );
 }

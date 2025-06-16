@@ -28,7 +28,7 @@ LINK_ENTITY_TO_CLASS( info_ctfspawn, CTFSpawn );
 
 bool CTFSpawn::CanPlayerSpawn( CBasePlayer* player )
 {
-    if( !BaseClass::CanPlayerSpawn(player) )
+    if( !BaseClass::CanPlayerSpawn( player ) )
         return false;
 
     if( !FStringNull( pev->targetname ) && STRING( pev->targetname ) )
@@ -39,7 +39,7 @@ bool CTFSpawn::CanPlayerSpawn( CBasePlayer* player )
 
 void CTFSpawn::SpawnPlayer( CBasePlayer* player )
 {
-    BaseClass::SpawnPlayer(player);
+    BaseClass::SpawnPlayer( player );
 
     if( player->m_iTeamNum == CTFTeam::None )
     {

@@ -79,7 +79,7 @@ bool CTriggerZone::KeyValue( KeyValueData* pkvd )
     }
     else
     {
-        return CBaseEntity::KeyValue(pkvd);
+        return CBaseEntity::KeyValue( pkvd );
     }
     return true;
 }
@@ -110,12 +110,12 @@ void CTriggerZone::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
             if( Intersects( pEntity ) )
             {
                 in_entities++;
-                FireTargets( STRING(pev->message), pEntity, this, m_InUse, { .Float = m_InValue } );
+                FireTargets( STRING( pev->message ), pEntity, this, m_InUse, { .Float = m_InValue } );
             }
             else
             {
                 out_entities++;
-                FireTargets( STRING(pev->netname), pEntity, this, m_OutUse, { .Float = m_OutValue } );
+                FireTargets( STRING( pev->netname ), pEntity, this, m_OutUse, { .Float = m_OutValue } );
             }
         }
     }

@@ -41,7 +41,7 @@ bool CPlayerRespawn::Spawn()
 
 void CPlayerRespawn::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
 {
-    if( IsLockedByMaster(pActivator) )
+    if( IsLockedByMaster( pActivator ) )
         return;
 
     FireTargets( STRING( pev->message ), nullptr, nullptr, USE_OFF );

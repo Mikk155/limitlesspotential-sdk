@@ -22,7 +22,7 @@ char* pszPlayerIPs[MAX_PLAYERS * 2];
 
 void GM_CaptureTheFlag::OnClientDisconnect( int index )
 {
-    BaseClass::OnClientDisconnect(index);
+    BaseClass::OnClientDisconnect( index );
 #ifdef CLIENT_DLL
 /*
     if( cl_entity_t* ent = gEngfuncs.GetEntityByIndex( index ); ent )
@@ -48,7 +48,7 @@ void GM_CaptureTheFlag::OnClientInit( CBasePlayer* player )
 #else
 #endif
 
-    BaseClass::OnClientInit(player);
+    BaseClass::OnClientInit( player );
 }
 
 void GM_CaptureTheFlag::OnPlayerPreThink( CBasePlayer* player, float time )
@@ -102,5 +102,5 @@ void GM_CaptureTheFlag::OnPlayerPreThink( CBasePlayer* player, float time )
     }
 #endif
 
-    BaseClass::OnPlayerPreThink(player, time);
+    BaseClass::OnPlayerPreThink( player, time );
 }

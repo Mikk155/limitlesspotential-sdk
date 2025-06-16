@@ -70,7 +70,7 @@ void CAmbientSound::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     {
         if( pActivator != nullptr && pActivator->IsPlayer() )
         {
-            pActivator->EmitAmbientSound( PlayFromEntity(pActivator, pCaller), STRING(m_sPlaySound), m_fVolume, m_flAttenuation, SND_ONLYHOST, m_iPitch );
+            pActivator->EmitAmbientSound( PlayFromEntity( pActivator, pCaller ), STRING( m_sPlaySound ), m_fVolume, m_flAttenuation, SND_ONLYHOST, m_iPitch );
         }
         else
         {
@@ -79,7 +79,7 @@ void CAmbientSound::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     }
     else
     {
-        EmitAmbientSound( PlayFromEntity(pActivator, pCaller), STRING(m_sPlaySound), m_fVolume, m_flAttenuation, 0, m_iPitch );
+        EmitAmbientSound( PlayFromEntity( pActivator, pCaller ), STRING( m_sPlaySound ), m_fVolume, m_flAttenuation, 0, m_iPitch );
     }
 
     BaseClass::Use( pActivator, pCaller, useType, value );

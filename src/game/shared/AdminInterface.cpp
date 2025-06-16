@@ -687,7 +687,7 @@ void CAdminInterface::RegisterCommands()
                     }
                     else
                     {
-                        UTIL_ConsolePrint( player, "Gave {} a {}\n", UTIL_GetBestEntityName(target), UTIL_GetBestEntityName(entity) );
+                        UTIL_ConsolePrint( player, "Gave {} a {}\n", UTIL_GetBestEntityName( target ), UTIL_GetBestEntityName( entity ) );
                     }
                 }
             }

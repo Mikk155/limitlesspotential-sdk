@@ -22,5 +22,5 @@ void GM_TeamDeathmatch::OnClientInit( CBasePlayer* player )
 #else
 #endif
 
-    BaseClass::OnClientInit(player);
+    BaseClass::OnClientInit( player );
 }

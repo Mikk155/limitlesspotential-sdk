@@ -35,17 +35,17 @@ bool CPlayerSpawnPoint::KeyValue( KeyValueData* pkvd )
         if( m_cTargets > MAX_SPAWNPOINT_KEYVALUES )
         {
             CBaseEntity::Logger->error( "Reached {} keyvalue limit on {}::{} can not set key {}",
-                MAX_SPAWNPOINT_KEYVALUES, STRING(pev->classname), STRING(pev->targetname), pkvd->szKeyName );
+                MAX_SPAWNPOINT_KEYVALUES, STRING( pev->classname ), STRING( pev->targetname ), pkvd->szKeyName );
             return false;
         }
 
         char temp[256];
 
-        UTIL_StripToken(pkvd->szKeyName + 1, temp);
-        m_iKey[m_cTargets] = ALLOC_STRING(temp);
+        UTIL_StripToken( pkvd->szKeyName + 1, temp );
+        m_iKey[m_cTargets] = ALLOC_STRING( temp );
 
-        UTIL_StripToken(pkvd->szValue + 1, temp);
-        m_iValue[m_cTargets] = ALLOC_STRING(temp);
+        UTIL_StripToken( pkvd->szValue + 1, temp );
+        m_iValue[m_cTargets] = ALLOC_STRING( temp );
 
         ++m_cTargets;
     }
@@ -63,7 +63,7 @@ bool CPlayerSpawnPoint::KeyValue( KeyValueData* pkvd )
     }
     else
     {
-        return BaseClass::KeyValue(pkvd);
+        return BaseClass::KeyValue( pkvd );
     }
     return true;
 }
@@ -194,7 +194,7 @@ CPlayerSpawnPoint* FindBestPlayerSpawn( CBasePlayer* player, const char* spawn_n
 
         if( spawnspot->CanPlayerSpawn( player ) )
         {
-            list_spawnspots.push_back(spawnspot);
+            list_spawnspots.push_back( spawnspot );
         }
     }
 

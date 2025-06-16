@@ -65,15 +65,15 @@ void CGameAchievement::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 {
     if( ( pev->spawnflags & 1 ) != 0 )
     {
-        if( CBasePlayer* player = ToBasePlayer(pActivator); player != nullptr )
+        if( CBasePlayer* player = ToBasePlayer( pActivator ); player != nullptr )
         {
-            g_Achievement.Achieve( player, STRING(m_label), STRING(m_name), STRING(m_description) );
+            g_Achievement.Achieve( player, STRING( m_label ), STRING( m_name ), STRING( m_description ) );
         }
     }
     else
     {
-        g_Achievement.Achieve( STRING(m_label), STRING(m_name), STRING(m_description) );
+        g_Achievement.Achieve( STRING( m_label ), STRING( m_name ), STRING( m_description ) );
     }
 
-    UTIL_Remove(this);
+    UTIL_Remove( this );
 }

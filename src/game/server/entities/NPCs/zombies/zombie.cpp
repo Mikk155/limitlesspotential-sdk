@@ -230,7 +230,7 @@ void CZombie::TraceAttack( CBaseEntity* pAttacker, float flDamage, Vector vecDir
     BaseClass::TraceAttack( pAttacker, flDamage, vecDir, ptr, bitsDamageType );
 }
 
-void CZombie::Killed(CBaseEntity* pAttacker, int iGib)
+void CZombie::Killed( CBaseEntity* pAttacker, int iGib )
 {
     // Check if the stored received damage is less than a headcrab's HP
     if( g_cfg.GetValue<bool>( "zombie_headcrab_jump"sv, false, this ) )

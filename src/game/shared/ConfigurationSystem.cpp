@@ -373,7 +373,7 @@ void ConfigurationSystem::DefineVariable( std::string name, float initialValue, 
 }
 
 template <typename T>
-T ConfigurationSystem::GetValue(
+T ConfigurationSystem::GetValue( 
     std::string_view name,
     std::optional<T> defaultValue,
     CBaseEntity* entity
@@ -474,22 +474,22 @@ void ConfigurationSystem::SetValue( std::string_view name, std::variant<float, i
 
     float fValue = 0;
 
-    if( std::holds_alternative<float>(value) )
+    if( std::holds_alternative<float>( value ) )
     {
-        fValue = std::get<float>(value);
+        fValue = std::get<float>( value );
     }
-    else if( std::holds_alternative<int>(value) )
+    else if( std::holds_alternative<int>( value ) )
     {
-        fValue = std::get<int>(value);
+        fValue = std::get<int>( value );
     }
-    else if( std::holds_alternative<bool>(value) )
+    else if( std::holds_alternative<bool>( value ) )
     {
-        fValue = ( std::get<bool>(value) ? 1 : 0 );
+        fValue = ( std::get<bool>( value ) ? 1 : 0 );
         it->Constraints.Type = ConfigVarType::Boolean;
     }
-    else if( std::holds_alternative<std::string_view>(value) )
+    else if( std::holds_alternative<std::string_view>( value ) )
     {
-        it->StringValue = std::string( std::get<std::string_view>(value) );
+        it->StringValue = std::string( std::get<std::string_view>( value ) );
         it->Constraints.Type = ConfigVarType::String;
     }
 
@@ -657,7 +657,7 @@ bool ConfigurationSystem::ParseConfiguration( json& input, const bool CustomMap 
                 if( it == config_map.end() )
                 {
                     ConfigVariable variable{
-                        .Name = std::string(name),
+                        .Name = std::string( name ),
                         .CurrentValue = 0,
                         .InitialValue = 0
                     };

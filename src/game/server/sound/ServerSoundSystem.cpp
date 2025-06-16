@@ -227,7 +227,7 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
         flags |= SND_LARGE_INDEX;
     }
 
-    auto IsPlayerHost = [&](int index, int bit, const std::string& flag ) -> std::pair<bool, CBasePlayer*>
+    auto IsPlayerHost = [&]( int index, int bit, const std::string& flag ) -> std::pair<bool, CBasePlayer*>
     {
         if( index > 0 && index <= gpGlobals->maxClients )
         {
@@ -238,7 +238,7 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
         }
         else
         {
-            m_Logger->error("EmitSound: Entity is not a player, cannot use flag {} ({})", bit, flag );
+            m_Logger->error( "EmitSound: Entity is not a player, cannot use flag {} ({})", bit, flag );
         }
         return { false, nullptr };
     };
@@ -248,7 +248,7 @@ void ServerSoundSystem::EmitSoundCore( CBaseEntity* entity, int channel, const c
         if( auto host = IsPlayerHost( entityIndex, SND_ONLYHOST, "SND_ONLYHOST" ); host.first )
         {
             MESSAGE_BEGIN( MSG_ONE_UNRELIABLE, gmsgEmitSound, nullptr, host.second );
-            BuildSoundMessage(entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin);
+            BuildSoundMessage( entityIndex, channel, soundIndex, volumeInt, attenuation, flags, pitch, origin );
             MESSAGE_END();
         }
     }

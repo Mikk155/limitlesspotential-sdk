@@ -567,7 +567,7 @@ void SV_CreateClientCommands()
             for( int i = 0; i < std::min( 3, args.Count() - 2 ); i ++ ) {
                 color[i] = atoi( args.Argument( i + 2 ) );
             }
-            g_GameMode->SetClientHUDColor( atoi( args.Argument( 1 ) ), player->entindex(), RGB24::FromVector(color) );
+            g_GameMode->SetClientHUDColor( atoi( args.Argument( 1 ) ), player->entindex(), RGB24::FromVector( color ) );
         }
         else
         {

@@ -97,7 +97,7 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw( float flTime, bool intermission )
 {
-    g_GameMode->OnPlayerPreThink(nullptr, flTime);
+    g_GameMode->OnPlayerPreThink( nullptr, flTime );
 
     m_fOldTime = m_flTime; // save time of previous redraw
     m_flTime = flTime;
@@ -212,7 +212,7 @@ bool CHud::Redraw( float flTime, bool intermission )
     }
     */
 
-    g_GameMode->OnPlayerPostThink(nullptr, flTime);
+    g_GameMode->OnPlayerPostThink( nullptr, flTime );
 
     return true;
 }

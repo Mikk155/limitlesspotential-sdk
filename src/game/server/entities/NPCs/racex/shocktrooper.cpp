@@ -791,13 +791,13 @@ void CShockTrooper::HandleAnimEvent( MonsterEvent_t* pEvent )
 
         if( grenade_type == 0 )
         {
-            CSpore::CreateSpore(pev->origin + Vector(0, 0, 98), m_vecTossVelocity, this, CSpore::SporeType::GRENADE, true, false);
+            CSpore::CreateSpore( pev->origin + Vector( 0, 0, 98 ), m_vecTossVelocity, this, CSpore::SporeType::GRENADE, true, false );
         }
         else
         {
-            if( CSpore* pSpore = CSpore::CreateSpore( pev->origin + Vector(0, 0, 98),
-                m_vecTossVelocity, this, CSpore::SporeType::ROCKET, false, false); pSpore != nullptr ) {
-                    pSpore->pev->velocity = pSpore->pev->velocity + DotProduct(pSpore->pev->velocity, gpGlobals->v_forward) * gpGlobals->v_forward;
+            if( CSpore* pSpore = CSpore::CreateSpore( pev->origin + Vector( 0, 0, 98 ),
+                m_vecTossVelocity, this, CSpore::SporeType::ROCKET, false, false ); pSpore != nullptr ) {
+                    pSpore->pev->velocity = pSpore->pev->velocity + DotProduct( pSpore->pev->velocity, gpGlobals->v_forward ) * gpGlobals->v_forward;
             }
         }
 

@@ -182,7 +182,7 @@ client_textmessage_t* CHudTextMessage::Getmessage( const char* pName )
         if( !label.is_object() )
         {
             g_GameLogger->error( "Invalid titles label {} is not an object", pName );
-            return gEngfuncs.pfnTextMessageGet(pName);
+            return gEngfuncs.pfnTextMessageGet( pName );
         }
 
         // -TODO Possible to get the OS or Steam language and convert to a formatted english name?
@@ -234,14 +234,14 @@ client_textmessage_t* CHudTextMessage::Getmessage( const char* pName )
             pMessage.fadeout = ( obj.is_number() ? obj.get<float>() : 1.0 );
 
             obj = GetValues( label, "color" );
-            while( obj.size() < 4 ) { obj.push_back(255); }
+            while( obj.size() < 4 ) { obj.push_back( 255 ); }
             pMessage.r1 = obj[0].get<uint>();
             pMessage.g1 = obj[1].get<uint>();
             pMessage.b1 = obj[2].get<uint>();
             pMessage.a1 = obj[3].get<uint>();
 
             obj = GetValues( label, "color2" );
-            while( obj.size() < 4 ) { obj.push_back(255); }
+            while( obj.size() < 4 ) { obj.push_back( 255 ); }
             pMessage.r2 = obj[0].get<uint>();
             pMessage.g2 = obj[1].get<uint>();
             pMessage.b2 = obj[2].get<uint>();
@@ -259,7 +259,7 @@ client_textmessage_t* CHudTextMessage::Getmessage( const char* pName )
         g_GameLogger->error( "Couldn't find label {} in titles", pName );
     }
 
-    return gEngfuncs.pfnTextMessageGet(pName);
+    return gEngfuncs.pfnTextMessageGet( pName );
 }
 
 // Searches through the string for any msg names (indicated by a '#')
