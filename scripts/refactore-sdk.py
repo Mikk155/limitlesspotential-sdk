@@ -12,8 +12,6 @@
 # That's all.
 #
 # this python script is shit but did the work for "my liking" so now i feel conforted writing.
-# I've upload it here just if anyone else wants to format their forks they get an idea of how i did it masively.
-# And mostly if i want to reuse this at some point.
 
 import os
 
@@ -94,7 +92,7 @@ for directory in [ "client", "server", "shared" ]:
 
                         if line.startswith( "\tEND_DATAMAP();" ):
                             line = line.replace( '\t', '', 1 );
-                        elif line.startswith( "DEFINE_" ):
+                        elif line.startswith( "DEFINE_" ) and not line.startswith( "DEFINE_DUMMY_DATAMAP" ):
                             line = f"\t{line}";
 
                         for typeof in [ "while", "for", "if" ]:
@@ -140,7 +138,7 @@ for directory in [ "client", "server", "shared" ]:
                             if is_in_string( line, index ):
                                 continue;
 
-                            if not line[index+1:index+2] in [ ")", " " ]:
+                            if not line[index+1:index+2] in [ ")", " " ] and line[index+2:index+3] != ")":
 
                                 line = line[0:index+1] + " " + line[index+1:]
 
@@ -159,7 +157,7 @@ for directory in [ "client", "server", "shared" ]:
                             if is_in_string( line, index ):
                                 continue;
 
-                            if not line[index-1:index] in [ "(", " " ]:
+                            if not line[index-1:index] in [ "(", " " ] and line[index-2:index-1] != "(":
 
                                 line = line[0:index] + " " + line[ index: ]
 
