@@ -43,6 +43,18 @@ class Logger():
         if not Logger.level & level and level != Logger.Level.ERROR:
             return;
 
+        from datetime import datetime;
+
+        now = datetime.now();
+
+        message = '[{}{}{}:{}{}{}:{}{}{}] [{}{}{}] [{}{}{}] {}'.format(
+            Logger.c.YELLOW, now.hour, Logger.c.RESET,
+            Logger.c.YELLOW, now.minute, Logger.c.RESET,
+            Logger.c.YELLOW, now.second, Logger.c.RESET,
+            color, levelname, Logger.c.RESET, Logger.c.CYAN,
+            self.name, Logger.c.RESET, message.format( *args )
+        );
+
         ColorList = {
             "R": Logger.c.RED,
             "G": Logger.c.GREEN,
@@ -81,18 +93,6 @@ class Logger():
 
                     message = message.replace( f'<{p}>', v, 1 );
                     message = message.replace( f'<>', Logger.c.RESET, 1 );
-
-        from datetime import datetime;
-
-        now = datetime.now();
-
-        message = '[{}{}{}:{}{}{}:{}{}{}] [{}{}{}] [{}{}{}] {}'.format(
-            Logger.c.YELLOW, now.hour, Logger.c.RESET,
-            Logger.c.YELLOW, now.minute, Logger.c.RESET,
-            Logger.c.YELLOW, now.second, Logger.c.RESET,
-            color, levelname, Logger.c.RESET, Logger.c.CYAN,
-            self.name, Logger.c.RESET, message.format( *args )
-        );
 
         print( message );
 
