@@ -124,3 +124,5 @@ elif CompiledProjects == 1:
 else:
 
     gLogger.error( "<r>{}<> projects builded.", CompiledProjects );
+
+input( "Builder ended." );
