@@ -10,6 +10,7 @@
 
     "files.exclude":
     {
+        "**/__pycache__/**": true,
         ".vs": true,
         "build/": true,
         "cmake/": true,
@@ -27,6 +28,7 @@
 
     "search.exclude":
     {
+        "**/__pycache__/**": true,
         ".vs": true,
         "build/": true,
         "cmake/": true,
