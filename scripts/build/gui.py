@@ -6,12 +6,6 @@ def Open_Menu() -> None:
 
     from build.EventBuilder import events
 
-    def toggle( btn, var ):
-
-        var.set( not var.get() );
-
-        btn.config( bg="green" if var.get() else "red" );
-
     global gui;
 
     gui = tk.Tk();
@@ -20,14 +14,8 @@ def Open_Menu() -> None:
 
     for event in events:
 
-        event.variable = tk.BooleanVar();
-
-        event.button = tk.Button( gui, text = event.Description(), bg="green" if event.variable.get() else "red", \
-                        command=lambda b= event.variable, btn=None: toggle( event.btn_holder[0], b ) );
-
-        event.btn_holder = [ event.button ]; # In Python the list class is passed as reference
-
-        event.btn_holder[0] = event.button;
+        event.button = tk.Button( gui, text = event.Description(), bg="green" if event.state else "red", \
+                        command=lambda e = event: e.toggle() ); # Needs to create a copy due to python passing on references.
 
         event.button.pack( pady=5 );
 
@@ -37,20 +25,9 @@ def Open_Menu() -> None:
 
         global gui;
 
-        for event in events:
-
-            if event.variable and event.variable.get():
-
-                event.state = True;
-
         gui.destroy();
 
-    button = tk.Button( gui, text="All done", bg="purple", \
-            command=lambda b= tk.BooleanVar(), btn=None: start_compiling() );
-
-    btn_holder = [ button ];
-
-    btn_holder[0] = button;
+    button = tk.Button( gui, text="All done", bg="purple", command = lambda: start_compiling() );
 
     button.pack( pady=5 );
 

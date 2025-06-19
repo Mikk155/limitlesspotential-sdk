@@ -47,6 +47,14 @@ class EventBuilder:
 
         self.m_Logger.debug( "Initialized event at index <r>{}<> mem(<m>{}<>)", events.index(self), self.mem );
 
+    def toggle( self ) -> None:
+
+        self.state = not self.state;
+
+        self.m_Logger.debug("Toggled state to <{}>{}<>", 'g' if self.state else 'r', str(self.state) );
+
+        self.button.config( bg="green" if self.state else "red" );
+
     def Description( self ) -> str:
         '''Called to display information on menu'''
         return '';
@@ -195,6 +203,7 @@ class EventBuilder:
                     EventBuilder.threads.append( EV );
 
                 else:
+                    continue;
 
                     EV.Build();
 

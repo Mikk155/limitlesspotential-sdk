@@ -6,6 +6,6 @@ class MultiThreading( EventBuilder ):
         super().__init__( __name__ );
 
     def Description( self ) -> str:
-        return 'Call builders on multipe threading';
+        return 'Build on multi-threading (broken)';
 
 MultiThreading();
