@@ -203,7 +203,6 @@ class EventBuilder:
                     EventBuilder.threads.append( EV );
 
                 else:
-                    continue;
 
                     EV.Build();
 

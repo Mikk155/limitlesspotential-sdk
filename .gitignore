@@ -16,8 +16,11 @@ src/FGDGenerator/FGD/*
 src/mapsrc/*.*
 !src/mapsrc/*.map
 
+# Python cache
+scripts/build/cache.json
+
 #==========================
-# CSharp:
+# Unified SDK:
 #==========================
 
 # User-specific files
