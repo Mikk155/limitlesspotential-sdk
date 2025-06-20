@@ -1780,7 +1780,7 @@ void CBaseMonster::MoveExecute( CBaseEntity* pTargetEnt, const Vector& vecDir, f
 
 void CBaseMonster::MonsterInit()
 {
-    if( !g_pGameRules->FAllowMonsters() )
+    if( !g_cfg.GetValue<bool>( "allow_monsters"sv, true ) )
     {
         pev->flags |= FL_KILLME; // Post this because some monster code modifies class data after calling this function
                                  //        REMOVE_ENTITY(edict());

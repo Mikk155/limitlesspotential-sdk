@@ -269,12 +269,6 @@ public:
     virtual bool PlayTextureSounds() { return true; }
     virtual bool PlayFootstepSounds( CBasePlayer* pl, float fvol ) { return true; }
 
-    // Monsters
-    /**
-     *    @brief are monsters allowed
-     */
-    bool FAllowMonsters();
-
     /**
      *    @brief Immediately end a multiplayer game
      */

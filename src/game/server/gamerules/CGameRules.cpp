@@ -348,11 +348,6 @@ int CGameRules::HEVChargerRechargeTime()
     return g_cfg.GetValue<float>( "hevcharger_recharge_time"sv, ChargerRechargeDelayNever );
 }
 
-bool CGameRules::FAllowMonsters()
-{
-    return g_cfg.GetValue<bool>( "allow_monsters"sv, true );
-}
-
 bool CGameRules::FShouldSwitchWeapon( CBasePlayer* pPlayer, CBasePlayerWeapon* pWeapon )
 {
     // that weapon can't deploy anyway.
