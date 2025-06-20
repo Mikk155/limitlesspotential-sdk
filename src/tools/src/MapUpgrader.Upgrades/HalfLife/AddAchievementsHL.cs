@@ -20,7 +20,7 @@ namespace MapUpgrader.Upgrades.HalfLife
                     a1.SetInteger( "spawnflags", 1 );
 
                     Entity a2 = context.Map.Entities.CreateNewEntity( "game_achievement" );
-                    a2.SetString( "targetname", "microwavepopmm1" );
+                    a2.SetString( "targetname", "beep5" );
                     a2.SetString( "m_label", "hl_microwave" );
                     a2.SetString( "m_name", "What is that smell?" );
                     a2.SetString( "m_description", "Burn out magnusom's food in the microwave" );
