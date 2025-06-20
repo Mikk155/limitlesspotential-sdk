@@ -17,24 +17,22 @@ struct SteamID
         const bool local{true};
 #endif
 
-        static uint64_t ToUint( uint32_t y, uint32_t z )
+        static SteamID From_uint32( uint32_t y, uint32_t z )
         {
-            return static_cast<uint64_t>( ( static_cast<uint64_t>( y ) << 32 ) | z );
+            return SteamID( static_cast<uint64_t>( ( y << 32 ) | z ) );
         }
 
-        static uint64_t ToUint( const char* sid )
+        static SteamID From_uint64( uint64_t sid )
         {
-            return static_cast<uint64_t>( strtoull( sid, nullptr, 10 ) );
+            return SteamID( sid );
+        }
+
+        static SteamID From_string( const char* sid )
+        {
+            return SteamID( static_cast<uint64_t>( strtoull( sid, nullptr, 10 ) ) );
         }
 
         SteamID( uint64_t sid ) : steamID64( sid ) { }
-
-        SteamID( uint32_t y, uint32_t z ) : steamID64( ToUint( y, z ) ) { }
-
-        /**
-         * @brief Constructor used in the ServerLibrary by keyvalue buffer at CBasePlayer
-         */
-        SteamID( const char* sid ) : steamID64( ToUint( sid ) ) { }
 
         /**
          * @brief Get the lower value of a steam ID
@@ -80,58 +78,9 @@ struct SteamID
         /**
          * @brief Return whatever the given SteamID is equal in uin64 or string form.
          */
-        bool StringEquals( std::string_view other ) const
+        bool Compare( std::string_view other ) const
         {
-            return ( other == steamID() || other == ToString() );
-        }
-
-#ifndef CLIENT_DLL
-        static CBasePlayer* FindPlayerBySteamID( uint64_t sid )
-        {
-            for( CBasePlayer* search : UTIL_FindPlayers() )
-            {
-                if( search != nullptr )
-                {
-                    if( SteamID* psid = search->GetSteamID(); psid != nullptr )
-                    {
-                        if( psid->steamID64 == sid )
-                            return search;
-                    }
-                }
-            }
-            return nullptr;
-        }
-#endif
-
-        bool operator==( const SteamID& other ) const {
-            return steamID64 == other.steamID64;
-        }
-        bool operator!=( const SteamID& other ) const {
-            return steamID64 != other.steamID64;
-        }
-        bool operator==( const SteamID* other ) const {
-            return steamID64 == other->steamID64;
-        }
-        bool operator!=( const SteamID* other ) const {
-            return steamID64 != other->steamID64;
-        }
-        bool operator==( const char* other ) const {
-            return StringEquals( std::string_view( other ) );
-        }
-        bool operator!=( const char* other ) const {
-            return !StringEquals( std::string_view( other ) );
-        }
-        bool operator==( const std::string& other ) const {
-            return StringEquals( std::string_view( other ) );
-        }
-        bool operator!=( const std::string& other ) const {
-            return !StringEquals( std::string_view( other ) );
-        }
-        bool operator==( const std::string_view other ) const {
-            return StringEquals( other );
-        }
-        bool operator!=( const std::string_view other ) const {
-            return !StringEquals( other );
+            return ( other == ToString() || other == steamID() );
         }
 };
 
@@ -151,7 +100,7 @@ inline SteamID* GetClientSteamID()
 
     if( !ClientSteamIDPointer )
     {
-        ClientSteamIDPointer = std::make_shared<SteamID>( std::to_string( ClientSteamIDUint64 ).c_str() );
+        ClientSteamIDPointer = std::make_shared<SteamID>( SteamID::From_uint64( ClientSteamIDUint64 ) );
     }
 
     return ClientSteamIDPointer.get();

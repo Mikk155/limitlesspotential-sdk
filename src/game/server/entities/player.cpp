@@ -3851,14 +3851,7 @@ void CBasePlayer::UpdateClientData()
             MESSAGE_BEGIN( MSG_ONE, gmsgInitHUD, nullptr, this );
             MESSAGE_END();
 
-            // Since the client is not aware we must update it
-            if( SteamID* steamid = GetSteamID(); steamid != nullptr )
-            {
-                MESSAGE_BEGIN( MSG_ONE, gmsgSendSteamID, nullptr, this );
-                    WRITE_LONG( static_cast<uint32_t>( steamid->steamID64 & 0xFFFFFFFF ) );
-                    WRITE_LONG( static_cast<uint32_t>( ( steamid->steamID64 >> 32 ) & 0xFFFFFFFF ) );
-                MESSAGE_END();
-            }
+            SendSteamID(); // Since the client is not aware we must update it
 
             g_pGameRules->InitHUD( this );
             g_GameMode->_UpdateClientGameMode_( this );
@@ -4975,6 +4968,31 @@ void CBasePlayer::SendScoreInfoAll()
 {
     MESSAGE_BEGIN( MSG_ALL, gmsgScoreInfo );
     SendScoreInfoMessage( this );
+}
+
+void CBasePlayer::SendSteamID()
+{
+    if( SteamID* steamid = GetSteamID(); steamid != nullptr )
+    {
+        MESSAGE_BEGIN( MSG_ONE, gmsgSendSteamID, nullptr, this );
+            WRITE_LONG( steamid->Y() );
+            WRITE_LONG( steamid->Z() );
+        MESSAGE_END();
+    }
+}
+
+SteamID* CBasePlayer::GetSteamID()
+{
+    if( !m_steamid )
+    {
+        auto kvBuffer = g_engfuncs.pfnGetInfoKeyBuffer( edict() );
+
+        auto sid = g_engfuncs.pfnInfoKeyValue( kvBuffer, "*sid" );
+
+        m_steamid = std::make_shared<SteamID>( SteamID::From_string( sid ) );
+    }
+
+    return m_steamid.get();
 }
 
 static edict_t* SV_TestEntityPosition( CBaseEntity* ent )

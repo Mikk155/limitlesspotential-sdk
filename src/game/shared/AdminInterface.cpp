@@ -379,7 +379,9 @@ bool CAdminInterface::HasAccess( CBasePlayer* player, std::string_view command )
 #endif
 
     if( steamid != nullptr )
-        return HasAccessByRole( steamid->steamID );
+    {
+        return HasAccessByRole( steamid->steamID() );
+    }
 
     return false;
 }
@@ -547,7 +549,7 @@ class TargetPlayerIterator
                 if( FStrEq( arg, "@alive" ) )
                     return ( player->IsAlive() );
                 if( strstr( arg, "STEAM_0:" ) != nullptr )
-                    return ( player->GetSteamID()->Equals( arg ) );
+                    return ( player->GetSteamID()->Compare( std::string_view(arg) ) );
                 // Nickname assumed
                 return ( FStrEq( STRING( player->pev->netname ), arg ) ); //-TODO Wildcarding as AFBase?
             };

@@ -656,12 +656,8 @@ public:
     /**
      * @brief This gets the Steam ID even if sv_lan is 1.
      */
-    SteamID* GetSteamID() {
-        if( !m_steamid ) {
-            m_steamid = std::make_shared<SteamID>( g_engfuncs.pfnInfoKeyValue( g_engfuncs.pfnGetInfoKeyBuffer( edict() ), "*sid" ), entindex() );
-        }
-        return m_steamid.get();
-    }
+    SteamID* GetSteamID();
+    void SendSteamID();
 
     // Entities listed as "used" See ambient_music/dsp
     std::vector<int> m_listed_entities;

@@ -100,11 +100,11 @@ void CAchievements::Achieve( CBasePlayer* player, const std::string& label, cons
             players = json::array();
         }
 
-        const char* ID = player->GetSteamID()->sid.c_str();
+        const std::string& ID = player->GetSteamID()->ToString();
 
         for( const auto& entry : players )
         {
-            if( entry == ID )
+            if( entry.get<std::string>() == ID )
                 return;
         }
 
