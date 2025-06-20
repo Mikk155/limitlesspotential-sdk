@@ -36,6 +36,10 @@ def Open_Menu() -> None:
 
     gui.title( "Python script builder" );
 
+    gui.focusmodel( 'active' );
+
+    gui.bell();
+
     for event in events:
 
         event.state = cache[ event.name ];
@@ -47,8 +51,6 @@ def Open_Menu() -> None:
 
     def start_compiling():
 
-        import sys;
-
         global gui;
 
         from json import dumps;
@@ -59,10 +61,18 @@ def Open_Menu() -> None:
 
         open( cache_path, "w" ).write( dumps( cache, indent=4 ) );
 
+        GuiClosed = False;
+
         gui.destroy();
+
+        gui = False
 
     button = tk.Button( gui, text="All done", bg="purple", command = lambda: start_compiling() );
 
     button.pack( pady=5 );
 
     gui.mainloop();
+
+    if gui is not False:
+
+        exit(0);
