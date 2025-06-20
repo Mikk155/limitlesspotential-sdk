@@ -75,19 +75,26 @@ void GM_Base::CheckMultiplayerGame( bool multiplayer )
     {
         if( (int)m_MultiplayerRestart == 0 )
         {
-            g_GameMode.Logger->warn( "Running map {} with {} gamemode on a {} server!",
-                STRING( gpGlobals->mapname ), GetName(), m_IsMultiplayer ? "multiplayer" : "singleplayer"
-            );
-
             if( IS_DEDICATED_SERVER() )
             {
                 g_GameMode.Logger->warn( "This is a {} map and may not work as expected.\n", GetName() );
                 m_IsMultiplayer = multiplayer;
+            }
+            else
+            {
+                // Wait for the host player to completely connect
+                if( auto player = UTIL_GetLocalPlayer(); player != nullptr )
+                {
+                    UTIL_ConsolePrint( player, "This is a {} map. This level will be restarted in 10 seconds.\n", GetName() );
+                    m_MultiplayerRestart = gpGlobals->time + 10.0;
+                    return;
+                }
                 return;
             }
 
-            g_GameMode.Logger->warn( "This is a {} map. This level will be restarted in 10 seconds.\n", GetName() );
-            m_MultiplayerRestart = gpGlobals->time + 10.0;
+            g_GameMode.Logger->warn( "Running map {} with {} gamemode on a {} server!",
+                STRING( gpGlobals->mapname ), GetName(), m_IsMultiplayer ? "multiplayer" : "singleplayer"
+            );
         }
         else if( m_MultiplayerRestart < gpGlobals->time )
         {
