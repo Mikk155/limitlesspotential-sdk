@@ -80,49 +80,59 @@ if len( [ EV for EV in events if EV.state ] ) == 0:
 # The class MultiThreading has served his purpose and is not needed anymore
 EventBuilder.MultiThread = events.pop(0).state;
 
-# Get a mutable list of only active events.
-EventsCopy: list[EventBuilder] = [ event for event in events if event.state ];
+def StartBuilding() -> bool:
 
-from time import sleep;
+    # Get a mutable list of only active events.
+    EventsCopy: list[EventBuilder] = [ event for event in events if event.state ];
 
-while len(EventsCopy) > 0:
+    from time import sleep;
 
-    EventsCopy = EventBuilder.CompileAllEvents( EventsCopy );
+    while len(EventsCopy) > 0:
 
-    continue;
+        EventsCopy = EventBuilder.CompileAllEvents( EventsCopy );
 
-    # Here is a dead end loop.
-    # Since the event's thread can't set the class's member "compiled" to true.
-    # I'd have yet to propertly investigate how multithreading works :)
+        continue;
 
-    if EventBuilder.MultiThread is True:
+        # Here is a dead end loop.
+        # Since the event's thread can't set the class's member "compiled" to true.
+        # I'd have yet to propertly investigate how multithreading works :)
 
-        if len( EventBuilder.threads ) > 0:
+        if EventBuilder.MultiThread is True:
 
-            print( "Threads: {} {}".format( len( EventBuilder.threads ), ''.join( f'{f.name} ' for f in EventBuilder.threads ) ) );
-            sleep(0.5);
+            if len( EventBuilder.threads ) > 0:
 
-            # Popoff any that has finished
-            for EV in EventBuilder.threads.copy():
-                
-                EV: EventBuilder;
+                print( "Threads: {} {}".format( len( EventBuilder.threads ), ''.join( f'{f.name} ' for f in EventBuilder.threads ) ) );
+                sleep(0.5);
 
-                if EV.compiled is not None:
+                # Popoff any that has finished
+                for EV in EventBuilder.threads.copy():
+                    
+                    EV: EventBuilder;
 
-                    ThreadEV: EventBuilder = EventBuilder.threads.pop( EventBuilder.threads.index( EV ) );
+                    if EV.compiled is not None:
 
-CompiledProjects: int = len( [ EV for EV in events if EV.compiled is not None and EV.compiled is True] );
+                        ThreadEV: EventBuilder = EventBuilder.threads.pop( EventBuilder.threads.index( EV ) );
 
-if CompiledProjects > 1:
+    CompiledProjects: int = len( [ EV for EV in events if EV.compiled is not None and EV.compiled is True] );
 
-    gLogger.info( "<g>All done<>: <r>{}<> projects builded.", CompiledProjects );
+    if CompiledProjects > 1:
 
-elif CompiledProjects == 1:
+        gLogger.info( "<g>All done<>: <r>{}<> projects builded.", CompiledProjects );
 
-    gLogger.info( "<g>All done<>: <r>one<> project builded." );
+    elif CompiledProjects == 1:
 
-else:
+        gLogger.info( "<g>All done<>: <r>one<> project builded." );
 
-    gLogger.error( "<r>{}<> projects builded.", CompiledProjects );
+    else:
+
+        gLogger.error( "<r>{}<> projects builded.", CompiledProjects );
+
+        return False;
+
+    return True;
+
+while StartBuilding() is False:
+
+    input( "Build failed. Press enter to retry" );
 
 input( "Builder ended." );
