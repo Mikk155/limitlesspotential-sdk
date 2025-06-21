@@ -30,7 +30,7 @@ class CNihilanthHVR : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool IsMonster() override { return false; }
 
@@ -95,7 +95,7 @@ class CNihilanth : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     int BloodColor() override { return BLOOD_COLOR_YELLOW; }
     void Killed( CBaseEntity* attacker, int iGib ) override;
@@ -288,7 +288,7 @@ void CNihilanth::OnCreate()
     SetClassification( "alien_military" );
 }
 
-bool CNihilanth::Spawn()
+SpawnAction CNihilanth::Spawn()
 {
     Precache();
     // motor
@@ -345,7 +345,7 @@ bool CNihilanth::Spawn()
     pev->health = 100;
     */
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CNihilanth::Precache()
@@ -1278,7 +1278,7 @@ CBaseEntity* CNihilanth::RandomTargetname( const char* szName )
     return pEntity;
 }
 
-bool CNihilanthHVR::Spawn()
+SpawnAction CNihilanthHVR::Spawn()
 {
     Precache();
 
@@ -1286,7 +1286,7 @@ bool CNihilanthHVR::Spawn()
     pev->renderamt = 255;
     pev->scale = 3.0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CNihilanthHVR::Precache()

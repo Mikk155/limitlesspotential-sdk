@@ -31,7 +31,7 @@ class CSqueak : public CBasePlayerWeapon
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool GetWeaponInfo( WeaponInfo& info ) override;
 

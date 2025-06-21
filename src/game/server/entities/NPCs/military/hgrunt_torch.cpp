@@ -67,7 +67,7 @@ class COFTorchAlly : public CBaseHGruntAlly
 public:
     void OnCreate() override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     void Shoot();
@@ -270,7 +270,7 @@ void COFTorchAlly::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool COFTorchAlly::Spawn()
+SpawnAction COFTorchAlly::Spawn()
 {
     SpawnCore();
 
@@ -301,7 +301,7 @@ bool COFTorchAlly::Spawn()
     m_flLastShot = gpGlobals->time;
     m_flMedicWaitTime = gpGlobals->time;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFTorchAlly::Precache()

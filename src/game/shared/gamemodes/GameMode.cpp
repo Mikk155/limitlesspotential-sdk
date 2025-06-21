@@ -269,6 +269,20 @@ void GM_Base::SetClientHUDColor( int elements, int index, std::optional<RGB24> c
 #endif
 }
 
+SpawnAction GM_Base::OnEntityPreSpawn( CBaseEntity* entity )
+{
+#ifndef CLIENT_DLL
+#endif
+    return SpawnAction::Spawn;
+}
+
+SpawnAction GM_Base::OnEntityPostSpawn( CBaseEntity* entity )
+{
+#ifndef CLIENT_DLL
+#endif
+    return SpawnAction::Spawn;
+}
+
 void GM_Base::_UpdateClientGameMode_( CBasePlayer* player )
 {
 #ifndef CLIENT_DLL

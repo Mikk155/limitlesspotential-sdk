@@ -30,9 +30,11 @@ void GM_Singleplayer::OnRegister()
 #else
     // Define this as a dummy command to silence console errors.
     m_VModEnableCommand = g_ClientCommands.CreateScoped( "vmodenable", []( auto, const auto& ) {} );
+
+    // Allow campaign selection vgui to fire map targets if a mapper wants to customize their lobby with entities
     m_MapSelectionTrigger = g_ClientCommands.CreateScoped( "client_fire", []( CBasePlayer* player, const auto& args )
     {
-        if( args.Count() != 1 )
+        if( args.Count() > 1 )
         {
             FireTargets( args.Argument(1), player, player, ( args.Count() != 2 ? static_cast<USE_TYPE>( atoi( args.Argument(2) ) ) : USE_TOGGLE ) );
         }

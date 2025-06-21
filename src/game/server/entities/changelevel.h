@@ -28,7 +28,7 @@ class CChangeLevel : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     /**

@@ -68,7 +68,7 @@ class CBaseItem : public CBaseAnimating
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     CBaseItem* MyItemPointer() override { return this; }
 

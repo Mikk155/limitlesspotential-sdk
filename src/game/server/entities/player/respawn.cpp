@@ -24,13 +24,13 @@ class CPlayerRespawn : public CPointEntity
     DECLARE_CLASS( CPlayerRespawn, CPointEntity );
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 LINK_ENTITY_TO_CLASS( player_respawn, CPlayerRespawn );
 
-bool CPlayerRespawn::Spawn()
+SpawnAction CPlayerRespawn::Spawn()
 {
     pev->solid = SOLID_NOT;
 

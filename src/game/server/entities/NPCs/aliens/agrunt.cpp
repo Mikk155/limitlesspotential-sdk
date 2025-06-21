@@ -59,7 +59,7 @@ class CAGrunt : public CSquadMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;
@@ -537,7 +537,7 @@ void CAGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CAGrunt::Spawn()
+SpawnAction CAGrunt::Spawn()
 {
     Precache();
 
@@ -563,7 +563,7 @@ bool CAGrunt::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CAGrunt::Precache()

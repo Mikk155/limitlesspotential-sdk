@@ -107,7 +107,7 @@ void CBasePlayerWeapon::OnCreate()
     LinkWeaponInfo();
 }
 
-bool CBasePlayerWeapon::Spawn()
+SpawnAction CBasePlayerWeapon::Spawn()
 {
     m_iDefaultPrimaryAmmo = m_iDefaultAmmo;
 
@@ -115,7 +115,7 @@ bool CBasePlayerWeapon::Spawn()
     SetModel( GetModelName() );
     SetupItem( vec3_origin, vec3_origin ); // pointsize until it lands on the ground.
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBasePlayerWeapon::LinkWeaponInfo()

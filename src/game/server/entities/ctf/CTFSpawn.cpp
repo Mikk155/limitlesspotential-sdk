@@ -34,7 +34,7 @@ bool CTFSpawn::CanPlayerSpawn( CBasePlayer* player )
     if( !FStringNull( pev->targetname ) && STRING( pev->targetname ) )
         return m_fState;
 
-        return true;
+    return true;
 }
 
 void CTFSpawn::SpawnPlayer( CBasePlayer* player )
@@ -81,12 +81,12 @@ bool CTFSpawn::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-bool CTFSpawn::Spawn()
+SpawnAction CTFSpawn::Spawn()
 {
     if( team_no < CTFTeam::None || team_no > CTFTeam::OpposingForce )
     {
         Logger->debug( "Teamspawnpoint with an invalid team_no of {}", static_cast<int>( team_no ) );
-        return false;
+        return SpawnAction::DelayRemove;
     }
 
     m_sMaster = pev->classname;
@@ -95,5 +95,5 @@ bool CTFSpawn::Spawn()
     pev->classname = MAKE_STRING( sTeamSpawnNames[static_cast<int>( team_no )] );
     m_fState = true;
 
-    return true;
+    return SpawnAction::Spawn;
 }

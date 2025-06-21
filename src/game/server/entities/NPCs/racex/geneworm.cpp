@@ -31,7 +31,7 @@ class COFGeneWormCloud : public CBaseEntity
 
 public:
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void GeneWormCloudThink();
 
@@ -76,7 +76,7 @@ void COFGeneWormCloud::Precache()
     PrecacheModel( "sprites/ballsmoke.spr" );
 }
 
-bool COFGeneWormCloud::Spawn()
+SpawnAction COFGeneWormCloud::Spawn()
 {
     Precache();
 
@@ -107,7 +107,7 @@ bool COFGeneWormCloud::Spawn()
     m_damageTimer = gpGlobals->time;
     m_fSinking = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFGeneWormCloud::GeneWormCloudThink()
@@ -224,7 +224,7 @@ class COFGeneWormSpawn : public CBaseEntity
 
 public:
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void GeneWormSpawnThink();
 
@@ -277,7 +277,7 @@ void COFGeneWormSpawn::Precache()
     PrecacheModel( "sprites/boss_glow.spr" );
 }
 
-bool COFGeneWormSpawn::Spawn()
+SpawnAction COFGeneWormSpawn::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -314,7 +314,7 @@ bool COFGeneWormSpawn::Spawn()
 
     m_iBeams = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFGeneWormSpawn::GeneWormSpawnThink()
@@ -562,7 +562,7 @@ public:
 
     void OnCreate() override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
 
@@ -760,7 +760,7 @@ void COFGeneWorm::OnCreate()
     SetClassification( "alien_monster" );
 }
 
-bool COFGeneWorm::Spawn()
+SpawnAction COFGeneWorm::Spawn()
 {
     Precache();
 
@@ -825,7 +825,7 @@ bool COFGeneWorm::Spawn()
 
     m_flMadDelayTime = gpGlobals->time;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFGeneWorm::StartupThink()

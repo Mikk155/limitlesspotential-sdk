@@ -56,7 +56,7 @@ void CShockRifle::Precache()
     m_usShockRifle = PRECACHE_EVENT( 1, "events/shock.sc" );
 }
 
-bool CShockRifle::Spawn()
+SpawnAction CShockRifle::Spawn()
 {
     CBasePlayerWeapon::Spawn();
 
@@ -64,7 +64,7 @@ bool CShockRifle::Spawn()
     pev->animtime = gpGlobals->time;
     pev->framerate = 1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CShockRifle::AttachToPlayer( CBasePlayer* pPlayer )

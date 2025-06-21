@@ -33,7 +33,7 @@ public:
     void OnCreate() override;
     void Precache() override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void AttachToPlayer( CBasePlayer* pPlayer ) override;
 

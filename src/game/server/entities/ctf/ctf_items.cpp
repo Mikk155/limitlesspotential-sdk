@@ -50,7 +50,7 @@ void CItemCTF::Precache()
     PrecacheSound( "items/ammopickup1.wav" );
 }
 
-bool CItemCTF::Spawn()
+SpawnAction CItemCTF::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->solid = SOLID_TRIGGER;
@@ -64,7 +64,7 @@ bool CItemCTF::Spawn()
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
         CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
-        return false;
+        return SpawnAction::DelayRemove;
     }
 
     if( !FStringNull( pev->model ) )
@@ -95,7 +95,7 @@ bool CItemCTF::Spawn()
     m_flNextTouchTime = 0;
     m_pszItemName = "";
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CItemCTF::DropPreThink()
@@ -437,7 +437,7 @@ void CItemAcceleratorCTF::Precache()
     PrecacheSound( "turret/tu_ping.wav" );
 }
 
-bool CItemAcceleratorCTF::Spawn()
+SpawnAction CItemAcceleratorCTF::Spawn()
 {
     Precache();
 
@@ -450,7 +450,7 @@ bool CItemAcceleratorCTF::Spawn()
     m_iItemFlag = CTFItem::Acceleration;
     m_pszItemName = "Damage";
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CItemAcceleratorCTF::RemoveEffect( CBasePlayer* pPlayer )
@@ -546,7 +546,7 @@ bool CItemBackpackCTF::MyTouch( CBasePlayer* pPlayer )
     return false;
 }
 
-bool CItemBackpackCTF::Spawn()
+SpawnAction CItemBackpackCTF::Spawn()
 {
     PrecacheSound( "ctf/itemthrow.wav" );
     PrecacheSound( "items/ammopickup1.wav" );
@@ -561,7 +561,7 @@ bool CItemBackpackCTF::Spawn()
     m_iItemFlag = CTFItem::Backpack;
     m_pszItemName = "Ammo";
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 LINK_ENTITY_TO_CLASS( item_ctflongjump, CItemLongJumpCTF );
@@ -619,7 +619,7 @@ bool CItemLongJumpCTF::MyTouch( CBasePlayer* pPlayer )
     return false;
 }
 
-bool CItemLongJumpCTF::Spawn()
+SpawnAction CItemLongJumpCTF::Spawn()
 {
     PrecacheSound( "ctf/itemthrow.wav" );
     PrecacheSound( "items/ammopickup1.wav" );
@@ -634,7 +634,7 @@ bool CItemLongJumpCTF::Spawn()
     m_iItemFlag = CTFItem::LongJump;
     m_pszItemName = "Jump";
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 LINK_ENTITY_TO_CLASS( item_ctfportablehev, CItemPortableHEVCTF );
@@ -687,7 +687,7 @@ bool CItemPortableHEVCTF::MyTouch( CBasePlayer* pPlayer )
     return false;
 }
 
-bool CItemPortableHEVCTF::Spawn()
+SpawnAction CItemPortableHEVCTF::Spawn()
 {
     PrecacheSound( "ctf/itemthrow.wav" );
     PrecacheSound( "items/ammopickup1.wav" );
@@ -703,7 +703,7 @@ bool CItemPortableHEVCTF::Spawn()
     m_iItemFlag = CTFItem::PortableHEV;
     m_pszItemName = "Shield";
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 LINK_ENTITY_TO_CLASS( item_ctfregeneration, CItemRegenerationCTF );
@@ -763,7 +763,7 @@ bool CItemRegenerationCTF::MyTouch( CBasePlayer* pPlayer )
     return false;
 }
 
-bool CItemRegenerationCTF::Spawn()
+SpawnAction CItemRegenerationCTF::Spawn()
 {
     PrecacheSound( "ctf/itemthrow.wav" );
     PrecacheSound( "items/ammopickup1.wav" );
@@ -779,5 +779,5 @@ bool CItemRegenerationCTF::Spawn()
     m_iItemFlag = CTFItem::Regeneration;
     m_pszItemName = "Health";
 
-    return true;
+    return SpawnAction::Spawn;
 }

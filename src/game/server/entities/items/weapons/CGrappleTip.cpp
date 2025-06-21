@@ -94,7 +94,7 @@ void CGrappleTip::Precache()
     PrecacheModel( "models/shock_effect.mdl" );
 }
 
-bool CGrappleTip::Spawn()
+SpawnAction CGrappleTip::Spawn()
 {
     Precache();
 
@@ -125,7 +125,7 @@ bool CGrappleTip::Spawn()
     m_bIsStuck = false;
     m_bMissed = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CGrappleTip::FlyThink()

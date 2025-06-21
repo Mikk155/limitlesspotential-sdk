@@ -93,7 +93,7 @@ class CShockTrooper : public CSquadMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
 
@@ -863,7 +863,7 @@ void CShockTrooper::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CShockTrooper::Spawn()
+SpawnAction CShockTrooper::Spawn()
 {
     Precache();
 
@@ -906,7 +906,7 @@ bool CShockTrooper::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CShockTrooper::Precache()
@@ -2137,7 +2137,7 @@ class CShockTrooperRepel : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     int m_iSpriteTexture; // Don't save, precache
@@ -2149,14 +2149,14 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( monster_shocktrooper_repel, CShockTrooperRepel );
 
-bool CShockTrooperRepel::Spawn()
+SpawnAction CShockTrooperRepel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
 
     SetUse( &CShockTrooperRepel::RepelUse );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CShockTrooperRepel::Precache()
@@ -2196,7 +2196,7 @@ class CDeadShockTrooper : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     // TODO: needs to be alien gibs instead
     bool HasHumanGibs() override { return true; }
@@ -2234,7 +2234,7 @@ bool CDeadShockTrooper::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_shocktrooper_dead, CDeadShockTrooper );
 
-bool CDeadShockTrooper::Spawn()
+SpawnAction CDeadShockTrooper::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -2255,5 +2255,5 @@ bool CDeadShockTrooper::Spawn()
 
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }

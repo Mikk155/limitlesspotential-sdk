@@ -25,14 +25,14 @@ BEGIN_DATAMAP( CTriggerEventHandler )
     DEFINE_FIELD( m_Caller, FIELD_STRING ),
 END_DATAMAP();
 
-bool CTriggerEventHandler::Spawn()
+SpawnAction CTriggerEventHandler::Spawn()
 {
     BaseClass::Spawn();
 
     if( m_EventType == TriggerEventType::None )
     {
         CBaseEntity::Logger->error( "Unexpecified event type in trigger_eventhandler at {}", pev->origin.MakeString() );
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     CBaseEntity::Logger->debug( "trigger_eventhandler Registering event type {} for {}", static_cast<int>( m_EventType ), STRING( pev->target ) );
@@ -43,7 +43,7 @@ bool CTriggerEventHandler::Spawn()
 
     InitialState = FBitSet( pev->spawnflags, SF_EVENT_STARTOFF );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CTriggerEventHandler::KeyValue( KeyValueData* pkvd )

@@ -702,7 +702,7 @@ void CHGrunt::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CHGrunt::Spawn()
+SpawnAction CHGrunt::Spawn()
 {
     Precache();
 
@@ -768,7 +768,7 @@ bool CHGrunt::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CHGrunt::Precache()
@@ -2012,14 +2012,14 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( monster_grunt_repel, CHGruntRepel );
 
-bool CHGruntRepel::Spawn()
+SpawnAction CHGruntRepel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
 
     SetUse( &CHGruntRepel::RepelUse );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CHGruntRepel::PrecacheCore( const char* classname )
@@ -2109,7 +2109,7 @@ void CDeadHGrunt::SpawnCore()
     MonsterInitDead();
 }
 
-bool CDeadHGrunt::Spawn()
+SpawnAction CDeadHGrunt::Spawn()
 {
     SpawnCore();
 
@@ -2142,5 +2142,5 @@ bool CDeadHGrunt::Spawn()
         break;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }

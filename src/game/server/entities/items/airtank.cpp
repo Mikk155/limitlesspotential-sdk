@@ -21,7 +21,7 @@ class CAirtank : public CGrenade
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void TankThink();
     void TankTouch( CBaseEntity* pOther );
@@ -47,7 +47,7 @@ void CAirtank::OnCreate()
     pev->model = MAKE_STRING( "models/w_oxygen.mdl" );
 }
 
-bool CAirtank::Spawn()
+SpawnAction CAirtank::Spawn()
 {
     Precache();
     // motor
@@ -66,7 +66,7 @@ bool CAirtank::Spawn()
     pev->dmg = 50;
     m_state = true;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CAirtank::Precache()

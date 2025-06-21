@@ -34,7 +34,7 @@ class CBubbling : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -62,7 +62,7 @@ END_DATAMAP();
 
 #define SF_BUBBLES_STARTOFF 0x0001
 
-bool CBubbling::Spawn()
+SpawnAction CBubbling::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) ); // Set size
@@ -87,7 +87,7 @@ bool CBubbling::Spawn()
     else
         m_state = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBubbling::Precache()
@@ -154,12 +154,12 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( beam, CBeam );
 
-bool CBeam::Spawn()
+SpawnAction CBeam::Spawn()
 {
     pev->solid = SOLID_NOT; // Remove model & collisions
     Precache();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBeam::Precache()
@@ -352,7 +352,7 @@ class CLightning : public CBeam
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Activate() override;
@@ -422,12 +422,12 @@ BEGIN_DATAMAP( CLightning )
     DEFINE_FUNCTION( ToggleUse ),
 END_DATAMAP();
 
-bool CLightning::Spawn()
+SpawnAction CLightning::Spawn()
 {
     if( FStringNull( m_iszSpriteName ) )
     {
         SetThink( &CLightning::SUB_Remove );
-        return true;
+        return SpawnAction::HandledRemoval;
     }
     pev->solid = SOLID_NOT; // Remove model & collisions
     Precache();
@@ -470,7 +470,7 @@ bool CLightning::Spawn()
         }
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CLightning::Precache()
@@ -912,12 +912,12 @@ BEGIN_DATAMAP( CLaser )
     DEFINE_FUNCTION( StrikeThink ),
 END_DATAMAP();
 
-bool CLaser::Spawn()
+SpawnAction CLaser::Spawn()
 {
     if( FStringNull( pev->model ) )
     {
         SetThink( &CLaser::SUB_Remove );
-        return true;
+        return SpawnAction::HandledRemoval;
     }
     pev->solid = SOLID_NOT; // Remove model & collisions
     Precache();
@@ -940,7 +940,7 @@ bool CLaser::Spawn()
     else
         TurnOn();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CLaser::Precache()
@@ -1077,7 +1077,7 @@ class CGlow : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Think() override;
     void Animate( float frames );
 
@@ -1092,7 +1092,7 @@ BEGIN_DATAMAP( CGlow )
     DEFINE_FIELD( m_maxFrame, FIELD_FLOAT ),
 END_DATAMAP();
 
-bool CGlow::Spawn()
+SpawnAction CGlow::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -1108,7 +1108,7 @@ bool CGlow::Spawn()
 
     m_lastTime = gpGlobals->time;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CGlow::Think()
@@ -1135,7 +1135,7 @@ BEGIN_DATAMAP( CSprite )
     DEFINE_FUNCTION( AnimateUntilDead ),
 END_DATAMAP();
 
-bool CSprite::Spawn()
+SpawnAction CSprite::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -1158,7 +1158,7 @@ bool CSprite::Spawn()
         pev->angles.y = 0;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CSprite::Precache()
@@ -1298,7 +1298,7 @@ class CGibShooter : public CBaseDelay
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void ShootThink();
@@ -1372,7 +1372,7 @@ void CGibShooter::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
     pev->nextthink = gpGlobals->time;
 }
 
-bool CGibShooter::Spawn()
+SpawnAction CGibShooter::Spawn()
 {
     Precache();
 
@@ -1392,7 +1392,7 @@ bool CGibShooter::Spawn()
     SetMovedir( this );
     pev->body = MODEL_FRAMES( m_iGibModelIndex );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 CGib* CGibShooter::CreateGib()
@@ -1551,7 +1551,7 @@ CGib* CEnvShooter::CreateGib()
 class CBlood : public CPointEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -1574,7 +1574,7 @@ LINK_ENTITY_TO_CLASS( env_blood, CBlood );
 #define SF_BLOOD_PLAYER 0x0004
 #define SF_BLOOD_DECAL 0x0008
 
-bool CBlood::Spawn()
+SpawnAction CBlood::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -1582,7 +1582,7 @@ bool CBlood::Spawn()
     pev->frame = 0;
     SetMovedir( this );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CBlood::KeyValue( KeyValueData* pkvd )
@@ -1662,7 +1662,7 @@ void CBlood::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useTyp
 class CShake : public CPointEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -1693,7 +1693,7 @@ LINK_ENTITY_TO_CLASS( env_shake, CShake );
 #define SF_SHAKE_DISRUPT 0x0002 // Disrupt controls
 #define SF_SHAKE_INAIR 0x0004    // Shake players in air
 
-bool CShake::Spawn()
+SpawnAction CShake::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -1703,7 +1703,7 @@ bool CShake::Spawn()
     if( ( pev->spawnflags & SF_SHAKE_EVERYONE ) != 0 )
         pev->dmg = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CShake::KeyValue( KeyValueData* pkvd )
@@ -1740,7 +1740,7 @@ void CShake::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useTyp
 class CFade : public CPointEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -1761,14 +1761,14 @@ LINK_ENTITY_TO_CLASS( env_fade, CFade );
 #define SF_FADE_MODULATE 0x0002 // Modulate, don't blend
 #define SF_FADE_ONLYONE 0x0004
 
-bool CFade::Spawn()
+SpawnAction CFade::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
     pev->effects = 0;
     pev->frame = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CFade::KeyValue( KeyValueData* pkvd )
@@ -1814,7 +1814,7 @@ void CFade::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType
 class CMessage : public CPointEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
@@ -1824,7 +1824,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( env_message, CMessage );
 
-bool CMessage::Spawn()
+SpawnAction CMessage::Spawn()
 {
     Precache();
 
@@ -1858,7 +1858,7 @@ bool CMessage::Spawn()
     if( pev->scale <= 0 )
         pev->scale = 1.0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CMessage::Precache()
@@ -1919,7 +1919,7 @@ void CMessage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 class CEnvFunnel : public CBaseDelay
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -1958,13 +1958,13 @@ void CEnvFunnel::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
     pev->nextthink = gpGlobals->time;
 }
 
-bool CEnvFunnel::Spawn()
+SpawnAction CEnvFunnel::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
     pev->effects = EF_NODRAW;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -1975,7 +1975,7 @@ bool CEnvFunnel::Spawn()
 class CEnvBeverage : public CBaseDelay
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
@@ -2015,7 +2015,7 @@ void CEnvBeverage::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
     // pev->nextthink = gpGlobals->time;
 }
 
-bool CEnvBeverage::Spawn()
+SpawnAction CEnvBeverage::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
@@ -2027,7 +2027,7 @@ bool CEnvBeverage::Spawn()
         pev->health = 10;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -2040,7 +2040,7 @@ class CItemSoda : public CBaseEntity
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void CanThink();
     void CanTouch( CBaseEntity* pOther );
@@ -2065,7 +2065,7 @@ void CItemSoda::Precache()
 
 LINK_ENTITY_TO_CLASS( item_sodacan, CItemSoda );
 
-bool CItemSoda::Spawn()
+SpawnAction CItemSoda::Spawn()
 {
     Precache();
     pev->solid = SOLID_NOT;
@@ -2077,7 +2077,7 @@ bool CItemSoda::Spawn()
     SetThink( &CItemSoda::CanThink );
     pev->nextthink = gpGlobals->time + 0.5;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CItemSoda::CanThink()
@@ -2130,7 +2130,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void UpdateOnRemove() override;
 
@@ -2213,7 +2213,7 @@ void CWarpBall::Precache()
     PrecacheSound( "debris/alien_teleport.wav" );
 }
 
-bool CWarpBall::Spawn()
+SpawnAction CWarpBall::Spawn()
 {
     Precache();
 
@@ -2233,7 +2233,7 @@ bool CWarpBall::Spawn()
 
     SetUse( &CWarpBall::WarpBallUse );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CWarpBall::UpdateOnRemove()

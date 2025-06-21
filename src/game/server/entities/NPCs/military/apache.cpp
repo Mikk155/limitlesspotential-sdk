@@ -54,7 +54,7 @@ void CApache::OnCreate()
     SetClassification( "human_military" );
 }
 
-bool CApache::Spawn()
+SpawnAction CApache::Spawn()
 {
     Precache();
     // motor
@@ -95,7 +95,7 @@ bool CApache::Spawn()
 
     m_iRockets = 10;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CApache::Precache()
@@ -919,7 +919,7 @@ class CApacheHVR : public CGrenade
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void IgniteThink();
     void AccelerateThink();
@@ -937,7 +937,7 @@ BEGIN_DATAMAP( CApacheHVR )
     DEFINE_FUNCTION( AccelerateThink ),
 END_DATAMAP();
 
-bool CApacheHVR::Spawn()
+SpawnAction CApacheHVR::Spawn()
 {
     Precache();
     // motor
@@ -959,7 +959,7 @@ bool CApacheHVR::Spawn()
 
     pev->dmg = 150;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CApacheHVR::Precache()

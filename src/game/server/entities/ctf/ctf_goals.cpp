@@ -52,7 +52,7 @@ bool CTFGoal::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-bool CTFGoal::Spawn()
+SpawnAction CTFGoal::Spawn()
 {
     if( !FStringNull( pev->model ) )
     {
@@ -75,7 +75,7 @@ bool CTFGoal::Spawn()
     SetThink( &CTFGoal::PlaceGoal );
     pev->nextthink = gpGlobals->time + 0.2;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTFGoal::SetObjectCollisionBox()
@@ -164,7 +164,7 @@ void CTFGoalBase::BaseThink()
     pev->nextthink = gpGlobals->time + 20.0;
 }
 
-bool CTFGoalBase::Spawn()
+SpawnAction CTFGoalBase::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
     pev->solid = SOLID_NOT;
@@ -184,7 +184,7 @@ bool CTFGoalBase::Spawn()
     if( 0 == g_engfuncs.pfnDropToFloor( edict() ) )
     {
         CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
-        return false;
+        return SpawnAction::DelayRemove;
     }
 
     if( !FStringNull( pev->model ) )
@@ -204,7 +204,7 @@ bool CTFGoalBase::Spawn()
     SetThink( &CTFGoalBase::BaseThink );
     pev->nextthink = gpGlobals->time + 0.1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTFGoalBase::TurnOnLight( CBasePlayer* pPlayer )
@@ -421,7 +421,7 @@ void CTFGoalFlag::goal_item_dropthink()
     }
 }
 
-bool CTFGoalFlag::Spawn()
+SpawnAction CTFGoalFlag::Spawn()
 {
     Precache();
 
@@ -443,7 +443,7 @@ bool CTFGoalFlag::Spawn()
         if( 0 == g_engfuncs.pfnDropToFloor( edict() ) )
         {
             CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
-            return false;
+            return SpawnAction::DelayRemove;
         }
 
         if( !FStringNull( pev->model ) )
@@ -481,7 +481,7 @@ bool CTFGoalFlag::Spawn()
         CBaseEntity::Logger->error( "Invalid goal_no set for CTF flag" );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTFGoalFlag::ReturnFlagThink()

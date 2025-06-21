@@ -54,12 +54,12 @@ public:
         PrecacheCore( "monster_human_friendly_grunt" );
     }
 
-    bool Spawn() override
+    SpawnAction Spawn() override
     {
         CHGruntRepel::Spawn();
         SetUse( &CHFGruntRepel::RepelUse );
 
-        return true;
+        return SpawnAction::Spawn;
     }
 
     void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )

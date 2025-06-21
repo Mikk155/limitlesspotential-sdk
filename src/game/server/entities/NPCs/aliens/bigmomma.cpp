@@ -27,7 +27,7 @@ class CInfoBM : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     // name in pev->targetname
@@ -47,9 +47,9 @@ BEGIN_DATAMAP( CInfoBM )
     DEFINE_FIELD( m_preSequence, FIELD_STRING ),
 END_DATAMAP();
 
-bool CInfoBM::Spawn()
+SpawnAction CInfoBM::Spawn()
 {
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CInfoBM::KeyValue( KeyValueData* pkvd )
@@ -92,7 +92,7 @@ class CBMortar : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     static CBMortar* Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVelocity );
     void Touch( CBaseEntity* pOther ) override;
@@ -152,7 +152,7 @@ class CBigMomma : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Activate() override;
@@ -611,7 +611,7 @@ void CBigMomma::LaunchMortar()
     MortarSpray( startPos, Vector( 0, 0, 1 ), gSpitSprite, 24 );
 }
 
-bool CBigMomma::Spawn()
+SpawnAction CBigMomma::Spawn()
 {
     Precache();
 
@@ -629,7 +629,7 @@ bool CBigMomma::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBigMomma::Precache()
@@ -1059,7 +1059,7 @@ void MortarSpray( const Vector& position, const Vector& direction, int spriteMod
 }
 
 // UNDONE: right now this is pretty much a copy of the squid spit with minor changes to the way it does damage
-bool CBMortar::Spawn()
+SpawnAction CBMortar::Spawn()
 {
     pev->movetype = MOVETYPE_TOSS;
 
@@ -1076,7 +1076,7 @@ bool CBMortar::Spawn()
     m_maxFrame = (float)MODEL_FRAMES( pev->modelindex ) - 1;
     pev->dmgtime = gpGlobals->time + 0.4;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBMortar::Animate()

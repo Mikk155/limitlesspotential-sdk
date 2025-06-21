@@ -22,7 +22,7 @@ class CRat : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
 
@@ -55,7 +55,7 @@ void CRat::SetYawSpeed()
     pev->yaw_speed = ys;
 }
 
-bool CRat::Spawn()
+SpawnAction CRat::Spawn()
 {
     Precache();
 
@@ -71,7 +71,7 @@ bool CRat::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CRat::Precache()

@@ -2742,7 +2742,7 @@ pt_end:
     g_GameMode->OnPlayerPostThink( this, 0 );
 }
 
-bool CBasePlayer::Spawn()
+SpawnAction CBasePlayer::Spawn()
 {
     m_bIsSpawning = true;
 
@@ -2855,7 +2855,7 @@ bool CBasePlayer::Spawn()
 
     g_pGameRules->PlayerSpawn( this );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBasePlayer::Precache()
@@ -5117,7 +5117,7 @@ class CDeadHEV : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -5153,7 +5153,7 @@ bool CDeadHEV::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_hevsuit_dead, CDeadHEV );
 
-bool CDeadHEV::Spawn()
+SpawnAction CDeadHEV::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -5175,7 +5175,7 @@ bool CDeadHEV::Spawn()
 
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -5183,11 +5183,11 @@ bool CDeadHEV::Spawn()
  */
 class CInfoIntermission : public CPointEntity
 {
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Think() override;
 };
 
-bool CInfoIntermission::Spawn()
+SpawnAction CInfoIntermission::Spawn()
 {
     SetOrigin( pev->origin );
     pev->solid = SOLID_NOT;
@@ -5196,7 +5196,7 @@ bool CInfoIntermission::Spawn()
 
     pev->nextthink = gpGlobals->time + 2; // let targets spawn!
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CInfoIntermission::Think()

@@ -28,7 +28,7 @@ class CBarnacle : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     /**
@@ -86,7 +86,7 @@ void CBarnacle::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CBarnacle::Spawn()
+SpawnAction CBarnacle::Spawn()
 {
     Precache();
 
@@ -117,7 +117,7 @@ bool CBarnacle::Spawn()
 
     SetOrigin( pev->origin );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CBarnacle::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType )

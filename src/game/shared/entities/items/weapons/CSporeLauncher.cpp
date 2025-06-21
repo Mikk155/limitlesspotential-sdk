@@ -53,7 +53,7 @@ void CSporeLauncher::Precache()
     m_usFireSpore = PRECACHE_EVENT( 1, "events/spore.sc" );
 }
 
-bool CSporeLauncher::Spawn()
+SpawnAction CSporeLauncher::Spawn()
 {
     CBasePlayerWeapon::Spawn();
 
@@ -61,7 +61,7 @@ bool CSporeLauncher::Spawn()
     pev->animtime = gpGlobals->time;
     pev->framerate = 1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CSporeLauncher::Deploy()
@@ -372,7 +372,7 @@ public:
         PrecacheSound( "weapons/spore_ammo.wav" );
     }
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override
     {
@@ -475,7 +475,7 @@ private:
     bool m_bIsLighting;
 };
 
-bool CSporeAmmo::Spawn()
+SpawnAction CSporeAmmo::Spawn()
 {
     Precache();
 
@@ -528,7 +528,7 @@ bool CSporeAmmo::Spawn()
     SetTouch( &CSporeAmmo::SporeTouch );
     SetThink( &CSporeAmmo::Idling );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 BEGIN_DATAMAP( CSporeAmmo )

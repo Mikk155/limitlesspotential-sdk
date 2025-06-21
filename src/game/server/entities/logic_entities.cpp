@@ -29,7 +29,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
@@ -93,11 +93,11 @@ bool CLogicRandom::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-bool CLogicRandom::Spawn()
+SpawnAction CLogicRandom::Spawn()
 {
     SetUse( &CLogicRandom::RandomUse );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CLogicRandom::RandomUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )

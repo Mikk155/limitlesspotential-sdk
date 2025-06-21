@@ -41,7 +41,7 @@ class CFrictionModifier : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
     /**
@@ -61,14 +61,14 @@ BEGIN_DATAMAP( CFrictionModifier )
     DEFINE_FUNCTION( ChangeFriction ),
 END_DATAMAP();
 
-bool CFrictionModifier::Spawn()
+SpawnAction CFrictionModifier::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     SetModel( STRING( pev->model ) ); // set size and link into world
     pev->movetype = MOVETYPE_NONE;
     SetTouch( &CFrictionModifier::ChangeFriction );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFrictionModifier::ChangeFriction( CBaseEntity* pOther )
@@ -101,7 +101,7 @@ class CAutoTrigger : public CBaseDelay
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Think() override;
 
@@ -128,11 +128,11 @@ bool CAutoTrigger::KeyValue( KeyValueData* pkvd )
     return CBaseDelay::KeyValue( pkvd );
 }
 
-bool CAutoTrigger::Spawn()
+SpawnAction CAutoTrigger::Spawn()
 {
     Precache();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CAutoTrigger::Precache()
@@ -158,7 +158,7 @@ class CTriggerRelay : public CBaseDelay
 //    DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -169,9 +169,9 @@ LINK_ENTITY_TO_CLASS( trigger_relay, CTriggerRelay );
 // BEGIN_DATAMAP( CTriggerRelay )
 // END_DATAMAP();
 
-bool CTriggerRelay::Spawn()
+SpawnAction CTriggerRelay::Spawn()
 {
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerRelay::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -202,7 +202,7 @@ class CMultiManager : public CBaseToggle
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void ManagerThink();
     void ManagerUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
@@ -282,7 +282,7 @@ bool CMultiManager::KeyValue( KeyValueData* pkvd )
     return false;
 }
 
-bool CMultiManager::Spawn()
+SpawnAction CMultiManager::Spawn()
 {
     pev->solid = SOLID_NOT;
     SetUse( &CMultiManager::ManagerUse );
@@ -311,7 +311,7 @@ bool CMultiManager::Spawn()
         }
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CMultiManager::HasTarget( string_t targetname )
@@ -414,17 +414,17 @@ void CMultiManager::ManagerReport()
 class CRenderFxManager : public CBaseEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 };
 
 LINK_ENTITY_TO_CLASS( env_render, CRenderFxManager );
 
-bool CRenderFxManager::Spawn()
+SpawnAction CRenderFxManager::Spawn()
 {
     pev->solid = SOLID_NOT;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CRenderFxManager::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -455,7 +455,7 @@ class CTriggerHurt : public CBaseTrigger
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     /**
      *    @brief When touched, a hurt trigger does DMG points of damage each half-second
@@ -491,7 +491,7 @@ bool CTriggerHurt::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-bool CTriggerHurt::Spawn()
+SpawnAction CTriggerHurt::Spawn()
 {
     InitTrigger();
     SetTouch( &CTriggerHurt::HurtTouch );
@@ -516,7 +516,7 @@ bool CTriggerHurt::Spawn()
 
     SetOrigin( pev->origin ); // Link into the list
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerHurt::HurtTouch( CBaseEntity* pOther )
@@ -695,7 +695,7 @@ class CTriggerMonsterJump : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Touch( CBaseEntity* pOther ) override;
     void Think() override;
 
@@ -709,7 +709,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_monsterjump, CTriggerMonsterJump );
 
-bool CTriggerMonsterJump::Spawn()
+SpawnAction CTriggerMonsterJump::Spawn()
 {
     SetMovedir( this );
 
@@ -726,7 +726,7 @@ bool CTriggerMonsterJump::Spawn()
         SetUse( &CTriggerMonsterJump::ToggleUse );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerMonsterJump::Think()
@@ -765,7 +765,7 @@ class CTriggerMultiple : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void MultiTouch( CBaseEntity* pOther );
 };
@@ -776,7 +776,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_multiple, CTriggerMultiple );
 
-bool CTriggerMultiple::Spawn()
+SpawnAction CTriggerMultiple::Spawn()
 {
     if( m_flWait == 0 )
         m_flWait = 0.2;
@@ -786,7 +786,7 @@ bool CTriggerMultiple::Spawn()
     ASSERTSZ( pev->health == 0, "trigger_multiple with health" );
     SetTouch( &CTriggerMultiple::MultiTouch );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerMultiple::MultiTouch( CBaseEntity* pOther )
@@ -817,12 +817,12 @@ void CTriggerMultiple::MultiTouch( CBaseEntity* pOther )
 class CTriggerOnce : public CTriggerMultiple
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_once, CTriggerOnce );
 
-bool CTriggerOnce::Spawn()
+SpawnAction CTriggerOnce::Spawn()
 {
     m_flWait = -1;
 
@@ -839,7 +839,7 @@ class CTriggerCounter : public CBaseTrigger
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 
@@ -865,7 +865,7 @@ bool CTriggerCounter::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-bool CTriggerCounter::Spawn()
+SpawnAction CTriggerCounter::Spawn()
 {
     // By making the flWait be -1, this counter-trigger will disappear after it's activated
     // (but of course it needs cTriggersLeft "uses" before that happens).
@@ -875,7 +875,7 @@ bool CTriggerCounter::Spawn()
         m_cTriggersLeft = 2;
     SetUse( &CTriggerCounter::CounterUse );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerCounter::CounterUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -927,7 +927,7 @@ class CLadder : public CBaseTrigger
 {
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 };
 
@@ -951,14 +951,14 @@ void CLadder::Precache()
     pev->effects &= ~EF_NODRAW;
 }
 
-bool CLadder::Spawn()
+SpawnAction CLadder::Spawn()
 {
     Precache();
 
     SetModel( STRING( pev->model ) ); // set size and link into world
     pev->movetype = MOVETYPE_PUSH;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -967,7 +967,7 @@ bool CLadder::Spawn()
 class CTriggerPush : public CBaseTrigger
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Touch( CBaseEntity* pOther ) override;
 };
@@ -979,7 +979,7 @@ bool CTriggerPush::KeyValue( KeyValueData* pkvd )
     return CBaseTrigger::KeyValue( pkvd );
 }
 
-bool CTriggerPush::Spawn()
+SpawnAction CTriggerPush::Spawn()
 {
     if( pev->angles == g_vecZero )
         pev->angles.y = 360;
@@ -995,7 +995,7 @@ bool CTriggerPush::Spawn()
 
     SetOrigin( pev->origin ); // Link into the list
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerPush::Touch( CBaseEntity* pOther )
@@ -1040,7 +1040,7 @@ class CTriggerGravity : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void GravityTouch( CBaseEntity* pOther );
 };
 
@@ -1050,12 +1050,12 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_gravity, CTriggerGravity );
 
-bool CTriggerGravity::Spawn()
+SpawnAction CTriggerGravity::Spawn()
 {
     InitTrigger();
     SetTouch( &CTriggerGravity::GravityTouch );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerGravity::GravityTouch( CBaseEntity* pOther )
@@ -1075,7 +1075,7 @@ class CTriggerChangeTarget : public CBaseDelay
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
@@ -1101,9 +1101,9 @@ bool CTriggerChangeTarget::KeyValue( KeyValueData* pkvd )
     return CBaseDelay::KeyValue( pkvd );
 }
 
-bool CTriggerChangeTarget::Spawn()
+SpawnAction CTriggerChangeTarget::Spawn()
 {
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerChangeTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -1131,7 +1131,7 @@ class CTriggerCamera : public CBaseDelay
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void FollowTarget();
@@ -1173,7 +1173,7 @@ BEGIN_DATAMAP( CTriggerCamera )
     DEFINE_FUNCTION( FollowTarget ),
 END_DATAMAP();
 
-bool CTriggerCamera::Spawn()
+SpawnAction CTriggerCamera::Spawn()
 {
     pev->movetype = MOVETYPE_NOCLIP;
     pev->solid = SOLID_NOT; // Remove model & collisions
@@ -1186,7 +1186,7 @@ bool CTriggerCamera::Spawn()
     if( m_deceleration == 0 )
         m_deceleration = 500;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CTriggerCamera::KeyValue( KeyValueData* pkvd )
@@ -1505,7 +1505,7 @@ class CTriggerKillNoGib : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void KillTouch( CBaseEntity* pOther );
 };
@@ -1516,7 +1516,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( trigger_kill_nogib, CTriggerKillNoGib );
 
-bool CTriggerKillNoGib::Spawn()
+SpawnAction CTriggerKillNoGib::Spawn()
 {
     InitTrigger();
 
@@ -1526,7 +1526,7 @@ bool CTriggerKillNoGib::Spawn()
     // TODO: this needs to be removed in order to function
     pev->solid = SOLID_NOT;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerKillNoGib::KillTouch( CBaseEntity* pOther )
@@ -1541,7 +1541,7 @@ class CTriggerXenReturn : public CBaseTrigger
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void ReturnTouch( CBaseEntity* pOther );
 };
@@ -1555,14 +1555,14 @@ LINK_ENTITY_TO_CLASS( trigger_xen_return, CTriggerXenReturn );
 LINK_ENTITY_TO_CLASS( info_displacer_earth_target, CPointEntity );
 LINK_ENTITY_TO_CLASS( info_displacer_xen_target, CPointEntity );
 
-bool CTriggerXenReturn::Spawn()
+SpawnAction CTriggerXenReturn::Spawn()
 {
     InitTrigger();
 
     SetTouch( &CTriggerXenReturn::ReturnTouch );
     SetUse( nullptr );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerXenReturn::ReturnTouch( CBaseEntity* pOther )
@@ -1628,7 +1628,7 @@ class COFTriggerGeneWormHit : public CBaseTrigger
 
 public:
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void GeneWormHitTouch( CBaseEntity* pOther );
 
@@ -1655,7 +1655,7 @@ void COFTriggerGeneWormHit::Precache()
     PRECACHE_SOUND_ARRAY( pAttackSounds );
 }
 
-bool COFTriggerGeneWormHit::Spawn()
+SpawnAction COFTriggerGeneWormHit::Spawn()
 {
     Precache();
 
@@ -1682,7 +1682,7 @@ bool COFTriggerGeneWormHit::Spawn()
     pev->dmg = g_cfg.GetValue<float>( "geneworm_dmg_hit"sv, 40, this );
     m_flLastDamageTime = gpGlobals->time;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFTriggerGeneWormHit::GeneWormHitTouch( CBaseEntity* pOther )
@@ -1745,7 +1745,7 @@ class CTriggerCTFGeneric : public CBaseTrigger
 public:
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void Touch( CBaseEntity* pOther ) override;
 
@@ -1765,13 +1765,13 @@ void CTriggerCTFGeneric::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE
     Touch( nullptr );
 }
 
-bool CTriggerCTFGeneric::Spawn()
+SpawnAction CTriggerCTFGeneric::Spawn()
 {
     InitTrigger();
 
     m_flTriggerDelayTime = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerCTFGeneric::Touch( CBaseEntity* pOther )

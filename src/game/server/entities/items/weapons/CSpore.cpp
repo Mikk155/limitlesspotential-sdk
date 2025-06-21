@@ -43,7 +43,7 @@ void CSpore::Precache()
     PrecacheSound( "weapons/splauncher_bounce.wav" );
 }
 
-bool CSpore::Spawn()
+SpawnAction CSpore::Spawn()
 {
     Precache();
 
@@ -115,7 +115,7 @@ bool CSpore::Spawn()
     pev->renderamt = 42.0f;
     pev->rendercolor = Vector( 50, 255, 50 );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CSpore::BounceSound()

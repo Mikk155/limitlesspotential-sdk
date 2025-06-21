@@ -66,7 +66,7 @@ class CHeadCrab : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void RunTask( const Task_t* pTask ) override;
     void StartTask( const Task_t* pTask ) override;
@@ -261,7 +261,7 @@ void CHeadCrab::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CHeadCrab::Spawn()
+SpawnAction CHeadCrab::Spawn()
 {
     Precache();
 
@@ -282,7 +282,7 @@ bool CHeadCrab::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CHeadCrab::Precache()
@@ -441,7 +441,7 @@ class CBabyCrab : public CHeadCrab
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void SetYawSpeed() override;
     float GetDamageAmount() override { return g_cfg.GetValue<float>( "baby_headcrab_dmg_bite"sv, 10, this ); }
     bool CheckRangeAttack1( float flDot, float flDist ) override;
@@ -462,7 +462,7 @@ void CBabyCrab::OnCreate()
     pev->model = MAKE_STRING( "models/baby_headcrab.mdl" );
 }
 
-bool CBabyCrab::Spawn()
+SpawnAction CBabyCrab::Spawn()
 {
     CHeadCrab::Spawn();
 
@@ -471,7 +471,7 @@ bool CBabyCrab::Spawn()
 
     SetSize( Vector( -12, -12, 0 ), Vector( 12, 12, 24 ) );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBabyCrab::SetYawSpeed()

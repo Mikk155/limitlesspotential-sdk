@@ -84,7 +84,7 @@ void CDisplacerBall::Precache()
     PrecacheSound( "weapons/displacer_teleport.wav" );
 }
 
-bool CDisplacerBall::Spawn()
+SpawnAction CDisplacerBall::Spawn()
 {
     Precache();
 
@@ -110,7 +110,7 @@ bool CDisplacerBall::Spawn()
 
     InitBeams();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CDisplacerBall::BallTouch( CBaseEntity* pOther )

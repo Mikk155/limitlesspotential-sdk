@@ -30,7 +30,7 @@ class COFBabyVoltigore : public COFVoltigore
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     void SetObjectCollisionBox() override
     {
@@ -201,13 +201,13 @@ void COFBabyVoltigore::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool COFBabyVoltigore::Spawn()
+SpawnAction COFBabyVoltigore::Spawn()
 {
     SpawnCore( {-16, -16, 0}, {16, 16, 32} );
 
     if( pev->health < 1 )
         pev->health = g_cfg.GetValue<float>( "babyvoltigore_health"sv, 120, this );
-    return true;
+    return SpawnAction::Spawn;
 }
 
 CBaseEntity* COFBabyVoltigore::CheckTraceHullAttack( float flDist, int iDamage, int iDmgType )

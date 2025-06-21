@@ -27,19 +27,19 @@ class CRuleEntity : public CBaseEntity
     DECLARE_CLASS( CRuleEntity, CBaseEntity );
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
 protected:
     bool CanFireForActivator( CBaseEntity* pActivator );
 };
 
-bool CRuleEntity::Spawn()
+SpawnAction CRuleEntity::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
     pev->effects = EF_NODRAW;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CRuleEntity::CanFireForActivator( CBaseEntity* pActivator )
@@ -53,16 +53,16 @@ bool CRuleEntity::CanFireForActivator( CBaseEntity* pActivator )
 class CRulePointEntity : public CRuleEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
-bool CRulePointEntity::Spawn()
+SpawnAction CRulePointEntity::Spawn()
 {
     CRuleEntity::Spawn();
     pev->frame = 0;
     pev->model = string_t::Null;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -72,17 +72,17 @@ bool CRulePointEntity::Spawn()
 class CRuleBrushEntity : public CRuleEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
 private:
 };
 
-bool CRuleBrushEntity::Spawn()
+SpawnAction CRuleBrushEntity::Spawn()
 {
     SetModel( STRING( pev->model ) );
     CRuleEntity::Spawn();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 #define SF_SCORE_NEGATIVE 0x0001
@@ -95,7 +95,7 @@ bool CRuleBrushEntity::Spawn()
 class CGameScore : public CRulePointEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -110,7 +110,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( game_score, CGameScore );
 
-bool CGameScore::Spawn()
+SpawnAction CGameScore::Spawn()
 {
     return CRulePointEntity::Spawn();
 }
@@ -178,7 +178,7 @@ class CGameText : public CRulePointEntity
 
 public:
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool KeyValue( KeyValueData* pkvd ) override;
@@ -211,7 +211,7 @@ void CGameText::Precache()
     }
 }
 
-bool CGameText::Spawn()
+SpawnAction CGameText::Spawn()
 {
     Precache();
 
@@ -483,7 +483,7 @@ void CGamePlayerHurt::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 class CGameCounter : public CRulePointEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     inline bool RemoveOnFire() { return ( pev->spawnflags & SF_GAMECOUNT_FIREONCE ) != 0; }
     inline bool ResetOnFire() { return ( pev->spawnflags & SF_GAMECOUNT_RESET ) != 0; }
@@ -503,7 +503,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( game_counter, CGameCounter );
 
-bool CGameCounter::Spawn()
+SpawnAction CGameCounter::Spawn()
 {
     // Save off the initial count
     SetInitialValue( CountValue() );

@@ -70,6 +70,21 @@ enum USE_TYPE : int
     USE_UNKNOWN
 };
 
+// Action to take during entity spawning
+enum SpawnAction : int
+{
+    // Entity spawned normaly.
+    Spawn = 0,
+    // Mark entity for delayed removal, Don't call anything else.
+    DelayRemove,
+    // Remove entity right away, Don't call anything else.
+    RemoveNow,
+    // Entity spawned, Don't call anything else.
+    HandledSpawn,
+    // Entity removed itself method, Don't call anything else.
+    HandledRemoval
+};
+
 /**
  * @brief Returns the appropiate USE_TYPE for @c from
  * @param default_value returned if @c value is out of range.
@@ -91,13 +106,6 @@ struct UseValue
 
     // Should the caller's m_UseType be overrided with this?
     std::optional<USE_TYPE> UseType;
-};
-
-enum appearflags : int
-{
-    NotIn = -1, // Does not appears when
-    Default = 0, // Has no effect
-    OnlyIn = 1 // Only appears when
 };
 
 // people gib if their health is <= this at the time of death
@@ -232,7 +240,8 @@ public:
 
     void Destruct();
 
-    virtual bool Spawn() { return true; }
+    virtual SpawnAction Spawn() { return SpawnAction::Spawn; }
+    SpawnAction GlobalState();
 
     /**
      *    @brief precaches all resources this entity needs
@@ -675,12 +684,8 @@ public:
     CBaseEntity* AllocNewActivator( CBaseEntity* pActivator, CBaseEntity* pCaller, string_t szNewTarget, CBaseEntity* failback = nullptr );
     string_t m_sNewActivator;
 
-    /**
-     *    @brief Returns whatever a entity is fine to exists by the current rules it has.
-     */
-    bool ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags );
-    std::vector<std::string> m_AppearFlagNotIn;
-    std::vector<std::string> m_AppearFlagOnlyIn;
+    bool AppearFlags( const char* keyname, int value );
+    SpawnAction m_appearflags{SpawnAction::Spawn};
 
     /**
      *  @brief Custom per-entity config

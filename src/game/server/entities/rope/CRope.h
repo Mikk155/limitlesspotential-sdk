@@ -56,7 +56,7 @@ public:
 
     void Precache() override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void UpdateOnRemove() override;
 

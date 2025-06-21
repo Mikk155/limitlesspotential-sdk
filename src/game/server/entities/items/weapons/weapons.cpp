@@ -704,7 +704,7 @@ bool CBasePlayerAmmo::KeyValue( KeyValueData* pkvd )
     return CBaseItem::KeyValue( pkvd );
 }
 
-bool CBasePlayerAmmo::Spawn()
+SpawnAction CBasePlayerAmmo::Spawn()
 {
     CBaseItem::Spawn();
 
@@ -712,7 +712,7 @@ bool CBasePlayerAmmo::Spawn()
     assert( m_AmmoAmount >= RefillAllAmmoAmount );
     assert( !FStrEq( STRING( m_AmmoName ), "" ) );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBasePlayerAmmo::PlayPickupSound( const char* pickupSoundName )

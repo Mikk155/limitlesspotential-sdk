@@ -35,7 +35,7 @@ class CEnvGlobal : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -73,11 +73,11 @@ bool CEnvGlobal::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-bool CEnvGlobal::Spawn()
+SpawnAction CEnvGlobal::Spawn()
 {
     if( FStringNull( m_globalstate ) )
     {
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     if( FBitSet( pev->spawnflags, SF_GLOBAL_SET ) )
@@ -85,7 +85,7 @@ bool CEnvGlobal::Spawn()
         if( !gGlobalState.EntityInTable( m_globalstate ) )
             gGlobalState.EntityAdd( m_globalstate, gpGlobals->mapname, ( GLOBALESTATE )m_initialstate );
     }
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CEnvGlobal::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -147,7 +147,7 @@ bool CMultiSource::KeyValue( KeyValueData* pkvd )
 
 #define SF_MULTI_INIT 1
 
-bool CMultiSource::Spawn()
+SpawnAction CMultiSource::Spawn()
 {
     // set up think for later registration
 
@@ -157,7 +157,7 @@ bool CMultiSource::Spawn()
     pev->spawnflags |= SF_MULTI_INIT; // Until it's initialized
     SetThink( &CMultiSource::Register );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CMultiSource::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -366,7 +366,7 @@ bool CBaseButton::TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, flo
 
 LINK_ENTITY_TO_CLASS( func_button, CBaseButton );
 
-bool CBaseButton::Spawn()
+SpawnAction CBaseButton::Spawn()
 {
     //----------------------------------------------------
     // determine sounds for buttons
@@ -431,7 +431,7 @@ bool CBaseButton::Spawn()
         SetUse( &CBaseButton::ButtonUse );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void DoSpark( CBaseEntity* entity, const Vector& location )
@@ -665,12 +665,12 @@ void CBaseButton::ButtonBackHome()
 class CRotButton : public CBaseButton
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( func_button_rotating, CRotButton );
 
-bool CRotButton::Spawn()
+SpawnAction CRotButton::Spawn()
 {
     //----------------------------------------------------
     // determine sounds for buttons
@@ -729,7 +729,7 @@ bool CRotButton::Spawn()
 
     // SetTouch( ButtonTouch );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 
@@ -746,7 +746,7 @@ class CMomentaryRotButton : public CBaseToggle
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     int ObjectCaps() override
     {
@@ -786,7 +786,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( func_button_momentary, CMomentaryRotButton );
 
-bool CMomentaryRotButton::Spawn()
+SpawnAction CMomentaryRotButton::Spawn()
 {
     CBaseToggle::AxisDir( this );
 
@@ -824,7 +824,7 @@ bool CMomentaryRotButton::Spawn()
     PrecacheSound( STRING( m_sounds ) );
     m_lastUsed = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CMomentaryRotButton::KeyValue( KeyValueData* pkvd )
@@ -975,7 +975,7 @@ class CEnvSpark : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SparkThink();
     void SparkStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
@@ -995,7 +995,7 @@ END_DATAMAP();
 LINK_ENTITY_TO_CLASS( env_spark, CEnvSpark );
 LINK_ENTITY_TO_CLASS( env_debris, CEnvSpark );
 
-bool CEnvSpark::Spawn()
+SpawnAction CEnvSpark::Spawn()
 {
     SetThink( nullptr );
     SetUse( nullptr );
@@ -1020,7 +1020,7 @@ bool CEnvSpark::Spawn()
 
     Precache();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CEnvSpark::Precache()
@@ -1069,7 +1069,7 @@ void CEnvSpark::SparkStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 class CButtonTarget : public CBaseEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
     int ObjectCaps() override;
@@ -1077,7 +1077,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_button_target, CButtonTarget );
 
-bool CButtonTarget::Spawn()
+SpawnAction CButtonTarget::Spawn()
 {
     pev->movetype = MOVETYPE_PUSH;
     pev->solid = SOLID_BSP;
@@ -1087,7 +1087,7 @@ bool CButtonTarget::Spawn()
     if( FBitSet( pev->spawnflags, SF_BTARGET_ON ) )
         pev->frame = 1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CButtonTarget::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )

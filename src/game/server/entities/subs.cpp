@@ -22,12 +22,12 @@
 #include "nodes.h"
 #include "doors.h"
 
-bool CPointEntity::Spawn()
+SpawnAction CPointEntity::Spawn()
 {
     pev->solid = SOLID_NOT;
     //    SetSize(g_vecZero, g_vecZero);
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -36,14 +36,12 @@ bool CPointEntity::Spawn()
 class CNullEntity : public CBaseEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
-bool CNullEntity::Spawn()
+SpawnAction CNullEntity::Spawn()
 {
-    REMOVE_ENTITY( edict() );
-
-    return false;
+    return SpawnAction::RemoveNow;
 }
 
 LINK_ENTITY_TO_CLASS( info_null, CNullEntity );

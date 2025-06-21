@@ -126,11 +126,11 @@ public:
         pev->model = MAKE_STRING( "models/w_medkit.mdl" );
     }
 
-    bool Spawn() override
+    SpawnAction Spawn() override
     {
         CItem::Spawn();
         m_HealthAmount = g_cfg.GetValue<float>( "healthkit"sv, 10, this );
-        return true;
+        return SpawnAction::Spawn;
     }
 
     void Precache() override
@@ -205,7 +205,7 @@ public:
         pev->model = MAKE_STRING( "models/w_battery.mdl" );
     }
 
-    bool Spawn() override
+    SpawnAction Spawn() override
     {
         CItem::Spawn();
         m_ArmorAmount = g_cfg.GetValue<float>( "battery"sv, 10, this );
@@ -225,7 +225,7 @@ public:
             }
         }
 
-        return true;
+        return SpawnAction::Spawn;
     }
 
     bool KeyValue( KeyValueData* pkvd ) override

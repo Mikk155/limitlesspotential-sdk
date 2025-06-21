@@ -75,7 +75,7 @@ public:
     void OnCreate() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void GuardFirePistol() override;
 
     void TalkInit() override;
@@ -153,7 +153,7 @@ void COtis::Precache()
     PrecacheSound( "weapons/de_shot1.wav" );
 }
 
-bool COtis::Spawn()
+SpawnAction COtis::Spawn()
 {
     CBarney::Spawn();
 
@@ -173,7 +173,7 @@ bool COtis::Spawn()
     SetBodygroup( OtisBodyGroup::Sleeves, m_Sleeves );
     SetBodygroup( OtisBodyGroup::Items, m_Item );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COtis::TalkInit()
@@ -220,7 +220,7 @@ class CDeadOtis : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -274,7 +274,7 @@ bool CDeadOtis::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_otis_dead, CDeadOtis );
 
-bool CDeadOtis::Spawn()
+SpawnAction CDeadOtis::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -296,5 +296,5 @@ bool CDeadOtis::Spawn()
 
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }

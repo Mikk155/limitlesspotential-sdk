@@ -138,14 +138,14 @@ CBasePlayer::Spawn
 
 =====================
 */
-bool CBasePlayer::Spawn()
+SpawnAction CBasePlayer::Spawn()
 {
     if( m_pActiveWeapon )
         m_pActiveWeapon->Deploy();
 
     g_irunninggausspred = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /*

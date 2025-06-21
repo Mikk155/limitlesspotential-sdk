@@ -19,9 +19,9 @@
 
 LINK_ENTITY_TO_CLASS( info_ctfdetect, CTFDetect );
 
-bool CTFDetect::Spawn()
+SpawnAction CTFDetect::Spawn()
 {
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CTFDetect::KeyValue( KeyValueData* pkvd )

@@ -54,7 +54,7 @@ class COFVoltigore : public CSquadMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;

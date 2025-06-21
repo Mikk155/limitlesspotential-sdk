@@ -574,11 +574,6 @@ class TargetPlayerIterator
                 ++index;
             }
 
-            if( index > gpGlobals->maxClients )
-            {
-                UTIL_ConsolePrint( admin, "Failed to find a target player!\n" );
-            }
-
             if( pOutNextIndex )
             {
                 *pOutNextIndex = gpGlobals->maxClients;
@@ -681,7 +676,11 @@ void CAdminInterface::RegisterCommands()
                         break; // Invalid object? Don't flood the console.
                     }
 
-                    DispatchSpawn( entity->edict() );
+                    if( DispatchSpawn( entity->edict() ) == -1 )
+                    {
+                        UTIL_ConsolePrint( player, "Failed to spawn entity at DispatchSpawn\n" );
+                        return;
+                    }
 
                     if( entity->AddToPlayer( target ) != ItemAddResult::Added )
                     {

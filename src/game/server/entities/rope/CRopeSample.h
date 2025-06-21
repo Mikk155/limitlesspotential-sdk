@@ -41,7 +41,7 @@ class CRopeSample : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
 
     static CRopeSample* CreateSample();

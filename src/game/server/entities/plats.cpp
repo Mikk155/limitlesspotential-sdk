@@ -129,7 +129,7 @@ class CFuncPlat : public CBasePlatTrain
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Setup();
 
@@ -228,7 +228,7 @@ void CFuncPlat::Precache()
         PlatSpawnInsideTrigger( this ); // the "start moving" trigger
 }
 
-bool CFuncPlat::Spawn()
+SpawnAction CFuncPlat::Spawn()
 {
     Setup();
 
@@ -248,7 +248,7 @@ bool CFuncPlat::Spawn()
         m_toggle_state = TS_AT_BOTTOM;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 static void PlatSpawnInsideTrigger( CFuncPlat* platform )
@@ -398,7 +398,7 @@ class CFuncPlatRot : public CFuncPlat
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void SetupRotation();
 
     void GoUp() override;
@@ -437,12 +437,12 @@ void CFuncPlatRot::SetupRotation()
     }
 }
 
-bool CFuncPlatRot::Spawn()
+SpawnAction CFuncPlatRot::Spawn()
 {
     CFuncPlat::Spawn();
     SetupRotation();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncPlatRot::GoDown()
@@ -498,7 +498,7 @@ class CFuncTrain : public CBasePlatTrain
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Activate() override;
     void OverrideReset() override;
 
@@ -674,7 +674,7 @@ void CFuncTrain::Activate()
     }
 }
 
-bool CFuncTrain::Spawn()
+SpawnAction CFuncTrain::Spawn()
 {
     Precache();
     if( pev->speed == 0 )
@@ -702,7 +702,7 @@ bool CFuncTrain::Spawn()
     if( m_volume == 0 )
         m_volume = 0.85;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncTrain::OverrideReset()
@@ -737,7 +737,7 @@ class CSpriteTrain : public CBasePlatTrain
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Activate() override;
     void OverrideReset() override;
@@ -975,7 +975,7 @@ void CSpriteTrain::Activate()
     }
 }
 
-bool CSpriteTrain::Spawn()
+SpawnAction CSpriteTrain::Spawn()
 {
     Precache();
     if( pev->speed == 0 )
@@ -1012,7 +1012,7 @@ bool CSpriteTrain::Spawn()
     m_nextTime = pev->ltime;
     m_stopSprite = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CSpriteTrain::Precache()
@@ -1586,7 +1586,7 @@ CFuncTrackTrain* CFuncTrackTrain::Instance( CBaseEntity* pent )
     return nullptr;
 }
 
-bool CFuncTrackTrain::Spawn()
+SpawnAction CFuncTrackTrain::Spawn()
 {
     if( pev->speed == 0 )
         m_speed = 100;
@@ -1626,7 +1626,7 @@ bool CFuncTrackTrain::Spawn()
     SetThink( &CFuncTrackTrain::Find );
     Precache();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncTrackTrain::Precache()
@@ -1657,7 +1657,7 @@ class CFuncTrainControls : public CBaseEntity
 
 public:
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Find();
 };
 
@@ -1687,7 +1687,7 @@ void CFuncTrainControls::Find()
     UTIL_Remove( this );
 }
 
-bool CFuncTrainControls::Spawn()
+SpawnAction CFuncTrainControls::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->movetype = MOVETYPE_NONE;
@@ -1699,7 +1699,7 @@ bool CFuncTrainControls::Spawn()
     SetThink( &CFuncTrainControls::Find );
     pev->nextthink = gpGlobals->time;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 #define SF_TRACK_ACTIVATETRAIN 0x00000001
@@ -1727,7 +1727,7 @@ class CFuncTrackChange : public CFuncPlatRot
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     //    void    Blocked() override;
@@ -1782,7 +1782,7 @@ BEGIN_DATAMAP( CFuncTrackChange )
     DEFINE_FUNCTION( Find ),
 END_DATAMAP();
 
-bool CFuncTrackChange::Spawn()
+SpawnAction CFuncTrackChange::Spawn()
 {
     Setup();
     if( FBitSet( pev->spawnflags, SF_TRACK_DONT_MOVE ) )
@@ -1810,7 +1810,7 @@ bool CFuncTrackChange::Spawn()
     SetThink( &CFuncTrackChange::Find );
     Precache();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncTrackChange::Precache()
@@ -2185,7 +2185,7 @@ class CGunTarget : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Activate() override;
     void Next();
     void Start();
@@ -2223,7 +2223,7 @@ void CGunTarget::OnCreate()
     SetClassification( "machine" );
 }
 
-bool CGunTarget::Spawn()
+SpawnAction CGunTarget::Spawn()
 {
     pev->solid = SOLID_BSP;
     pev->movetype = MOVETYPE_PUSH;
@@ -2247,7 +2247,7 @@ bool CGunTarget::Spawn()
         pev->nextthink = pev->ltime + 0.3;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CGunTarget::Activate()

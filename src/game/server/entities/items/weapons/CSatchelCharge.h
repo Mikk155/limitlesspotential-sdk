@@ -24,7 +24,7 @@ class CSatchelCharge : public CGrenade
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void BounceSound() override;
 

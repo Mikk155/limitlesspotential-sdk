@@ -27,7 +27,7 @@ class CTripmineGrenade : public CGrenade
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     bool TakeDamage( CBaseEntity* inflictor, CBaseEntity* attacker, float flDamage, int bitsDamageType ) override;
@@ -79,7 +79,7 @@ void CTripmineGrenade::OnCreate()
     pev->model = MAKE_STRING( "models/w_tripmine.mdl" );
 }
 
-bool CTripmineGrenade::Spawn()
+SpawnAction CTripmineGrenade::Spawn()
 {
     Precache();
     // motor
@@ -127,7 +127,7 @@ bool CTripmineGrenade::Spawn()
     m_vecDir = gpGlobals->v_forward;
     m_vecEnd = pev->origin + m_vecDir * 2048;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTripmineGrenade::Precache()
@@ -356,7 +356,7 @@ void CTripmine::OnCreate()
     m_WorldModel = pev->model = MAKE_STRING( "models/w_tripmine.mdl" );
 }
 
-bool CTripmine::Spawn()
+SpawnAction CTripmine::Spawn()
 {
     CBasePlayerWeapon::Spawn();
 
@@ -370,7 +370,7 @@ bool CTripmine::Spawn()
         SetSize( Vector( -16, -16, 0 ), Vector( 16, 16, 28 ) );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTripmine::Precache()

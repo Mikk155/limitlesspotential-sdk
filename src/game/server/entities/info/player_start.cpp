@@ -91,10 +91,10 @@ void CPlayerSpawnPoint::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
     }
 }
 
-bool CPlayerSpawnPoint::Spawn()
+SpawnAction CPlayerSpawnPoint::Spawn()
 {
     InitialState = FBitSet( pev->spawnflags, SF_SPAWNPOINT_STARTOFF );
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CPlayerSpawnPoint::CanPlayerSpawn( CBasePlayer* player )

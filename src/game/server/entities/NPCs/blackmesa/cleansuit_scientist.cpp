@@ -57,7 +57,7 @@ class CDeadCleansuitScientist : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -102,7 +102,7 @@ bool CDeadCleansuitScientist::KeyValue( KeyValueData* pkvd )
     return CBaseMonster::KeyValue( pkvd );
 }
 
-bool CDeadCleansuitScientist::Spawn()
+SpawnAction CDeadCleansuitScientist::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -137,7 +137,7 @@ bool CDeadCleansuitScientist::Spawn()
     //    pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 class CSittingCleansuitScientist : public CSittingScientist // kdb: changed from public CBaseMonster so he can speak

@@ -65,7 +65,7 @@ class CMOFAssassin : public CHGrunt
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     bool CheckRangeAttack1( float flDot, float flDist ) override;
     bool CheckRangeAttack2( float flDot, float flDist ) override;
@@ -299,7 +299,7 @@ void CMOFAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CMOFAssassin::Spawn()
+SpawnAction CMOFAssassin::Spawn()
 {
     Precache();
 
@@ -370,7 +370,7 @@ bool CMOFAssassin::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CMOFAssassin::PainSound()
@@ -428,7 +428,7 @@ class CMOFAssassinRepel : public CHGruntRepel
 
 public:
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
 };
 
@@ -442,12 +442,12 @@ void CMOFAssassinRepel::Precache()
     PrecacheCore( "monster_male_assassin" );
 }
 
-bool CMOFAssassinRepel::Spawn()
+SpawnAction CMOFAssassinRepel::Spawn()
 {
     CHGruntRepel::Spawn();
     SetUse( &CMOFAssassinRepel::RepelUse );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CMOFAssassinRepel::RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -459,7 +459,7 @@ class CDeadMOFAssassin : public CDeadHGrunt
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( monster_massassin_dead, CDeadMOFAssassin );
@@ -471,7 +471,7 @@ void CDeadMOFAssassin::OnCreate()
     pev->model = MAKE_STRING( "models/massn.mdl" );
 }
 
-bool CDeadMOFAssassin::Spawn()
+SpawnAction CDeadMOFAssassin::Spawn()
 {
     SpawnCore();
 
@@ -504,5 +504,5 @@ bool CDeadMOFAssassin::Spawn()
         break;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }

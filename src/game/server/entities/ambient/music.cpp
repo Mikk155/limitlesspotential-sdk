@@ -35,7 +35,7 @@ class CAmbientMusic : public CAmbient
     DECLARE_DATAMAP();
 
     public:
-        bool Spawn() override;
+        SpawnAction Spawn() override;
         bool KeyValue( KeyValueData* pkvd ) override;
         void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -149,7 +149,7 @@ void CAmbientMusic::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     BaseClass::Use( pActivator, pCaller, useType, value );
 }
 
-bool CAmbientMusic::Spawn()
+SpawnAction CAmbientMusic::Spawn()
 {
     Precache();
     return BaseClass::Spawn();

@@ -63,7 +63,7 @@ class COFShockRoach : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void RunTask( const Task_t* pTask ) override;
     void StartTask( const Task_t* pTask ) override;
@@ -254,7 +254,7 @@ void COFShockRoach::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool COFShockRoach::Spawn()
+SpawnAction COFShockRoach::Spawn()
 {
     Precache();
 
@@ -277,7 +277,7 @@ bool COFShockRoach::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFShockRoach::Precache()

@@ -21,7 +21,7 @@ class CTriggerZone : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -84,13 +84,13 @@ bool CTriggerZone::KeyValue( KeyValueData* pkvd )
     return true;
 }
 
-bool CTriggerZone::Spawn()
+SpawnAction CTriggerZone::Spawn()
 {
     pev->solid = SOLID_NOT;
     pev->effects |= EF_NODRAW;
     pev->movetype = MOVETYPE_NONE;
     SetModel( STRING( pev->model ) );
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTriggerZone::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )

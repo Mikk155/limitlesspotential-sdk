@@ -100,7 +100,7 @@ void CGrenade::Explode( TraceResult*, int ) {}
 void CGrenade::Killed( CBaseEntity*, int ) {}
 void CGrenade::OnCreate() { CBaseMonster::OnCreate(); }
 void CGrenade::Precache() {}
-bool CGrenade::Spawn() { return true; }
+SpawnAction CGrenade::Spawn() { return SpawnAction::Spawn; }
 CGrenade* CGrenade::ShootTimed( CBaseEntity* owner, Vector vecStart, Vector vecVelocity, float time ) { return nullptr; }
 CGrenade* CGrenade::ShootContact( CBaseEntity* owner, Vector vecStart, Vector vecVelocity ) { return nullptr; }
 void CGrenade::DetonateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value ) {}
@@ -326,7 +326,7 @@ ItemAddResult CBasePlayerWeapon::Apply( CBasePlayer* player ) { return ItemAddRe
 void CBasePlayerWeapon::PostRestore() {}
 
 bool CBasePlayerAmmo::KeyValue( KeyValueData* pkvd ) { return false; }
-bool CBasePlayerAmmo::Spawn() { return true; }
+SpawnAction CBasePlayerAmmo::Spawn() { return SpawnAction::Spawn; }
 bool CBasePlayerAmmo::AddAmmo( CBasePlayer* player ) { return false; }
 
 void CSoundEnt::InsertSound( int iType, const Vector& vecOrigin, int iVolume, float flDuration ) {}

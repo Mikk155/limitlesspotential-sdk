@@ -31,12 +31,12 @@ class CAmbient : public CPointEntity
 
         [[nodiscard]] Vector PlayFromEntity( CBaseEntity* activator, CBaseEntity* caller );
 
-        bool Spawn() override
+        SpawnAction Spawn() override
         {
             pev->solid = SOLID_NOT;
             pev->movetype = MOVETYPE_NONE;
 
-            return true;
+            return SpawnAction::Spawn;
         }
 
     protected:

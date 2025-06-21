@@ -118,7 +118,7 @@ class CAmbientGeneric : public CAmbient
 
     public:
         void Think() override;
-        bool Spawn() override;
+        SpawnAction Spawn() override;
         void Precache() override;
         bool KeyValue( KeyValueData* pkvd ) override;
         void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
@@ -151,14 +151,14 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( ambient_generic, CAmbientGeneric );
 
-bool CAmbientGeneric::Spawn()
+SpawnAction CAmbientGeneric::Spawn()
 {
     const char* szSoundFile = STRING( m_sPlaySound );
 
     if( FStringNull( m_sPlaySound ) || strlen( szSoundFile ) < 1 )
     {
         Logger->error( "EMPTY AMBIENT AT: {}", pev->origin.MakeString() );
-        return false;
+        return SpawnAction::DelayRemove;
     }
 
     pev->nextthink = 0;

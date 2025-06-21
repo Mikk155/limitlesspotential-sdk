@@ -130,7 +130,7 @@ void CAmbientDSP::DSPTouch( CBaseEntity* pOther )
     }
 }
 
-bool CAmbientDSP::Spawn()
+SpawnAction CAmbientDSP::Spawn()
 {
     if( STRING( pev->model )[0] == '*' )
     {
@@ -141,7 +141,7 @@ bool CAmbientDSP::Spawn()
 
         SetTouch( &CAmbientDSP::DSPTouch );
 
-        return true;
+        return SpawnAction::Spawn;
     }
 
     return BaseClass::Spawn();

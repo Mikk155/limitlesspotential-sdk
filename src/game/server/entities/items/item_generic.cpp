@@ -25,7 +25,7 @@ class CGenericItem : public CBaseAnimating
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void StartItem();
     void AnimateThink();
@@ -68,7 +68,7 @@ void CGenericItem::Precache()
     PrecacheModel( STRING( pev->model ) );
 }
 
-bool CGenericItem::Spawn()
+SpawnAction CGenericItem::Spawn()
 {
     pev->solid = 0;
     pev->movetype = 0;
@@ -105,7 +105,7 @@ bool CGenericItem::Spawn()
         if( 0 == g_engfuncs.pfnDropToFloor( pev->pContainingEntity ) )
         {
             CBaseEntity::Logger->error( "Item {} fell out of level at {}", STRING( pev->classname ), pev->origin.MakeString() );
-            return false;
+            return SpawnAction::DelayRemove;
         }
     }
 
@@ -121,7 +121,7 @@ bool CGenericItem::Spawn()
         SetOrigin( pev->origin );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CGenericItem::StartItem()

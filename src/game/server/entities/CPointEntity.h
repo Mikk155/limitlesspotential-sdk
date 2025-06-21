@@ -22,7 +22,7 @@ class CPointEntity : public CBaseEntity
     DECLARE_CLASS( CPointEntity, CBaseEntity );
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 private:

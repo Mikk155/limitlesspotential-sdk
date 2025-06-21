@@ -29,7 +29,7 @@ class COFGonomeGuts : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void Touch( CBaseEntity* pOther ) override;
 
@@ -51,7 +51,7 @@ END_DATAMAP();
 
 LINK_ENTITY_TO_CLASS( gonomeguts, COFGonomeGuts );
 
-bool COFGonomeGuts::Spawn()
+SpawnAction COFGonomeGuts::Spawn()
 {
     pev->movetype = MOVETYPE_FLY;
 
@@ -82,7 +82,7 @@ bool COFGonomeGuts::Spawn()
 
     m_maxFrame = static_cast<int>( MODEL_FRAMES( pev->modelindex ) - 1 );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFGonomeGuts::Touch( CBaseEntity* pOther )
@@ -181,7 +181,7 @@ class COFGonome : public CZombie
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     int IgnoreConditions() override;
@@ -454,7 +454,7 @@ void COFGonome::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool COFGonome::Spawn()
+SpawnAction COFGonome::Spawn()
 {
     m_flNextThrowTime = gpGlobals->time;
     m_pGonomeGuts = nullptr;
@@ -714,7 +714,7 @@ class CDeadGonome : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasAlienGibs() override { return true; }
 
@@ -750,7 +750,7 @@ bool CDeadGonome::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_gonome_dead, CDeadGonome );
 
-bool CDeadGonome::Spawn()
+SpawnAction CDeadGonome::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -768,5 +768,5 @@ bool CDeadGonome::Spawn()
 
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }

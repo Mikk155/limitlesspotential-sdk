@@ -116,7 +116,7 @@ class CHGrunt : public CSquadMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
 
@@ -257,7 +257,7 @@ class CHGruntRepel : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void RepelUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
     int m_iSpriteTexture; // Don't save, precache
@@ -280,7 +280,7 @@ class CDeadHGrunt : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 

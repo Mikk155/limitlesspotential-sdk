@@ -23,7 +23,7 @@ class CTFSpawn : public CPlayerSpawnPoint
     DECLARE_CLASS( CTFSpawn, CPlayerSpawnPoint );
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void SpawnPlayer( CBasePlayer* player ) override;
     bool CanPlayerSpawn( CBasePlayer* player ) override;

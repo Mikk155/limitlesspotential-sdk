@@ -150,7 +150,7 @@ void CZombie::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CZombie::Spawn()
+SpawnAction CZombie::Spawn()
 {
     Precache();
 
@@ -170,7 +170,7 @@ bool CZombie::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CZombie::Precache()

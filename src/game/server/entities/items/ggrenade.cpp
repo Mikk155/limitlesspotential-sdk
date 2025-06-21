@@ -335,7 +335,7 @@ void CGrenade::TumbleThink()
     }
 }
 
-bool CGrenade::Spawn()
+SpawnAction CGrenade::Spawn()
 {
     Precache();
 
@@ -349,7 +349,7 @@ bool CGrenade::Spawn()
     pev->dmg = 100;
     m_fRegisteredSound = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 CGrenade* CGrenade::ShootContact( CBaseEntity* owner, Vector vecStart, Vector vecVelocity )

@@ -92,7 +92,7 @@ class CDecal : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void StaticDecal();
     void TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
@@ -107,11 +107,11 @@ LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 
 // -TODO On client connect find decals and use them if active
 // UNDONE:  These won't get sent to joining players in multi-player
-bool CDecal::Spawn()
+SpawnAction CDecal::Spawn()
 {
     if( pev->skin < 0 || ( g_GameMode->IsMultiplayer() && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH ) ) )
     {
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     if( FStringNull( pev->targetname ) )
@@ -127,7 +127,7 @@ bool CDecal::Spawn()
         SetUse( &CDecal::TriggerDecal );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CDecal::TriggerDecal( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -229,8 +229,14 @@ CWorld::~CWorld()
     g_GameLogger->trace( "worldspawn destroyed" );
 }
 
-bool CWorld::Spawn()
+SpawnAction CWorld::Spawn()
 {
+    // Flag this entity for removal if it's not the actual world entity.
+    if( World != this )
+    {
+        return SpawnAction::DelayRemove;
+    }
+
     g_fGameOver = false;
     Precache();
     CItemCTF::m_pLastSpawn = nullptr;
@@ -240,7 +246,7 @@ bool CWorld::Spawn()
         ResetTeamScores();
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CWorld::PostRestore()
@@ -256,13 +262,6 @@ void CWorld::PostRestore()
 
 void CWorld::Precache()
 {
-    // Flag this entity for removal if it's not the actual world entity.
-    if( World != this )
-    {
-        UTIL_Remove( this );
-        return;
-    }
-
     // Load the config files, which will initialize the map state as needed
     WorldConfig MapConfiguration{
         .cfg = m_MapConfig,

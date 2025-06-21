@@ -34,7 +34,7 @@ class CMonsterMaker : public CBaseMonster
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     bool IsMonster() override { return false; }
@@ -139,7 +139,7 @@ bool CMonsterMaker::KeyValue( KeyValueData* pkvd )
     return CBaseMonster::KeyValue( pkvd );
 }
 
-bool CMonsterMaker::Spawn()
+SpawnAction CMonsterMaker::Spawn()
 {
     pev->solid = SOLID_NOT;
 
@@ -185,7 +185,7 @@ bool CMonsterMaker::Spawn()
 
     m_flGround = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CMonsterMaker::Precache()

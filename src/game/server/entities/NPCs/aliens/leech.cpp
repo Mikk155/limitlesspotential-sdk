@@ -41,7 +41,7 @@ class CLeech : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     void SwimThink();
@@ -156,7 +156,7 @@ void CLeech::OnCreate()
     // pev->model = MAKE_STRING("models/icky.mdl");
 }
 
-bool CLeech::Spawn()
+SpawnAction CLeech::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) );
@@ -186,7 +186,7 @@ bool CLeech::Spawn()
     SetState( MONSTERSTATE_IDLE );
     m_stateTime = gpGlobals->time + RANDOM_FLOAT( 1, 5 );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CLeech::Activate()

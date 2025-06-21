@@ -82,7 +82,7 @@ void CElectrifiedWire::Precache()
     m_iLightningSprite = PrecacheModel( "sprites/lgtning.spr" );
 }
 
-bool CElectrifiedWire::Spawn()
+SpawnAction CElectrifiedWire::Spawn()
 {
     BaseClass::Spawn();
 
@@ -119,7 +119,7 @@ bool CElectrifiedWire::Spawn()
 
     SetSoundAllowed( false );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CElectrifiedWire::Think()

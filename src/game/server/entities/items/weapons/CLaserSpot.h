@@ -23,7 +23,7 @@ class CLaserSpot : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     int ObjectCaps() override { return FCAP_DONT_SAVE; }

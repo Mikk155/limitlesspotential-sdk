@@ -39,7 +39,7 @@ class CSprite : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     int ObjectCaps() override
@@ -111,7 +111,7 @@ class CBeam : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     int ObjectCaps() override
     {
@@ -205,7 +205,7 @@ class CLaser : public CBeam
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 

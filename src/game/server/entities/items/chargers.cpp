@@ -37,7 +37,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Activate() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
@@ -135,7 +135,7 @@ void CBaseCharger::Precache()
     PrecacheSound( m_DispensingSound );
 }
 
-bool CBaseCharger::Spawn()
+SpawnAction CBaseCharger::Spawn()
 {
     Precache();
 
@@ -148,7 +148,7 @@ bool CBaseCharger::Spawn()
     m_Juice = m_TotalJuice;
     pev->frame = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBaseCharger::Activate()
@@ -297,7 +297,7 @@ void CBaseCharger::CheckIfOutOfCharge( bool fireTargets )
 class CWallHealth : public CBaseCharger
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void OnCreate() override
     {
@@ -315,11 +315,11 @@ protected:
     }
 };
 
-bool CWallHealth::Spawn()
+SpawnAction CWallHealth::Spawn()
 {
     m_TotalJuice = g_cfg.GetValue<float>( "healthcharger"sv, 25, this );
     m_RechargeDelay = g_pGameRules->HealthChargerRechargeTime();
-    return true;
+    return SpawnAction::Spawn;
 }
 
 LINK_ENTITY_TO_CLASS( func_healthcharger, CWallHealth );
@@ -327,7 +327,7 @@ LINK_ENTITY_TO_CLASS( func_healthcharger, CWallHealth );
 class CRecharge : public CBaseCharger
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void OnCreate() override
     {
@@ -355,11 +355,11 @@ protected:
     }
 };
 
-bool CRecharge::Spawn()
+SpawnAction CRecharge::Spawn()
 {
     m_TotalJuice = g_cfg.GetValue<float>( "suitcharger"sv, 35, this );
     m_RechargeDelay = g_pGameRules->HEVChargerRechargeTime();
-    return true;
+    return SpawnAction::Spawn;
 }
 
 LINK_ENTITY_TO_CLASS( func_recharge, CRecharge );

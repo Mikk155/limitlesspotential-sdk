@@ -38,7 +38,7 @@ class CIchthyosaur : public CFlyingMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
@@ -418,7 +418,7 @@ void CIchthyosaur::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CIchthyosaur::Spawn()
+SpawnAction CIchthyosaur::Spawn()
 {
     Precache();
 
@@ -458,7 +458,7 @@ bool CIchthyosaur::Spawn()
     pev->velocity = m_flightSpeed * Forward.Normalize();
     m_SaveVelocity = pev->velocity;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CIchthyosaur::Precache()

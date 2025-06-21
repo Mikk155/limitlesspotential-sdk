@@ -1538,7 +1538,7 @@ bool CNodeEnt::KeyValue( KeyValueData* pkvd )
 
 //=========================================================
 //=========================================================
-bool CNodeEnt::Spawn()
+SpawnAction CNodeEnt::Spawn()
 {
     pev->movetype = MOVETYPE_NONE;
     pev->solid = SOLID_NOT; // always solid_not
@@ -1546,7 +1546,7 @@ bool CNodeEnt::Spawn()
     // graph loaded from disk, so discard all these node ents as soon as they spawn
     if( 0 != WorldGraph.m_fGraphPresent )
     {
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     if( WorldGraph.m_cNodes == 0 )
@@ -1558,8 +1558,7 @@ bool CNodeEnt::Spawn()
     if( WorldGraph.m_cNodes >= MAX_NODES )
     {
         CGraph::Logger->error( "cNodes >= MAX_NODES" );
-        REMOVE_ENTITY( edict() );
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_vecOriginPeek =
@@ -1567,16 +1566,10 @@ bool CNodeEnt::Spawn()
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_flHintYaw = pev->angles.y;
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_sHintType = m_sHintType;
     WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_sHintActivity = m_sHintActivity;
-
-    if( ClassnameIs( "info_node_air" ) )
-        WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_afNodeInfo = bits_NODE_AIR;
-    else
-        WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_afNodeInfo = 0;
-
+    WorldGraph.m_pNodes[WorldGraph.m_cNodes].m_afNodeInfo = ( ClassnameIs( "info_node_air" ) ? bits_NODE_AIR : 0 );
     WorldGraph.m_cNodes++;
 
-    REMOVE_ENTITY( edict() );
-    return false; // Should we really be aware if this failed?
+    return SpawnAction::RemoveNow; // Should we really be aware if this failed?
 }
 
 //=========================================================
@@ -3441,7 +3434,7 @@ class CNodeViewer : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     int m_iBaseNode;
     int m_iDraw;
@@ -3466,12 +3459,12 @@ LINK_ENTITY_TO_CLASS( node_viewer_human, CNodeViewer );
 LINK_ENTITY_TO_CLASS( node_viewer_fly, CNodeViewer );
 LINK_ENTITY_TO_CLASS( node_viewer_large, CNodeViewer );
 
-bool CNodeViewer::Spawn()
+SpawnAction CNodeViewer::Spawn()
 {
     if( 0 == WorldGraph.m_fGraphPresent || 0 == WorldGraph.m_fGraphPointersSet )
     { // protect us in the case that the node graph isn't available or built
         CGraph::Logger->error( "Graph not ready!" );
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     if( ClassnameIs( "node_viewer_fly" ) )
@@ -3499,7 +3492,7 @@ bool CNodeViewer::Spawn()
     if( m_iBaseNode < 0 )
     {
         CGraph::Logger->debug( "No nearby node" );
-        return false;
+        return SpawnAction::DelayRemove;
     }
 
     m_nVisited = 0;
@@ -3538,7 +3531,7 @@ bool CNodeViewer::Spawn()
     SetThink( &CNodeViewer::DrawThink );
     pev->nextthink = gpGlobals->time;
 
-    return true;
+    return SpawnAction::HandledSpawn;
 }
 
 

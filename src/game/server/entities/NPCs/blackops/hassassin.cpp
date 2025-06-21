@@ -46,7 +46,7 @@ class CHAssassin : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;
@@ -240,7 +240,7 @@ void CHAssassin::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CHAssassin::Spawn()
+SpawnAction CHAssassin::Spawn()
 {
     Precache();
 
@@ -267,7 +267,7 @@ bool CHAssassin::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CHAssassin::Precache()

@@ -24,7 +24,7 @@ class CClientFog : public CBaseEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
 public:
     float m_Density = 0;

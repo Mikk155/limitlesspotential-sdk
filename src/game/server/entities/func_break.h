@@ -50,7 +50,7 @@ class CBreakable : public CBaseDelay
 
 public:
     // basic functions
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void BreakTouch( CBaseEntity* pOther );

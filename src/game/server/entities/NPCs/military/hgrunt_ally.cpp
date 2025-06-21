@@ -88,7 +88,7 @@ class CHGruntAlly : public CBaseHGruntAlly
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
     void Shoot( bool firstShotInBurst );
@@ -318,7 +318,7 @@ void CHGruntAlly::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CHGruntAlly::Spawn()
+SpawnAction CHGruntAlly::Spawn()
 {
     SpawnCore();
 
@@ -389,7 +389,7 @@ bool CHGruntAlly::Spawn()
         m_voicePitch = 90;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CHGruntAlly::Precache()
@@ -480,7 +480,7 @@ class CDeadHGruntAlly : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasHumanGibs() override { return true; }
 
@@ -522,7 +522,7 @@ bool CDeadHGruntAlly::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_human_grunt_ally_dead, CDeadHGruntAlly );
 
-bool CDeadHGruntAlly::Spawn()
+SpawnAction CDeadHGruntAlly::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -566,5 +566,5 @@ bool CDeadHGruntAlly::Spawn()
 
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }

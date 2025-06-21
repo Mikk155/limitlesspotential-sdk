@@ -23,7 +23,7 @@ class CAmbientDSPAuto : public CAmbientDSP
 
 public:
     void Think() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -164,7 +164,7 @@ void CAmbientDSPAuto::Think()
     pev->nextthink = gpGlobals->time + ( shouldThinkFast ? 0.25 : 0.75 );
 }
 
-bool CAmbientDSPAuto::Spawn()
+SpawnAction CAmbientDSPAuto::Spawn()
 {
     // spread think times
     pev->nextthink = gpGlobals->time + RANDOM_FLOAT( 0.0, 0.5 );

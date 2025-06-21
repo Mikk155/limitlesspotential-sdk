@@ -111,7 +111,7 @@ BEGIN_DATAMAP( CBreakable )
     DEFINE_FUNCTION( Die ),
 END_DATAMAP();
 
-bool CBreakable::Spawn()
+SpawnAction CBreakable::Spawn()
 {
     Precache();
 
@@ -139,7 +139,7 @@ bool CBreakable::Spawn()
     if( !IsBreakable() && pev->rendermode != kRenderNormal )
         pev->flags |= FL_WORLDBRUSH;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 const char* CBreakable::pSoundsWood[] =
@@ -760,7 +760,7 @@ class CPushable : public CBreakable
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void Touch( CBaseEntity* pOther ) override;
     void Move( CBaseEntity* pMover, bool push );
@@ -799,7 +799,7 @@ LINK_ENTITY_TO_CLASS( func_pushable, CPushable );
 
 const char* CPushable::m_soundNames[3] = {"debris/pushbox1.wav", "debris/pushbox2.wav", "debris/pushbox3.wav"};
 
-bool CPushable::Spawn()
+SpawnAction CPushable::Spawn()
 {
     if( ( pev->spawnflags & SF_PUSH_BREAKABLE ) != 0 )
         CBreakable::Spawn();
@@ -824,7 +824,7 @@ bool CPushable::Spawn()
     pev->skin = ( pev->skin * ( pev->maxs.x - pev->mins.x ) * ( pev->maxs.y - pev->mins.y ) ) * 0.0005;
     m_soundTime = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CPushable::Precache()

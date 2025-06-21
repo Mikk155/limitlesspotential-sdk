@@ -43,7 +43,7 @@ void CPenguin::Precache()
     m_usPenguinFire = g_engfuncs.pfnPrecacheEvent( 1, "events/penguinfire.sc" );
 }
 
-bool CPenguin::Spawn()
+SpawnAction CPenguin::Spawn()
 {
     CBasePlayerWeapon::Spawn();
 
@@ -51,7 +51,7 @@ bool CPenguin::Spawn()
     pev->animtime = gpGlobals->time;
     pev->framerate = 1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 bool CPenguin::Deploy()

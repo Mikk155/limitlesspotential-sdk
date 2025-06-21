@@ -32,7 +32,7 @@ class CGamePrecache : public CPointEntity
 
 public:
 
-    bool Spawn() override
+    SpawnAction Spawn() override
     {
         Precache();
         return BaseClass::Spawn();

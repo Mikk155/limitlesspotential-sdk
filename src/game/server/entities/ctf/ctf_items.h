@@ -33,7 +33,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void SetObjectCollisionBox() override
     {
@@ -80,7 +80,7 @@ public:
 
     void Precache() override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void RemoveEffect( CBasePlayer* pPlayer ) override;
 
@@ -98,7 +98,7 @@ public:
 
     bool MyTouch( CBasePlayer* pPlayer ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 class CItemLongJumpCTF : public CItemCTF
@@ -112,7 +112,7 @@ public:
 
     bool MyTouch( CBasePlayer* pPlayer ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 class CItemPortableHEVCTF : public CItemCTF
@@ -126,7 +126,7 @@ public:
 
     bool MyTouch( CBasePlayer* pPlayer ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 class CItemRegenerationCTF : public CItemCTF
@@ -140,5 +140,5 @@ public:
 
     bool MyTouch( CBasePlayer* pPlayer ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };

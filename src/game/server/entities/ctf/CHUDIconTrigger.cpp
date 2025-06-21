@@ -19,14 +19,14 @@
 
 LINK_ENTITY_TO_CLASS( ctf_hudicon, CHUDIconTrigger );
 
-bool CHUDIconTrigger::Spawn()
+SpawnAction CHUDIconTrigger::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     SetModel( STRING( pev->model ) );
     pev->movetype = MOVETYPE_NONE;
     m_fIsActive = false;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CHUDIconTrigger::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )

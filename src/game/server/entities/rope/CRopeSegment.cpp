@@ -44,7 +44,7 @@ void CRopeSegment::Precache()
     PrecacheSound( "items/grab_rope.wav" );
 }
 
-bool CRopeSegment::Spawn()
+SpawnAction CRopeSegment::Spawn()
 {
     Precache();
 
@@ -60,7 +60,7 @@ bool CRopeSegment::Spawn()
 
     pev->nextthink = gpGlobals->time + 0.5;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CRopeSegment::Think()

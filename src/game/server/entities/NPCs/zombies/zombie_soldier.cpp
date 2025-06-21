@@ -26,15 +26,14 @@ public:
         pev->model = MAKE_STRING( "models/zombie_soldier.mdl" );
     }
 
-    bool Spawn() override
+    SpawnAction Spawn() override
     {
-        if( !CZombie::Spawn() )
-            return false;
+        SpawnAction action = CZombie::Spawn();
 
-        if( pev->health < 1 )
+        if( action == SpawnAction::Spawn && pev->health < 1 )
             pev->health = g_cfg.GetValue<float>( "zombie_soldier_health"sv, 120, this );
 
-        return true;
+        return action;
     }
 protected:
     float GetOneSlashDamage() override { return g_cfg.GetValue<float>( "zombie_soldier_dmg_one_slash"sv, 20, this ); }
@@ -47,7 +46,7 @@ class CDeadZombieSoldier : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool HasAlienGibs() override { return true; }
 
@@ -83,7 +82,7 @@ bool CDeadZombieSoldier::KeyValue( KeyValueData* pkvd )
 
 LINK_ENTITY_TO_CLASS( monster_zombie_soldier_dead, CDeadZombieSoldier );
 
-bool CDeadZombieSoldier::Spawn()
+SpawnAction CDeadZombieSoldier::Spawn()
 {
     PrecacheModel( STRING( pev->model ) );
     SetModel( STRING( pev->model ) );
@@ -102,5 +101,5 @@ bool CDeadZombieSoldier::Spawn()
 
     MonsterInitDead();
 
-    return true;
+    return SpawnAction::Spawn;
 }

@@ -39,7 +39,7 @@ public:
     CTentacle();
 
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
 
@@ -247,7 +247,7 @@ void CTentacle::OnCreate()
     SetClassification( "alien_monster" );
 }
 
-bool CTentacle::Spawn()
+SpawnAction CTentacle::Spawn()
 {
     Precache();
 
@@ -297,7 +297,7 @@ bool CTentacle::Spawn()
     // SetThink( Test );
     SetOrigin( pev->origin );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTentacle::Precache()
@@ -1034,7 +1034,7 @@ class CTentacleMaw : public CBaseMonster
 {
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 };
 
@@ -1048,7 +1048,7 @@ void CTentacleMaw::OnCreate()
     pev->model = MAKE_STRING( "models/maw.mdl" );
 }
 
-bool CTentacleMaw::Spawn()
+SpawnAction CTentacleMaw::Spawn()
 {
     Precache();
     SetModel( STRING( pev->model ) );
@@ -1063,7 +1063,7 @@ bool CTentacleMaw::Spawn()
     pev->angles.x = 90;
     // ResetSequenceInfo( );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CTentacleMaw::Precache()

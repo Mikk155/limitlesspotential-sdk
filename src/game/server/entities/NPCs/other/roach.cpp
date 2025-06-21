@@ -32,7 +32,7 @@ class CRoach : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void MonsterThink() override;
@@ -114,7 +114,7 @@ void CRoach::SetYawSpeed()
     pev->yaw_speed = ys;
 }
 
-bool CRoach::Spawn()
+SpawnAction CRoach::Spawn()
 {
     Precache();
 
@@ -140,7 +140,7 @@ bool CRoach::Spawn()
     m_iMode = ROACH_IDLE;
     m_flNextSmellTime = gpGlobals->time;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CRoach::Precache()

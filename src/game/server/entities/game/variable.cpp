@@ -30,7 +30,7 @@ class CGameVariable : public CPointEntity
     DECLARE_DATAMAP();
 
     public:
-        bool Spawn() override
+        SpawnAction Spawn() override
         {
             if( FBitSet( pev->spawnflags, SF_GAME_VARIABLE_START_ON ) )
             {

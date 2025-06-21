@@ -46,10 +46,9 @@ public:
         m_SentenceReplacement = &RecruitSentenceReplacement;
     }
 
-    bool Spawn() override
+    SpawnAction Spawn() override
     {
-        CBarney::Spawn();
-        return true;
+        return CBarney::Spawn();
     }
 
     void TalkInit() override

@@ -36,7 +36,7 @@ void CSatchelCharge::Deactivate()
     UTIL_Remove( this );
 }
 
-bool CSatchelCharge::Spawn()
+SpawnAction CSatchelCharge::Spawn()
 {
     Precache();
     // motor
@@ -60,7 +60,7 @@ bool CSatchelCharge::Spawn()
     // ResetSequenceInfo( );
     pev->sequence = 1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CSatchelCharge::SatchelSlide( CBaseEntity* pOther )

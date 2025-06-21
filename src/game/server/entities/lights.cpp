@@ -26,7 +26,7 @@ class CLight : public CPointEntity
 
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
 private:
@@ -62,11 +62,11 @@ bool CLight::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-bool CLight::Spawn()
+SpawnAction CLight::Spawn()
 {
     if( FStringNull( pev->targetname ) )
     {
-        return false;
+        return SpawnAction::RemoveNow;
     }
 
     if( m_iStyle >= 32 )
@@ -80,7 +80,7 @@ bool CLight::Spawn()
             LIGHT_STYLE( m_iStyle, "m" );
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CLight::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -115,7 +115,7 @@ class CEnvLight : public CLight
 {
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( light_environment, CEnvLight );
@@ -156,7 +156,7 @@ bool CEnvLight::KeyValue( KeyValueData* pkvd )
     return CLight::KeyValue( pkvd );
 }
 
-bool CEnvLight::Spawn()
+SpawnAction CEnvLight::Spawn()
 {
     char szVector[64];
     UTIL_MakeAimVectors( pev->angles );

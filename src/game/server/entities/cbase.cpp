@@ -26,67 +26,76 @@ static void SetObjectCollisionBox( entvars_t* pev );
 
 int DispatchSpawn( edict_t* pent )
 {
+    // Initialize these or entities who don't link to the world won't have anything in here
+    pent->v.absmin = pent->v.origin - Vector( 1, 1, 1 );
+    pent->v.absmax = pent->v.origin + Vector( 1, 1, 1 );
+
     CBaseEntity* entity = (CBaseEntity*)GET_PRIVATE( pent );
 
-    if( entity != nullptr )
+    if( entity == nullptr )
+        return -1;
+
+    // Removing these will cause all sorts of problems.
+    if( entity == CBaseEntity::World || entity->IsPlayer() )
     {
-        if( !entity->ShouldAppearByFlags( entity->m_AppearFlagNotIn, appearflags::NotIn )
-        ||  !entity->ShouldAppearByFlags( entity->m_AppearFlagOnlyIn, appearflags::OnlyIn ) ) {
-            UTIL_Remove( entity );
-            return -1;
-        }
+        g_GameMode->OnEntityPreSpawn( entity );
+        entity->Spawn();
+        g_GameMode->OnEntityPostSpawn( entity );
+        return 0;
+    }
 
-        // Initialize these or entities who don't link to the world won't have anything in here
-        entity->pev->absmin = entity->pev->origin - Vector( 1, 1, 1 );
-        entity->pev->absmax = entity->pev->origin + Vector( 1, 1, 1 );
-
-        if( !entity->Spawn() )
-        {
-            REMOVE_ENTITY( pent );
-            return -1;
-        }
-
-        if( g_pGameRules && !g_pGameRules->IsAllowedToSpawn( entity ) )
-        {
-            return -1; // return that this entity should be deleted
-        }
-
+    auto EntityHasSpawned = [&]( SpawnAction code ) -> int
+    {
         entity = (CBaseEntity*)GET_PRIVATE( pent );
 
-        if( !entity )
-            return -1;
-
-        if( ( entity->pev->flags & FL_KILLME ) != 0 )
+        if( entity == nullptr )
         {
+            if( !FNullEnt(pent) )
+                CBaseEntity::Logger->error( "Unable to handle Spawn for entity {}", STRING( pent->v.classname ) );
             return -1;
         }
 
-        // Handle global stuff here
-        if( !FStringNull( entity->pev->globalname ) )
+        switch( code )
         {
-            const globalentity_t* pGlobal = gGlobalState.EntityFromTable( entity->pev->globalname );
-
-            if( pGlobal )
+            case SpawnAction::DelayRemove:
             {
-                // Already dead? delete
-                if( pGlobal->state == GLOBAL_DEAD )
-                {
-                    return -1;
-                }
-                else if( !FStrEq( STRING( gpGlobals->mapname ), pGlobal->levelName ) )
-                {
-                    entity->MakeDormant(); // Hasn't been moved to this level yet, wait but stay alive
-                                            // In this level & not dead, continue on as normal
-                }
+                entity->UpdateOnRemove();
+                entity->pev->flags |= FL_KILLME;
+                entity->pev->targetname = string_t::Null;
+                return -1;
             }
-            else
+            case SpawnAction::RemoveNow:
             {
-                // Spawned entities default to 'On'
-                gGlobalState.EntityAdd( entity->pev->globalname, gpGlobals->mapname, GLOBAL_ON );
-                // CBaseEntity::Logger->trace("Added global entity {} ({})", STRING(entity->pev->classname), STRING(entity->pev->globalname));
+                g_engfuncs.pfnRemoveEntity( pent );
+                return -1;
+            }
+            case SpawnAction::HandledRemoval:
+            {
+                return -1;
+            }
+            case SpawnAction::HandledSpawn:
+            {
+                return 0;
+            }
+            case SpawnAction::Spawn:
+            default:
+            {
+                return 1;
             }
         }
-    }
+    };
+
+    // Whatever code != SpawnAction::Spawn is either -1 for removal or 0 for Spawn handled
+    if( int code = EntityHasSpawned( g_GameMode->OnEntityPreSpawn( entity ) ); code != 1 )
+        return code;
+    if( int code = EntityHasSpawned( entity->m_appearflags ); code != 1 )
+        return code;
+    if( int code = EntityHasSpawned( entity->Spawn() ); code != 1 )
+        return code;
+    if( int code = EntityHasSpawned( entity->GlobalState() ); code != 1 )
+        return code;
+    if( int code = EntityHasSpawned( g_GameMode->OnEntityPostSpawn( entity ) ); code != 1 )
+        return code;
 
     return 0;
 }
@@ -613,20 +622,7 @@ bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
     }
     else if( strstr( pkvd->szKeyName, "appearflag_" ) != nullptr )
     {
-        switch( std::max( -1, std::min( 1, atoi( pkvd->szValue ) ) ) )
-        {
-            case appearflags::NotIn:
-            {
-                m_AppearFlagNotIn.push_back( std::move( std::string( pkvd->szKeyName ) ) );
-                return true;
-            }
-            case appearflags::OnlyIn:
-            {
-                m_AppearFlagOnlyIn.push_back( std::move( std::string( pkvd->szKeyName ) ) );
-                return true;
-            }
-        }
-        return false;
+        return AppearFlags(pkvd->szKeyName, atoi(pkvd->szValue));
     }
     else if( strstr( pkvd->szKeyName, "cfg_" ) != nullptr )
     {
@@ -1049,49 +1045,98 @@ CBaseEntity* CBaseEntity::AllocNewActivator( CBaseEntity* pActivator, CBaseEntit
     return failback;
 }
 
-bool CBaseEntity::ShouldAppearByFlags( std::vector<std::string>& keynames, appearflags flags )
+SpawnAction CBaseEntity::GlobalState()
 {
-    // You can add more rules here
-    std::unordered_map<std::string_view, bool> condition_flags = {
-        { "appearflag_multiplayer"sv, g_GameMode->IsMultiplayer() },
-        { "appearflag_cooperative"sv, g_GameMode->IsGamemode( "coop"sv ) },
-        { "appearflag_skilleasy"sv, g_cfg.GetSkillLevel() == SkillLevel::Easy },
-        { "appearflag_skillmedium"sv, g_cfg.GetSkillLevel() == SkillLevel::Medium },
-        { "appearflag_skillhard"sv, g_cfg.GetSkillLevel() == SkillLevel::Hard },
-        { "appearflag_deathmatch"sv, g_GameMode->IsGamemode( "deathmatch"sv ) },
-        { "appearflag_teamplay"sv, g_GameMode->IsGamemode( "teamplay"sv ) },
-        { "appearflag_ctf"sv, g_GameMode->IsGamemode( "ctf"sv ) },
-        { "appearflag_dedicated"sv, IS_DEDICATED_SERVER() }
-    };
-
-    bool should_appear = true;
-
-    for( std::string& variable : keynames )
+    // Handle global stuff here
+    if( !FStringNull( pev->globalname ) )
     {
-        if( condition_flags.find( variable ) != condition_flags.end() )
+        const globalentity_t* pGlobal = gGlobalState.EntityFromTable( pev->globalname );
+
+        if( pGlobal )
         {
-            if( flags == appearflags::NotIn )
+            // Already dead? delete
+            if( pGlobal->state == GLOBAL_DEAD )
             {
-                if( !condition_flags[ variable ] )
-                {
-                    CBaseEntity::Logger->debug( "Entity got appearflags \"Not in\" for key \"{}\"", variable );
-                    should_appear = false;
-                    break;
-                }
+                return SpawnAction::RemoveNow;
             }
-            else if( flags == appearflags::OnlyIn )
+            else if( !FStrEq( STRING( gpGlobals->mapname ), pGlobal->levelName ) )
             {
-                if( condition_flags[ variable ] )
-                {
-                    CBaseEntity::Logger->debug( "Entity got appearflags \"Only in\" for key \"{}\"", variable );
-                    should_appear = false;
-                    break;
-                }
+                MakeDormant(); // Hasn't been moved to this level yet, wait but stay alive
+                                        // In this level & not dead, continue on as normal
             }
+        }
+        else
+        {
+            // Spawned entities default to 'On'
+            gGlobalState.EntityAdd( pev->globalname, gpGlobals->mapname, GLOBAL_ON );
+            // CBaseEntity::Logger->trace("Added global entity {} ({})", STRING(entity->pev->classname), STRING(entity->pev->globalname));
         }
     }
 
-    keynames.clear();
+    return SpawnAction::Spawn;
+}
 
-    return should_appear;
+bool CBaseEntity::AppearFlags( const char* keyname, int value )
+{
+    value = std::max( -1, std::min( 1, value ) );
+
+    auto ShouldAppear = [&]( bool condition ) -> bool
+    {
+        switch( value )
+        {
+            case -1: // Does not appears when condition is true
+            {
+                if( condition ) {
+                    m_appearflags = SpawnAction::RemoveNow;
+                    CBaseEntity::Logger->debug( "Entity got appearflags \"Not in\" for key \"{}\"", keyname );
+                    return false;
+                }
+                break;
+            }
+            case 1: // Only appears when condition is true
+            {
+                if( !condition ) {
+                    m_appearflags = SpawnAction::RemoveNow;
+                    CBaseEntity::Logger->debug( "Entity got appearflags \"Only in\" for key \"{}\"", keyname );
+                    return false;
+                }
+                break;
+            }
+        }
+
+        return true;
+    };
+
+    // You can add more appearance conditions here
+    if( FStrEq( keyname, "appearflag_multiplayer" ) ) {
+        ShouldAppear( g_GameMode->IsMultiplayer() );
+    }
+    else if( FStrEq( keyname, "appearflag_cooperative" ) ) {
+        ShouldAppear( g_GameMode->IsGamemode( "coop"sv ) );
+    }
+    else if( FStrEq( keyname, "appearflag_skilleasy" ) ) {
+        ShouldAppear( g_cfg.GetSkillLevel() == SkillLevel::Easy );
+    }
+    else if( FStrEq( keyname, "appearflag_skillmedium" ) ) {
+        ShouldAppear( g_cfg.GetSkillLevel() == SkillLevel::Medium );
+    }
+    else if( FStrEq( keyname, "appearflag_skillhard" ) ) {
+        ShouldAppear( g_cfg.GetSkillLevel() == SkillLevel::Hard );
+    }
+    else if( FStrEq( keyname, "appearflag_deathmatch" ) ) {
+        ShouldAppear( g_GameMode->IsGamemode( "deathmatch"sv ) );
+    }
+    else if( FStrEq( keyname, "appearflag_teamplay" ) ) {
+        ShouldAppear( g_GameMode->IsGamemode( "teamplay"sv ) );
+    }
+    else if( FStrEq( keyname, "appearflag_ctf" ) ) {
+        ShouldAppear( g_GameMode->IsGamemode( "ctf"sv ) );
+    }
+    else if( FStrEq( keyname, "appearflag_dedicated" ) ) {
+        ShouldAppear( IS_DEDICATED_SERVER() );
+    }
+    else {
+        return false;
+    }
+    return true;
 }

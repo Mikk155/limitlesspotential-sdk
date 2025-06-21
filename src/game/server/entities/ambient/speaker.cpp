@@ -26,7 +26,7 @@ class CAmbientSpeaker : public CAmbient
 
 public:
     void Think() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -53,12 +53,12 @@ BEGIN_DATAMAP( CAmbientSpeaker )
     
 END_DATAMAP();
 
-bool CAmbientSpeaker::Spawn()
+SpawnAction CAmbientSpeaker::Spawn()
 {
     if( FStringNull( pev->message ) || strlen( STRING( pev->message ) ) < 1 )
     {
         Logger->error( "SPEAKER with no Level/Sentence! at: {}", pev->origin.MakeString() );
-        return false;
+        return SpawnAction::DelayRemove;
     }
 
     pev->nextthink = 0.0;

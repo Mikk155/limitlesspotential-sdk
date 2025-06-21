@@ -18,7 +18,7 @@
 class CTFDetect : public CBaseEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     bool KeyValue( KeyValueData* pkvd ) override;
 

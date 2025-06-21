@@ -32,7 +32,7 @@ class CGenericMonster : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     void HandleAnimEvent( MonsterEvent_t* pEvent ) override;
@@ -102,7 +102,7 @@ int CGenericMonster::ISoundMask()
     return bits_SOUND_NONE;
 }
 
-bool CGenericMonster::Spawn()
+SpawnAction CGenericMonster::Spawn()
 {
     Precache();
 
@@ -131,7 +131,7 @@ bool CGenericMonster::Spawn()
     m_flCurrentYaw = 0;
     m_flIdealYaw = 0;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CGenericMonster::Precache()

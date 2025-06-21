@@ -52,7 +52,7 @@ CRpgRocket* CRpgRocket::CreateRpgRocket( Vector vecOrigin, Vector vecAngles, CBa
     return pRocket;
 }
 
-bool CRpgRocket::Spawn()
+SpawnAction CRpgRocket::Spawn()
 {
     Precache();
     // motor
@@ -77,7 +77,7 @@ bool CRpgRocket::Spawn()
 
     pev->dmg = g_cfg.GetValue<float>( "plr_rpg"sv, 100, this );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CRpgRocket::RocketTouch( CBaseEntity* pOther )

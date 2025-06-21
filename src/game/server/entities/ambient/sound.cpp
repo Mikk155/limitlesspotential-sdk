@@ -24,7 +24,7 @@ class CAmbientSound : public CAmbient
     DECLARE_DATAMAP();
 
     public:
-        bool Spawn() override;
+        SpawnAction Spawn() override;
         bool KeyValue( KeyValueData* pkvd ) override;
         void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -85,7 +85,7 @@ void CAmbientSound::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
     BaseClass::Use( pActivator, pCaller, useType, value );
 }
 
-bool CAmbientSound::Spawn()
+SpawnAction CAmbientSound::Spawn()
 {
     Precache();
     return BaseClass::Spawn();

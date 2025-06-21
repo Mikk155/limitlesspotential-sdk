@@ -31,7 +31,7 @@ class CTFGoal : public CBaseAnimating
 public:
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void SetObjectCollisionBox() override;
 
@@ -53,7 +53,7 @@ class CTFGoalBase : public CTFGoal
 public:
     void BaseThink();
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void TurnOnLight( CBasePlayer* pPlayer );
 };
@@ -74,7 +74,7 @@ public:
 
     void goal_item_dropthink();
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void ReturnFlagThink();
 

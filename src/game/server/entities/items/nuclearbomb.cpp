@@ -21,7 +21,7 @@ public:
 
     void OnCreate() override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void SetNuclearBombButton( bool fOn );
 };
@@ -40,7 +40,7 @@ void COFNuclearBombButton::Precache()
     PrecacheModel( STRING( pev->model ) );
 }
 
-bool COFNuclearBombButton::Spawn()
+SpawnAction COFNuclearBombButton::Spawn()
 {
     Precache();
 
@@ -57,14 +57,14 @@ bool COFNuclearBombButton::Spawn()
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
         CBaseEntity::Logger->error( "Nuclear Bomb Button fell out of level at {}", pev->origin.MakeString() );
-        return false;
+        return SpawnAction::DelayRemove;
     }
     else
     {
         pev->skin = 0;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFNuclearBombButton::SetNuclearBombButton( bool fOn )
@@ -82,7 +82,7 @@ public:
 
     void OnCreate() override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void NuclearBombTimerThink();
 
@@ -111,7 +111,7 @@ void COFNuclearBombTimer::Precache()
     PrecacheSound( "common/nuke_ticking.wav" );
 }
 
-bool COFNuclearBombTimer::Spawn()
+SpawnAction COFNuclearBombTimer::Spawn()
 {
     Precache();
 
@@ -128,7 +128,7 @@ bool COFNuclearBombTimer::Spawn()
     if( DROP_TO_FLOOR( edict() ) == 0 )
     {
         CBaseEntity::Logger->error( "Nuclear Bomb Timer fell out of level at {}", pev->origin.MakeString() );
-        UTIL_Remove( this );
+        return SpawnAction::DelayRemove;
     }
     else
     {
@@ -137,7 +137,7 @@ bool COFNuclearBombTimer::Spawn()
         bBombSoundPlaying = true;
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFNuclearBombTimer::NuclearBombTimerThink()
@@ -190,7 +190,7 @@ public:
     bool KeyValue( KeyValueData* pkvd ) override;
     void OnCreate() override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
@@ -261,7 +261,7 @@ void COFNuclearBomb::Precache()
     m_pButton->pev->skin = static_cast<int>( m_fOn );
 }
 
-bool COFNuclearBomb::Spawn()
+SpawnAction COFNuclearBomb::Spawn()
 {
     Precache();
 
@@ -282,9 +282,9 @@ bool COFNuclearBomb::Spawn()
     else
     {
         CBaseEntity::Logger->error( "Nuclear Bomb fell out of level at {}", pev->origin.MakeString() );
-        return false;
+        return SpawnAction::DelayRemove;
     }
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void COFNuclearBomb::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )

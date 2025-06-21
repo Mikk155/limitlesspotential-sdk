@@ -88,7 +88,7 @@ class CScientist : public CTalkMonster
 public:
     void OnCreate() override;
     bool KeyValue( KeyValueData* pkvd ) override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     bool HasHumanGibs() override { return true; }
@@ -140,7 +140,7 @@ class CSittingScientist : public CScientist // kdb: changed from public CBaseMon
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     void SittingThink();

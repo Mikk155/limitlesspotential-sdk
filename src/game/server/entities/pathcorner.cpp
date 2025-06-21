@@ -22,7 +22,7 @@ class CPathCorner : public CPointEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     float GetDelay() override { return m_flWait; }
 
@@ -47,11 +47,11 @@ bool CPathCorner::KeyValue( KeyValueData* pkvd )
     return CPointEntity::KeyValue( pkvd );
 }
 
-bool CPathCorner::Spawn()
+SpawnAction CPathCorner::Spawn()
 {
     ASSERTSZ( !FStringNull( pev->targetname ), "path_corner without a targetname" );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 BEGIN_DATAMAP( CPathTrack )
@@ -142,7 +142,7 @@ void CPathTrack::Link()
     }
 }
 
-bool CPathTrack::Spawn()
+SpawnAction CPathTrack::Spawn()
 {
     pev->solid = SOLID_TRIGGER;
     SetSize( Vector( -8, -8, -8 ), Vector( 8, 8, 8 ) );
@@ -155,7 +155,7 @@ bool CPathTrack::Spawn()
     pev->nextthink = gpGlobals->time + 0.5;
 #endif
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CPathTrack::Activate()

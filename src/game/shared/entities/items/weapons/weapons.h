@@ -42,7 +42,7 @@ class CGrenade : public CBaseMonster
 public:
     void OnCreate() override;
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool IsMonster() override { return false; }
 
     enum SATCHELCODE
@@ -250,7 +250,7 @@ public:
 
     bool KeyValue( KeyValueData* pkvd ) override;
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     void LinkWeaponInfo();
 
@@ -506,7 +506,7 @@ public:
         PrecacheSound( DefaultItemPickupSound );
     }
 
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     ItemType GetType() const override { return ItemType::Consumable; }
 

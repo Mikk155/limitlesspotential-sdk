@@ -45,7 +45,7 @@ class CPitdroneSpike : public CBaseEntity
 
 public:
     void Precache() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 
     static void Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVelocity, Vector vecAngles );
     void SpikeTouch( CBaseEntity* pOther );
@@ -72,7 +72,7 @@ void CPitdroneSpike::Precache()
     iSpikeTrail = PrecacheModel( "sprites/spike_trail.spr" );
 }
 
-bool CPitdroneSpike::Spawn()
+SpawnAction CPitdroneSpike::Spawn()
 {
     pev->movetype = MOVETYPE_FLY;
 
@@ -89,7 +89,7 @@ bool CPitdroneSpike::Spawn()
 
     m_maxFrame = (float)MODEL_FRAMES( pev->modelindex ) - 1;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CPitdroneSpike::Shoot( CBaseEntity* owner, Vector vecStart, Vector vecVelocity, Vector vecAngles )
@@ -212,7 +212,7 @@ class CPitdrone : public CBaseMonster
 
 public:
     void OnCreate() override;
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     void SetYawSpeed() override;
     int ISoundMask() override;
@@ -604,7 +604,7 @@ void CPitdrone::HandleAnimEvent( MonsterEvent_t* pEvent )
     }
 }
 
-bool CPitdrone::Spawn()
+SpawnAction CPitdrone::Spawn()
 {
     Precache();
 
@@ -646,7 +646,7 @@ bool CPitdrone::Spawn()
 
     MonsterInit();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CPitdrone::Precache()

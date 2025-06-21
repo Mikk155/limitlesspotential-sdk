@@ -45,7 +45,7 @@ bool CClientFog::KeyValue( KeyValueData* pkvd )
     return BaseClass::KeyValue( pkvd );
 }
 
-bool CClientFog::Spawn()
+SpawnAction CClientFog::Spawn()
 {
     // Not really needed, perhaps fog was once a brush entity?
     pev->movetype = MOVETYPE_NOCLIP;
@@ -53,5 +53,5 @@ bool CClientFog::Spawn()
     pev->renderamt = 0;
     pev->rendermode = kRenderTransTexture;
 
-    return true;
+    return SpawnAction::Spawn;
 }

@@ -25,7 +25,7 @@ class CBaseDoor : public CBaseToggle
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
@@ -249,7 +249,7 @@ LINK_ENTITY_TO_CLASS( func_door, CBaseDoor );
  */
 LINK_ENTITY_TO_CLASS( func_water, CBaseDoor );
 
-bool CBaseDoor::Spawn()
+SpawnAction CBaseDoor::Spawn()
 {
     Precache();
     SetMovedir( this );
@@ -295,7 +295,7 @@ bool CBaseDoor::Spawn()
     else // touchable button
         SetTouch( &CBaseDoor::DoorTouch );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CBaseDoor::Precache()
@@ -591,12 +591,12 @@ void CBaseDoor::Blocked( CBaseEntity* pOther )
 class CRotDoor : public CBaseDoor
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( func_door_rotating, CRotDoor );
 
-bool CRotDoor::Spawn()
+SpawnAction CRotDoor::Spawn()
 {
     Precache();
     // set the axis of rotation
@@ -644,7 +644,7 @@ bool CRotDoor::Spawn()
     else // touchable button
         SetTouch( &CRotDoor::DoorTouch );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 class CMomentaryDoor : public CBaseToggle
@@ -653,7 +653,7 @@ class CMomentaryDoor : public CBaseToggle
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     bool KeyValue( KeyValueData* pkvd ) override;
@@ -679,7 +679,7 @@ BEGIN_DATAMAP( CMomentaryDoor )
     DEFINE_FUNCTION( StopMoveSound ),
 END_DATAMAP();
 
-bool CMomentaryDoor::Spawn()
+SpawnAction CMomentaryDoor::Spawn()
 {
     SetMovedir( this );
 
@@ -709,7 +709,7 @@ bool CMomentaryDoor::Spawn()
 
     Precache();
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CMomentaryDoor::Precache()

@@ -191,9 +191,22 @@ public:
      * @param index Target player index. if 0 = all players.
      *
      * @param color RGB Color, if not set then restore to client's default.
-     * 
      */
-    void SetClientHUDColor( int elements = HUDElements::All, int index = 0, std::optional<RGB24> color = std::nullopt );
+    virtual void SetClientHUDColor( int elements = HUDElements::All, int index = 0, std::optional<RGB24> color = std::nullopt );
+
+    /**
+     * @brief A entity is about to spawn
+     *
+     * CLIENT: No effect.
+     */
+    virtual SpawnAction OnEntityPreSpawn( CBaseEntity* entity );
+
+    /**
+     * @brief A entity has already spawned
+     *
+     * CLIENT: No effect.
+     */
+    virtual SpawnAction OnEntityPostSpawn( CBaseEntity* entity );
 };
 
 using GameModeFactoryEntry = std::pair<const char*, std::function<GM_Base*()>>;

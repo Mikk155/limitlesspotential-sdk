@@ -33,7 +33,7 @@
 class CFuncWall : public CBaseEntity
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
 
     // Bmodels don't go across transitions
@@ -42,7 +42,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_wall, CFuncWall );
 
-bool CFuncWall::Spawn()
+SpawnAction CFuncWall::Spawn()
 {
     pev->angles = g_vecZero;
     pev->movetype = MOVETYPE_PUSH; // so it doesn't get pushed by anything
@@ -52,7 +52,7 @@ bool CFuncWall::Spawn()
     // If it can't move/go away, it's really part of the world
     pev->flags |= FL_WORLDBRUSH;
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncWall::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
@@ -66,7 +66,7 @@ void CFuncWall::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
 class CFuncWallToggle : public CFuncWall
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void TurnOff();
     void TurnOn();
@@ -75,7 +75,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( func_wall_toggle, CFuncWallToggle );
 
-bool CFuncWallToggle::Spawn()
+SpawnAction CFuncWallToggle::Spawn()
 {
     CFuncWall::Spawn();
 
@@ -84,7 +84,7 @@ bool CFuncWallToggle::Spawn()
         TurnOff();
     }
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncWallToggle::TurnOff()
@@ -127,14 +127,14 @@ void CFuncWallToggle::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TY
 class CFuncConveyor : public CFuncWall
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value = {} ) override;
     void UpdateSpeed( float speed );
 };
 
 LINK_ENTITY_TO_CLASS( func_conveyor, CFuncConveyor );
 
-bool CFuncConveyor::Spawn()
+SpawnAction CFuncConveyor::Spawn()
 {
     SetMovedir( this );
     CFuncWall::Spawn();
@@ -154,7 +154,7 @@ bool CFuncConveyor::Spawn()
 
     UpdateSpeed( pev->speed );
 
-    return true;
+    return SpawnAction::Spawn;
 }
 
 // HACKHACK -- This is ugly, but encode the speed in the rendercolor to avoid adding more data to the network stream
@@ -184,7 +184,7 @@ void CFuncConveyor::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 class CFuncIllusionary : public CBaseToggle
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
@@ -202,7 +202,7 @@ bool CFuncIllusionary::KeyValue( KeyValueData* pkvd )
     return CBaseToggle::KeyValue( pkvd );
 }
 
-bool CFuncIllusionary::Spawn()
+SpawnAction CFuncIllusionary::Spawn()
 {
     pev->angles = g_vecZero;
     pev->movetype = MOVETYPE_NONE;
@@ -213,7 +213,7 @@ bool CFuncIllusionary::Spawn()
     // these entities after they have been moved to the client, or respawn them ala Quake
     // Perhaps we can do this in deathmatch only.
     //    g_engfuncs.pfnMakeStatic(edict());
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -225,19 +225,19 @@ bool CFuncIllusionary::Spawn()
 class CFuncMonsterClip : public CFuncWall
 {
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value ) override {} // Clear out func_wall's use function
 };
 
 LINK_ENTITY_TO_CLASS( func_clip, CFuncMonsterClip );
 
-bool CFuncMonsterClip::Spawn()
+SpawnAction CFuncMonsterClip::Spawn()
 {
     CFuncWall::Spawn();
     if( CVAR_GET_FLOAT( "showtriggers" ) == 0 )
         pev->effects = EF_NODRAW;
     pev->flags |= FL_MONSTERCLIP;
-    return true;
+    return SpawnAction::Spawn;
 }
 
 /**
@@ -253,7 +253,7 @@ class CFuncRotating : public CBaseEntity
 
 public:
     // basic functions
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     void Precache() override;
 
     /**
@@ -341,7 +341,7 @@ bool CFuncRotating::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-bool CFuncRotating::Spawn()
+SpawnAction CFuncRotating::Spawn()
 {
     // set final pitch.  Must not be PITCH_NORM, since we
     // plan on pitch shifting later.
@@ -423,7 +423,7 @@ bool CFuncRotating::Spawn()
     }
 
     Precache();
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CFuncRotating::Precache()
@@ -633,7 +633,7 @@ class CPendulum : public CBaseEntity
     DECLARE_DATAMAP();
 
 public:
-    bool Spawn() override;
+    SpawnAction Spawn() override;
     bool KeyValue( KeyValueData* pkvd ) override;
     void Swing();
     void PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value );
@@ -689,7 +689,7 @@ bool CPendulum::KeyValue( KeyValueData* pkvd )
     return CBaseEntity::KeyValue( pkvd );
 }
 
-bool CPendulum::Spawn()
+SpawnAction CPendulum::Spawn()
 {
     // set the axis of rotation
     CBaseToggle::AxisDir( this );
@@ -725,7 +725,7 @@ bool CPendulum::Spawn()
             SetTouch( &CPendulum::RopeTouch );
         }
     }
-    return true;
+    return SpawnAction::Spawn;
 }
 
 void CPendulum::PendulumUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, UseValue value )
