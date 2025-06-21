@@ -19,6 +19,9 @@ from utils.Logger import Logger;
 global gLogger;
 gLogger: Logger = Logger( "Global" );
 
+from datetime import datetime;
+timestamp_start = datetime.now();
+
 # Import builder events
 import build.events.MultiThreading; # MultiThreading should always be at index 0 for indexing.
 import build.events.CSharpTools;
@@ -133,6 +136,22 @@ def StartBuilding() -> bool:
 
 while StartBuilding() is False:
 
-    input( "Build failed. Press enter to retry" );
+    gLogger.error( "Build failed. Press enter to retry" );
 
-input( "Builder ended." );
+    input();
+
+timestamp_end = datetime.now();
+
+timestamp_delta = timestamp_end - timestamp_start;
+
+timestamp_secs = int( timestamp_delta.total_seconds() );
+
+elapsed_str = "<y>{:02}<>:<y>{:02}<>:<y>{:02}<>".format(
+    int( timestamp_secs // 3600 ),
+    int( ( timestamp_secs % 3600) // 60 ),
+    int( timestamp_secs % 60 )
+);
+
+gLogger.info( f"Builders ended in {elapsed_str}" );
+
+input();
