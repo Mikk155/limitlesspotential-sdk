@@ -1552,7 +1552,7 @@ int AddToFullPack( entity_state_t* state, int e, edict_t* ent, edict_t* host, in
             state->effects &= ~EF_BRIGHTLIGHT;
 
             // Set nocliping if players touching each others
-            if( !g_cfg.GetValue<bool>( "player_collision", true )
+            if( !g_cfg.GetValue<bool>( "player_collision"sv, true )
             && entity->IsPlayer()
             && pHost->IsAlive()
             && pHost->Intersects( entity )
@@ -2159,7 +2159,7 @@ int ShouldCollide( edict_t *pentTouched, edict_t *pentOther )
         if( touched != nullptr && toucher != nullptr )
         {
 //-TODO Need to check both players are efectivelly allies
-            if( !g_cfg.GetValue<bool>( "player_collision", true ) )
+            if( !g_cfg.GetValue<bool>( "player_collision"sv, true ) )
             {
                 auto IsPlayerWithProjectile = []( CBaseEntity* a, CBaseEntity* b ) -> bool
                 {

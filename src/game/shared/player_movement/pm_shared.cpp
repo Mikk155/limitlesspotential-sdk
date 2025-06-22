@@ -2919,7 +2919,7 @@ void PM_PlayerMove( qboolean server )
         return;
     }
 
-    if( !g_cfg.GetValue<bool>( "player_collision", true ) && pmove->dead == 0 && pmove->deadflag == DEAD_NO )
+    if( !g_cfg.GetValue<bool>( "player_collision"sv, true ) && pmove->dead == 0 && pmove->deadflag == DEAD_NO )
     {
         int numphysent = -1;
 
