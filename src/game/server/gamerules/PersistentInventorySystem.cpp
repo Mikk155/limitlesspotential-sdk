@@ -70,10 +70,10 @@ bool PersistentInventorySystem::TryApplyToPlayer( CBasePlayer* player )
         return false;
     }
 
-    const float gracePeriod = g_cfg.GetValue<float>( "coop_persistent_inventory_grace_period"sv, 0 );
+    const float gracePeriod = g_cfg.GetValue<float>( "coop_persistent_inventory_grace_period"sv );
 
     // Grace period ended, can't restore.
-    if( gracePeriod != -1 && gpGlobals->time >= ( player->m_ConnectTime + std::max( 0.f, gracePeriod ) ) )
+    if( static_cast<int>( gracePeriod ) != -1 && gpGlobals->time >= ( player->m_ConnectTime + std::max( 0.f, gracePeriod ) ) )
     {
         return false;
     }

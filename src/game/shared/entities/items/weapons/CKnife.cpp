@@ -182,7 +182,7 @@ bool CKnife::Swing( const bool bFirst )
 
 #endif
 
-        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) == 0 )
+        if( !g_cfg.GetValue<bool>( "chainsaw_melee"sv, false, this ) )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }
@@ -253,7 +253,7 @@ bool CKnife::Swing( const bool bFirst )
         pev->nextthink = gpGlobals->time + 0.2;
 #endif
 
-        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) != 0 )
+        if( g_cfg.GetValue<bool>( "chainsaw_melee"sv, false, this ) )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }

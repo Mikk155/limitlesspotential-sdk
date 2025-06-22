@@ -265,7 +265,7 @@ void CCrossbow::Holster()
 
 void CCrossbow::PrimaryAttack()
 {
-    if( m_pPlayer->m_iFOV != 0 && g_cfg.GetValue<float>( "crossbow_sniper_bolt"sv, 0 ) != 0 )
+    if( m_pPlayer->m_iFOV != 0 && g_cfg.GetValue<bool>( "crossbow_sniper_bolt"sv, false ) )
     {
         FireSniperBolt();
         return;

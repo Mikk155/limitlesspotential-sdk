@@ -195,7 +195,7 @@ void CGauss::SecondaryAttack()
             {
                 m_pPlayer->AdjustAmmoByIndex( m_iPrimaryAmmoType, -1 );
 
-                if( g_cfg.GetValue<float>( "gauss_fast_ammo_use"sv, 0 ) != 0 )
+                if( g_cfg.GetValue<bool>( "gauss_fast_ammo_use"sv, false ) )
                 {
                     m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.1;
                 }

@@ -649,7 +649,7 @@ void EV_FireShotGunSingle( event_args_t* args )
     EV_GetGunPosition( args, vecSrc, origin );
     vecAiming = forward;
 
-    if( g_cfg.GetValue<float>( "shotgun_single_tight_spread"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "shotgun_single_tight_spread"sv, false ) )
     {
         EV_HLDM_FireBullets( idx, forward, right, up, 4, vecSrc, vecAiming, 2048, BULLET_PLAYER_BUCKSHOT, 0,
             &g_tracerCount[idx - 1], VECTOR_CONE_DM_SHOTGUN.x, VECTOR_CONE_DM_SHOTGUN.y );

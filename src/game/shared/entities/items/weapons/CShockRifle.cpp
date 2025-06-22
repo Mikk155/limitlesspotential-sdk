@@ -82,7 +82,7 @@ bool CShockRifle::CanDeploy()
 
 bool CShockRifle::Deploy()
 {
-    if( g_cfg.GetValue<float>( "shockrifle_fast"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "shockrifle_fast"sv, false ) )
     {
         m_flRechargeTime = gpGlobals->time + 0.25;
     }
@@ -217,7 +217,7 @@ void CShockRifle::PrimaryAttack()
     }
 #endif
 
-    if( g_cfg.GetValue<float>( "shockrifle_fast"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "shockrifle_fast"sv, false ) )
     {
         m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + 0.1;
     }
@@ -259,7 +259,7 @@ void CShockRifle::RechargeAmmo( bool bLoud )
             m_pPlayer->EmitSound( CHAN_WEAPON, "weapons/shock_recharge.wav", VOL_NORM, ATTN_NORM );
         }
 
-        if( g_cfg.GetValue<float>( "shockrifle_fast"sv, 0 ) != 0 )
+        if( g_cfg.GetValue<bool>( "shockrifle_fast"sv, false ) )
         {
             m_flRechargeTime += 0.25;
         }

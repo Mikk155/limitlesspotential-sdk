@@ -125,7 +125,7 @@ void CShotgun::PrimaryAttack()
 
     Vector vecDir;
 
-    if( g_cfg.GetValue<float>( "shotgun_single_tight_spread"sv, 0 ) != 0 )
+    if( g_cfg.GetValue<bool>( "shotgun_single_tight_spread"sv, false ) )
     {
         vecDir = m_pPlayer->FireBulletsPlayer( 4, vecSrc, vecAiming, VECTOR_CONE_DM_SHOTGUN, 2048, BULLET_PLAYER_BUCKSHOT, 0, 0, m_pPlayer, m_pPlayer->random_seed );
     }

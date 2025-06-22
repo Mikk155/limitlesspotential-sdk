@@ -178,7 +178,7 @@ bool CCrowbar::Swing( bool fFirst )
 
 #endif
 
-        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) == 0 )
+        if( !g_cfg.GetValue<bool>( "chainsaw_melee"sv, false, this ) )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }
@@ -248,7 +248,7 @@ bool CCrowbar::Swing( bool fFirst )
         m_pPlayer->m_iWeaponVolume = flVol * CROWBAR_WALLHIT_VOLUME;
 #endif
 
-        if( g_cfg.GetValue<float>( "chainsaw_melee"sv, 0, this ) != 0 )
+        if( g_cfg.GetValue<bool>( "chainsaw_melee"sv, false, this ) )
         {
             m_flNextPrimaryAttack = GetNextAttackDelay( 0.25 );
         }
