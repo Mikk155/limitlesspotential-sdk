@@ -47,12 +47,15 @@ class Logger():
 
         now = datetime.now();
 
+        if len(args) > 0:
+            message = message.format( *args );
+
         message = '[{}{}{}:{}{}{}:{}{}{}] [{}{}{}] [{}{}{}] {}'.format(
             Logger.c.YELLOW, now.hour, Logger.c.RESET,
             Logger.c.YELLOW, now.minute, Logger.c.RESET,
             Logger.c.YELLOW, now.second, Logger.c.RESET,
             color, levelname, Logger.c.RESET, Logger.c.CYAN,
-            self.name, Logger.c.RESET, message.format( *args )
+            self.name, Logger.c.RESET, message
         );
 
         ColorList = {
