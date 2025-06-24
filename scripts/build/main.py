@@ -24,6 +24,7 @@ timestamp_start = datetime.now();
 
 # Import builder events
 import build.events.MultiThreading; # MultiThreading should always be at index 0 for indexing.
+import build.events.GenerateDocs;
 import build.events.CSharpTools;
 import build.events.FGDGenerator;
 import build.events.CompileGame;
@@ -70,11 +71,16 @@ def GithubActivate() -> bool:
 
     return True;
 
+global Freeze;
+Freeze = False;
+
 if not GithubActivate():
 
     from gui import Open_Menu;
 
     Open_Menu();
+
+    Freeze = True;
 
 if len( [ EV for EV in events if EV.state ] ) == 0:
 
@@ -138,7 +144,9 @@ while StartBuilding() is False:
 
     gLogger.error( "Build failed. Press enter to retry" );
 
-    input();
+    if Freeze:
+
+        input();
 
 timestamp_end = datetime.now();
 
@@ -154,4 +162,6 @@ elapsed_str = "<y>{:02}<>:<y>{:02}<>:<y>{:02}<>".format(
 
 gLogger.info( f"Builders ended in {elapsed_str}" );
 
-input();
+if Freeze:
+
+    input();
