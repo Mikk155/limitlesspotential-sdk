@@ -26,6 +26,74 @@
 #include "networking/ClientUserMessages.h"
 #endif
 
+using namespace std::literals;
+
+constexpr std::string_view ConfigurationVariablesSchemaName{ "cfgvars"sv };
+
+static std::string GetConfigurationVariablesSchema()
+{
+    auto GetType = []( ConfigurationVariables::VarTypes type ) -> std::string_view
+    {
+        switch( type )
+        {
+            case ConfigurationVariables::VarTypes::String:
+                return "string"sv;
+            case ConfigurationVariables::VarTypes::Boolean:
+                return "boolean"sv;
+            case ConfigurationVariables::VarTypes::Integer:
+                return "integer"sv;
+            case ConfigurationVariables::VarTypes::Float:
+            default:
+                return "number"sv;
+        }
+    };
+
+    json variables_object = json::object();
+
+    const std::vector<ConfigurationVariables::Variable>& variables = g_ConfigVars.GetVariables();
+
+    for( const ConfigurationVariables::Variable& variable : variables )
+    {
+        json variable_object = json::object();
+
+        variable_object[ "type" ] = GetType( variable.type );
+
+        if( variable.flags.Min.has_value() )
+            variable_object[ "minimum" ] = *variable.flags.Min;
+
+        if( variable.flags.Max.has_value() )
+            variable_object[ "maximum" ] = *variable.flags.Max;
+
+// -TODO Add default value once "GetValue" method is added.
+//        variable_object[ "default" ] = variable.default_value;
+
+        variables_object[ variable.name ] = variable_object;
+    }
+
+    return fmt::format( R"(
+{{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Configuration System",
+    "type": "object",
+    "$ref": "#/$defs/configValue",
+    "properties": {{
+        "cooperative": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "multiplayer": {{ "type": "object", "$ref": "#/$defs/configValue"}},
+        "ctf": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "deathmatch": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "teamplay": {{ "type": "object", "$ref": "#/$defs/configValue" }},
+        "$schema": {{ "type": "string" }}
+    }},
+    "$defs": {{
+        "configValue": {{
+            "properties": {}
+        }}
+    }},
+    "additionalProperties": false
+}}
+)", variables_object.dump() );
+}
+
 void ConfigurationVariables::Shutdown()
 {
     m_Logger.reset();
@@ -43,6 +111,10 @@ bool ConfigurationVariables::Initialize()
 
     m_Logger->info( "Registered {} variables.", m_vars.size() );
 
+    // Last call since variables has to be registered first.
+#ifndef CLIENT_DLL
+    g_JSON.RegisterSchema( ConfigurationVariablesSchemaName, &GetConfigurationVariablesSchema );
+#endif
     return true;
 }
 

@@ -126,6 +126,12 @@ class ConfigurationVariables final : public IGameSystem, public INetworkDataBloc
 #ifndef CLIENT_DLL // The client don't need these.
         void RegisterVariables();
 #endif
+
+    public:
+
+        const std::vector<Variable>& GetVariables() {
+            return m_vars;
+        }
 };
 
 inline ConfigurationVariables g_ConfigVars;
