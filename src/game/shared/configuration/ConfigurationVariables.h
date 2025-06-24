@@ -73,18 +73,28 @@ class ConfigurationVariables final : public IGameSystem, public INetworkDataBloc
             // Variable value explicit set in the code
             const VarVariant default_value;
 
+            // Variable value
+            std::optional<VarVariant> value;
+
             // Variable type, The game code is sensitive about this, do not set/get a variable type other than this.
             const VarTypes type;
 
             // Variable flags
-            const VarFlags flags{};
+            VarFlags flags{};
 
             Variable( const std::string& n, VarVariant d, VarTypes t = VarTypes::Float, VarFlags f = {} ) :
                 name( std::move(n) ),
-                default_value( d ),
+                default_value( std::move( d ) ),
                 type( t ),
                 flags( f )
             {}
+
+            // Get value if has a value else default_value
+            VarVariant Get() {
+                if( value.has_value() )
+                    return *value;
+                return default_value;
+            }
 
             // This is managed by the game itself. do not modify
             int network_index{INVALID_NETWORK_INDEX};
@@ -109,6 +119,9 @@ class ConfigurationVariables final : public IGameSystem, public INetworkDataBloc
         Variable* RegisterVariable( Variable var );
 
         void RegisterNetworkedVariables();
+
+        // Set a value to a variant, this apply the flags and debug proper info.
+        void SetVariant( Variable* var, VarVariant value );
 
 #ifndef CLIENT_DLL // The client don't need these.
         void RegisterVariables();
