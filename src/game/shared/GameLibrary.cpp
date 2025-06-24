@@ -37,6 +37,7 @@
 #include "utils/ReplacementMaps.h"
 #include "Achievements.h"
 #include "AdminInterface.h"
+#include "Configuration/ConfigurationVariables.h"
 
 bool GameLibrary::Initialize()
 {
@@ -110,6 +111,7 @@ void GameLibrary::AddGameSystems()
     g_GameSystems.Add( &g_EntityClassifications );
     g_GameSystems.Add( &g_Achievement );
     g_GameSystems.Add( &g_AdminInterface );
+    g_GameSystems.Add( &g_ConfigVars );
 }
 
 void GameLibrary::SetEntLogLevels( spdlog::level::level_enum level )

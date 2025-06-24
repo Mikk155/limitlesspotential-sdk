@@ -14,6 +14,9 @@ function(add_game_shared_sources target)
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/ConfigurationSystem.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/voice_common.h
 
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/configuration/ConfigurationVariables.cpp
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/configuration/ConfigurationVariables.h
+
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/ehandle.cpp
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/ehandle.h
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/entities/EntityClassificationSystem.cpp
