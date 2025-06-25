@@ -1,0 +1,45 @@
+{
+// Supported languages.
+"languages":
+[
+    "english"
+],
+
+// Commonly used sentences
+"Type":
+{
+"english": "Type"
+},
+"Description":
+{
+"english": "Description"
+},
+
+// Start of Configuration Variables
+"docs.ConfigurationVariables.name":
+{
+"english": "Variable name"
+},
+"docs.ConfigurationVariables.value":
+{
+"english": "Default hardcoded value"
+},
+"docs.ConfigurationVariables.min":
+{
+"english": "Minimum value clamp"
+},
+"docs.ConfigurationVariables.max":
+{
+"english": "Maximum value clamp"
+},
+"docs.ConfigurationVariables.network":
+{
+"english": "Networked to clients"
+},
+
+// Start of variables
+"docs.ConfigurationVariables.variable.fall_damage":
+{
+"english": "Fall damage math value"
+}
+}

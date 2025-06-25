@@ -24,7 +24,7 @@ timestamp_start = datetime.now();
 
 # Import builder events
 import build.events.MultiThreading; # MultiThreading should always be at index 0 for indexing.
-import build.events.GenerateDocs;
+import build.events.DocsGenerator;
 import build.events.CSharpTools;
 import build.events.FGDGenerator;
 import build.events.CompileGame;
