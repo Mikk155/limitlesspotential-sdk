@@ -38,6 +38,8 @@ class CTalkMonster;
 class CItemCTF;
 struct ReplacementMap;
 
+#define MAX_KEYVALUEMANAGER_ENTRIES 64 // Max entries for KeyValueManager
+
 #define MAX_PATH_SIZE 10 // max number of nodes available for a path.
 
 // These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
@@ -698,6 +700,30 @@ public:
     int m_capdmg_max;
 
     bool m_uselos = false;
+
+private:
+
+    struct KeyValueManager
+    {
+        bool custom{false};
+        const std::string emptystr;
+
+        std::unordered_map<std::string, std::string> KeyValues;
+
+        int size{0};
+        string_t m_Keys[MAX_KEYVALUEMANAGER_ENTRIES];
+        string_t m_Values[MAX_KEYVALUEMANAGER_ENTRIES];
+
+        std::string& GetValue( std::string_view key );
+        void SetValue( std::string_view key, std::string_view value );
+        void Save();
+        void Restore();
+    };
+
+public:
+
+    KeyValueManager m_KeyValues{};
+    KeyValueManager m_CustomKeyValues{};
 };
 
 inline bool FNullEnt( CBaseEntity* ent ) { return ( ent == nullptr ) || FNullEnt( ent->edict() ); }

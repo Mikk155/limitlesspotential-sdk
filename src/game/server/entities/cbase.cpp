@@ -44,6 +44,9 @@ int DispatchSpawn( edict_t* pent )
         return 0;
     }
 
+    // We map these keyvalues regardless of the map config
+    entity->m_CustomKeyValues.custom = true;
+
     auto EntityHasSpawned = [&]( SpawnAction code ) -> int
     {
         entity = (CBaseEntity*)GET_PRIVATE( pent );
@@ -175,6 +178,11 @@ void DispatchKeyValue( edict_t* pentKeyvalue, KeyValueData* pkvd )
     if( !pEntity )
         return;
 
+    if( false ) // -TODO Get a map context config to decide if waste memory on this
+    {
+        pEntity->m_KeyValues.SetValue( pkvd->szKeyName, pkvd->szValue );
+    }
+
     pkvd->fHandled = static_cast<int32>( pEntity->RequiredKeyValue( pkvd ) );
 
     if( pkvd->fHandled != 0 )
@@ -250,6 +258,10 @@ void DispatchSave( edict_t* pent, SAVERESTOREDATA* pSaveData )
             pEntity->pev->ltime = gpGlobals->time;
             pEntity->pev->nextthink = pEntity->pev->ltime + delta;
         }
+
+        // Move the map into arrays of string_t
+        pEntity->m_KeyValues.Save();
+        pEntity->m_CustomKeyValues.Save();
 
         pTable->location = pSaveData->size;             // Remember entity position for file I/O
         pTable->classname = pEntity->pev->classname; // Remember entity class for respawn
@@ -351,6 +363,10 @@ int DispatchRestore( edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity
 
         pEntity->Restore( restoreHelper );
         pEntity->PostRestore();
+
+        // Move arrays of string_t into the map
+        pEntity->m_KeyValues.Restore();
+        pEntity->m_CustomKeyValues.Restore();
 
         if( ( pEntity->ObjectCaps() & FCAP_MUST_SPAWN ) != 0 )
         {
@@ -573,9 +589,14 @@ static void LoadSentenceReplacementMap( const ReplacementMap*& destination, stri
 
 bool CBaseEntity::RequiredKeyValue( KeyValueData* pkvd )
 {
+    // Theorically should only catch supported ones but it's fine for now
+    if( pkvd->szKeyName[0] == '$' )
+    {
+        m_CustomKeyValues.SetValue( pkvd->szKeyName, pkvd->szValue );
+    }
     // Replacement maps can be changed at runtime using trigger_changekeyvalue.
     // Note that this may cause host_error or sys_error if files aren't precached.
-    if( FStrEq( pkvd->szKeyName, "configlist" ) )
+    else if( FStrEq( pkvd->szKeyName, "configlist" ) )
     {
         m_config = g_cfg.CustomConfigurationFile( pkvd->szValue );
         return ( m_config >= 0 );
@@ -1139,4 +1160,51 @@ bool CBaseEntity::AppearFlags( const char* keyname, int value )
         return false;
     }
     return true;
+}
+
+std::string& CBaseEntity::KeyValueManager::GetValue( std::string_view key )
+{
+    std::string keyname = std::string( key );
+
+    if( KeyValues.find( keyname ) != KeyValues.end() )
+    {
+        return KeyValues.at( keyname );
+    }
+
+    static std::string empty;
+    return empty;
+}
+
+void CBaseEntity::KeyValueManager::SetValue( std::string_view key, std::string_view value )
+{
+    // If we're in multiplayer SaveRestore shouldn't be important, maybe skip this condition?
+    if( auto tsize = KeyValues.size(); tsize >= MAX_KEYVALUEMANAGER_ENTRIES ) {
+        CBaseEntity::Logger->warn( "Couldn't add key-value pair \"{}:{}\" list on size limit {}!", key, value, tsize );
+        return;
+    }
+
+    KeyValues[ std::string( key ) ] = std::string( value );
+}
+
+void CBaseEntity::KeyValueManager::Restore()
+{
+    for( int i = 0; i < size; ++i )
+    {
+        SetValue( STRING( m_Keys[i] ), STRING( m_Values[i] ) );
+    }
+}
+
+void CBaseEntity::KeyValueManager::Save()
+{
+    // Is this a custom keyvalues buffer?
+    if( custom ) // -TODO Add a map context to allow m_KeyValues to be saved and stored
+    {
+        for( const auto& [ key, value ] : KeyValues )
+        {
+            m_Keys[size] = ALLOC_STRING( key.c_str() );
+            m_Values[size] = ALLOC_STRING( value.c_str() );
+
+            ++size;
+        }
+    }
 }
