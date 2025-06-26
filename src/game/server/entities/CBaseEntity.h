@@ -706,7 +706,6 @@ private:
     struct KeyValueManager
     {
         bool custom{false};
-        const std::string emptystr;
 
         std::unordered_map<std::string, std::string> KeyValues;
 
