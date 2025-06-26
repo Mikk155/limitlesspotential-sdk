@@ -75,9 +75,10 @@ target_sources(server PRIVATE
     config/sections/GlobalReplacementFilesSections.h
     config/sections/HudColorSection.h
     config/sections/HudReplacementSection.h
+    config/sections/KeyvalueManagerSection.h
     config/sections/SpawnInventorySection.h
     config/sections/SuitLightTypeSection.h
-    
+
     entities/animating.cpp
     entities/animation.cpp
     entities/animation.h

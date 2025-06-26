@@ -17,6 +17,7 @@
 
 #include "cbase.h"
 #include "ServerLibrary.h"
+#include "MapState.h"
 #include "pm_shared.h"
 #include "world.h"
 #include "sound/ServerSoundSystem.h"
@@ -178,7 +179,7 @@ void DispatchKeyValue( edict_t* pentKeyvalue, KeyValueData* pkvd )
     if( !pEntity )
         return;
 
-    if( false ) // -TODO Get a map context config to decide if waste memory on this
+    if( g_Server.GetMapState()->KeyValueManager )
     {
         pEntity->m_KeyValues.SetValue( pkvd->szKeyName, pkvd->szValue );
     }
@@ -1196,8 +1197,8 @@ void CBaseEntity::KeyValueManager::Restore()
 
 void CBaseEntity::KeyValueManager::Save()
 {
-    // Is this a custom keyvalues buffer?
-    if( custom ) // -TODO Add a map context to allow m_KeyValues to be saved and stored
+    // Custom keyvalues are always saved
+    if( custom || g_Server.GetMapState()->KeyValueManager )
     {
         for( const auto& [ key, value ] : KeyValues )
         {

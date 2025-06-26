@@ -42,6 +42,8 @@ public:
     std::optional<RGB24> m_CrosshairColor;
     std::optional<SuitLightType> m_LightType;
 
+    bool KeyValueManager;
+
     // Initialized during config load.
     std::unique_ptr<const ReplacementMap> m_GlobalModelReplacement;
     std::unique_ptr<const ReplacementMap> m_GlobalSentenceReplacement;

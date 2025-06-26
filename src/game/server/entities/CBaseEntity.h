@@ -709,7 +709,7 @@ private:
 
         std::unordered_map<std::string, std::string> KeyValues;
 
-        int size{0};
+        int size{0}; // This is for SaveRestore. I should see how to implement std::vector support instead.
         string_t m_Keys[MAX_KEYVALUEMANAGER_ENTRIES];
         string_t m_Values[MAX_KEYVALUEMANAGER_ENTRIES];
 

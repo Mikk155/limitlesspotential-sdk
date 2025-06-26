@@ -49,6 +49,7 @@
 #include "config/sections/GlobalReplacementFilesSections.h"
 #include "config/sections/HudColorSection.h"
 #include "config/sections/HudReplacementSection.h"
+#include "config/sections/KeyvalueManagerSection.h"
 #include "config/sections/SpawnInventorySection.h"
 #include "config/sections/SuitLightTypeSection.h"
 
@@ -439,6 +440,7 @@ void ServerLibrary::CreateConfigDefinitions()
             sections.push_back( std::make_unique<EntityTemplatesSection>() );
             sections.push_back( std::make_unique<EntityClassificationsSection>() );
             sections.push_back( std::make_unique<HudReplacementSection>() );
+            sections.push_back( std::make_unique<KeyvalueManagerSection>() );
 
             return sections; }() );
 }
