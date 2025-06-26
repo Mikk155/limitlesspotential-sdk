@@ -126,6 +126,10 @@ bool CAdminInterface::Initialize()
 {
     m_Logger = g_Logging.CreateLogger( "admin" );
 
+#ifndef CLIENT_DLL
+    RegisterCommands();
+#endif
+
     g_NetworkData.RegisterHandler( "AdminInterface", this );
 
     return true;
@@ -302,8 +306,6 @@ void CAdminInterface::HandleNetworkDataBlock( NetworkDataBlock& block )
     if( block.Mode == NetworkDataMode::Serialize )
     {
 #ifndef CLIENT_DLL
-        RegisterCommands();
-
         block.Data = m_Active;
 
         // The server must reformat first with the available commands only.
@@ -631,11 +633,6 @@ class TargetPlayerEnumerator
 
 void CAdminInterface::RegisterCommands()
 {
-    if( m_binitialized )
-        return;
-
-    m_binitialized = true;
-
     CClientCommandCreateArguments fCheats{ .Flags = ( ClientCommandFlag::Cheat | ClientCommandFlag::AdminInterface ) };
     CClientCommandCreateArguments fDefault{ .Flags = ( ClientCommandFlag::AdminInterface ) };
 

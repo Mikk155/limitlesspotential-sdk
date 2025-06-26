@@ -86,10 +86,6 @@ class CAdminInterface final : public IGameSystem, public INetworkDataBlockHandle
         }
         // Replaces ' -> " and then parses a json object
         std::optional<json> ParseJson( CBasePlayer* player, std::string text );
-
-    private:
-
-        bool m_binitialized{false};
 #endif
 };
 
